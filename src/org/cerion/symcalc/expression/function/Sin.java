@@ -18,7 +18,7 @@ public class Sin extends FunctionExpr {
 		{
 			NumberExpr num = (NumberExpr)get(0);
 			
-			if(!num.isComplex())
+			if(!num.isComplex() && Expr.getEnv().isNumericalEval())
 				return new RealNum( Math.sin( num.toDouble() ));
 		}
 		

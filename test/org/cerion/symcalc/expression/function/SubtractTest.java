@@ -1,4 +1,4 @@
-package expression.function;
+package org.cerion.symcalc.expression.function;
 
 import static org.junit.Assert.*;
 

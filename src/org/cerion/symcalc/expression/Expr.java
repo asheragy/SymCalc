@@ -1,7 +1,8 @@
 package org.cerion.symcalc.expression;
 
+import org.cerion.symcalc.Environment;
+
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 public abstract class Expr 
@@ -74,9 +75,15 @@ public abstract class Expr
 	{
 		mValue = obj;
 	}
-	
+
+	//Required subclass methods
 	@Override
 	public abstract String toString();
+	//TODO, verify what everything below is for again
+	public abstract void show(int i); //rename to something like treeForm or make different function, can probably make non-abstract if types are standardized (name + value/args)
+	//TODO, add some optional verify() that can Override to see if eval will even work
+	public abstract Expr eval();
+	public abstract ExprType GetType();
 
 	@Override
 	public boolean equals(Object obj) {
@@ -88,17 +95,11 @@ public abstract class Expr
 	}
 
 	//TODO make required
-	public boolean equals(Expr e) {
+	public boolean equals(Expr e)
+	{
 		return false;
 	}
 
-	//TODO, verify what everything below is for again
-	public abstract void show(int i); //rename to something like treeForm or make different function, can probably make non-abstract if types are standardized (name + value/args)
-	
-	//TODO, add some optional verify() that can Override to see if eval will even work
-	public abstract Expr eval();
-	public abstract ExprType GetType();
-	
 	public void print()
 	{
 		show(0);
@@ -152,17 +153,11 @@ public abstract class Expr
 	}
 
 	//TODO, needs to be passed in recursively so it can be changed
-	private static Hashtable<String, Expr> environment = new Hashtable<String, Expr>();
-	
-	public static void SetVar(String name, Expr value)
-	{	
-		environment.put(name,value);
+	public static Environment getEnv() {
+		return mEnv;
 	}
-	
-	public static Expr GetVar(String name)
-	{
-		return environment.get(name);
-	}
+
+	private static Environment mEnv = new Environment();
 
 
 }

@@ -21,7 +21,7 @@ public class UserFunction {
             throw new IllegalArgumentException();
 
         for(int i = 0; i < mVars.length; i++) {
-            Expr.SetVar(mVars[i].value(), params[i]);
+            Expr.getEnv().setVar(mVars[i].value(), params[i]);
         }
 
         return mExpr.eval();

@@ -30,9 +30,20 @@ public abstract class NumberExpr extends Expr
 	//Members
 	//private BigInteger n;
 	
-	public boolean isInteger()
-	{
-		return (numType() == INTEGER);
+	public boolean isInteger() {
+		return numType() == INTEGER;
+	}
+
+	public boolean isReal() {
+		return numType() == REAL;
+	}
+
+	public boolean isRational() {
+		return numType() == RATIONAL;
+	}
+
+	public boolean isComplex() {
+		return numType() == COMPLEX;
 	}
 
 	//Inherited from MathTerm
@@ -63,11 +74,6 @@ public abstract class NumberExpr extends Expr
 	public static NumberExpr parse(String s)
 	{
 		return getNumber(s);
-	}
-	
-	public boolean isComplex()
-	{
-		return numType() == COMPLEX;
 	}
 
 }

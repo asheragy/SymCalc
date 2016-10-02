@@ -35,7 +35,7 @@ public class VarExpr extends Expr {
     @Override
     public Expr eval() 
     {
-    	Expr result = GetVar(value());
+    	Expr result = Expr.getEnv().getVar(value());
     	if(result == null)
     		result = this;
     	

@@ -20,7 +20,7 @@ public class Main
 		//MathExpr expr = new MathExpr("d");
 		//MathExpr expr = new MathExpr("FFT({-1, -1, -1, -1, 1, 1, 1, 1})");
 		
-		MathExpr expr = new MathExpr("Map(Sin,{1,2,3})");
+		MathExpr expr = new MathExpr("Sin(1)");
 		expr.show();
 		
 		//expr.eval();

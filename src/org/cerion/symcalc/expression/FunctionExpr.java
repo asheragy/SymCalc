@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression;
 
-
 import org.cerion.symcalc.expression.function.*;
 import org.cerion.symcalc.expression.function.integer.*;
 import org.cerion.symcalc.expression.function.list.*;
@@ -8,25 +7,22 @@ import org.cerion.symcalc.expression.function.list.*;
 public abstract class FunctionExpr extends Expr
 {
 	private String mName;
+	private FunctionType mType;
 
-    protected FunctionExpr(FunctionType t, Expr... e)
-    {
-    	//m_functionId = identifiers.get(f);
+    protected FunctionExpr(FunctionType t, Expr... e) {
+		mType = t;
     	mName = t.toString();
-        
-        //this.mArgs = new ArrayList<Expr>();
+
         setArgs(e);
     }
     
 	@Override
-	public ExprType GetType()
-	{ 
+	public ExprType GetType() {
 		return ExprType.FUNCTION;
 	}
 	
 	@Override
-	public String toString() 
-	{
+	public String toString() {
 		return mName + argString();
 	}
 	
@@ -37,14 +33,35 @@ public abstract class FunctionExpr extends Expr
 		for(int j = 0; j < size(); j++)
 			get(j).show(i+1);
     }
-    
-    public void add(Expr t) 
+
+	@Override
+	public boolean equals(Expr e) {
+		if(e.GetType() != ExprType.FUNCTION)
+			return false;
+
+		FunctionExpr f = (FunctionExpr)e;
+		if(f.mType != mType)
+			return false;
+
+		if(f.size() != size())
+			return false;
+
+		for(int i = 0; i < size(); i++) {
+			if(!get(i).equals(f.get(i)))
+				return false;
+		}
+
+		return true;
+	}
+
+	public void add(Expr t)
     { 
     	setArgs(t); 
     }
        
 	protected enum FunctionType
 	{
+		N("N"),
 		PLUS("Plus"),
 		SUBTRACT("Subtract"),
 		TIMES("Times"),
@@ -131,6 +148,7 @@ public abstract class FunctionExpr extends Expr
 		
 		switch(type)
 		{
+			case N: return new N(e);
 			case PLUS: return new Plus(e);
 			case SUBTRACT: return new Subtract(e);
 			case TIMES: return new Times(e);

@@ -1,4 +1,4 @@
-package parser;
+package org.cerion.symcalc.parser;
 
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.ListExpr;

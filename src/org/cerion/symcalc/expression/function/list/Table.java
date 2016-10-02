@@ -85,7 +85,7 @@ public class Table extends FunctionExpr {
 				}
 				
 				//Set variable equal to list
-				SetVar(var.value(),varList);
+				getEnv().setVar(var.value(),varList);
 				result = expr.eval();
 				
 				//If result is not a list, make it one

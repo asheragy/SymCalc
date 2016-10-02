@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number;
 
+import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.NumberExpr;
 
 import java.math.BigDecimal;
@@ -44,12 +45,28 @@ public class RealNum extends NumberExpr
 	{
 		dNumber = n;
 	}
-	
+
+	@Override
 	public String toString() 
 	{
 		if(bigNumber != null)
 			return bigNumber.toString();
 		return "" + dNumber;
+	}
+
+	@Override
+	public boolean equals(Expr e) {
+		if(e.isNumber() && ((NumberExpr)e).isReal()) {
+			RealNum n = (RealNum)e;
+
+			if(n.bigNumber != null && bigNumber != null && n.bigNumber.compareTo(bigNumber) == 0)
+				return true;
+
+			if(n.bigNumber == null && bigNumber == null)
+				return n.dNumber == dNumber;
+		}
+
+		return false;
 	}
 	
 	public RealNum negate()

@@ -2,8 +2,8 @@ package org.cerion.symcalc.expression;
 
 
 import org.cerion.symcalc.expression.Expr;
-import parser.Lexer;
-import parser.Parser;
+import org.cerion.symcalc.parser.Lexer;
+import org.cerion.symcalc.parser.Parser;
 
 //TODO, remove this and just use Expr as the public exposed element
 public class MathExpr {

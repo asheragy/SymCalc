@@ -15,7 +15,17 @@ public class BoolExpr extends Expr {
 	public boolean value() {
 		return (boolean)this.getValue();
 	}
-	
+
+	@Override
+	public boolean equals(Expr e) {
+		if(e.GetType() != ExprType.BOOL)
+			return false;
+
+		BoolExpr be = (BoolExpr)e;
+
+		return be.value() == value();
+	}
+
 	@Override
 	public String toString() {
 		
