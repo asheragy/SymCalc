@@ -1,6 +1,8 @@
 package org.cerion.symcalc.expression;
 
 
+import org.cerion.symcalc.Environment;
+
 public class ListExpr extends Expr {
 
 	public ListExpr()
@@ -38,15 +40,15 @@ public class ListExpr extends Expr {
 		for(int i = 0; i < (int) size(); i++) {
 			if(i > 0) ret += ","; //dont add comma on first element
 			//Eval before printing
-			ret += get(i).eval().toString();
+			ret += get(i).toString();
 		}
 		
 		ret += "}";
 		return ret; 
 	}
 
-	public ListExpr eval() 
-	{
+	public ListExpr eval() {
 		return this;
 	}
+
 }

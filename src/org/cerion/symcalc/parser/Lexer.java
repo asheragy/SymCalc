@@ -99,7 +99,7 @@ public class Lexer {
 	
 	private boolean isIdent(String s) 
 	{
-		return FunctionExpr.isFunction(s);
+		return FunctionExpr.isValidFunction(s);
 	}
 	
 	private boolean isConst(String s) {

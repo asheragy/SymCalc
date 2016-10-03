@@ -14,13 +14,13 @@ public class Main
 
 	public static void main(String args[]) 
 	{
-		//Expr e = new BinExpr('+',new IntegerNum(1),new IntegerNum(2));
-		
 		//TODO, if its a function name, it can't be a variable name
 		//MathExpr expr = new MathExpr("d");
 		//MathExpr expr = new MathExpr("FFT({-1, -1, -1, -1, 1, 1, 1, 1})");
-		
-		MathExpr expr = new MathExpr("Sin(1)");
+		//MathExpr expr = new MathExpr("RandomInteger(10)");
+		MathExpr expr = new MathExpr("Table(RandomInteger(), {10})");
+		//MathExpr expr = new MathExpr("N(Sin(1))");
+
 		expr.show();
 		
 		//expr.eval();

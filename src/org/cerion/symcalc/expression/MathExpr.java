@@ -29,14 +29,13 @@ public class MathExpr {
 		String s = t.toString();
 		return s;
 	}
+
 	//public Number eval(double x) {
 	//	Double n = new Double(x);
 		//return e.eval(new Number(n));
 	//	return e.eval(-1);
 	//}
-	
-	
-	
+
 	public void show() {
 		e.show(0);
 	}

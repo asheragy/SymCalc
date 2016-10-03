@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression;
 
+import org.cerion.symcalc.Environment;
 import org.cerion.symcalc.expression.number.ComplexNum;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.number.RealNum;
@@ -53,12 +54,16 @@ public abstract class NumberExpr extends Expr
 		indent(i,"Number " + this.toString());
 	}
 	
-	public NumberExpr eval() 
-	{
-		//need to round rationals
+	public NumberExpr eval() {
 		return this;
 	}
-	
+
+	@Override
+	public Expr eval(Environment env) {
+		//TODO need to round rationals if N is set
+		return this;
+	}
+
 	@Deprecated
 	public static NumberExpr getNumber(String s)
 	{

@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.function;
 
+import org.cerion.symcalc.Environment;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
 import org.cerion.symcalc.expression.NumberExpr;
@@ -12,13 +13,13 @@ public class Sin extends FunctionExpr {
 	}
 
 	@Override
-	public Expr eval() {
+	public Expr eval(Environment env) {
 		
 		if(size() == 1 && get(0).isNumber())
 		{
 			NumberExpr num = (NumberExpr)get(0);
 			
-			if(!num.isComplex() && Expr.getEnv().isNumericalEval())
+			if(!num.isComplex() && env.isNumericalEval())
 				return new RealNum( Math.sin( num.toDouble() ));
 		}
 		

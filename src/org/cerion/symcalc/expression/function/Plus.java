@@ -48,6 +48,10 @@ public class Plus extends FunctionExpr {
 			//Only add number if non-zero
 			if(!sum.isZero())
 				list.add(0, sum);
+
+			//If only 1 entry just return it
+			if(list.size() == 1)
+				return list.get(0);
 			
 			return new Plus(list.toArray(new Expr[list.size()]));
 		}

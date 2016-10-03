@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression;
 
+import org.cerion.symcalc.Environment;
 import org.cerion.symcalc.expression.function.*;
 import org.cerion.symcalc.expression.function.integer.*;
 import org.cerion.symcalc.expression.function.list.*;
@@ -24,6 +25,10 @@ public abstract class FunctionExpr extends Expr
 	@Override
 	public String toString() {
 		return mName + argString();
+	}
+
+	public String getName() {
+		return mName;
 	}
 	
 	@Override
@@ -52,6 +57,17 @@ public abstract class FunctionExpr extends Expr
 		}
 
 		return true;
+	}
+
+	@Deprecated
+	public Expr eval() {
+		return eval(new Environment());
+	}
+
+	@Override
+	public Expr eval(Environment env) {
+		//TODO this should be done in every sub class instead, can remove from here once that is done
+		return eval();
 	}
 
 	public void add(Expr t)
@@ -128,7 +144,7 @@ public abstract class FunctionExpr extends Expr
 		return null;
 	}
 	
-	public static boolean isFunction(String functionName)
+	public static boolean isValidFunction(String functionName)
 	{
 		boolean bResult = false;
 		String name = functionName.toLowerCase();

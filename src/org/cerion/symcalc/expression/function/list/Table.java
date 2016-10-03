@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.function.list;
 
+import org.cerion.symcalc.Environment;
 import org.cerion.symcalc.expression.ErrorExpr;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.ListExpr;
@@ -11,12 +12,12 @@ public class Table extends FunctionExpr {
 
 	public Table(Expr... e) {
 		super(FunctionType.TABLE);
-		this.EVAL = false;
+		//this.EVAL = false;
 		this.setArgs(e);
 	}
 	
 	@Override
-	public Expr eval() {
+	public Expr eval(Environment env) {
 	
 		//TODO, need to make sure expr is evaulated each time
 		// Table[RandomInteger[10],{10}]

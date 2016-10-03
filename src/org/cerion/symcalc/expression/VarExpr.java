@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression;
 
+import org.cerion.symcalc.Environment;
 import org.cerion.symcalc.expression.Expr;
 
 public class VarExpr extends Expr {
@@ -40,6 +41,15 @@ public class VarExpr extends Expr {
     		result = this;
     	
     	return result;
+    }
+
+    @Override
+    public Expr eval(Environment env) {
+        Expr result = env.getVar(value());
+        if(result == null)
+            result = this;
+
+        return result;
     }
 
     @Override

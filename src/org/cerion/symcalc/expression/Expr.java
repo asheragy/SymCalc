@@ -10,16 +10,18 @@ public abstract class Expr
 	private Object mValue;
 	private List<Expr> mArgs;
 	
-	protected boolean EVAL = true;
+	//protected boolean EVAL = true;
 	
 	protected void setArgs(Expr ...args)
 	{
 		if(mArgs == null)
 			mArgs = new ArrayList<>();
 		
-		for(Expr k : args)
-			mArgs.add( EVAL ? k.eval() : k );
-		
+		for(Expr k : args) {
+			//mArgs.add( EVAL ? k.eval() : k );
+			if(k != null)
+				mArgs.add(k);
+		}
 	}
 	
 	public List<Expr> getArgs()
@@ -34,7 +36,8 @@ public abstract class Expr
 	
 	public Expr get(int index)
 	{
-		return mArgs.get(index).eval();
+		//return mArgs.get(index).eval();
+		return mArgs.get(index);
 	}
 	
 	protected void setArg(int index, Expr e)
@@ -43,14 +46,17 @@ public abstract class Expr
 			mArgs = new ArrayList<>();
 		
 		if(index == mArgs.size())
-			mArgs.add(EVAL ? e.eval() : e );
+			//mArgs.add(EVAL ? e.eval() : e );
+			mArgs.add(e);
 		else
-			mArgs.set(index, EVAL ? e.eval() : e);
+			//mArgs.set(index, EVAL ? e.eval() : e);
+			mArgs.set(index, e);
 	}
 	
 	protected void addArg(Expr e)
 	{
-		setArg(size(), EVAL ? e.eval() : e);
+		//setArg(size(), EVAL ? e.eval() : e);
+		setArg(size(), e);
 	}
 	
 	public int size()
@@ -81,9 +87,19 @@ public abstract class Expr
 	public abstract String toString();
 	//TODO, verify what everything below is for again
 	public abstract void show(int i); //rename to something like treeForm or make different function, can probably make non-abstract if types are standardized (name + value/args)
+
+
 	//TODO, add some optional verify() that can Override to see if eval will even work
-	public abstract Expr eval();
+	public Expr eval() {
+		//TODO this should be a global ENV or something
+		return eval(new Environment());
+	}
+
 	public abstract ExprType GetType();
+
+	public Expr eval(Environment env) {
+		return this;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -105,10 +121,8 @@ public abstract class Expr
 		show(0);
 	}
 	
-	public enum ExprType
-	{ 
+	public enum ExprType {
 		NUMBER,
-		UNARY,
 		VARIABLE,
 		FUNCTION,
 		LIST,
@@ -140,6 +154,20 @@ public abstract class Expr
 	public boolean isList()
 	{
 		return GetType() == ExprType.LIST;
+	}
+
+	public boolean isFunction() {
+		return GetType() == ExprType.FUNCTION;
+	}
+
+	public boolean isFunction(String name) {
+		if(isFunction()) {
+			FunctionExpr e = (FunctionExpr)this;
+			if(name.compareToIgnoreCase(e.getName()) == 0)
+				return true;
+		}
+
+		return false;
 	}
 	
 	//TODO, may be an actual function that does this
