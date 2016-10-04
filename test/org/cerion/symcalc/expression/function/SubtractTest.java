@@ -49,6 +49,14 @@ public class SubtractTest {
 		t = getI(new IntegerNum(3), new IntegerNum(5));
 		assertEquals(-2, t.toInteger());
 	}
+
+	@Test
+	public void nested() {
+		Expr e = new Subtract(new IntegerNum(1), new IntegerNum(2));
+		e = new Subtract(new IntegerNum(5), e);
+
+		assertEquals(new IntegerNum(6), e.eval());
+	}
 	
 	@Test
 	public void identity() {

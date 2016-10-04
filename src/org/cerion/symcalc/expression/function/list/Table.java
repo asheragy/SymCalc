@@ -42,7 +42,7 @@ public class Table extends FunctionExpr {
 
 				ListExpr varList = new ListExpr();
 				for(int i = 0; i < size; i++)
-					varList.add(expr);
+					varList.add(expr.eval());
 				
 				//Set variable equal to list
 				//SetVar(var.GetName(),varList);

@@ -18,7 +18,7 @@ public class Main
 		//MathExpr expr = new MathExpr("d");
 		//MathExpr expr = new MathExpr("FFT({-1, -1, -1, -1, 1, 1, 1, 1})");
 		//MathExpr expr = new MathExpr("RandomInteger(10)");
-		MathExpr expr = new MathExpr("Table(RandomInteger(), {10})");
+		MathExpr expr = new MathExpr("Hold(1+2+3)");
 		//MathExpr expr = new MathExpr("N(Sin(1))");
 
 		expr.show();

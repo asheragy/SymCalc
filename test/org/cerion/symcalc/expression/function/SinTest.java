@@ -1,8 +1,7 @@
 package org.cerion.symcalc.expression.function;
 
-import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.FunctionExpr;
-import org.cerion.symcalc.expression.NumberExpr;
+import org.cerion.symcalc.expression.*;
+import org.cerion.symcalc.expression.function.integer.RandomInteger;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.number.RealNum;
 import org.junit.Test;
@@ -26,5 +25,14 @@ public class SinTest {
 
         RealNum num = (RealNum)eval;
         assertEquals(-0.958924, num.toDouble(), 0.00001);
+    }
+
+    @Test
+    public void listParameter() {
+        ListExpr params = new ListExpr(IntegerNum.ONE, new VarExpr("x"), new RandomInteger());
+        Expr e = new Sin(params).eval();
+
+        assertTrue(e.isList());
+        assertTrue(e.get(0).isFunction("sin"));
     }
 }

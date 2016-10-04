@@ -61,8 +61,10 @@ public class Subtract extends FunctionExpr {
 	@Override
 	public String toString()
 	{
-		if(size() == 2)
-			return get(0) + " - " + get(1);
+		if(size() == 2) {
+			Expr e2 = get(1);
+			return get(0) + " - " + (e2.isFunction("subtract") ? "(" + e2 + ")": e2);
+		}
 		
 		return super.toString();
 	}

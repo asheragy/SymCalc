@@ -78,6 +78,8 @@ public abstract class FunctionExpr extends Expr
 	protected enum FunctionType
 	{
 		N("N"),
+		HOLD("Hold"),
+
 		PLUS("Plus"),
 		SUBTRACT("Subtract"),
 		TIMES("Times"),
@@ -165,6 +167,8 @@ public abstract class FunctionExpr extends Expr
 		switch(type)
 		{
 			case N: return new N(e);
+			case HOLD: return new Hold(e);
+
 			case PLUS: return new Plus(e);
 			case SUBTRACT: return new Subtract(e);
 			case TIMES: return new Times(e);
