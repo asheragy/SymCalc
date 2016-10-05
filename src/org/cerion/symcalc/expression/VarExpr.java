@@ -34,22 +34,13 @@ public class VarExpr extends Expr {
 	}
     
     @Override
-    public Expr eval() 
+    protected Expr evaluate()
     {
-    	Expr result = Expr.getEnv().getVar(value());
+    	Expr result = getEnv().getVar(value());
     	if(result == null)
     		result = this;
     	
     	return result;
-    }
-
-    @Override
-    public Expr eval(Environment env) {
-        Expr result = env.getVar(value());
-        if(result == null)
-            result = this;
-
-        return result;
     }
 
     @Override

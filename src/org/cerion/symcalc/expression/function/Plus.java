@@ -15,7 +15,7 @@ public class Plus extends FunctionExpr {
 	}
 	
 	@Override
-	public Expr eval() {
+	protected Expr evaluate() {
 		
 		NumberExpr sum = IntegerNum.ZERO;
 		
@@ -34,7 +34,7 @@ public class Plus extends FunctionExpr {
 		Iterator<Expr> it = list.iterator();
 		while(it.hasNext())
 		{
-			Expr e = it.next().eval();
+			Expr e = it.next();
 			if(e.isNumber())
 			{
 				sum = sum.add((NumberExpr)e);

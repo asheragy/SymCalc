@@ -10,7 +10,7 @@ public class Subtract extends FunctionExpr {
 	}
 
 	@Override
-	public Expr eval() {
+	public Expr evaluate() {
 		
 		if(size() != 2)
 			return new ErrorExpr("invalid parameters");

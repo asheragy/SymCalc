@@ -15,7 +15,7 @@ public class Times extends FunctionExpr {
 	}
 	
 	@Override
-	public Expr eval() {
+	protected Expr evaluate() {
 		
 		NumberExpr product = IntegerNum.ONE;
 		

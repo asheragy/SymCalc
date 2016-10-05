@@ -11,7 +11,7 @@ public class GCD extends FunctionExpr {
 	}
 	
 	@Override
-	public Expr eval() {
+	protected Expr evaluate() {
 		
 		//TODO can take more than 2 integer parameters
 	

@@ -11,7 +11,7 @@ public class Last extends FunctionExpr {
 	}
 	
 	@Override
-	public Expr eval() {
+	protected Expr evaluate() {
 		
 		if(get(0).isList())
 		{

@@ -12,7 +12,12 @@ public class Hold extends FunctionExpr {
     }
 
     @Override
-    public Expr eval(Environment env) {
+    protected Expr evaluate() {
         return this;
+    }
+
+    @Override
+    protected int getProperties() {
+        return Properties.HOLD.value;
     }
 }

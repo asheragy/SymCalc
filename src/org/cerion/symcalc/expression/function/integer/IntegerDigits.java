@@ -13,7 +13,7 @@ public class IntegerDigits extends FunctionExpr {
 	}
 	
 	@Override
-	public Expr eval() {
+	public Expr evaluate() {
 		
 		if(get(0).isInteger())
 		{

@@ -6,14 +6,19 @@ public class ErrorExpr extends Expr {
 	{
 		indent(i,"Error " + this.toString());
 	}
-	
-	public Expr eval() 
+
+	@Override
+	protected Expr evaluate()
 	{ 
 		return this; 
 	};
 
+	@Override
+	public boolean equals(Expr e) {
+		// There should never be a reason to compare errors so just say they are never equal
+		return false;
+	}
 
-	
 	public String value()
 	{
 		return (String)getValue();

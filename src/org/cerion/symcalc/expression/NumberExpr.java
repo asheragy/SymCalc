@@ -53,14 +53,9 @@ public abstract class NumberExpr extends Expr
 	{
 		indent(i,"Number " + this.toString());
 	}
-	
-	public NumberExpr eval() {
-		return this;
-	}
 
 	@Override
-	public Expr eval(Environment env) {
-		//TODO need to round rationals if N is set
+	public NumberExpr evaluate() {
 		return this;
 	}
 
@@ -81,4 +76,10 @@ public abstract class NumberExpr extends Expr
 		return getNumber(s);
 	}
 
+	//TODO remove so sub types are forced to implement
+	@Override
+	public boolean equals(Expr e)
+	{
+		return false;
+	}
 }

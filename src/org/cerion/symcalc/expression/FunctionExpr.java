@@ -59,17 +59,6 @@ public abstract class FunctionExpr extends Expr
 		return true;
 	}
 
-	@Deprecated
-	public Expr eval() {
-		return eval(new Environment());
-	}
-
-	@Override
-	public Expr eval(Environment env) {
-		//TODO this should be done in every sub class instead, can remove from here once that is done
-		return eval();
-	}
-
 	public void add(Expr t)
     { 
     	setArgs(t); 

@@ -11,7 +11,7 @@ public class Factorial extends FunctionExpr {
 	}
 	
 	@Override
-	public Expr eval() {
+	protected Expr evaluate() {
 		
 		//TODO can work on non-integers
 	

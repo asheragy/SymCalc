@@ -17,7 +17,7 @@ public class Table extends FunctionExpr {
 	}
 	
 	@Override
-	public Expr eval(Environment env) {
+	protected Expr evaluate() {
 	
 		//TODO, need to make sure expr is evaulated each time
 		// Table[RandomInteger[10],{10}]
@@ -107,5 +107,10 @@ public class Table extends FunctionExpr {
 		}
 			
 		return this;
+	}
+
+	@Override
+	protected int getProperties() {
+		return Properties.HOLD.value;
 	}
 }

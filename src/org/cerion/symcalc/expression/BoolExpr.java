@@ -39,7 +39,7 @@ public class BoolExpr extends Expr {
 	}
 
 	@Override
-	public Expr eval() {
+	protected Expr evaluate() {
 		return this;
 	}
 

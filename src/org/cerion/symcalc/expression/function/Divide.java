@@ -12,7 +12,7 @@ public class Divide extends FunctionExpr {
 	}
 
 	@Override
-	public Expr eval() {
+	protected Expr evaluate() {
 		
 		if(size() != 2)
 			return new ErrorExpr("invalid parameters");

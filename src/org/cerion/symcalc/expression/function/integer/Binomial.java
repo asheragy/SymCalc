@@ -11,7 +11,7 @@ public class Binomial extends FunctionExpr {
 	}
 	
 	@Override
-	public Expr eval() {
+	protected Expr evaluate() {
 		
 		if(get(0).isInteger() && get(1).isInteger())
 		{

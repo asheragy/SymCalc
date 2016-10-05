@@ -9,16 +9,13 @@ public abstract class Expr
 {
 	private Object mValue;
 	private List<Expr> mArgs;
-	
-	//protected boolean EVAL = true;
-	
+
 	protected void setArgs(Expr ...args)
 	{
 		if(mArgs == null)
 			mArgs = new ArrayList<>();
 		
 		for(Expr k : args) {
-			//mArgs.add( EVAL ? k.eval() : k );
 			if(k != null)
 				mArgs.add(k);
 		}
@@ -36,7 +33,6 @@ public abstract class Expr
 	
 	public Expr get(int index)
 	{
-		//return mArgs.get(index).eval();
 		return mArgs.get(index);
 	}
 	
@@ -46,16 +42,13 @@ public abstract class Expr
 			mArgs = new ArrayList<>();
 		
 		if(index == mArgs.size())
-			//mArgs.add(EVAL ? e.eval() : e );
 			mArgs.add(e);
 		else
-			//mArgs.set(index, EVAL ? e.eval() : e);
 			mArgs.set(index, e);
 	}
 	
 	protected void addArg(Expr e)
 	{
-		//setArg(size(), EVAL ? e.eval() : e);
 		setArg(size(), e);
 	}
 	
@@ -87,18 +80,45 @@ public abstract class Expr
 	public abstract String toString();
 	//TODO, verify what everything below is for again
 	public abstract void show(int i); //rename to something like treeForm or make different function, can probably make non-abstract if types are standardized (name + value/args)
-
-
-	//TODO, add some optional verify() that can Override to see if eval will even work
-	public Expr eval() {
-		//TODO this should be a global ENV or something
-		return eval(new Environment());
-	}
-
+	protected abstract Expr evaluate();
 	public abstract ExprType GetType();
 
-	public Expr eval(Environment env) {
-		return this;
+	public final Expr eval() {
+
+		// Set environment for every parameter to the current one before its evaluated
+		for (int i = 0; i < size(); i++) {
+			get(i).setEnv(getEnv());
+		}
+
+		// Skip eval for Hold property
+		if(!hasProperty(Properties.HOLD)) {
+			for (int i = 0; i < size(); i++) {
+				setArg(i, get(i).eval());
+
+				//Return the first error
+				if(get(i).isError())
+					return get(i);
+			}
+		}
+
+		// Listable property
+		if(hasProperty(Properties.LISTABLE) && isFunction()) {
+			FunctionExpr function = (FunctionExpr)this;
+			if(size() == 1 && get(0).isList()) {
+				ListExpr p1 = (ListExpr)get(0);
+				ListExpr result = new ListExpr();
+
+				for(int i = 0; i < p1.size(); i++)
+					result.add(FunctionExpr.CreateFunction(function.getName(), p1.get(i)));
+
+				return result.eval();
+			}
+		}
+
+		//TODO if anything is an error the entire function should return an error and skip the normal eval
+		// TODO, add some optional verify() that can Override to see if eval will even work, this will also return an error instead of normal eval
+
+		return evaluate();
 	}
 
 	@Override
@@ -111,16 +131,15 @@ public abstract class Expr
 	}
 
 	//TODO make required
-	public boolean equals(Expr e)
-	{
-		return false;
-	}
+	public abstract boolean equals(Expr e);
+
 
 	public void print()
 	{
 		show(0);
 	}
-	
+
+	//TODO just make a function isXXX() for each type and make protected
 	public enum ExprType {
 		NUMBER,
 		VARIABLE,
@@ -131,6 +150,31 @@ public abstract class Expr
 		BOOL
 	}
 
+	protected enum Properties {
+		NONE(0),
+		HOLD(1),
+		LISTABLE(2);
+
+		public final int value;
+
+		Properties(final int newValue) {
+			value = newValue;
+		}
+	}
+
+	protected int getProperties() {
+		return Properties.NONE.value;
+	}
+
+	private boolean hasProperty(Properties attr) {
+		int attrs = getProperties();
+
+		if((attr.value & attrs) != 0)
+			return true;
+
+		return false;
+	}
+
 	protected void indent(int i, String s) 
 	{
 		for(int ii = 0; ii < 2*i; ii++)
@@ -138,21 +182,18 @@ public abstract class Expr
 		System.out.println(s);
 	}
 	
-	public boolean isNumber()
-	{
+	public boolean isNumber() {
 		return GetType() == ExprType.NUMBER;
 	}
 	
-    public boolean isInteger()
-    {
+    public boolean isInteger() {
     	if(isNumber() && ((NumberExpr)this).isInteger())
     		return true;
     	
     	return false;
     }
     
-	public boolean isList()
-	{
+	public boolean isList() {
 		return GetType() == ExprType.LIST;
 	}
 
@@ -169,10 +210,13 @@ public abstract class Expr
 
 		return false;
 	}
+
+	public boolean isError() {
+		return GetType() == ExprType.ERROR;
+	}
 	
 	//TODO, may be an actual function that does this
-	public ListExpr toList(int size)
-	{
+	public ListExpr toList(int size) {
 		ListExpr result = new ListExpr();
 		for(int i = 0; i < size; i++)
 			result.add(this);
@@ -180,12 +224,15 @@ public abstract class Expr
 		return result;
 	}
 
-	//TODO, needs to be passed in recursively so it can be changed
-	public static Environment getEnv() {
+	public Environment getEnv() {
 		return mEnv;
 	}
 
-	private static Environment mEnv = new Environment();
+	private void setEnv(Environment env) {
+		mEnv = env;
+	}
+
+	private Environment mEnv = new Environment();
 
 
 }

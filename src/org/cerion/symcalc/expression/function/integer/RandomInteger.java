@@ -14,7 +14,7 @@ public class RandomInteger extends FunctionExpr {
 	}
 	
 	@Override
-	public Expr eval(Environment env) {
+	protected Expr evaluate() {
 		Random rand = new Random();
 
 		if(size() == 0) { //Default no parameters is random 0 or 1

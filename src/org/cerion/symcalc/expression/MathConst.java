@@ -33,8 +33,13 @@ public class MathConst extends Expr {
     {
     	return (String)getValue();
     }
-	
-	private static enum Name 
+
+	@Override
+	public boolean equals(Expr e) {
+		return false; //TODO
+	}
+
+	private static enum Name
 	{ 
 		PI
 	}
@@ -49,7 +54,7 @@ public class MathConst extends Expr {
 	
 	
 	@Override
-	public Expr eval() 
+	protected Expr evaluate()
     {
 		Expr result = this;
 		

@@ -11,7 +11,7 @@ public class Mod extends FunctionExpr {
 	}
 	
 	@Override
-	public Expr eval() {
+	protected Expr evaluate() {
 		
 		//TODO can work on non-integers
 	

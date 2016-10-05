@@ -11,9 +11,8 @@ public class PowerMod extends FunctionExpr {
 	}
 	
 	@Override
-	public Expr eval() {
-		
-		
+	public Expr evaluate() {
+
 		if(size() == 3 && get(0).isInteger() && get(1).isInteger() && get(2).isInteger())
 		{
 			IntegerNum a = (IntegerNum)get(0);

@@ -13,16 +13,21 @@ public class Sin extends FunctionExpr {
 	}
 
 	@Override
-	public Expr eval(Environment env) {
+	public Expr evaluate() {
 		
 		if(size() == 1 && get(0).isNumber())
 		{
 			NumberExpr num = (NumberExpr)get(0);
 			
-			if(!num.isComplex() && env.isNumericalEval())
+			if(!num.isComplex() && getEnv().isNumericalEval())
 				return new RealNum( Math.sin( num.toDouble() ));
 		}
 		
 		return this;
+	}
+
+	@Override
+	protected int getProperties() {
+		return Properties.LISTABLE.value;
 	}
 }

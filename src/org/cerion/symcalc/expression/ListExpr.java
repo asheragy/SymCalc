@@ -23,7 +23,24 @@ public class ListExpr extends Expr {
 	{ 
 		addArg(t);
 	}
-	
+
+	@Override
+	public boolean equals(Expr e) {
+		if(e.isList()) {
+			ListExpr list = (ListExpr)e;
+			if(list.size() == size()) {
+				for(int i = 0; i < list.size(); i++) {
+					if(!list.get(i).equals(get(i)))
+						return false;
+				}
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	//Inherited
 	public ExprType GetType() { return ExprType.LIST; }
 	
@@ -47,7 +64,8 @@ public class ListExpr extends Expr {
 		return ret; 
 	}
 
-	public ListExpr eval() {
+	@Override
+	protected ListExpr evaluate() {
 		return this;
 	}
 

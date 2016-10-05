@@ -12,15 +12,15 @@ public class N extends FunctionExpr {
     }
 
     @Override
-    public Expr eval(Environment env) {
+    protected Expr evaluate() {
         if(size() > 0) {
             if(size() > 1 && get(1).isInteger()) {
                 IntegerNum n = (IntegerNum)get(1);
-                env.setNumericalEval(true, n.toInteger());
+                getEnv().setNumericalEval(true, n.toInteger());
             } else
-                env.setNumericalEval(true);
+                getEnv().setNumericalEval(true);
 
-            return get(0).eval(env);
+            return get(0).eval();
         }
 
         return this;
