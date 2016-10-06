@@ -18,7 +18,7 @@ public abstract class FunctionExpr extends Expr
     }
     
 	@Override
-	public ExprType GetType() {
+	public ExprType getType() {
 		return ExprType.FUNCTION;
 	}
 	
@@ -41,7 +41,7 @@ public abstract class FunctionExpr extends Expr
 
 	@Override
 	public boolean equals(Expr e) {
-		if(e.GetType() != ExprType.FUNCTION)
+		if(!e.isFunction())
 			return false;
 
 		FunctionExpr f = (FunctionExpr)e;

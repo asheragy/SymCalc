@@ -29,7 +29,7 @@ public class ErrorExpr extends Expr {
 		setValue(error);
 	}
 
-	public ExprType GetType()
+	public ExprType getType()
 	{ 
 		return ExprType.ERROR;
 	}

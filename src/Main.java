@@ -25,7 +25,7 @@ public class Main
 		
 		//expr.eval();
 		Expr a = expr.eval();
-		//Expr.ExprType t = a.GetType();
+		//Expr.ExprType t = a.getType();
 		
 		System.out.println("---------");
 		System.out.println("Answer = " + a.toString()  );

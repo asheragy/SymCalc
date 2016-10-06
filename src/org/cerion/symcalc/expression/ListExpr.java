@@ -42,7 +42,7 @@ public class ListExpr extends Expr {
 	}
 
 	//Inherited
-	public ExprType GetType() { return ExprType.LIST; }
+	public ExprType getType() { return ExprType.LIST; }
 	
 	public void show(int i) 
 	{

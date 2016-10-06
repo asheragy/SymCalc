@@ -8,7 +8,7 @@ import org.cerion.symcalc.expression.Expr;
 public class MathConst extends Expr {
 
 	@Override
-	public ExprType GetType()
+	public ExprType getType()
 	{
 		return ExprType.CONST;
 	}

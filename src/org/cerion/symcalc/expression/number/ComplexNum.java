@@ -1,23 +1,27 @@
 package org.cerion.symcalc.expression.number;
 
+import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.NumberExpr;
 
 public class ComplexNum extends NumberExpr
 {
 	public int numType() { return COMPLEX; };
-	
-	public ComplexNum()
-	{
+
+	public static final ComplexNum ZERO = new ComplexNum();
+
+	public ComplexNum() {
 		setArgs(IntegerNum.ZERO, IntegerNum.ZERO);
 	}
 	
-	public ComplexNum(NumberExpr r, NumberExpr i)
-	{
+	public ComplexNum(NumberExpr r, NumberExpr i) {
 		setArgs(r,i);
 	}
+
+	public ComplexNum(int r, int i) {
+		this(new IntegerNum(r), new IntegerNum(i));
+	}
 	
-	public ComplexNum(String s)
-	{
+	public ComplexNum(String s) {
 		String num = s.substring(0, s.length()-1);
 		//System.out.println(num);
 		setArgs(IntegerNum.ZERO);
@@ -27,45 +31,36 @@ public class ComplexNum extends NumberExpr
 		else
 			setArgs(parse(num));
 	}
-	
-	public double toDouble()
-	{
+
+	@Override
+	public String toString() {
+		return "ComplexNum[" + getReal().toString() + "," + getImg().toString() + "]";
+	}
+
+	@Override
+	public ComplexNum negate() {
+		return new ComplexNum(getReal().negate(), getImg().negate());
+	}
+
+	@Override
+	public double toDouble() {
 		System.out.println("Error ComplexNum.toDouble()");
 		return 0;
 	}
-	
-	//@Override
-	public String toString()
-	{
-		/*
-		String result;
-		String sI = img.toString();
-		String sR = real.toString();
 
-		if(sI.equals("0") == false)
-		{
-			if(sR.equals("0"))
-				result = "";
-			else if(sI.contains("-") == false)
-				result = sR + "+";
-			else
-				result = sR;
-
-			result += sI + "i";
+	@Override
+	public boolean equals(NumberExpr e) {
+		if(e.isComplex()) {
+			ComplexNum c = (ComplexNum)e;
+			return getReal().equals(c.getReal()) && getImg().equals(c.getImg());
+		} else if(getImg().isZero()) {
+			//Non complex number can be equal as long as the imaginary part is zero
+			return getReal().equals(e);
 		}
-		else
-			result = sR;
-		
-		return result;
-		*/
-		return "ComplexNum[" + getReal().toString() + "," + getImg().toString() + "]";
+
+		return false;
 	}
-	
-	public ComplexNum negate()
-	{
-		return new ComplexNum(getReal().negate(), getImg().negate());
-	}
-	
+
 	public NumberExpr getReal()
 	{
 		return (NumberExpr) get(0);
@@ -76,18 +71,15 @@ public class ComplexNum extends NumberExpr
 		return (NumberExpr) get(1);
 	}
 	
-	private void setReal(NumberExpr n)
-	{
+	private void setReal(NumberExpr n) {
 		setArg(0, n);
 	}
 	
-	private void setImg(NumberExpr n)
-	{
+	private void setImg(NumberExpr n) {
 		setArg(1, n);
 	}
 	
-	public boolean isZero()
-	{
+	public boolean isZero() {
 		return (getReal().isZero() && getImg().isZero());
 	}
 	

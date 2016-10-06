@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number;
 
+import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.NumberExpr;
 
 import java.math.BigDecimal;
@@ -8,10 +9,16 @@ public class RationalNum extends NumberExpr
 {
 	public static final RationalNum ONE = new RationalNum(IntegerNum.ONE, IntegerNum.ONE);
 	
-	//TODO may want to only allow rational to be created with factory method since it can be reduced to integer
-	public RationalNum(IntegerNum n, IntegerNum d)
-	{
-		set(n,d);
+	//TODO may want to only allow rational to be created with factory method since it can be reduced to integer, check mathematica for this
+	public RationalNum(IntegerNum n, IntegerNum d) {
+		if(d.signum() == -1)
+			set(n.negate(),d.negate());
+		else
+			set(n,d);
+	}
+
+	public RationalNum(int n, int d) {
+		this(new IntegerNum(n), new IntegerNum(d));
 	}
 	
 	private RationalNum(NumberExpr n, NumberExpr d)
@@ -31,7 +38,17 @@ public class RationalNum extends NumberExpr
 	{
 		return (IntegerNum)get(1);
 	}
-	
+
+	@Override
+	public boolean equals(NumberExpr e) {
+		if(e.isRational()) {
+			RationalNum r = (RationalNum) e;
+			return numerator().equals(r.numerator()) && denominator().equals(r.denominator());
+		}
+
+		return false;
+	}
+
 	private void set(IntegerNum n, IntegerNum d)
 	{
 		if(n != null)

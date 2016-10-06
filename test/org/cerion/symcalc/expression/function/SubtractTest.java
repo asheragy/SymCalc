@@ -24,20 +24,20 @@ public class SubtractTest {
 	@Test
 	public void invalidParameters() {
 		Expr e = get();
-		assertEquals(Expr.ExprType.ERROR,e.GetType());
+		assertTrue(e.isError());
 		
 		e = get(new IntegerNum(5));
-		assertEquals(Expr.ExprType.ERROR,e.GetType());
+		assertTrue(e.isError());
 		
 		e = get(new IntegerNum(1), new IntegerNum(2), new IntegerNum(3));
-		assertEquals(Expr.ExprType.ERROR,e.GetType());
+		assertTrue(e.isError());
 		
 		//List sizes
 		ListExpr a = new IntegerNum(0).toList(2);
 		ListExpr b = new IntegerNum(0).toList(3);
 		
 		e = get(a,b);
-		assertEquals(Expr.ExprType.ERROR,e.GetType());
+		assertTrue(e.isError());
 	}
 	
 	@Test

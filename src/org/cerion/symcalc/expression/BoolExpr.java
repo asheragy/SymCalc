@@ -19,12 +19,12 @@ public class BoolExpr extends Expr {
 
 	@Override
 	public boolean equals(Expr e) {
-		if(e.GetType() != ExprType.BOOL)
-			return false;
+		if(e.isBool()) {
+			BoolExpr be = (BoolExpr) e;
+			return be.value() == value();
+		}
 
-		BoolExpr be = (BoolExpr)e;
-
-		return be.value() == value();
+		return false;
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class BoolExpr extends Expr {
 	}
 
 	@Override
-	public ExprType GetType() {
+	public ExprType getType() {
 		return ExprType.BOOL;
 	}
 

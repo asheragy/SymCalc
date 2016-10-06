@@ -75,13 +75,11 @@ public abstract class Expr
 		mValue = obj;
 	}
 
-	//Required subclass methods
-	@Override
 	public abstract String toString();
-	//TODO, verify what everything below is for again
 	public abstract void show(int i); //rename to something like treeForm or make different function, can probably make non-abstract if types are standardized (name + value/args)
+	public abstract boolean equals(Expr e);
 	protected abstract Expr evaluate();
-	public abstract ExprType GetType();
+	protected abstract ExprType getType();
 
 	public final Expr eval() {
 
@@ -130,17 +128,12 @@ public abstract class Expr
 		return false;
 	}
 
-	//TODO make required
-	public abstract boolean equals(Expr e);
-
-
 	public void print()
 	{
 		show(0);
 	}
 
-	//TODO just make a function isXXX() for each type and make protected
-	public enum ExprType {
+	protected enum ExprType {
 		NUMBER,
 		VARIABLE,
 		FUNCTION,
@@ -183,7 +176,7 @@ public abstract class Expr
 	}
 	
 	public boolean isNumber() {
-		return GetType() == ExprType.NUMBER;
+		return getType() == ExprType.NUMBER;
 	}
 	
     public boolean isInteger() {
@@ -194,11 +187,11 @@ public abstract class Expr
     }
     
 	public boolean isList() {
-		return GetType() == ExprType.LIST;
+		return getType() == ExprType.LIST;
 	}
 
 	public boolean isFunction() {
-		return GetType() == ExprType.FUNCTION;
+		return getType() == ExprType.FUNCTION;
 	}
 
 	public boolean isFunction(String name) {
@@ -212,7 +205,15 @@ public abstract class Expr
 	}
 
 	public boolean isError() {
-		return GetType() == ExprType.ERROR;
+		return getType() == ExprType.ERROR;
+	}
+
+	public boolean isVariable() {
+		return getType() == ExprType.VARIABLE;
+	}
+
+	public boolean isBool() {
+		return getType() == ExprType.BOOL;
 	}
 	
 	//TODO, may be an actual function that does this

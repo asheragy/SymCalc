@@ -32,7 +32,7 @@ public class IntegerNum extends NumberExpr
 	}
 
 	@Override
-	public boolean equals(Expr e) {
+	public boolean equals(NumberExpr e) {
 		if(e.isInteger()) {
 			IntegerNum n = (IntegerNum)e;
 			if(val().compareTo(n.val()) == 0)
@@ -45,6 +45,7 @@ public class IntegerNum extends NumberExpr
 	public static final IntegerNum ZERO = new IntegerNum(0);
 	public static final IntegerNum ONE = new IntegerNum(1);
 	public static final IntegerNum TWO = new IntegerNum(2);
+	public static final IntegerNum NEGATIVE_ONE = new IntegerNum(-1);
 	
 	public int toInteger() 
 	{
@@ -85,12 +86,12 @@ public class IntegerNum extends NumberExpr
 		
 		return new IntegerNum(new BigInteger(maxBits,new Random()));
 	}
-	
-	public IntegerNum negate()
-	{
+
+	@Override
+	public IntegerNum negate() {
 		return new IntegerNum(val().negate());
 	}
-	
+
 	public boolean isZero()
 	{
 		return val().equals(BigInteger.ZERO);

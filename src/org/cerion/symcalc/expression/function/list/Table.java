@@ -50,7 +50,7 @@ public class Table extends FunctionExpr {
 			}
 			
 			//Expr followed by at least 1 number
-			else if(argList.size() >= 2 && argList.get(0).GetType() == ExprType.VARIABLE && argList.get(1).isNumber())
+			else if(argList.size() >= 2 && argList.get(0).isVariable() && argList.get(1).isNumber())
 			{
 				VarExpr var = (VarExpr)argList.get(0);
 				IntegerNum n1 = (IntegerNum)argList.get(1);
@@ -90,7 +90,7 @@ public class Table extends FunctionExpr {
 				result = expr.eval();
 				
 				//If result is not a list, make it one
-				if(result.GetType() != ExprType.LIST)
+				if(!result.isList())
 				{
 					varList = new ListExpr();
 					i = a;

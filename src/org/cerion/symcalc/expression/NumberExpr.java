@@ -22,15 +22,25 @@ public abstract class NumberExpr extends Expr
 	public abstract NumberExpr divide(NumberExpr num);
 	public abstract NumberExpr power(NumberExpr num);
 	public abstract boolean canExp(NumberExpr num); //this^num = num is TRUE, FALSE if can't resolve
-	
-	//TODO, see if this can be replaced with Subtract[0,this]
 	public abstract NumberExpr negate();
+
 	public abstract double toDouble(); //Valid on all but ComplexNum
 	public abstract boolean isZero();
 	public abstract boolean isOne();
+	public abstract boolean equals(NumberExpr e);
+
 	//Members
 	//private BigInteger n;
-	
+
+	@Override
+	public boolean equals(Expr e) {
+		if(e.isNumber()) {
+			return equals((NumberExpr)e);
+		}
+
+		return false;
+	}
+
 	public boolean isInteger() {
 		return numType() == INTEGER;
 	}
@@ -48,7 +58,7 @@ public abstract class NumberExpr extends Expr
 	}
 
 	//Inherited from MathTerm
-	public ExprType GetType() { return ExprType.NUMBER; }
+	public ExprType getType() { return ExprType.NUMBER; }
 	public void show(int i) 
 	{
 		indent(i,"Number " + this.toString());
@@ -71,15 +81,7 @@ public abstract class NumberExpr extends Expr
 		return new IntegerNum(s);
 	}
 	
-	public static NumberExpr parse(String s)
-	{
+	public static NumberExpr parse(String s) {
 		return getNumber(s);
-	}
-
-	//TODO remove so sub types are forced to implement
-	@Override
-	public boolean equals(Expr e)
-	{
-		return false;
 	}
 }

@@ -20,4 +20,10 @@ public class RealNumTest {
         //TODO add BigDecimal cases or switch class to only use that type
     }
 
+    @Test
+    public void negate() {
+        assertEquals(0, new RealNum(0.0).negate().toDouble(), 0.01);
+        assertEquals(-1, new RealNum(1.0).negate().toDouble(), 0.01);
+        assertEquals(1, new RealNum(-1.0).negate().toDouble(), 0.01);
+    }
 }

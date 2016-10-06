@@ -55,8 +55,8 @@ public class RealNum extends NumberExpr
 	}
 
 	@Override
-	public boolean equals(Expr e) {
-		if(e.isNumber() && ((NumberExpr)e).isReal()) {
+	public boolean equals(NumberExpr e) {
+		if(e.isReal()) {
 			RealNum n = (RealNum)e;
 
 			if(n.bigNumber != null && bigNumber != null && n.bigNumber.compareTo(bigNumber) == 0)

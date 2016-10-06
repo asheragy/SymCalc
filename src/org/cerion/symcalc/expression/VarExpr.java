@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.Expr;
 public class VarExpr extends Expr {
 	
 	//Inherited
-	public ExprType GetType()
+	public ExprType getType()
 	{ 
 		return ExprType.VARIABLE;
 	}
@@ -44,13 +44,12 @@ public class VarExpr extends Expr {
     }
 
     @Override
-    public boolean equals(Expr t)
-    {
-    	if(t.GetType() != ExprType.VARIABLE)
-    		return false;
-    	
-    	if(value().contentEquals( ((VarExpr)t).value() ))
-    		return true;
+    public boolean equals(Expr e) {
+        if(e.isVariable()) {
+            VarExpr t = (VarExpr)e;
+            if (value().contentEquals(t.value()))
+                return true;
+        }
     	
     	return false;
     }
