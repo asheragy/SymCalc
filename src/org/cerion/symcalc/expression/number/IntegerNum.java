@@ -105,8 +105,8 @@ public class IntegerNum extends NumberExpr
 	{
 		return val().signum();
 	}
-	
-	public NumberExpr add(NumberExpr num) 
+
+	public NumberExpr add(NumberExpr num)
 	{
 		if(num.numType() == INTEGER) //IntegerNum + IntegerNum
 			return add((IntegerNum)num);
@@ -133,18 +133,16 @@ public class IntegerNum extends NumberExpr
 	{
 		return new IntegerNum( val().subtract( n.val()) );
 	}
-	
-	public NumberExpr multiply(NumberExpr num) 
-	{
+
+	@Override
+	public NumberExpr multiply(NumberExpr num) {
 		if(num.numType() == INTEGER) //IntegerNum * IntegerNum
 			return multiply((IntegerNum)num);
-		
-		//Default
+
 		return num.multiply(this);
 	}
 	
-	public IntegerNum multiply(IntegerNum n)
-	{
+	public IntegerNum multiply(IntegerNum n) {
 		return new IntegerNum( val().multiply( n.val() ));
 	}
 

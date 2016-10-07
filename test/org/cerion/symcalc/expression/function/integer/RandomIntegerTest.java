@@ -22,9 +22,8 @@ public class RandomIntegerTest {
             count[x]++;
         }
 
-        //if this fails occasionally it might still be okay
-        assertTrue("0 count = " + count[0], count[0] > 4900);
-        assertTrue("1 count = " + count[1], count[1] > 4900);
+        assertTrue("0 count = " + count[0], count[0] > 4800);
+        assertTrue("1 count = " + count[1], count[1] > 4800);
     }
 
     @Test

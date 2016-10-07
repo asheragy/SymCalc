@@ -41,7 +41,7 @@ public class Plus extends FunctionExpr {
 				it.remove();
 			}
 		}
-		
+
 		//At least 1 non-number value
 		if(list.size() > 0)
 		{
