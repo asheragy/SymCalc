@@ -1,8 +1,7 @@
 package org.cerion.symcalc.expression.number;
 
-import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.function.Plus;
-import org.cerion.symcalc.expression.function.Subtract;
+import org.cerion.symcalc.expression.function.arithmetic.Plus;
+import org.cerion.symcalc.expression.function.arithmetic.Subtract;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

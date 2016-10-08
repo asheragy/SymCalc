@@ -1,8 +1,9 @@
-package org.cerion.symcalc.expression.function;
+package org.cerion.symcalc.expression.function.arithmetic;
 
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
 import org.cerion.symcalc.expression.VarExpr;
+import org.cerion.symcalc.expression.function.arithmetic.Plus;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class PlusTest {
     }
 
     @Test
-    public void nestedInstancesMerge() {
+    public void associativeProperty() {
         FunctionExpr inner = new Plus(new VarExpr("x"), new VarExpr("y"));
         FunctionExpr outer = new Plus(new VarExpr("z"), inner);
 

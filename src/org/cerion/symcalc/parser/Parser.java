@@ -2,14 +2,14 @@ package org.cerion.symcalc.parser;
 
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.ListExpr;
-import org.cerion.symcalc.expression.MathConst;
+import org.cerion.symcalc.expression.ConstExpr;
 import org.cerion.symcalc.expression.VarExpr;
-import org.cerion.symcalc.expression.function.Divide;
+import org.cerion.symcalc.expression.function.arithmetic.Divide;
 import org.cerion.symcalc.expression.FunctionExpr;
-import org.cerion.symcalc.expression.function.Plus;
-import org.cerion.symcalc.expression.function.Power;
-import org.cerion.symcalc.expression.function.Subtract;
-import org.cerion.symcalc.expression.function.Times;
+import org.cerion.symcalc.expression.function.arithmetic.Plus;
+import org.cerion.symcalc.expression.function.arithmetic.Power;
+import org.cerion.symcalc.expression.function.arithmetic.Subtract;
+import org.cerion.symcalc.expression.function.arithmetic.Times;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.NumberExpr;
 
@@ -190,7 +190,7 @@ public class Parser {
         else if (token == CONST) 
         {
 			getNext();
-            return new MathConst(tokval);
+            return new ConstExpr(tokval);
         } 
         else if (token == '(') 
         {

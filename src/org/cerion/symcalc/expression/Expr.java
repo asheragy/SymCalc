@@ -1,13 +1,15 @@
 package org.cerion.symcalc.expression;
 
 import org.cerion.symcalc.Environment;
+import org.cerion.symcalc.parser.Lexer;
+import org.cerion.symcalc.parser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Expr 
 {
-	private Object mValue;
+	protected Object mValue;
 	private List<Expr> mArgs;
 
 	protected void setArgs(Expr ...args)
@@ -52,27 +54,29 @@ public abstract class Expr
 		setArg(size(), e);
 	}
 	
-	public int size()
-	{
+	public final int size() {
 		if(mArgs != null)
 			return mArgs.size();
 		
 		return 0;
 	}
 	
-	protected String argString()
-	{
+	protected String argString() {
 		return mArgs.toString();
 	}
 	
-	public Object getValue()
-	{
+	public Object getValue() {
 		return mValue;
 	}
 	
-	protected void setValue(Object obj)
-	{
+	protected void setValue(Object obj) {
 		mValue = obj;
+	}
+
+	public static Expr parse(String s) {
+		Lexer lex = new Lexer(s);
+		Parser p = new Parser(lex);
+		return p.e;
 	}
 
 	public abstract String toString();
@@ -82,6 +86,22 @@ public abstract class Expr
 	protected abstract ExprType getType();
 
 	public final Expr eval() {
+
+		// TODO, add some optional verify() that can Override to see if eval will even work, this will also return an error instead of normal eval
+		// This can be done first
+
+		// Associative function, if the same function is a parameter move its parameters to the top level
+		if(hasProperty(Properties.ASSOCIATIVE)) {
+			for(int i = 0; i < size(); i++) {
+				if(get(i).getClass() == getClass()) {
+					// insert these sub parameters at the same position it was removed
+					Expr t = mArgs.get(i);
+					mArgs.remove(i);
+					mArgs.addAll(i,t.getArgs());
+					i--;
+				}
+			}
+		}
 
 		// Set environment for every parameter to the current one before its evaluated
 		for (int i = 0; i < size(); i++) {
@@ -113,9 +133,6 @@ public abstract class Expr
 			}
 		}
 
-		//TODO if anything is an error the entire function should return an error and skip the normal eval
-		// TODO, add some optional verify() that can Override to see if eval will even work, this will also return an error instead of normal eval
-
 		return evaluate();
 	}
 
@@ -128,8 +145,7 @@ public abstract class Expr
 		return false;
 	}
 
-	public void print()
-	{
+	public void print() {
 		show(0);
 	}
 
@@ -146,7 +162,8 @@ public abstract class Expr
 	protected enum Properties {
 		NONE(0),
 		HOLD(1),
-		LISTABLE(2);
+		LISTABLE(2),
+		ASSOCIATIVE(4);
 
 		public final int value;
 
@@ -175,7 +192,7 @@ public abstract class Expr
 		System.out.println(s);
 	}
 	
-	public boolean isNumber() {
+	public final boolean isNumber() {
 		return getType() == ExprType.NUMBER;
 	}
 	
@@ -186,15 +203,15 @@ public abstract class Expr
     	return false;
     }
     
-	public boolean isList() {
+	public final boolean isList() {
 		return getType() == ExprType.LIST;
 	}
 
-	public boolean isFunction() {
+	public final boolean isFunction() {
 		return getType() == ExprType.FUNCTION;
 	}
 
-	public boolean isFunction(String name) {
+	public final boolean isFunction(String name) {
 		if(isFunction()) {
 			FunctionExpr e = (FunctionExpr)this;
 			if(name.compareToIgnoreCase(e.getName()) == 0)
@@ -204,16 +221,20 @@ public abstract class Expr
 		return false;
 	}
 
-	public boolean isError() {
+	public final boolean isError() {
 		return getType() == ExprType.ERROR;
 	}
 
-	public boolean isVariable() {
+	public final boolean isVariable() {
 		return getType() == ExprType.VARIABLE;
 	}
 
-	public boolean isBool() {
+	public final boolean isBool() {
 		return getType() == ExprType.BOOL;
+	}
+
+	public final boolean isConst() {
+		return getType() == ExprType.CONST;
 	}
 	
 	//TODO, may be an actual function that does this
@@ -225,7 +246,7 @@ public abstract class Expr
 		return result;
 	}
 
-	public Environment getEnv() {
+	public final Environment getEnv() {
 		return mEnv;
 	}
 

@@ -41,6 +41,7 @@ public abstract class NumberExpr extends Expr
 		return false;
 	}
 
+	@Override
 	public boolean isInteger() {
 		return numType() == INTEGER;
 	}

@@ -77,16 +77,6 @@ public class IntegerNum extends NumberExpr
 		return (BigInteger)getValue();
 	}
 
-	//TODO, move this out of here and into RandomInteger
-	public static IntegerNum Random(IntegerNum max) { return Random(IntegerNum.ZERO,max); }
-	public static IntegerNum Random(IntegerNum min, IntegerNum max)
-	{
-		//int minBits = min.val().bitLength();
-		int maxBits = max.val().bitLength();
-		
-		return new IntegerNum(new BigInteger(maxBits,new Random()));
-	}
-
 	@Override
 	public IntegerNum negate() {
 		return new IntegerNum(val().negate());

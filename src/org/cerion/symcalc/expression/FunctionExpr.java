@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression;
 
-import org.cerion.symcalc.Environment;
 import org.cerion.symcalc.expression.function.*;
+import org.cerion.symcalc.expression.function.arithmetic.*;
 import org.cerion.symcalc.expression.function.integer.*;
 import org.cerion.symcalc.expression.function.list.*;
 
@@ -75,7 +75,6 @@ public abstract class FunctionExpr extends Expr
 		DIVIDE("Divide"),
 		POWER("Power"),
 		SIN("Sin"),
-		//TODO Derivative
 		
 		//List Functions
 		TOTAL("Total"),

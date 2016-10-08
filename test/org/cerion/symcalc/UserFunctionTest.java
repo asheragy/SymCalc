@@ -1,7 +1,7 @@
 import org.cerion.symcalc.UserFunction;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.VarExpr;
-import org.cerion.symcalc.expression.function.Plus;
+import org.cerion.symcalc.expression.function.arithmetic.Plus;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.junit.Test;
 

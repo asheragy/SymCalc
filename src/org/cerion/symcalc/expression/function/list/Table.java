@@ -18,14 +18,16 @@ public class Table extends FunctionExpr {
 	
 	@Override
 	protected Expr evaluate() {
-	
-		//TODO, need to make sure expr is evaulated each time
-		// Table[RandomInteger[10],{10}]
-		
-		//Table[expr,{N}]     		    //N copies
-		//Table[expr,{x, max}] 	        //1 to max
-		//Table[expr,{x, min,max}]      //min to max
-		//Table[expr,{x, min,max,step}] //min to max with step
+		/*
+			Table[expr,{N}]     		    //N copies
+			Table[expr,{x, max}] 	        //1 to max
+			Table[expr,{x, min,max}]      //min to max
+			Table[expr,{x, min,max,step}] //min to max with step
+
+			Example:
+				Table[RandomInteger[10],{10}]
+		 */
+
 		if(size() == 2 && get(1).isList())
 		{
 			Expr result = new ErrorExpr("Invalid parameters"); //Default

@@ -1,4 +1,4 @@
-package org.cerion.symcalc.expression.function;
+package org.cerion.symcalc.expression.function.arithmetic;
 
 import org.cerion.symcalc.expression.ErrorExpr;
 import org.cerion.symcalc.expression.Expr;

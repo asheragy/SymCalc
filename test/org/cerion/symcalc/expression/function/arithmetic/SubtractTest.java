@@ -1,14 +1,13 @@
-package org.cerion.symcalc.expression.function;
+package org.cerion.symcalc.expression.function.arithmetic;
 
 import static org.junit.Assert.*;
 
-import org.cerion.symcalc.expression.function.Subtract;
+import org.cerion.symcalc.expression.function.arithmetic.Subtract;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.junit.Test;
 
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.ListExpr;
-import org.cerion.symcalc.expression.MathExpr;
 import org.cerion.symcalc.expression.VarExpr;
 
 public class SubtractTest {
@@ -16,7 +15,7 @@ public class SubtractTest {
 	@Test
 	public void parser() {
 		//Verify a-b = Subtract(a,b)
-		MathExpr expr = new MathExpr("5-1");
+		Expr expr = Expr.parse("5-1");
 		IntegerNum e = (IntegerNum)expr.eval();
 		assertEquals(4, e.toInteger());
 	}

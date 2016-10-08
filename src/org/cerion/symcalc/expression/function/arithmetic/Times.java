@@ -1,4 +1,4 @@
-package org.cerion.symcalc.expression.function;
+package org.cerion.symcalc.expression.function.arithmetic;
 
 import java.util.Iterator;
 import java.util.List;
@@ -18,19 +18,8 @@ public class Times extends FunctionExpr {
 	protected Expr evaluate() {
 		
 		NumberExpr product = IntegerNum.ONE;
-		
-		//Merge nexted Times functions
 		List<Expr> list = getArgs();
-		for(int i = 0; i < list.size(); i++)
-		{
-			if(list.get(i) instanceof Times)
-			{
-				list.addAll(list.get(i).getArgs());
-				list.remove(i);
-				i--;
-			}
-		}
-		
+
 		//Multiply numbers
 		Iterator<Expr> it = list.iterator();
 		while(it.hasNext())
@@ -59,8 +48,7 @@ public class Times extends FunctionExpr {
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if(size() > 0)
 		{
 			String s = get(0).toString();
@@ -71,5 +59,10 @@ public class Times extends FunctionExpr {
 		}
 		
 		return super.toString();
+	}
+
+	@Override
+	protected int getProperties() {
+		return Properties.ASSOCIATIVE.value;
 	}
 }

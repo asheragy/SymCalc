@@ -126,8 +126,8 @@ public class IntegerNumTest {
 		divideByZero(i1, new RationalNum((IntegerNum)i0,(IntegerNum)i1));
 		divideByZero(i1, new RealNum(0));
 		divideByZero(i1, new ComplexNum());
-		
-		//TODO Add others
+
+		//Add more later
 	}
 	
 	@Test

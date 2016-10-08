@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression;
 
-import org.cerion.symcalc.expression.function.Plus;
-import org.cerion.symcalc.expression.function.Subtract;
+import org.cerion.symcalc.expression.function.arithmetic.Plus;
+import org.cerion.symcalc.expression.function.arithmetic.Subtract;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.number.RealNum;
 import org.junit.Test;

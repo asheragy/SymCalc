@@ -1,9 +1,7 @@
 
 import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.MathExpr;
 import org.cerion.symcalc.expression.NumberExpr;
-import org.cerion.symcalc.expression.function.Plus;
-import org.cerion.symcalc.expression.number.*;
+import org.cerion.symcalc.expression.function.arithmetic.Plus;
 import org.cerion.symcalc.expression.number.ComplexNum;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.number.RationalNum;
@@ -11,17 +9,16 @@ import org.cerion.symcalc.expression.number.RealNum;
 
 public class Main 
 {
-
 	public static void main(String args[]) 
 	{
 		//TODO, if its a function name, it can't be a variable name
 		//MathExpr expr = new MathExpr("d");
 		//MathExpr expr = new MathExpr("FFT({-1, -1, -1, -1, 1, 1, 1, 1})");
 		//MathExpr expr = new MathExpr("RandomInteger(10)");
-		MathExpr expr = new MathExpr("Plus(1,2,Subtract(3,4))");
+		Expr expr = Expr.parse("a+b+c");
 		//MathExpr expr = new MathExpr("N(Sin(1))");
 
-		expr.show();
+		expr.print();
 		
 		//expr.eval();
 		Expr a = expr.eval();
@@ -51,10 +48,9 @@ public class Main
 				System.out.println(nums[i].numType() + " " + nums[j].numType() + " = " + t.toString());
 			}
 		}
-		
-		
-		MathExpr c1 = new MathExpr("1 + 10i");
-		MathExpr c2 = new MathExpr("2 - 3I");
+
+		Expr c1 = Expr.parse("1 + 10i");
+		Expr c2 = Expr.parse("2 - 3I");
 		
 		Expr exp = new Plus(c1.eval(), c2.eval());
 		exp.show(0);

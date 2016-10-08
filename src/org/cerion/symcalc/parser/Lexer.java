@@ -1,6 +1,6 @@
 package org.cerion.symcalc.parser;
 
-import org.cerion.symcalc.expression.MathConst;
+import org.cerion.symcalc.expression.ConstExpr;
 import org.cerion.symcalc.expression.FunctionExpr;
 
 //import java.util.Hashtable;
@@ -68,7 +68,7 @@ public class Lexer {
 						tokval = tokval.toLowerCase();
 						return 'f'; 
 					}
-					else if (isConst(tokval))
+					else if (ConstExpr.isConstant(tokval))
 					{
 						tokval = tokval.toLowerCase();
 						return 'c';
@@ -101,13 +101,4 @@ public class Lexer {
 	{
 		return FunctionExpr.isValidFunction(s);
 	}
-	
-	private boolean isConst(String s) {
-		if(MathConst.identifiers.containsKey(s.toLowerCase()))
-			return true;
-		return false;
-	
-	}
-
-	
 }
