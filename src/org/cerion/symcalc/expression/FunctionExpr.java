@@ -1,6 +1,8 @@
 package org.cerion.symcalc.expression;
 
-import org.cerion.symcalc.expression.function.*;
+import org.cerion.symcalc.expression.function.Hold;
+import org.cerion.symcalc.expression.function.N;
+import org.cerion.symcalc.expression.function.Sin;
 import org.cerion.symcalc.expression.function.arithmetic.*;
 import org.cerion.symcalc.expression.function.integer.*;
 import org.cerion.symcalc.expression.function.list.*;
@@ -8,8 +10,8 @@ import org.cerion.symcalc.expression.function.logical.Greater;
 
 public abstract class FunctionExpr extends Expr
 {
-	private String mName;
-	private FunctionType mType;
+	private final String mName;
+	private final FunctionType mType;
 
     protected FunctionExpr(FunctionType t, Expr... e) {
 		mType = t;
@@ -106,7 +108,7 @@ public abstract class FunctionExpr extends Expr
 		ASDFDSF("DSFDS");
 		
 		
-	    private String value;
+	    private final String value;
 
 	    FunctionType(final String value) 
 	    {
@@ -138,23 +140,20 @@ public abstract class FunctionExpr extends Expr
 		return null;
 	}
 	
-	public static boolean isValidFunction(String functionName)
-	{
-		boolean bResult = false;
+	public static boolean isValidFunction(String functionName) {
 		String name = functionName.toLowerCase();
-		
-		if(bResult == false)
-		{
-			if(stringToFunctionType(name) != null)
-				bResult = true;
-		}
-		
-		return bResult;
+
+		if(stringToFunctionType(name) != null)
+			return true;
+
+		return false;
 	}
 	
     public static FunctionExpr CreateFunction(String f, Expr ...e)
     {
 		FunctionType type = stringToFunctionType(f);
+		if(type == null)
+			return null;
 		
 		switch(type)
 		{

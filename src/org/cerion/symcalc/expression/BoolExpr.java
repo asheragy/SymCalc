@@ -1,8 +1,5 @@
 package org.cerion.symcalc.expression;
 
-import org.cerion.symcalc.Environment;
-import org.cerion.symcalc.expression.Expr;
-
 public class BoolExpr extends Expr {
 
 	public static final BoolExpr TRUE = new BoolExpr(true);

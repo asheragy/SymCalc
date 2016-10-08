@@ -1,12 +1,12 @@
 package org.cerion.symcalc.expression.function.arithmetic;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
-import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.NumberExpr;
+import org.cerion.symcalc.expression.number.IntegerNum;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class Plus extends FunctionExpr {
 

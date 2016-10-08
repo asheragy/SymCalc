@@ -3,7 +3,8 @@ package org.cerion.symcalc.expression;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 
 public class BoolExprTest {
@@ -22,7 +23,7 @@ public class BoolExprTest {
         assertEquals(e2, e2);
 
         // Different object type
-        assertNotEquals(e1, new Integer(5));
+        assertNotEquals(e1, new IntegerNum(5));
         assertNotEquals(e1, new ListExpr());
     }
 

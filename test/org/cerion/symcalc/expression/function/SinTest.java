@@ -1,12 +1,16 @@
 package org.cerion.symcalc.expression.function;
 
-import org.cerion.symcalc.expression.*;
+import org.cerion.symcalc.expression.Expr;
+import org.cerion.symcalc.expression.FunctionExpr;
+import org.cerion.symcalc.expression.ListExpr;
+import org.cerion.symcalc.expression.VarExpr;
 import org.cerion.symcalc.expression.function.integer.RandomInteger;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.number.RealNum;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class SinTest {
 

@@ -1,11 +1,12 @@
 package org.cerion.symcalc.expression.number;
 
-import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.NumberExpr;
 
 public class ComplexNum extends NumberExpr
 {
-	public int numType() { return COMPLEX; };
+	public int numType() {
+		return COMPLEX;
+	}
 
 	public static final ComplexNum ZERO = new ComplexNum();
 

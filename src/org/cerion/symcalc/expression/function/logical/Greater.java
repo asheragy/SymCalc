@@ -1,8 +1,6 @@
 package org.cerion.symcalc.expression.function.logical;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.cerion.symcalc.expression.*;
-import org.cerion.symcalc.expression.function.N;
 
 import java.util.List;
 

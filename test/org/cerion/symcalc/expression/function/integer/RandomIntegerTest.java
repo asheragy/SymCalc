@@ -1,12 +1,11 @@
 package org.cerion.symcalc.expression.function.integer;
 
-import org.cerion.symcalc.Environment;
 import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.FunctionExpr;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class RandomIntegerTest {
 

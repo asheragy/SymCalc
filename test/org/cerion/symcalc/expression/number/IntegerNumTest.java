@@ -1,21 +1,21 @@
 package org.cerion.symcalc.expression.number;
 
-import static org.junit.Assert.*;
+import org.cerion.symcalc.expression.NumberExpr;
+import org.junit.Test;
 
 import java.math.BigInteger;
 
-import org.cerion.symcalc.expression.NumberExpr;
-import org.cerion.symcalc.expression.number.*;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class IntegerNumTest {
 
-	NumberExpr i0 = new IntegerNum(0);
-	NumberExpr i1 = new IntegerNum(1);
-	NumberExpr i3 = new IntegerNum(3);
-	NumberExpr i5 = new IntegerNum(5);
-	NumberExpr in = new IntegerNum(-17);
-	NumberExpr big = new IntegerNum("99999999999999999999999999999999999999999999");
+	private final NumberExpr i0 = new IntegerNum(0);
+	private final NumberExpr i1 = new IntegerNum(1);
+	private final NumberExpr i3 = new IntegerNum(3);
+	private final NumberExpr i5 = new IntegerNum(5);
+	private final NumberExpr in = new IntegerNum(-17);
+	private final NumberExpr big = new IntegerNum("99999999999999999999999999999999999999999999");
 	
 	@Test
 	public void stringConstructor()

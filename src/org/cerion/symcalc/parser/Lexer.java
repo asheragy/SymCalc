@@ -45,7 +45,7 @@ public class Lexer {
 				return c;
 				
 			default : 
-				if (Character.isDigit(c) || c == '.' || c == 'i') 
+				if (Character.isDigit(c) || c == '.')
 				{
 					tokval = Character.toString(c);
 					

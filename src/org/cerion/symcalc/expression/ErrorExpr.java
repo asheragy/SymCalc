@@ -8,10 +8,9 @@ public class ErrorExpr extends Expr {
 	}
 
 	@Override
-	protected Expr evaluate()
-	{ 
+	protected Expr evaluate() {
 		return this; 
-	};
+	}
 
 	@Override
 	public boolean equals(Expr e) {

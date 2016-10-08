@@ -179,10 +179,9 @@ public class RationalNum extends NumberExpr
 
 	@Override
 	public boolean canExp(NumberExpr num) {
-		if(num.numType() == RATIONAL)
+		if(num.numType() == RATIONAL || num.numType() == COMPLEX)
 			return false;
-		if(num.numType() == COMPLEX)
-			return false;
+
 		return true;
 	}
 

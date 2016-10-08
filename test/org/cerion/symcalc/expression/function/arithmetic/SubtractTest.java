@@ -1,14 +1,13 @@
 package org.cerion.symcalc.expression.function.arithmetic;
 
-import static org.junit.Assert.*;
-
-import org.cerion.symcalc.expression.function.arithmetic.Subtract;
-import org.cerion.symcalc.expression.number.IntegerNum;
-import org.junit.Test;
-
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.ListExpr;
 import org.cerion.symcalc.expression.VarExpr;
+import org.cerion.symcalc.expression.number.IntegerNum;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class SubtractTest {
 

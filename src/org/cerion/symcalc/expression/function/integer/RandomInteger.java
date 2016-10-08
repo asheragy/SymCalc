@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression.function.integer;
 
-import org.cerion.symcalc.Environment;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
 import org.cerion.symcalc.expression.number.IntegerNum;

@@ -20,10 +20,10 @@ public class Binomial extends FunctionExpr {
 			
 			// n! / k!(n-k)!
 			IntegerNum n1 = n.factorial();
-			IntegerNum n2 = (IntegerNum)n.subtract(k);
+			IntegerNum n2 = n.subtract(k);
 			n2 = n2.factorial();
 			IntegerNum n3 = k.factorial();
-			n2 = (IntegerNum) n2.multiply(n3);
+			n2 = n2.multiply(n3);
 			
 			return n1.divide(n2);
 		}

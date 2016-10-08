@@ -1,18 +1,16 @@
 package org.cerion.symcalc.expression.number;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Random;
-
-import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.NumberExpr;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class IntegerNum extends NumberExpr
 {
 	public int numType() {
 		return INTEGER; 
-	};
+	}
 	
 	public IntegerNum(BigInteger n) {
 		setValue(n);
@@ -194,9 +192,8 @@ public class IntegerNum extends NumberExpr
 	}	
 	
 	//IntegerNum Specific Functions
-	public boolean IsEven()
-	{
-		return (val().testBit(0) == false);
+	public boolean IsEven() {
+		return (!val().testBit(0));
 	}
 	
 	public IntegerNum GCD(IntegerNum N)

@@ -120,14 +120,12 @@ public class Parser {
             	
             }
     		//Number f = new Number(tokval);
-            NumberExpr f = NumberExpr.parse(tokval);
-            return f;
+            return NumberExpr.parse(tokval);
         }
     	else if(token == 'i') //complex 1
     	{
     		getNext();
-    		NumberExpr img = NumberExpr.parse("i");
-    		return img;
+    		return NumberExpr.parse("i");
     	}
 
     	else if (token == 'v') 

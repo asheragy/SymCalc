@@ -1,8 +1,6 @@
 package org.cerion.symcalc.expression;
 
 
-import org.cerion.symcalc.Environment;
-
 public class ListExpr extends Expr {
 
 	public ListExpr()
@@ -54,7 +52,7 @@ public class ListExpr extends Expr {
 	public String toString() 
 	{ 
 		String ret = "{";
-		for(int i = 0; i < (int) size(); i++) {
+		for(int i = 0; i < size(); i++) {
 			if(i > 0) ret += ","; //dont add comma on first element
 			//Eval before printing
 			ret += get(i).toString();

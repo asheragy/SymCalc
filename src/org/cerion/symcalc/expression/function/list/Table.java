@@ -1,11 +1,6 @@
 package org.cerion.symcalc.expression.function.list;
 
-import org.cerion.symcalc.Environment;
-import org.cerion.symcalc.expression.ErrorExpr;
-import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.ListExpr;
-import org.cerion.symcalc.expression.VarExpr;
-import org.cerion.symcalc.expression.FunctionExpr;
+import org.cerion.symcalc.expression.*;
 import org.cerion.symcalc.expression.number.IntegerNum;
 
 public class Table extends FunctionExpr {

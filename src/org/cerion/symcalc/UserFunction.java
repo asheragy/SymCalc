@@ -26,4 +26,17 @@ public class UserFunction {
 
         return mExpr.eval();
     }
+
+    @Override
+    public String toString() {
+
+        String params = "";
+        for(int i = 0; i < mVars.length; i++) {
+            if(i > 0)
+                params += ",";
+            params += mVars[i];
+        }
+
+        return mName + "[" + params + "] = " + mExpr;
+    }
 }

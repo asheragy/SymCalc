@@ -6,7 +6,8 @@ import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.number.RealNum;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class FunctionExprTest {
     @Test

@@ -1,7 +1,6 @@
 package org.cerion.symcalc.expression.function.arithmetic;
 
 import org.cerion.symcalc.expression.*;
-import org.cerion.symcalc.expression.Expr;
 
 public class Subtract extends FunctionExpr {
 

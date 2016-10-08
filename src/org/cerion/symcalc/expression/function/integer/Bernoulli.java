@@ -2,8 +2,8 @@ package org.cerion.symcalc.expression.function.integer;
 
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
-import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.NumberExpr;
+import org.cerion.symcalc.expression.number.IntegerNum;
 
 public class Bernoulli extends FunctionExpr {
 
@@ -45,7 +45,7 @@ public class Bernoulli extends FunctionExpr {
  					
  				}
  				res = res.negate();
- 				N = (IntegerNum) N.add(IntegerNum.ONE);
+ 				N = N.add(IntegerNum.ONE);
  				res = res.divide(N);
  				
  				result = res;	

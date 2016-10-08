@@ -138,11 +138,7 @@ public abstract class Expr
 
 	@Override
 	public boolean equals(Object obj) {
-
-		if(obj instanceof Expr)
-			return this.equals((Expr)obj);
-
-		return false;
+		return obj instanceof Expr && this.equals((Expr)obj);
 	}
 
 	public void print() {

@@ -1,10 +1,10 @@
 package org.cerion.symcalc.expression.function.integer;
 
 import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.ListExpr;
 import org.cerion.symcalc.expression.FunctionExpr;
-import org.cerion.symcalc.expression.number.IntegerNum;
+import org.cerion.symcalc.expression.ListExpr;
 import org.cerion.symcalc.expression.NumberExpr;
+import org.cerion.symcalc.expression.number.IntegerNum;
 
 public class IntegerDigits extends FunctionExpr {
 

@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression.number;
 
-import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.NumberExpr;
 
 import java.math.BigDecimal;
@@ -11,7 +10,9 @@ public class RealNum extends NumberExpr
 	//private BigDecimal test;
 	private double dNumber = 0;
 	
-	public int numType() { return REAL; };
+	public int numType() {
+		return REAL;
+	}
 	
 	public double toDouble()
 	{
@@ -82,14 +83,14 @@ public class RealNum extends NumberExpr
 	public boolean isZero()
 	{
 		if(bigNumber != null)
-			return ((RealNum)this).bigNumber.equals(BigDecimal.ZERO);
+			return bigNumber.equals(BigDecimal.ZERO);
 		return (dNumber == 0.0);
 	}
 	
 	public boolean isOne()
 	{
 		if(bigNumber != null)
-			return ((RealNum)this).bigNumber.equals(BigDecimal.ONE);
+			return bigNumber.equals(BigDecimal.ONE);
 		return (dNumber == 1.0);
 	}
 	

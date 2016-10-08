@@ -1,8 +1,8 @@
 package org.cerion.symcalc.expression;
 
-import java.util.Hashtable;
-
 import org.cerion.symcalc.expression.number.RealNum;
+
+import java.util.Hashtable;
 
 public class ConstExpr extends Expr {
 

@@ -1,10 +1,8 @@
 package org.cerion.symcalc.expression;
 
-import org.cerion.symcalc.Environment;
 import org.cerion.symcalc.expression.number.ComplexNum;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.number.RealNum;
-import org.cerion.symcalc.expression.Expr;
 
 public abstract class NumberExpr extends Expr
 {
@@ -34,11 +32,7 @@ public abstract class NumberExpr extends Expr
 
 	@Override
 	public boolean equals(Expr e) {
-		if(e.isNumber()) {
-			return equals((NumberExpr)e);
-		}
-
-		return false;
+		return e.isNumber() && equals((NumberExpr)e);
 	}
 
 	@Override
@@ -70,19 +64,13 @@ public abstract class NumberExpr extends Expr
 		return this;
 	}
 
-	@Deprecated
-	public static NumberExpr getNumber(String s)
-	{
+	public static NumberExpr parse(String s) {
 		if(s.indexOf('i') > -1)
 			return new ComplexNum(s);
-		
+
 		if(s.indexOf('.') > 0)
 			return new RealNum(s);
-		
+
 		return new IntegerNum(s);
-	}
-	
-	public static NumberExpr parse(String s) {
-		return getNumber(s);
 	}
 }
