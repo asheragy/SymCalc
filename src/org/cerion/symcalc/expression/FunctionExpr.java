@@ -4,6 +4,7 @@ import org.cerion.symcalc.expression.function.*;
 import org.cerion.symcalc.expression.function.arithmetic.*;
 import org.cerion.symcalc.expression.function.integer.*;
 import org.cerion.symcalc.expression.function.list.*;
+import org.cerion.symcalc.expression.function.logical.Greater;
 
 public abstract class FunctionExpr extends Expr
 {
@@ -98,6 +99,9 @@ public abstract class FunctionExpr extends Expr
 		RANDOM_INTEGER("RandomInteger"),
 		BERNOULLI("Bernoulli"),
 
+		//Logical
+		GREATER("Greater"),
+
 		
 		ASDFDSF("DSFDS");
 		
@@ -185,6 +189,9 @@ public abstract class FunctionExpr extends Expr
 			case BERNOULLI: return new Bernoulli(e);
 			case INTEGER_DIGITS: return new IntegerDigits(e);
 			case RANDOM_INTEGER: return new RandomInteger(e);
+
+			//Logical
+			case GREATER: return new Greater(e);
 			
 			default:
 				return null;

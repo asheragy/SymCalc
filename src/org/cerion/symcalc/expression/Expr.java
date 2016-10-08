@@ -159,6 +159,13 @@ public abstract class Expr
 		BOOL
 	}
 
+	protected enum LogicalCompare {
+		TRUE,
+		FALSE,
+		UNKNOWN,
+		ERROR
+	}
+
 	protected enum Properties {
 		NONE(0),
 		HOLD(1),
