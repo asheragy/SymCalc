@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="deff7650-89ee-454b-be3f-f43f0216eb31" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/Andrew.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SymCalc.iws" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -731,7 +725,14 @@
       <option name="project" value="LOCAL" />
       <updated>1479010820945</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="added .idea">
+      <created>1479011490124</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1479011490125</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -825,7 +826,8 @@
     <MESSAGE value="added Greater than" />
     <MESSAGE value="warning cleanup" />
     <MESSAGE value="added notes" />
-    <option name="LAST_COMMIT_MESSAGE" value="added notes" />
+    <MESSAGE value="added .idea" />
+    <option name="LAST_COMMIT_MESSAGE" value="added .idea" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
