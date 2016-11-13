@@ -6,6 +6,10 @@ import java.math.BigDecimal;
 
 public class RealNum extends NumberExpr
 {
+	//TODO By default make this class a double
+	//Make a 2nd implementation of this class which is a BigDecimal
+	//If precision is ever specified it evaluates to a different instance of this class which is BigDecimal with N precision
+
 	private BigDecimal bigNumber = null;
 	//private BigDecimal test;
 	private double dNumber = 0;

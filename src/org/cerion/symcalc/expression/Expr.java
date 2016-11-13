@@ -86,6 +86,8 @@ public abstract class Expr
 	protected abstract ExprType getType();
 
 	public final Expr eval() {
+		//https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
+		//https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
 		// TODO, add some optional verify() that can Override to see if eval will even work, this will also return an error instead of normal eval
 		// This can be done first
