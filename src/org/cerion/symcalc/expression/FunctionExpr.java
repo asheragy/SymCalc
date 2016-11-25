@@ -89,6 +89,7 @@ public abstract class FunctionExpr extends Expr
 		FLATTEN("Flatten"),
 		PARTITION("Partition"),
 		JOIN("Join"),
+		SELECT("Select"),
 		
 		//IntegerNum
 		FACTORIAL("Factorial"),
@@ -105,6 +106,7 @@ public abstract class FunctionExpr extends Expr
 		BERNOULLI("Bernoulli"),
 		EVENQ("EvenQ"),
 		ODDQ("OddQ"),
+
 
 		//Logical
 		GREATER("Greater"),
@@ -182,6 +184,7 @@ public abstract class FunctionExpr extends Expr
 			case FLATTEN: return new Flatten(e);
 			case PARTITION: return new Partition(e);
 			case JOIN: return new Join(e);
+			case SELECT: return new Select(e);
 
 			//IntegerNum
 			case FACTORIAL: return new Factorial(e);
