@@ -195,6 +195,10 @@ public class IntegerNum extends NumberExpr
 	public boolean IsEven() {
 		return (!val().testBit(0));
 	}
+
+	public boolean IsOdd() {
+		return (val().testBit(0));
+	}
 	
 	public IntegerNum GCD(IntegerNum N)
 	{

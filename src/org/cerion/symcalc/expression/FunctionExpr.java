@@ -103,6 +103,8 @@ public abstract class FunctionExpr extends Expr
 		INTEGER_DIGITS("IntegerDigits"),
 		RANDOM_INTEGER("RandomInteger"),
 		BERNOULLI("Bernoulli"),
+		EVENQ("EvenQ"),
+		ODDQ("OddQ"),
 
 		//Logical
 		GREATER("Greater"),
@@ -194,6 +196,8 @@ public abstract class FunctionExpr extends Expr
 			case BERNOULLI: return new Bernoulli(e);
 			case INTEGER_DIGITS: return new IntegerDigits(e);
 			case RANDOM_INTEGER: return new RandomInteger(e);
+			case EVENQ: return new EvenQ(e);
+			case ODDQ: return new OddQ(e);
 
 			//Logical
 			case GREATER: return new Greater(e);
@@ -202,5 +206,9 @@ public abstract class FunctionExpr extends Expr
 				return null;
 		}
     }
-   
+
+	protected ErrorExpr invalidParameterCountError(int expected, int actual) {
+		String error = String.format("%d parameters, expected %d", actual, expected);
+		return new ErrorExpr(error);
+	}
 }
