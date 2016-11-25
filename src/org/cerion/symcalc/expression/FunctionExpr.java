@@ -86,6 +86,9 @@ public abstract class FunctionExpr extends Expr
 		FIRST("First"),
 		LAST("Last"),
 		TABLE("Table"),
+		FLATTEN("Flatten"),
+		PARTITION("Partition"),
+		JOIN("Join"),
 		
 		//IntegerNum
 		FACTORIAL("Factorial"),
@@ -174,6 +177,9 @@ public abstract class FunctionExpr extends Expr
 			case FIRST: return new First(e);
 			case LAST: return new Last(e);
 			case TABLE: return new Table(e);
+			case FLATTEN: return new Flatten(e);
+			case PARTITION: return new Partition(e);
+			case JOIN: return new Join(e);
 
 			//IntegerNum
 			case FACTORIAL: return new Factorial(e);

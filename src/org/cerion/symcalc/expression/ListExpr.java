@@ -1,6 +1,8 @@
 package org.cerion.symcalc.expression;
 
 
+import java.util.List;
+
 public class ListExpr extends Expr {
 
 	public ListExpr()
@@ -17,9 +19,16 @@ public class ListExpr extends Expr {
 		setArgs(e);
 	}
 	
-	public void add(Expr t) 
-	{ 
+	public void add(Expr t) {
 		addArg(t);
+	}
+
+	public void addAll(List<Expr> items) {
+		if(items != null) {
+			for (Expr e : items) {
+				add(e);
+			}
+		}
 	}
 
 	@Override

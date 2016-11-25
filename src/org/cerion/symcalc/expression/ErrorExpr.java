@@ -23,9 +23,13 @@ public class ErrorExpr extends Expr {
 		return (String)getValue();
 	}
 	
-	public ErrorExpr(String error) 
-	{
+	public ErrorExpr(String error) {
 		setValue(error);
+	}
+
+	public static ErrorExpr getInvalidParameterType(Class c, int position) {
+		String error = String.format("parameter {%d} must be a %s", position, c.getSimpleName());
+		return new ErrorExpr(error);
 	}
 
 	public ExprType getType()

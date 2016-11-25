@@ -85,12 +85,17 @@ public abstract class Expr
 	protected abstract Expr evaluate();
 	protected abstract ExprType getType();
 
+	protected ErrorExpr validate() {
+		return null;
+	}
+
 	public final Expr eval() {
 		//https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
 		//https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
-		// TODO, add some optional verify() that can Override to see if eval will even work, this will also return an error instead of normal eval
-		// This can be done first
+		if(validate() != null) {
+			return validate();
+		}
 
 		// Associative function, if the same function is a parameter move its parameters to the top level
 		if(hasProperty(Properties.ASSOCIATIVE)) {
