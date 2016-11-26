@@ -7,6 +7,7 @@ import org.cerion.symcalc.expression.function.arithmetic.*;
 import org.cerion.symcalc.expression.function.integer.*;
 import org.cerion.symcalc.expression.function.list.*;
 import org.cerion.symcalc.expression.function.logical.Greater;
+import org.cerion.symcalc.expression.function.statistics.*;
 
 public abstract class FunctionExpr extends Expr
 {
@@ -111,7 +112,11 @@ public abstract class FunctionExpr extends Expr
 		//Logical
 		GREATER("Greater"),
 
-		
+		//Statistics
+		MEAN("Mean"),
+		VARIANCE("Variance"),
+		STANDARD_DEVIATION("StandardDeviation"),
+
 		ASDFDSF("DSFDS");
 		
 		
@@ -204,6 +209,11 @@ public abstract class FunctionExpr extends Expr
 
 			//Logical
 			case GREATER: return new Greater(e);
+
+			//Statistics
+			case MEAN: return new Mean(e);
+			case VARIANCE: return new Variance(e);
+			case STANDARD_DEVIATION: return new StandardDeviation(e);
 			
 			default:
 				return null;
