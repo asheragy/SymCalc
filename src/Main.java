@@ -11,6 +11,7 @@ public class Main
 {
 	public static void main(String args[]) 
 	{
+		// Test commit 3/8/17
 		//TODO, if its a function name, it can't be a variable name
 		//MathExpr expr = new MathExpr("d");
 		//MathExpr expr = new MathExpr("FFT({-1, -1, -1, -1, 1, 1, 1, 1})");
