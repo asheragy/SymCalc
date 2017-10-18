@@ -19,9 +19,11 @@ public class ErrorExprTest {
         assertNotEquals(e1, e1);
     }
 
+    /* TODO not really valid anymore, errors may be handled with exceptions so purposely passing ErrorExpr("test" is wrong
     @Test
     public void singleErrorGetsPassedUp() {
         Expr e = new Plus(IntegerNum.ONE, IntegerNum.TWO, new ErrorExpr("test")).eval();
         assertTrue(e.isError());
     }
+    */
 }

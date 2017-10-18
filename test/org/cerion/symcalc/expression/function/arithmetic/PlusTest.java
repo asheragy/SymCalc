@@ -18,6 +18,13 @@ public class PlusTest {
     }
 
     @Test
+    public void doubleEval() {
+        Expr e = new Plus(IntegerNum.ONE, IntegerNum.ONE);
+        assertEquals(IntegerNum.TWO, e.eval());
+        assertEquals(IntegerNum.TWO, e.eval());
+    }
+
+    @Test
     public void associativeProperty() {
         FunctionExpr inner = new Plus(new VarExpr("x"), new VarExpr("y"));
         FunctionExpr outer = new Plus(new VarExpr("z"), inner);

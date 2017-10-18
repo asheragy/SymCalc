@@ -4,6 +4,7 @@ import org.cerion.symcalc.expression.function.Hold;
 import org.cerion.symcalc.expression.function.N;
 import org.cerion.symcalc.expression.function.Sin;
 import org.cerion.symcalc.expression.function.arithmetic.*;
+import org.cerion.symcalc.expression.function.plots.Plot;
 import org.cerion.symcalc.expression.function.integer.*;
 import org.cerion.symcalc.expression.function.list.*;
 import org.cerion.symcalc.expression.function.logical.Greater;
@@ -118,6 +119,10 @@ public abstract class FunctionExpr extends Expr
 		STANDARD_DEVIATION("StandardDeviation"),
 		RANDOM_CHOICE("RandomChoice"),
 
+		// Graphics
+		PLOT("Plot"),
+
+
 		ASDFDSF("DSFDS");
 		
 		
@@ -204,7 +209,6 @@ public abstract class FunctionExpr extends Expr
 			case BINOMIAL: return new Binomial(e);
 			case BERNOULLI: return new Bernoulli(e);
 			case INTEGER_DIGITS: return new IntegerDigits(e);
-			case RANDOM_INTEGER: return new RandomInteger(e);
 			case EVENQ: return new EvenQ(e);
 			case ODDQ: return new OddQ(e);
 
@@ -216,6 +220,10 @@ public abstract class FunctionExpr extends Expr
 			case VARIANCE: return new Variance(e);
 			case STANDARD_DEVIATION: return new StandardDeviation(e);
 			case RANDOM_CHOICE: return new RandomChoice(e);
+			case RANDOM_INTEGER: return new RandomInteger(e);
+
+			// Graphics
+			case PLOT: return new Plot(e);
 			
 			default:
 				return null;

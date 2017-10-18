@@ -39,5 +39,8 @@ public class UserFunctionTest {
         Expr output = uf.eval(input);
         assertEquals(new IntegerNum(10), output);
 
+        input = new IntegerNum(1);
+        output = uf.eval(input);
+        assertEquals(new IntegerNum(2), output);
     }
 }

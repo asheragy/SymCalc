@@ -44,9 +44,13 @@ public class IntegerNum extends NumberExpr
 	public static final IntegerNum ONE = new IntegerNum(1);
 	public static final IntegerNum TWO = new IntegerNum(2);
 	public static final IntegerNum NEGATIVE_ONE = new IntegerNum(-1);
-	
-	public int toInteger() 
-	{
+
+	public int intValue() {
+		return val().intValue();
+	}
+
+	@Deprecated
+	public int toInteger() {
 		return val().intValue();
 	}
 	

@@ -9,6 +9,7 @@ public class UserFunction {
     private Expr mExpr;
     private VarExpr mVars[];
 
+    // TODO is name required? Anonymous functions should work, maybe UserFunction is just an expression...
     public UserFunction(String name, Expr e, VarExpr ...vars) {
         mName = name;
         mExpr = e;

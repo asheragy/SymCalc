@@ -22,8 +22,8 @@ public class Flatten extends FunctionExpr {
 
             if(e.isList()) {
                 ListExpr sublist = (ListExpr)e;
-                sublist = (ListExpr)new Flatten(sublist).eval();
-                result.addAll(sublist.getArgs());
+                sublist = (ListExpr)new Flatten(sublist).eval(); // TODO eval may be redundant since getAll will eval
+                result.addAll(sublist.getAll());
             } else {
                 result.add(e);
             }

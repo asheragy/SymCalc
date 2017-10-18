@@ -5,6 +5,7 @@ import org.cerion.symcalc.expression.FunctionExpr;
 import org.cerion.symcalc.expression.NumberExpr;
 import org.cerion.symcalc.expression.number.IntegerNum;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,7 +19,10 @@ public class Times extends FunctionExpr {
 	protected Expr evaluate() {
 		
 		NumberExpr product = IntegerNum.ONE;
-		List<Expr> list = getArgs();
+		List<Expr> list = new ArrayList<>();
+
+		for(int i = 0; i < size(); i++)
+			list.add(get(i));
 
 		//Multiply numbers
 		Iterator<Expr> it = list.iterator();

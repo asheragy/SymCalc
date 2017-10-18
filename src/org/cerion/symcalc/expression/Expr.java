@@ -23,9 +23,8 @@ public abstract class Expr
 				mArgs.add(k);
 		}
 	}
-	
-	public List<Expr> getArgs()
-	{
+
+	private List<Expr> getArgs() {
 		return mArgs;
 	}
 	
@@ -33,8 +32,24 @@ public abstract class Expr
 	{
 		return mArgs.toArray(new Expr[mArgs.size()]);
 	}
-	
+
+	public List<Expr> getAll() {
+		if(!hasProperty(Properties.HOLD)) {
+			List<Expr> args = new ArrayList<>();
+			for(int i = 0; i < size(); i++)
+				args.add(get(i).eval());
+
+			return args;
+		}
+
+		return mArgs;
+	}
+
 	public Expr get(int index) {
+		if(!hasProperty(Properties.HOLD)) {
+			return mArgs.get(index).eval();
+		}
+
 		return mArgs.get(index);
 	}
 
@@ -128,15 +143,17 @@ public abstract class Expr
 		}
 
 		// Skip eval for Hold property
+		/*
 		if(!hasProperty(Properties.HOLD)) {
 			for (int i = 0; i < size(); i++) {
 				setArg(i, get(i).eval());
 
 				//Return the first error
-				if(get(i).isError())
+				if (get(i).isError())
 					return get(i);
 			}
 		}
+		*/
 
 		// Listable property
 		if(hasProperty(Properties.LISTABLE) && isFunction()) {
@@ -171,7 +188,8 @@ public abstract class Expr
 		LIST,
 		CONST,
 		ERROR,
-		BOOL
+		BOOL,
+		GRAPHICS
 	}
 
 	protected enum LogicalCompare {

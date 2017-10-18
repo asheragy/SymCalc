@@ -5,6 +5,7 @@ import org.cerion.symcalc.expression.FunctionExpr;
 import org.cerion.symcalc.expression.NumberExpr;
 import org.cerion.symcalc.expression.number.IntegerNum;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,7 +19,11 @@ public class Plus extends FunctionExpr {
 	protected Expr evaluate() {
 		
 		NumberExpr sum = IntegerNum.ZERO;
-		List<Expr> list = getArgs();
+		List<Expr> list = new ArrayList<>();
+
+		//list.addAll(getArgs());
+		for(int i = 0; i < size(); i++)
+			list.add(get(i));
 
 		Iterator<Expr> it = list.iterator();
 		while(it.hasNext())

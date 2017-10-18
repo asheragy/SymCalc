@@ -19,7 +19,7 @@ public class Join extends FunctionExpr {
 
         for(int i = 0; i < size(); i++) {
             ListExpr e = (ListExpr)get(i);
-            result.addAll(e.getArgs());
+            result.addAll(e.getAll());
         }
 
         return result;

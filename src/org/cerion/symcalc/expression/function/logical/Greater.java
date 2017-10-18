@@ -20,9 +20,9 @@ public class Greater extends FunctionExpr {
          */
 
         // Simplify
-        List<Expr> args = getArgs();
-        for(int i = 0; i < size() - 1; i++) {
-            LogicalCompare comp = compare(get(i), get(i+1));
+        List<Expr> args = getAll();
+        for(int i = 0; i < args.size() - 1; i++) {
+            LogicalCompare comp = compare(args.get(i), args.get(i+1));
             if(comp == LogicalCompare.TRUE) {
                 if(i == 0) { //First
                     args.remove(0);
@@ -31,7 +31,7 @@ public class Greater extends FunctionExpr {
                     args.remove(i+1);
                 } else {
                     //If the next is also true, we can remove current
-                    if(compare(get(i+1), get(i+2)) == LogicalCompare.TRUE) {
+                    if(compare(args.get(i+1), args.get(i+2)) == LogicalCompare.TRUE) {
                         args.remove(i+1);
                         i--;
                     }

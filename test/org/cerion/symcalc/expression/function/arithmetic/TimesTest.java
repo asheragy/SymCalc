@@ -3,12 +3,20 @@ package org.cerion.symcalc.expression.function.arithmetic;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
 import org.cerion.symcalc.expression.VarExpr;
+import org.cerion.symcalc.expression.number.IntegerNum;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TimesTest {
+
+    @Test
+    public void doubleEval() {
+        Expr e = new Times(IntegerNum.TWO, IntegerNum.TWO);
+        assertEquals(new IntegerNum(4), e.eval());
+        assertEquals(new IntegerNum(4), e.eval());
+    }
 
     @Test
     public void associativeProperty() {
