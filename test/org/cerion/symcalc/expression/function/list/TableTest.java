@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression.function.list;
 
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.ListExpr;
-import org.cerion.symcalc.expression.function.integer.RandomInteger;
+import org.cerion.symcalc.expression.function.statistics.RandomInteger;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.junit.Test;
 

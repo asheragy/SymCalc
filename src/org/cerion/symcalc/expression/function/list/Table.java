@@ -5,6 +5,10 @@ import org.cerion.symcalc.expression.number.IntegerNum;
 
 public class Table extends FunctionExpr {
 
+	public Table(Expr e, int N) {
+		this(e, new ListExpr(new IntegerNum(N)));
+	}
+
 	public Table(Expr... e) {
 		super(FunctionType.TABLE);
 		//this.EVAL = false;

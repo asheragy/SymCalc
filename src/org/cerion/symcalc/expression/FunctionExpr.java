@@ -116,6 +116,7 @@ public abstract class FunctionExpr extends Expr
 		MEAN("Mean"),
 		VARIANCE("Variance"),
 		STANDARD_DEVIATION("StandardDeviation"),
+		RANDOM_CHOICE("RandomChoice"),
 
 		ASDFDSF("DSFDS");
 		
@@ -214,6 +215,7 @@ public abstract class FunctionExpr extends Expr
 			case MEAN: return new Mean(e);
 			case VARIANCE: return new Variance(e);
 			case STANDARD_DEVIATION: return new StandardDeviation(e);
+			case RANDOM_CHOICE: return new RandomChoice(e);
 			
 			default:
 				return null;

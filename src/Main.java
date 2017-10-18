@@ -18,7 +18,7 @@ public class Main
 		//MathExpr expr = new MathExpr("RandomInteger(10)");
 		//Expr expr = Expr.parse("Greater(1,3)");
 		//MathExpr expr = new MathExpr("N(Sin(1))");
-		Expr expr = Expr.parse("Join({1,2,3,4},2)");
+		Expr expr = Expr.parse("RandomInteger({1,2})");
 
 		expr.print();
 		

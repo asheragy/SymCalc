@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression;
 
 import org.cerion.symcalc.Environment;
+import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.parser.Lexer;
 import org.cerion.symcalc.parser.Parser;
 
@@ -33,9 +34,20 @@ public abstract class Expr
 		return mArgs.toArray(new Expr[mArgs.size()]);
 	}
 	
-	public Expr get(int index)
-	{
+	public Expr get(int index) {
 		return mArgs.get(index);
+	}
+
+	public ListExpr getList(int index) {
+		return (ListExpr)get(index);
+	}
+
+	public IntegerNum getInteger(int index) {
+		return (IntegerNum)get(index);
+	}
+
+	public IntegerNum toIntegerNum() {
+		return (IntegerNum)this;
 	}
 	
 	protected void setArg(int index, Expr e)
