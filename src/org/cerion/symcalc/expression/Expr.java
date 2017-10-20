@@ -34,7 +34,7 @@ public abstract class Expr
 	}
 
 	public List<Expr> getAll() {
-		if(!hasProperty(Properties.HOLD)) {
+		if(!hasProperty(Properties.HOLD) && !getEnv().skipEval) {
 			List<Expr> args = new ArrayList<>();
 			for(int i = 0; i < size(); i++)
 				args.add(get(i).eval());
@@ -46,7 +46,7 @@ public abstract class Expr
 	}
 
 	public Expr get(int index) {
-		if(!hasProperty(Properties.HOLD)) {
+		if(!hasProperty(Properties.HOLD) && !getEnv().skipEval) {
 			return mArgs.get(index).eval();
 		}
 
@@ -63,6 +63,14 @@ public abstract class Expr
 
 	public IntegerNum toIntegerNum() {
 		return (IntegerNum)this;
+	}
+
+	public BoolExpr toBool() {
+		return (BoolExpr)this;
+	}
+
+	public VarExpr toVar() {
+		return (VarExpr)this;
 	}
 	
 	protected void setArg(int index, Expr e)
@@ -137,9 +145,11 @@ public abstract class Expr
 			}
 		}
 
+		getEnv().skipEval = false;
+
 		// Set environment for every parameter to the current one before its evaluated
 		for (int i = 0; i < size(); i++) {
-			get(i).setEnv(getEnv());
+			mArgs.get(i).setEnv(getEnv());
 		}
 
 		// Skip eval for Hold property
@@ -169,7 +179,8 @@ public abstract class Expr
 			}
 		}
 
-		return evaluate();
+		Expr e = evaluate();
+		return e;
 	}
 
 	@Override

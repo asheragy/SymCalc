@@ -71,8 +71,13 @@ public abstract class FunctionExpr extends Expr
        
 	protected enum FunctionType
 	{
+
 		N("N"),
 		HOLD("Hold"),
+
+		// Core
+		SET("Set"),
+		COMPOUND_EXPRESSION("CompoundExpression"),
 
 		PLUS("Plus"),
 		SUBTRACT("Subtract"),
@@ -121,6 +126,9 @@ public abstract class FunctionExpr extends Expr
 
 		// Graphics
 		PLOT("Plot"),
+
+		// Procedural
+		IF("If"),
 
 
 		ASDFDSF("DSFDS");

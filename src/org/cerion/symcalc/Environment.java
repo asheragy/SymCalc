@@ -10,24 +10,22 @@ public class Environment {
     private static final int SYSTEM_DECIMAL_PRECISION = -1; // numbers evaluated to whatever primitive types hold
 
     //Table of variables, x = expr
-    private Map<String, Expr> mVars;
+    private Map<String, Expr> mVars = new HashMap<>();
 
     //Table of function definitions
-    private Map<String, UserFunction> mFunctions;
+    private static Map<String, UserFunction> mFunctions;
+
+    public boolean skipEval = true;
 
     //Decimal evaluation precision
     private boolean mEvalNumber = false;
     private int mDecimalPrecision = SYSTEM_DECIMAL_PRECISION;
 
     public void setVar(String name, Expr value) {
-        if(mVars == null)
-            mVars = new HashMap<>();
-
         mVars.put(name,value);
     }
 
-    public Expr getVar(String name)
-    {
+    public Expr getVar(String name) {
         if(mVars == null)
             return null;
 
