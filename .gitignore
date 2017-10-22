@@ -1,2 +1,5 @@
 # User-specific stuff:
 .idea/**/workspace.xml
+.idea/workspace.xml
+
+out/
