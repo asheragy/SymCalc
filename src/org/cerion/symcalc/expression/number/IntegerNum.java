@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.number;
 
 import org.cerion.symcalc.expression.NumberExpr;
+import org.cerion.symcalc.expression.function.arithmetic.Divide;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.math.BigDecimal;
@@ -149,8 +150,13 @@ public class IntegerNum extends NumberExpr
 			IntegerNum n = (IntegerNum)num;
 			IntegerNum gcd = this.GCD(n);
 			
-			if(gcd.isOne())
+			if(gcd.isOne()) {
+				if (getEnv().isNumericalEval()) {
+					return (NumberExpr) new Divide(new RealNum(toDouble()), new RealNum(num.toDouble())).eval();
+				}
+
 				return new RationalNum(this, n);
+			}
 			
 			//Divide both by GCD
 			IntegerNum a = new IntegerNum(val().divide(gcd.val()));
@@ -158,7 +164,11 @@ public class IntegerNum extends NumberExpr
 			
 			if(b.isOne())
 				return a;
-			
+
+			if (getEnv().isNumericalEval()) {
+				return (NumberExpr) new Divide(new RealNum(a.toDouble()), new RealNum(b.toDouble())).eval();
+			}
+
 			return new RationalNum(a,b);
 		}
 		
