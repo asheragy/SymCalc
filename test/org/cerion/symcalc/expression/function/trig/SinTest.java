@@ -1,9 +1,10 @@
-package org.cerion.symcalc.expression.function;
+package org.cerion.symcalc.expression.function.trig;
 
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
 import org.cerion.symcalc.expression.ListExpr;
 import org.cerion.symcalc.expression.VarExpr;
+import org.cerion.symcalc.expression.function.core.N;
 import org.cerion.symcalc.expression.function.statistics.RandomInteger;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.number.RealNum;

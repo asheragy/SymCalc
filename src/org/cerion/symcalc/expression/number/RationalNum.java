@@ -201,7 +201,7 @@ public class RationalNum extends NumberExpr
 				
 			case REAL: //RationalNum ^ RealNum
 			{
-				RealNum rResult = new RealNum(this);
+				RealNum rResult = RealNum.create(this);
 				return rResult.power(num);
 			}
 		}

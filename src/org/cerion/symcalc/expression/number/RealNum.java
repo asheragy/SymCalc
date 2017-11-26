@@ -2,78 +2,30 @@ package org.cerion.symcalc.expression.number;
 
 import org.cerion.symcalc.expression.NumberExpr;
 
-import java.math.BigDecimal;
-
-public class RealNum extends NumberExpr
+public abstract class RealNum extends NumberExpr
 {
-	//TODO By default make this class a double
-	//Make a 2nd implementation of this class which is a BigDecimal
-	//If precision is ever specified it evaluates to a different instance of this class which is BigDecimal with N precision
-
-	private BigDecimal bigNumber = null;
-	//private BigDecimal test;
-	private double dNumber = 0;
-	
 	public int numType() {
 		return REAL;
 	}
-	
-	public double toDouble()
-	{
-		if(bigNumber != null)
-			return bigNumber.doubleValue();
-		return dNumber;
-	}
-	public RealNum()
-	{
-		//bigNumber = new BigDecimal("0");
-	}
-	
-	public RealNum(String s)
-	{
-		dNumber = Double.parseDouble(s);
-		//test = null;
-		//bigNumber = new BigDecimal(s);
-	}
-	
-	public RealNum(IntegerNum n)
-	{
-		dNumber = n.toDouble();
-	}
-	
-	public RealNum(RationalNum r)
-	{
-		dNumber = r.toDouble();
-	}
-	
-	public RealNum(double n)
-	{
-		dNumber = n;
+
+	public static RealNum parse(String s) {
+		// TODO add BigDecimal
+		return new RealNum_Double(s);
 	}
 
-	@Override
-	public String toString() 
-	{
-		if(bigNumber != null)
-			return bigNumber.toString();
-		return "" + dNumber;
+	public static RealNum create(IntegerNum n) {
+		return new RealNum_Double(n);
 	}
 
-	@Override
-	public boolean equals(NumberExpr e) {
-		if(e.isReal()) {
-			RealNum n = (RealNum)e;
-
-			if(n.bigNumber != null && bigNumber != null && n.bigNumber.compareTo(bigNumber) == 0)
-				return true;
-
-			if(n.bigNumber == null && bigNumber == null)
-				return n.dNumber == dNumber;
-		}
-
-		return false;
+	public static RealNum create(RationalNum r) {
+		return new RealNum_Double(r);
 	}
-	
+
+	public static RealNum create(double n) {
+		return new RealNum_Double(n);
+	}
+
+	/*
 	public RealNum negate()
 	{
 		RealNum result = new RealNum();
@@ -83,7 +35,9 @@ public class RealNum extends NumberExpr
 			result.dNumber = -dNumber;
 		return result;
 	}
-	
+	*/
+
+	/*
 	public boolean isZero()
 	{
 		if(bigNumber != null)
@@ -214,6 +168,7 @@ public class RealNum extends NumberExpr
 		}
 		return num.multiply(this);
 	}
+	*/
 	
 	public boolean canExp(NumberExpr num)
 	{
@@ -221,7 +176,8 @@ public class RealNum extends NumberExpr
 			return false;
 		return true;
 	}
-	
+
+	/*
 	public NumberExpr power(NumberExpr num) 
 	{
 		RealNum result = new RealNum();
@@ -237,6 +193,7 @@ public class RealNum extends NumberExpr
 		}
 	
 		return null;
-	}	
+	}
+	*/
 	
 }

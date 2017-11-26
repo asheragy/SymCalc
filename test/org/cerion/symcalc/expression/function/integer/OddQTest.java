@@ -24,7 +24,7 @@ public class OddQTest {
     @Test
     public void nonIntegerInput() {
         ListExpr e = new ListExpr();
-        RealNum num = new RealNum(3.0);
+        RealNum num = RealNum.create(3.0);
 
         assertEquals(BoolExpr.FALSE, new OddQ(e).eval());
         assertEquals(BoolExpr.FALSE, new OddQ(num).eval());

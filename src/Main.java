@@ -36,7 +36,7 @@ public class Main
 		NumberExpr[] nums = new NumberExpr[6];
 		nums[0] = IntegerNum.ONE;
 		nums[1] = RationalNum.ONE;
-		nums[2] = new RealNum(1.0);
+		nums[2] = RealNum.create(1.0);
 		nums[3] = new ComplexNum(nums[0],nums[0]);
 		nums[4] = new ComplexNum(nums[1],nums[1]);
 		nums[5] = new ComplexNum(nums[2],nums[2]);

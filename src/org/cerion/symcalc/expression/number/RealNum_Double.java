@@ -1,37 +1,35 @@
 package org.cerion.symcalc.expression.number;
 
 import org.cerion.symcalc.expression.NumberExpr;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-public class RealNum_Double extends NumberExpr {
+class RealNum_Double extends RealNum {
 
     private double dNumber = 0;
 
-    public int numType() {
-        return REAL;
-    }
-
-    public double toDouble() {
-        return dNumber;
-    }
-
-    public RealNum_Double() {
+    private RealNum_Double() {
         this.dNumber = 0;
     }
 
-    public RealNum_Double(String s) {
+    RealNum_Double(String s) {
         dNumber = Double.parseDouble(s);
     }
 
-    public RealNum_Double(IntegerNum n) {
+    RealNum_Double(IntegerNum n) {
         dNumber = n.toDouble();
     }
 
-    public RealNum_Double(RationalNum r) {
+    RealNum_Double(RationalNum r) {
         dNumber = r.toDouble();
     }
 
-    public RealNum_Double(double n) {
+    RealNum_Double(double n) {
         dNumber = n;
+    }
+
+    @Override
+    public double toDouble() {
+        return dNumber;
     }
 
     @Override
@@ -42,11 +40,10 @@ public class RealNum_Double extends NumberExpr {
     @Override
     public boolean equals(NumberExpr e) {
         if(e.isReal()) {
-            RealNum n = (RealNum)e;
+            if (e instanceof RealNum_BigDecimal)
+                throw new NotImplementedException();
 
-            // TODO fix this
-            //if(n.bigNumber == null && bigNumber == null)
-            //    return n.dNumber == dNumber;
+            return this.dNumber == e.toDouble();
         }
 
         return false;
@@ -161,12 +158,6 @@ public class RealNum_Double extends NumberExpr {
             }
         }
         return num.multiply(this);
-    }
-
-    public boolean canExp(NumberExpr num) {
-        if(num.numType() == COMPLEX)
-            return false;
-        return true;
     }
 
     public NumberExpr power(NumberExpr num) {

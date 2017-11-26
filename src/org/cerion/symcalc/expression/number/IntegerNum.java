@@ -152,7 +152,7 @@ public class IntegerNum extends NumberExpr
 			
 			if(gcd.isOne()) {
 				if (getEnv().isNumericalEval()) {
-					return (NumberExpr) new Divide(new RealNum(toDouble()), new RealNum(num.toDouble())).eval();
+					return (NumberExpr) new Divide(RealNum.create(toDouble()), RealNum.create(num.toDouble())).eval();
 				}
 
 				return new RationalNum(this, n);
@@ -166,7 +166,7 @@ public class IntegerNum extends NumberExpr
 				return a;
 
 			if (getEnv().isNumericalEval()) {
-				return (NumberExpr) new Divide(new RealNum(a.toDouble()), new RealNum(b.toDouble())).eval();
+				return (NumberExpr) new Divide(RealNum.create(a.toDouble()), RealNum.create(b.toDouble())).eval();
 			}
 
 			return new RationalNum(a,b);
@@ -197,7 +197,7 @@ public class IntegerNum extends NumberExpr
 
 			case REAL: //RealNum ^ RealNum
 			{
-				result = new RealNum(this);
+				result = RealNum.create(this);
 				break;
 			}
 		}

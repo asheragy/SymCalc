@@ -9,9 +9,9 @@ public class RealNumTest {
     @Test
     public void equals() {
 
-        RealNum n1 = new RealNum(5.0);
-        RealNum n2 = new RealNum(6.0);
-        RealNum n3 = new RealNum(5.0);
+        RealNum n1 = RealNum.create(5.0);
+        RealNum n2 = RealNum.create(6.0);
+        RealNum n3 = RealNum.create(5.0);
         IntegerNum n4 = new IntegerNum(5);
 
         assertNotEquals(n1, n2);
@@ -23,8 +23,8 @@ public class RealNumTest {
 
     @Test
     public void negate() {
-        assertEquals(0, new RealNum(0.0).negate().toDouble(), 0.01);
-        assertEquals(-1, new RealNum(1.0).negate().toDouble(), 0.01);
-        assertEquals(1, new RealNum(-1.0).negate().toDouble(), 0.01);
+        assertEquals(0, RealNum.create(0.0).negate().toDouble(), 0.01);
+        assertEquals(-1, RealNum.create(1.0).negate().toDouble(), 0.01);
+        assertEquals(1, RealNum.create(-1.0).negate().toDouble(), 0.01);
     }
 }

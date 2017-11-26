@@ -21,13 +21,13 @@ public class VarianceTest {
 
     @Test
     public void basicTest() {
-        ListExpr list = new ListExpr(new RealNum(1.1), new RealNum(1.2), new RealNum(1.3));
+        ListExpr list = new ListExpr(RealNum.create(1.1), RealNum.create(1.2), RealNum.create(1.3));
         Expr e = new Variance(list).eval();
-        assertEquals(new RealNum(0.00666).toDouble(), ((RealNum)e).toDouble(), 0.00001);
+        assertEquals(RealNum.create(0.00666).toDouble(), ((RealNum)e).toDouble(), 0.00001);
 
-        list = new ListExpr(new RealNum(1.21), new RealNum(3.4), new RealNum(2.0),
-                new RealNum(4.66), new RealNum(1.5), new RealNum(5.61), new RealNum(7.22));
+        list = new ListExpr(RealNum.create(1.21), RealNum.create(3.4), RealNum.create(2.0),
+                RealNum.create(4.66), RealNum.create(1.5), RealNum.create(5.61), RealNum.create(7.22));
         e = new Variance(list).eval();
-        assertEquals(new RealNum(4.42390).toDouble(), ((RealNum)e).toDouble(), 0.00001);
+        assertEquals(RealNum.create(4.42390).toDouble(), ((RealNum)e).toDouble(), 0.00001);
     }
 }

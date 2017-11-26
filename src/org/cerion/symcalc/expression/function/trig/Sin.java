@@ -1,4 +1,4 @@
-package org.cerion.symcalc.expression.function;
+package org.cerion.symcalc.expression.function.trig;
 
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
@@ -19,7 +19,7 @@ public class Sin extends FunctionExpr {
 			NumberExpr num = (NumberExpr)get(0);
 			
 			if(!num.isComplex() && getEnv().isNumericalEval())
-				return new RealNum( Math.sin( num.toDouble() ));
+				return RealNum.create( Math.sin( num.toDouble() ));
 		}
 		
 		return this;

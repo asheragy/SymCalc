@@ -74,9 +74,9 @@ public class ConstExpr extends Expr {
 
     	switch (getValue()) {
      		case PI :
-     			return new RealNum(Math.PI);
+     			return RealNum.create(Math.PI);
 			case E:
-				return new RealNum(Math.E);
+				return RealNum.create(Math.E);
     	}
     	
     	return this;

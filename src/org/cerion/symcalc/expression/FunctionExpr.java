@@ -1,8 +1,8 @@
 package org.cerion.symcalc.expression;
 
-import org.cerion.symcalc.expression.function.Hold;
-import org.cerion.symcalc.expression.function.N;
-import org.cerion.symcalc.expression.function.Sin;
+import org.cerion.symcalc.expression.function.core.Hold;
+import org.cerion.symcalc.expression.function.core.N;
+import org.cerion.symcalc.expression.function.trig.Sin;
 import org.cerion.symcalc.expression.function.arithmetic.*;
 import org.cerion.symcalc.expression.function.plots.Plot;
 import org.cerion.symcalc.expression.function.integer.*;

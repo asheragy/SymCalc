@@ -124,7 +124,7 @@ public class IntegerNumTest {
 		//Zero
 		divideByZero(i1, i0);
 		divideByZero(i1, new RationalNum((IntegerNum)i0,(IntegerNum)i1));
-		divideByZero(i1, new RealNum(0));
+		divideByZero(i1, RealNum.create(0));
 		divideByZero(i1, new ComplexNum());
 
 		//Add more later

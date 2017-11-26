@@ -5,7 +5,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.math.BigDecimal;
 
-public class RealNum_BigDecimal extends NumberExpr {
+public class RealNum_BigDecimal extends RealNum {
 
     private BigDecimal bigNumber = null;
 
@@ -191,12 +191,6 @@ public class RealNum_BigDecimal extends NumberExpr {
         }
         return num.multiply(this);
         */
-    }
-
-    public boolean canExp(NumberExpr num) {
-        if(num.numType() == COMPLEX)
-            return false;
-        return true;
     }
 
     public NumberExpr power(NumberExpr num) {

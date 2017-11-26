@@ -69,7 +69,7 @@ public abstract class NumberExpr extends Expr
 			return new ComplexNum(s);
 
 		if(s.indexOf('.') > 0)
-			return new RealNum(s);
+			return RealNum.parse(s);
 
 		return new IntegerNum(s);
 	}
