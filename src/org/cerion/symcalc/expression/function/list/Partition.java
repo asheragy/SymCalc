@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.function.list;
 
+import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.ErrorExpr;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
@@ -37,8 +38,8 @@ public class Partition extends FunctionExpr {
     }
 
     @Override
-    protected ErrorExpr validate() {
-
+    public void validate() throws ValidationException {
+        /*
         // TODO make generic parameter errors so they can be changed if needed
 
         if(size() < 2) {
@@ -50,6 +51,7 @@ public class Partition extends FunctionExpr {
         }
 
         return null;
+        */
     }
 
 }

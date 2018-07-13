@@ -1,17 +1,33 @@
 package org.cerion.symcalc.expression;
 
+import org.cerion.symcalc.expression.constant.Pi;
 import org.cerion.symcalc.expression.number.RealNum;
 
 import java.util.Hashtable;
 
-public class ConstExpr extends Expr {
+public abstract class ConstExpr extends Expr {
 
+	/*
 	public ConstExpr(String s) {
 		Name n = lookup(s);
 		if(n != null)
 			setValue(n);
 		else
 			throw new IllegalArgumentException("invalid constant");
+	}
+	*/
+
+	public static boolean isConstant(String s) {
+		return (lookup(s) != null);
+	}
+
+	public static ConstExpr getConstant(String name) {
+		Name n = lookup(name);
+		switch(n) {
+			case PI: return new Pi();
+		}
+
+		throw new IllegalArgumentException("invalid constant");
 	}
 
 	@Override
@@ -20,28 +36,15 @@ public class ConstExpr extends Expr {
 	}
 
 	@Override
-	public String toString() {
-		return getValue().toString();
-	}
+	public abstract  String toString();
 
 	public void show(int i) {
-        indent(i,"Constant[" + getValue() + "]");
+        indent(i,"Constant: " + toString());
 	}
-
-	@Override
-    public Name getValue() {
-    	return (Name)mValue;
-    }
 
 	@Override
 	public boolean equals(Expr e) {
-		if(e.isConst()) {
-			ConstExpr c = (ConstExpr)e;
-			if(c.getValue() == getValue())
-				return true;
-		}
-
-		return false;
+		return getClass() == e.getClass();
 	}
 
 	private enum Name {
@@ -57,10 +60,6 @@ public class ConstExpr extends Expr {
 		identifiers.put("e", Name.E);
     }
 
-    public static boolean isConstant(String s) {
-		return (lookup(s) != null);
-	}
-
 	private static Name lookup(String s) {
 		String lookup = s.toLowerCase();
 		if(identifiers.containsKey(lookup))
@@ -70,15 +69,7 @@ public class ConstExpr extends Expr {
 	}
 
 	@Override
-	protected Expr evaluate() {
-
-    	switch (getValue()) {
-     		case PI :
-     			return RealNum.create(Math.PI);
-			case E:
-				return RealNum.create(Math.E);
-    	}
-    	
-    	return this;
+	protected int getProperties() {
+		return Properties.CONSTANT.value;
 	}
 }

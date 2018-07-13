@@ -1,7 +1,9 @@
 package org.cerion.symcalc.expression;
 
+import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.function.core.Hold;
 import org.cerion.symcalc.expression.function.core.N;
+import org.cerion.symcalc.expression.function.core.NumberQ;
 import org.cerion.symcalc.expression.function.trig.Sin;
 import org.cerion.symcalc.expression.function.arithmetic.*;
 import org.cerion.symcalc.expression.function.plots.Plot;
@@ -44,6 +46,8 @@ public abstract class FunctionExpr extends Expr
 			get(j).show(i+1);
     }
 
+    public void validate() throws ValidationException {}
+
 	@Override
 	public boolean equals(Expr e) {
 		if(!e.isFunction())
@@ -71,9 +75,9 @@ public abstract class FunctionExpr extends Expr
        
 	protected enum FunctionType
 	{
-
 		N("N"),
 		HOLD("Hold"),
+		NUMBERQ("NumberQ"),
 
 		// Core
 		SET("Set"),
@@ -185,6 +189,7 @@ public abstract class FunctionExpr extends Expr
 		{
 			case N: return new N(e);
 			case HOLD: return new Hold(e);
+			case NUMBERQ: return new NumberQ(e);
 
 			case PLUS: return new Plus(e);
 			case SUBTRACT: return new Subtract(e);
@@ -238,8 +243,16 @@ public abstract class FunctionExpr extends Expr
 		}
     }
 
-	protected ErrorExpr invalidParameterCountError(int expected, int actual) {
-		String error = String.format("%d parameters, expected %d", actual, expected);
-		return new ErrorExpr(error);
+    protected void validateParameterType(int position, ExprType type) throws ValidationException {
+    	if (size() < position || get(position).getType() != type)
+			throw new ValidationException(String.format("parameter %d must be type %s", position, type));
+	}
+
+	protected void validateParameterCount(int expected) throws ValidationException {
+    	if (size() == expected)
+    		return;
+
+		String error = String.format("%d parameters, expected %d", size(), expected);
+		throw new ValidationException(error);
 	}
 }

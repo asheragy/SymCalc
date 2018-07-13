@@ -20,6 +20,7 @@ public class Plot extends FunctionExpr {
         return new PlotGraphics(function, list.get(1).toIntegerNum(), list.get(2).toIntegerNum());
     }
 
+    /*
     @Override
     protected ErrorExpr validate() {
         if (size() == 0)
@@ -32,4 +33,5 @@ public class Plot extends FunctionExpr {
 
         return null;
     }
+    */
 }

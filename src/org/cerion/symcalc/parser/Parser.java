@@ -188,7 +188,7 @@ public class Parser {
         else if (token == CONST) 
         {
 			getNext();
-            return new ConstExpr(tokval);
+            return ConstExpr.getConstant(tokval);
         } 
         else if (token == '(') 
         {

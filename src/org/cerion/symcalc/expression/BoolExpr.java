@@ -5,7 +5,7 @@ public class BoolExpr extends Expr {
 	public static final BoolExpr TRUE = new BoolExpr(true);
 	public static final BoolExpr FALSE = new BoolExpr(false);
 	
-	private BoolExpr(boolean value)
+	public BoolExpr(boolean value)
 	{
 		setValue(value);
 	}

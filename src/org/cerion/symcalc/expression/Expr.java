@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression;
 
 import org.cerion.symcalc.Environment;
+import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.parser.Lexer;
 import org.cerion.symcalc.parser.Parser;
@@ -120,16 +121,16 @@ public abstract class Expr
 	protected abstract Expr evaluate();
 	protected abstract ExprType getType();
 
-	protected ErrorExpr validate() {
-		return null;
-	}
-
 	public final Expr eval() {
 		//https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
 		//https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
-		if(validate() != null) {
-			return validate();
+		if (isFunction()) {
+			try {
+				((FunctionExpr) this).validate();
+			} catch (ValidationException e) {
+				return new ErrorExpr(e.getMessage());
+			}
 		}
 
 		// Associative function, if the same function is a parameter move its parameters to the top level
@@ -214,7 +215,9 @@ public abstract class Expr
 		NONE(0),
 		HOLD(1),
 		LISTABLE(2),
-		ASSOCIATIVE(4);
+		ASSOCIATIVE(4),
+		CONSTANT(8),
+		NumericFunction(16);
 
 		public final int value;
 
@@ -297,6 +300,7 @@ public abstract class Expr
 		return result;
 	}
 
+	// TODO add functions to access the Env values directly, getEnv() is a bit redundant
 	public final Environment getEnv() {
 		return mEnv;
 	}

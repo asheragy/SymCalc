@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.function.list;
 
+import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.ErrorExpr;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
@@ -26,15 +27,8 @@ public class Join extends FunctionExpr {
     }
 
     @Override
-    protected ErrorExpr validate() {
-
-        for(int i = 0; i < size(); i++) {
-            Expr e = get(i);
-            if(!e.isList()) {
-                return ErrorExpr.getInvalidParameterType(ListExpr.class, i);
-            }
-        }
-
-        return null;
+    public void validate() throws ValidationException {
+        for(int i = 0; i < size(); i++)
+            validateParameterType(i, ExprType.LIST);
     }
 }

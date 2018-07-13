@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.function.list;
 
+import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.ErrorExpr;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
@@ -33,12 +34,7 @@ public class Flatten extends FunctionExpr {
     }
 
     @Override
-    protected ErrorExpr validate() {
-
-        if(size() != 1 || !get(0).isList()) {
-            return new ErrorExpr("parameter 1 must be a list");
-        }
-
-        return null;
+    public void validate() throws ValidationException {
+        validateParameterType(0, ExprType.LIST);
     }
 }

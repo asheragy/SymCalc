@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.function.integer;
 
+import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.BoolExpr;
 import org.cerion.symcalc.expression.ErrorExpr;
 import org.cerion.symcalc.expression.Expr;
@@ -26,11 +27,7 @@ public class OddQ extends FunctionExpr {
     }
 
     @Override
-    protected ErrorExpr validate() {
-
-        if(size() != 1)
-            return invalidParameterCountError(1, size());
-
-        return null;
+    public void validate() throws ValidationException {
+        validateParameterCount(1);
     }
 }
