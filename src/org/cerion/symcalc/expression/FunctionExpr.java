@@ -68,16 +68,20 @@ public abstract class FunctionExpr extends Expr
 		return true;
 	}
 
-	public void add(Expr t)
-    { 
+	public void add(Expr t) {
     	setArgs(t); 
     }
-       
+
+    public boolean isNumeric() {
+    	return hasProperty(Properties.NumericFunction);
+	}
+
 	protected enum FunctionType
 	{
 		N("N"),
 		HOLD("Hold"),
 		NUMBERQ("NumberQ"),
+		NUMERICQ("NumericQ"),
 
 		// Core
 		SET("Set"),

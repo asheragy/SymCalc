@@ -29,8 +29,7 @@ public abstract class Expr
 		return mArgs;
 	}
 	
-	public Expr[] args()
-	{
+	public Expr[] args() {
 		return mArgs.toArray(new Expr[mArgs.size()]);
 	}
 
@@ -230,7 +229,7 @@ public abstract class Expr
 		return Properties.NONE.value;
 	}
 
-	private boolean hasProperty(Properties attr) {
+	protected boolean hasProperty(Properties attr) {
 		int attrs = getProperties();
 
 		if((attr.value & attrs) != 0)
