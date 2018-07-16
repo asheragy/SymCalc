@@ -4,6 +4,7 @@ import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.function.core.Hold;
 import org.cerion.symcalc.expression.function.core.N;
 import org.cerion.symcalc.expression.function.core.NumberQ;
+import org.cerion.symcalc.expression.function.core.NumericQ;
 import org.cerion.symcalc.expression.function.trig.Sin;
 import org.cerion.symcalc.expression.function.arithmetic.*;
 import org.cerion.symcalc.expression.function.plots.Plot;
@@ -105,6 +106,8 @@ public abstract class FunctionExpr extends Expr
 		PARTITION("Partition"),
 		JOIN("Join"),
 		SELECT("Select"),
+		VECTORQ("VectorQ"),
+		MATRIXQ("MatrixQ"),
 		
 		//IntegerNum
 		FACTORIAL("Factorial"),
@@ -194,6 +197,7 @@ public abstract class FunctionExpr extends Expr
 			case N: return new N(e);
 			case HOLD: return new Hold(e);
 			case NUMBERQ: return new NumberQ(e);
+			case NUMERICQ: return new NumericQ(e);
 
 			case PLUS: return new Plus(e);
 			case SUBTRACT: return new Subtract(e);
@@ -213,6 +217,8 @@ public abstract class FunctionExpr extends Expr
 			case PARTITION: return new Partition(e);
 			case JOIN: return new Join(e);
 			case SELECT: return new Select(e);
+			case VECTORQ: return new VectorQ(e);
+			case MATRIXQ: return new MatrixQ(e);
 
 			//IntegerNum
 			case FACTORIAL: return new Factorial(e);
