@@ -108,6 +108,7 @@ public abstract class FunctionExpr extends Expr
 		SELECT("Select"),
 		VECTORQ("VectorQ"),
 		MATRIXQ("MatrixQ"),
+		DOT("Dot"),
 		
 		//IntegerNum
 		FACTORIAL("Factorial"),
@@ -219,6 +220,7 @@ public abstract class FunctionExpr extends Expr
 			case SELECT: return new Select(e);
 			case VECTORQ: return new VectorQ(e);
 			case MATRIXQ: return new MatrixQ(e);
+			case DOT: return new Dot(e);
 
 			//IntegerNum
 			case FACTORIAL: return new Factorial(e);
