@@ -7,6 +7,7 @@ import org.cerion.symcalc.expression.number.RealNum;
 public abstract class NumberExpr extends Expr
 {
 	//Types
+	// TODO make this enum
 	public static final int INTEGER = 0;
 	public static final int RATIONAL = 1;
 	public static final int REAL = 2;

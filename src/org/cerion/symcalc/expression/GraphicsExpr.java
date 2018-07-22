@@ -23,7 +23,7 @@ public class GraphicsExpr extends Expr {
     }
 
     @Override
-    protected ExprType getType() {
+    public ExprType getType() {
         return ExprType.GRAPHICS;
     }
 }

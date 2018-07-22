@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class Expr 
 {
-	protected Object mValue;
+	private Object mValue;
 	private List<Expr> mArgs;
 
 	protected void setArgs(Expr ...args)
@@ -118,7 +118,7 @@ public abstract class Expr
 	public abstract void show(int i); //rename to something like treeForm or make different function, can probably make non-abstract if types are standardized (name + value/args)
 	public abstract boolean equals(Expr e);
 	protected abstract Expr evaluate();
-	protected abstract ExprType getType();
+	public abstract ExprType getType();
 
 	public final Expr eval() {
 		//https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
@@ -179,8 +179,7 @@ public abstract class Expr
 			}
 		}
 
-		Expr e = evaluate();
-		return e;
+		return evaluate();
 	}
 
 	@Override
@@ -192,7 +191,7 @@ public abstract class Expr
 		show(0);
 	}
 
-	protected enum ExprType {
+	public enum ExprType {
 		NUMBER,
 		VARIABLE,
 		FUNCTION,
@@ -238,7 +237,7 @@ public abstract class Expr
 		return false;
 	}
 
-	protected void indent(int i, String s) 
+	protected void indent(int i, String s)
 	{
 		for(int ii = 0; ii < 2*i; ii++)
 			System.out.print(" ");

@@ -47,6 +47,7 @@ public abstract class FunctionExpr extends Expr
 			get(j).show(i+1);
     }
 
+    // TODO make this required for subclasses
     public void validate() throws ValidationException {}
 
 	@Override
@@ -109,6 +110,7 @@ public abstract class FunctionExpr extends Expr
 		VECTORQ("VectorQ"),
 		MATRIXQ("MatrixQ"),
 		DOT("Dot"),
+		IDENTITY_MATRIX("IdentityMatrix"),
 		
 		//IntegerNum
 		FACTORIAL("Factorial"),
@@ -258,6 +260,12 @@ public abstract class FunctionExpr extends Expr
     protected void validateParameterType(int position, ExprType type) throws ValidationException {
     	if (size() < position || get(position).getType() != type)
 			throw new ValidationException(String.format("parameter %d must be type %s", position, type));
+	}
+
+	protected void validateNumberType(int position, int numberType) throws ValidationException {
+    	NumberExpr e = (NumberExpr)get(position);
+    	if (e.numType() != numberType)
+    		throw new ValidationException(String.format("parameter %d must be type %s", position, numberType));
 	}
 
 	protected void validateParameterCount(int expected) throws ValidationException {
