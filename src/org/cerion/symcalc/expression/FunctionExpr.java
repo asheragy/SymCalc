@@ -78,7 +78,11 @@ public abstract class FunctionExpr extends Expr
     	return hasProperty(Properties.NumericFunction);
 	}
 
-	protected enum FunctionType
+	public FunctionType getFunctionType() {
+    	return mType;
+	}
+
+	public enum FunctionType
 	{
 		N("N"),
 		HOLD("Hold"),
@@ -94,7 +98,10 @@ public abstract class FunctionExpr extends Expr
 		TIMES("Times"),
 		DIVIDE("Divide"),
 		POWER("Power"),
+
+		// Trig
 		SIN("Sin"),
+		COS("Cos"),
 		
 		//List Functions
 		TOTAL("Total"),
@@ -128,6 +135,8 @@ public abstract class FunctionExpr extends Expr
 		EVENQ("EvenQ"),
 		ODDQ("OddQ"),
 
+		// Calculus
+		D("D"),
 
 		//Logical
 		GREATER("Greater"),

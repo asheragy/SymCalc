@@ -39,12 +39,14 @@ public class Times extends FunctionExpr {
 		}
 		
 		//At least 1 non-number value
-		if(list.size() > 0)
-		{
+		if(list.size() > 0) {
 			//Only add number if not one
 			if(!product.isOne())
 				list.add(0, product);
-			
+
+			if (list.size() == 1)
+				return list.get(0);
+
 			return new Times(list.toArray(new Expr[list.size()]));
 		}
 		
