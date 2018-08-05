@@ -1,23 +1,69 @@
 package org.cerion.symcalc.expression.function.list;
 
+import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.*;
 import org.cerion.symcalc.expression.number.IntegerNum;
 
 public class Table extends FunctionExpr {
 
-	public Table(Expr e, int N) {
-		this(e, new ListExpr(new IntegerNum(N)));
-	}
-
 	public Table(Expr... e) {
 		super(FunctionType.TABLE);
-		//this.EVAL = false;
 		this.setArgs(e);
 	}
 	
 	@Override
 	protected Expr evaluate() {
-		/*
+		Expr expr = get(0);
+		ListExpr argList = (ListExpr)get(1);
+
+		if(argList.size() == 1)
+			return evaluate(expr, null, IntegerNum.ONE, argList.getInteger(0), IntegerNum.ONE);
+
+		VarExpr var = (VarExpr)argList.get(0);
+
+		if (argList.size() == 2 && argList.get(1).isList())
+			return evaluate(expr, var, argList.getList(1));
+		else if (argList.size() == 2)
+			return evaluate(expr, var, IntegerNum.ONE, argList.getInteger(1), IntegerNum.ONE);
+		else if (argList.size() == 3)
+			return evaluate(expr, var, argList.getInteger(1), argList.getInteger(2), IntegerNum.ONE);
+		else if (argList.size() == 4)
+			return evaluate(expr, var, argList.getInteger(1), argList.getInteger(2), argList.getInteger(3));
+
+		return new ErrorExpr("Table() unexpected case");
+	}
+
+	private Expr evaluate(Expr expr, VarExpr var, IntegerNum iMin, IntegerNum iMax, IntegerNum iStep) {
+		int min = iMin.intValue();
+		int max = iMax.intValue();
+		int step = iStep.intValue();
+
+		ListExpr values = new ListExpr();
+		for(int i = min; i <= max; i+= step)
+			values.add(new IntegerNum(i));
+
+		return evaluate(expr, var, values);
+	}
+
+	private Expr evaluate(Expr expr, VarExpr var, ListExpr values) {
+		ListExpr result = new ListExpr();
+		for(int i = 0; i < values.size(); i++) {
+			if (var != null)
+				getEnv().setVar(var.value(), values.get(i));
+			result.add( expr.eval());
+		}
+
+		return result;
+	}
+
+	@Override
+	protected int getProperties() {
+		return Properties.HOLD.value;
+	}
+
+	@Override
+	public void validate() throws ValidationException {
+		 /*
 			Table[expr,{N}]     		    //N copies
 			Table[expr,{x, max}] 	        //1 to max
 			Table[expr,{x, min,max}]      //min to max
@@ -27,91 +73,31 @@ public class Table extends FunctionExpr {
 				Table[RandomInteger[10],{10}]
 		 */
 
-		if(size() == 2 && get(1).isList())
-		{
-			Expr result = new ErrorExpr("Invalid parameters"); //Default
-			Expr expr = get(0);
-			
-			//List needs to be {num} or {expr,num,num,num}
-			ListExpr argList = (ListExpr)get(1);
-			
-			//Single number only
-			if(argList.size() == 1 && argList.get(0).isNumber())
-			{
-				IntegerNum num = (IntegerNum)argList.get(0);
-				int size = num.toInteger();
+		validateParameterCount(2);
+		validateParameterType(1, ExprType.LIST);
 
-				ListExpr varList = new ListExpr();
-				for(int i = 0; i < size; i++)
-					varList.add(expr.eval());
-				
-				//Set variable equal to list
-				//SetVar(var.GetName(),varList);
-				result = varList;
-			}
-			
-			//Expr followed by at least 1 number
-			else if(argList.size() >= 2 && argList.get(0).isVariable() && argList.get(1).isNumber())
-			{
-				VarExpr var = (VarExpr)argList.get(0);
-				IntegerNum n1 = (IntegerNum)argList.get(1);
-				IntegerNum n2 = null;
-				IntegerNum n3 = null;
-				
-				if(argList.size() >= 3 && argList.get(2).isNumber())
-					n2 = (IntegerNum)argList.get(2);
-				if(argList.size() >= 4 && argList.get(3).isNumber())
-					n3 = (IntegerNum)argList.get(3);
-				
-				//Default 1 to max
-				int a = 1;
-				int b = n1.toInteger();
-				
-				//both min/max given
-				if(n2 != null)
-				{
-					a = b;
-					b = n2.toInteger();
-				}
+		ListExpr list = getList(1);
+		if (list.size() == 0)
+			throw new ValidationException("list parameters must not be empty");
 
-				int iStep = 1;
-				if(n3 != null) //step
-					iStep = n3.toInteger();
-				
-				ListExpr varList = new ListExpr();
-				int i = a;
-				while(i <= b)
-				{
-					varList.add( new IntegerNum(i));
-					i += iStep;
-				}
-				
-				//Set variable equal to list
-				getEnv().setVar(var.value(),varList);
-				result = expr.eval();
-				
-				//If result is not a list, make it one
-				if(!result.isList())
-				{
-					varList = new ListExpr();
-					i = a;
-					while(i <= b)
-					{
-						varList.add( result);
-						i += iStep;
-					}
-					result = varList.eval(); //eval might not be needed
-				}
-			}
-			
-			return result;
+		if (list.size() == 1)
+			if(!list.get(0).isInteger())
+				throw new ValidationException("list parameter at position 0 must be an integer");
+
+		if (list.size() > 4)
+			throw new ValidationException("too many list parameters");
+
+		// If more than 1 parameter first must be variable and the rest integers
+		if (list.size() > 1) {
+			if (!list.get(0).isVariable())
+				throw new ValidationException("first list parameter must be variable");
+
+			if (list.size() >= 2 && (!list.get(1).isInteger() && !list.get(1).isList()))
+				throw new ValidationException("first list parameter at position 1 must be integer OR value list");
+			if (list.size() >= 3 && !list.get(2).isInteger())
+				throw new ValidationException("first list parameter at position 2 must be integer");
+			if (list.size() == 4 && !list.get(3).isInteger())
+				throw new ValidationException("first list parameter at position 3 must be integer");
 		}
-			
-		return this;
-	}
-
-	@Override
-	protected int getProperties() {
-		return Properties.HOLD.value;
 	}
 }

@@ -179,7 +179,13 @@ public abstract class Expr
 			}
 		}
 
-		return evaluate();
+		try {
+			return evaluate();
+		}
+		catch(Exception e) {
+			return new ErrorExpr(e.toString());
+		}
+
 	}
 
 	@Override

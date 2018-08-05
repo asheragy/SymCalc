@@ -16,8 +16,7 @@ public class RandomChoice extends FunctionExpr {
     protected Expr evaluate() {
         ListExpr list = (ListExpr)get(0);
         if (size() > 1) {
-            IntegerNum N = (IntegerNum)get(1);
-            return new Table(new RandomChoice(list), N.toInteger()).eval();
+            return new Table(new RandomChoice(list), new ListExpr(getInteger(1))).eval();
         }
 
         IntegerNum rand = (IntegerNum)new RandomInteger(list.size()-1).eval();
