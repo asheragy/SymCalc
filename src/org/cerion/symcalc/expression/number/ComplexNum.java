@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.number;
 
 import org.cerion.symcalc.expression.NumberExpr;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class ComplexNum extends NumberExpr
 {
@@ -218,6 +219,10 @@ public class ComplexNum extends NumberExpr
 		
 		//System.out.println(this + " * " + num + " = " + result);
 		return result;
-	}	
+	}
 
+	@Override
+	public int compareTo(NumberExpr o) {
+		throw new NotImplementedException();
+	}
 }

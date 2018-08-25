@@ -1,18 +1,26 @@
 package org.cerion.symcalc.expression.number;
 
+import org.cerion.symcalc.expression.Expr;
+import org.cerion.symcalc.expression.ListExpr;
 import org.cerion.symcalc.expression.NumberExpr;
 import org.cerion.symcalc.expression.function.arithmetic.Divide;
+import org.cerion.symcalc.expression.function.arithmetic.Power;
+import org.cerion.symcalc.expression.function.arithmetic.Times;
+import org.cerion.symcalc.expression.function.integer.Factor;
+import org.cerion.symcalc.expression.function.list.Tally;
+import sun.plugin.dom.exception.InvalidStateException;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public class IntegerNum extends NumberExpr
-{
-	public int numType() {
-		return INTEGER; 
-	}
-	
+public class IntegerNum extends NumberExpr {
+
+	public static final IntegerNum ZERO = new IntegerNum(0);
+	public static final IntegerNum ONE = new IntegerNum(1);
+	public static final IntegerNum TWO = new IntegerNum(2);
+	public static final IntegerNum NEGATIVE_ONE = new IntegerNum(-1);
+
 	public IntegerNum(BigInteger n) {
 		setValue(n);
 	}
@@ -23,6 +31,11 @@ public class IntegerNum extends NumberExpr
 	
 	public IntegerNum(long n) {
 		setValue(BigInteger.valueOf(n));
+	}
+
+	@Override
+	public int numType() {
+		return INTEGER;
 	}
 
 	@Override
@@ -41,11 +54,6 @@ public class IntegerNum extends NumberExpr
 		return false;
 	}
 
-	public static final IntegerNum ZERO = new IntegerNum(0);
-	public static final IntegerNum ONE = new IntegerNum(1);
-	public static final IntegerNum TWO = new IntegerNum(2);
-	public static final IntegerNum NEGATIVE_ONE = new IntegerNum(-1);
-
 	public int intValue() {
 		return val().intValue();
 	}
@@ -55,28 +63,23 @@ public class IntegerNum extends NumberExpr
 		return val().intValue();
 	}
 	
-	public BigInteger toBigInteger()
-	{
+	public BigInteger toBigInteger() {
 		return val();
 	}
 
-	public double toDouble()
-	{
+	public double toDouble() {
 		return val().doubleValue();
 	}
 	
-	public RealNum toReal()
-	{
+	public RealNum toReal() {
 		return null;
 	}
 	
-	public BigDecimal toBigDecimal()
-	{
+	public BigDecimal toBigDecimal() {
 		return new BigDecimal(val());
 	}
 	
-	private BigInteger val()
-	{
+	private BigInteger val() {
 		return (BigInteger)getValue();
 	}
 
@@ -85,35 +88,30 @@ public class IntegerNum extends NumberExpr
 		return new IntegerNum(val().negate());
 	}
 
-	public boolean isZero()
-	{
+	public boolean isZero() {
 		return val().equals(BigInteger.ZERO);
 	}
-	public boolean isOne()
-	{
+
+	public boolean isOne() {
 		return val().equals(BigInteger.ONE);
 	}
 	
-	public int signum()
-	{
+	public int signum() {
 		return val().signum();
 	}
 
-	public NumberExpr add(NumberExpr num)
-	{
+	public NumberExpr add(NumberExpr num) {
 		if(num.numType() == INTEGER) //IntegerNum + IntegerNum
 			return add((IntegerNum)num);
 		
 		return num.add(this); //Higher number type will handle conversion
 	}
 	
-	public IntegerNum add(IntegerNum n)
-	{
+	public IntegerNum add(IntegerNum n) {
 		return new IntegerNum( val().add( n.val() ));
 	}
 	
-	public NumberExpr subtract(NumberExpr num) 
-	{
+	public NumberExpr subtract(NumberExpr num) {
 		if(num.numType() == INTEGER) //IntegerNum - IntegerNum
 			return subtract((IntegerNum)num);
 		
@@ -122,8 +120,7 @@ public class IntegerNum extends NumberExpr
 		return negative.add(this);
 	}
 	
-	public IntegerNum subtract(IntegerNum n)
-	{
+	public IntegerNum subtract(IntegerNum n) {
 		return new IntegerNum( val().subtract( n.val()) );
 	}
 
@@ -139,14 +136,13 @@ public class IntegerNum extends NumberExpr
 		return new IntegerNum( val().multiply( n.val() ));
 	}
 
-	public NumberExpr divide(NumberExpr num) 
-	{
+	public NumberExpr divide(NumberExpr num) {
 		//Any code calling this should check
 		if(num.isZero())
 			throw new ArithmeticException("divide by zero");
-		
-		if(num.isInteger()) //Int / Int
-		{
+
+        //Int / Int
+		if(num.isInteger()) {
 			IntegerNum n = (IntegerNum)num;
 			IntegerNum gcd = this.GCD(n);
 			
@@ -174,10 +170,9 @@ public class IntegerNum extends NumberExpr
 		
 		throw new NotImplementedException();
 		//return num.multiply(this);
-	}	
-	
-	public boolean canExp(NumberExpr num)
-	{
+	}
+
+	public boolean canExp(NumberExpr num) {
 		switch (num.numType())
 			{
 			case INTEGER: return true;
@@ -186,23 +181,64 @@ public class IntegerNum extends NumberExpr
 		
 		return false;
 	}
-	
-	public NumberExpr power(NumberExpr num) 
-	{
-		NumberExpr result = null;
-		switch (num.numType()) 
-		{
-			case INTEGER: //IntegerNum ^ IntegerNum
+
+    @Override
+    public Expr power(NumberExpr num) {
+		//NumberExpr result = null;
+		switch (num.numType()) {
+			case INTEGER:
 				return new IntegerNum(val().pow( ((IntegerNum)num).val().intValue() ));
 
-			case REAL: //RealNum ^ RealNum
-			{
-				result = RealNum.create(this);
+            case RATIONAL:
+                double pow = Math.pow(val().doubleValue(), num.toDouble());
+                RealNum real = RealNum.create(pow);
+
+                if(!getEnv().isNumericalEval()) {
+                    if (real.isWholeNumber())
+                        return real.toInteger();
+                    else {
+                    	// factor out any numbers that are the Nth root of the denominator
+						Expr t = new Factor(this);
+						ListExpr factors = new Tally(t).eval().asList();
+						int denominator = ((RationalNum)num).denominator().intValue();
+
+						IntegerNum multiply = IntegerNum.ONE;
+
+						for(int i = 0; i < factors.size();) {
+							int key = factors.get(i).get(0).asInteger().intValue();
+							int val = factors.get(i).get(1).asInteger().intValue();
+
+							// Factor it out
+							if (val >= denominator) {
+								multiply = new Times(multiply, new IntegerNum(key)).eval().asInteger();
+								factors.set(i, new ListExpr(new IntegerNum(key), new IntegerNum(val - denominator)));
+							} else
+								i++;
+						}
+
+						if (multiply.isOne())
+							return new Power(this, num);
+
+						// Factor out multiples
+						//Expr result = new Power(this, num);
+						IntegerNum root = IntegerNum.ONE;
+						for(int i = 0; i < factors.size(); i++) {
+							root = new Times(root, factors.get(i).get(0), factors.get(i).get(1)).eval().asInteger();
+						}
+
+						return new Times(multiply, new Power(root, num));
+					}
+                }
+
+                return real;
+
+			case REAL: {
+				//result = RealNum.create(this);
 				break;
 			}
 		}
 	
-		return result.power(num);
+		throw new InvalidStateException("missing case");
 	}	
 	
 	//IntegerNum Specific Functions
@@ -214,13 +250,11 @@ public class IntegerNum extends NumberExpr
 		return (val().testBit(0));
 	}
 	
-	public IntegerNum GCD(IntegerNum N)
-	{
+	public IntegerNum GCD(IntegerNum N) {
 		return new IntegerNum(val().gcd(N.val()));
 	}
 	
-	public IntegerNum PowerMod(NumberExpr b, NumberExpr m)
-	{
+	public IntegerNum PowerMod(NumberExpr b, NumberExpr m) {
 		//Assuming all integers at this point since MathFunc needs to check that
 		BigInteger num = ((IntegerNum)this).val();
 		BigInteger exp = ((IntegerNum)b).val();
@@ -229,18 +263,15 @@ public class IntegerNum extends NumberExpr
 		return new IntegerNum(num.modPow(exp, mod)) ;
 	}
 	
-	public boolean PrimeQ()
-	{
+	public boolean primeQ() {
 		return val().isProbablePrime(5);
 	}
 	
-	public IntegerNum factorial()
-	{ 
+	public IntegerNum factorial() {
 		return factorial((int)this.val().longValue()); 
 	}
 	
-	public static IntegerNum factorial(int N)
-	{
+	public static IntegerNum factorial(int N) {
 		BigInteger result = BigInteger.valueOf(1);
 		while(N > 1)
 		{
@@ -251,8 +282,18 @@ public class IntegerNum extends NumberExpr
 		return new IntegerNum(result);
 	}
 	
-	public IntegerNum mod(IntegerNum N)
-	{
+	public IntegerNum mod(IntegerNum N) {
 		return new IntegerNum( val().mod(N.val()));
+	}
+
+	@Override
+	public int compareTo(NumberExpr o) {
+		if (o.isInteger()) {
+			BigInteger n1 = val();
+			BigInteger n2 = o.toIntegerNum().val();
+			return n1.compareTo(n2);
+		}
+
+		throw new NotImplementedException();
 	}
 }

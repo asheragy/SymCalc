@@ -13,6 +13,16 @@ public class RealNum_BigDecimal extends RealNum {
         return REAL;
     }
 
+    @Override
+    public boolean isWholeNumber() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public IntegerNum toInteger() {
+        return null;
+    }
+
     public double toDouble() {
         return bigNumber.doubleValue();
     }

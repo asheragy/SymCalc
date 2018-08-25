@@ -176,4 +176,18 @@ class RealNum_Double extends RealNum {
         return null;
     }
 
+    @Override
+    public boolean isWholeNumber() {
+        if(dNumber == Math.floor(dNumber) && !Double.isInfinite(dNumber))
+            return true;
+
+        return false;
+    }
+
+    @Override
+    public IntegerNum toInteger() {
+        return new IntegerNum((long)dNumber);
+    }
+
+
 }

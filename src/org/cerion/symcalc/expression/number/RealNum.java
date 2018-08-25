@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.number;
 
 import org.cerion.symcalc.expression.NumberExpr;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public abstract class RealNum extends NumberExpr
 {
@@ -23,6 +24,14 @@ public abstract class RealNum extends NumberExpr
 
 	public static RealNum create(double n) {
 		return new RealNum_Double(n);
+	}
+
+	public abstract boolean isWholeNumber(); // TODO better name for this? isInteger() is already taken
+	public abstract IntegerNum toInteger();
+
+	@Override
+	public int compareTo(NumberExpr o) {
+		throw new NotImplementedException();
 	}
 
 	/*

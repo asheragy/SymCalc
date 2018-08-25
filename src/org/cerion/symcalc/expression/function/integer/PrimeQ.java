@@ -17,7 +17,7 @@ public class PrimeQ extends FunctionExpr {
 		if(get(0).isInteger())
 		{
 			IntegerNum n = (IntegerNum)get(0);
-			if(n.PrimeQ())
+			if(n.primeQ())
 				return BoolExpr.TRUE;
 			else
 				return BoolExpr.FALSE;

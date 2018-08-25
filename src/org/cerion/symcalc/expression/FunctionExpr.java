@@ -98,6 +98,7 @@ public abstract class FunctionExpr extends Expr
 		TIMES("Times"),
 		DIVIDE("Divide"),
 		POWER("Power"),
+		SQRT("Sqrt"),
 
 		// Trig
 		SIN("Sin"),
@@ -118,6 +119,7 @@ public abstract class FunctionExpr extends Expr
 		MATRIXQ("MatrixQ"),
 		DOT("Dot"),
 		IDENTITY_MATRIX("IdentityMatrix"),
+		TALLY("Tally"),
 		
 		//IntegerNum
 		FACTORIAL("Factorial"),
@@ -125,7 +127,7 @@ public abstract class FunctionExpr extends Expr
 		POWERMOD("PowerMod"),
 		GCD("GCD"),
 		FOURIER("Fourier"),
-		PRIMEQ("PrimeQ"),
+		PRIMEQ("primeQ"),
 		FIBONACCI("Fibonacci"),
 		FACTOR("Factor"),
 		BINOMIAL("Binomial"),

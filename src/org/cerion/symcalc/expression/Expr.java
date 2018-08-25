@@ -53,6 +53,10 @@ public abstract class Expr
 		return mArgs.get(index);
 	}
 
+	public void set(int index, Expr e) {
+		mArgs.set(index, e);
+	}
+
 	public ListExpr getList(int index) {
 		return (ListExpr)get(index);
 	}
@@ -61,6 +65,11 @@ public abstract class Expr
 		return (IntegerNum)get(index);
 	}
 
+	public ListExpr asList() { return (ListExpr)this; }
+	public IntegerNum asInteger() { return (IntegerNum) this; }
+
+	// TODO rename these "asIntegerNum" etc, "to" indicates a type of conversation when really we are getting what it already is.
+	@Deprecated
 	public IntegerNum toIntegerNum() {
 		return (IntegerNum)this;
 	}
@@ -124,14 +133,6 @@ public abstract class Expr
 		//https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
 		//https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
-		if (isFunction()) {
-			try {
-				((FunctionExpr) this).validate();
-			} catch (ValidationException e) {
-				return new ErrorExpr(e.getMessage());
-			}
-		}
-
 		// Associative function, if the same function is a parameter move its parameters to the top level
 		if(hasProperty(Properties.ASSOCIATIVE)) {
 			for(int i = 0; i < size(); i++) {
@@ -146,6 +147,14 @@ public abstract class Expr
 		}
 
 		getEnv().skipEval = false;
+
+		if (isFunction()) {
+			try {
+				((FunctionExpr) this).validate();
+			} catch (ValidationException e) {
+				return new ErrorExpr(e.getMessage());
+			}
+		}
 
 		// Set environment for every parameter to the current one before its evaluated
 		for (int i = 0; i < size(); i++) {

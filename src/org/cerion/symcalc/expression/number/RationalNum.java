@@ -1,6 +1,8 @@
 package org.cerion.symcalc.expression.number;
 
+import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.NumberExpr;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.math.BigDecimal;
 
@@ -91,6 +93,10 @@ public class RationalNum extends NumberExpr
 	@Override
 	public NumberExpr negate() {
 		return new RationalNum(numerator().negate(), denominator());
+	}
+
+	public NumberExpr reciprocal() {
+		return new RationalNum(denominator(), numerator()).evaluate();
 	}
 
 	@Override
@@ -186,7 +192,7 @@ public class RationalNum extends NumberExpr
 	}
 
 	@Override
-	public NumberExpr power(NumberExpr num) {
+	public Expr power(NumberExpr num) {
 		IntegerNum n;
 		IntegerNum d;
 		switch (num.numType()) 
@@ -216,4 +222,8 @@ public class RationalNum extends NumberExpr
 			setArg(1, d);
 	}
 
+	@Override
+	public int compareTo(NumberExpr o) {
+		throw new NotImplementedException();
+	}
 }

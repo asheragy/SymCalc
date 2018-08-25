@@ -16,7 +16,7 @@ public class SubtractTest {
 		//Verify a-b = Subtract(a,b)
 		Expr expr = Expr.parse("5-1");
 		IntegerNum e = (IntegerNum)expr.eval();
-		assertEquals(4, e.toInteger());
+		assertEquals(4, e.intValue());
 	}
 	
 	@Test
@@ -42,10 +42,10 @@ public class SubtractTest {
 	public void basicNumbers() {
 		
 		IntegerNum t = getI(new IntegerNum(5), new IntegerNum(3));
-		assertEquals(2, t.toInteger());
+		assertEquals(2, t.intValue());
 		
 		t = getI(new IntegerNum(3), new IntegerNum(5));
-		assertEquals(-2, t.toInteger());
+		assertEquals(-2, t.intValue());
 	}
 
 	@Test
@@ -77,7 +77,7 @@ public class SubtractTest {
 		assertEquals(5, l.size());
 		
 		for(int n = 0; n < 5; n++)
-			assertEquals(7, ((IntegerNum)l.get(n)).toInteger());
+			assertEquals(7, ((IntegerNum)l.get(n)).intValue());
 		
 		//Single - List
 		e = get(i,a);
@@ -86,7 +86,7 @@ public class SubtractTest {
 		assertEquals(5, l.size());
 		
 		for(int n = 0; n < 5; n++)
-			assertEquals(-7, ((IntegerNum)l.get(n)).toInteger());
+			assertEquals(-7, ((IntegerNum)l.get(n)).intValue());
 	}
 
 	

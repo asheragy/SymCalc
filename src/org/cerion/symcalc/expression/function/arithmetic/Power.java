@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.function.arithmetic;
 
+import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.ErrorExpr;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
@@ -13,22 +14,18 @@ public class Power extends FunctionExpr {
 
 	@Override
 	public Expr evaluate() {
-		
-		if(size() != 2)
-			return new ErrorExpr("invalid parameters");
-		
 		Expr a = get(0);
 		Expr b = get(1);
 		
 		//Identity
+		// TODO unit test and move to NumberExpr classes
 		if(b.isNumber() && ((NumberExpr)b).isOne())
 			return a;
 				
-		if(a.isNumber() && b.isNumber())
-		{
+		if(a.isNumber() && b.isNumber()) {
 			NumberExpr n1 = (NumberExpr)a;
 			NumberExpr n2 = (NumberExpr)b;
-			
+
 			return n1.power(n2);
 		}
 
@@ -36,11 +33,15 @@ public class Power extends FunctionExpr {
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if(size() == 2)
 			return get(0) + "^" + get(1);
 		
 		return super.toString();
+	}
+
+	@Override
+	public void validate() throws ValidationException {
+		validateParameterCount(2);
 	}
 }

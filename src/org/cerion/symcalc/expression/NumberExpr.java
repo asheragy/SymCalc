@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.number.ComplexNum;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.number.RealNum;
 
-public abstract class NumberExpr extends Expr
+public abstract class NumberExpr extends Expr implements Comparable<NumberExpr>
 {
 	//Types
 	// TODO make this enum
@@ -19,7 +19,7 @@ public abstract class NumberExpr extends Expr
 	public abstract NumberExpr subtract(NumberExpr num);
 	public abstract NumberExpr multiply(NumberExpr num);
 	public abstract NumberExpr divide(NumberExpr num);
-	public abstract NumberExpr power(NumberExpr num);
+	public abstract Expr power(NumberExpr num);
 	public abstract boolean canExp(NumberExpr num); //this^num = num is TRUE, FALSE if can't resolve
 	public abstract NumberExpr negate();
 
