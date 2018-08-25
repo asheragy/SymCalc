@@ -22,7 +22,7 @@ public class Dot extends FunctionExpr {
 
         ListExpr a = getList(0);
         ListExpr b = getList(1);
-        if (new VectorQ(a).eval().toBool() == BoolExpr.TRUE)
+        if (new VectorQ(a).eval().asBool() == BoolExpr.TRUE)
             return evalVector(a, b);
 
         return evalMatrix(a, b);
@@ -72,11 +72,11 @@ public class Dot extends FunctionExpr {
         ListExpr a = getList(0);
         ListExpr b = getList(1);
 
-        if (new VectorQ(a).eval().toBool().value() && new VectorQ(b).eval().toBool().value()) {
+        if (new VectorQ(a).eval().asBool().value() && new VectorQ(b).eval().asBool().value()) {
             if (a.size() != b.size())
                 throw new ValidationException("Vectors must be same length");
         }
-        else if (new MatrixQ(a).eval().toBool().value() && new MatrixQ(b).eval().toBool().value()) {
+        else if (new MatrixQ(a).eval().asBool().value() && new MatrixQ(b).eval().asBool().value()) {
             ListExpr ax = a.getList(0);
             ListExpr bx = b.getList(0);
 

@@ -33,8 +33,8 @@ public class RandomIntegerTest {
         int[] found = { 0, 5, 10 };
 
         for(int i = 0; i < 10000; i++) {
-            IntegerNum n = e.eval().toIntegerNum();
-            int rand = n.toInteger();
+            IntegerNum n = e.eval().asInteger();
+            int rand = n.intValue();
             if(rand == 0)
                 found[0] = -1;
             else if(rand == 5)
@@ -55,8 +55,8 @@ public class RandomIntegerTest {
         int[] found = { 10, 15, 20 };
 
         for(int i = 0; i < 10000; i++) {
-            IntegerNum n = e.eval().toIntegerNum();
-            int rand = n.toInteger();
+            IntegerNum n = e.eval().asInteger();
+            int rand = n.intValue();
             if(rand == 10)
                 found[0] = -1;
             else if(rand == 15)

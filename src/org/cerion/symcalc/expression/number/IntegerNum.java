@@ -290,7 +290,7 @@ public class IntegerNum extends NumberExpr {
 	public int compareTo(NumberExpr o) {
 		if (o.isInteger()) {
 			BigInteger n1 = val();
-			BigInteger n2 = o.toIntegerNum().val();
+			BigInteger n2 = o.asInteger().val();
 			return n1.compareTo(n2);
 		}
 

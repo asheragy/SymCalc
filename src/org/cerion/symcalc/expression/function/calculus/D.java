@@ -26,7 +26,7 @@ public class D extends FunctionExpr {
             return IntegerNum.ZERO;
 
         if (e.isVariable()) {
-            if (e.toVar().equals(var))
+            if (e.asVar().equals(var))
                 return IntegerNum.ONE;
             else
                 return IntegerNum.ZERO;

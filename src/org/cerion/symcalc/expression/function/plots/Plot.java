@@ -17,7 +17,7 @@ public class Plot extends FunctionExpr {
 
         UserFunction function = new UserFunction("_", e, (VarExpr)list.get(0));
 
-        return new PlotGraphics(function, list.get(1).toIntegerNum(), list.get(2).toIntegerNum());
+        return new PlotGraphics(function, list.get(1).asInteger(), list.get(2).asInteger());
     }
 
     /*

@@ -28,7 +28,7 @@ public class Factor extends FunctionExpr {
 			// Continue factoring 3+
 			if(!num.isOne()) {
 				IntegerNum test = new IntegerNum(3);
-				IntegerNum max = new Times(test, test).eval().toIntegerNum();
+				IntegerNum max = new Times(test, test).eval().asInteger();
 
 				while(max.compareTo(num) <= 0) {
 
@@ -37,8 +37,8 @@ public class Factor extends FunctionExpr {
 						list.add(test);
 						num = (IntegerNum)num.divide(test);
 					} else {
-						test = new Plus(test, IntegerNum.TWO).eval().toIntegerNum();
-						max = new Times(test, test).eval().toIntegerNum();
+						test = new Plus(test, IntegerNum.TWO).eval().asInteger();
+						max = new Times(test, test).eval().asInteger();
 					}
 				}
 

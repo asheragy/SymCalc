@@ -12,7 +12,7 @@ public class Set extends FunctionExpr {
 
     @Override
     protected Expr evaluate() {
-        VarExpr v = get(0).toVar();
+        VarExpr v = get(0).asVar();
         Expr e = get(1);
 
         getEnv().setVar(v.value(), e);

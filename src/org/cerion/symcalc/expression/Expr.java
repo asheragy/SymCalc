@@ -65,23 +65,12 @@ public abstract class Expr
 		return (IntegerNum)get(index);
 	}
 
+	// Casting
 	public ListExpr asList() { return (ListExpr)this; }
 	public IntegerNum asInteger() { return (IntegerNum) this; }
+	public BoolExpr asBool() { return (BoolExpr)this; }
+	public VarExpr asVar() { return (VarExpr)this; }
 
-	// TODO rename these "asIntegerNum" etc, "to" indicates a type of conversation when really we are getting what it already is.
-	@Deprecated
-	public IntegerNum toIntegerNum() {
-		return (IntegerNum)this;
-	}
-
-	public BoolExpr toBool() {
-		return (BoolExpr)this;
-	}
-
-	public VarExpr toVar() {
-		return (VarExpr)this;
-	}
-	
 	protected void setArg(int index, Expr e)
 	{
 		if(mArgs == null)

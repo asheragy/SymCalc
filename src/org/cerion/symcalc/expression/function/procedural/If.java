@@ -14,7 +14,7 @@ public class If extends FunctionExpr {
     protected Expr evaluate() {
         Expr p0 = get(0);
         if (p0.isBool()) {
-            if (p0.toBool() == BoolExpr.TRUE)
+            if (p0.asBool() == BoolExpr.TRUE)
                 return get(1);
 
             return get(2);
