@@ -22,11 +22,11 @@ public class RandomInteger extends FunctionExpr {
 		if(size() == 0) { //Default no parameters is random 0 or 1
 			return new IntegerNum( getRandomInteger(0, 1));
 		} else if(get(0).isInteger()) {
-			int N = ((IntegerNum)get(0)).toInteger();
+			int N = ((IntegerNum)get(0)).intValue();
 			return new IntegerNum( getRandomInteger(0, N));
 		} else if (get(0).isList()) {
-			int min = getList(0).getInteger(0).toInteger();
-			int max = getList(0).getInteger(1).toInteger();
+			int min = getList(0).getInteger(0).intValue();
+			int max = getList(0).getInteger(1).intValue();
 			return new IntegerNum( getRandomInteger(min, max));
 		}
 

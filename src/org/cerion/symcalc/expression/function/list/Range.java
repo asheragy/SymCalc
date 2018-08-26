@@ -16,7 +16,7 @@ public class Range extends FunctionExpr {
 		
 		if(get(0).isInteger())
 		{
-			int num = ((IntegerNum)get(0)).toInteger();
+			int num = ((IntegerNum)get(0)).intValue();
 			
 			ListExpr listResult = new ListExpr();
 			int i = 1; //default start at 1
@@ -24,14 +24,14 @@ public class Range extends FunctionExpr {
 			//if 2nd parameter range is num1 to num2
 			if(size() > 1 && get(1).isInteger()) 
 			{
-				i = ((IntegerNum)get(0)).toInteger();
-				num = ((IntegerNum)get(1)).toInteger();
+				i = ((IntegerNum)get(0)).intValue();
+				num = ((IntegerNum)get(1)).intValue();
 			}
 			
 			//Step by 1 or 3rd parameter
 			int iStep = 1;
 			if(size() > 2 && get(2).isInteger())
-				iStep = ((IntegerNum)get(2)).toInteger();
+				iStep = ((IntegerNum)get(2)).intValue();
 				
 			while(i <= num)
 			{

@@ -9,9 +9,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by andy on 7/11/2018.
- */
 public class NTest {
 
     @Test

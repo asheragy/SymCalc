@@ -26,7 +26,7 @@ public class Bernoulli extends FunctionExpr {
  			else
  			{
  				NumberExpr res = IntegerNum.ZERO;
- 				int n = N.toInteger();
+ 				int n = N.intValue();
  				
  				for(int i = 0; i < n; i++)
  				{

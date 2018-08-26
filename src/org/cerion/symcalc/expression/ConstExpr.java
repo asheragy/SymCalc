@@ -1,7 +1,6 @@
 package org.cerion.symcalc.expression;
 
 import org.cerion.symcalc.expression.constant.Pi;
-import org.cerion.symcalc.expression.number.RealNum;
 
 import java.util.Hashtable;
 

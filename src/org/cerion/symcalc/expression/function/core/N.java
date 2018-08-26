@@ -15,7 +15,7 @@ public class N extends FunctionExpr {
         if(size() > 0) {
             if(size() > 1 && get(1).isInteger()) {
                 IntegerNum n = (IntegerNum)get(1);
-                getEnv().setNumericalEval(true, n.toInteger());
+                getEnv().setNumericalEval(true, n.intValue());
             } else
                 getEnv().setNumericalEval(true);
 

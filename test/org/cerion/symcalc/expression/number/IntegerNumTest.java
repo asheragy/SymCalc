@@ -145,7 +145,7 @@ public class IntegerNumTest {
 			fail("unexpected type: " + e.numType());
 		
 		IntegerNum n = (IntegerNum)e;
-		assertEquals(expected, n.toInteger());
+		assertEquals(expected, n.intValue());
 	}
 	
 	private void verify(NumberExpr e, BigInteger expected)

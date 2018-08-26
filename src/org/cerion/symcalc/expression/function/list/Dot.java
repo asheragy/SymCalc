@@ -7,9 +7,6 @@ import org.cerion.symcalc.expression.FunctionExpr;
 import org.cerion.symcalc.expression.ListExpr;
 import org.cerion.symcalc.expression.function.arithmetic.Plus;
 import org.cerion.symcalc.expression.function.arithmetic.Times;
-import org.cerion.symcalc.expression.number.IntegerNum;
-
-import java.rmi.server.ExportException;
 
 public class Dot extends FunctionExpr {
 

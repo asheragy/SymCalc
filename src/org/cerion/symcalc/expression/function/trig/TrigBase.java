@@ -4,7 +4,6 @@ import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
 import org.cerion.symcalc.expression.NumberExpr;
-import org.cerion.symcalc.expression.number.RealNum;
 
 public abstract class TrigBase extends FunctionExpr {
 

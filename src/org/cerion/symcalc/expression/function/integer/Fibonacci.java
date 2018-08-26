@@ -16,7 +16,7 @@ public class Fibonacci extends FunctionExpr {
 		
 		if(get(0).isInteger())
 		{
-			int n = ((IntegerNum)get(0)).toInteger();
+			int n = ((IntegerNum)get(0)).intValue();
 
 			NumberExpr a = IntegerNum.ZERO;
 			NumberExpr b = IntegerNum.ONE;

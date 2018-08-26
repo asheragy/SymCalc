@@ -58,12 +58,7 @@ public class RealNum_BigDecimal extends RealNum {
 
     @Override
     public boolean equals(NumberExpr e) {
-        if(e.isReal()) {
-            //RealNum n = (RealNum)e;
-            return toDouble() == e.toDouble();
-        }
-
-        return false;
+        return e.isReal() && toDouble() == e.toDouble();
     }
 
     public RealNum_BigDecimal negate() {

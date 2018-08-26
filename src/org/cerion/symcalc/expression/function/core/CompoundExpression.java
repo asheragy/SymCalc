@@ -2,7 +2,6 @@ package org.cerion.symcalc.expression.function.core;
 
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
-import org.cerion.symcalc.expression.ListExpr;
 
 public class CompoundExpression extends FunctionExpr {
 

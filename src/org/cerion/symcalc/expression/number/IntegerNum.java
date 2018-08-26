@@ -256,7 +256,7 @@ public class IntegerNum extends NumberExpr {
 	
 	public IntegerNum PowerMod(NumberExpr b, NumberExpr m) {
 		//Assuming all integers at this point since MathFunc needs to check that
-		BigInteger num = ((IntegerNum)this).val();
+		BigInteger num = val();
 		BigInteger exp = ((IntegerNum)b).val();
 		BigInteger mod = ((IntegerNum)m).val();
 	

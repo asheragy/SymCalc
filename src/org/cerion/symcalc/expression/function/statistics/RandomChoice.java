@@ -20,7 +20,7 @@ public class RandomChoice extends FunctionExpr {
         }
 
         IntegerNum rand = (IntegerNum)new RandomInteger(list.size()-1).eval();
-        return list.get(rand.toInteger());
+        return list.get(rand.intValue());
 
         /* Other cases
         [list, {n1, n2,...}]

@@ -11,7 +11,7 @@ public class ComplexNumTest {
     @Test
     public void equals() {
         assertEquals(new ComplexNum(0,0), ComplexNum.ZERO);
-        assertEquals(new ComplexNum(1,0), IntegerNum.ONE);
+        assertEquals(new ComplexNum(1,0).eval(), IntegerNum.ONE);
         assertNotEquals(new ComplexNum(1,1), IntegerNum.ONE);
         assertEquals(new ComplexNum(5,6), new ComplexNum(5,6));
         assertNotEquals(new ComplexNum(5,6), new ComplexNum(5,7));

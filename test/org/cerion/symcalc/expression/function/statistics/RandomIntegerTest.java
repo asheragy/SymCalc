@@ -19,7 +19,7 @@ public class RandomIntegerTest {
 
         for(int i = 0; i < 10000; i++) {
             IntegerNum n = (IntegerNum) e.eval();
-            int x = n.toInteger();
+            int x = n.intValue();
             count[x]++;
         }
 

@@ -1,7 +1,6 @@
 package org.cerion.symcalc.expression.function.core;
 
 import org.cerion.symcalc.expression.BoolExpr;
-import org.cerion.symcalc.expression.ErrorExpr;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.VarExpr;
 import org.cerion.symcalc.expression.constant.Pi;

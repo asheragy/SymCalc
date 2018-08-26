@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression.function.list;
 
-import org.cerion.symcalc.expression.ErrorExpr;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.ListExpr;
 import org.cerion.symcalc.expression.VarExpr;

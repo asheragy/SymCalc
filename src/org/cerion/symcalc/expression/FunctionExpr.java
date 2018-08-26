@@ -103,6 +103,7 @@ public abstract class FunctionExpr extends Expr
 		// Trig
 		SIN("Sin"),
 		COS("Cos"),
+		TAN("Tan"),
 		
 		//List Functions
 		TOTAL("Total"),

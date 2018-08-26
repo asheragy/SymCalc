@@ -1,7 +1,6 @@
 package org.cerion.symcalc.expression.function.list;
 
 import org.cerion.symcalc.exception.ValidationException;
-import org.cerion.symcalc.expression.ErrorExpr;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
 import org.cerion.symcalc.expression.ListExpr;
@@ -17,7 +16,7 @@ public class Partition extends FunctionExpr {
     protected Expr evaluate() {
 
         ListExpr input = (ListExpr) get(0);
-        int N = ((IntegerNum)get(1)).toInteger();
+        int N = ((IntegerNum)get(1)).intValue();
         ListExpr result = new ListExpr();
 
         for(int i = 0; i < (input.size() / N); i++) {

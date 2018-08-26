@@ -3,6 +3,7 @@ package org.cerion.symcalc.expression;
 import org.cerion.symcalc.Environment;
 import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.number.IntegerNum;
+import org.cerion.symcalc.expression.number.RealNum;
 import org.cerion.symcalc.parser.Lexer;
 import org.cerion.symcalc.parser.Parser;
 
@@ -68,6 +69,7 @@ public abstract class Expr
 	// Casting
 	public ListExpr asList() { return (ListExpr)this; }
 	public IntegerNum asInteger() { return (IntegerNum) this; }
+	public RealNum asReal() { return (RealNum) this; }
 	public BoolExpr asBool() { return (BoolExpr)this; }
 	public VarExpr asVar() { return (VarExpr)this; }
 
@@ -253,7 +255,7 @@ public abstract class Expr
 	}
 	
     public boolean isInteger() {
-    	if(isNumber() && ((NumberExpr)this).isInteger())
+    	if(isNumber() && this.isInteger())
     		return true;
     	
     	return false;

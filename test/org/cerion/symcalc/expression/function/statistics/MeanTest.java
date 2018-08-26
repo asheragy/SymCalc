@@ -2,7 +2,6 @@ package org.cerion.symcalc.expression.function.statistics;
 
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.ListExpr;
-import org.cerion.symcalc.expression.number.ComplexNum;
 import org.cerion.symcalc.expression.number.IntegerNum;
 import org.cerion.symcalc.expression.number.RationalNum;
 import org.cerion.symcalc.expression.number.RealNum;

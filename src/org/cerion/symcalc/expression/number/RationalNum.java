@@ -199,7 +199,7 @@ public class RationalNum extends NumberExpr
 		{
 			case INTEGER: //RationalNum ^ IntegerNum
 				n = (IntegerNum) numerator().power( num );
-				d = (IntegerNum) denominator().power( (IntegerNum)num );
+				d = (IntegerNum) denominator().power( num );
 				return new RationalNum(n,d);
 			
 			//case RATIONAL: //RationalNum ^ RationalNum
