@@ -1,38 +1,32 @@
 package org.cerion.symcalc.expression;
 
 public class VarExpr extends Expr {
-	
-	//Inherited
-	public ExprType getType()
-	{ 
-		return ExprType.VARIABLE;
-	}
-	
-    public VarExpr(String str) 
-    {
-    	setValue(str);
+
+    public VarExpr(String str) {
+        setValue(str);
     }
 
     @Override
-    public void show(int i) 
-    {
+	public ExprType getType() {
+		return ExprType.VARIABLE;
+	}
+
+    @Override
+    public void show(int i) {
     	indent(i,"VarExpr = " + value());
     }
     
-    public String value()
-    {
+    public String value() {
     	return (String)getValue();
     }
     
     @Override
-    public String toString()
-    {
+    public String toString() {
     	return value();
 	}
     
     @Override
-    protected Expr evaluate()
-    {
+    protected Expr evaluate() {
     	Expr result = getEnv().getVar(value());
     	if(result == null)
     		result = this;
@@ -50,5 +44,4 @@ public class VarExpr extends Expr {
     	
     	return false;
     }
-
 }

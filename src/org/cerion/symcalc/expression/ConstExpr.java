@@ -6,16 +6,6 @@ import java.util.Hashtable;
 
 public abstract class ConstExpr extends Expr {
 
-	/*
-	public ConstExpr(String s) {
-		Name n = lookup(s);
-		if(n != null)
-			setValue(n);
-		else
-			throw new IllegalArgumentException("invalid constant");
-	}
-	*/
-
 	public static boolean isConstant(String s) {
 		return (lookup(s) != null);
 	}
@@ -51,7 +41,7 @@ public abstract class ConstExpr extends Expr {
 		E
 	}
 
-	private static Hashtable<String, Name> identifiers = null;
+	private static Hashtable<String, Name> identifiers;
 	static 
     {
     	identifiers = new Hashtable<>();

@@ -8,7 +8,6 @@ import org.cerion.symcalc.expression.function.arithmetic.Power;
 import org.cerion.symcalc.expression.function.arithmetic.Times;
 import org.cerion.symcalc.expression.function.integer.Factor;
 import org.cerion.symcalc.expression.function.list.Tally;
-import sun.plugin.dom.exception.InvalidStateException;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.math.BigDecimal;
@@ -237,8 +236,9 @@ public class IntegerNum extends NumberExpr {
 				break;
 			}
 		}
-	
-		throw new InvalidStateException("missing case");
+
+		return null;
+		//throw new InvalidStateException("missing case");
 	}	
 	
 	//IntegerNum Specific Functions

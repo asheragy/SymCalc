@@ -13,5 +13,4 @@ class Tan(e: Expr) : TrigBase(FunctionType.TAN, e) {
 
         return this
     }
-
 }
