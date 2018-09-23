@@ -18,7 +18,7 @@ public abstract class FunctionExpr extends Expr
 	private final String mName;
 	private final FunctionType mType;
 
-    protected FunctionExpr(FunctionType t, Expr... e) {
+    protected FunctionExpr(FunctionType t, Expr[] e) {
 		mType = t;
     	mName = t.toString();
 
