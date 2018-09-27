@@ -9,7 +9,7 @@ public abstract class RealNum extends NumberExpr
 		return REAL;
 	}
 
-	public static RealNum parse(String s) {
+	public static RealNum parse2(String s) {
 		// TODO add BigDecimal
 		return new RealNum_Double(s);
 	}
