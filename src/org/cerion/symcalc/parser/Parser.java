@@ -168,7 +168,7 @@ public class Parser {
     			System.out.println("missing ident (");
     		getNext();
 
-    		FunctionExpr mf = FunctionExpr.CreateFunction(ident, expr() );
+    		FunctionExpr mf = FunctionExpr.createFunction(ident, expr() );
     		
 			while(token == ',') //Add additional parameters
 			{

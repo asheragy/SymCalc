@@ -13,7 +13,7 @@ class VectorQ(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.VECTORQ, 
 
         val list = getList(0)
         for (i in 0 until list.size()) {
-            if (list.get(i).isList)
+            if (list[i].isList)
                 return BoolExpr.FALSE
         }
 

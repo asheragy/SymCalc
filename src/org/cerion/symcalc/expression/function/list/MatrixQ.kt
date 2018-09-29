@@ -3,7 +3,6 @@ package org.cerion.symcalc.expression.function.list
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.FunctionExpr
-import org.cerion.symcalc.expression.ListExpr
 
 class MatrixQ(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.MATRIXQ, *e) {
 
@@ -15,7 +14,7 @@ class MatrixQ(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.MATRIXQ, 
         val list = getList(0)
         for (i in 0 until list.size()) {
             // Every sublist must be a vector of the same length
-            if (!list.get(i).isList)
+            if (!list[i].isList)
                 return BoolExpr.FALSE
 
             val sublist = list.getList(i)

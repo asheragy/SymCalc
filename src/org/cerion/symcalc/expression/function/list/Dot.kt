@@ -19,7 +19,7 @@ class Dot(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.DOT, *e) {
     private fun evalVector(a: ListExpr, b: ListExpr): Expr {
         val sum = Plus()
         for (i in 0 until a.size())
-            sum.add(Times(a.get(i), b.get(i)))
+            sum.add(Times(a[i], b[i]))
 
         return sum.eval()
     }
@@ -36,8 +36,8 @@ class Dot(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.DOT, *e) {
 
                 for (k in 0 until ax.size())
                     sum.add(Times(
-                            ax.get(k),
-                            b.get(k).get(j)
+                            ax[k],
+                            b[k][j]
                     ))
 
                 sublist.add(sum.eval())

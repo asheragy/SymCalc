@@ -15,7 +15,6 @@ abstract class Expr {
         protected set
 
     private var mArgs: MutableList<Expr>? = null
-
     private val args: List<Expr>?
         get() = mArgs
 
@@ -189,18 +188,17 @@ abstract class Expr {
                 val result = ListExpr()
 
                 for (i in 0 until p1.size())
-                    result.add(FunctionExpr.CreateFunction(function.name, p1[i])!!)
+                    result.add(FunctionExpr.createFunction(function.name, p1[i])!!)
 
                 return result.eval()
             }
         }
 
-        try {
-            return evaluate()
+        return try {
+            evaluate()
         } catch (e: Exception) {
-            return ErrorExpr(e.toString())
+            ErrorExpr(e.toString())
         }
-
     }
 
     fun print() {

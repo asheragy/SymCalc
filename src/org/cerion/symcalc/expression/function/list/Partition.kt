@@ -11,18 +11,18 @@ class Partition(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.PARTITI
     override fun evaluate(): Expr {
 
         val input = get(0) as ListExpr
-        val N = (get(1) as IntegerNum).intValue()
+        val n = (get(1) as IntegerNum).intValue()
         val result = ListExpr()
 
-        for (i in 0 until input.size() / N) {
+        for (i in 0 until input.size() / n) {
             val sublist = ListExpr()
 
-            for (j in 0 until N) {
-                val pos = i * N + j
+            for (j in 0 until n) {
+                val pos = i * n + j
                 if (pos >= input.size())
                     break
 
-                sublist.add(input.get(pos))
+                sublist.add(input[pos])
             }
 
             result.add(sublist)

@@ -8,11 +8,11 @@ class Reverse(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.REVERSE, 
 
     override fun evaluate(): Expr {
         if (get(0).isList) {
-            val L = get(0).asList()
+            val list = get(0).asList()
             val result = ListExpr()
 
-            for (i in L.size() downTo 1)
-                result.add(L.get(i - 1))
+            for (i in list.size() downTo 1)
+                result.add(list[i - 1])
 
             return result
         }

@@ -55,7 +55,7 @@ abstract class FunctionExpr protected constructor(val functionType: FunctionType
             return false
 
         for (i in 0 until size()) {
-            if (!get(i).equals(f.get(i)))
+            if (!get(i).equals(f[i]))
                 return false
         }
 
@@ -66,7 +66,7 @@ abstract class FunctionExpr protected constructor(val functionType: FunctionType
         setArgs(t)
     }
 
-    enum class FunctionType private constructor(val value: String) {
+    enum class FunctionType constructor(val value: String) {
         N("N"),
         HOLD("Hold"),
         NUMBERQ("NumberQ"),
@@ -186,12 +186,11 @@ abstract class FunctionExpr protected constructor(val functionType: FunctionType
         fun isValidFunction(functionName: String): Boolean {
             val name = functionName.toLowerCase()
 
-            return if (stringToFunctionType(name) != null) true else false
-
+            return stringToFunctionType(name) != null
         }
 
         @JvmStatic
-        fun CreateFunction(f: String, vararg e: Expr): FunctionExpr? {
+        fun createFunction(f: String, vararg e: Expr): FunctionExpr? {
             val type = stringToFunctionType(f) ?: return null
 
             when (type) {

@@ -13,9 +13,9 @@ class Table(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.TABLE, *e) 
         if (argList.size() == 1)
             return evaluate(expr, null, IntegerNum.ONE, argList.getInteger(0), IntegerNum.ONE)
 
-        val v = argList.get(0) as VarExpr
+        val v = argList[0] as VarExpr
 
-        if (argList.size() == 2 && argList.get(1).isList)
+        if (argList.size() == 2 && argList[1].isList)
             return evaluate(expr, v, argList.getList(1))
         else if (argList.size() == 2)
             return evaluate(expr, v, IntegerNum.ONE, argList.getInteger(1), IntegerNum.ONE)
@@ -46,7 +46,7 @@ class Table(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.TABLE, *e) 
         val result = ListExpr()
         for (i in 0 until values.size()) {
             if (`var` != null)
-                env.setVar(`var`.value(), values.get(i))
+                env.setVar(`var`.value(), values[i])
             result.add(expr.eval())
         }
 
@@ -76,7 +76,7 @@ class Table(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.TABLE, *e) 
             throw ValidationException("list parameters must not be empty")
 
         if (list.size() == 1)
-            if (!list.get(0).isInteger)
+            if (!list[0].isInteger)
                 throw ValidationException("list parameter at position 0 must be an integer")
 
         if (list.size() > 4)
@@ -84,14 +84,14 @@ class Table(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.TABLE, *e) 
 
         // If more than 1 parameter first must be variable and the rest integers
         if (list.size() > 1) {
-            if (!list.get(0).isVariable)
+            if (!list[0].isVariable)
                 throw ValidationException("first list parameter must be variable")
 
-            if (list.size() >= 2 && !list.get(1).isInteger && !list.get(1).isList)
+            if (list.size() >= 2 && !list[1].isInteger && !list[1].isList)
                 throw ValidationException("first list parameter at position 1 must be integer OR value list")
-            if (list.size() >= 3 && !list.get(2).isInteger)
+            if (list.size() >= 3 && !list[2].isInteger)
                 throw ValidationException("first list parameter at position 2 must be integer")
-            if (list.size() == 4 && !list.get(3).isInteger)
+            if (list.size() == 4 && !list[3].isInteger)
                 throw ValidationException("first list parameter at position 3 must be integer")
         }
     }

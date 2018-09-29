@@ -31,7 +31,7 @@ class ListExpr : Expr {
             val list = e.asList()
             if (list.size() == size()) {
                 for (i in 0 until list.size()) {
-                    if (!list.get(i).equals(get(i)))
+                    if (!list[i].equals(get(i)))
                         return false
                 }
 

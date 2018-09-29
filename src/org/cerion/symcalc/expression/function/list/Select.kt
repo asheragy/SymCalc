@@ -16,11 +16,11 @@ class Select(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.SELECT, e[
         val result = ListExpr()
 
         for (i in 0 until list.size()) {
-            var e: Expr? = FunctionExpr.CreateFunction(mFunctionName, list.get(i))
+            var e: Expr? = FunctionExpr.createFunction(mFunctionName, list[i])
             e = e!!.eval()
 
-            if (e!!.equals(BoolExpr.TRUE)) {
-                result.add(list.get(i))
+            if (e.equals(BoolExpr.TRUE)) {
+                result.add(list[i])
             }
         }
 

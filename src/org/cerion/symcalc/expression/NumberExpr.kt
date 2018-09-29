@@ -45,10 +45,10 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     companion object {
         //Types
         // TODO make this enum
-        @JvmField val INTEGER = 0
-        @JvmField val RATIONAL = 1
-        @JvmField val REAL = 2
-        @JvmField val COMPLEX = 3
+        const val INTEGER = 0
+        const val RATIONAL = 1
+        const val REAL = 2
+        const val COMPLEX = 3
 
         @JvmStatic fun parse(s: String): NumberExpr {
             if (s.indexOf('i') > -1)

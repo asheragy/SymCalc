@@ -14,17 +14,17 @@ class Tally(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.TALLY, *e) 
 
         val list = getList(0)
         for (i in 0 until list.size()) {
-            val e = list.get(i)
+            val e = list[i]
 
             var found = false
             for (j in 0 until result.size()) {
-                var keyval = result.get(j)
-                val (key, value) = Pair(keyval.get(0), keyval.get(1).asInteger())
+                var keyval = result[j]
+                val (key, value) = Pair(keyval[0], keyval[1].asInteger())
 
                 if (e.equals(key)) {
                     val v2 = Plus(value, IntegerNum.ONE).eval().asInteger()
                     keyval = ListExpr(e, v2)
-                    result.set(j, keyval)
+                    result[j] = keyval
                     found = true
                     break
                 }
