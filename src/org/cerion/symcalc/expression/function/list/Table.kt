@@ -53,9 +53,8 @@ class Table(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.TABLE, *e) 
         return result
     }
 
-    override fun getProperties(): Int {
-        return Expr.Properties.HOLD.value
-    }
+    override val properties: Int
+        get() = Properties.HOLD.value
 
     @Throws(ValidationException::class)
     override fun validate() {

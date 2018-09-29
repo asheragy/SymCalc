@@ -25,7 +25,7 @@ public abstract class TrigBase extends FunctionExpr {
 
     @Override
     protected int getProperties() {
-        return Properties.LISTABLE.value;
+        return Properties.LISTABLE.getValue();
     }
 
     @Override

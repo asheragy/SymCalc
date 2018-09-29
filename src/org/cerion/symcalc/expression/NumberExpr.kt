@@ -5,6 +5,13 @@ import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.RealNum
 
 abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
+
+    override val type: ExprType
+        get() = ExprType.NUMBER
+
+    override val isInteger: Boolean
+        get() = numType() == INTEGER
+
     abstract val isZero: Boolean
     abstract val isOne: Boolean
 
@@ -32,8 +39,6 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract fun equals(e: NumberExpr): Boolean
 
     override fun equals(e: Expr): Boolean = e.isNumber && equals(e as NumberExpr)
-    override fun isInteger(): Boolean = numType() == INTEGER
-    override fun getType(): Expr.ExprType = Expr.ExprType.NUMBER
     override fun show(i: Int) = indent(i, "Number " + this.toString())
     public override fun evaluate(): NumberExpr = this
 

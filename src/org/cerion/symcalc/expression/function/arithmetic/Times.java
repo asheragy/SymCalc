@@ -69,6 +69,6 @@ public class Times extends FunctionExpr {
 
 	@Override
 	protected int getProperties() {
-		return Properties.ASSOCIATIVE.value;
+		return Properties.ASSOCIATIVE.getValue();
 	}
 }

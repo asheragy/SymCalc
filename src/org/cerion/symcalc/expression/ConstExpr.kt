@@ -6,10 +6,14 @@ import java.util.Hashtable
 
 abstract class ConstExpr : Expr() {
 
-    override fun getType(): Expr.ExprType = Expr.ExprType.CONST
+    override val type: ExprType
+        get() = ExprType.CONST
+
+    override val properties: Int
+        get() = Expr.Properties.CONSTANT.value
+
     override fun show(i: Int) = indent(i, "Constant: " + toString())
     override fun equals(e: Expr): Boolean = javaClass == e.javaClass
-    override fun getProperties(): Int = Expr.Properties.CONSTANT.value
 
     abstract override fun toString(): String
 

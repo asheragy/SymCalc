@@ -16,6 +16,6 @@ public class Hold extends FunctionExpr {
 
     @Override
     protected int getProperties() {
-        return Properties.HOLD.value;
+        return Properties.HOLD.getValue();
     }
 }

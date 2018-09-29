@@ -25,9 +25,8 @@ abstract class FunctionExpr protected constructor(val functionType: FunctionType
         setArgs(*e)
     }
 
-    override fun getType(): Expr.ExprType {
-        return Expr.ExprType.FUNCTION
-    }
+    override val type: ExprType
+        get() = Expr.ExprType.FUNCTION
 
     override fun toString(): String {
         return name + argString()

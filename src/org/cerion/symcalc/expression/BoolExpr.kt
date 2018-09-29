@@ -2,13 +2,16 @@ package org.cerion.symcalc.expression
 
 class BoolExpr(value: Boolean) : Expr() {
 
+    override val type: ExprType
+        get() = ExprType.BOOL
+
     companion object {
         @JvmField val TRUE = BoolExpr(true)
         @JvmField val FALSE = BoolExpr(false)
     }
 
     init {
-        setValue(value)
+        this.value = value
     }
 
     fun value(): Boolean  = this.value as Boolean
@@ -23,5 +26,4 @@ class BoolExpr(value: Boolean) : Expr() {
     override fun toString(): String = if (value()) "True" else "False"
     override fun show(i: Int) = indent(i, "BoolExpr = " + toString())
     override fun evaluate(): Expr = this
-    override fun getType(): Expr.ExprType = Expr.ExprType.BOOL
 }

@@ -69,6 +69,6 @@ public class Plus extends FunctionExpr {
 
 	@Override
 	protected int getProperties() {
-		return Properties.ASSOCIATIVE.value | Properties.NumericFunction.value;
+		return Properties.ASSOCIATIVE.getValue() | Properties.NumericFunction.getValue();
 	}
 }

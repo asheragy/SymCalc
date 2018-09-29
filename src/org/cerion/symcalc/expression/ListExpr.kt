@@ -1,6 +1,8 @@
 package org.cerion.symcalc.expression
 
 class ListExpr : Expr {
+    override val type: ExprType
+        get() = ExprType.LIST
 
     constructor()
 
@@ -40,7 +42,6 @@ class ListExpr : Expr {
         return false
     }
 
-    override fun getType(): Expr.ExprType = Expr.ExprType.LIST
     override fun evaluate(): ListExpr = this
 
     override fun show(i: Int) {
