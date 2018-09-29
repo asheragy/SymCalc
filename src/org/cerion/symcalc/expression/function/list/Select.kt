@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression.function.list
 
 import org.cerion.symcalc.expression.*
 
-class Select(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.SELECT, Array(1) { e[0]}) {
+class Select(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.SELECT, e[0]) {
 
     private val mFunctionName: String
 

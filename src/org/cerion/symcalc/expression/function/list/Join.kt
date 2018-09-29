@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 
-class Join(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.JOIN, e) {
+class Join(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.JOIN, *e) {
 
     override fun evaluate(): Expr {
         val result = ListExpr()

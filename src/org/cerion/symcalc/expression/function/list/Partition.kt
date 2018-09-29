@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 
-class Partition(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.PARTITION, e) {
+class Partition(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.PARTITION, *e) {
 
     override fun evaluate(): Expr {
 

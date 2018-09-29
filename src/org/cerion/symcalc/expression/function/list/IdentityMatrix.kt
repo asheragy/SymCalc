@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.NumberExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 
-class IdentityMatrix(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.IDENTITY_MATRIX, e) {
+class IdentityMatrix(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.IDENTITY_MATRIX, *e) {
 
     override fun evaluate(): Expr {
         val n = getInteger(0).intValue()

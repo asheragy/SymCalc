@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 
-class MatrixQ(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.MATRIXQ, e) {
+class MatrixQ(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.MATRIXQ, *e) {
 
     override fun evaluate(): Expr {
         if (!get(0).isList)

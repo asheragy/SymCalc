@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 
-class Range(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.RANGE, e) {
+class Range(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.RANGE, *e) {
 
     override fun evaluate(): Expr {
 

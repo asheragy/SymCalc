@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 
-class Flatten(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FLATTEN, e) {
+class Flatten(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FLATTEN, *e) {
 
     override fun evaluate(): Expr {
         val l = get(0) as ListExpr

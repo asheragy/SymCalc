@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.FunctionExpr
 
-class VectorQ(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.VECTORQ, e) {
+class VectorQ(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.VECTORQ, *e) {
 
     override fun evaluate(): Expr {
         if (!get(0).isList)

@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.number.IntegerNum
 
-class Tally(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.TALLY, e) {
+class Tally(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.TALLY, *e) {
 
     override fun evaluate(): Expr {
         val result = ListExpr()

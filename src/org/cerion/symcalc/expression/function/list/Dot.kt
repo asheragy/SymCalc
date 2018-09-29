@@ -8,7 +8,7 @@ import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Times
 
-class Dot(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.DOT, e) {
+class Dot(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.DOT, *e) {
 
     override fun evaluate(): Expr {
         val a = getList(0)
