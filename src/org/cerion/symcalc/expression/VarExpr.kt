@@ -17,7 +17,7 @@ class VarExpr(str: String) : Expr() {
     }
 
     override fun evaluate(): Expr {
-        var result = env.getVar(value())
+        var result = getEnvVar(value())
         if (result == null)
             result = this
 

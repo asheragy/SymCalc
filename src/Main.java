@@ -18,7 +18,8 @@ public class Main
 		//MathExpr expr = new MathExpr("RandomInteger(10)");
 		//Expr expr = Expr.parse("Greater(1,3)");
 		//MathExpr expr = new MathExpr("N(Sin(1))");
-		Expr expr = Expr.parse("N(1) + Pi");
+		//Expr expr = Expr.parse("1 + 2 + N(1) + Pi + 1 + 2");
+		Expr expr = Expr.parse("1 + 2 + 3");
 
 		expr.print();
 		

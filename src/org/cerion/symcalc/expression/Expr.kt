@@ -14,9 +14,15 @@ abstract class Expr {
     var value: Any? = null
         protected set
 
+    var env = Environment()
+        private set
+
     private var mArgs: MutableList<Expr>? = null
     private val args: List<Expr>?
         get() = mArgs
+
+    protected fun getEnvVar(name: String): Expr? = env.getVar(name)
+    protected fun setEnvVar(name: String, e: Expr) = env.setVar(name, e)
 
     val all: List<Expr>?
         get() {
@@ -59,10 +65,6 @@ abstract class Expr {
 
     val isConst: Boolean
         get() = type == ExprType.CONST
-
-    // TODO add functions to access the Env values directly, getEnv() is a bit redundant
-    var env = Environment()
-        private set
 
     protected fun setArgs(vararg args: Expr) {
         if (mArgs == null)
@@ -267,7 +269,7 @@ abstract class Expr {
         fun parse(s: String): Expr {
             val lex = Lexer(s)
             val p = Parser(lex)
-            return p.e
+            return p.e!!
         }
     }
 }

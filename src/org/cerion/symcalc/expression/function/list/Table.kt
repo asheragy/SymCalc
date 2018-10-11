@@ -42,11 +42,11 @@ class Table(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.TABLE, *e) 
         return evaluate(expr, `var`, values)
     }
 
-    private fun evaluate(expr: Expr, `var`: VarExpr?, values: ListExpr): Expr {
+    private fun evaluate(expr: Expr, variable: VarExpr?, values: ListExpr): Expr {
         val result = ListExpr()
         for (i in 0 until values.size()) {
-            if (`var` != null)
-                env.setVar(`var`.value(), values[i])
+            if (variable != null)
+                setEnvVar(variable.value(), values[i])
             result.add(expr.eval())
         }
 
