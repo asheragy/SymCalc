@@ -1,28 +1,30 @@
 package org.cerion.symcalc.parser
 
-import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.ConstExpr
-import org.cerion.symcalc.expression.VarExpr
+import org.cerion.symcalc.expression.*
 import org.cerion.symcalc.expression.function.arithmetic.Divide
-import org.cerion.symcalc.expression.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.NumberExpr
+
+class ParseException(message: String?) : Exception(message)
 
 class Parser(private val lex: Lexer) {
 
-    var e: Expr?
+    var e: Expr
 
     private var token: Char = ' '
-    private var tokval: String? = null
+    private var tokval: String = ""
 
     init {
         getNext() //start input
-        this.e = expr()
+
+        try {
+            this.e = expr()
+        } catch(ex: ParseException) {
+            this.e = ErrorExpr(ex.toString())
+        }
     }
 
     /*
@@ -44,12 +46,10 @@ class Parser(private val lex: Lexer) {
 	       | foo(expr)
 	       | (expr)
 	*/
-    private fun expr(): Expr? {
-
+    private fun expr(): Expr {
         var e = term()
 
-        while (lex.hasInput()) {
-
+        while (true) {
             when(token) {
                 '+' -> {
                     getNext()
@@ -62,14 +62,12 @@ class Parser(private val lex: Lexer) {
                 else -> return e
             }
         }
-
-        return e
     }
 
-    private fun term(): Expr? {
+    private fun term(): Expr {
         var e = expterm()
 
-        while (lex.hasInput()) {
+        while (true) {
             if (token == '*') {
                 getNext()
                 e = Times(e, expterm())
@@ -80,11 +78,9 @@ class Parser(private val lex: Lexer) {
                 return e
             }
         }
-
-        return e
     }
 
-    private fun expterm(): Expr? {
+    private fun expterm(): Expr {
         var e = factor()
 
         while (lex.hasInput()) {
@@ -96,95 +92,90 @@ class Parser(private val lex: Lexer) {
             }
         }
 
-
         return e
     }
 
-    private fun factor(): Expr? {
+    private fun factor(): Expr {
 
         if (token == NUMBER) {
-            //if (lex.hasInput())
-            run {
-                getNext()
-
-            }
-            //Number f = new Number(tokval);
-            return NumberExpr.parse(tokval!!)
-        } else if (token == 'i')
-        //complex 1
-        {
+            getNext()
+            return NumberExpr.parse(tokval)
+        }
+        //Complex 1
+        else if (token == 'i') {
             getNext()
             return NumberExpr.parse("i")
-        } else if (token == 'v') {
+        }
+        // Variable
+        else if (token == 'v') {
             //if(lex.hasInput())
             getNext()
-            return VarExpr(tokval!!)
-        } else if (token == '-') {
+            return VarExpr(tokval)
+        }
+        // Negate
+        else if (token == '-') {
             getNext()
             var next = factor()
             //if number just negate it
-            if (next!!.isNumber)
+            if (next.isNumber)
                 next = (next as NumberExpr).negate()
             else
                 next = Times(IntegerNum("-1"), next)
 
             return next
-        } else if (token == '{') {
+        }
+        // Lists
+        else if (token == '{') {
             getNext()
-            val ml = ListExpr(expr()!!)
+            val ml = ListExpr(expr())
 
             while (token == ',') {
                 getNext()
-                ml.add(expr()!!)
+                ml.add(expr())
             }
             if (token != '}')
                 println("Edit: missing }")
             getNext()
             return ml
-        } else if (token == FUNC) {
+        }
+        // Function
+        else if (token == FUNC) {
             val ident = tokval
             getNext()
             if (token != '(')
                 println("missing ident (")
+
             getNext()
+            val mf = FunctionExpr.createFunction(ident, expr())
 
-            val mf = FunctionExpr.createFunction(ident!!, expr()!!)
-
-            while (token == ',')
             //Add additional parameters
+            while (token == ',')
             {
                 getNext()
-                mf!!.add(expr()!!)
+                mf.add(expr())
             }
 
             if (token == ')') {
                 getNext()
                 return mf
             } else
-                println("missing ident )")
+                throw ParseException("Function missing closing ')'")
 
         } else if (token == CONST) {
             getNext()
-            return ConstExpr.getConstant(tokval!!)
+            return ConstExpr.getConstant(tokval)
         } else if (token == '(') {
-
             getNext()
             val e = expr()
             if (token == ')') {
                 getNext()
                 return e
-            } else {
-                println("missing ')'")
             }
-            return e
-
-        } else {
-
-            println("syntax error")
+            else
+                throw ParseException("Missing closing ')'")
         }
-
-        println("error: return null")
-        return null /* not used */
+        else
+            throw ParseException("Incomplete expression")
     }
 
     private fun getNext() {

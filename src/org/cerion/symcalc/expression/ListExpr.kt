@@ -14,6 +14,8 @@ class ListExpr : Expr {
         setArgs(*e)
     }
 
+    operator fun plusAssign(e: Expr) = add(e)
+
     fun add(t: Expr) {
         addArg(t)
     }

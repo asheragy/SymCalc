@@ -190,8 +190,8 @@ abstract class FunctionExpr protected constructor(val functionType: FunctionType
         }
 
         @JvmStatic
-        fun createFunction(f: String, vararg e: Expr): FunctionExpr? {
-            val type = stringToFunctionType(f) ?: return null
+        fun createFunction(f: String, vararg e: Expr): FunctionExpr {
+            val type = stringToFunctionType(f)
 
             when (type) {
                 FunctionExpr.FunctionType.N -> return N(*e)
@@ -249,7 +249,7 @@ abstract class FunctionExpr protected constructor(val functionType: FunctionType
                 // Graphics
                 FunctionExpr.FunctionType.PLOT -> return Plot(*e)
 
-                else -> return null
+                else -> throw RuntimeException("invalid function name '$f'")
             }
         }
     }

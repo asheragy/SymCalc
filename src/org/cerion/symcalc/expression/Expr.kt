@@ -2,6 +2,7 @@ package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.Environment
 import org.cerion.symcalc.exception.ValidationException
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.parser.Lexer
@@ -90,6 +91,8 @@ abstract class Expr {
     operator fun set(index: Int, e: Expr) {
         mArgs!![index] = e
     }
+
+    operator fun times(e: Expr) = Times(this, e)
 
     fun getList(index: Int): ListExpr = get(index) as ListExpr
     fun getInteger(index: Int): IntegerNum = get(index) as IntegerNum
@@ -190,7 +193,7 @@ abstract class Expr {
                 val result = ListExpr()
 
                 for (i in 0 until p1.size())
-                    result.add(FunctionExpr.createFunction(function.name, p1[i])!!)
+                    result.add(FunctionExpr.createFunction(function.name, p1[i]))
 
                 return result.eval()
             }
@@ -269,7 +272,7 @@ abstract class Expr {
         fun parse(s: String): Expr {
             val lex = Lexer(s)
             val p = Parser(lex)
-            return p.e!!
+            return p.e
         }
     }
 }

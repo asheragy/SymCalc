@@ -42,9 +42,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     override fun show(i: Int) = indent(i, "Number " + this.toString())
     public override fun evaluate(): NumberExpr = this
 
-    operator fun plus(number: NumberExpr): NumberExpr {
-        return this.add(number)
-    }
+    operator fun plus(number: NumberExpr): NumberExpr = this.add(number)
 
     companion object {
         //Types

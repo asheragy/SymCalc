@@ -6,7 +6,6 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.arithmetic.Times
 
 class Dot(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.DOT, *e) {
 
@@ -19,7 +18,7 @@ class Dot(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.DOT, *e) {
     private fun evalVector(a: ListExpr, b: ListExpr): Expr {
         val sum = Plus()
         for (i in 0 until a.size())
-            sum.add(Times(a[i], b[i]))
+            sum += a[i] * b[i]
 
         return sum.eval()
     }
@@ -35,15 +34,12 @@ class Dot(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.DOT, *e) {
                 val sum = Plus()
 
                 for (k in 0 until ax.size())
-                    sum.add(Times(
-                            ax[k],
-                            b[k][j]
-                    ))
+                    sum += ax[k] * b[k][j]
 
-                sublist.add(sum.eval())
+                sublist += sum.eval()
             }
 
-            result.add(sublist)
+            result += sublist
         }
 
         return result
