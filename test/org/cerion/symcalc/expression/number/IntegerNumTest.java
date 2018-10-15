@@ -131,8 +131,7 @@ public class IntegerNumTest {
 	}
 	
 	@Test
-	public void factorial()
-	{
+	public void factorial() {
 		verify(IntegerNum.factorial(0), 1);
 		verify(IntegerNum.factorial(1), 1);
 		verify(IntegerNum.factorial(2), 2);

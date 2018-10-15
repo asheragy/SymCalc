@@ -19,7 +19,7 @@ public class EvenQ extends FunctionExpr {
             return BoolExpr.FALSE;
 
         IntegerNum N = (IntegerNum)get(0);
-        if(N.IsEven())
+        if(N.isEven())
             return BoolExpr.TRUE;
 
         return BoolExpr.FALSE;

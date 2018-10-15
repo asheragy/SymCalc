@@ -20,7 +20,7 @@ public class Factor extends FunctionExpr {
 			IntegerNum num = (IntegerNum)get(0);
 		
 			ListExpr list = new ListExpr();
-			while(num.IsEven()) {
+			while(num.isEven()) {
 				num = (IntegerNum)num.divide( IntegerNum.TWO );
 				list.add( IntegerNum.TWO);
 			}

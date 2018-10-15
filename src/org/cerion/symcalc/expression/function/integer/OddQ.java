@@ -19,7 +19,7 @@ public class OddQ extends FunctionExpr {
             return BoolExpr.FALSE;
 
         IntegerNum N = (IntegerNum)get(0);
-        if(N.IsOdd())
+        if(N.isOdd())
             return BoolExpr.TRUE;
 
         return BoolExpr.FALSE;
