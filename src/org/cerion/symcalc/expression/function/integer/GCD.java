@@ -20,7 +20,7 @@ public class GCD extends FunctionExpr {
 			IntegerNum a = (IntegerNum)get(0);
 			IntegerNum b = (IntegerNum)get(1);
 			
-			return a.GCD(b);
+			return a.gcd(b);
 		}
 	
 		return this;

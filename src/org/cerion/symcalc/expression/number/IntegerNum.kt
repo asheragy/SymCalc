@@ -20,6 +20,7 @@ class IntegerNum : NumberExpr {
     override val isOne: Boolean get() = intVal == BigInteger.ONE
     val isEven: Boolean get() = !intVal.testBit(0)
     val isOdd: Boolean get() = intVal.testBit(0)
+    val signum: Int get() = intVal.signum()
 
     constructor(n: BigInteger) {
         value = n
@@ -35,6 +36,8 @@ class IntegerNum : NumberExpr {
 
     override fun numType(): Int = NumberExpr.INTEGER
     override fun toString(): String = intVal.toString()
+    override fun toDouble(): Double = intVal.toDouble()
+    override fun negate(): IntegerNum = IntegerNum(intVal.negate())
 
     override fun equals(e: NumberExpr): Boolean {
         if (e.isInteger) {
@@ -46,22 +49,9 @@ class IntegerNum : NumberExpr {
         return false
     }
 
-    @Deprecated("")
-    fun toInteger(): Int = intVal.toInt()
-
     fun intValue(): Int = intVal.toInt()
     fun toBigInteger(): BigInteger = intVal
-
-    // TODO check where needed, this class can abstract some functionality
     fun toBigDecimal(): BigDecimal = BigDecimal(intVal)
-
-    // TODO check where needed and possibly remove
-    override fun toDouble(): Double = intVal.toDouble()
-
-    override fun negate(): IntegerNum = IntegerNum(intVal.negate())
-
-    // TODO check where needed, we have isEven/Odd
-    fun signum(): Int = intVal.signum()
 
     fun add(n: IntegerNum): IntegerNum = IntegerNum(intVal.add(n.intVal))
     fun subtract(n: IntegerNum): IntegerNum = IntegerNum(intVal.subtract(n.intVal))
@@ -91,7 +81,7 @@ class IntegerNum : NumberExpr {
         //Int / Int
         if (num.isInteger) {
             val n = num as IntegerNum
-            val gcd = this.GCD(n)
+            val gcd = this.gcd(n)
 
             if (gcd.isOne) {
                 return if (env.isNumericalEval) {
@@ -184,26 +174,21 @@ class IntegerNum : NumberExpr {
     }
 
     //IntegerNum Specific Functions
-    fun GCD(N: IntegerNum): IntegerNum = IntegerNum(intVal.gcd(N.intVal))
+    fun gcd(N: IntegerNum): IntegerNum = IntegerNum(intVal.gcd(N.intVal))
 
-    // TODO change parameters to IntegerNum
-    fun powerMod(b: NumberExpr, m: NumberExpr): IntegerNum {
+    fun powerMod(b: IntegerNum, m: IntegerNum): IntegerNum {
         //Assuming all integers at this point since MathFunc needs to check that
         val num = intVal
-        val exp = (b as IntegerNum).intVal
-        val mod = (m as IntegerNum).intVal
+        val exp = b.intVal
+        val mod = m.intVal
 
         return IntegerNum(num.modPow(exp, mod))
     }
 
     fun primeQ(): Boolean = intVal.isProbablePrime(5)
 
-    // TODO consider removing
-    fun factorial(): IntegerNum = factorial(intVal.toLong().toInt())
-
-    operator fun mod(N: IntegerNum): IntegerNum {
-        return IntegerNum(intVal.mod(N.intVal))
-    }
+    operator fun dec(): IntegerNum = IntegerNum(intVal.minus(BigInteger.ONE))
+    operator fun mod(N: IntegerNum): IntegerNum = IntegerNum(intVal.mod(N.intVal))
 
     override fun compareTo(other: NumberExpr): Int {
         if (other.isInteger) {
@@ -220,17 +205,5 @@ class IntegerNum : NumberExpr {
         @JvmField val ONE = IntegerNum(1)
         @JvmField val TWO = IntegerNum(2)
         @JvmField val NEGATIVE_ONE = IntegerNum(-1)
-
-        // TODO move to class
-        @JvmStatic
-        fun factorial(N: Int): IntegerNum { var N = N
-            var result = BigInteger.valueOf(1)
-            while (N > 1) {
-                result = result.multiply(BigInteger(N.toString() + ""))
-                N--
-            }
-
-            return IntegerNum(result)
-        }
     }
 }

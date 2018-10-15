@@ -150,12 +150,18 @@ abstract class FunctionExpr protected constructor(val functionType: FunctionType
 
     @Throws(ValidationException::class)
     protected fun validateParameterType(position: Int, type: Expr.ExprType) {
+        if (size() < position+1)
+            validateParameterCount(position+1)
+
         if (size() < position || get(position).type != type)
             throw ValidationException(String.format("parameter %d must be type %s", position, type))
     }
 
     @Throws(ValidationException::class)
     protected fun validateNumberType(position: Int, numberType: Int) {
+        if (size() < position+1)
+            validateParameterCount(position+1)
+
         val e = get(position) as NumberExpr
         if (e.numType() != numberType)
             throw ValidationException(String.format("parameter %d must be type %s", position, numberType))

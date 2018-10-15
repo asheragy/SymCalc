@@ -16,7 +16,7 @@ public class RationalNum extends NumberExpr
 	}
 
 	public RationalNum(IntegerNum n, IntegerNum d) {
-		if(d.signum() == -1)
+		if(d.getSignum() == -1)
 			set(n.negate(),d.negate());
 		else
 			set(n,d);
@@ -47,7 +47,7 @@ public class RationalNum extends NumberExpr
 	@Override
 	public NumberExpr evaluate() {
 		//Reduce with GCD
-		IntegerNum gcd = numerator().GCD(denominator());
+		IntegerNum gcd = numerator().gcd(denominator());
 		IntegerNum n;
 		IntegerNum d;
 
@@ -58,7 +58,7 @@ public class RationalNum extends NumberExpr
 		}
 
 		//Never allow bottom to be negative
-		if(denominator().signum() == -1) {
+		if(denominator().getSignum() == -1) {
 			n = numerator().negate();
 			d = denominator().negate();
 			set(n,d);
