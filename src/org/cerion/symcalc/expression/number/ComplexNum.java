@@ -36,7 +36,8 @@ public class ComplexNum extends NumberExpr
 
 	@Override
 	public String toString() {
-		return "ComplexNum[" + getReal().toString() + "," + getImg().toString() + "]";
+		// TODO handle negative
+		return getReal().toString() + "+" + getImg().toString() + "i";
 	}
 
 	@Override
