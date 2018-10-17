@@ -91,16 +91,16 @@ public class ComplexNum extends NumberExpr
 		return (getReal().isOne() && getImg().isZero());
 	}
 	
-	public NumberExpr add(NumberExpr num)
+	public NumberExpr plus(NumberExpr num)
 	{
 		if(num.numType() == NumberExpr.COMPLEX)
 		{
 			ComplexNum b = (ComplexNum)num;
-			return new ComplexNum( getReal().add(b.getReal()), getImg().add(b.getImg()));
+			return new ComplexNum( getReal().plus(b.getReal()), getImg().plus(b.getImg()));
 			
 		}
 		
-		return new ComplexNum( getReal().add(num), getImg());
+		return new ComplexNum( getReal().plus(num), getImg());
 	}
 	
 	public NumberExpr subtract(NumberExpr num) 
@@ -141,7 +141,7 @@ public class ComplexNum extends NumberExpr
 
 				temp1 = b.multiply(c);
 				temp2 = a.multiply(d);
-				result.setImg( temp1.add(temp2));
+				result.setImg( temp1.plus(temp2));
 				break;
 			}
 			default: 

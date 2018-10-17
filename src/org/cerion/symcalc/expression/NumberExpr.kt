@@ -27,7 +27,6 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract fun numType(): Int  //getType already used by MathTerm
 
     abstract override fun toString(): String
-    abstract fun add(num: NumberExpr): NumberExpr
     abstract fun subtract(num: NumberExpr): NumberExpr
     abstract fun multiply(num: NumberExpr): NumberExpr
     abstract fun divide(num: NumberExpr): NumberExpr
@@ -42,7 +41,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     override fun show(i: Int) = indent(i, "Number " + this.toString())
     public override fun evaluate(): NumberExpr = this
 
-    operator fun plus(number: NumberExpr): NumberExpr = this.add(number)
+    abstract operator fun plus(number: NumberExpr): NumberExpr
 
     companion object {
         //Types

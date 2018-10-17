@@ -61,7 +61,7 @@ class RealNum_Double extends RealNum {
         return (dNumber == 1.0);
     }
 
-    public NumberExpr add(NumberExpr num) {
+    public NumberExpr plus(NumberExpr num) {
         RealNum_Double result = new RealNum_Double();
         switch (num.numType())
         {
@@ -84,7 +84,7 @@ class RealNum_Double extends RealNum {
 
         }
 
-        return num.add(this);
+        return num.plus(this);
     }
 
     public NumberExpr subtract(NumberExpr num) {
@@ -111,7 +111,7 @@ class RealNum_Double extends RealNum {
         }
 
         NumberExpr negative = num.negate();
-        return negative.add(this);
+        return negative.plus(this);
     }
 
     public NumberExpr multiply(NumberExpr num) {

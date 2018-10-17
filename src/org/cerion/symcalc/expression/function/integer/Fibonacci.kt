@@ -19,7 +19,7 @@ class Fibonacci(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FIBONAC
 
         // TODO overload IntegerNum so while loop works
         for (i in 1 until n) {
-            fib = a.add(b)
+            fib = a + b
             a = b
             b = fib
         }

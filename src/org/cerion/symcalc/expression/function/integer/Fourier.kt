@@ -52,7 +52,7 @@ class Fourier(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FOURIER, 
         for (k in 0 until y0.size()) {
             val num1 = y0[k] as NumberExpr
             val num2 = w.multiply(y1[k] as NumberExpr)
-            result.add(num1.add(num2))
+            result.add(num1 + num2)
             result.add(num1.subtract(num2))
 
             w = w.multiply(wN)

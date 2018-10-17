@@ -53,24 +53,25 @@ class IntegerNum : NumberExpr {
     fun toBigInteger(): BigInteger = intVal
     fun toBigDecimal(): BigDecimal = BigDecimal(intVal)
 
-    fun add(n: IntegerNum): IntegerNum = IntegerNum(intVal.add(n.intVal))
-    fun subtract(n: IntegerNum): IntegerNum = IntegerNum(intVal.subtract(n.intVal))
-    fun multiply(n: IntegerNum): IntegerNum = IntegerNum(intVal.multiply(n.intVal))
+    operator fun plus(N: IntegerNum): IntegerNum = IntegerNum(intVal.add(N.intVal))
+    operator fun minus(n: IntegerNum): IntegerNum = IntegerNum(intVal.subtract(n.intVal))
+    operator fun times(n: IntegerNum): IntegerNum = IntegerNum(intVal.multiply(n.intVal))
 
-    override fun add(num: NumberExpr): NumberExpr {
-        return if (num.numType() == NumberExpr.INTEGER) add(num as IntegerNum) else num.add(this)
+    override fun plus(number: NumberExpr): NumberExpr {
+        return if (number.isInteger) plus(number.asInteger()) else number.plus(this)
     }
+
     override fun subtract(num: NumberExpr): NumberExpr {
-        if (num.numType() == NumberExpr.INTEGER)
-            return subtract(num as IntegerNum)
+        if (num.isInteger)
+            return minus(num.asInteger())
 
         //Default reverse order
         val negative = num.negate()
-        return negative.add(this)
+        return negative.plus(this)
     }
 
     override fun multiply(num: NumberExpr): NumberExpr {
-        return if (num.numType() == NumberExpr.INTEGER) multiply(num as IntegerNum) else num.multiply(this)
+        return if (num.isInteger) times(num.asInteger()) else num.multiply(this)
     }
 
     override fun divide(num: NumberExpr): NumberExpr {

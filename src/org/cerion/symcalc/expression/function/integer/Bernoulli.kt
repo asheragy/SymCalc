@@ -33,12 +33,11 @@ class Bernoulli(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.BERNOUL
                 //System.out.println(b);
 
                 b = t.multiply(b)
-
-                res = res.add(b)
+                res+= b
             }
 
             res = res.negate()
-            N = N.add(IntegerNum.ONE)
+            N+= IntegerNum.ONE
             res = res.divide(N)
 
             result = res

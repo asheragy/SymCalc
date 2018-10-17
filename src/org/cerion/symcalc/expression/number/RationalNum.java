@@ -110,34 +110,34 @@ public class RationalNum extends NumberExpr
 	}
 
 	@Override
-	public NumberExpr add(NumberExpr num) {
+	public NumberExpr plus(NumberExpr num) {
 		RationalNum result;
 		switch (num.numType()) 
 		{
 			case INTEGER: //RationalNum + IntegerNum
-				IntegerNum i = (IntegerNum)num;
+				IntegerNum i = num.asInteger();
 
-				IntegerNum norm = i.multiply(denominator());
-				return new RationalNum(numerator().add(norm), denominator());
+				IntegerNum norm = i.times(denominator());
+				return new RationalNum(numerator().plus(norm), denominator());
 				
 			case RATIONAL: //RationalNum + RationalNum
 			{
 				RationalNum div = (RationalNum)num;
-				IntegerNum n1 = div.numerator().multiply( denominator());
-				IntegerNum n2 = numerator().multiply( div.denominator() );
+				IntegerNum n1 = div.numerator().times( denominator());
+				IntegerNum n2 = numerator().times( div.denominator() );
 				
-				result = new RationalNum(n1.add(n2), denominator().multiply(div.denominator()));
+				result = new RationalNum(n1.plus(n2), denominator().times(div.denominator()));
 				return result.evaluate();
 			}
 		}
 		
-		return num.add(this); //Default reverse order
+		return num.plus(this); //Default reverse order
 	}
 
 	@Override
 	public NumberExpr subtract(NumberExpr num) {
 		NumberExpr negative = num.negate();
-		return this.add(negative);
+		return this.plus(negative);
 	}
 
 	@Override
@@ -147,13 +147,13 @@ public class RationalNum extends NumberExpr
 		{
 			case INTEGER: //RationalNum * IntegerNum
 			{
-				result = new RationalNum(numerator().multiply( (IntegerNum)num), denominator());
+				result = new RationalNum(numerator().times(num.asInteger()), denominator());
 				return result.evaluate();
 			}
 			case RATIONAL: //RationalNum * RationalNum
 			{
 				RationalNum t = (RationalNum)num;
-				result = new RationalNum( numerator().multiply( t.numerator() ), denominator().multiply( t.denominator() ) );
+				result = new RationalNum( numerator().times( t.numerator() ), denominator().times( t.denominator() ) );
 				return result.evaluate();
 			}
 		}
@@ -168,14 +168,13 @@ public class RationalNum extends NumberExpr
 		{
 			case INTEGER: //RationalNum / IntegerNum
 			{
-				result = new RationalNum(numerator(), denominator().multiply( (IntegerNum)num ) );
-				
+				result = new RationalNum(numerator(), denominator().times( num.asInteger() ) );
 				return result.evaluate();
 			}
 			case RATIONAL: //RationalNum / RationalNum
 			{
 				RationalNum t = (RationalNum)num;
-				result = new RationalNum( numerator().multiply( t.denominator()), denominator().multiply(t.numerator()) );
+				result = new RationalNum( numerator().times( t.denominator()), denominator().times(t.numerator()) );
 				return result.evaluate();
 			}
 		}

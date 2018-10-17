@@ -92,8 +92,6 @@ abstract class Expr {
         mArgs!![index] = e
     }
 
-    operator fun times(e: Expr) = Times(this, e)
-
     fun getList(index: Int): ListExpr = get(index) as ListExpr
     fun getInteger(index: Int): IntegerNum = get(index) as IntegerNum
 

@@ -11,12 +11,12 @@ import java.math.BigInteger
 class Factorial(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FACTORIAL, *e) {
 
     override fun evaluate(): Expr {
-        //TODO can work on non-
+        //TODO can work on non-integer
 
         var result = IntegerNum.ONE
         var N = get(0).asInteger()
         while (N > IntegerNum.ONE) {
-            result = result.multiply(N)
+            result*= N
             N--
         }
 

@@ -73,7 +73,7 @@ public class RealNum_BigDecimal extends RealNum {
             return bigNumber.equals(BigDecimal.ONE);
     }
 
-    public NumberExpr add(NumberExpr num) {
+    public NumberExpr plus(NumberExpr num) {
         throw new NotImplementedException();
         /*
         RealNum result = new RealNum();

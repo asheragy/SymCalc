@@ -135,7 +135,7 @@ public class TableTest {
         assertTrue(e.get(0).isInteger());
         IntegerNum sum = IntegerNum.ZERO;
         for(int i = 0; i < e.size(); i++)
-            sum = sum.add((IntegerNum)e.get(i));
+            sum = sum.plus((IntegerNum)e.get(i));
 
         //Result should be list of 0s and 1s, verify there is at least a few of each
         assertTrue(sum.intValue() > 2);
