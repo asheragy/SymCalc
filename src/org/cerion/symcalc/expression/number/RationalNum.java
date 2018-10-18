@@ -17,7 +17,7 @@ public class RationalNum extends NumberExpr
 
 	public RationalNum(IntegerNum n, IntegerNum d) {
 		if(d.getSignum() == -1)
-			set(n.negate(),d.negate());
+			set(n.unaryMinus(),d.unaryMinus());
 		else
 			set(n,d);
 	}
@@ -52,15 +52,15 @@ public class RationalNum extends NumberExpr
 		IntegerNum d;
 
 		if(!gcd.isOne()) {
-			n = (IntegerNum) numerator().divide(gcd);
-			d = (IntegerNum) denominator().divide(gcd);
+			n = (IntegerNum) numerator().div(gcd);
+			d = (IntegerNum) denominator().div(gcd);
 			set(n,d);
 		}
 
 		//Never allow bottom to be negative
 		if(denominator().getSignum() == -1) {
-			n = numerator().negate();
-			d = denominator().negate();
+			n = numerator().unaryMinus();
+			d = denominator().unaryMinus();
 			set(n,d);
 		}
 
@@ -91,8 +91,8 @@ public class RationalNum extends NumberExpr
 	}
 
 	@Override
-	public NumberExpr negate() {
-		return new RationalNum(numerator().negate(), denominator());
+	public NumberExpr unaryMinus() {
+		return new RationalNum(numerator().unaryMinus(), denominator());
 	}
 
 	public NumberExpr reciprocal() {
@@ -135,13 +135,13 @@ public class RationalNum extends NumberExpr
 	}
 
 	@Override
-	public NumberExpr subtract(NumberExpr num) {
-		NumberExpr negative = num.negate();
+	public NumberExpr minus(NumberExpr num) {
+		NumberExpr negative = num.unaryMinus();
 		return this.plus(negative);
 	}
 
 	@Override
-	public NumberExpr multiply(NumberExpr num) {
+	public NumberExpr times(NumberExpr num) {
 		RationalNum result;
 		switch (num.numType()) 
 		{
@@ -158,11 +158,11 @@ public class RationalNum extends NumberExpr
 			}
 		}
 		
-		return num.multiply(this);
+		return num.times(this);
 	}
 
 	@Override
-	public NumberExpr divide(NumberExpr num) {
+	public NumberExpr div(NumberExpr num) {
 		RationalNum result;
 		switch (num.numType()) 
 		{
@@ -179,7 +179,7 @@ public class RationalNum extends NumberExpr
 			}
 		}
 		
-		return num.multiply(this);
+		return num.times(this);
 	}
 
 	@Override

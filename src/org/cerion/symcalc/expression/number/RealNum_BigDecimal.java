@@ -61,7 +61,7 @@ public class RealNum_BigDecimal extends RealNum {
         return e.isReal() && toDouble() == e.toDouble();
     }
 
-    public RealNum_BigDecimal negate() {
+    public RealNum_BigDecimal unaryMinus() {
         return new RealNum_BigDecimal(bigNumber.negate());
     }
 
@@ -105,7 +105,7 @@ public class RealNum_BigDecimal extends RealNum {
         */
     }
 
-    public NumberExpr subtract(NumberExpr num) {
+    public NumberExpr minus(NumberExpr num) {
         throw new NotImplementedException();
         /*
         RealNum result = new RealNum();
@@ -138,7 +138,7 @@ public class RealNum_BigDecimal extends RealNum {
         */
     }
 
-    public NumberExpr multiply(NumberExpr num) {
+    public NumberExpr times(NumberExpr num) {
         throw new NotImplementedException();
         /*
         RealNum result = new RealNum();
@@ -168,7 +168,7 @@ public class RealNum_BigDecimal extends RealNum {
         */
     }
 
-    public NumberExpr divide(NumberExpr num) {
+    public NumberExpr div(NumberExpr num) {
         throw new NotImplementedException();
         /*
         RealNum result = new RealNum();

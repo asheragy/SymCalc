@@ -41,8 +41,8 @@ public class ComplexNum extends NumberExpr
 	}
 
 	@Override
-	public ComplexNum negate() {
-		return new ComplexNum(getReal().negate(), getImg().negate());
+	public ComplexNum unaryMinus() {
+		return new ComplexNum(getReal().unaryMinus(), getImg().unaryMinus());
 	}
 
 	@Override
@@ -103,26 +103,26 @@ public class ComplexNum extends NumberExpr
 		return new ComplexNum( getReal().plus(num), getImg());
 	}
 	
-	public NumberExpr subtract(NumberExpr num) 
+	public NumberExpr minus(NumberExpr num)
 	{
 		ComplexNum result = new ComplexNum();
 		if(num.numType() == NumberExpr.COMPLEX)
 		{
 			ComplexNum b = (ComplexNum)num;
-			result.setReal (getReal().subtract(b.getReal()));
-			result.setImg (getImg().subtract(b.getImg()));
+			result.setReal (getReal().minus(b.getReal()));
+			result.setImg (getImg().minus(b.getImg()));
 			
 		}
 		else
 		{
-			result.setReal (getReal().subtract(num));
+			result.setReal (getReal().minus(num));
 			result.setImg( getImg() );
 		}
 		
 		return result;
 	}
 	
-	public NumberExpr multiply(NumberExpr num) 
+	public NumberExpr times(NumberExpr num)
 	{
 		ComplexNum result = new ComplexNum();
 		switch (num.numType()) 
@@ -135,19 +135,19 @@ public class ComplexNum extends NumberExpr
 				NumberExpr c = ((ComplexNum)num).getReal();
 				NumberExpr d = ((ComplexNum)num).getImg();
 				
-				NumberExpr temp1 = a.multiply(c);
-				NumberExpr temp2 = b.multiply(d);
-				result.setReal (temp1.subtract(temp2));
+				NumberExpr temp1 = a.times(c);
+				NumberExpr temp2 = b.times(d);
+				result.setReal (temp1.minus(temp2));
 
-				temp1 = b.multiply(c);
-				temp2 = a.multiply(d);
+				temp1 = b.times(c);
+				temp2 = a.times(d);
 				result.setImg( temp1.plus(temp2));
 				break;
 			}
 			default: 
 			{
-				result.setReal( this.getReal().multiply(num));
-				result.setImg( this.getImg().multiply(num));
+				result.setReal( this.getReal().times(num));
+				result.setImg( this.getImg().times(num));
 				break;
 			}
 		}
@@ -156,7 +156,7 @@ public class ComplexNum extends NumberExpr
 	}
 	
 	@Override
-	public NumberExpr divide(NumberExpr num) {
+	public NumberExpr div(NumberExpr num) {
 		// TODO Auto-generated method stub
 		return null;
 	}

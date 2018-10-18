@@ -17,7 +17,7 @@ class Bernoulli(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.BERNOUL
         if (N.isZero)
             result = IntegerNum.ONE
         else if (N.isOne)
-            result = NumberExpr.parse("0.5").negate()
+            result = NumberExpr.parse("0.5").unaryMinus()
         else {
             var res: NumberExpr = IntegerNum.ZERO
             val n = N.intValue()
@@ -32,13 +32,13 @@ class Bernoulli(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.BERNOUL
                 var b = bern.eval() as NumberExpr
                 //System.out.println(b);
 
-                b = t.multiply(b)
+                b = t * b
                 res+= b
             }
 
-            res = res.negate()
+            res = -res
             N+= IntegerNum.ONE
-            res = res.divide(N)
+            res/= N
 
             result = res
         }

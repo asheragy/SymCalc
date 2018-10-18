@@ -4,8 +4,6 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.NumberExpr
-import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
 
 class Factor(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FACTOR, *e) {
@@ -15,26 +13,24 @@ class Factor(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FACTOR, *e
 
         val list = ListExpr()
         while (num.isEven) {
-            num = num.divide(IntegerNum.TWO).asInteger()
+            num = (num / IntegerNum.TWO).asInteger()
             list.add(IntegerNum.TWO)
         }
 
         // Continue factoring 3+
         if (!num.isOne) {
             var test = IntegerNum(3)
-
-            // TODO add some operator overloading to remove Times() and divide()
-            var max = Times(test, test).eval().asInteger()
+            var max = test * test
 
             while (max.compareTo(num) <= 0) {
 
                 val mod = num.mod(test)
                 if (mod.isZero) {
                     list.add(test)
-                    num = num.divide(test) as IntegerNum
+                    num = (num / test).asInteger()
                 } else {
-                    test = Plus(test, IntegerNum.TWO).eval().asInteger()
-                    max = Times(test, test).eval().asInteger()
+                    test+= IntegerNum.TWO
+                    max = test * test
                 }
             }
 

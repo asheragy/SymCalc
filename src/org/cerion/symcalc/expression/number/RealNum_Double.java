@@ -49,7 +49,7 @@ class RealNum_Double extends RealNum {
         return false;
     }
 
-    public RealNum_Double negate() {
+    public RealNum_Double unaryMinus() {
         return new RealNum_Double(0 - dNumber);
     }
 
@@ -87,7 +87,7 @@ class RealNum_Double extends RealNum {
         return num.plus(this);
     }
 
-    public NumberExpr subtract(NumberExpr num) {
+    public NumberExpr minus(NumberExpr num) {
         RealNum_Double result = new RealNum_Double();
         switch (num.numType())
         {
@@ -110,11 +110,11 @@ class RealNum_Double extends RealNum {
             }
         }
 
-        NumberExpr negative = num.negate();
+        NumberExpr negative = num.unaryMinus();
         return negative.plus(this);
     }
 
-    public NumberExpr multiply(NumberExpr num) {
+    public NumberExpr times(NumberExpr num) {
         RealNum_Double result = new RealNum_Double();
         switch (num.numType())
         {
@@ -134,10 +134,10 @@ class RealNum_Double extends RealNum {
                 return result;
             }
         }
-        return num.multiply(this);
+        return num.times(this);
     }
 
-    public NumberExpr divide(NumberExpr num) {
+    public NumberExpr div(NumberExpr num) {
         RealNum_Double result = new RealNum_Double();
         switch (num.numType())
         {
@@ -157,7 +157,7 @@ class RealNum_Double extends RealNum {
                 return result;
             }
         }
-        return num.multiply(this);
+        return num.times(this);
     }
 
     public NumberExpr power(NumberExpr num) {

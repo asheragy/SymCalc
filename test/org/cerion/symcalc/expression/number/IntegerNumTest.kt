@@ -37,10 +37,10 @@ class IntegerNumTest {
 
     @Test
     fun negate() {
-        verify(IntegerNum.ZERO.negate(), 0)
-        verify(IntegerNum.ONE.negate(), -1)
-        verify(IntegerNum.TWO.negate(), -2)
-        verify(IntegerNum(-5).negate(), 5)
+        verify(-IntegerNum.ZERO, 0)
+        verify(-IntegerNum.ONE, -1)
+        verify(-IntegerNum.TWO, -2)
+        verify(-IntegerNum(-5), 5)
     }
 
     @Test
@@ -62,54 +62,54 @@ class IntegerNumTest {
         //Big
         verify(big + big, BigInteger("199999999999999999999999999999999999999999998"))
         verify(big + i1, BigInteger("100000000000000000000000000000000000000000000"))
-        verify(big + big.negate(), 0)
+        verify(big + big.unaryMinus(), 0)
     }
 
     @Test
     fun subtraction() {
         //Zero
-        verify(i0.subtract(i0), 0)
-        verify(i0.subtract(i1), -1)
-        verify(i1.subtract(i0), 1)
+        verify(i0 - i0, 0)
+        verify(i0 - i1, -1)
+        verify(i1 - i0, 1)
 
         //Basic
-        verify(i1.subtract(i1), 0)
-        verify(i3.subtract(i5), -2)
-        verify(i5.subtract(i3), 2)
+        verify(i1 - i1, 0)
+        verify(i3 - i5, -2)
+        verify(i5 - i3, 2)
 
         //Negative
-        verify(neg.subtract(i5), -22)
-        verify(i5.subtract(neg), 22)
-        verify(neg.subtract(neg), 0)
+        verify(neg - i5, -22)
+        verify(i5 - neg, 22)
+        verify(neg - neg, 0)
 
         //Big
-        verify(big.subtract(big), BigInteger("0"))
-        verify(big.subtract(i1), BigInteger("99999999999999999999999999999999999999999998"))
-        verify(i1.subtract(big), BigInteger("-99999999999999999999999999999999999999999998"))
-        verify(big.subtract(big.negate()), BigInteger("199999999999999999999999999999999999999999998"))
+        verify(big - big, BigInteger("0"))
+        verify(big - i1, BigInteger("99999999999999999999999999999999999999999998"))
+        verify(i1 - big, BigInteger("-99999999999999999999999999999999999999999998"))
+        verify(big - big.unaryMinus(), BigInteger("199999999999999999999999999999999999999999998"))
     }
 
     @Test
     fun multiply() {
         //Zero
-        verify(i0.multiply(i0), 0)
-        verify(i0.multiply(i1), 0)
-        verify(i1.multiply(i0), 0)
+        verify(i0 * i0, 0)
+        verify(i0 * i1, 0)
+        verify(i1 * i0, 0)
 
         //Basic
-        verify(i1.multiply(i1), 1)
-        verify(i3.multiply(i5), 15)
+        verify(i1 * i1, 1)
+        verify(i3 * i5, 15)
 
         //Negative
-        verify(neg.multiply(i5), -85)
-        verify(i5.multiply(neg), -85)
-        verify(neg.multiply(neg), 289)
+        verify(neg * i5, -85)
+        verify(i5 * neg, -85)
+        verify(neg * neg, 289)
 
         //Big
-        verify(big.multiply(big), BigInteger("9999999999999999999999999999999999999999999800000000000000000000000000000000000000000001"))
-        verify(big.multiply(i1), BigInteger("99999999999999999999999999999999999999999999"))
-        verify(i1.multiply(big), BigInteger("99999999999999999999999999999999999999999999"))
-        verify(big.multiply(big.negate()), BigInteger("-9999999999999999999999999999999999999999999800000000000000000000000000000000000000000001"))
+        verify(big * big, BigInteger("9999999999999999999999999999999999999999999800000000000000000000000000000000000000000001"))
+        verify(big * i1, BigInteger("99999999999999999999999999999999999999999999"))
+        verify(i1 * big, BigInteger("99999999999999999999999999999999999999999999"))
+        verify(big * big.unaryMinus(), BigInteger("-9999999999999999999999999999999999999999999800000000000000000000000000000000000000000001"))
     }
 
     @Test
@@ -121,6 +121,18 @@ class IntegerNumTest {
         divideByZero(i1, ComplexNum())
 
         //Add more later
+    }
+
+    @Test
+    fun inc_dec() {
+        var n = IntegerNum.NEGATIVE_ONE
+        assertEquals(IntegerNum.ZERO, ++n)
+        assertEquals(IntegerNum.ONE, ++n)
+        assertEquals(IntegerNum.TWO, ++n)
+
+        assertEquals(IntegerNum.ONE, --n)
+        assertEquals(IntegerNum.ZERO, --n)
+        assertEquals(IntegerNum.NEGATIVE_ONE, --n)
     }
 
     private fun verify(e: NumberExpr, expected: Long) {
@@ -141,11 +153,10 @@ class IntegerNumTest {
 
     private fun divideByZero(n: NumberExpr, exp: NumberExpr) {
         try {
-            verify(n.divide(exp), 0)
+            verify(n.div(exp), 0)
+            assert(true)
         } catch (e: ArithmeticException) {
             //Success
         }
-
     }
-
 }

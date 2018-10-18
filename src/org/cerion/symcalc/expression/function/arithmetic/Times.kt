@@ -27,7 +27,7 @@ class Times(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.TIMES, *e) 
             if (e.isNumber) {
                 val n = e as NumberExpr
                 if (!n.isOne)
-                    product = product.multiply(n)
+                    product*= n
                 it.remove()
             }
         }

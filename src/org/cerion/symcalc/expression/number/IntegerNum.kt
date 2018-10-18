@@ -37,7 +37,6 @@ class IntegerNum : NumberExpr {
     override fun numType(): Int = NumberExpr.INTEGER
     override fun toString(): String = intVal.toString()
     override fun toDouble(): Double = intVal.toDouble()
-    override fun negate(): IntegerNum = IntegerNum(intVal.negate())
 
     override fun equals(e: NumberExpr): Boolean {
         if (e.isInteger) {
@@ -57,24 +56,26 @@ class IntegerNum : NumberExpr {
     operator fun minus(n: IntegerNum): IntegerNum = IntegerNum(intVal.subtract(n.intVal))
     operator fun times(n: IntegerNum): IntegerNum = IntegerNum(intVal.multiply(n.intVal))
 
+    override fun unaryMinus(): IntegerNum = IntegerNum(intVal.negate())
+
     override fun plus(number: NumberExpr): NumberExpr {
         return if (number.isInteger) plus(number.asInteger()) else number.plus(this)
     }
 
-    override fun subtract(num: NumberExpr): NumberExpr {
-        if (num.isInteger)
-            return minus(num.asInteger())
+    override fun minus(number: NumberExpr): NumberExpr {
+        if (number.isInteger)
+            return minus(number.asInteger())
 
         //Default reverse order
-        val negative = num.negate()
-        return negative.plus(this)
+        val negative = number.unaryMinus()
+        return negative + this
     }
 
-    override fun multiply(num: NumberExpr): NumberExpr {
-        return if (num.isInteger) times(num.asInteger()) else num.multiply(this)
+    override fun times(num: NumberExpr): NumberExpr {
+        return if (num.isInteger) times(num.asInteger()) else num.times(this)
     }
 
-    override fun divide(num: NumberExpr): NumberExpr {
+    override fun div(num: NumberExpr): NumberExpr {
         //Any code calling this should check
         if (num.isZero)
             throw ArithmeticException("divide by zero")
@@ -131,20 +132,20 @@ class IntegerNum : NumberExpr {
                         // factor out any numbers that are the Nth root of the denominator
                         val t = Factor(this)
                         val factors = Tally(t).eval().asList()
-                        val denominator = (num as RationalNum).denominator().intValue()
+                        val denominator = num.asRational().denominator()
 
                         var multiply = IntegerNum.ONE
 
                         run {
                             var i = 0
                             while (i < factors.size()) {
-                                val key = factors[i][0].asInteger().intValue()
-                                val `val` = factors[i][1].asInteger().intValue()
+                                val key = factors[i][0].asInteger()
+                                val v = factors[i][1].asInteger()
 
                                 // Factor it out
-                                if (`val` >= denominator) {
-                                    multiply = Times(multiply, IntegerNum(key.toLong())).eval().asInteger()
-                                    factors[i] = ListExpr(IntegerNum(key.toLong()), IntegerNum((`val` - denominator).toLong()))
+                                if (v >= denominator) {
+                                    multiply*= key
+                                    factors[i] = ListExpr(key, v - denominator)
                                 } else
                                     i++
                             }
@@ -188,6 +189,7 @@ class IntegerNum : NumberExpr {
 
     fun primeQ(): Boolean = intVal.isProbablePrime(5)
 
+    operator fun inc(): IntegerNum = IntegerNum(intVal.inc())
     operator fun dec(): IntegerNum = IntegerNum(intVal.minus(BigInteger.ONE))
     operator fun mod(N: IntegerNum): IntegerNum = IntegerNum(intVal.mod(N.intVal))
 

@@ -20,15 +20,15 @@ public class ComplexNumTest {
 
     @Test
     public void negate() {
-        assertEquals(new ComplexNum(0,0), new ComplexNum(0,0).negate());
-        assertEquals(new ComplexNum(-1,0), new ComplexNum(1,0).negate());
-        assertEquals(new ComplexNum(0,-1), new ComplexNum(0,1).negate());
-        assertEquals(new ComplexNum(-1,-1), new ComplexNum(1,1).negate());
-        assertEquals(new ComplexNum(1,0), new ComplexNum(-1,0).negate());
-        assertEquals(new ComplexNum(0,1), new ComplexNum(0,-1).negate());
-        assertEquals(new ComplexNum(1,1), new ComplexNum(-1,-1).negate());
-        assertEquals(new ComplexNum(-1,1), new ComplexNum(1,-1).negate());
-        assertEquals(new ComplexNum(1,-1), new ComplexNum(-1,1).negate());
+        assertEquals(new ComplexNum(0,0), new ComplexNum(0,0).unaryMinus());
+        assertEquals(new ComplexNum(-1,0), new ComplexNum(1,0).unaryMinus());
+        assertEquals(new ComplexNum(0,-1), new ComplexNum(0,1).unaryMinus());
+        assertEquals(new ComplexNum(-1,-1), new ComplexNum(1,1).unaryMinus());
+        assertEquals(new ComplexNum(1,0), new ComplexNum(-1,0).unaryMinus());
+        assertEquals(new ComplexNum(0,1), new ComplexNum(0,-1).unaryMinus());
+        assertEquals(new ComplexNum(1,1), new ComplexNum(-1,-1).unaryMinus());
+        assertEquals(new ComplexNum(-1,1), new ComplexNum(1,-1).unaryMinus());
+        assertEquals(new ComplexNum(1,-1), new ComplexNum(-1,1).unaryMinus());
     }
 
 }

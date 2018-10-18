@@ -23,8 +23,8 @@ public class RealNumTest {
 
     @Test
     public void negate() {
-        assertEquals(0, RealNum.create(0.0).negate().toDouble(), 0.01);
-        assertEquals(-1, RealNum.create(1.0).negate().toDouble(), 0.01);
-        assertEquals(1, RealNum.create(-1.0).negate().toDouble(), 0.01);
+        assertEquals(0, RealNum.create(0.0).unaryMinus().toDouble(), 0.01);
+        assertEquals(-1, RealNum.create(1.0).unaryMinus().toDouble(), 0.01);
+        assertEquals(1, RealNum.create(-1.0).unaryMinus().toDouble(), 0.01);
     }
 }

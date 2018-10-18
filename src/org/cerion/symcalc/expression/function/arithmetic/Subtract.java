@@ -26,7 +26,7 @@ public class Subtract extends FunctionExpr {
 			NumberExpr n1 = (NumberExpr)a;
 			NumberExpr n2 = (NumberExpr)b;
 			
-			return n1.subtract(n2);
+			return n1.minus(n2);
 		}
 		else if(a.isList() || b.isList())
 		{

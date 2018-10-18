@@ -118,7 +118,7 @@ class Parser(private val lex: Lexer) {
             var next = factor()
             //if number just negate it
             if (next.isNumber)
-                next = (next as NumberExpr).negate()
+                next = (next as NumberExpr).unaryMinus()
             else
                 next = Times(IntegerNum("-1"), next)
 

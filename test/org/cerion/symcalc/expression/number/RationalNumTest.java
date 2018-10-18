@@ -20,10 +20,10 @@ public class RationalNumTest {
 
     @Test
     public void negate() {
-        assertEquals(new RationalNum(4,5), new RationalNum(-4,5).negate());
-        assertEquals(new RationalNum(-4,5), new RationalNum(4,5).negate());
-        assertEquals(new RationalNum(-4,5), new RationalNum(-4,-5).negate());
-        assertEquals(new RationalNum(4,5), new RationalNum(4,-5).negate());
+        assertEquals(new RationalNum(4,5), new RationalNum(-4,5).unaryMinus());
+        assertEquals(new RationalNum(-4,5), new RationalNum(4,5).unaryMinus());
+        assertEquals(new RationalNum(-4,5), new RationalNum(-4,-5).unaryMinus());
+        assertEquals(new RationalNum(4,5), new RationalNum(4,-5).unaryMinus());
     }
 
     @Test

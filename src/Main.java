@@ -47,7 +47,7 @@ public class Main
 		{
 			for(int j = 0; j < 6; j++)
 			{
-				NumberExpr t = nums[i].multiply(nums[j]);
+				NumberExpr t = nums[i].times(nums[j]);
 				System.out.println(nums[i].numType() + " " + nums[j].numType() + " = " + t.toString());
 			}
 		}

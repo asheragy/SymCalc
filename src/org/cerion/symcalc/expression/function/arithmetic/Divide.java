@@ -29,7 +29,7 @@ public class Divide extends FunctionExpr {
 			NumberExpr n1 = (NumberExpr)a;
 			NumberExpr n2 = (NumberExpr)b;
 			
-			return n1.divide(n2);
+			return n1.div(n2);
 		}
 
 		return this;

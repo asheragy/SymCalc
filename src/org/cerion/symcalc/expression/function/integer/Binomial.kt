@@ -14,12 +14,12 @@ class Binomial(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.BINOMIAL
 
         // n! / k!(n-k)!
         val n1 = Factorial(n).eval().asInteger()
-        var n2 = n.subtract(k)
+        var n2 = n - k
         n2 = Factorial(n2).eval().asInteger()
         val n3 = Factorial(k).eval().asInteger()
-        n2 = n2.multiply(n3)
+        n2 = n2.times(n3)
 
-        return n1.divide(n2)
+        return n1 / n2
     }
 
     @Throws(ValidationException::class)
