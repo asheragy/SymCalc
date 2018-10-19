@@ -39,6 +39,7 @@ class IntegerNum : NumberExpr {
     override fun toString(): String = intVal.toString()
     override fun toDouble(): Double = intVal.toDouble()
 
+    /*
     override fun equals(e: NumberExpr): Boolean {
         if (e.isInteger) {
             val n = e as IntegerNum
@@ -48,6 +49,7 @@ class IntegerNum : NumberExpr {
 
         return false
     }
+    */
 
     fun intValue(): Int = intVal.toInt()
     fun toBigInteger(): BigInteger = intVal

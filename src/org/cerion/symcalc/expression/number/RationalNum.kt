@@ -2,6 +2,7 @@ package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.expression.Expr
+import java.math.RoundingMode
 
 class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : NumberExpr() {
 
@@ -21,16 +22,6 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
     }
 
     constructor(n: Int, d: Int) : this(IntegerNum(n.toLong()), IntegerNum(d.toLong()))
-
-    // TODO add compareTo and equals can build off that
-    override fun equals(e: NumberExpr): Boolean {
-        if (e.isRational) {
-            val r = e as RationalNum
-            return numerator.equals(r.numerator) && denominator.equals(r.denominator)
-        }
-
-        return false
-    }
 
     override fun evaluate(): NumberExpr {
         //Reduce with GCD
@@ -58,82 +49,79 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
     override fun toString(): String = numerator.toString() + "/" + denominator.toString()
 
     override fun toDouble(): Double {
-        var decN = numerator.toBigDecimal()
-        val decD = denominator.toBigDecimal()
-        decN = decN.divide(decD)
-        return decN.toDouble()
+        val decN = numerator.toBigDecimal().toDouble()
+        val decD = denominator.toBigDecimal().toDouble()
+        return decN / decD
     }
 
     override fun unaryMinus(): NumberExpr = RationalNum(numerator.unaryMinus(), denominator)
 
     fun reciprocal(): NumberExpr = RationalNum(denominator, numerator).evaluate()
 
-    override fun plus(number: NumberExpr): NumberExpr {
+    override fun plus(other: NumberExpr): NumberExpr {
         val result: RationalNum
-        when (number.numType) {
+        when (other.numType) {
             NumberType.INTEGER -> {
-                val norm = number.asInteger() * denominator
+                val norm = other.asInteger() * denominator
                 return RationalNum(numerator.plus(norm), denominator)
             }
 
             NumberType.RATIONAL -> {
-                val div = number as RationalNum
+                val div = other as RationalNum
                 val n1 = div.numerator * denominator
                 val n2 = numerator * div.denominator
 
                 result = RationalNum(n1 + n2, denominator * div.denominator)
                 return result.evaluate()
             }
+            else -> return other + this
         }
-
-        return number + this //Default reverse order
     }
 
-    override fun minus(number: NumberExpr): NumberExpr = this + number.unaryMinus()
+    override fun minus(other: NumberExpr): NumberExpr = this + other.unaryMinus()
 
-    override fun times(num: NumberExpr): NumberExpr {
+    override fun times(other: NumberExpr): NumberExpr {
         val result: RationalNum
-        when (num.numType) {
+
+        when (other.numType) {
             NumberType.INTEGER -> {
-                result = RationalNum(numerator * num.asInteger(), denominator)
+                result = RationalNum(numerator * other.asInteger(), denominator)
                 return result.evaluate()
             }
             NumberType.RATIONAL -> {
-                val t = num as RationalNum
+                val t = other as RationalNum
                 result = RationalNum(numerator * t.numerator, denominator * t.denominator)
                 return result.evaluate()
             }
+            else -> return other * this
         }
-
-        return num * this
     }
 
-    override fun div(num: NumberExpr): NumberExpr {
+    override fun div(other: NumberExpr): NumberExpr {
         val result: RationalNum
-        when (num.numType) {
+        when (other.numType) {
             NumberType.INTEGER -> {
-                result = RationalNum(numerator, denominator * num.asInteger())
+                result = RationalNum(numerator, denominator * other.asInteger())
                 return result.evaluate()
             }
             NumberType.RATIONAL -> {
-                val t = num as RationalNum
+                val t = other as RationalNum
                 result = RationalNum(numerator * t.denominator, denominator * t.numerator)
                 return result.evaluate()
             }
+            else -> return other * this
         }
-
-        return num.times(this)
     }
 
-    override fun canExp(num: NumberExpr): Boolean = !(num.isRational || num.isComplex)
+    override fun canExp(other: NumberExpr): Boolean = !(other.isRational || other.isComplex)
 
-    override fun power(num: NumberExpr): Expr {
+    override fun power(other: NumberExpr): Expr {
         val n: IntegerNum
         val d: IntegerNum
-        when (num.numType) {
+        when (other.numType) {
             NumberType.INTEGER -> {
-                n = numerator.power(num) as IntegerNum
-                d = denominator.power(num) as IntegerNum
+                n = numerator.power(other) as IntegerNum
+                d = denominator.power(other) as IntegerNum
                 return RationalNum(n, d)
             }
 
@@ -142,7 +130,7 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
 
             NumberType.REAL -> {
                 val rResult = RealNum.create(this)
-                return rResult.power(num)
+                return rResult.power(other)
             }
         }
 
@@ -156,8 +144,10 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
             setArg(1, d)
     }
 
-    override fun compareTo(o: NumberExpr): Int {
-        throw NotImplementedError()
+    override fun compareTo(other: NumberExpr): Int {
+        // TODO add test to see if 1/2 == 2/4 and check compareTo Complex
+        val result = toDouble().compareTo(other.toDouble())
+        return result
     }
 
     companion object {

@@ -31,7 +31,29 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract fun canExp(other: NumberExpr): Boolean  //this^num = num is TRUE, FALSE if can't resolve
     abstract fun toDouble(): Double  //Valid on all but ComplexNum
 
-    abstract fun equals(e: NumberExpr): Boolean
+    abstract override fun compareTo(other: NumberExpr): Int
+
+    fun equals(other: NumberExpr): Boolean {
+        // TODO ignore type so 1.0==1?
+
+        try {
+            return compareTo(other) == 0
+        }
+        catch (e: NotImplementedError) {
+            return false
+        }
+
+        /*
+        if(numType == other.numType) {
+            if (isComplex && other.isComplex)
+                return asComplex().real.compareTo(other.asComplex().real) == 0 && asComplex().img.compareTo(other.asComplex().img) == 0
+            return compareTo(other) == 0
+        }
+
+        return false
+        */
+    }
+
     override fun equals(e: Expr): Boolean = e.isNumber && equals(e as NumberExpr)
 
     override fun show(i: Int) = indent(i, "Number " + this.toString())

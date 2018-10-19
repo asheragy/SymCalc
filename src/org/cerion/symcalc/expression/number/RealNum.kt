@@ -7,10 +7,6 @@ abstract class RealNum : NumberExpr() {
 
     override val numType: NumberType get() = NumberType.REAL
 
-    override fun compareTo(o: NumberExpr): Int {
-        throw NotImplementedError()
-    }
-
     override fun canExp(num: NumberExpr): Boolean {
         return if (num.numType === NumberType.COMPLEX) false else true
     }

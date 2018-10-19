@@ -17,7 +17,9 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
 
     override fun toDouble(): Double = dNumber
     override fun toString(): String = "" + dNumber
+    override fun compareTo(other: NumberExpr): Int = dNumber.compareTo(other.toDouble())
 
+    /*
     override fun equals(e: NumberExpr): Boolean {
         if (e.isReal) {
             if (e is RealNum_BigDecimal)
@@ -28,6 +30,7 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
 
         return false
     }
+    */
 
     override fun unaryMinus(): RealNum_Double = RealNum_Double(0 - dNumber)
 

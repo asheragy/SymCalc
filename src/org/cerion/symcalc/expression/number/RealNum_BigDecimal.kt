@@ -21,6 +21,10 @@ class RealNum_BigDecimal(value: BigDecimal) : RealNum() {
         return bigNumber.toDouble()
     }
 
+    override fun compareTo(other: NumberExpr): Int {
+        return toDouble().compareTo(other.toDouble())
+    }
+
     /*
     constructor() {
         super(BigDecimal("0")
@@ -49,9 +53,11 @@ class RealNum_BigDecimal(value: BigDecimal) : RealNum() {
         return bigNumber.toString()
     }
 
+    /*
     override fun equals(e: NumberExpr): Boolean {
         return e.isReal && toDouble() == e.toDouble()
     }
+    */
 
     override fun unaryMinus(): RealNum_BigDecimal {
         return RealNum_BigDecimal(bigNumber.negate())

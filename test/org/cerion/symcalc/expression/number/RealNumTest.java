@@ -15,7 +15,7 @@ public class RealNumTest {
         IntegerNum n4 = new IntegerNum(5);
 
         assertNotEquals(n1, n2);
-        assertNotEquals(n1, n4); //For now this is okay but maybe should be equal
+        assertEquals(n1, n4);
         assertEquals(n1, n3);
 
         //Add BigDecimal cases or switch class to only use that type

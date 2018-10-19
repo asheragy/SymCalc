@@ -1,5 +1,7 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.expression.Expr
+
 class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) : NumberExpr() {
 
     var real: NumberExpr
@@ -44,6 +46,7 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
         return 0.0
     }
 
+    /*
     override fun equals(e: NumberExpr): Boolean {
         if (e.isComplex) {
             val c = e as ComplexNum
@@ -55,6 +58,7 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
 
         return false
     }
+    */
 
     override fun plus(other: NumberExpr): NumberExpr {
         if (other.numType === NumberType.COMPLEX) {
@@ -179,7 +183,19 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
         return result
     }
 
-    override fun compareTo(o: NumberExpr): Int {
+    override fun compareTo(other: NumberExpr): Int {
+        if(other.isComplex) {
+            val o = other.asComplex()
+            if (real == o.real && img == o.img)
+                return 0
+
+            // Can't compare so they are either equal or not able to determine
+        }
+        else if(img.isZero) {
+            return real.compareTo(other)
+        }
+
+        // TODO this may be implemented but some cases will throw exception
         throw NotImplementedError()
     }
 
