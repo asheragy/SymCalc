@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression.number;
 
-import org.cerion.symcalc.expression.NumberExpr;
+import org.jetbrains.annotations.NotNull;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.math.BigDecimal;
@@ -8,10 +8,6 @@ import java.math.BigDecimal;
 public class RealNum_BigDecimal extends RealNum {
 
     private BigDecimal bigNumber = null;
-
-    public int numType() {
-        return REAL;
-    }
 
     @Override
     public boolean isWholeNumber() {
@@ -217,4 +213,9 @@ public class RealNum_BigDecimal extends RealNum {
         */
     }
 
+    @NotNull
+    @Override
+    public NumberType getNumType() {
+        return NumberType.REAL;
+    }
 }

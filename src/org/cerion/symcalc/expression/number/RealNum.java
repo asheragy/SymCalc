@@ -1,14 +1,9 @@
 package org.cerion.symcalc.expression.number;
 
-import org.cerion.symcalc.expression.NumberExpr;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public abstract class RealNum extends NumberExpr
 {
-	public int numType() {
-		return REAL;
-	}
-
 	public static RealNum parse2(String s) {
 		// TODO add BigDecimal
 		return new RealNum_Double(s);
@@ -181,7 +176,7 @@ public abstract class RealNum extends NumberExpr
 	
 	public boolean canExp(NumberExpr num)
 	{
-		if(num.numType() == COMPLEX)
+		if(num.getNumType() == NumberType.COMPLEX)
 			return false;
 		return true;
 	}

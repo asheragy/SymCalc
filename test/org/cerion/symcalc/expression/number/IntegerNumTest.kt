@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.NumberExpr
 import org.junit.Test
 
 import java.math.BigInteger
@@ -136,16 +135,16 @@ class IntegerNumTest {
     }
 
     private fun verify(e: NumberExpr, expected: Long) {
-        if (e.numType() != NumberExpr.INTEGER)
-            fail("unexpected type: " + e.numType())
+        if (e.numType != NumberType.INTEGER)
+            fail("unexpected type: " + e.numType)
 
         val n = e as IntegerNum
         assertEquals(expected, n.intValue().toLong())
     }
 
     private fun verify(e: NumberExpr, expected: BigInteger) {
-        if (e.numType() != NumberExpr.INTEGER)
-            fail("unexpected type: " + e.numType())
+        if (e.numType != NumberType.INTEGER)
+            fail("unexpected type: " + e.numType)
 
         val n = e as IntegerNum
         assertEquals(expected, n.toBigInteger())

@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.function.logical;
 
 import org.cerion.symcalc.expression.*;
+import org.cerion.symcalc.expression.number.NumberExpr;
 
 import java.util.List;
 

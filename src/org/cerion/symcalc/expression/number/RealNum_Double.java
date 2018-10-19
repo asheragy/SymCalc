@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression.number;
 
-import org.cerion.symcalc.expression.NumberExpr;
+import org.jetbrains.annotations.NotNull;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 class RealNum_Double extends RealNum {
@@ -63,7 +63,7 @@ class RealNum_Double extends RealNum {
 
     public NumberExpr plus(NumberExpr num) {
         RealNum_Double result = new RealNum_Double();
-        switch (num.numType())
+        switch (num.getNumType())
         {
             case INTEGER: //RealNum + IntegerNum
                 result.dNumber = dNumber + num.toDouble();
@@ -89,7 +89,7 @@ class RealNum_Double extends RealNum {
 
     public NumberExpr minus(NumberExpr num) {
         RealNum_Double result = new RealNum_Double();
-        switch (num.numType())
+        switch (num.getNumType())
         {
             case INTEGER: //RealNum - IntegerNum
             {
@@ -116,7 +116,7 @@ class RealNum_Double extends RealNum {
 
     public NumberExpr times(NumberExpr num) {
         RealNum_Double result = new RealNum_Double();
-        switch (num.numType())
+        switch (num.getNumType())
         {
             case INTEGER: //RealNum * IntegerNum
                 result.dNumber = dNumber * num.toDouble();
@@ -139,7 +139,7 @@ class RealNum_Double extends RealNum {
 
     public NumberExpr div(NumberExpr num) {
         RealNum_Double result = new RealNum_Double();
-        switch (num.numType())
+        switch (num.getNumType())
         {
             case INTEGER: //RealNum / IntegerNum
                 result.dNumber = dNumber / num.toDouble();
@@ -162,7 +162,7 @@ class RealNum_Double extends RealNum {
 
     public NumberExpr power(NumberExpr num) {
         RealNum_Double result = new RealNum_Double();
-        switch (num.numType())
+        switch (num.getNumType())
         {
             case INTEGER: //RealNum ^ IntegerNum
             case RATIONAL: //RealNum ^ RationalNum
@@ -189,5 +189,9 @@ class RealNum_Double extends RealNum {
         return new IntegerNum((long)dNumber);
     }
 
-
+    @NotNull
+    @Override
+    public NumberType getNumType() {
+        return NumberType.REAL;
+    }
 }

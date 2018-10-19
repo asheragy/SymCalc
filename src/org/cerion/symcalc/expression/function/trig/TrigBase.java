@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.function.trig;
 import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.Expr;
 import org.cerion.symcalc.expression.FunctionExpr;
-import org.cerion.symcalc.expression.NumberExpr;
+import org.cerion.symcalc.expression.number.NumberExpr;
 
 public abstract class TrigBase extends FunctionExpr {
 

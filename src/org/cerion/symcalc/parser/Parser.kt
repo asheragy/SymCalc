@@ -7,6 +7,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.NumberExpr
 
 class ParseException(message: String?) : Exception(message)
 

@@ -3,10 +3,8 @@ package org.cerion.symcalc.expression.function.integer
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.FunctionExpr
-import org.cerion.symcalc.expression.NumberExpr
+import org.cerion.symcalc.expression.number.NumberType
 import org.cerion.symcalc.expression.number.IntegerNum
-
-import java.math.BigInteger
 
 class Factorial(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FACTORIAL, *e) {
 
@@ -25,6 +23,6 @@ class Factorial(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FACTORI
 
     @Throws(ValidationException::class)
     override fun validate() {
-        validateNumberType(0, NumberExpr.INTEGER)
+        validateNumberType(0, NumberType.INTEGER)
     }
 }

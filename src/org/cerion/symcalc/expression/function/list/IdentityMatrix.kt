@@ -1,11 +1,9 @@
 package org.cerion.symcalc.expression.function.list
 
 import org.cerion.symcalc.exception.ValidationException
-import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.FunctionExpr
-import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.NumberExpr
+import org.cerion.symcalc.expression.*
 import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.NumberType
 
 class IdentityMatrix(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.IDENTITY_MATRIX, *e) {
 
@@ -28,7 +26,7 @@ class IdentityMatrix(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.ID
     override fun validate() {
         validateParameterCount(1)
         validateParameterType(0, Expr.ExprType.NUMBER)
-        validateNumberType(0, NumberExpr.INTEGER)
+        validateNumberType(0, NumberType.INTEGER)
 
         val n = getInteger(0).intValue()
         if (n <= 0)

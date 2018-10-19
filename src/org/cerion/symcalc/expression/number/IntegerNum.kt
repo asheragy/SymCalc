@@ -2,7 +2,6 @@ package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.NumberExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
@@ -18,6 +17,8 @@ class IntegerNum : NumberExpr {
 
     override val isZero: Boolean get() = intVal == BigInteger.ZERO
     override val isOne: Boolean get() = intVal == BigInteger.ONE
+    override val numType: NumberType get() = NumberType.INTEGER
+
     val isEven: Boolean get() = !intVal.testBit(0)
     val isOdd: Boolean get() = intVal.testBit(0)
     val signum: Int get() = intVal.signum()
@@ -34,7 +35,6 @@ class IntegerNum : NumberExpr {
         value = BigInteger.valueOf(n)
     }
 
-    override fun numType(): Int = NumberExpr.INTEGER
     override fun toString(): String = intVal.toString()
     override fun toDouble(): Double = intVal.toDouble()
 
@@ -109,19 +109,19 @@ class IntegerNum : NumberExpr {
     }
 
     override fun canExp(num: NumberExpr): Boolean {
-        return when (num.numType()) {
-            NumberExpr.INTEGER -> return true
-            NumberExpr.REAL -> return true
+        return when (num.numType) {
+            NumberType.INTEGER -> return true
+            NumberType.REAL -> return true
             else -> false
         }
     }
 
     override fun power(num: NumberExpr): Expr {
         //NumberExpr result = null;
-        when (num.numType()) {
-            NumberExpr.INTEGER -> return IntegerNum(intVal.pow(num.asInteger().intVal.toInt()))
+        when (num.numType) {
+            NumberType.INTEGER -> return IntegerNum(intVal.pow(num.asInteger().intVal.toInt()))
 
-            NumberExpr.RATIONAL -> {
+            NumberType.RATIONAL -> {
                 val pow = Math.pow(intVal.toDouble(), num.toDouble())
                 val real = RealNum.create(pow)
 
@@ -132,7 +132,7 @@ class IntegerNum : NumberExpr {
                         // factor out any numbers that are the Nth root of the denominator
                         val t = Factor(this)
                         val factors = Tally(t).eval().asList()
-                        val denominator = num.asRational().denominator()
+                        val denominator = num.asRational().denominator
 
                         var multiply = IntegerNum.ONE
 
@@ -168,7 +168,7 @@ class IntegerNum : NumberExpr {
                 return real
             }
 
-            NumberExpr.REAL -> {
+            NumberType.REAL -> {
             }//result = RealNum.create(this);
         }
 

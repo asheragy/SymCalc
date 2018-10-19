@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression.function.trig;
 
 import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.NumberExpr;
+import org.cerion.symcalc.expression.number.NumberExpr;
 import org.cerion.symcalc.expression.number.RealNum;
 
 public class Sin extends TrigBase {

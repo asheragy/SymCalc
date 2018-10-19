@@ -12,6 +12,8 @@ import org.cerion.symcalc.expression.function.integer.*
 import org.cerion.symcalc.expression.function.list.*
 import org.cerion.symcalc.expression.function.logical.Greater
 import org.cerion.symcalc.expression.function.statistics.*
+import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.expression.number.NumberType
 
 abstract class FunctionExpr protected constructor(val functionType: FunctionType, vararg val e: Expr) : Expr() {
     val name: String
@@ -158,12 +160,12 @@ abstract class FunctionExpr protected constructor(val functionType: FunctionType
     }
 
     @Throws(ValidationException::class)
-    protected fun validateNumberType(position: Int, numberType: Int) {
+    protected fun validateNumberType(position: Int, numberType: NumberType) {
         if (size() < position+1)
             validateParameterCount(position+1)
 
         val e = get(position) as NumberExpr
-        if (e.numType() != numberType)
+        if (e.numType != numberType)
             throw ValidationException(String.format("parameter %d must be type %s", position, numberType))
     }
 

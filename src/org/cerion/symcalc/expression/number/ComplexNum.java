@@ -1,13 +1,9 @@
 package org.cerion.symcalc.expression.number;
 
-import org.cerion.symcalc.expression.NumberExpr;
+import org.jetbrains.annotations.NotNull;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-public class ComplexNum extends NumberExpr
-{
-	public int numType() {
-		return COMPLEX;
-	}
+public class ComplexNum extends NumberExpr {
 
 	public static final ComplexNum ZERO = new ComplexNum();
 
@@ -93,7 +89,7 @@ public class ComplexNum extends NumberExpr
 	
 	public NumberExpr plus(NumberExpr num)
 	{
-		if(num.numType() == NumberExpr.COMPLEX)
+		if(num.getNumType() == NumberType.COMPLEX)
 		{
 			ComplexNum b = (ComplexNum)num;
 			return new ComplexNum( getReal().plus(b.getReal()), getImg().plus(b.getImg()));
@@ -106,7 +102,7 @@ public class ComplexNum extends NumberExpr
 	public NumberExpr minus(NumberExpr num)
 	{
 		ComplexNum result = new ComplexNum();
-		if(num.numType() == NumberExpr.COMPLEX)
+		if(num.getNumType() == NumberType.COMPLEX)
 		{
 			ComplexNum b = (ComplexNum)num;
 			result.setReal (getReal().minus(b.getReal()));
@@ -125,9 +121,9 @@ public class ComplexNum extends NumberExpr
 	public NumberExpr times(NumberExpr num)
 	{
 		ComplexNum result = new ComplexNum();
-		switch (num.numType()) 
+		switch (num.getNumType())
 		{
-			case NumberExpr.COMPLEX: //ComplexNum + ComplexNum
+			case COMPLEX: //ComplexNum + ComplexNum
 			{
 			    //(a+bi)(c+di) = (ac-bd) + (bc+ad)i
 				NumberExpr a = this.getReal();
@@ -170,9 +166,9 @@ public class ComplexNum extends NumberExpr
 	{
 		ComplexNum result = new ComplexNum();
 		
-		switch (num.numType()) 
+		switch (num.getNumType())
 		{
-			case 0: //ComplexNum ^ IntegerNum
+			case INTEGER: //ComplexNum ^ IntegerNum
 			{
 				
 				
@@ -225,5 +221,11 @@ public class ComplexNum extends NumberExpr
 	@Override
 	public int compareTo(NumberExpr o) {
 		throw new NotImplementedException();
+	}
+
+	@NotNull
+	@Override
+	public NumberType getNumType() {
+		return NumberType.COMPLEX;
 	}
 }

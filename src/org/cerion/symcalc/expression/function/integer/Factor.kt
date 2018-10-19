@@ -1,10 +1,8 @@
 package org.cerion.symcalc.expression.function.integer
 
-import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.FunctionExpr
-import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.NumberExpr
+import org.cerion.symcalc.expression.*
 import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.NumberType
 
 class Factor(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FACTOR, *e) {
 
@@ -42,6 +40,6 @@ class Factor(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FACTOR, *e
 
     override fun validate() {
         validateParameterCount(1)
-        validateNumberType(0, NumberExpr.INTEGER)
+        validateNumberType(0, NumberType.INTEGER)
     }
 }
