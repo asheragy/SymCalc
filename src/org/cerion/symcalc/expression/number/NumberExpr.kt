@@ -17,6 +17,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract val isZero: Boolean
     abstract val isOne: Boolean
     abstract val numType: NumberType
+    abstract val isNegative: Boolean
 
     val isReal: Boolean get() = numType == NumberType.REAL
     val isRational: Boolean get() = numType == NumberType.RATIONAL
@@ -43,11 +44,6 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract operator fun unaryMinus(): NumberExpr
 
     companion object {
-        //Types
-        // TODO make this enum
-        //const val INTEGER = 0
-        //const val REAL = 2
-
         @JvmStatic fun parse(s: String): NumberExpr {
             if (s.indexOf('i') > -1)
                 return ComplexNum(s)

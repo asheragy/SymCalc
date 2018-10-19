@@ -8,6 +8,7 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
     override val isZero: Boolean get() = numerator.isZero
     override val isOne: Boolean get() = numerator.equals(denominator)
     override val numType: NumberType get() = NumberType.RATIONAL
+    override val isNegative: Boolean get() = numerator.isNegative
 
     val numerator: IntegerNum get() = get(0) as IntegerNum
     val denominator: IntegerNum get() = get(1) as IntegerNum

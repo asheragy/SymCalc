@@ -6,6 +6,7 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
 
     override val isZero: Boolean get() = dNumber == 0.0
     override val isOne: Boolean get() = dNumber == 1.0
+    override val isNegative: Boolean get() = dNumber < 0
 
     override val isWholeNumber: Boolean
         get() = if (dNumber == Math.floor(dNumber) && !java.lang.Double.isInfinite(dNumber)) true else false

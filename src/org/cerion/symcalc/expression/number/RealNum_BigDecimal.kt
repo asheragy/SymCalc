@@ -11,6 +11,7 @@ class RealNum_BigDecimal(value: BigDecimal) : RealNum() {
 
     override val isZero: Boolean get() = bigNumber == BigDecimal.ZERO
     override val isOne: Boolean get() = bigNumber == BigDecimal.ONE
+    override val isNegative: Boolean get() = bigNumber.signum() == -1
 
     override fun toInteger(): IntegerNum {
         return IntegerNum(bigNumber.toLong())

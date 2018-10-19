@@ -18,6 +18,7 @@ class IntegerNum : NumberExpr {
     override val isZero: Boolean get() = intVal == BigInteger.ZERO
     override val isOne: Boolean get() = intVal == BigInteger.ONE
     override val numType: NumberType get() = NumberType.INTEGER
+    override val isNegative: Boolean get() = signum == -1
 
     val isEven: Boolean get() = !intVal.testBit(0)
     val isOdd: Boolean get() = intVal.testBit(0)
