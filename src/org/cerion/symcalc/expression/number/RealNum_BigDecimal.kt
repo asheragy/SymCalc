@@ -1,76 +1,63 @@
-package org.cerion.symcalc.expression.number;
+package org.cerion.symcalc.expression.number
 
-import org.jetbrains.annotations.NotNull;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.math.BigDecimal
 
-import java.math.BigDecimal;
+class RealNum_BigDecimal(value: BigDecimal) : RealNum() {
 
-public class RealNum_BigDecimal extends RealNum {
+    private var bigNumber: BigDecimal = value
 
-    private BigDecimal bigNumber = null;
+    override val isWholeNumber: Boolean
+        get() = throw NotImplementedError()
 
-    @Override
-    public boolean isWholeNumber() {
-        throw new NotImplementedException();
+    override val isZero: Boolean get() = bigNumber == BigDecimal.ZERO
+    override val isOne: Boolean get() = bigNumber == BigDecimal.ONE
+
+    override fun toInteger(): IntegerNum {
+        return IntegerNum(bigNumber.toLong())
     }
 
-    @Override
-    public IntegerNum toInteger() {
-        return null;
+    override fun toDouble(): Double {
+        return bigNumber.toDouble()
     }
 
-    public double toDouble() {
-        return bigNumber.doubleValue();
+    /*
+    constructor() {
+        super(BigDecimal("0")
+    }
+    */
+
+    /*
+    constructor(s: String) {
+        bigNumber = BigDecimal(s)
     }
 
-    public RealNum_BigDecimal() {
-        bigNumber = new BigDecimal("0");
+    constructor(n: IntegerNum) {
+        bigNumber = BigDecimal(n.toBigInteger())
     }
 
-    public RealNum_BigDecimal(String s) {
-        bigNumber = new BigDecimal(s);
+    constructor(r: RationalNum) {
+        throw NotImplementedException()
     }
 
-    public RealNum_BigDecimal(IntegerNum n) {
-        bigNumber = new BigDecimal(n.toBigInteger());
+    constructor(n: Double) {
+        bigNumber = BigDecimal(n)
+    }
+    */
+
+    override fun toString(): String {
+        return bigNumber.toString()
     }
 
-    public RealNum_BigDecimal (RationalNum r) {
-        throw new NotImplementedException();
+    override fun equals(e: NumberExpr): Boolean {
+        return e.isReal && toDouble() == e.toDouble()
     }
 
-    public RealNum_BigDecimal(double n) {
-        bigNumber = new BigDecimal(n);
+    override fun unaryMinus(): RealNum_BigDecimal {
+        return RealNum_BigDecimal(bigNumber.negate())
     }
 
-    public RealNum_BigDecimal(BigDecimal n) {
-        bigNumber = n;
-    }
-
-    @Override
-    public String toString() {
-        return bigNumber.toString();
-    }
-
-    @Override
-    public boolean equals(NumberExpr e) {
-        return e.isReal() && toDouble() == e.toDouble();
-    }
-
-    public RealNum_BigDecimal unaryMinus() {
-        return new RealNum_BigDecimal(bigNumber.negate());
-    }
-
-    public boolean isZero() {
-        return bigNumber.equals(BigDecimal.ZERO);
-    }
-
-    public boolean isOne() {
-            return bigNumber.equals(BigDecimal.ONE);
-    }
-
-    public NumberExpr plus(NumberExpr num) {
-        throw new NotImplementedException();
+    override fun plus(other: NumberExpr): NumberExpr {
+        throw NotImplementedError()
         /*
         RealNum result = new RealNum();
         switch (num.numType())
@@ -101,8 +88,8 @@ public class RealNum_BigDecimal extends RealNum {
         */
     }
 
-    public NumberExpr minus(NumberExpr num) {
-        throw new NotImplementedException();
+    override fun minus(other: NumberExpr): NumberExpr {
+        throw NotImplementedError()
         /*
         RealNum result = new RealNum();
         switch (num.numType())
@@ -134,8 +121,8 @@ public class RealNum_BigDecimal extends RealNum {
         */
     }
 
-    public NumberExpr times(NumberExpr num) {
-        throw new NotImplementedException();
+    override fun times(other: NumberExpr): NumberExpr {
+        throw NotImplementedError()
         /*
         RealNum result = new RealNum();
         switch (num.numType())
@@ -164,8 +151,8 @@ public class RealNum_BigDecimal extends RealNum {
         */
     }
 
-    public NumberExpr div(NumberExpr num) {
-        throw new NotImplementedException();
+    override fun div(other: NumberExpr): NumberExpr {
+        throw NotImplementedError()
         /*
         RealNum result = new RealNum();
         switch (num.numType())
@@ -194,8 +181,8 @@ public class RealNum_BigDecimal extends RealNum {
         */
     }
 
-    public NumberExpr power(NumberExpr num) {
-        throw new NotImplementedException();
+    override fun power(other: NumberExpr): NumberExpr {
+        throw NotImplementedError()
         /*
         RealNum result = new RealNum();
         switch (num.numType())
@@ -211,11 +198,5 @@ public class RealNum_BigDecimal extends RealNum {
 
         return null;
         */
-    }
-
-    @NotNull
-    @Override
-    public NumberType getNumType() {
-        return NumberType.REAL;
     }
 }

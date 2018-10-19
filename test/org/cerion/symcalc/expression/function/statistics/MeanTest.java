@@ -17,8 +17,8 @@ public class MeanTest {
         Expr e = new Mean(list).eval();
         assertEquals(new RationalNum(new IntegerNum(3), IntegerNum.TWO), e);
 
-        list = new ListExpr(new IntegerNum(6), new RationalNum(87,3), RealNum.create(23.542));
+        list = new ListExpr(new IntegerNum(6), new RationalNum(87,3), RealNum.Companion.create(23.542));
         e = new Mean(list).eval();
-        assertEquals(RealNum.create(19.514), e);
+        assertEquals(RealNum.Companion.create(19.514), e);
     }
 }

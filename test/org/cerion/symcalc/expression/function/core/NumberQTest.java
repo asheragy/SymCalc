@@ -22,7 +22,7 @@ public class NumberQTest {
     @Test
     public void basic() {
         Assert.assertEquals(BoolExpr.TRUE, new NumberQ(new IntegerNum(5)).eval());
-        Assert.assertEquals(BoolExpr.TRUE, new NumberQ(RealNum.create(2.34)).eval());
+        Assert.assertEquals(BoolExpr.TRUE, new NumberQ(RealNum.Companion.create(2.34)).eval());
         Assert.assertEquals(BoolExpr.TRUE, new NumberQ(new RationalNum(2,3)).eval());
         Assert.assertEquals(BoolExpr.TRUE, new NumberQ(new ComplexNum(5,7)).eval());
 

@@ -21,7 +21,7 @@ public class DTest {
     public void single() {
         // Numbers
         Assert.assertEquals(IntegerNum.ZERO, new D(IntegerNum.TWO, new VarExpr("x")).eval());
-        Assert.assertEquals(IntegerNum.ZERO, new D(RealNum.create(2.354), new VarExpr("x")).eval());
+        Assert.assertEquals(IntegerNum.ZERO, new D(RealNum.Companion.create(2.354), new VarExpr("x")).eval());
         Assert.assertEquals(IntegerNum.ZERO, new D(new RationalNum(4,6), new VarExpr("x")).eval());
         Assert.assertEquals(IntegerNum.ZERO, new D(ComplexNum.ZERO, new VarExpr("x")).eval());
 

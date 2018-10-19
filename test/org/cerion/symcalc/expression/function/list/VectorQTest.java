@@ -14,7 +14,7 @@ public class VectorQTest {
     public void isVector() {
         Assert.assertEquals(BoolExpr.TRUE, new VectorQ(new ListExpr()).eval());
         Assert.assertEquals(BoolExpr.TRUE, new VectorQ(new ListExpr(new IntegerNum(3))).eval());
-        Assert.assertEquals(BoolExpr.TRUE, new VectorQ(new ListExpr(new IntegerNum(3), RealNum.create(2.35))).eval());
+        Assert.assertEquals(BoolExpr.TRUE, new VectorQ(new ListExpr(new IntegerNum(3), RealNum.Companion.create(2.35))).eval());
     }
 
     @Test

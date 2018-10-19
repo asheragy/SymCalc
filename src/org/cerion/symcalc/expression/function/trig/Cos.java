@@ -13,7 +13,7 @@ public class Cos extends TrigBase {
     @Override
     protected Expr evaluate(NumberExpr num) {
         if(!num.isComplex())
-            return RealNum.create( Math.cos( num.toDouble() ));
+            return RealNum.Companion.create( Math.cos( num.toDouble() ));
 
         return this;
     }

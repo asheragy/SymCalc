@@ -23,7 +23,7 @@ public class EvenQTest {
     @Test
     public void nonIntegerInput() {
         ListExpr e = new ListExpr();
-        RealNum num = RealNum.create(3.0);
+        RealNum num = RealNum.Companion.create(3.0);
 
         assertEquals(BoolExpr.FALSE, new EvenQ(e).eval());
         assertEquals(BoolExpr.FALSE, new EvenQ(num).eval());

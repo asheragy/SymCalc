@@ -18,7 +18,7 @@ public class NumericQTest {
     public void basic() {
         // Number
         Assert.assertEquals(BoolExpr.TRUE, new NumericQ(new IntegerNum(5)).eval());
-        Assert.assertEquals(BoolExpr.TRUE, new NumericQ(RealNum.create(4.576)).eval());
+        Assert.assertEquals(BoolExpr.TRUE, new NumericQ(RealNum.Companion.create(4.576)).eval());
 
         // Constant
         Assert.assertEquals(BoolExpr.TRUE, new NumericQ(new Pi()).eval());

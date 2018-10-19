@@ -46,7 +46,7 @@ public class TableTest {
         // if 2,3,4 parameters others must be integer
         assertEquals(Expr.ExprType.ERROR, new Table(new IntegerNum(2), new ListExpr(new VarExpr("a"), new RationalNum(1,2))).eval().getType());
         assertEquals(Expr.ExprType.ERROR, new Table(new IntegerNum(2), new ListExpr(new VarExpr("a"), new IntegerNum(5), new Pi())).eval().getType());
-        assertEquals(Expr.ExprType.ERROR, new Table(new IntegerNum(2), new ListExpr(new VarExpr("a"), new IntegerNum(5), new IntegerNum(6), RealNum.create(2.34))).eval().getType());
+        assertEquals(Expr.ExprType.ERROR, new Table(new IntegerNum(2), new ListExpr(new VarExpr("a"), new IntegerNum(5), new IntegerNum(6), RealNum.Companion.create(2.34))).eval().getType());
     }
 
     @Test

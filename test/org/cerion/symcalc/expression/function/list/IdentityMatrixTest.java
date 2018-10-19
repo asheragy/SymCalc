@@ -13,7 +13,7 @@ public class IdentityMatrixTest {
     @Test
     public void validate() {
         // Non-integers
-        Assert.assertEquals(Expr.ExprType.ERROR, new IdentityMatrix(RealNum.create(2.34)).eval().getType());
+        Assert.assertEquals(Expr.ExprType.ERROR, new IdentityMatrix(RealNum.Companion.create(2.34)).eval().getType());
         Assert.assertEquals(Expr.ExprType.ERROR, new IdentityMatrix(new Pi()).eval().getType());
 
         // Zero

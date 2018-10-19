@@ -14,7 +14,7 @@ public class MatrixQTest {
     @Test
     public void isMatrix() {
         Expr a = new IntegerNum(3);
-        Expr b = RealNum.create(6.32);
+        Expr b = RealNum.Companion.create(6.32);
         Expr c = new VarExpr("x");
 
         // 0x0
@@ -33,7 +33,7 @@ public class MatrixQTest {
     @Test
     public void isNotMatrix() {
         Expr a = new IntegerNum(3);
-        Expr b = RealNum.create(6.32);
+        Expr b = RealNum.Companion.create(6.32);
         Expr c = new VarExpr("x");
 
         // Not a list
