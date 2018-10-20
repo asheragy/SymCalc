@@ -8,7 +8,7 @@ import org.cerion.symcalc.expression.number.NumberExpr
 class Fourier(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FOURIER, *e) {
 
     override fun evaluate(): Expr {
-        return Recursive_FFT(get(0).asList())
+        return recursiveFFT(get(0).asList())
     }
 
     override fun validate() {
@@ -16,7 +16,7 @@ class Fourier(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FOURIER, 
         validateParameterType(0, ExprType.LIST)
     }
 
-    fun Recursive_FFT(list: ListExpr): ListExpr {
+    private fun recursiveFFT(list: ListExpr): ListExpr {
         val N = list.size()
         if (N == 1)
             return list
@@ -37,8 +37,8 @@ class Fourier(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FOURIER, 
         var w = NumberExpr.parse("1")
         val wN = NumberExpr.parse("1i")
 
-        val y0 = Recursive_FFT(a0)
-        val y1 = Recursive_FFT(a1)
+        val y0 = recursiveFFT(a0)
+        val y1 = recursiveFFT(a1)
         //MathList y0 = new MathList();
         //MathList y1 = new MathList();
         //y0.add(Number.getNumber("4"));

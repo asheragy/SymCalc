@@ -25,7 +25,7 @@ class Plus(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.PLUS, *e) {
         while (it.hasNext()) {
             val e = it.next()
             if (e.isNumber) {
-                sum = sum + e as NumberExpr
+                sum+= e.asNumber()
                 it.remove()
             }
         }

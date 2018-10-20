@@ -20,7 +20,7 @@ class Factor(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FACTOR, *e
             var test = IntegerNum(3)
             var max = test * test
 
-            while (max.compareTo(num) <= 0) {
+            while (max <= num) {
 
                 val mod = num.mod(test)
                 if (mod.isZero) {

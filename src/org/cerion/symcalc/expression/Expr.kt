@@ -4,6 +4,7 @@ import org.cerion.symcalc.Environment
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
@@ -101,6 +102,7 @@ abstract class Expr {
     fun asReal(): RealNum = this as RealNum
     fun asBool(): BoolExpr = this as BoolExpr
     fun asVar(): VarExpr = this as VarExpr
+    fun asNumber(): NumberExpr = this as NumberExpr
 
     protected fun setArg(index: Int, e: Expr) {
         if (mArgs == null)
