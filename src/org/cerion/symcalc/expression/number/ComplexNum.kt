@@ -1,7 +1,5 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.Expr
-
 class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) : NumberExpr() {
 
     var real: NumberExpr
@@ -17,7 +15,7 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
     override val numType: NumberType get() = NumberType.COMPLEX
 
     override val isNegative: Boolean
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        get() = throw NotImplementedError() // TODO need InvalidOperation exception
 
     init {
         real = r

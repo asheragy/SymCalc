@@ -1,9 +1,13 @@
+Basic:
+Divide DivideBy Plus Power Sqrt Subtract SubtractFrom Times TimesBy
 
 Trig:
 Sin Cos Tan Csc Sec Cot
 ArcCos ArcCosh ArcCot ArcCoth ArcCsc ArcCsch ArcSec ArcSech ArcSin ArcSinh ArcTan ArcTanh
 Sinc Cosh Tanh
 
+Calculus:
+D Dt Integrate
 
 Abort
 AbortKernels
@@ -136,12 +140,6 @@ AxesLabel
 AxesOrigin
 AxesStyle
 Axis
-Back
-Background
-BackgroundTasksSettings
-Backslash
-Backsubstitution
-Backward
 Band
 BarChart
 BarChart3D
@@ -542,7 +540,6 @@ Cyclotomic
 Cylinder
 CylinderBox
 CylindricalDecomposition
-D
 DamerauLevenshteinDistance
 DampingFactor
 Darker
@@ -707,8 +704,6 @@ DistributionDomain
 DistributionDomainQ
 DistributionParameterQ
 Dithering
-Divide
-DivideBy
 Dividers
 Divisible
 Divisors
@@ -757,7 +752,6 @@ DragAndDrop
 DrawHighlighted
 Drop
 DSolve
-Dt
 DualLinearProgramming
 DumpGet
 DumpSave
@@ -1040,18 +1034,6 @@ FromContinuedFraction
 FromDate
 FromDigits
 FromDMS
-Front
-FrontEndDynamicExpression
-FrontEndEventActions
-FrontEndExecute
-FrontEndObject
-FrontEndResource
-FrontEndResourceString
-FrontEndStackSize
-FrontEndToken
-FrontEndTokenExecute
-FrontEndValueCache
-FrontEndVersion
 Full
 FullAxes
 FullDefinition
@@ -1326,7 +1308,6 @@ IntegerQ
 Integers
 IntegerString
 Integral
-Integrate
 Interactive
 InterestRate
 Interlaced
@@ -2081,7 +2062,6 @@ PlotRangeClipping
 PlotRangePadding
 PlotRegion
 PlotStyle
-Plus
 PlusMinus
 Pochhammer
 Point
@@ -2128,7 +2108,6 @@ PositiveDefiniteMatrixQ
 PossibleZeroQ
 Postfix
 PostScript
-Power
 PowerExpand
 PowerMod
 PowerModList
@@ -2608,7 +2587,6 @@ SplineWeights
 Split
 SplitBy
 SpokenString
-Sqrt
 SqrtBox
 SqrtBoxOptions
 Square
@@ -2682,17 +2660,6 @@ StruveH
 StruveL
 Stub
 StudentTDistribution
-Style
-StyleBox
-StyleBoxAutoDelete
-StyleBoxOptions
-StyleData
-StyleDefinitions
-StyleForm
-StyleMenuListing
-StyleNameDialogSettings
-StylePrint
-StyleSheetPath
 Subfactorial
 SubMinus
 SubPlus
@@ -2708,8 +2675,6 @@ SubStar
 Subsuperscript
 SubsuperscriptBox
 SubsuperscriptBoxOptions
-Subtract
-SubtractFrom
 SubValues
 Succeeds
 SucceedsEqual
@@ -2822,8 +2787,6 @@ TildeFullEqual
 TildeTilde
 TimeConstrained
 TimeConstraint
-Times
-TimesBy
 TimeUsed
 TimeZone
 Timing
@@ -2990,39 +2953,11 @@ VectorScale
 VectorStyle
 Vee
 Verbatim
-Verbose
-VerboseConvertToPostScriptPacket
 VerifyConvergence
-VerifySolutions
-Version
-VersionNumber
-VertexColors
-VertexCoordinateRules
-VertexLabeling
-VertexNormals
-VertexRenderingFunction
-Vertical
-VerticalBar
-VerticalForm
-VerticalSeparator
-VerticalSlider
-VerticalTilde
-ViewAngle
-ViewCenter
-ViewMatrix
-ViewPoint
-ViewPointSelectorSettings
-ViewPort
-ViewRange
-ViewVector
-ViewVertical
-VirtualGroupData
-Visible
-VisibleCell
+
 WaitAll
 WaitNext
 WaitUntil
-WeatherData
 WeberE
 Wedge
 WeibullDistribution
@@ -3036,40 +2971,13 @@ Weights
 Which
 While
 White
-Whitespace
-WhitespaceCharacter
 WhittakerM
 WhittakerW
-WindowClickSelect
-WindowElements
-WindowFloating
-WindowFrame
-WindowFrameElements
-WindowMargins
-WindowMovable
-WindowOpacity
-WindowSelected
-WindowSize
-WindowStatusArea
-WindowTitle
-WindowToolbars
-WindowWidth
 With
-Word
-WordBoundary
-WordCharacter
-WordData
-WordSearch
-WordSeparators
 WorkingPrecision
-Write
-WriteString
 Wronskian
-XMLElement
-XMLObject
 Xnor
 Xor
-Yellow
 YuleDissimilarity
 ZernikeR
 ZeroTest
