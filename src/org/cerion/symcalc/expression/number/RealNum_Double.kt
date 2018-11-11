@@ -1,6 +1,8 @@
 package org.cerion.symcalc.expression.number
 
 internal class RealNum_Double(value: Double = 0.0) : RealNum() {
+    override val precision: Int
+        get() = 0
 
     private var dNumber: Double = value
 
@@ -11,13 +13,14 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
     override val isWholeNumber: Boolean
         get() = if (dNumber == Math.floor(dNumber) && !java.lang.Double.isInfinite(dNumber)) true else false
 
-    constructor(s: String) : this() { dNumber = java.lang.Double.parseDouble(s) }
     constructor(n: IntegerNum) : this() { dNumber = n.toDouble() }
-    constructor(r: RationalNum) : this() { dNumber = r.toDouble() }
 
     override fun toDouble(): Double = dNumber
     override fun toString(): String = "" + dNumber
-    override fun compareTo(other: NumberExpr): Int = dNumber.compareTo(other.toDouble())
+
+    override fun compareTo(other: NumberExpr): Int {
+        return toDouble().compareTo(other.toDouble())
+    }
 
     /*
     override fun equals(e: NumberExpr): Boolean {
@@ -48,8 +51,7 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
             }
 
             NumberType.REAL -> {
-                //result.bigNumber = this.bigNumber.add( ((RealNum)num).bigNumber );
-                result.dNumber = dNumber + (other as RealNum_Double).dNumber
+                result.dNumber = dNumber + other.asReal().toDouble()
                 return result
             }
             else -> {

@@ -1,10 +1,20 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.Environment
 import java.math.BigDecimal
+import java.math.RoundingMode
 
-class RealNum_BigDecimal(value: BigDecimal) : RealNum() {
+class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
 
-    private var bigNumber: BigDecimal = value
+    private val bigNumber: BigDecimal
+        get() = value as BigDecimal
+
+    init {
+        this.value = bigDecimal
+    }
+
+    override val precision: Int
+        get() = bigNumber.scale()
 
     override val isWholeNumber: Boolean
         get() = throw NotImplementedError()
@@ -21,36 +31,28 @@ class RealNum_BigDecimal(value: BigDecimal) : RealNum() {
         return bigNumber.toDouble()
     }
 
+    override fun toString(): String {
+        return bigNumber.toString()
+    }
+
     override fun compareTo(other: NumberExpr): Int {
+        if (other.isReal && !other.asReal().isDouble) {
+            val bigDec = other.asReal() as RealNum_BigDecimal
+            return bigNumber.compareTo(bigDec.bigNumber)
+        }
+
         return toDouble().compareTo(other.toDouble())
     }
 
-    /*
-    constructor() {
-        super(BigDecimal("0")
-    }
-    */
+    override fun evaluate(): NumberExpr {
+        if (env.isNumericalEval) {
+            if(env.precision == Environment.SYSTEM_DECIMAL_PRECISION)
+                return RealNum.create(toDouble())
+            else if (env.precision < precision)
+                return RealNum.create(bigNumber.setScale(env.precision, RoundingMode.HALF_UP))
+        }
 
-    /*
-    constructor(s: String) {
-        bigNumber = BigDecimal(s)
-    }
-
-    constructor(n: IntegerNum) {
-        bigNumber = BigDecimal(n.toBigInteger())
-    }
-
-    constructor(r: RationalNum) {
-        throw NotImplementedException()
-    }
-
-    constructor(n: Double) {
-        bigNumber = BigDecimal(n)
-    }
-    */
-
-    override fun toString(): String {
-        return bigNumber.toString()
+        return this
     }
 
     /*
@@ -64,35 +66,32 @@ class RealNum_BigDecimal(value: BigDecimal) : RealNum() {
     }
 
     override fun plus(other: NumberExpr): NumberExpr {
-        throw NotImplementedError()
-        /*
-        RealNum result = new RealNum();
-        switch (num.numType())
-        {
-            case INTEGER: //RealNum + IntegerNum
 
-                //result.bigNumber = new BigDecimal( ((IntegerNum)num).integer );
-                //result.bigNumber = result.bigNumber.add(this.bigNumber);
-                result.dNumber = dNumber + num.toDouble();
-                return result;
-
-            case RATIONAL: //RealNum + RationalNum
-            {
-                result.dNumber = dNumber + num.toDouble();
-                return result;
+        when (other.numType) {
+            NumberType.INTEGER -> {
+                val bigDec = other.asInteger().toBigDecimal()
+                return RealNum_BigDecimal( this.bigNumber.plus(bigDec))
             }
 
-            case REAL: //RealNum + RealNum
-            {
-                //result.bigNumber = this.bigNumber.add( ((RealNum)num).bigNumber );
-                result.dNumber = dNumber + ((RealNum)num).dNumber;
-                return result;
+            NumberType.RATIONAL -> {
+                val rational = other.asRational()
+                rational.env.setNumericalEval(true, precision)
+
+                return this + rational.eval().asReal()
             }
 
+            NumberType.REAL -> {
+                val real = other.asReal()
+                if(real.isDouble)
+                    return real + this
+
+                // Both are BigDecimal
+                return RealNum_BigDecimal( this.bigNumber.plus((real as RealNum_BigDecimal).bigNumber))
+            }
+            else -> {
+                return other + this
+            }
         }
-
-        return num.add(this);
-        */
     }
 
     override fun minus(other: NumberExpr): NumberExpr {

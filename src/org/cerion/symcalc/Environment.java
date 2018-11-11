@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Environment {
 
-    private static final int SYSTEM_DECIMAL_PRECISION = -1; // numbers evaluated to whatever primitive types hold
+    public static final int SYSTEM_DECIMAL_PRECISION = -1; // numbers evaluated to whatever primitive types hold
 
     //Table of variables, x = expr
     private Map<String, Expr> mVars = new HashMap<>();
@@ -43,6 +43,10 @@ public class Environment {
 
     public boolean isNumericalEval() {
         return mEvalNumber;
+    }
+
+    public int getPrecision() {
+        return mDecimalPrecision;
     }
 
 }

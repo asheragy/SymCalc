@@ -89,6 +89,8 @@ abstract class Expr {
 
     }
 
+    operator fun get(index: Int, eval: Boolean): Expr = if (eval) mArgs!![index].eval() else mArgs!![index]
+
     operator fun set(index: Int, e: Expr) {
         mArgs!![index] = e
     }

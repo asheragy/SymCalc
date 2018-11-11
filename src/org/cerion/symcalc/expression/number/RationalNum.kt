@@ -42,6 +42,17 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
             set(n, d)
         }
 
+        if(env.isNumericalEval) {
+            if (env.precision > 0) {
+                val a = numerator.toBigDecimal()
+                val b = denominator.toBigDecimal()
+                val n = a.divide(b, env.precision, RoundingMode.HALF_UP)
+                return RealNum.create(n)
+            }
+
+            return RealNum.create(numerator.toDouble() / denominator.toDouble())
+        }
+
         //Integer since denominator is one
         return if (denominator.isOne) numerator else this
     }
@@ -129,7 +140,7 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
             //	break;
 
             NumberType.REAL -> {
-                val rResult = RealNum.create(this)
+                val rResult = RealNum.create(this.toDouble())
                 return rResult.power(other)
             }
         }
