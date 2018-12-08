@@ -1,10 +1,12 @@
 package org.cerion.symcalc.expression.function.integer
 
 import org.cerion.symcalc.expression.*
+import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberType
 
-class Factor(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FACTOR, *e) {
+class Factor(vararg e: Expr) : FunctionExpr(Function.FACTOR, *e) {
 
     override fun evaluate(): Expr {
         var num = get(0).asInteger()

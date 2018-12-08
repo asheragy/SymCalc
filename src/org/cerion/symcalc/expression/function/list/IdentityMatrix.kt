@@ -2,10 +2,12 @@ package org.cerion.symcalc.expression.function.list
 
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.*
+import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberType
 
-class IdentityMatrix(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.IDENTITY_MATRIX, *e) {
+class IdentityMatrix(vararg e: Expr) : FunctionExpr(Function.IDENTITY_MATRIX, *e) {
 
     override fun evaluate(): Expr {
         val n = getInteger(0).intValue()

@@ -2,10 +2,11 @@ package org.cerion.symcalc.expression.function.list
 
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.FunctionExpr
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.expression.function.Function
 
-class Flatten(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FLATTEN, *e) {
+class Flatten(vararg e: Expr) : FunctionExpr(Function.FLATTEN, *e) {
 
     override fun evaluate(): Expr {
         val l = get(0) as ListExpr

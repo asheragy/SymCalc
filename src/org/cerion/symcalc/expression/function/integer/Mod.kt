@@ -1,10 +1,11 @@
 package org.cerion.symcalc.expression.function.integer
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.FunctionExpr
+import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberType
 
-class Mod(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.MOD, *e) {
+class Mod(vararg e: Expr) : FunctionExpr(Function.MOD, *e) {
 
     override fun evaluate(): Expr {
         //TODO can work on non-integers

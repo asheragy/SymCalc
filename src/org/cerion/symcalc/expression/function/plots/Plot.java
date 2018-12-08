@@ -2,12 +2,14 @@ package org.cerion.symcalc.expression.function.plots;
 
 import org.cerion.symcalc.UserFunction;
 import org.cerion.symcalc.expression.*;
+import org.cerion.symcalc.expression.function.Function;
+import org.cerion.symcalc.expression.function.FunctionExpr;
 import org.cerion.symcalc.expression.graphics.PlotGraphics;
 
 public class Plot extends FunctionExpr {
 
     public Plot(Expr...e) {
-        super(FunctionType.PLOT, e);
+        super(Function.PLOT, e);
     }
 
     @Override

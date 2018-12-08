@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression.function.trig;
 
 import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.FunctionExpr;
+import org.cerion.symcalc.expression.function.FunctionExpr;
 import org.cerion.symcalc.expression.ListExpr;
 import org.cerion.symcalc.expression.VarExpr;
 import org.cerion.symcalc.expression.function.core.N;

@@ -2,10 +2,11 @@ package org.cerion.symcalc.expression.function.integer
 
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.FunctionExpr
+import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberType
 
-class Binomial(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.BINOMIAL, *e) {
+class Binomial(vararg e: Expr) : FunctionExpr(Function.BINOMIAL, *e) {
 
     override fun evaluate(): Expr {
         val n = get(0).asInteger()

@@ -1,7 +1,8 @@
 package org.cerion.symcalc.expression.function.statistics;
 
 import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.FunctionExpr;
+import org.cerion.symcalc.expression.function.Function;
+import org.cerion.symcalc.expression.function.FunctionExpr;
 import org.cerion.symcalc.expression.number.IntegerNum;
 
 import java.util.Random;
@@ -13,7 +14,7 @@ public class RandomInteger extends FunctionExpr {
 	}
 
 	public RandomInteger(Expr ...e) {
-		super(FunctionType.RANDOM_INTEGER, e);
+		super(Function.RANDOM_INTEGER, e);
 	}
 	
 	@Override

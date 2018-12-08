@@ -1,7 +1,8 @@
 package org.cerion.symcalc.expression.function.statistics;
 
 import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.FunctionExpr;
+import org.cerion.symcalc.expression.function.Function;
+import org.cerion.symcalc.expression.function.FunctionExpr;
 import org.cerion.symcalc.expression.ListExpr;
 import org.cerion.symcalc.expression.function.list.Table;
 import org.cerion.symcalc.expression.number.IntegerNum;
@@ -9,7 +10,7 @@ import org.cerion.symcalc.expression.number.IntegerNum;
 public class RandomChoice extends FunctionExpr {
 
     public RandomChoice(Expr... e) {
-        super(FunctionType.RANDOM_CHOICE,e);
+        super(Function.RANDOM_CHOICE,e);
     }
 
     @Override

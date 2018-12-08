@@ -2,12 +2,13 @@ package org.cerion.symcalc.expression.function.trig;
 
 import org.cerion.symcalc.exception.ValidationException;
 import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.FunctionExpr;
+import org.cerion.symcalc.expression.function.Function;
+import org.cerion.symcalc.expression.function.FunctionExpr;
 import org.cerion.symcalc.expression.number.NumberExpr;
 
 public abstract class TrigBase extends FunctionExpr {
 
-    protected TrigBase(FunctionType t, Expr... e) {
+    protected TrigBase(Function t, Expr... e) {
         super(t, e);
     }
 

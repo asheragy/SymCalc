@@ -1,6 +1,7 @@
 package org.cerion.symcalc.parser
 
 import org.cerion.symcalc.expression.*
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Power

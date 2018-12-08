@@ -1,12 +1,13 @@
 package org.cerion.symcalc.expression.function.integer
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.FunctionExpr
+import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 import org.cerion.symcalc.expression.number.IntegerNum
 
-class Bernoulli(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.BERNOULLI, *e) {
+class Bernoulli(vararg e: Expr) : FunctionExpr(Function.BERNOULLI, *e) {
 
     override fun evaluate(): Expr {
 

@@ -2,11 +2,12 @@ package org.cerion.symcalc.expression.function.integer
 
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.FunctionExpr
+import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberType
 import org.cerion.symcalc.expression.number.IntegerNum
 
-class Factorial(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.FACTORIAL, *e) {
+class Factorial(vararg e: Expr) : FunctionExpr(Function.FACTORIAL, *e) {
 
     override fun evaluate(): Expr {
         //TODO can work on non-integer

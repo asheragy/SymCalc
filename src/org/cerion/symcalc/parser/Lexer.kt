@@ -1,7 +1,7 @@
 package org.cerion.symcalc.parser
 
 import org.cerion.symcalc.expression.ConstExpr
-import org.cerion.symcalc.expression.FunctionExpr
+import org.cerion.symcalc.expression.function.FunctionExpr
 
 //import java.util.Hashtable;
 

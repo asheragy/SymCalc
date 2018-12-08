@@ -1,13 +1,14 @@
 package org.cerion.symcalc.expression.function.trig;
 
 import org.cerion.symcalc.expression.Expr;
+import org.cerion.symcalc.expression.function.Function;
 import org.cerion.symcalc.expression.number.NumberExpr;
 import org.cerion.symcalc.expression.number.RealNum;
 
 public class Sin extends TrigBase {
 
 	public Sin(Expr ...e) {
-		super(FunctionType.SIN, e);
+		super(Function.SIN, e);
 	}
 
 	@Override

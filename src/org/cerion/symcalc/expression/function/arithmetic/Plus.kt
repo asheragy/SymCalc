@@ -1,13 +1,14 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.FunctionExpr
+import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 
 import java.util.ArrayList
 
-class Plus(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.PLUS, *e) {
+class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
 
     override val properties: Int
         get() = Expr.Properties.ASSOCIATIVE.value or Expr.Properties.NumericFunction.value

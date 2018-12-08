@@ -22,12 +22,12 @@ class Pi : ConstExpr() {
     }
 
     private fun getPiToDigits(n: Int): BigDecimal {
-        var sum = calc(0, n+5)
+        var sum = calc(0, n+2)
 
         // TODO change loop limit to something that makes sense
         for(i in 1..10000) {
             val prev = sum
-            sum += calc(i, n+5)
+            sum += calc(i, n+2)
 
             if (sum == prev)
                 return sum.setScale(n, RoundingMode.HALF_UP)

@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.Environment
 import org.cerion.symcalc.exception.ValidationException
-import org.cerion.symcalc.expression.function.arithmetic.Times
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealNum

@@ -1,6 +1,8 @@
 package org.cerion.symcalc.expression.function.logical;
 
 import org.cerion.symcalc.expression.*;
+import org.cerion.symcalc.expression.function.Function;
+import org.cerion.symcalc.expression.function.FunctionExpr;
 import org.cerion.symcalc.expression.number.NumberExpr;
 
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
 public class Greater extends FunctionExpr {
 
     public Greater(Expr... e) {
-        super(FunctionType.GREATER, e);
+        super(Function.GREATER, e);
     }
 
     @Override

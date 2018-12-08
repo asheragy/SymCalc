@@ -1,7 +1,8 @@
 package org.cerion.symcalc.expression.function.statistics;
 
 import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.FunctionExpr;
+import org.cerion.symcalc.expression.function.Function;
+import org.cerion.symcalc.expression.function.FunctionExpr;
 import org.cerion.symcalc.expression.ListExpr;
 import org.cerion.symcalc.expression.function.arithmetic.Divide;
 import org.cerion.symcalc.expression.function.arithmetic.Plus;
@@ -12,7 +13,7 @@ import org.cerion.symcalc.expression.number.IntegerNum;
 public class Variance extends FunctionExpr {
 
     public Variance(Expr... e) {
-        super(FunctionType.VARIANCE,e);
+        super(Function.VARIANCE,e);
     }
 
     @Override

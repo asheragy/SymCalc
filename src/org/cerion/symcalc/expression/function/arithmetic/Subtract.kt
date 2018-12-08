@@ -2,10 +2,11 @@ package org.cerion.symcalc.expression.function.arithmetic
 
 import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.FunctionExpr
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.expression.function.Function
 
-class Subtract(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.SUBTRACT, *e) {
+class Subtract(vararg e: Expr) : FunctionExpr(Function.SUBTRACT, *e) {
 
     public override fun evaluate(): Expr {
         val a = get(0)

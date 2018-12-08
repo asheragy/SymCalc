@@ -2,7 +2,8 @@ package org.cerion.symcalc.expression.function.calculus;
 
 
 import org.cerion.symcalc.expression.Expr;
-import org.cerion.symcalc.expression.FunctionExpr;
+import org.cerion.symcalc.expression.function.Function;
+import org.cerion.symcalc.expression.function.FunctionExpr;
 import org.cerion.symcalc.expression.VarExpr;
 import org.cerion.symcalc.expression.function.arithmetic.Plus;
 import org.cerion.symcalc.expression.function.arithmetic.Subtract;
@@ -14,7 +15,7 @@ import org.cerion.symcalc.expression.number.IntegerNum;
 public class D extends FunctionExpr {
 
     public D(Expr... e) {
-        super(FunctionType.D,e);
+        super(Function.D,e);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class D extends FunctionExpr {
             FunctionExpr func = (FunctionExpr)e;
             FunctionExpr result = this;
 
-            switch (func.getFunctionType()) {
+            switch (func.getFunction()) {
                 case PLUS:
                     // TODO use map function here, or similar
                     result = new Plus();

@@ -2,9 +2,11 @@ package org.cerion.symcalc.expression.function.list
 
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.*
+import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 
-class Table(vararg e: Expr) : FunctionExpr(FunctionExpr.FunctionType.TABLE, *e) {
+class Table(vararg e: Expr) : FunctionExpr(Function.TABLE, *e) {
 
     override fun evaluate(): Expr {
         val expr = get(0)
