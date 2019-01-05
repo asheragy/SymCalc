@@ -9,7 +9,7 @@ class ErrorExpr(error: String) : Expr() {
         value = error
     }
 
-    override fun show(i: Int) = indent(i, "Error " + this.toString())
+    override fun treeForm(i: Int) = indent(i, "Error " + this.toString())
     override fun evaluate(): Expr = this
     override fun toString(): String = "Error($value)"
 

@@ -12,7 +12,7 @@ abstract class ConstExpr : Expr() {
     override val properties: Int
         get() = Expr.Properties.CONSTANT.value
 
-    override fun show(i: Int) = indent(i, "Constant: " + toString())
+    override fun treeForm(i: Int) = indent(i, "Constant: " + toString())
     override fun equals(e: Expr): Boolean = javaClass == e.javaClass
 
     abstract override fun toString(): String

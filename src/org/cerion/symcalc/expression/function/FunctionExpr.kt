@@ -23,10 +23,10 @@ abstract class FunctionExpr protected constructor(val function: Function, vararg
         return name + argString()
     }
 
-    override fun show(i: Int) {
+    override fun treeForm(i: Int) {
         indent(i, "$name[]")
         for (j in 0 until size())
-            get(j).show(i + 1)
+            get(j).treeForm(i + 1)
     }
 
     // TODO make this required for subclasses

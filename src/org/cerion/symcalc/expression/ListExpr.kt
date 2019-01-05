@@ -46,10 +46,10 @@ class ListExpr : Expr {
 
     override fun evaluate(): ListExpr = this
 
-    override fun show(i: Int) {
+    override fun treeForm(i: Int) {
         indent(i, "List: " + size())
         for (j in 0 until size())
-            get(j).show(i + 1)
+            get(j).treeForm(i + 1)
     }
 
     override fun toString(): String {

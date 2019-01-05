@@ -135,7 +135,7 @@ abstract class Expr {
     }
 
     abstract override fun toString(): String
-    abstract fun show(i: Int)  //rename to something like treeForm or make different function, can probably make non-abstract if types are standardized (name + value/args)
+    abstract fun treeForm(i: Int)
     abstract fun equals(e: Expr): Boolean
     protected abstract fun evaluate(): Expr
 
@@ -187,6 +187,7 @@ abstract class Expr {
 		}
 		*/
 
+        // TODO verify listable function is still valid even though it does not take a list parameter
         // Listable property
         if (hasProperty(Properties.LISTABLE) && isFunction) {
             val function = this as FunctionExpr
@@ -209,7 +210,7 @@ abstract class Expr {
     }
 
     fun print() {
-        show(0)
+        treeForm(0)
     }
 
     enum class ExprType {

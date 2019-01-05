@@ -61,36 +61,36 @@ class IntegerNum : NumberExpr {
 
     override fun unaryMinus(): IntegerNum = IntegerNum(intVal.negate())
 
-    override fun plus(number: NumberExpr): NumberExpr {
-        return if (number.isInteger) plus(number.asInteger()) else number.plus(this)
+    override fun plus(other: NumberExpr): NumberExpr {
+        return if (other.isInteger) plus(other.asInteger()) else other.plus(this)
     }
 
-    override fun minus(number: NumberExpr): NumberExpr {
-        if (number.isInteger)
-            return minus(number.asInteger())
+    override fun minus(other: NumberExpr): NumberExpr {
+        if (other.isInteger)
+            return minus(other.asInteger())
 
         //Default reverse order
-        val negative = number.unaryMinus()
+        val negative = other.unaryMinus()
         return negative + this
     }
 
-    override fun times(num: NumberExpr): NumberExpr {
-        return if (num.isInteger) times(num.asInteger()) else num.times(this)
+    override fun times(other: NumberExpr): NumberExpr {
+        return if (other.isInteger) times(other.asInteger()) else other.times(this)
     }
 
-    override fun div(num: NumberExpr): NumberExpr {
+    override fun div(other: NumberExpr): NumberExpr {
         //Any code calling this should check
-        if (num.isZero)
+        if (other.isZero)
             throw ArithmeticException("divide by zero")
 
         //Int / Int
-        if (num.isInteger) {
-            val n = num as IntegerNum
+        if (other.isInteger) {
+            val n = other as IntegerNum
             val gcd = this.gcd(n)
 
             if (gcd.isOne) {
                 return if (env.isNumericalEval) {
-                    Divide(RealNum.create(toDouble()), RealNum.create(num.toDouble())).eval() as NumberExpr
+                    Divide(RealNum.create(toDouble()), RealNum.create(other.toDouble())).eval() as NumberExpr
                 } else RationalNum(this, n)
 
             }
@@ -111,21 +111,21 @@ class IntegerNum : NumberExpr {
         throw NotImplementedError()
     }
 
-    override fun canExp(num: NumberExpr): Boolean {
-        return when (num.numType) {
+    override fun canExp(other: NumberExpr): Boolean {
+        return when (other.numType) {
             NumberType.INTEGER -> return true
             NumberType.REAL -> return true
             else -> false
         }
     }
 
-    override fun power(num: NumberExpr): Expr {
+    override fun power(other: NumberExpr): Expr {
         //NumberExpr result = null;
-        when (num.numType) {
-            NumberType.INTEGER -> return IntegerNum(intVal.pow(num.asInteger().intVal.toInt()))
+        when (other.numType) {
+            NumberType.INTEGER -> return IntegerNum(intVal.pow(other.asInteger().intVal.toInt()))
 
             NumberType.RATIONAL -> {
-                val pow = Math.pow(intVal.toDouble(), num.toDouble())
+                val pow = Math.pow(intVal.toDouble(), other.toDouble())
                 val real = RealNum.create(pow)
 
                 if (!env.isNumericalEval) {
@@ -135,7 +135,7 @@ class IntegerNum : NumberExpr {
                         // factor out any numbers that are the Nth root of the denominator
                         val t = Factor(this)
                         val factors = Tally(t).eval().asList()
-                        val denominator = num.asRational().denominator
+                        val denominator = other.asRational().denominator
 
                         var multiply = IntegerNum.ONE
 
@@ -155,7 +155,7 @@ class IntegerNum : NumberExpr {
                         }
 
                         if (multiply.isOne)
-                            return Power(this, num)
+                            return Power(this, other)
 
                         // Factor out multiples
                         //Expr result = new Power(this, num);
@@ -164,7 +164,7 @@ class IntegerNum : NumberExpr {
                             root = Times(root, factors[i][0], factors[i][1]).eval().asInteger()
                         }
 
-                        return Times(multiply, Power(root, num))
+                        return Times(multiply, Power(root, other))
                     }
                 }
 

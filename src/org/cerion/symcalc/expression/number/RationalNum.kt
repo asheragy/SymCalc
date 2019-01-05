@@ -46,8 +46,8 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
             if (env.precision > 0) {
                 val a = numerator.toBigDecimal()
                 val b = denominator.toBigDecimal()
-                val n = a.divide(b, env.precision, RoundingMode.HALF_UP)
-                return RealNum.create(n)
+                val t = a.divide(b, env.precision, RoundingMode.HALF_UP)
+                return RealNum.create(t)
             }
 
             return RealNum.create(numerator.toDouble() / denominator.toDouble())
@@ -143,9 +143,9 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
                 val rResult = RealNum.create(this.toDouble())
                 return rResult.power(other)
             }
+            NumberType.RATIONAL -> TODO()
+            NumberType.COMPLEX -> TODO()
         }
-
-        return ErrorExpr("Not implemented")
     }
 
     private operator fun set(n: IntegerNum?, d: IntegerNum?) {

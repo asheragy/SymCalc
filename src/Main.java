@@ -56,7 +56,7 @@ public class Main
 		Expr c2 = Expr.parse("2 - 3I");
 		
 		Expr exp = new Plus(c1.eval(), c2.eval());
-		exp.show(0);
-		exp.eval().show(0);
+		exp.treeForm(0);
+		exp.eval().treeForm(0);
 	}
 }

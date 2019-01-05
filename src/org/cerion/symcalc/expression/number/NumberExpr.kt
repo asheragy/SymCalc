@@ -56,7 +56,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
 
     override fun equals(e: Expr): Boolean = e.isNumber && equals(e as NumberExpr)
 
-    override fun show(i: Int) = indent(i, "Number " + this.toString())
+    override fun treeForm(i: Int) = indent(i, "Number " + this.toString())
     public override fun evaluate(): NumberExpr = this
 
     abstract operator fun plus(other: NumberExpr): NumberExpr

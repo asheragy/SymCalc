@@ -9,7 +9,7 @@ class VarExpr(str: String) : Expr() {
         value = str
     }
 
-    override fun show(i: Int) = indent(i, "VarExpr = " + value())
+    override fun treeForm(i: Int) = indent(i, "VarExpr = " + value())
     override fun toString(): String = value()
 
     fun value(): String {

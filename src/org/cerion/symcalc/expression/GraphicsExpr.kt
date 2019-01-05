@@ -5,7 +5,7 @@ open class GraphicsExpr : Expr() {
         get() = ExprType.GRAPHICS
 
     override fun toString(): String = "Graphics"
-    override fun show(i: Int) = println("Graphics")
+    override fun treeForm(i: Int) = println("Graphics")
     override fun equals(e: Expr): Boolean = false
     override fun evaluate(): Expr = this
 }

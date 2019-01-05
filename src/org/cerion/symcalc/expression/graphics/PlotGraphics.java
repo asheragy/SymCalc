@@ -18,7 +18,7 @@ public class PlotGraphics extends GraphicsExpr {
     }
 
     @Override
-    public void show(int i) {
+    public void treeForm(int i) {
 
         for(int x = min.intValue(); x <= max.intValue(); x++) {
             Expr e = function.eval(new IntegerNum(x));
