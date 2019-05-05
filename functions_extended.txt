@@ -1,4 +1,10 @@
 
+Colors:
+Red Green Blue Black White Gray Cyan Magenta Yellow Brown Orange Pink Purple
+LightBlue LightBrown LightCyan LightGray LightGreen LightMagenta LightOrange LightPink LightPurple LightRed LightYellow
+Darker Lighter
+
+
 \[FormalA]
 \[FormalB]
 \[FormalC]
@@ -52,6 +58,19 @@
 \[FormalCapitalY]
 \[FormalCapitalZ]
 
+Abort
+AbortKernels
+AbortProtect
+
+Active
+ActiveItem
+ActiveStyle
+ActionDelay
+ActionMenu
+ActionMenuBox
+ActionMenuBoxOptions
+AddOnHelpPath
+
 Back
 Background
 BackgroundTasksSettings
@@ -101,6 +120,15 @@ CellProlog
 CellSize
 CellStyle
 CellTags
+
+CheckAbort
+CheckAll
+Checkbox
+CheckboxBar
+CheckboxBox
+CheckboxBoxOptions
+ChemicalData
+ChessboardDistance
 
 Font
 FontColor
@@ -213,6 +241,42 @@ NotebookSetupLayoutInformationPacket
 NotebooksMenu
 NotebookWrite
 
+Selectable
+SelectedNotebook
+Selection
+SelectionAnimate
+SelectionCell
+SelectionCellCreateCell
+SelectionCellDefaultStyle
+SelectionCellParentStyle
+SelectionCreateCell
+SelectionDebuggerTag
+SelectionDuplicateCell
+SelectionEvaluate
+SelectionEvaluateCreateCell
+SelectionMove
+SelectionSetStyle
+SelfLoopStyle
+
+Show
+ShowAutoStyles
+ShowCellBracket
+ShowCellLabel
+ShowCellTags
+ShowClosedCellArea
+ShowContents
+ShowControls
+ShowCursorTracker
+ShowGroupOpenCloseIcon
+ShowGroupOpener
+ShowInvisibleCharacters
+ShowPageBreaks
+ShowSelection
+ShowShortBoxForm
+ShowSpecialCharacters
+ShowStringCharacters
+ShowSyntaxStyles
+
 Style
 StyleBox
 StyleBoxAutoDelete
@@ -224,6 +288,20 @@ StyleMenuListing
 StyleNameDialogSettings
 StylePrint
 StyleSheetPath
+
+UnAlias
+Uncompress
+UnderBar
+
+Underlined
+Underoverscript
+UnderoverscriptBox
+UnderoverscriptBoxOptions
+Underscript
+UnderscriptBox
+UnderscriptBoxOptions
+UndocumentedTestFEParserPacket
+UndocumentedTestGetSelectionPacket
 
 Verbose
 VerboseConvertToPostScriptPacket
@@ -283,7 +361,6 @@ Write
 WriteString
 XMLElement
 XMLObject
-Yellow
 
 $
 $Aborted

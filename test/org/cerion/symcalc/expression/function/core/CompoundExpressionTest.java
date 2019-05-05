@@ -12,6 +12,7 @@ public class CompoundExpressionTest {
 
     @Test
     public void variableScope() {
+
         Expr e1 = new Set(new VarExpr("x"), new IntegerNum(5));
         Expr e2 = new Plus(new IntegerNum(5), new VarExpr("x"));
 
