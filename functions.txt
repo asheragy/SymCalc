@@ -1,16 +1,32 @@
 Basic:
-Divide DivideBy Plus Power Sqrt Subtract SubtractFrom Times TimesBy
+Divide DivideBy Plus Power Sqrt Subtract SubtractFrom Times TimesBy Log Log10 Log2 Exp
 
 Trig:
-Sin Cos Tan Csc Sec Cot
-ArcCos ArcCosh ArcCot ArcCoth ArcCsc ArcCsch ArcSec ArcSech ArcSin ArcSinh ArcTan ArcTanh
-Sinc Cosh Tanh
+Sin Cos Tan Csc Sec Cot ArcCos ArcCot ArcCsc ArcSec ArcSin ArcTan Sinc
 
 Calculus:
 D Dt Integrate
 
 Logic:
 And Or Not Nand Nor Xor Implies Equivalent Equal Unequal
+
+List:
+ArrayFlatten Flatten FlattenAt Partition Join Sequence
+Sort SortBy Reverse RotateLeft RotateRight Transpose
+ArrayPad Riffle PadLeft PadRight Intersection Complement
+Split SplitBy Gather GatherBy Union Tally DeleteDuplicates Tuples Subsets Permutations RandomSample
+ReplacePart Take Drop Append AppendTo
+
+Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN
+Spheroidal: SpheroidalPS SpheroidalPSPrime SpheroidalQS SpheroidalQSPrime SpheroidalS1 SpheroidalS1Prime SpheroidalS2 SpheroidalS2Prime SpheroidalRadialFactor SpheroidalEigenvalue SpheroidalJoiningFactor
+Hyperbolic: Sinh Cosh Tanh Csch Sech Coth ArcSinh ArcCosh ArcTanh ArcCsch ArcSech ArcCoth
+Fourier:  Fourier FourierCoefficient FourierCosCoefficient FourierCosSeries FourierCosTransform FourierDCT FourierDST FourierParameters FourierSequenceTransform FourierSeries FourierSinCoefficient FourierSinSeries FourierSinTransform FourierTransform FourierTrigSeries InverseFourier InverseFourierCosTransform InverseFourierSequenceTransform InverseFourierSinTransform InverseFourierTransform
+
+Constants:
+I Pi E Degree GoldenRatio EulerGamma StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber
+ComplexInfinity DirectedInfinity Infinity Indeterminate
+
+Recurrence: Fibonacci LucasL BernoulliB NorlundB EulerE StirlingS1 StirlingS2 HarmonicNumber PolyGamma Zeta LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB
 
 
 
@@ -81,8 +97,6 @@ ApartSquareFree
 Appearance
 AppearanceElements
 AppellF1
-Append
-AppendTo
 Apply
 Arg
 ArgMax
@@ -91,8 +105,6 @@ ArgumentCountQ
 ArithmeticGeometricMean
 Array
 ArrayDepth
-ArrayFlatten
-ArrayPad
 ArrayPlot
 ArrayQ
 ArrayRules
@@ -150,9 +162,7 @@ Begin
 BeginDialogPacket
 BeginFrontEndInteractionPacket
 BeginPackage
-BellB
 Below
-BernoulliB
 BernoulliDistribution
 BernsteinBasis
 BesselI
@@ -180,7 +190,6 @@ BinaryReadList
 BinaryWrite
 BinCounts
 BinLists
-Binomial
 BinomialDistribution
 BitAnd
 BitClear
@@ -283,8 +292,6 @@ CapitalDifferentialD
 CarmichaelLambda
 Cases
 Casoratian
-Catalan
-CatalanNumber
 Catch
 CauchyDistribution
 CDF
@@ -294,7 +301,6 @@ Center
 CenterDot
 CentralMoment
 CForm
-ChampernowneNumber
 Character
 CharacterEncoding
 CharacterEncodingsPath
@@ -315,7 +321,6 @@ ChebyshevDistance
 ChebyshevT
 ChebyshevU
 Check
-
 ChiDistribution
 ChineseRemainder
 ChiSquareDistribution
@@ -392,12 +397,10 @@ Compile
 Compiled
 CompiledFunction
 CompileOptimizations
-Complement
 CompletionsListPacket
 Complex
 Complexes
 ComplexExpand
-ComplexInfinity
 ComplexityFunction
 ComponentwiseContextMenu
 Compose
@@ -483,7 +486,6 @@ CorrelationDistance
 CoshIntegral
 CosineDistance
 CosIntegral
-Coth
 Count
 CounterAssignments
 CounterBox
@@ -508,7 +510,6 @@ CreateWindow
 CriticalSection
 Cross
 CrossMatrix
-Csch
 Cubics
 Cuboid
 CuboidBox
@@ -548,39 +549,10 @@ DeclarePackage
 Decompose
 Decrement
 DedekindEta
-Default
-DefaultAxesStyle
-DefaultBaseStyle
-DefaultBoxStyle
-DefaultButton
-DefaultColor
-DefaultControlPlacement
-DefaultDuplicateCellStyle
-DefaultDuration
-DefaultElement
-DefaultFont
-DefaultFontProperties
-DefaultFormatType
-DefaultFormatTypeForStyle
-DefaultFrameStyle
-DefaultInlineFormatType
-DefaultInputFormatType
-DefaultLabelStyle
-DefaultNaturalLanguage
-DefaultNewCellStyle
-DefaultNewInlineCellStyle
-DefaultNotebook
-DefaultOptions
-DefaultOutputFormatType
-DefaultStyle
-DefaultStyleDefinitions
-DefaultTextFormatType
-DefaultTextInlineFormatType
-DefaultValues
+
 Defer
 DefineExternal
 Definition
-Degree
 DegreeLexicographic
 DegreeReverseLexicographic
 Deinitialization
@@ -590,7 +562,6 @@ Delete
 DeleteCases
 DeleteContents
 DeleteDirectory
-DeleteDuplicates
 DeleteFile
 DeletionWarning
 Delimiter
@@ -610,14 +581,6 @@ Det
 DiacriticalPositioning
 Diagonal
 DiagonalMatrix
-Dialog
-DialogIndent
-DialogInput
-DialogLevel
-DialogNotebook
-DialogProlog
-DialogReturn
-DialogSymbols
 Diamond
 DiamondMatrix
 DiceDissimilarity
@@ -640,7 +603,6 @@ Dimensions
 DiracComb
 DiracDelta
 DirectedEdges
-DirectedInfinity
 Direction
 Directive
 Directory
@@ -731,33 +693,7 @@ DownTeeArrow
 DownValues
 DragAndDrop
 DrawHighlighted
-Drop
 DSolve
-DualLinearProgramming
-DumpGet
-DumpSave
-Dynamic
-DynamicBox
-DynamicBoxOptions
-DynamicEvaluationTimeout
-DynamicModule
-DynamicModuleBox
-DynamicModuleBoxOptions
-DynamicModuleParent
-DynamicModuleValues
-DynamicSetting
-DynamicUpdating
-DynamicWrapper
-DynamicWrapperBox
-DynamicWrapperBoxOptions
-E
-EdgeForm
-EdgeLabeling
-EdgeRenderingFunction
-Editable
-EditButtonSettings
-EditCellTagsSettings
-EditDistance
 EffectiveInterestRate
 Eigensystem
 Eigenvalues
@@ -808,14 +744,7 @@ Erf
 Erfc
 Erfi
 Erosion
-ErrorBox
-ErrorBoxOptions
-ErrorNorm
-ErrorPacket
-ErrorsDialogSettings
 EuclideanDistance
-EulerE
-EulerGamma
 EulerPhi
 Evaluatable
 Evaluate
@@ -843,7 +772,6 @@ ExclusionsStyle
 Exists
 Exit
 ExitDialog
-Exp
 Expand
 ExpandAll
 ExpandDenominator
@@ -879,9 +807,6 @@ FaceGrids
 FaceGridsStyle
 Factor
 FactorComplete
-Factorial
-Factorial2
-FactorialPower
 FactorInteger
 FactorList
 FactorSquareFree
@@ -892,7 +817,6 @@ Fail
 False
 FEDisableConsolePrintPacket
 FEEnableConsolePrintPacket
-Fibonacci
 FieldMasked
 FieldSize
 File
@@ -952,8 +876,6 @@ FittedModel
 FixedPoint
 FixedPointList
 Flat
-Flatten
-FlattenAt
 FlipView
 Floor
 FlushPrintOutputPacket
@@ -971,21 +893,6 @@ FormBoxOptions
 FortranForm
 Forward
 ForwardBackward
-Fourier
-FourierCoefficient
-FourierCosCoefficient
-FourierCosSeries
-FourierCosTransform
-FourierDCT
-FourierDST
-FourierParameters
-FourierSequenceTransform
-FourierSeries
-FourierSinCoefficient
-FourierSinSeries
-FourierSinTransform
-FourierTransform
-FourierTrigSeries
 FractionalPart
 FractionBox
 FractionBoxOptions
@@ -1030,8 +937,6 @@ Gamma
 GammaDistribution
 GammaRegularized
 GapPenalty
-Gather
-GatherBy
 GaussianFilter
 GaussianIntegers
 GaussianMatrix
@@ -1074,11 +979,9 @@ GetFrontEndOptionsDataPacket
 GetLinebreakInformationPacket
 GetMenusPacket
 GetPageBreakInformationPacket
-Glaisher
 GlobalPreferences
 GlobalSession
 Glow
-GoldenRatio
 Goto
 Gradient
 GradientFilter
@@ -1152,7 +1055,6 @@ HankelH2
 HankelMatrix
 HarmonicMean
 HarmonicMeanFilter
-HarmonicNumber
 Hash
 HashTable
 Haversine
@@ -1212,7 +1114,6 @@ Hyperlink
 HyperlinkCreationSettings
 Hyphenation
 HyphenationOptions
-I
 Identity
 IdentityMatrix
 If
@@ -1229,13 +1130,11 @@ Increment
 Indent
 IndentingNewlineSpacings
 IndentMaxFraction
-Indeterminate
 IndexCreationOptions
 IndexTag
 Inequality
 InexactNumberQ
 InexactNumbers
-Infinity
 Infix
 Information
 Inherited
@@ -1302,7 +1201,6 @@ InterpretTemplate
 InterquartileRange
 Interrupt
 InterruptSettings
-Intersection
 Interval
 IntervalIntersection
 IntervalMemberQ
@@ -1314,11 +1212,6 @@ InverseChiSquareDistribution
 InverseEllipticNomeQ
 InverseErf
 InverseErfc
-InverseFourier
-InverseFourierCosTransform
-InverseFourierSequenceTransform
-InverseFourierSinTransform
-InverseFourierTransform
 InverseFunction
 InverseFunctions
 InverseGammaDistribution
@@ -1326,18 +1219,6 @@ InverseGammaRegularized
 InverseGaussianDistribution
 InverseGudermannian
 InverseHaversine
-InverseJacobiCD
-InverseJacobiCN
-InverseJacobiCS
-InverseJacobiDC
-InverseJacobiDN
-InverseJacobiDS
-InverseJacobiNC
-InverseJacobiND
-InverseJacobiNS
-InverseJacobiSC
-InverseJacobiSD
-InverseJacobiSN
 InverseLaplaceTransform
 InverseSeries
 InverseWeierstrassP
@@ -1358,22 +1239,9 @@ ItemStyle
 JaccardDissimilarity
 JacobiAmplitude
 Jacobian
-JacobiCD
-JacobiCN
-JacobiCS
-JacobiDC
-JacobiDN
-JacobiDS
-JacobiNC
-JacobiND
-JacobiNS
 JacobiP
-JacobiSC
-JacobiSD
-JacobiSN
 JacobiSymbol
 JacobiZeta
-Join
 Joined
 JoinForm
 JordanDecomposition
@@ -1384,7 +1252,6 @@ KelvinKei
 KelvinKer
 KernelObject
 Kernels
-Khinchin
 KleinInvariantJ
 KnotData
 KroneckerDelta
@@ -1447,7 +1314,6 @@ LegendreQ
 LegendreType
 Length
 LengthWhile
-LerchPhi
 Less
 LessEqual
 LessEqualGreater
@@ -1557,9 +1423,6 @@ LocatorPaneBox
 LocatorPaneBoxOptions
 LocatorRegion
 Locked
-Log
-Log10
-Log2
 LogBarnesG
 LogGamma
 LogicalExpand
@@ -1587,7 +1450,6 @@ LowerLeftArrow
 LowerRightArrow
 LowerTriangularize
 LUBackSubstitution
-LucasL
 LUDecomposition
 MachineID
 MachineName
@@ -1771,7 +1633,6 @@ None
 NonlinearModelFit
 NonNegative
 NonPositive
-NorlundB
 Norm
 Normal
 NormalDistribution
@@ -1926,8 +1787,6 @@ PackingMethod
 PaddedForm
 Padding
 PadeApproximant
-PadLeft
-PadRight
 PageBreakAbove
 PageBreakBelow
 PageBreakWithin
@@ -1977,7 +1836,6 @@ ParetoDistribution
 Part
 PartialD
 ParticleData
-Partition
 PartitionsP
 PartitionsQ
 PassEventsDown
@@ -1994,8 +1852,6 @@ PausedTime
 PDF
 PerformanceGoal
 PeriodicInterpolation
-Permutations
-Pi
 Pick
 Piecewise
 PiecewiseExpand
@@ -2034,7 +1890,6 @@ PolarAxesOrigin
 PolarGridLines
 PolarPlot
 PolarTicks
-PolyGamma
 Polygon
 Polygon3DBox
 Polygon3DBoxOptions
@@ -2044,7 +1899,6 @@ PolygonHoleScale
 PolygonIntersections
 PolygonScale
 PolyhedronData
-PolyLog
 PolynomialExtendedGCD
 PolynomialForm
 PolynomialGCD
@@ -2166,7 +2020,6 @@ RandomComplex
 RandomInteger
 RandomPrime
 RandomReal
-RandomSample
 RandomSeed
 Range
 RangeSpecification
@@ -2234,7 +2087,6 @@ Replace
 ReplaceAll
 ReplaceHeldPart
 ReplaceList
-ReplacePart
 ReplaceRepeated
 Rescale
 RescalingTransform
@@ -2250,7 +2102,6 @@ ReturnExpressionPacket
 ReturnInputFormPacket
 ReturnPacket
 ReturnTextPacket
-Reverse
 ReverseElement
 ReverseEquilibrium
 ReverseUpEquilibrium
@@ -2260,7 +2111,6 @@ RGBColor
 RiemannR
 RiemannSiegelTheta
 RiemannSiegelZ
-Riffle
 Right
 RightArrow
 RightArrowBar
@@ -2291,8 +2141,6 @@ Roots
 RootSum
 Rotate
 RotateLabel
-RotateLeft
-RotateRight
 RotationAction
 RotationBox
 RotationBoxOptions
@@ -2352,7 +2200,6 @@ ScriptSizeMultipliers
 Scrollbars
 ScrollingOptions
 ScrollPosition
-Sech
 SectionGrouping
 SectorChart
 SectorChart3D
@@ -2364,7 +2211,6 @@ Select
 SemialgebraicComponentInstances
 SendFontInformationToKernel
 SendMail
-Sequence
 SequenceAlignment
 SequenceForm
 SequenceHold
@@ -2428,7 +2274,6 @@ SingleLetterStyle
 SingularValueDecomposition
 SingularValueList
 SingularValues
-Sinh
 SinhIntegral
 SinIntegral
 SixJSymbol
@@ -2453,8 +2298,6 @@ SokalSneathDissimilarity
 Solve
 SolveAlways
 SolveDelayed
-Sort
-SortBy
 Sound
 SoundAndGraphics
 SoundNote
@@ -2493,24 +2336,11 @@ SphericalHankelH2
 SphericalHarmonicY
 SphericalPlot3D
 SphericalRegion
-SpheroidalEigenvalue
-SpheroidalJoiningFactor
-SpheroidalPS
-SpheroidalPSPrime
-SpheroidalQS
-SpheroidalQSPrime
-SpheroidalRadialFactor
-SpheroidalS1
-SpheroidalS1Prime
-SpheroidalS2
-SpheroidalS2Prime
 Splice
 SplineClosed
 SplineDegree
 SplineKnots
 SplineWeights
-Split
-SplitBy
 SpokenString
 SqrtBox
 SqrtBoxOptions
@@ -2540,9 +2370,6 @@ StartOfString
 StartupSound
 StatusArea
 StepMonitor
-StieltjesGamma
-StirlingS1
-StirlingS2
 StreamColorFunction
 StreamColorFunctionScaling
 StreamDensityPlot
@@ -2595,7 +2422,6 @@ SubscriptBoxOptions
 Subscripted
 Subset
 SubsetEqual
-Subsets
 SubStar
 Subsuperscript
 SubsuperscriptBox
@@ -2664,9 +2490,7 @@ TagSet
 TagSetDelayed
 TagStyle
 TagUnset
-Take
 TakeWhile
-Tally
 TargetFunctions
 TautologyQ
 TemplateBox
@@ -2675,25 +2499,7 @@ Temporary
 TemporaryVariable
 TensorQ
 TensorRank
-TeXForm
-TeXSave
-Text
-Text3DBox
-Text3DBoxOptions
-TextAlignment
-TextBand
-TextBoundingBox
-TextBox
-TextCell
-TextClipboardType
-TextData
-TextForm
-TextJustification
-TextLine
-TextPacket
-TextParagraph
-TextRendering
-TextStyle
+
 Therefore
 Thick
 Thickness
@@ -2725,27 +2531,6 @@ ToeplitzMatrix
 ToExpression
 ToFileName
 Together
-Toggle
-ToggleFalse
-Toggler
-TogglerBar
-TogglerBox
-TogglerBoxOptions
-ToHeldExpression
-TokenWords
-Tolerance
-ToLowerCase
-ToNumberField
-TooBig
-Tooltip
-TooltipBox
-TooltipBoxOptions
-TooltipDelay
-Top
-TopHatTransform
-ToRadicals
-ToRules
-ToString
 Total
 TotalHeight
 TotalWidth
@@ -2777,7 +2562,6 @@ Translate
 TranslationTransform
 Transparent
 TransparentColor
-Transpose
 TreeForm
 TreePlot
 TriangleWave
@@ -2798,7 +2582,6 @@ TubeBezierCurveBoxOptions
 TubeBox
 TubeBSplineCurveBox
 TubeBSplineCurveBoxOptions
-Tuples
 TuringMachine
 
 Underflow
@@ -2806,7 +2589,6 @@ Underflow
 Unevaluated
 UniformDistribution
 Uninstall
-Union
 UnionPlus
 Unique
 UnitBox
@@ -2894,7 +2676,6 @@ YuleDissimilarity
 ZernikeR
 ZeroTest
 ZeroWidthTimes
-Zeta
 ZetaZero
 ZipfDistribution
 ZTransform
