@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression
 
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.expression.constant.*
 
 import java.util.Hashtable
 
@@ -32,6 +32,7 @@ abstract class ConstExpr : Expr() {
             val n = lookup(name)
             when (n) {
                 ConstExpr.Name.PI -> return Pi()
+                ConstExpr.Name.E -> return E()
             }
 
             throw IllegalArgumentException("invalid constant")

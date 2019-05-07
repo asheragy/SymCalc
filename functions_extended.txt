@@ -200,6 +200,21 @@ ErrorNorm
 ErrorPacket
 ErrorsDialogSettings
 
+Evaluatable
+Evaluated
+EvaluatePacket
+EvaluationCell
+EvaluationCompletionAction
+EvaluationMonitor
+EvaluationNotebook
+EvaluationObject
+EvaluationOrder
+Evaluator
+EvaluatorNames
+EventEvaluator
+EventHandler
+EventHandlerTag
+
 Font
 FontColor
 FontFamily

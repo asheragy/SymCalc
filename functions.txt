@@ -11,27 +11,26 @@ Logic:
 And Or Not Nand Nor Xor Implies Equivalent Equal Unequal
 
 List:
-ArrayFlatten Flatten FlattenAt Partition Join Sequence
-Sort SortBy Reverse RotateLeft RotateRight Transpose
-ArrayPad Riffle PadLeft PadRight Intersection Complement
-Split SplitBy Gather GatherBy Union Tally DeleteDuplicates Tuples Subsets Permutations RandomSample
-ReplacePart Take Drop Append AppendTo
+ArrayFlatten Flatten FlattenAt Partition Join Sequence Sort SortBy Reverse RotateLeft RotateRight Transpose
+ArrayPad Riffle PadLeft PadRight Intersection Complement Split SplitBy Gather GatherBy Union Tally DeleteDuplicates Tuples Subsets Permutations RandomSample ReplacePart Take Drop Append AppendTo
 
 Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN
 Spheroidal: SpheroidalPS SpheroidalPSPrime SpheroidalQS SpheroidalQSPrime SpheroidalS1 SpheroidalS1Prime SpheroidalS2 SpheroidalS2Prime SpheroidalRadialFactor SpheroidalEigenvalue SpheroidalJoiningFactor
 Hyperbolic: Sinh Cosh Tanh Csch Sech Coth ArcSinh ArcCosh ArcTanh ArcCsch ArcSech ArcCoth
 Fourier:  Fourier FourierCoefficient FourierCosCoefficient FourierCosSeries FourierCosTransform FourierDCT FourierDST FourierParameters FourierSequenceTransform FourierSeries FourierSinCoefficient FourierSinSeries FourierSinTransform FourierTransform FourierTrigSeries InverseFourier InverseFourierCosTransform InverseFourierSequenceTransform InverseFourierSinTransform InverseFourierTransform
 
-Constants:
-I Pi E Degree GoldenRatio EulerGamma StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber
-ComplexInfinity DirectedInfinity Infinity Indeterminate
-
+Constants: I Pi E Degree GoldenRatio EulerGamma StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber ComplexInfinity DirectedInfinity Infinity Indeterminate
 Recurrence: Fibonacci LucasL BernoulliB NorlundB EulerE StirlingS1 StirlingS2 HarmonicNumber PolyGamma Zeta LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB
+Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator
+Integer: Mod PowerMod Quotient QuotientRemainder GCD LCM Divisible CoprimeQ EvenQ OddQ PrimeQ FactorInteger Divisors IntegerPartitions IntegerDigits FrobeniusNumber FrobeniusSolve
+Bitwise: BitAnd BitClear BitGet BitLength BitNot BitOr BitSet BitShiftLeft BitShiftRight BitXor
+
+Statistics: BernoulliDistribution BetaBinomialDistribution BetaDistribution BetaNegativeBinomialDistribution BinomialDistribution HypergeometricDistribution NegativeBinomialDistribution GeometricDistribution PoissonDistribution DiscreteUniformDistribution ZipfDistribution LogSeriesDistribution
+
 
 
 
 Above
-Abs
 AbsoluteCurrentValue
 AbsoluteDashing
 AbsoluteFileName
@@ -163,7 +162,6 @@ BeginDialogPacket
 BeginFrontEndInteractionPacket
 BeginPackage
 Below
-BernoulliDistribution
 BernsteinBasis
 BesselI
 BesselJ
@@ -172,9 +170,6 @@ BesselK
 BesselY
 BesselYZero
 Beta
-BetaBinomialDistribution
-BetaDistribution
-BetaNegativeBinomialDistribution
 BetaRegularized
 BezierCurve
 BezierCurve3DBox
@@ -190,17 +185,6 @@ BinaryReadList
 BinaryWrite
 BinCounts
 BinLists
-BinomialDistribution
-BitAnd
-BitClear
-BitGet
-BitLength
-BitNot
-BitOr
-BitSet
-BitShiftLeft
-BitShiftRight
-BitXor
 Blank
 BlankForm
 BlankNullSequence
@@ -211,7 +195,6 @@ BlockRandom
 Blur
 Bold
 Bookmarks
-Boole
 BooleanConvert
 BooleanCountingFunction
 BooleanFunction
@@ -295,7 +278,6 @@ Casoratian
 Catch
 CauchyDistribution
 CDF
-Ceiling
 CellularAutomaton
 Center
 CenterDot
@@ -327,7 +309,6 @@ ChiSquareDistribution
 ChoiceButtons
 ChoiceDialog
 CholeskyDecomposition
-Chop
 Circle
 CircleBox
 CircleDot
@@ -341,7 +322,6 @@ ClearAttributes
 ClearSystemCache
 ClebschGordan
 ClickPane
-Clip
 ClipboardNotebook
 ClipFill
 ClippingStyle
@@ -474,7 +454,6 @@ ConvertToPostScript
 ConvertToPostScriptPacket
 Convolve
 CoordinatesToolOptions
-CoprimeQ
 Coproduct
 Copyable
 CopyDirectory
@@ -616,11 +595,9 @@ DirichletTransform
 DisableConsolePrintPacket
 DiscreteConvolve
 DiscreteDelta
-DiscreteIndicator
 DiscretePlot
 DiscreteRatio
 DiscreteShift
-DiscreteUniformDistribution
 Discriminant
 Disjunction
 Disk
@@ -648,8 +625,6 @@ DistributionDomainQ
 DistributionParameterQ
 Dithering
 Dividers
-Divisible
-Divisors
 DivisorSigma
 DivisorSum
 DMSList
@@ -746,22 +721,7 @@ Erfi
 Erosion
 EuclideanDistance
 EulerPhi
-Evaluatable
 Evaluate
-Evaluated
-EvaluatePacket
-EvaluationCell
-EvaluationCompletionAction
-EvaluationMonitor
-EvaluationNotebook
-EvaluationObject
-EvaluationOrder
-Evaluator
-EvaluatorNames
-EvenQ
-EventEvaluator
-EventHandler
-EventHandlerTag
 ExactNumberQ
 ExactRootIsolation
 ExampleData
@@ -807,7 +767,6 @@ FaceGrids
 FaceGridsStyle
 Factor
 FactorComplete
-FactorInteger
 FactorList
 FactorSquareFree
 FactorSquareFreeList
@@ -877,7 +836,6 @@ FixedPoint
 FixedPointList
 Flat
 FlipView
-Floor
 FlushPrintOutputPacket
 Fold
 FoldList
@@ -893,7 +851,6 @@ FormBoxOptions
 FortranForm
 Forward
 ForwardBackward
-FractionalPart
 FractionBox
 FractionBoxOptions
 FractionLine
@@ -912,8 +869,6 @@ FRatioDistribution
 FreeQ
 FresnelC
 FresnelS
-FrobeniusNumber
-FrobeniusSolve
 FromCharacterCode
 FromCoefficientRules
 FromContinuedFraction
@@ -940,7 +895,6 @@ GapPenalty
 GaussianFilter
 GaussianIntegers
 GaussianMatrix
-GCD
 GegenbauerC
 General
 GeneralizedLinearModelFit
@@ -959,7 +913,6 @@ GeodesyData
 GeoDirection
 GeoDistance
 GeoGridPosition
-GeometricDistribution
 GeometricMean
 GeometricMeanFilter
 GeometricTransformation
@@ -1106,7 +1059,6 @@ Hypergeometric1F1
 Hypergeometric1F1Regularized
 Hypergeometric2F1
 Hypergeometric2F1Regularized
-HypergeometricDistribution
 HypergeometricPFQ
 HypergeometricPFQRegularized
 HypergeometricU
@@ -1174,11 +1126,8 @@ Install
 InstallService
 InString
 Integer
-IntegerDigits
 IntegerExponent
 IntegerLength
-IntegerPart
-IntegerPartitions
 IntegerQ
 Integers
 IntegerString
@@ -1283,7 +1232,6 @@ LaunchKernels
 LayeredGraphPlot
 LayerSizeFunction
 LayoutInformation
-LCM
 LeafCount
 LeastSquares
 Left
@@ -1329,11 +1277,9 @@ LeviCivitaTensor
 LevyDistribution
 Lexicographic
 LicenseID
-
 Lighting
 LightingAngle
 LightSources
-
 Limit
 LimitsPositioning
 LimitsPositioningTokens
@@ -1433,7 +1379,6 @@ LogLinearPlot
 LogLogPlot
 LogNormalDistribution
 LogPlot
-LogSeriesDistribution
 LongEqual
 Longest
 LongestCommonSequence
@@ -1496,7 +1441,6 @@ MatrixPlot
 MatrixPower
 MatrixQ
 MatrixRank
-Max
 MaxBend
 MaxFilter
 Maximize
@@ -1542,7 +1486,6 @@ MessagesNotebook
 MetaCharacters
 Method
 MethodOptions
-Min
 MinFilter
 MinimalPolynomial
 Minimize
@@ -1553,7 +1496,6 @@ Minus
 MinusPlus
 MinValue
 Missing
-Mod
 Modal
 Mode
 Modular
@@ -1599,7 +1541,6 @@ NeedCurrentFrontEndSymbolsPacket
 NeedlemanWunschSimilarity
 Needs
 Negative
-NegativeBinomialDistribution
 Nest
 NestedGreaterGreater
 NestedLessLess
@@ -1726,7 +1667,6 @@ NumericFunction
 NumericQ
 NValues
 O
-OddQ
 Off
 Offset
 OLEData
@@ -1853,7 +1793,6 @@ PDF
 PerformanceGoal
 PeriodicInterpolation
 Pick
-Piecewise
 PiecewiseExpand
 PieChart
 PieChart3D
@@ -1884,7 +1823,6 @@ Point3DBox
 PointBox
 PointForm
 PointSize
-PoissonDistribution
 PolarAxes
 PolarAxesOrigin
 PolarGridLines
@@ -1922,7 +1860,6 @@ PossibleZeroQ
 Postfix
 PostScript
 PowerExpand
-PowerMod
 PowerModList
 PowersRepresentations
 Precedence
@@ -1950,7 +1887,6 @@ PrimeNu
 PrimeOmega
 PrimePi
 PrimePowerQ
-PrimeQ
 Primes
 PrimeZetaP
 PrimitiveRoot
@@ -2002,8 +1938,6 @@ Quartiles
 QuartileSkewness
 Quiet
 Quit
-Quotient
-QuotientRemainder
 RadicalBox
 RadicalBoxOptions
 RadioButton
@@ -2088,7 +2022,6 @@ ReplaceAll
 ReplaceHeldPart
 ReplaceList
 ReplaceRepeated
-Rescale
 RescalingTransform
 ResetDirectory
 ResetMenusPacket
@@ -2146,7 +2079,6 @@ RotationBox
 RotationBoxOptions
 RotationMatrix
 RotationTransform
-Round
 RoundImplies
 RoundingRadius
 Row
@@ -2259,11 +2191,9 @@ ShortestMatch
 ShortLeftArrow
 ShortRightArrow
 ShortUpArrow
-
 ShrinkingDelay
 ShrinkWrapBoundingBox
 SiegelTheta
-Sign
 Signature
 SignPadding
 SimilarityRules
@@ -2583,18 +2513,12 @@ TubeBox
 TubeBSplineCurveBox
 TubeBSplineCurveBoxOptions
 TuringMachine
-
 Underflow
-
 Unevaluated
 UniformDistribution
 Uninstall
 UnionPlus
 Unique
-UnitBox
-Unitize
-UnitStep
-UnitTriangle
 UnitVector
 Unprotect
 UnsameQ
@@ -2677,5 +2601,4 @@ ZernikeR
 ZeroTest
 ZeroWidthTimes
 ZetaZero
-ZipfDistribution
 ZTransform
