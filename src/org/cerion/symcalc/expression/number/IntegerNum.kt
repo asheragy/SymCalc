@@ -36,6 +36,10 @@ class IntegerNum : NumberExpr {
         value = BigInteger.valueOf(n)
     }
 
+    constructor(n: Int) {
+        value = BigInteger.valueOf(n.toLong())
+    }
+
     override fun toString(): String = intVal.toString()
     override fun toDouble(): Double = intVal.toDouble()
 

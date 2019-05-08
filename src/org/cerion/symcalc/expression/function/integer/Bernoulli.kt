@@ -6,43 +6,39 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.RationalNum
 
 class Bernoulli(vararg e: Expr) : FunctionExpr(Function.BERNOULLI, *e) {
 
     override fun evaluate(): Expr {
 
         val result: Expr
-        var N = get(0) as IntegerNum
+        var N = get(0).asInteger()
 
-        // TODO clean up with operator overloading
+        when {
+            N.isZero -> result = IntegerNum.ONE
+            N.isOne -> result = RationalNum(-1,2)
+            else -> {
+                var res: NumberExpr = IntegerNum.ZERO
+                val n = N.intValue()
 
-        if (N.isZero)
-            result = IntegerNum.ONE
-        else if (N.isOne)
-            result = NumberExpr.parse("0.5").unaryMinus()
-        else {
-            var res: NumberExpr = IntegerNum.ZERO
-            val n = N.intValue()
+                for (i in 0 until n) {
+                    val bin = Binomial(IntegerNum(n + 1), IntegerNum(i))
+                    val t = bin.eval().asInteger()
 
-            for (i in 0 until n) {
-                val bin = Binomial(IntegerNum((n + 1).toLong()))
-                bin.add(IntegerNum(i.toLong()))
-                val t = bin.eval() as IntegerNum
-                //System.out.println(t.toString());
+                    val bern = Bernoulli(IntegerNum(i))
+                    var b = bern.eval().asNumber()
 
-                val bern = Bernoulli(IntegerNum(i.toLong()))
-                var b = bern.eval() as NumberExpr
-                //System.out.println(b);
+                    b = t * b
+                    res+= b
+                }
 
-                b = t * b
-                res+= b
+                res = -res
+                N+= IntegerNum.ONE
+                res/= N
+
+                result = res
             }
-
-            res = -res
-            N+= IntegerNum.ONE
-            res/= N
-
-            result = res
         }
 
         return result
