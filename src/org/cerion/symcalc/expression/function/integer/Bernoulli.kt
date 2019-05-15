@@ -22,6 +22,7 @@ class Bernoulli(vararg e: Expr) : FunctionExpr(Function.BERNOULLI, *e) {
                 var res: NumberExpr = IntegerNum.ZERO
                 val n = N.intValue()
 
+
                 for (i in 0 until n) {
                     val bin = Binomial(IntegerNum(n + 1), IntegerNum(i))
                     val t = bin.eval().asInteger()
