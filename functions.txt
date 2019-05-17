@@ -12,7 +12,8 @@ And Or Not Nand Nor Xor Implies Equivalent Equal Unequal
 
 List:
 ArrayFlatten Flatten FlattenAt Partition Join Sequence Sort SortBy Reverse RotateLeft RotateRight Transpose
-ArrayPad Riffle PadLeft PadRight Intersection Complement Split SplitBy Gather GatherBy Union Tally DeleteDuplicates Tuples Subsets Permutations RandomSample ReplacePart Take Drop Append AppendTo
+ArrayPad Riffle PadLeft PadRight Intersection Complement Split SplitBy Gather GatherBy Union Tally DeleteDuplicates Tuples Subsets Permutations RandomSample AppendTo
+Accumulate
 
 Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN
 Spheroidal: SpheroidalPS SpheroidalPSPrime SpheroidalQS SpheroidalQSPrime SpheroidalS1 SpheroidalS1Prime SpheroidalS2 SpheroidalS2Prime SpheroidalRadialFactor SpheroidalEigenvalue SpheroidalJoiningFactor
@@ -22,31 +23,21 @@ Fourier:  Fourier FourierCoefficient FourierCosCoefficient FourierCosSeries Four
 Constants: I Pi E Degree GoldenRatio EulerGamma StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber ComplexInfinity DirectedInfinity Infinity Indeterminate
 Recurrence: Fibonacci LucasL BernoulliB NorlundB EulerE StirlingS1 StirlingS2 HarmonicNumber PolyGamma Zeta LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB
 Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator
-Integer: Mod PowerMod Quotient QuotientRemainder GCD LCM Divisible CoprimeQ EvenQ OddQ PrimeQ FactorInteger Divisors IntegerPartitions IntegerDigits FrobeniusNumber FrobeniusSolve
+Integer: Mod PowerMod Quotient QuotientRemainder GCD LCM Divisible EvenQ OddQ FactorInteger Divisors IntegerPartitions IntegerDigits FrobeniusNumber FrobeniusSolve
 Bitwise: BitAnd BitClear BitGet BitLength BitNot BitOr BitSet BitShiftLeft BitShiftRight BitXor
 
 Statistics: BernoulliDistribution BetaBinomialDistribution BetaDistribution BetaNegativeBinomialDistribution BinomialDistribution HypergeometricDistribution NegativeBinomialDistribution GeometricDistribution PoissonDistribution DiscreteUniformDistribution ZipfDistribution LogSeriesDistribution
 Fractions: Apart Together Cancel Numerator Denominator PolynomialQuotient PolynomialRemainder Residue PadeApproximant ExpandAll ExpandDenominator ExpandNumerator
+Timing: AbsoluteTime AbsoluteTiming
+Primes: Prime PrimeNu PrimeOmega PrimePi PrimePowerQ Primes PrimeZetaP NextPrime RandomPrime ZetaZero RiemannR RiemannSiegelZ CoprimeQ PrimeQ LiouvilleLambda MangoldtLambda
+Expressions: Part Length First Last Most Rest Take Drop Extract ReplacePart Append Prepend Insert Delete DeleteCases Position Cases Map MapAll MapAt Heads Sow Reap
 
 
 
 
-Above
-AbsoluteCurrentValue
-AbsoluteDashing
-AbsoluteFileName
-AbsoluteOptions
-AbsolutePointSize
-AbsoluteThickness
-AbsoluteTime
-AbsoluteTiming
-AccountingForm
-Accumulate
 Accuracy
 AccuracyGoal
 AddTo
-AdjustmentBox
-AdjustmentBoxOptions
 AffineTransform
 After
 AiryAi
@@ -103,6 +94,7 @@ Assumptions
 AstronomicalData
 AtomQ
 Attributes
+
 AutoAction
 AutoDelete
 AutoEvaluateEvents
@@ -222,29 +214,6 @@ BSplineCurveBoxOptions
 BSplineFunction
 BSplineSurface
 BSplineSurface3DBox
-BubbleChart
-BubbleChart3D
-BubbleScale
-BubbleSizes
-Button
-ButtonBar
-ButtonBox
-ButtonBoxOptions
-ButtonCell
-ButtonContents
-ButtonData
-ButtonEvaluator
-ButtonExpandable
-ButtonFrame
-ButtonFunction
-ButtonMargins
-ButtonMinHeight
-ButtonNote
-ButtonNotebook
-ButtonSource
-ButtonStyle
-ButtonStyleMenuListing
-Byte
 ByteCount
 ByteOrdering
 C
@@ -257,7 +226,6 @@ Cap
 CapForm
 CapitalDifferentialD
 CarmichaelLambda
-Cases
 Casoratian
 Catch
 CauchyDistribution
@@ -326,35 +294,6 @@ CoefficientDomain
 CoefficientList
 CoefficientRules
 Collect
-Colon
-ColonForm
-ColorCombine
-ColorConvert
-ColorData
-ColorDataFunction
-ColorFunction
-ColorFunctionScaling
-ColorMap
-ColorNegate
-ColorOutput
-ColorQuantize
-ColorRules
-ColorSelectorSettings
-ColorSeparate
-ColorSetter
-ColorSetterBox
-ColorSetterBoxOptions
-ColorSlider
-ColorSpace
-Column
-ColumnAlignments
-ColumnBackgrounds
-ColumnForm
-ColumnLines
-ColumnsEqual
-ColumnSpacings
-ColumnWidths
-CommonDefaultFormatTypes
 Commonest
 CommonestFilter
 Compile
@@ -521,8 +460,6 @@ DegreeReverseLexicographic
 Deinitialization
 Del
 Deletable
-Delete
-DeleteCases
 DeleteContents
 DeleteDirectory
 DeleteFile
@@ -719,7 +656,6 @@ ExtendedGCD
 Extension
 ExternalCall
 ExternalDataCharacterEncoding
-Extract
 ExtremeValueDistribution
 FaceForm
 FaceGrids
@@ -787,7 +723,6 @@ FinishDynamic
 FiniteAbelianGroupCount
 FiniteGroupCount
 FiniteGroupData
-First
 Fit
 FitAll
 FittedModel
@@ -972,7 +907,6 @@ HashTable
 Haversine
 Head
 HeadCompose
-Heads
 HeavisideLambda
 HeavisidePi
 HeavisideTheta
@@ -1075,7 +1009,6 @@ InputStream
 InputString
 InputStringPacket
 InputToBoxFormPacket
-Insert
 InsertionPointObject
 Inset
 Inset3DBox
@@ -1181,45 +1114,15 @@ LaplacianFilter
 LaplacianGaussianFilter
 Large
 Larger
-Last
 Latitude
 LatitudeLongitude
 LatticeData
 LatticeReduce
-Launch
-LaunchKernels
-LayeredGraphPlot
-LayerSizeFunction
-LayoutInformation
 LeafCount
 LeastSquares
-Left
-LeftArrow
-LeftArrowBar
-LeftArrowRightArrow
-LeftDownTeeVector
-LeftDownVector
-LeftDownVectorBar
-LeftRightArrow
-LeftRightVector
-LeftTee
-LeftTeeArrow
-LeftTeeVector
-LeftTriangle
-LeftTriangleBar
-LeftTriangleEqual
-LeftUpDownVector
-LeftUpTeeVector
-LeftUpVector
-LeftUpVectorBar
-LeftVector
-LeftVectorBar
-LegendAppearance
-Legended
 LegendreP
 LegendreQ
 LegendreType
-Length
 LengthWhile
 Less
 LessEqual
@@ -1252,7 +1155,6 @@ LinearProgramming
 LinearRecurrence
 LinearSolve
 LinearSolveFunction
-LiouvilleLambda
 List
 Listable
 ListAnimate
@@ -1334,15 +1236,11 @@ Majority
 MakeBoxes
 MakeExpression
 MakeRules
-MangoldtLambda
 ManhattanDistance
 Manipulate
 Manipulator
 MantissaExponent
 Manual
-Map
-MapAll
-MapAt
 MapIndexed
 MapPlot
 MapThread
@@ -1435,7 +1333,6 @@ MonomialOrder
 MorphologicalComponents
 MorphologicalEulerNumber
 MorphologicalPerimeter
-Most
 MouseAnnotation
 MouseButtons
 Mouseover
@@ -1478,7 +1375,6 @@ NevilleThetaD
 NevilleThetaN
 NevilleThetaS
 Next
-NextPrime
 NHoldAll
 NHoldFirst
 NHoldRest
@@ -1565,28 +1461,8 @@ NSolve
 NSum
 NSumTerms
 Null
-NullRecords
-NullSpace
-NullWords
-Number
-NumberFieldClassNumber
-NumberFieldDiscriminant
-NumberFieldFundamentalUnits
-NumberFieldIntegralBasis
-NumberFieldNormRepresentatives
-NumberFieldRegulator
-NumberFieldRootsOfUnity
-NumberFieldSignature
 NumberForm
-NumberFormat
-NumberMarks
-NumberMultiplier
-NumberPadding
-NumberPoint
 NumberQ
-NumberSeparator
-NumberSigns
-NumberString
 NumericFunction
 NumericQ
 NValues
@@ -1696,7 +1572,6 @@ ParentDirectory
 ParentForm
 Parenthesize
 ParetoDistribution
-Part
 PartialD
 ParticleData
 PartitionsP
@@ -1774,7 +1649,6 @@ PopupMenuBox
 PopupMenuBoxOptions
 PopupView
 PopupWindow
-Position
 Positive
 PositiveDefiniteMatrixQ
 PossibleZeroQ
@@ -1796,20 +1670,12 @@ PreemptProtect
 PreferencesPath
 Prefix
 PreIncrement
-Prepend
 PrependTo
 PresentValue
 PresentValueList
 PreserveImageOptions
 Previous
 PrimaryPlaceholder
-Prime
-PrimeNu
-PrimeOmega
-PrimePi
-PrimePowerQ
-Primes
-PrimeZetaP
 PrimitiveRoot
 PrincipalValue
 Print
@@ -1873,7 +1739,6 @@ Random
 RandomChoice
 RandomComplex
 RandomInteger
-RandomPrime
 RandomReal
 RandomSeed
 Range
@@ -1903,7 +1768,6 @@ RealBlockDiagonalForm
 RealDigits
 RealExponent
 Reals
-Reap
 Record
 RecordLists
 RecordSeparators
@@ -1947,7 +1811,6 @@ RescalingTransform
 ResetDirectory
 ResetMenusPacket
 Resolve
-Rest
 Resultant
 ResumePacket
 Return
@@ -1961,9 +1824,7 @@ ReverseUpEquilibrium
 RevolutionAxis
 RevolutionPlot3D
 RGBColor
-RiemannR
 RiemannSiegelTheta
-RiemannSiegelZ
 RogersTanimotoDissimilarity
 Root
 RootApproximant
@@ -2133,7 +1994,6 @@ Sound
 SoundAndGraphics
 SoundNote
 SoundVolume
-Sow
 Space
 SpaceForm
 Spacer
@@ -2500,5 +2360,4 @@ YuleDissimilarity
 ZernikeR
 ZeroTest
 ZeroWidthTimes
-ZetaZero
 ZTransform
