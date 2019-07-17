@@ -198,7 +198,7 @@ class IntegerNum : NumberExpr {
 
     operator fun inc(): IntegerNum = IntegerNum(intVal.inc())
     operator fun dec(): IntegerNum = IntegerNum(intVal.minus(BigInteger.ONE))
-    operator fun mod(N: IntegerNum): IntegerNum = IntegerNum(intVal.mod(N.intVal))
+    operator fun rem(N: IntegerNum): IntegerNum = IntegerNum(intVal.mod(N.intVal))
 
     override fun compareTo(other: NumberExpr): Int {
         if (other.isInteger) {

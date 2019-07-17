@@ -24,7 +24,7 @@ class Factor(vararg e: Expr) : FunctionExpr(Function.FACTOR, *e) {
 
             while (max <= num) {
 
-                val mod = num.mod(test)
+                val mod = num.rem(test)
                 if (mod.isZero) {
                     list.add(test)
                     num = (num / test).asInteger()

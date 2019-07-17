@@ -13,7 +13,7 @@ class Mod(vararg e: Expr) : FunctionExpr(Function.MOD, *e) {
         val a = get(0).asInteger()
         val b = get(1).asInteger()
 
-        return a.mod(b)
+        return a.rem(b)
     }
 
     override fun validate() {
