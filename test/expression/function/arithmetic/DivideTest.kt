@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
+import org.cerion.symcalc.assertEqual
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.IntegerNum
@@ -15,7 +16,7 @@ class DivideTest {
         assertEquals("5/3", e.eval().toString())
 
         e = N(e).eval()
-        assertEquals("1.6666666666666667", e.toString())
+        assertEqual(1.6666666666666667, e)
 
         e = Divide(IntegerNum(10), IntegerNum(6))
         e = N(e).eval()
