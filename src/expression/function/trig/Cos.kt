@@ -4,14 +4,12 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealNum
+import kotlin.math.cos
 
-class Tan(e: Expr) : TrigBase(Function.TAN, e) {
+class Cos(vararg e: Expr) : TrigBase(Function.COS, *e) {
 
-    override fun evaluate(num: NumberExpr?): Expr {
-        if (num != null && !num.isComplex) {
-            return RealNum.create(Math.tan(num.toDouble()))
-        }
+    override fun evaluate(num: NumberExpr): Expr {
+        return if (!num.isComplex) RealNum.create(cos(num.toDouble())) else this
 
-        return this
     }
 }
