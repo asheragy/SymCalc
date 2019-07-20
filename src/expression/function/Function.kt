@@ -38,6 +38,7 @@ enum class Function constructor(val value: String) {
     DOT("Dot"),
     IDENTITY_MATRIX("IdentityMatrix"),
     TALLY("Tally"),
+    CONSTANT_ARRAY("ConstantArray"),
 
     //IntegerNum
     FACTORIAL("Factorial"),

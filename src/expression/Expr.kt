@@ -241,15 +241,6 @@ abstract class Expr {
         return false
     }
 
-    //TODO, may be an actual function that does this
-    fun toList(size: Int): ListExpr {
-        val result = ListExpr()
-        for (i in 0 until size)
-            result.add(this)
-
-        return result
-    }
-
     companion object {
         @JvmStatic
         fun parse(s: String): Expr {

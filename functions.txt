@@ -13,7 +13,7 @@ And Or Not Nand Nor Xor Implies Equivalent Equal Unequal
 List:
 ArrayFlatten Flatten FlattenAt Partition Join Sequence Sort SortBy Reverse RotateLeft RotateRight Transpose
 ArrayPad Riffle PadLeft PadRight Intersection Complement Split SplitBy Gather GatherBy Union Tally DeleteDuplicates Tuples Subsets Permutations RandomSample AppendTo
-Accumulate
+Accumulate ConstantArray
 
 Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN
 Spheroidal: SpheroidalPS SpheroidalPSPrime SpheroidalQS SpheroidalQSPrime SpheroidalS1 SpheroidalS1Prime SpheroidalS2 SpheroidalS2Prime SpheroidalRadialFactor SpheroidalEigenvalue SpheroidalJoiningFactor
@@ -327,7 +327,6 @@ ConsoleMessage
 ConsoleMessagePacket
 ConsolePrint
 Constant
-ConstantArray
 Constants
 ConstrainedMax
 ConstrainedMin
