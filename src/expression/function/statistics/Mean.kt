@@ -13,8 +13,8 @@ class Mean(vararg e: Expr) : FunctionExpr(Function.MEAN, *e) {
     override fun evaluate(): Expr {
 
         val list = get(0) as ListExpr
-        var result: Expr = Plus(*list.args())
-        result = Divide(result, IntegerNum(list.size()))
+        var result: Expr = Plus(*list.args.toTypedArray())
+        result = Divide(result, IntegerNum(list.size))
 
         return result.eval()
     }

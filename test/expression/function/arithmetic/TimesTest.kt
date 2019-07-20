@@ -30,6 +30,6 @@ class TimesTest {
 
         val e = outer.eval()
         assertTrue(e.isFunction("times"))
-        assertEquals(3, e.size().toLong())
+        assertEquals(3, e.size.toLong())
     }
 }

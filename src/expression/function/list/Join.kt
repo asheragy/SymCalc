@@ -11,7 +11,7 @@ class Join(vararg e: Expr) : FunctionExpr(Function.JOIN, *e) {
     override fun evaluate(): Expr {
         val result = ListExpr()
 
-        for (i in 0 until size()) {
+        for (i in 0 until size) {
             val e = get(i) as ListExpr
             result.addAll(e.all)
         }
@@ -21,7 +21,7 @@ class Join(vararg e: Expr) : FunctionExpr(Function.JOIN, *e) {
 
     @Throws(ValidationException::class)
     override fun validate() {
-        for (i in 0 until size())
-            validateParameterType(i, Expr.ExprType.LIST)
+        for (i in 0 until size)
+            validateParameterType(i, ExprType.LIST)
     }
 }

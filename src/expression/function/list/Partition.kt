@@ -15,12 +15,12 @@ class Partition(vararg e: Expr) : FunctionExpr(Function.PARTITION, *e) {
         val n = (get(1) as IntegerNum).intValue()
         val result = ListExpr()
 
-        for (i in 0 until input.size() / n) {
+        for (i in 0 until input.size / n) {
             val sublist = ListExpr()
 
             for (j in 0 until n) {
                 val pos = i * n + j
-                if (pos >= input.size())
+                if (pos >= input.size)
                     break
 
                 sublist.add(input[pos])

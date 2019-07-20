@@ -21,7 +21,7 @@ class NumericQ(vararg e: Expr) : FunctionExpr(Function.NUMERICQ, *e) {
             val func = test as FunctionExpr
             if (func.isNumeric) {
 
-                for (i in 0 until func.size()) {
+                for (i in 0 until func.size) {
                     val isNumeric = NumericQ(func[i]).eval() as BoolExpr
                     if (isNumeric === BoolExpr.FALSE)
                         return BoolExpr.FALSE

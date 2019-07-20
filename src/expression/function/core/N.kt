@@ -8,8 +8,8 @@ import org.cerion.symcalc.expression.number.IntegerNum
 class N(vararg e: Expr) : FunctionExpr(Function.N, *e) {
 
     override fun evaluate(): Expr {
-        if (size() > 0) {
-            if (size() > 1 && get(1).isInteger) {
+        if (size > 0) {
+            if (size > 1 && get(1).isInteger) {
                 val n = get(1) as IntegerNum
                 env.setNumericalEval(true, n.intValue())
             } else

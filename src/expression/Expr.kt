@@ -20,8 +20,8 @@ abstract class Expr {
         private set
 
     private var mArgs: MutableList<Expr>? = null
-    private val args: List<Expr>?
-        get() = mArgs
+    val args: List<Expr>
+        get() = if(mArgs != null) mArgs!! else emptyList()
 
     protected fun getEnvVar(name: String): Expr? = env.getVar(name)
     protected fun setEnvVar(name: String, e: Expr) = env.setVar(name, e)
@@ -30,7 +30,7 @@ abstract class Expr {
         get() {
             if (!hasProperty(Properties.HOLD) && !env.skipEval) {
                 val args = ArrayList<Expr>()
-                for (i in 0 until size())
+                for (i in 0 until size)
                     args.add(get(i).eval())
 
                 return args
@@ -44,29 +44,16 @@ abstract class Expr {
     protected open val properties: Int
         get() = Properties.NONE.value
 
-    val isNumber: Boolean
-        get() = type == ExprType.NUMBER
+    val size get() = if (mArgs != null) mArgs!!.size else 0
 
-    open val isInteger: Boolean
-        get() = isNumber && asInteger().isInteger
-
-    val isList: Boolean
-        get() = type == ExprType.LIST
-
-    val isFunction: Boolean
-        get() = type == ExprType.FUNCTION
-
-    val isError: Boolean
-        get() = type == ExprType.ERROR
-
-    val isVariable: Boolean
-        get() = type == ExprType.VARIABLE
-
-    val isBool: Boolean
-        get() = type == ExprType.BOOL
-
-    val isConst: Boolean
-        get() = type == ExprType.CONST
+    val isNumber: Boolean get() = type == ExprType.NUMBER
+    open val isInteger: Boolean get() = isNumber && asInteger().isInteger
+    val isList: Boolean get() = type == ExprType.LIST
+    val isFunction: Boolean get() = type == ExprType.FUNCTION
+    val isError: Boolean get() = type == ExprType.ERROR
+    val isVariable: Boolean get() = type == ExprType.VARIABLE
+    val isBool: Boolean get() = type == ExprType.BOOL
+    val isConst: Boolean get() = type == ExprType.CONST
 
     protected fun setArgs(vararg args: Expr) {
         if (mArgs == null)
@@ -77,20 +64,15 @@ abstract class Expr {
         }
     }
 
-    fun args(): Array<Expr> {
-        return mArgs!!.toTypedArray()
-    }
-
     // Indexes
     operator fun get(index: Int): Expr {
         return if (!hasProperty(Properties.HOLD) && !env.skipEval) {
-            mArgs!![index].eval()
-        } else mArgs!![index]
+            args[index].eval()
+        } else args[index]
 
     }
 
-    operator fun get(index: Int, eval: Boolean): Expr = if (eval) mArgs!![index].eval() else mArgs!![index]
-
+    operator fun get(index: Int, eval: Boolean): Expr = if (eval) args[index].eval() else args[index]
     operator fun set(index: Int, e: Expr) {
         mArgs!![index] = e
     }
@@ -117,13 +99,11 @@ abstract class Expr {
     }
 
     protected fun addArg(e: Expr) {
-        setArg(size(), e)
+        setArg(size, e)
     }
 
-    fun size(): Int = if (mArgs != null) mArgs!!.size else 0
-
     protected fun argString(): String {
-        return mArgs!!.toString()
+        return args.toString()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -146,12 +126,12 @@ abstract class Expr {
         // Associative function, if the same function is a parameter move its parameters to the top level
         if (hasProperty(Properties.ASSOCIATIVE)) {
             var i = 0
-            while (i < size()) {
+            while (i < size) {
                 if (get(i).javaClass == javaClass) {
                     // insert these sub parameters at the same position it was removed
                     val t = mArgs!![i]
                     mArgs!!.removeAt(i)
-                    mArgs!!.addAll(i, t.args!!)
+                    mArgs!!.addAll(i, t.args)
                     i--
                 }
                 i++
@@ -170,7 +150,7 @@ abstract class Expr {
         }
 
         // Set environment for every parameter to the current one before its evaluated
-        for (i in 0 until size()) {
+        for (i in 0 until size) {
             mArgs!![i].env = env
         }
 
@@ -191,11 +171,11 @@ abstract class Expr {
         // Listable property
         if (hasProperty(Properties.LISTABLE) && isFunction) {
             val function = this as FunctionExpr
-            if (size() == 1 && get(0).isList) {
+            if (size == 1 && get(0).isList) {
                 val p1 = get(0) as ListExpr
                 val result = ListExpr()
 
-                for (i in 0 until p1.size())
+                for (i in 0 until p1.size)
                     result.add(FunctionExpr.createFunction(function.name, p1[i]))
 
                 return result.eval()

@@ -18,7 +18,7 @@ class Fourier(vararg e: Expr) : FunctionExpr(Function.FOURIER, *e) {
     }
 
     private fun recursiveFFT(list: ListExpr): ListExpr {
-        val N = list.size()
+        val N = list.size
         if (N == 1)
             return list
 
@@ -50,7 +50,7 @@ class Fourier(vararg e: Expr) : FunctionExpr(Function.FOURIER, *e) {
         println("y0 = " + y0.toString())
         println("y1 = " + y1.toString())
 
-        for (k in 0 until y0.size()) {
+        for (k in 0 until y0.size) {
             val num1 = y0[k] as NumberExpr
             val num2 = w * (y1[k] as NumberExpr)
             result.add(num1 + num2)
@@ -63,9 +63,9 @@ class Fourier(vararg e: Expr) : FunctionExpr(Function.FOURIER, *e) {
 
         //Fix order
         val temp = ListExpr()
-        for (i in 0 until y0.size()) {
+        for (i in 0 until y0.size) {
             temp.add(result[i])
-            temp.add(result[i + y0.size()])
+            temp.add(result[i + y0.size])
         }
         result = temp
 

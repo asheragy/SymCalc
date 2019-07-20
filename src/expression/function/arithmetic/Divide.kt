@@ -20,7 +20,7 @@ class Divide(vararg e: Expr) : FunctionExpr(Function.DIVIDE, *e) {
         return this
     }
 
-    override fun toString(): String = if (size() == 2) get(0).toString() + " / " + get(1) else super.toString()
+    override fun toString(): String = if (size == 2) get(0).toString() + " / " + get(1) else super.toString()
 
     override fun validate() {
         validateParameterCount(2)

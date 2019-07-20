@@ -17,8 +17,8 @@ class Select(vararg e: Expr) : FunctionExpr(Function.SELECT, e[0]) {
         val list = get(0) as ListExpr
         val result = ListExpr()
 
-        for (i in 0 until list.size()) {
-            var e: Expr? = FunctionExpr.createFunction(mFunctionName, list[i])
+        for (i in 0 until list.size) {
+            var e: Expr? = createFunction(mFunctionName, list[i])
             e = e!!.eval()
 
             if (e.equals(BoolExpr.TRUE)) {

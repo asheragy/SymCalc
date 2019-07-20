@@ -12,7 +12,7 @@ class Flatten(vararg e: Expr) : FunctionExpr(Function.FLATTEN, *e) {
         val l = get(0) as ListExpr
         val result = ListExpr()
 
-        for (i in 0 until l.size()) {
+        for (i in 0 until l.size) {
             val e = l[i]
 
             if (e.isList) {

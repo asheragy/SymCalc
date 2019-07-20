@@ -21,9 +21,9 @@ class Subtract(vararg e: Expr) : FunctionExpr(Function.SUBTRACT, *e) {
 
         if (a.isList || b.isList) {
             if (a.isList && b.isList) {
-                if (a.size() == b.size()) {
+                if (a.size == b.size) {
                     val result = ListExpr()
-                    for (i in 0 until a.size()) {
+                    for (i in 0 until a.size) {
                         var e: Expr = Subtract(a[i], b[i])
                         e = e.eval()
                         result.add(e)
@@ -34,16 +34,16 @@ class Subtract(vararg e: Expr) : FunctionExpr(Function.SUBTRACT, *e) {
 
                 return ErrorExpr("list sizes not equal")
             } else return if (a.isList)
-                Subtract(a, b.toList(a.size())).eval()
+                Subtract(a, b.toList(a.size)).eval()
             else
-                Subtract(a.toList(b.size()), b).eval()
+                Subtract(a.toList(b.size), b).eval()
         }
 
         return this
     }
 
     override fun toString(): String {
-        if (size() == 2) {
+        if (size == 2) {
             val e2 = get(1)
             return get(0).toString() + " - " + if (e2.isFunction("subtract")) "($e2)" else e2
         }

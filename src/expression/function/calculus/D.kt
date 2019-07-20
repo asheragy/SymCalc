@@ -36,13 +36,13 @@ class D(vararg e: Expr) : FunctionExpr(Function.D, *e) {
                 Function.PLUS -> {
                     // TODO use map function here, or similar
                     result = Plus()
-                    for (ee in func.args())
+                    for (ee in func.args)
                         result.add(D(ee, `var`))
                 }
 
                 Function.SUBTRACT -> {
                     result = Subtract()
-                    for (ee in func.args())
+                    for (ee in func.args)
                         result.add(D(ee, `var`))
                 }
 

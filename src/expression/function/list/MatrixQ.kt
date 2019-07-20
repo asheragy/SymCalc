@@ -13,7 +13,7 @@ class MatrixQ(vararg e: Expr) : FunctionExpr(Function.MATRIXQ, *e) {
 
         var size = -1
         val list = getList(0)
-        for (i in 0 until list.size()) {
+        for (i in 0 until list.size) {
             // Every sublist must be a vector of the same length
             if (!list[i].isList)
                 return BoolExpr.FALSE
@@ -23,10 +23,10 @@ class MatrixQ(vararg e: Expr) : FunctionExpr(Function.MATRIXQ, *e) {
                 return BoolExpr.FALSE
 
             if (size > 0) {
-                if (sublist.size() != size)
+                if (sublist.size != size)
                     return BoolExpr.FALSE
             } else
-                size = sublist.size()
+                size = sublist.size
         }
 
         return BoolExpr.TRUE

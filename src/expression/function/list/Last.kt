@@ -9,7 +9,7 @@ class Last(vararg e: Expr) : FunctionExpr(Function.LAST, *e) {
     override fun evaluate(): Expr {
         if (get(0).isList) {
             val l = get(0).asList()
-            return l[l.size() - 1]
+            return l[l.size - 1]
         }
 
         return this

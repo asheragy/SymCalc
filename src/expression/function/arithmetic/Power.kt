@@ -28,7 +28,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
     }
 
     override fun toString(): String {
-        return if (size() == 2) get(0).toString() + "^" + get(1) else super.toString()
+        return if (size == 2) get(0).toString() + "^" + get(1) else super.toString()
     }
 
     @Throws(ValidationException::class)

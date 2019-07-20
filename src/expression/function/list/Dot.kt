@@ -19,7 +19,7 @@ class Dot(vararg e: Expr) : FunctionExpr(Function.DOT, *e) {
 
     private fun evalVector(a: ListExpr, b: ListExpr): Expr {
         val sum = Plus()
-        for (i in 0 until a.size())
+        for (i in 0 until a.size)
             sum += Times(a[i],b[i])
 
         return sum.eval()
@@ -28,14 +28,14 @@ class Dot(vararg e: Expr) : FunctionExpr(Function.DOT, *e) {
     private fun evalMatrix(a: ListExpr, b: ListExpr): Expr {
         val result = ListExpr()
 
-        for (i in 0 until a.size()) {
+        for (i in 0 until a.size) {
             val ax = a.getList(i)
             val sublist = ListExpr()
 
-            for (j in 0 until a.size()) {
+            for (j in 0 until a.size) {
                 val sum = Plus()
 
-                for (k in 0 until ax.size())
+                for (k in 0 until ax.size)
                     sum += Times(ax[k],b[k][j])
 
                 sublist += sum.eval()
@@ -50,20 +50,20 @@ class Dot(vararg e: Expr) : FunctionExpr(Function.DOT, *e) {
     @Throws(ValidationException::class)
     override fun validate() {
         validateParameterCount(2)
-        validateParameterType(0, Expr.ExprType.LIST)
-        validateParameterType(1, Expr.ExprType.LIST)
+        validateParameterType(0, ExprType.LIST)
+        validateParameterType(1, ExprType.LIST)
 
         val a = getList(0)
         val b = getList(1)
 
         if (VectorQ(a).eval().asBool().value() && VectorQ(b).eval().asBool().value()) {
-            if (a.size() != b.size())
+            if (a.size != b.size)
                 throw ValidationException("Vectors must be same length")
         } else if (MatrixQ(a).eval().asBool().value() && MatrixQ(b).eval().asBool().value()) {
             val ax = a.getList(0)
             val bx = b.getList(0)
 
-            if (a.size() != bx.size() || b.size() != ax.size())
+            if (a.size != bx.size || b.size != ax.size)
                 throw ValidationException("Incompatible matrix sizes")
         } else {
             throw ValidationException("Arrays must be the same rank")

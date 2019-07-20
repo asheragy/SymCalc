@@ -12,7 +12,7 @@ class Reverse(vararg e: Expr) : FunctionExpr(Function.REVERSE, *e) {
             val list = get(0).asList()
             val result = ListExpr()
 
-            for (i in list.size() downTo 1)
+            for (i in list.size downTo 1)
                 result.add(list[i - 1])
 
             return result

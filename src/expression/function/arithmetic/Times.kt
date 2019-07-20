@@ -18,7 +18,7 @@ class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
         var product: NumberExpr = IntegerNum.ONE
         val list = ArrayList<Expr>()
 
-        for (i in 0 until size())
+        for (i in 0 until size)
             list += get(i)
 
         //Multiply numbers
@@ -47,9 +47,9 @@ class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
     }
 
     override fun toString(): String {
-        if (size() > 0) {
+        if (size > 0) {
             var s = get(0).toString()
-            for (i in 1 until size())
+            for (i in 1 until size)
                 s += " * " + get(i).toString()
 
             return s

@@ -8,6 +8,6 @@ class CompoundExpression(vararg e: Expr) : FunctionExpr(Function.COMPOUND_EXPRES
 
     override fun evaluate(): Expr {
         all // eval all
-        return get(size() - 1)
+        return get(size - 1)
     }
 }

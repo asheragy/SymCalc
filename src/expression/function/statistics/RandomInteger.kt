@@ -13,7 +13,7 @@ class RandomInteger(vararg e: Expr) : FunctionExpr(Function.RANDOM_INTEGER, *e) 
 
     override fun evaluate(): Expr {
 
-        if (size() == 0) { //Default no parameters is random 0 or 1
+        if (size == 0) { //Default no parameters is random 0 or 1
             return IntegerNum(getRandomInteger(0, 1))
         } else if (get(0).isInteger) {
             val N = (get(0) as IntegerNum).intValue()

@@ -131,10 +131,10 @@ class TableTest {
         var e: Expr = Table(r, params)
 
         e = e.eval()
-        assertEquals(20, e.size().toLong())
+        assertEquals(20, e.size.toLong())
         assertTrue(e[0].isInteger)
         var sum = IntegerNum.ZERO
-        for (i in 0 until e.size())
+        for (i in 0 until e.size)
             sum = sum.plus(e[i] as IntegerNum)
 
         //Result should be list of 0s and 1s, verify there is at least a few of each

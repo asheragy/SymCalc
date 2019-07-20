@@ -18,7 +18,7 @@ class HoldTest {
         e = e.eval()
 
         assertTrue(e.isFunction("hold"))
-        assertEquals(1, e.size().toLong())
+        assertEquals(1, e.size.toLong())
         assertTrue(e[0].isFunction("plus"))
     }
 

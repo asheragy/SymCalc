@@ -45,7 +45,7 @@ class RandomChoiceTest {
 
         assertTrue(e.isList)
         val list = e as ListExpr
-        assertEquals(100, list.size().toLong())
+        assertEquals(100, list.size.toLong())
 
         val found = booleanArrayOf(false, false, false)
         for (i in 0..99) {

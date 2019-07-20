@@ -31,8 +31,8 @@ class ListExpr : Expr {
     override fun equals(e: Expr): Boolean {
         if (e.isList) {
             val list = e.asList()
-            if (list.size() == size()) {
-                for (i in 0 until list.size()) {
+            if (list.size == size) {
+                for (i in 0 until list.size) {
                     if (!list[i].equals(get(i)))
                         return false
                 }
@@ -47,14 +47,14 @@ class ListExpr : Expr {
     override fun evaluate(): ListExpr = this
 
     override fun treeForm(i: Int) {
-        indent(i, "List: " + size())
-        for (j in 0 until size())
+        indent(i, "List: " + size)
+        for (j in 0 until size)
             get(j).treeForm(i + 1)
     }
 
     override fun toString(): String {
         var ret = "{"
-        for (i in 0 until size()) {
+        for (i in 0 until size) {
             if (i > 0) ret += "," //dont add comma on first element
             //Eval before printing
             ret += get(i).toString()

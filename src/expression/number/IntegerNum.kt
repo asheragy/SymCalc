@@ -145,7 +145,7 @@ class IntegerNum : NumberExpr {
 
                         run {
                             var i = 0
-                            while (i < factors.size()) {
+                            while (i < factors.size) {
                                 val key = factors[i][0].asInteger()
                                 val v = factors[i][1].asInteger()
 
@@ -164,7 +164,7 @@ class IntegerNum : NumberExpr {
                         // Factor out multiples
                         //Expr result = new Power(this, num);
                         var root = IntegerNum.ONE
-                        for (i in 0 until factors.size()) {
+                        for (i in 0 until factors.size) {
                             root = Times(root, factors[i][0], factors[i][1]).eval().asInteger()
                         }
 

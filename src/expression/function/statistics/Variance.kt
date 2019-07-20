@@ -19,14 +19,14 @@ class Variance(vararg e: Expr) : FunctionExpr(Function.VARIANCE, *e) {
 
         val sum = Plus()
 
-        for (i in 0 until list.size()) {
+        for (i in 0 until list.size) {
             val e = list[i]
             val diff = Subtract(e, mean).eval() // TODO may be another function for (a - b)^2
             val square = Times(diff, diff).eval()
             sum.add(square)
         }
 
-        val result = Divide(sum, IntegerNum(list.size() - 1))
+        val result = Divide(sum, IntegerNum(list.size - 1))
 
         return result.eval()
     }

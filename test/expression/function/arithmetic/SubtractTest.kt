@@ -74,7 +74,7 @@ class SubtractTest {
         assertTrue(e.isList)
 
         var l = e as ListExpr
-        assertEquals(5, l.size().toLong())
+        assertEquals(5, l.size.toLong())
 
         for (n in 0..4)
             assertEquals(7, (l[n] as IntegerNum).intValue().toLong())
@@ -83,7 +83,7 @@ class SubtractTest {
         e = get(i, a)
 
         l = e as ListExpr
-        assertEquals(5, l.size().toLong())
+        assertEquals(5, l.size.toLong())
 
         for (n in 0..4)
             assertEquals(-7, (l[n] as IntegerNum).intValue().toLong())

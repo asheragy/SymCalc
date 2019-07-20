@@ -38,7 +38,7 @@ class FlattenTest {
         assertTrue(actual.isList)
         val l = actual as ListExpr
 
-        assertEquals(expected.size().toLong(), l.size().toLong())
+        assertEquals(expected.size.toLong(), l.size.toLong())
         assertEquals(expected, actual)
     }
 

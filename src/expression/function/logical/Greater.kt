@@ -26,7 +26,7 @@ class Greater(vararg e: Expr) : FunctionExpr(Function.GREATER, *e) {
                     if (i == 0) { //First
                         args.removeAt(0)
                         i--
-                    } else if (i == size() - 2) { //Last
+                    } else if (i == size - 2) { //Last
                         args.removeAt(i + 1)
                     } else {
                         //If the next is also true, we can remove current
@@ -41,14 +41,14 @@ class Greater(vararg e: Expr) : FunctionExpr(Function.GREATER, *e) {
         }
 
         // If elements were removed evaluate new instance
-        if (args!!.size < size())
+        if (args!!.size < size)
             return Greater(*args.toTypedArray()).eval()
 
-        if (size() == 1)
+        if (size == 1)
             return BoolExpr.TRUE
         else {
 
-            for (i in 0 until size() - 1) {
+            for (i in 0 until size - 1) {
                 val comp = compare(get(i), get(i + 1))
                 if (comp === LogicalCompare.ERROR)
                     return ErrorExpr("invalid comparison")

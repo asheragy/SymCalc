@@ -30,7 +30,7 @@ class PlusTest {
 
         val e = outer.eval()
         assertTrue(e.isFunction("plus"))
-        assertEquals(3, e.size().toLong())
+        assertEquals(3, e.size.toLong())
     }
 
     @Test

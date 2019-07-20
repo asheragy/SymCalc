@@ -25,7 +25,7 @@ abstract class FunctionExpr protected constructor(val function: Function, vararg
 
     override fun treeForm(i: Int) {
         indent(i, "$name[]")
-        for (j in 0 until size())
+        for (j in 0 until size)
             get(j).treeForm(i + 1)
     }
 
@@ -42,10 +42,10 @@ abstract class FunctionExpr protected constructor(val function: Function, vararg
         if (f.function != function)
             return false
 
-        if (f.size() != size())
+        if (f.size != size)
             return false
 
-        for (i in 0 until size()) {
+        for (i in 0 until size) {
             if (!get(i).equals(f[i]))
                 return false
         }
@@ -59,16 +59,16 @@ abstract class FunctionExpr protected constructor(val function: Function, vararg
 
     @Throws(ValidationException::class)
     protected fun validateParameterType(position: Int, type: ExprType) {
-        if (size() < position+1)
+        if (size < position+1)
             validateParameterCount(position+1)
 
-        if (size() < position || get(position).type != type)
+        if (size < position || get(position).type != type)
             throw ValidationException(String.format("parameter %d must be type %s", position, type))
     }
 
     @Throws(ValidationException::class)
     protected fun validateNumberType(position: Int, numberType: NumberType) {
-        if (size() < position+1)
+        if (size < position+1)
             validateParameterCount(position+1)
 
         val e = get(position) as NumberExpr
@@ -78,10 +78,10 @@ abstract class FunctionExpr protected constructor(val function: Function, vararg
 
     @Throws(ValidationException::class)
     protected fun validateParameterCount(expected: Int) {
-        if (size() == expected)
+        if (size == expected)
             return
 
-        val error = String.format("%d parameters, expected %d", size(), expected)
+        val error = String.format("%d parameters, expected %d", size, expected)
         throw ValidationException(error)
     }
 

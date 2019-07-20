@@ -19,7 +19,7 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
         val list = ArrayList<Expr>()
 
         //list.addAll(getArgs());
-        for (i in 0 until size())
+        for (i in 0 until size)
             list.add(get(i))
 
         val it = list.iterator()
@@ -48,9 +48,9 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
     operator fun plusAssign(e: Expr) = add(e)
 
     override fun toString(): String {
-        if (size() > 0) {
+        if (size > 0) {
             var s = get(0).toString()
-            for (i in 1 until size())
+            for (i in 1 until size)
                 s += " + " + get(i).toString()
 
             return s
