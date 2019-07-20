@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.Expr
+import java.lang.Exception
 
 enum class NumberType {
     INTEGER,
@@ -72,6 +73,15 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
 
             return if (s.indexOf('.') > 0) RealNum.create(s) else IntegerNum(s)
 
+        }
+
+        @JvmStatic fun create(n: Number) : NumberExpr {
+            if (n is Double)
+                return RealNum.create(n)
+            else if (n is Int)
+                return IntegerNum(n)
+
+            throw Exception()
         }
     }
 }

@@ -143,7 +143,11 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
                 val rResult = RealNum.create(this.toDouble())
                 return rResult.power(other)
             }
-            NumberType.RATIONAL -> TODO()
+            NumberType.RATIONAL -> {
+                // If both sides are reduced there may be nothing to do here...
+                return this
+            }
+
             NumberType.COMPLEX -> TODO()
         }
     }

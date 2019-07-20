@@ -1,6 +1,8 @@
 package org.cerion.symcalc
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.expression.number.NumberExpr
 import org.junit.Assert.*
 
 
@@ -11,3 +13,12 @@ fun assertEqual(expected: Double, actual: Expr) {
 fun assertEqual(expected: Int, actual: Expr) {
     assertEquals(expected, actual.asInteger().intValue())
 }
+
+fun listOfNumbers(vararg numbers: Number) : ListExpr {
+    val list = ListExpr()
+    for (number in numbers)
+        list.add(NumberExpr.create(number))
+
+    return list
+}
+

@@ -26,8 +26,7 @@ class Variance(vararg e: Expr) : FunctionExpr(Function.VARIANCE, *e) {
             sum.add(square)
         }
 
-        // TODO, divide by N or N-1, both seem to be used
-        val result = Divide(sum, IntegerNum(list.size()))
+        val result = Divide(sum, IntegerNum(list.size() - 1))
 
         return result.eval()
     }

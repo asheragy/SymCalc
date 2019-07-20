@@ -2,6 +2,7 @@ package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.Environment
 import java.math.BigDecimal
+import java.math.MathContext
 import java.math.RoundingMode
 
 class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
@@ -188,21 +189,21 @@ class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
     }
 
     override fun power(other: NumberExpr): NumberExpr {
-        throw NotImplementedError()
-        /*
-        RealNum result = new RealNum();
-        switch (num.numType())
+
+        // Special case square root
+        if(other.isRational && other.equals(RationalNum(1,2)))
+            return RealNum_BigDecimal(bigNumber.sqrt(MathContext.DECIMAL32))
+
+        when (other.numType)
         {
-            case INTEGER: //RealNum ^ IntegerNum
-            case RATIONAL: //RealNum ^ RationalNum
-            case REAL: //RealNum ^ RealNum
-            {
-                result.dNumber = Math.pow( dNumber, num.toDouble());
-                return result;
+            NumberType.INTEGER -> {
+                val number = bigNumber.pow(other.asInteger().intValue())
+                return RealNum_BigDecimal(number)
             }
+            //case RATIONAL: //RealNum ^ RationalNum
+
         }
 
-        return null;
-        */
+        throw NotImplementedError()
     }
 }
