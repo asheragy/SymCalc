@@ -60,6 +60,7 @@ enum class Function constructor(val value: String) {
     D("D"),
 
     //Logical
+    EQUAL("Equal"),
     GREATER("Greater"),
 
     //Statistics

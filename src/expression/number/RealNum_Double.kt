@@ -19,7 +19,20 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
     override fun toString(): String = "" + dNumber
 
     override fun compareTo(other: NumberExpr): Int {
-        return toDouble().compareTo(other.toDouble())
+        when(other.numType) {
+            NumberType.INTEGER,
+            NumberType.RATIONAL,
+            NumberType.REAL ->
+                return toDouble().compareTo(other.toDouble())
+
+            NumberType.COMPLEX -> {
+                val complex = other.asComplex()
+                if (complex.img.isZero)
+                    return this.compareTo(complex.real)
+
+                TODO()
+            }
+        }
     }
 
     /*
@@ -130,14 +143,18 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
         when (other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL,
-            NumberType.REAL
-            -> {
+            NumberType.REAL -> {
                 result.dNumber = Math.pow(dNumber, other.toDouble())
                 return result
             }
-            else -> {
-                throw NotImplementedError()
+            NumberType.COMPLEX -> {
+                val complex = other.asComplex()
+                if (complex.img.isZero)
+                    return this.power(complex.real)
+
+                TODO()
             }
+
         }
     }
 

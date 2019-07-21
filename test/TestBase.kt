@@ -14,6 +14,14 @@ fun assertEqual(expected: Int, actual: Expr) {
     assertEquals(expected, actual.asInteger().intValue())
 }
 
+fun assertTrue(expected: Expr) {
+    assertTrue(expected.asBool().value())
+}
+
+fun assertFalse(expected: Expr) {
+    assertFalse(expected.asBool().value())
+}
+
 fun listOfNumbers(vararg numbers: Number) : ListExpr {
     val list = ListExpr()
     for (number in numbers)

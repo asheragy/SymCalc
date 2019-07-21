@@ -148,7 +148,13 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
                 return this
             }
 
-            NumberType.COMPLEX -> TODO()
+            NumberType.COMPLEX -> {
+                val complex = other.asComplex()
+                if (complex.img.isZero)
+                    return this.power(complex.real)
+
+                TODO()
+            }
         }
     }
 

@@ -141,7 +141,7 @@ class IntegerNum : NumberExpr {
                         val factors = Tally(t).eval().asList()
                         val denominator = other.asRational().denominator
 
-                        var multiply = IntegerNum.ONE
+                        var multiply = ONE
 
                         run {
                             var i = 0
@@ -151,7 +151,7 @@ class IntegerNum : NumberExpr {
 
                                 // Factor it out
                                 if (v >= denominator) {
-                                    multiply*= key
+                                    multiply *= key
                                     factors[i] = ListExpr(key, v - denominator)
                                 } else
                                     i++
@@ -163,7 +163,7 @@ class IntegerNum : NumberExpr {
 
                         // Factor out multiples
                         //Expr result = new Power(this, num);
-                        var root = IntegerNum.ONE
+                        var root = ONE
                         for (i in 0 until factors.size) {
                             root = Times(root, factors[i][0], factors[i][1]).eval().asInteger()
                         }
@@ -176,10 +176,17 @@ class IntegerNum : NumberExpr {
             }
 
             NumberType.REAL -> {
-            }//result = RealNum.create(this);
-        }
+                val real = RealNum.create(this)
+                return real.power(other)
+            }
+            NumberType.COMPLEX -> {
+                val complex = other.asComplex()
+                if (complex.img.isZero)
+                    return this.power(complex.real)
 
-        throw NotImplementedError()
+                TODO()
+            }
+        }
     }
 
     //IntegerNum Specific Functions
@@ -201,13 +208,26 @@ class IntegerNum : NumberExpr {
     operator fun rem(N: IntegerNum): IntegerNum = IntegerNum(intVal.mod(N.intVal))
 
     override fun compareTo(other: NumberExpr): Int {
-        if (other.isInteger) {
-            val n1 = intVal
-            val n2 = other.asInteger().intVal
-            return n1.compareTo(n2)
-        }
+        when (other.numType) {
+            NumberType.INTEGER -> {
+                val n1 = intVal
+                val n2 = other.asInteger().intVal
+                return n1.compareTo(n2)
+            }
 
-        throw NotImplementedError()
+            NumberType.RATIONAL -> TODO()
+            NumberType.REAL -> {
+                val n1 = RealNum.create(this)
+                return n1.compareTo(other)
+            }
+            NumberType.COMPLEX -> {
+                val complex = other.asComplex()
+                if (complex.img.isZero)
+                    return this.compareTo(complex.real)
+
+                TODO()
+            }
+        }
     }
 
     companion object {

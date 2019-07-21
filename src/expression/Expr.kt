@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression
 
+import expression.function.list.ConstantArray
 import org.cerion.symcalc.Environment
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.function.FunctionExpr
@@ -249,4 +250,7 @@ abstract class Expr {
             return p.e
         }
     }
+
+    // Extensions for convenience
+    fun toList(size: Int): ListExpr = ConstantArray(this, IntegerNum(size)).eval().asList()
 }

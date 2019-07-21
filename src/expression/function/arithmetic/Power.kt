@@ -4,6 +4,7 @@ import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
+import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
 
 class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
@@ -12,14 +13,19 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         val a = get(0)
         val b = get(1)
 
-        //Identity
-        // TODO unit test and move to NumberExpr classes
-        if (b.isNumber && b.asNumber().isOne)
-            return a
-
         if (a.isNumber && b.isNumber) {
             val n1 = a as NumberExpr
             val n2 = b as NumberExpr
+
+            // TODO Zero/Identity is just a shortcut for special case, unit tests should still pass if this is commented out
+
+            // Zero
+            if (n2.isZero)
+                return IntegerNum.ONE
+
+            //Identity
+            if (n2.isOne)
+                return a
 
             return n1.power(n2)
         }

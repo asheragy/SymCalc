@@ -137,48 +137,19 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
     }
 
     override fun power(other: NumberExpr): NumberExpr {
-        val result = ComplexNum()
+        // TODO This fixes the single use case
+        if (other.isOne)
+            return this
+
+        if (other.isZero)
+            return ComplexNum(1, 0)
 
         when (other.numType) {
-            NumberType.INTEGER //ComplexNum ^ IntegerNum
-            -> {
-            }
-        }/*
-			case 1:
-			{
-				result.img = this.img.multiply(num);
-				result.real = this.real.multiply(num);
-				break;
-			}
-			*///case 1: //ComplexNum + RealNum
-        //{
-        //	result.real = this.real.add(num);
-        //	result.img = this.img;
-        //	break;
-        //}
-        /*
-			case 2: //ComplexNum + ComplexNum
-			{
-			    //(a+bi)(c+di) = (ac-bd) + (bc+ad)i
-				Number a = this.real;
-				Number b = this.img;
-				Number c = ((ComplexNum)num).real;
-				Number d = ((ComplexNum)num).img;
-
-				Number temp1 = a.multiply(c);
-				Number temp2 = b.multiply(d);
-				result.real = temp1.subtract(temp2);
-
-				temp1 = b.multiply(c);
-				temp2 = a.multiply(d);
-				result.img = temp1.add(temp2);
-
-				break;
-			}
-			*///default : System.out.println("ComplexNum.multiply() no case"); return getNumber("99.9");
-
-        //System.out.println(this + " * " + num + " = " + result);
-        return result
+            NumberType.INTEGER -> TODO()
+            NumberType.RATIONAL -> TODO()
+            NumberType.REAL -> TODO()
+            NumberType.COMPLEX -> TODO()
+        }
     }
 
     override fun compareTo(other: NumberExpr): Int {
