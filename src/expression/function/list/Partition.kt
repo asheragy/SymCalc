@@ -6,6 +6,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.NumberType
 
 class Partition(vararg e: Expr) : FunctionExpr(Function.PARTITION, *e) {
 
@@ -34,19 +35,9 @@ class Partition(vararg e: Expr) : FunctionExpr(Function.PARTITION, *e) {
 
     @Throws(ValidationException::class)
     override fun validate() {
-        /*
-        // TODO make generic parameter errors so they can be changed if needed
-
-        if(size() < 2) {
-            return new ErrorExpr("missing parameter {2} length");
-        } else if (!get(1).isInteger()) {
-            return new ErrorExpr("parameter {2} must be an integer");
-        } else if (!get(0).isList()) {
-            return new ErrorExpr("parameter {1} must be a list");
-        }
-
-        return null;
-        */
+        validateParameterCount(2)
+        validateParameterType(0, ExprType.LIST)
+        validateNumberType(1, NumberType.INTEGER)
     }
 
 }

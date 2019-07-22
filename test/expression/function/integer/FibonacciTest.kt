@@ -17,5 +17,11 @@ class FibonacciTest {
         assertEquals(IntegerNum(8), Fibonacci(IntegerNum(6)).eval())
 
         assertEquals(IntegerNum(6765), Fibonacci(IntegerNum(20)).eval())
+        assertEquals(IntegerNum(12586269025), Fibonacci(IntegerNum(50)).eval())
+
+        assertEquals("43466557686937456435688527675040625802564660517371780402481729089536555417949051890403879840079255169295922593080322634775209689623239873322471161642996440906533187938298969649928516003704476137795166849228875",
+                Fibonacci(IntegerNum(1000)).eval().toString())
+
+        val test = Fibonacci(IntegerNum(100000)).eval()
     }
 }

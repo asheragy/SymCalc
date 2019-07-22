@@ -10,17 +10,24 @@ import org.cerion.symcalc.expression.number.IntegerNum
 class GCD(vararg e: Expr) : FunctionExpr(Function.GCD, *e) {
 
     override fun evaluate(): Expr {
-        //TODO can take more than 2 integer parameters
         val a = get(0) as IntegerNum
         val b = get(1) as IntegerNum
 
-        return a.gcd(b)
+        val gcd = a.gcd(b)
+
+        if (size == 2)
+            return gcd
+
+        val next = GCD(gcd)
+        for(i in 2 until size)
+            next.add(args[i])
+
+        return next.eval()
     }
 
     @Throws(ValidationException::class)
     override fun validate() {
-        validateParameterCount(0)
-        validateNumberType(0, NumberType.INTEGER)
-        validateNumberType(1, NumberType.INTEGER)
+        for (i in 0 until size)
+            validateNumberType(i, NumberType.INTEGER)
     }
 }

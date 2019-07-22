@@ -17,7 +17,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
             val n1 = a as NumberExpr
             val n2 = b as NumberExpr
 
-            // TODO Zero/Identity is just a shortcut for special case, unit tests should still pass if this is commented out
+            // Zero/Identity is just a shortcut for special case, unit tests should still pass if this is commented out
 
             // Zero
             if (n2.isZero)
