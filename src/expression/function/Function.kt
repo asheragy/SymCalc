@@ -16,6 +16,7 @@ enum class Function constructor(val value: String) {
     DIVIDE("Divide"),
     POWER("Power"),
     SQRT("Sqrt"),
+    LOG("Log"),
 
     // Trig
     SIN("Sin"),

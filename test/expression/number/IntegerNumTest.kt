@@ -6,6 +6,7 @@ import java.math.BigInteger
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
+import java.math.BigDecimal
 
 class IntegerNumTest {
 
@@ -120,6 +121,19 @@ class IntegerNumTest {
         divideByZero(i1, ComplexNum())
 
         //Add more later
+    }
+
+    @Test
+    fun power_realAndComplexConverted() {
+        // Integer is converted to these values and power() is evaluated in those classes, minimal testing needed for this class
+        val three = IntegerNum(3)
+        val real = RealNum.create(3.14)
+        val realBig = RealNum.create(BigDecimal("123.35340583128859694839201928385968473749596868726265"))
+        val complex = ComplexNum(2,3)
+
+        assertEquals(RealNum.create(3.0).power(real), three.power(real))
+        assertEquals(RealNum.create(3.0).power(realBig), three.power(realBig))
+        assertEquals(ComplexNum(3,0).power(complex), three.power(complex))
     }
 
     @Test

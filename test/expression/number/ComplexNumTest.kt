@@ -1,5 +1,7 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.expression.function.arithmetic.Power
+import org.cerion.symcalc.expression.function.core.N
 import org.junit.Test
 
 import org.junit.Assert.assertEquals
@@ -56,6 +58,11 @@ class ComplexNumTest {
 
         // Divide: real
         assertEquals(ComplexNum(RealNum.create(0.4461538461538462), RealNum.create(-0.03076923076923077)), ComplexNum(RealNum.create(2.0),IntegerNum(3)) / ComplexNum(4,7))
+    }
+
+    @Test
+    fun power() {
+        assertEquals(ComplexNum(RealNum.create(-1.947977671863125), RealNum.create(3.493620327099486)), N(Power(IntegerNum(2), ComplexNum(2,3))).eval())
     }
 
 }

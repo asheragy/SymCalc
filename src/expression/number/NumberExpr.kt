@@ -28,7 +28,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     fun asComplex(): ComplexNum = this as ComplexNum
 
     abstract override fun toString(): String
-    abstract fun power(other: NumberExpr): Expr // TODO should return numberExpr
+    abstract fun power(other: NumberExpr): Expr
     abstract fun canExp(other: NumberExpr): Boolean  //this^num = num is TRUE, FALSE if can't resolve
     abstract fun toDouble(): Double  //Valid on all but ComplexNum
 

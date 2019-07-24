@@ -184,7 +184,7 @@ class IntegerNum : NumberExpr {
                 if (complex.img.isZero)
                     return this.power(complex.real)
 
-                TODO()
+                return ComplexNum(this).power(other)
             }
         }
     }
