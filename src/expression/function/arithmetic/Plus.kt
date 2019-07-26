@@ -49,11 +49,7 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
 
     override fun toString(): String {
         if (size > 0) {
-            var s = get(0).toString()
-            for (i in 1 until size)
-                s += " + " + get(i).toString()
-
-            return s
+            return args.joinToString(" + ")
         }
 
         return super.toString()

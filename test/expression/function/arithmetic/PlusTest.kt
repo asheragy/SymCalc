@@ -3,7 +3,9 @@ package org.cerion.symcalc.expression.function.arithmetic
 import org.cerion.symcalc.assertEqual
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
+import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.RealNum
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -43,5 +45,10 @@ class PlusTest {
 
         e = Plus(n, v)
         assertEquals(v, e.eval())
+    }
+
+    @Test
+    fun toStringTest() {
+        assertEquals("5 + 3.14 + E", Plus(IntegerNum(5), RealNum.create(3.14), E()).toString())
     }
 }

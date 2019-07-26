@@ -74,67 +74,34 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
     }
 
     override fun minus(other: NumberExpr): NumberExpr {
-        val result = RealNum_Double()
         when (other.numType) {
-            NumberType.INTEGER -> {
-                result.dNumber = dNumber - other.toDouble()
-                return result
-            }
-            NumberType.RATIONAL -> {
-                result.dNumber = dNumber - other.toDouble()
-                return result
-            }
-            NumberType.REAL -> {
-                result.dNumber = dNumber - (other as RealNum_Double).dNumber
-                return result
-            }
-            else -> {
-                return other - this
-            }
+            NumberType.INTEGER,
+            NumberType.RATIONAL,
+            NumberType.REAL ->
+                return RealNum_Double(dNumber - other.toDouble())
+            NumberType.COMPLEX -> TODO()
         }
     }
 
     override fun times(other: NumberExpr): NumberExpr {
-        val result = RealNum_Double()
         when (other.numType) {
-            NumberType.INTEGER -> {
-                result.dNumber = dNumber * other.toDouble()
-                return result
-            }
+            NumberType.INTEGER,
+            NumberType.RATIONAL,
+            NumberType.REAL ->
+                return RealNum_Double(dNumber * other.toDouble())
 
-            NumberType.RATIONAL -> {
-                result.dNumber = dNumber * other.toDouble()
-                return result
-            }
-
-            NumberType.REAL -> {
-                result.dNumber = dNumber * (other as RealNum_Double).dNumber
-                return result
-            }
-            else -> {
-                return other * this
-            }
+            NumberType.COMPLEX -> TODO()
         }
     }
 
     override fun div(other: NumberExpr): NumberExpr {
-        val result = RealNum_Double()
         when (other.numType) {
-            NumberType.INTEGER -> {
-                result.dNumber = dNumber / other.toDouble()
-                return result
-            }
-            NumberType.RATIONAL -> {
-                result.dNumber = dNumber / other.toDouble()
-                return result
-            }
+            NumberType.INTEGER,
+            NumberType.RATIONAL,
             NumberType.REAL -> {
-                result.dNumber = dNumber / (other as RealNum_Double).dNumber
-                return result
+                return RealNum_Double(dNumber / other.toDouble())
             }
-            else -> {
-                throw NotImplementedError()
-            }
+            NumberType.COMPLEX -> TODO()
         }
     }
 

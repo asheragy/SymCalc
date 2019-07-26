@@ -152,7 +152,7 @@ abstract class Expr {
 
         // Set environment for every parameter to the current one before its evaluated
         for (i in 0 until size) {
-            mArgs!![i].env = env
+            args[i].env = env
         }
 
         // Skip eval for Hold property

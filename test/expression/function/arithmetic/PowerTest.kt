@@ -1,7 +1,11 @@
 package expression.function.arithmetic
 
+import expression.constant.I
 import expression.function.logical.Equal
+import org.cerion.symcalc.expression.constant.E
+import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Power
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.*
 import org.junit.Assert.*
 import org.junit.Test
@@ -33,5 +37,10 @@ class PowerTest {
                 assertTrue("Power($num,$one)", Equal(num, power).eval().asBool().value())
             }
         }
+    }
+
+    @Test
+    fun ePiI() {
+        //assertEquals(IntegerNum(-1), Power(E(), Times(Pi(), I())).eval())
     }
 }

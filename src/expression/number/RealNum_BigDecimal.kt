@@ -4,11 +4,14 @@ import org.cerion.symcalc.Environment
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
+import kotlin.math.min
 
 class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
 
     private val bigNumber: BigDecimal
         get() = value as BigDecimal
+
+    constructor(value: String) : this(BigDecimal(value))
 
     init {
         this.value = bigDecimal
@@ -86,9 +89,13 @@ class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
                 if(real.isDouble)
                     return real + this
 
+                real as RealNum_BigDecimal
+
                 // Both are BigDecimal
-                return RealNum_BigDecimal( this.bigNumber.plus((real as RealNum_BigDecimal).bigNumber))
+                val result = RealNum_BigDecimal( this.bigNumber.plus(real.bigNumber))
+                return evaluatePrecision(result, this, real)
             }
+
             else -> {
                 return other + this
             }
@@ -96,96 +103,63 @@ class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
     }
 
     override fun minus(other: NumberExpr): NumberExpr {
-        throw NotImplementedError()
+        return this + other.unaryMinus()
         /*
-        RealNum result = new RealNum();
-        switch (num.numType())
-        {
-            case INTEGER: //RealNum - IntegerNum
-            {
-                //result.bigNumber = new BigDecimal( ((IntegerNum)num).integer );
-                //result.bigNumber = bigNumber.subtract(result.bigNumber);
-                result.dNumber = dNumber - num.toDouble();
-                return result;
-            }
+        when (other.numType) {
+            NumberType.INTEGER -> TODO()
+            NumberType.RATIONAL -> TODO()
+            NumberType.REAL -> {
+                val real = other.asReal()
+                if(real.isDouble)
+                    return real + this
 
-            case RATIONAL: //RealNum - RationalNum
-            {
-                result.dNumber = dNumber - num.toDouble();
-                return result;
-            }
+                real as RealNum_BigDecimal
 
-            case REAL: //RealNum - RealNum
-            {
-                //result.bigNumber = this.bigNumber.subtract( ((RealNum)num).bigNumber );
-                result.dNumber = dNumber - ((RealNum)num).dNumber;
-                return result;
+                // Both are BigDecimal
+                val result = RealNum_BigDecimal( this.bigNumber.subtract(real.bigNumber))
+                return evaluatePrecision(result, this, real)
             }
+            NumberType.COMPLEX -> TODO()
         }
-
-        NumberExpr negative = num.negate();
-        return negative.add(this);
         */
     }
 
     override fun times(other: NumberExpr): NumberExpr {
-        throw NotImplementedError()
-        /*
-        RealNum result = new RealNum();
-        switch (num.numType())
-        {
-            case INTEGER: //RealNum * IntegerNum
+        when(other.numType) {
+            NumberType.INTEGER -> TODO()
+            NumberType.RATIONAL -> TODO()
+            NumberType.REAL -> {
+                val real = other.asReal()
+                if(real.isDouble)
+                    return real * this
 
-                //result.bigNumber = new BigDecimal( ((IntegerNum)num).integer );
-                //result.bigNumber = result.bigNumber.multiply(this.bigNumber);
-                result.dNumber = dNumber * num.toDouble();
-                return result;
+                real as RealNum_BigDecimal
 
-            case RATIONAL: //RealNum * RationalNum
-            {
-                result.dNumber = dNumber * num.toDouble();
-                return result;
+                // Both are BigDecimal
+                val result = RealNum_BigDecimal( this.bigNumber.times(real.bigNumber))
+                return evaluatePrecision(result, this, real)
             }
-
-            case REAL: //RealNum * RealNum
-            {
-                //result.bigNumber = this.bigNumber.multiply( ((RealNum)num).bigNumber );
-                result.dNumber = dNumber * ((RealNum)num).dNumber;
-                return result;
-            }
+            NumberType.COMPLEX -> TODO()
         }
-        return num.multiply(this);
-        */
     }
 
     override fun div(other: NumberExpr): NumberExpr {
-        throw NotImplementedError()
-        /*
-        RealNum result = new RealNum();
-        switch (num.numType())
-        {
-            case INTEGER: //RealNum / IntegerNum
+        when (other.numType) {
+            NumberType.INTEGER -> TODO()
+            NumberType.RATIONAL -> TODO()
+            NumberType.REAL -> {
+                val real = other.asReal()
+                if(real.isDouble)
+                    return real / this
 
-                //result.bigNumber = new BigDecimal( ((IntegerNum)num).integer );
-                //result.bigNumber = result.bigNumber.multiply(this.bigNumber);
-                result.dNumber = dNumber / num.toDouble();
-                return result;
+                real as RealNum_BigDecimal
 
-            case RATIONAL: //RealNum / RationalNum
-            {
-                result.dNumber = dNumber / num.toDouble();
-                return result;
+                // Both are BigDecimal
+                val result = RealNum_BigDecimal( this.bigNumber.divide(real.bigNumber, RoundingMode.HALF_UP))
+                return evaluatePrecision(result, this, real)
             }
-
-            case REAL: //RealNum / RealNum
-            {
-                //result.bigNumber = this.bigNumber.multiply( ((RealNum)num).bigNumber );
-                result.dNumber = dNumber / ((RealNum)num).dNumber;
-                return result;
-            }
+            NumberType.COMPLEX -> TODO()
         }
-        return num.multiply(this);
-        */
     }
 
     override fun power(other: NumberExpr): NumberExpr {
@@ -205,5 +179,11 @@ class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
         }
 
         throw NotImplementedError()
+    }
+
+    private fun evaluatePrecision(result: RealNum_BigDecimal, a: RealNum_BigDecimal, b: RealNum_BigDecimal): RealNum_BigDecimal {
+        // TODO maybe set scale on environment and call evaluate()
+        val min = min(a.bigNumber.scale(), b.bigNumber.scale())
+        return RealNum_BigDecimal(result.bigNumber.setScale(min, RoundingMode.HALF_UP))
     }
 }
