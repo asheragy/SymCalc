@@ -7,6 +7,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealNum
+import org.cerion.symcalc.expression.number.RealNum_Double
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 
@@ -26,6 +27,8 @@ abstract class Expr {
 
     protected fun getEnvVar(name: String): Expr? = env.getVar(name)
     protected fun setEnvVar(name: String, e: Expr) = env.setVar(name, e)
+
+    val isNumericalEval get() = env.isNumericalEval || (this is RealNum_Double)
 
     val all: List<Expr>?
         get() {

@@ -7,6 +7,9 @@ import org.cerion.symcalc.expression.number.RealNum
 import kotlin.math.tan
 
 class Tan(e: Expr) : TrigBase(Function.TAN, e) {
+    override fun evaluate(e: Expr): Expr {
+        return this
+    }
 
     override fun evaluate(num: NumberExpr): Expr {
         if (!num.isComplex) {

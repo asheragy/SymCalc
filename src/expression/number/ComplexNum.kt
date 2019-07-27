@@ -1,10 +1,6 @@
 package org.cerion.symcalc.expression.number
 
-import expression.constant.I
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.arithmetic.*
-import org.cerion.symcalc.expression.function.trig.Cos
-import org.cerion.symcalc.expression.function.trig.Sin
 
 class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) : NumberExpr() {
 
@@ -50,6 +46,13 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
         return 0.0
     }
 
+    override fun evaluate(): NumberExpr {
+        if(img.isZero)
+            return real
+
+        return this
+    }
+
     /*
     override fun equals(e: NumberExpr): Boolean {
         if (e.isComplex) {
@@ -67,10 +70,10 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
     override fun plus(other: NumberExpr): NumberExpr {
         if (other.numType === NumberType.COMPLEX) {
             val b = other.asComplex()
-            return ComplexNum(real + b.real, img + b.img)
+            return ComplexNum(real + b.real, img + b.img).evaluate()
         }
 
-        return ComplexNum(real + other, img)
+        return ComplexNum(real + other, img).evaluate()
     }
 
     override fun minus(other: NumberExpr): NumberExpr {
@@ -107,7 +110,7 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
             }
         }
 
-        return result
+        return result.evaluate()
     }
 
     override fun div(other: NumberExpr): NumberExpr {
@@ -117,17 +120,17 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
             NumberType.COMPLEX -> {
                 val conj = other.asComplex().conjugate()
                 val top = (this * conj).asComplex()
-                val bottom = (other.asComplex() * conj).asComplex()
+                val bottom = other.asComplex() * conj // This should not be a complex number
 
-                if (top.real.isInteger && bottom.real.isInteger)
-                    result.real = RationalNum(top.real.asInteger(), bottom.real.asInteger())
+                if (top.real.isInteger && bottom.isInteger)
+                    result.real = RationalNum(top.real.asInteger(), bottom.asInteger())
                 else
-                    result.real = top.real / bottom.real
+                    result.real = top.real / bottom
 
-                if (top.img.isInteger && bottom.real.isInteger)
-                    result.img = RationalNum(top.img.asInteger(), bottom.real.asInteger())
+                if (top.img.isInteger && bottom.isInteger)
+                    result.img = RationalNum(top.img.asInteger(), bottom.asInteger())
                 else
-                    result.img = top.img / bottom.real
+                    result.img = top.img / bottom
             }
             else -> {
                 result.real = real / other
@@ -156,23 +159,6 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
             NumberType.RATIONAL -> TODO()
             NumberType.REAL -> TODO()
             NumberType.COMPLEX -> {
-                if (img.isZero) {
-                    val a = real
-                    val b = other.asComplex().real
-                    val c = other.asComplex().img
-
-                    val clog = Times(c, Log(a))
-                    val cos = Cos(clog)
-                    val sin = Sin(clog)
-                    val pow = Power(a, b)
-
-                    val result: Expr = Times(pow, Plus(cos, Times(I(), sin)))
-                    // TODO when functions create other functions the env is not passed, this is a big problem
-                    if (other.env.isNumericalEval)
-                        result.env.setNumericalEval(true, other.env.precision)
-
-                    return result.eval()
-                }
 
                 TODO()
             }

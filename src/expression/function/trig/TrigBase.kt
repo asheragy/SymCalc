@@ -12,14 +12,18 @@ abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : Fun
         get() = Expr.Properties.LISTABLE.value
 
     protected abstract fun evaluate(num: NumberExpr): Expr
+    protected abstract fun evaluate(e: Expr): Expr
 
     public override fun evaluate(): Expr {
-        if (get(0).isNumber && env.isNumericalEval) {
-            val num = get(0) as NumberExpr
-            return evaluate(num)
+        val n = get(0)
+        if (n.isNumber) {
+            if (n.isNumericalEval) {
+                n as NumberExpr
+                return evaluate(n)
+            }
         }
 
-        return this
+        return evaluate(n)
     }
 
     @Throws(ValidationException::class)

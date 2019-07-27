@@ -1,11 +1,11 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.assertFalse
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.core.N
-import org.junit.Test
-
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
+import org.junit.Test
 
 class ComplexNumTest {
 
@@ -63,6 +63,14 @@ class ComplexNumTest {
     @Test
     fun power() {
         assertEquals(ComplexNum(RealNum.create(-1.947977671863125), RealNum.create(3.493620327099486)), N(Power(IntegerNum(2), ComplexNum(2,3))).eval())
+    }
+
+    @Test
+    fun reducesToNonComplex() {
+        assertEquals(NumberType.INTEGER, (ComplexNum(2,0) + IntegerNum(3)).numType)
+        assertEquals(NumberType.INTEGER , (ComplexNum(2,10) + ComplexNum(3, -10)).numType)
+        assertEquals(NumberType.INTEGER, (ComplexNum(1,1) * ComplexNum(1, -1)).numType)
+        // TODO add more operators here
     }
 
 }

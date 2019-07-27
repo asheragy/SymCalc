@@ -2,10 +2,14 @@ package expression.function.arithmetic
 
 import expression.constant.I
 import expression.function.logical.Equal
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
+import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
 import org.junit.Assert.*
 import org.junit.Test
@@ -41,6 +45,17 @@ class PowerTest {
 
     @Test
     fun ePiI() {
-        //assertEquals(IntegerNum(-1), Power(E(), Times(Pi(), I())).eval())
+        val approx = ComplexNum(RealNum.create(-1.0), RealNum.create(1.2246467991473532E-16))
+        assertEquals(approx, Power(N(E()), Times(N(Pi()), I())).eval())
+        assertEquals(approx, Power(N(E()), Times(Pi(), I())).eval())
+        assertEquals(approx, Power(E(), Times(N(Pi()), I())).eval())
+
+        assertEquals(IntegerNum(-1), Power(E(), Times(Pi(), I())).eval())
+        assertEquals(IntegerNum(-1), Power(E(), Times(I(), Pi())).eval())
+
+        // Variations
+        assertEquals(Times(IntegerNum(-1),Power(E(), IntegerNum(5))), Power(E(), Plus(IntegerNum(5), Times(I(), Pi()))).eval())
+        assertEquals(IntegerNum.ONE, Power(E(), Times(IntegerNum.TWO, I(), Pi())).eval())
+        assertEquals(ComplexNum(0,1), Power(E(), Times(I(), Divide(Pi(), IntegerNum.TWO))).eval())
     }
 }

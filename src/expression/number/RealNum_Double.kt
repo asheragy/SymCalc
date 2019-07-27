@@ -67,8 +67,9 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
                 result.dNumber = dNumber + other.asReal().toDouble()
                 return result
             }
-            else -> {
-                return other + this
+            NumberType.COMPLEX -> {
+                other as ComplexNum
+                return ComplexNum(this + other.real, other.img)
             }
         }
     }
@@ -90,7 +91,13 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
             NumberType.REAL ->
                 return RealNum_Double(dNumber * other.toDouble())
 
-            NumberType.COMPLEX -> TODO()
+            NumberType.COMPLEX -> {
+                other as ComplexNum
+                val r = this * other.real
+                val i = this * other.img
+                return ComplexNum(r, i)
+
+            }
         }
     }
 
