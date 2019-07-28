@@ -51,4 +51,7 @@ class RandomInteger(vararg e: Expr) : FunctionExpr(Function.RANDOM_INTEGER, *e) 
 		return new IntegerNum(new BigInteger(maxBits,new Random()));
 	}
 	*/
+
+    override fun validate() {
+    }
 }

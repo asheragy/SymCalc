@@ -16,4 +16,9 @@ class Total(vararg e: Expr) : FunctionExpr(Function.TOTAL, *e) {
 
         return this
     }
+
+    override fun validate() {
+        validateParameterCount(1)
+        validateParameterType(0, ExprType.LIST)
+    }
 }

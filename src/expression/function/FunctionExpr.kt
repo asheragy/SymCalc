@@ -6,13 +6,12 @@ import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 
 abstract class FunctionExpr protected constructor(val function: Function, vararg val e: Expr) : Expr() {
-    val name: String
+    val name: String = function.toString()
 
     val isNumeric: Boolean
         get() = hasProperty(Properties.NumericFunction)
 
     init {
-        name = function.toString()
         setArgs(*e)
     }
 
@@ -29,10 +28,8 @@ abstract class FunctionExpr protected constructor(val function: Function, vararg
             get(j).treeForm(i + 1)
     }
 
-    // TODO make this required for subclasses
     @Throws(ValidationException::class)
-    open fun validate() {
-    }
+    abstract fun validate()
 
     override fun equals(e: Expr): Boolean {
         if (!e.isFunction)

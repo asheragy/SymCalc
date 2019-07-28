@@ -63,4 +63,9 @@ class D(vararg e: Expr) : FunctionExpr(Function.D, *e) {
 
         return this
     }
+
+    override fun validate() {
+        validateParameterCount(2)
+        validateParameterType(1, ExprType.VARIABLE)
+    }
 }

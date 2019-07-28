@@ -31,4 +31,9 @@ class Plot(vararg e: Expr) : FunctionExpr(Function.PLOT, *e) {
         return null;
     }
     */
+
+    override fun validate() {
+        validateParameterCount(2)
+        validateParameterType(1, ExprType.LIST)
+    }
 }

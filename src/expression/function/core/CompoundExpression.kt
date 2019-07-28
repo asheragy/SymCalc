@@ -10,4 +10,7 @@ class CompoundExpression(vararg e: Expr) : FunctionExpr(Function.COMPOUND_EXPRES
         all // eval all
         return get(size - 1)
     }
+
+    override fun validate() {
+    }
 }

@@ -30,4 +30,9 @@ class Variance(vararg e: Expr) : FunctionExpr(Function.VARIANCE, *e) {
 
         return result.eval()
     }
+
+    override fun validate() {
+        validateParameterCount(1)
+        validateParameterType(0, ExprType.LIST)
+    }
 }

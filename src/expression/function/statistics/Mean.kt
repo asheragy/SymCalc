@@ -18,4 +18,9 @@ class Mean(vararg e: Expr) : FunctionExpr(Function.MEAN, *e) {
 
         return result.eval()
     }
+
+    override fun validate() {
+        validateParameterCount(1)
+        validateParameterType(0, ExprType.LIST)
+    }
 }

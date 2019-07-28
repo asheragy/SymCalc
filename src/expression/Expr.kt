@@ -171,19 +171,16 @@ abstract class Expr {
 		}
 		*/
 
-        // TODO verify listable function is still valid even though it does not take a list parameter
         // Listable property
-        if (hasProperty(Properties.LISTABLE) && isFunction) {
+        if (hasProperty(Properties.LISTABLE) && size == 1 && get(0).isList) {
             val function = this as FunctionExpr
-            if (size == 1 && get(0).isList) {
-                val p1 = get(0) as ListExpr
-                val result = ListExpr()
+            val p1 = get(0) as ListExpr
+            val result = ListExpr()
 
-                for (i in 0 until p1.size)
-                    result.add(FunctionExpr.createFunction(function.name, p1[i]))
+            for (i in 0 until p1.size)
+                result.add(FunctionExpr.createFunction(function.name, p1[i]))
 
-                return result.eval()
-            }
+            return result.eval()
         }
 
         return try {

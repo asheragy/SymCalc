@@ -15,4 +15,7 @@ class If(vararg e: Expr) : FunctionExpr(Function.IF, *e) {
         } else this
 
     }
+
+    override fun validate() {
+    }
 }

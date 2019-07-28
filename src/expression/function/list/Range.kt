@@ -37,4 +37,7 @@ class Range(vararg e: Expr) : FunctionExpr(Function.RANGE, *e) {
 
         return this
     }
+
+    override fun validate() {
+    }
 }

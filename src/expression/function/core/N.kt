@@ -20,4 +20,7 @@ class N(vararg e: Expr) : FunctionExpr(Function.N, *e) {
 
         return this
     }
+
+    override fun validate() {
+    }
 }

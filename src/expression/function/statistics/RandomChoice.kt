@@ -25,4 +25,8 @@ class RandomChoice(vararg e: Expr) : FunctionExpr(Function.RANDOM_CHOICE, *e) {
         [wlist -> elist, {n1, n2,...}]
          */
     }
+
+    override fun validate() {
+        validateParameterType(0, ExprType.LIST)
+    }
 }

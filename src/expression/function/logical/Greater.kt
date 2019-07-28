@@ -78,4 +78,7 @@ class Greater(vararg e: Expr) : FunctionExpr(Function.GREATER, *e) {
 
         return LogicalCompare.UNKNOWN
     }
+
+    override fun validate() {
+    }
 }

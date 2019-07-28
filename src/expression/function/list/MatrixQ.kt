@@ -31,4 +31,7 @@ class MatrixQ(vararg e: Expr) : FunctionExpr(Function.MATRIXQ, *e) {
 
         return BoolExpr.TRUE
     }
+
+    override fun validate() {
+    }
 }

@@ -54,4 +54,7 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
 
         return super.toString()
     }
+
+    override fun validate() {
+    }
 }

@@ -12,4 +12,8 @@ class Hold(vararg e: Expr) : FunctionExpr(Function.HOLD, *e) {
     override fun evaluate(): Expr {
         return this
     }
+
+    override fun validate() {
+        validateParameterCount(1)
+    }
 }

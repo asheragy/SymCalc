@@ -29,4 +29,7 @@ class Select(vararg e: Expr) : FunctionExpr(Function.SELECT, e[0]) {
         return result
     }
 
+    override fun validate() {
+        validateParameterType(0, ExprType.LIST)
+    }
 }

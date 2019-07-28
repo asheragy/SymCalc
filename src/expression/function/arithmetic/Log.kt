@@ -11,6 +11,9 @@ import org.cerion.symcalc.expression.number.RealNum_Double
 import kotlin.math.ln
 
 class Log(vararg e: Expr) : FunctionExpr(Function.LOG, *e) {
+    override fun validate() {
+        validateParameterCount(1)
+    }
 
     override fun evaluate(): Expr {
         val n = get(0)

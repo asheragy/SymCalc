@@ -14,4 +14,9 @@ class Last(vararg e: Expr) : FunctionExpr(Function.LAST, *e) {
 
         return this
     }
+
+    override fun validate() {
+        validateParameterCount(1)
+        validateParameterType(0, ExprType.LIST)
+    }
 }

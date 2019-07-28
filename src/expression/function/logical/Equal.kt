@@ -20,4 +20,6 @@ class Equal(vararg e: Expr) : FunctionExpr(Function.EQUAL, *e) {
         return this
     }
 
+    override fun validate() {
+    }
 }

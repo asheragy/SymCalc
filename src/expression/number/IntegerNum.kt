@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number
 
+import jdk.jshell.spi.ExecutionControl
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
@@ -123,56 +124,13 @@ class IntegerNum : NumberExpr {
         }
     }
 
-    override fun power(other: NumberExpr): Expr {
+    override fun power(other: NumberExpr): NumberExpr {
         //NumberExpr result = null;
         when (other.numType) {
             NumberType.INTEGER -> return IntegerNum(intVal.pow(other.asInteger().intVal.toInt()))
 
             NumberType.RATIONAL -> {
-                val pow = Math.pow(intVal.toDouble(), other.toDouble())
-                val real = RealNum.create(pow)
-
-                if (!env.isNumericalEval) {
-                    if (real.isWholeNumber)
-                        return real.toInteger()
-                    else {
-                        // factor out any numbers that are the Nth root of the denominator
-                        val t = Factor(this)
-                        val factors = Tally(t).eval().asList()
-                        val denominator = other.asRational().denominator
-
-                        var multiply = ONE
-
-                        run {
-                            var i = 0
-                            while (i < factors.size) {
-                                val key = factors[i][0].asInteger()
-                                val v = factors[i][1].asInteger()
-
-                                // Factor it out
-                                if (v >= denominator) {
-                                    multiply *= key
-                                    factors[i] = ListExpr(key, v - denominator)
-                                } else
-                                    i++
-                            }
-                        }
-
-                        if (multiply.isOne)
-                            return Power(this, other)
-
-                        // Factor out multiples
-                        //Expr result = new Power(this, num);
-                        var root = ONE
-                        for (i in 0 until factors.size) {
-                            root = Times(root, factors[i][0], factors[i][1]).eval().asInteger()
-                        }
-
-                        return Times(multiply, Power(root, other))
-                    }
-                }
-
-                return real
+                throw UnsupportedOperationException()
             }
 
             NumberType.REAL -> {

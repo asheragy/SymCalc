@@ -20,4 +20,9 @@ class Reverse(vararg e: Expr) : FunctionExpr(Function.REVERSE, *e) {
 
         return this
     }
+
+    override fun validate() {
+        validateParameterCount(1)
+        validateParameterType(0, ExprType.LIST)
+    }
 }

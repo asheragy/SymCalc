@@ -14,4 +14,9 @@ class Set(vararg e: Expr) : FunctionExpr(Function.SET, *e) {
 
         return e
     }
+
+    override fun validate() {
+        validateParameterCount(2)
+        validateParameterType(0, ExprType.VARIABLE)
+    }
 }

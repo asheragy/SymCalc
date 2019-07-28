@@ -28,7 +28,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     fun asComplex(): ComplexNum = this as ComplexNum
 
     abstract override fun toString(): String
-    abstract fun power(other: NumberExpr): Expr
+    // TODO is this needed?
     abstract fun canExp(other: NumberExpr): Boolean  //this^num = num is TRUE, FALSE if can't resolve
     abstract fun toDouble(): Double  //Valid on all but ComplexNum
 
@@ -57,13 +57,14 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
 
     override fun equals(e: Expr): Boolean = e.isNumber && equals(e as NumberExpr)
 
-    override fun treeForm(i: Int) = indent(i, "Number " + this.toString())
+    override fun treeForm(i: Int) = indent(i, "Number $this")
     public override fun evaluate(): NumberExpr = this
 
     abstract operator fun plus(other: NumberExpr): NumberExpr
     abstract operator fun minus(other: NumberExpr): NumberExpr
     abstract operator fun times(other: NumberExpr): NumberExpr
     abstract operator fun div(other: NumberExpr): NumberExpr
+    abstract fun power(other: NumberExpr): NumberExpr
     abstract operator fun unaryMinus(): NumberExpr
 
     companion object {

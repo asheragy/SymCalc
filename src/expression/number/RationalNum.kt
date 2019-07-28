@@ -126,7 +126,7 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
 
     override fun canExp(other: NumberExpr): Boolean = !(other.isRational || other.isComplex)
 
-    override fun power(other: NumberExpr): Expr {
+    override fun power(other: NumberExpr): NumberExpr {
         val n: IntegerNum
         val d: IntegerNum
         when (other.numType) {

@@ -57,4 +57,7 @@ class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
 
         return super.toString()
     }
+
+    override fun validate() {
+    }
 }
