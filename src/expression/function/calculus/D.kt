@@ -30,7 +30,7 @@ class D(vararg e: Expr) : FunctionExpr(Function.D, *e) {
 
         if (e.isFunction) {
             val func = e as FunctionExpr
-            var result: FunctionExpr = this
+            val result: FunctionExpr
 
             when (func.function) {
                 Function.PLUS -> {

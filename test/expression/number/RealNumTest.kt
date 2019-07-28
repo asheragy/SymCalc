@@ -91,7 +91,7 @@ class RealNumTest : NumberTestBase() {
     fun comparePrecision() {
         val a = RealNum.create("1.000000000000000000000000000000000001")
         val b = RealNum.create("1.000000000000000000000000000000000002")
-        val c = RealNum.create(1.0)
+        //val c = RealNum.create(1.0)
 
         assertEquals(0, a.compareTo(a))
         assertEquals(-1, a.compareTo(b))

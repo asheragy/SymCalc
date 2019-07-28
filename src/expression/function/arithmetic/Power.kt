@@ -89,7 +89,6 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         if (b.env.isNumericalEval)
             result.env.setNumericalEval(true, b.env.precision)
 
-        val debug = result.eval()
         return result.eval()
     }
 

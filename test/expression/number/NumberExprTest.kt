@@ -12,7 +12,7 @@ class NumberExprTest {
     @Test
     fun unsupportedOperations() {
         val integer = IntegerNum.ONE
-        val real = RealNum.create(0.0)
+        //val real = RealNum.create(0.0)
         val rational = RationalNum(1,2)
         val complex = ComplexNum(1,1)
 

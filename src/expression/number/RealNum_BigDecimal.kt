@@ -168,17 +168,15 @@ class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
         if(other.isRational && other.equals(RationalNum(1,2)))
             return RealNum_BigDecimal(bigNumber.sqrt(MathContext.DECIMAL32))
 
-        when (other.numType)
-        {
+        when (other.numType) {
             NumberType.INTEGER -> {
                 val number = bigNumber.pow(other.asInteger().intValue())
                 return RealNum_BigDecimal(number)
             }
-            //case RATIONAL: //RealNum ^ RationalNum
-
+            NumberType.RATIONAL -> TODO()
+            NumberType.REAL -> TODO()
+            NumberType.COMPLEX -> TODO()
         }
-
-        throw NotImplementedError()
     }
 
     private fun evaluatePrecision(result: RealNum_BigDecimal, a: RealNum_BigDecimal, b: RealNum_BigDecimal): RealNum_BigDecimal {

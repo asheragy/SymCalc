@@ -129,7 +129,7 @@ class IntegerNumTest {
         val three = IntegerNum(3)
         val real = RealNum.create(3.14)
         val realBig = RealNum.create(BigDecimal("123.35340583128859694839201928385968473749596868726265"))
-        val complex = ComplexNum(2,3)
+        //val complex = ComplexNum(2,3)
 
         assertEquals(RealNum.create(3.0).power(real), three.power(real))
         assertEquals(RealNum.create(3.0).power(realBig), three.power(realBig))
