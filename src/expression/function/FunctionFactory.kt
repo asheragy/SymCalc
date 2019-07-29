@@ -15,9 +15,7 @@ class FunctionFactory {
     companion object {
 
         fun createInstance(name: String, vararg e: Expr): FunctionExpr {
-            val type = stringToFunctionType(name)
-
-            when (type) {
+            when (stringToFunctionType(name)) {
                 Function.N -> return N(*e)
                 Function.HOLD -> return Hold(*e)
                 Function.NUMBERQ -> return NumberQ(*e)
@@ -28,6 +26,7 @@ class FunctionFactory {
                 Function.TIMES -> return Times(*e)
                 Function.DIVIDE -> return Divide(*e)
                 Function.POWER -> return Power(*e)
+                Function.MINUS -> return Minus(*e)
                 Function.SIN -> return Sin(*e)
 
                 //List

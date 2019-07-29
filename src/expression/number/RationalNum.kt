@@ -174,5 +174,6 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
     companion object {
         val ZERO = RationalNum(IntegerNum.ZERO, IntegerNum.ONE)
         val ONE = RationalNum(IntegerNum.ONE, IntegerNum.ONE)
+        val HALF = RationalNum(IntegerNum.ONE, IntegerNum.TWO)
     }
 }

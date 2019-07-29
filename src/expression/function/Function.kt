@@ -17,6 +17,7 @@ enum class Function constructor(val value: String) {
     POWER("Power"),
     SQRT("Sqrt"),
     LOG("Log"),
+    MINUS("Minus"),
 
     // Trig
     SIN("Sin"),
@@ -77,7 +78,7 @@ enum class Function constructor(val value: String) {
     IF("If"),
 
 
-    ASDFDSF("DSFDS");
+    END_OF_LIST("**eol");
 
     override fun toString(): String {
         return this.value
