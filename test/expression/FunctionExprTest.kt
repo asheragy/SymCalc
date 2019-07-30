@@ -2,6 +2,7 @@ package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.RealNum
 import org.junit.Assert.assertEquals
@@ -22,4 +23,8 @@ class FunctionExprTest {
         assertEquals(f1, f4)
     }
 
+    @Test
+    fun equals_Orderless() {
+        assertEquals(Times(IntegerNum(1), IntegerNum(2), IntegerNum(3)), Times(IntegerNum(2), IntegerNum(3), IntegerNum(1)))
+    }
 }

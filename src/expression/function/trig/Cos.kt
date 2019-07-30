@@ -7,14 +7,30 @@ import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.expression.number.RationalNum
 import org.cerion.symcalc.expression.number.RealNum
 import kotlin.math.cos
 
 class Cos(vararg e: Expr) : TrigBase(Function.COS, *e) {
-    override fun evaluate(e: Expr): Expr {
-        // TODO add tests for multiples of pi
-        if (e is Pi)
+    override fun evaluateAsDouble(d: Double): Expr = RealNum.create(cos(d))
+
+    override fun evaluatePiFactoredOut(e: Expr): Expr {
+        if (e == IntegerNum.ONE)
             return IntegerNum.NEGATIVE_ONE
+
+        if (e.isInteger && e.asInteger().isEven)
+            return IntegerNum.ONE
+
+        if (e.isNumber && e.asNumber().isRational) {
+            e as RationalNum
+            if (e.denominator == IntegerNum.TWO)
+                return IntegerNum.ZERO
+        }
+
+        return this
+    }
+
+    override fun evaluate(e: Expr): Expr {
 
         // Even*Pi = 1 / Odd*Pi = -1
         if (e is Times && e.args.any { it is Pi } && e.args.any { it is IntegerNum }) {
@@ -38,9 +54,5 @@ class Cos(vararg e: Expr) : TrigBase(Function.COS, *e) {
         }
 
         return this
-    }
-
-    override fun evaluate(num: NumberExpr): Expr {
-        return if (!num.isComplex) RealNum.create(cos(num.toDouble())) else this
     }
 }

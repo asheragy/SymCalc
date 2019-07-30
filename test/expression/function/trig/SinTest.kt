@@ -43,6 +43,12 @@ class SinTest {
     }
 
     @Test
+    fun valuesNotEvaluated() {
+        val e = Sin(Times(Pi(), RationalNum(1,5)))
+        assertEquals(e, e.eval())
+    }
+
+    @Test
     fun basicPiCycles_over2() {
         // Test cycles with increments of Pi / 2
         val expected = ListExpr(IntegerNum.ZERO, IntegerNum.ONE, IntegerNum.ZERO, IntegerNum.NEGATIVE_ONE)

@@ -42,9 +42,23 @@ abstract class FunctionExpr protected constructor(val function: Function, vararg
         if (f.size != size)
             return false
 
-        for (i in 0 until size) {
-            if (!get(i).equals(f[i]))
-                return false
+        if (hasProperty(Properties.Orderless)) {
+            val otherArgs = e.args.toMutableList()
+            for (arg in args) {
+                for(i in 0 until otherArgs.size)
+                    if (arg == otherArgs[i]) {
+                        otherArgs.removeAt(i)
+                        break
+                    }
+            }
+
+            return otherArgs.size == 0
+        }
+        else {
+            for (i in 0 until size) {
+                if (!get(i).equals(f[i]))
+                    return false
+            }
         }
 
         return true

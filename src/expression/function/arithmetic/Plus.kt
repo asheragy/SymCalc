@@ -11,7 +11,7 @@ import java.util.ArrayList
 class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
 
     override val properties: Int
-        get() = Expr.Properties.ASSOCIATIVE.value or Expr.Properties.NumericFunction.value
+        get() = Expr.Properties.ASSOCIATIVE.value or Expr.Properties.NumericFunction.value or Properties.Orderless.value
 
     override fun evaluate(): Expr {
 

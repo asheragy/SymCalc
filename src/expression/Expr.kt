@@ -211,7 +211,8 @@ abstract class Expr {
         LISTABLE(2),
         ASSOCIATIVE(4),
         CONSTANT(8),
-        NumericFunction(16)
+        NumericFunction(16),
+        Orderless(32)
     }
 
     protected enum class LogicalCompare {
