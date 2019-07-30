@@ -7,6 +7,7 @@ import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 
 import java.util.ArrayList
+import kotlin.math.min
 
 class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
 
@@ -21,6 +22,15 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
         //list.addAll(getArgs());
         for (i in 0 until size)
             list.add(get(i))
+
+        // TODO this should be done in Expr class, may only apply to ConstExpr so that is a factor
+        val minPrecision = list.minBy { it.precision }!!.precision
+        for (i in 0 until list.size) {
+            if (list[i].precision > minPrecision) {
+                list[i].setNumericalEval(true, minPrecision)
+                list[i] = list[i].eval()
+            }
+        }
 
         val it = list.iterator()
         while (it.hasNext()) {

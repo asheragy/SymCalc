@@ -27,7 +27,10 @@ class FunctionFactory {
                 Function.DIVIDE -> return Divide(*e)
                 Function.POWER -> return Power(*e)
                 Function.MINUS -> return Minus(*e)
+
+                // Trig
                 Function.SIN -> return Sin(*e)
+                Function.TAN -> return Tan(*e)
 
                 //List
                 Function.TOTAL -> return Total(*e)

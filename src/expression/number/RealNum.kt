@@ -7,8 +7,6 @@ abstract class RealNum : NumberExpr() {
     abstract val isWholeNumber: Boolean // TODO better name for this? isInteger() is already taken
     abstract fun toInteger(): IntegerNum
 
-    abstract val precision: Int
-
     val isDouble: Boolean get() = this is RealNum_Double
 
     override val numType: NumberType get() = NumberType.REAL

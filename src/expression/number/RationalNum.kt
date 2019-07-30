@@ -11,10 +11,11 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
     override val numType: NumberType get() = NumberType.RATIONAL
     override val isNegative: Boolean get() = numerator.isNegative
 
-    val numerator: IntegerNum get() = get(0) as IntegerNum
-    val denominator: IntegerNum get() = get(1) as IntegerNum
+    val numerator: IntegerNum get() = args[0] as IntegerNum
+    val denominator: IntegerNum get() = args[1] as IntegerNum
 
     init {
+        // TODO eval should fix sign AND remove set function
         if (d.signum == -1)
             set(n.unaryMinus(), d.unaryMinus())
         else
@@ -42,11 +43,11 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
             set(n, d)
         }
 
-        if(env.isNumericalEval) {
-            if (env.precision > 0) {
+        if(isNumericalEval) {
+            if (precision > 0) {
                 val a = numerator.toBigDecimal()
                 val b = denominator.toBigDecimal()
-                val t = a.divide(b, env.precision, RoundingMode.HALF_UP)
+                val t = a.divide(b, precision, RoundingMode.HALF_UP)
                 return RealNum.create(t)
             }
 

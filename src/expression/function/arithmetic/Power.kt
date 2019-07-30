@@ -2,22 +2,32 @@ package org.cerion.symcalc.expression.function.arithmetic
 
 import expression.constant.I
 import org.cerion.symcalc.exception.ValidationException
+import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
+import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.function.integer.Factor
 import org.cerion.symcalc.expression.function.list.Tally
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.*
+import kotlin.math.min
 
 class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
     public override fun evaluate(): Expr {
-        val a = get(0)
-        val b = get(1)
+        var a = get(0)
+        var b = get(1)
+
+        // TODO this should be done in Expr class, may only apply to ConstExpr so that is a factor
+        val minPrecision = min(a.precision, b.precision)
+        if (a is ConstExpr && minPrecision < a.precision)
+            a = N(a, minPrecision).eval()
+        if ((b is ConstExpr || b is Times) && minPrecision < b.precision)
+            b = N(b, minPrecision).eval()
 
         if (b.isNumber) {
             b as NumberExpr
@@ -84,12 +94,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         val sin = Sin(clog)
         val pow = Power(a, b)
 
-        val result: Expr = Times(pow, Plus(cos, Times(I(), sin)))
-        // TODO when functions create other functions the env is not passed, this is a big problem
-        if (b.env.isNumericalEval)
-            result.env.setNumericalEval(true, b.env.precision)
-
-        return result.eval()
+        return Times(pow, Plus(cos, Times(I(), sin))).eval()
     }
 
     private fun integerToRational(a: IntegerNum, b: RationalNum): Expr {
@@ -97,7 +102,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         val pow = Math.pow(a.toDouble(), b.toDouble())
         val real = RealNum.create(pow)
 
-        if (!env.isNumericalEval) {
+        if (!isNumericalEval) {
             if (real.isWholeNumber)
                 return real.toInteger()
             else {

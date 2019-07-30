@@ -1,8 +1,6 @@
 package org.cerion.symcalc.expression.number
 
 internal class RealNum_Double(value: Double = 0.0) : RealNum() {
-    override val precision: Int
-        get() = 0
 
     private var dNumber: Double = value
 
@@ -14,6 +12,10 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
         get() = if (dNumber == Math.floor(dNumber) && !java.lang.Double.isInfinite(dNumber)) true else false
 
     constructor(n: IntegerNum) : this() { dNumber = n.toDouble() }
+
+    init {
+        setNumericalEval(true, SYSTEM_DECIMAL_PRECISION)
+    }
 
     override fun toDouble(): Double = dNumber
     override fun toString(): String = "" + dNumber

@@ -28,8 +28,6 @@ abstract class Expr {
     protected fun getEnvVar(name: String): Expr? = env.getVar(name)
     protected fun setEnvVar(name: String, e: Expr) = env.setVar(name, e)
 
-    val isNumericalEval get() = env.isNumericalEval || (this is RealNum_Double)
-
     val all: List<Expr>?
         get() {
             if (!hasProperty(Properties.HOLD) && !env.skipEval) {
@@ -243,6 +241,20 @@ abstract class Expr {
         return false
     }
 
+    //Decimal evaluation precision
+    private var evalNumber = false
+    private var _precision = InfinitePrecision
+    val precision get() = _precision
+
+    var isNumericalEval: Boolean
+        get() = evalNumber || (this is RealNum_Double)
+        set(bEval) = setNumericalEval(bEval, SYSTEM_DECIMAL_PRECISION)
+
+    fun setNumericalEval(bEval: Boolean, digits: Int = SYSTEM_DECIMAL_PRECISION) {
+        evalNumber = bEval
+        _precision = if (digits >= 0) digits else SYSTEM_DECIMAL_PRECISION
+    }
+
     companion object {
         @JvmStatic
         fun parse(s: String): Expr {
@@ -250,6 +262,9 @@ abstract class Expr {
             val p = Parser(lex)
             return p.e
         }
+
+        const val InfinitePrecision = Int.MAX_VALUE
+        const val SYSTEM_DECIMAL_PRECISION = -1 // numbers evaluated to whatever primitive types hold
     }
 
     // Extensions for convenience

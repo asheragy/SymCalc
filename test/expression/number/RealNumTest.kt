@@ -54,8 +54,6 @@ class RealNumTest : NumberTestBase() {
 
         // N[x_Precision, y] = Y Precision if Y is smaller than X
         assertEquals(20, N(b, IntegerNum(20)).eval().asReal().precision)
-
-
     }
 
     @Test

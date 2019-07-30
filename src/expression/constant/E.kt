@@ -11,11 +11,11 @@ class E : ConstExpr() {
     override fun toString(): String = "E"
 
     override fun evaluate(): Expr {
-        if (env.isNumericalEval) {
-            if (env.precision == Environment.SYSTEM_DECIMAL_PRECISION)
+        if (isNumericalEval) {
+            if (precision == SYSTEM_DECIMAL_PRECISION)
                 return RealNum.create(Math.E)
 
-            return RealNum.create( getEToDigits(env.precision) )
+            return RealNum.create( getEToDigits(precision) )
         }
         else
             return this

@@ -43,6 +43,7 @@ class IntegerNum : NumberExpr {
 
     override fun toString(): String = intVal.toString()
     override fun toDouble(): Double = intVal.toDouble()
+    override fun evaluate(): NumberExpr = if (isNumericalEval) RealNum.create(this) else this
 
     /*
     override fun equals(e: NumberExpr): Boolean {
@@ -94,7 +95,7 @@ class IntegerNum : NumberExpr {
             val gcd = this.gcd(n)
 
             if (gcd.isOne) {
-                return if (env.isNumericalEval) {
+                return if (isNumericalEval) {
                     Divide(RealNum.create(toDouble()), RealNum.create(other.toDouble())).eval() as NumberExpr
                 } else RationalNum(this, n)
 
@@ -107,7 +108,7 @@ class IntegerNum : NumberExpr {
             if (b.isOne)
                 return a
 
-            return if (env.isNumericalEval) {
+            return if (isNumericalEval) {
                 Divide(RealNum.create(a.toDouble()), RealNum.create(b.toDouble())).eval() as NumberExpr
             } else RationalNum(a, b)
 

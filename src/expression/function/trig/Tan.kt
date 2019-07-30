@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealNum
 import kotlin.math.tan
 
-class Tan(e: Expr) : TrigBase(Function.TAN, e) {
+class Tan(vararg e: Expr) : TrigBase(Function.TAN, *e) {
     override fun evaluateAsDouble(d: Double): Expr = RealNum.create(tan(d))
 
     override fun evaluatePiFactoredOut(e: Expr): Expr {

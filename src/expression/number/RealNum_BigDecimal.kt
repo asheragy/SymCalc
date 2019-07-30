@@ -15,10 +15,11 @@ class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
 
     init {
         this.value = bigDecimal
+        setNumericalEval(true, bigDecimal.scale())
     }
 
-    override val precision: Int
-        get() = bigNumber.scale()
+    //override val precision: Int
+    //    get() = bigNumber.scale()
 
     override val isWholeNumber: Boolean
         get() = throw NotImplementedError()
@@ -49,11 +50,13 @@ class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
     }
 
     override fun evaluate(): NumberExpr {
-        if (env.isNumericalEval) {
-            if(env.precision == Environment.SYSTEM_DECIMAL_PRECISION)
+        if (isNumericalEval) {
+            if(precision == SYSTEM_DECIMAL_PRECISION)
                 return RealNum.create(toDouble())
-            else if (env.precision < precision)
-                return RealNum.create(bigNumber.setScale(env.precision, RoundingMode.HALF_UP))
+            else if (precision < bigNumber.scale())
+                return RealNum.create(bigNumber.setScale(precision, RoundingMode.HALF_UP))
+            else
+                setNumericalEval(true, bigNumber.scale())
         }
 
         return this
@@ -79,7 +82,7 @@ class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
 
             NumberType.RATIONAL -> {
                 val rational = other.asRational()
-                rational.env.setNumericalEval(true, precision)
+                rational.setNumericalEval(true, precision)
 
                 return this + rational.eval().asReal()
             }

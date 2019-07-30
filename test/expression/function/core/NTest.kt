@@ -16,7 +16,6 @@ class NTest {
         var e: Expr = N(Plus(Pi(), IntegerNum(5)))
         assertEquals(RealNum.create(8.141592653589793), e.eval())
 
-        // TODO this is what mathematica does but it doesn't seem right
         e = Plus(N(IntegerNum(5)), Pi())
         assertEquals(RealNum.create(8.141592653589793), e.eval())
     }

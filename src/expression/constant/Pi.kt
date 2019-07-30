@@ -11,11 +11,11 @@ class Pi : ConstExpr() {
     override fun toString(): String = "Pi"
 
     override fun evaluate(): Expr {
-        if (env.isNumericalEval) {
-            if (env.precision == Environment.SYSTEM_DECIMAL_PRECISION)
+        if (isNumericalEval) {
+            if (precision == SYSTEM_DECIMAL_PRECISION)
                 return RealNum.create(Math.PI)
 
-            return RealNum.create( getPiToDigits(env.precision) )
+            return RealNum.create( getPiToDigits(precision) )
         }
         else
             return this

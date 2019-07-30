@@ -96,6 +96,15 @@ abstract class FunctionExpr protected constructor(val function: Function, vararg
         throw ValidationException(error)
     }
 
+    @Throws(ValidationException::class)
+    protected fun validateParameterRage(min: Int, max: Int) {
+        if (size in min..max)
+            return
+
+        val error = "$name called with $size parameters, expected $min to $max"
+        throw ValidationException(error)
+    }
+
     companion object {
         @JvmStatic fun isValidFunction(functionName: String): Boolean = FunctionFactory.isValidFunction(functionName)
         @JvmStatic fun createFunction(f: String, vararg e: Expr): FunctionExpr = FunctionFactory.createInstance(f, *e)
