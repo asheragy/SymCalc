@@ -7,7 +7,7 @@ import org.junit.Assert.*
 
 
 fun assertEqual(expected: Double, actual: Expr) {
-    assertEquals(expected, actual.asReal().toDouble(), 0.001111) // TODO delta should be the largest possible value
+    assertEquals(expected, actual.asReal().toDouble(), 0.0)
 }
 
 fun assertEqual(expected: Int, actual: Expr) {

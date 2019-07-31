@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.expression.Expr
 import java.math.RoundingMode
 
-class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : NumberExpr() {
+class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : NumberExpr() {
 
     override val isZero: Boolean get() = numerator.isZero
     override val isOne: Boolean get() = numerator.equals(denominator)
@@ -15,11 +15,8 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
     val denominator: IntegerNum get() = args[1] as IntegerNum
 
     init {
-        // TODO eval should fix sign AND remove set function
-        if (d.signum == -1)
-            set(n.unaryMinus(), d.unaryMinus())
-        else
-            set(n, d)
+        setArg(0, n)
+        setArg(1, d)
     }
 
     constructor(n: Int, d: Int) : this(IntegerNum(n.toLong()), IntegerNum(d.toLong()))
@@ -27,35 +24,33 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
     override fun evaluate(): NumberExpr {
         //Reduce with GCD
         val gcd = numerator.gcd(denominator)
-        var n: IntegerNum
-        var d: IntegerNum
+        var n: IntegerNum = numerator
+        var d: IntegerNum = denominator
 
         if (!gcd.isOne) {
-            n = numerator.div(gcd).asInteger()
-            d = denominator.div(gcd).asInteger()
-            set(n, d)
+            n = n.div(gcd).asInteger()
+            d = d.div(gcd).asInteger()
         }
 
         //Never allow bottom to be negative
-        if (denominator.signum == -1) {
-            n = numerator.unaryMinus()
-            d = denominator.unaryMinus()
-            set(n, d)
+        if (d.signum == -1) {
+            n = n.unaryMinus()
+            d = d.unaryMinus()
         }
 
         if(isNumericalEval) {
             if (precision > 0) {
-                val a = numerator.toBigDecimal()
-                val b = denominator.toBigDecimal()
+                val a = n.toBigDecimal()
+                val b = d.toBigDecimal()
                 val t = a.divide(b, precision, RoundingMode.HALF_UP)
                 return RealNum.create(t)
             }
 
-            return RealNum.create(numerator.toDouble() / denominator.toDouble())
+            return RealNum.create(n.toDouble() / d.toDouble())
         }
 
         //Integer since denominator is one
-        return if (denominator.isOne) numerator else this
+        return if (d.isOne) n else RationalNum(n, d)
     }
 
     override fun toString(): String = numerator.toString() + "/" + denominator.toString()
@@ -157,13 +152,6 @@ class RationalNum @JvmOverloads constructor(n: IntegerNum, d: IntegerNum = Integ
                 TODO()
             }
         }
-    }
-
-    private operator fun set(n: IntegerNum?, d: IntegerNum?) {
-        if (n != null)
-            setArg(0, n)
-        if (d != null)
-            setArg(1, d)
     }
 
     override fun compareTo(other: NumberExpr): Int {

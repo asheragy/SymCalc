@@ -2,7 +2,6 @@ package org.cerion.symcalc.expression
 
 import expression.function.list.ConstantArray
 import org.cerion.symcalc.Environment
-import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
@@ -10,8 +9,7 @@ import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.expression.number.RealNum_Double
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
-
-import java.util.ArrayList
+import java.util.*
 
 abstract class Expr {
 
@@ -27,19 +25,6 @@ abstract class Expr {
 
     protected fun getEnvVar(name: String): Expr? = env.getVar(name)
     protected fun setEnvVar(name: String, e: Expr) = env.setVar(name, e)
-
-    val all: List<Expr>?
-        get() {
-            if (!hasProperty(Properties.HOLD)) {
-                val args = ArrayList<Expr>()
-                for (i in 0 until size)
-                    args.add(get(i).eval())
-
-                return args
-            }
-
-            return mArgs
-        }
 
     abstract val type: ExprType
 
@@ -67,17 +52,7 @@ abstract class Expr {
     }
 
     // Indexes
-    operator fun get(index: Int): Expr {
-        return args[index]
-        /*
-        return if (!hasProperty(Properties.HOLD)) {
-            args[index].eval()
-        } else args[index]
-
-         */
-    }
-
-    operator fun get(index: Int, eval: Boolean): Expr = if (eval) args[index].eval() else args[index]
+    operator fun get(index: Int): Expr = args[index]
     operator fun set(index: Int, e: Expr) {
         mArgs!![index] = e
     }
@@ -165,14 +140,6 @@ abstract class Expr {
             }
         }
 
-        if (result is FunctionExpr) {
-            try {
-                result.validate()
-            } catch (e: ValidationException) {
-                return ErrorExpr(e.message!!)
-            }
-        }
-
         // Listable property
         if (hasProperty(Properties.LISTABLE) && size == 1 && result[0].isList) {
             val function = result as FunctionExpr
@@ -186,10 +153,12 @@ abstract class Expr {
         }
 
         return try {
-            val test = result.evaluate()
+            if (result is FunctionExpr)
+                result.validate()
 
-            test
-        } catch (e: Exception) {
+            result.evaluate()
+        }
+        catch (e: Exception) {
             ErrorExpr(e.toString())
         }
     }
@@ -209,6 +178,8 @@ abstract class Expr {
         GRAPHICS
     }
 
+    // ssymb = Cases[Map[ToExpression, Names["System`*"]], _Symbol];
+    // nfuns = Select[ssymb, MemberQ[Attributes[#], HoldFirst] &]
     enum class Properties constructor(val value: Int) {
         NONE(0),
         HOLD(1),

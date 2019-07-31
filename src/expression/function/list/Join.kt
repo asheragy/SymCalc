@@ -13,7 +13,7 @@ class Join(vararg e: Expr) : FunctionExpr(Function.JOIN, *e) {
 
         for (i in 0 until size) {
             val e = get(i) as ListExpr
-            result.addAll(e.all)
+            result.addAll(e.args)
         }
 
         return result

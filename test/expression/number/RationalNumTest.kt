@@ -28,12 +28,27 @@ class RationalNumTest : NumberTestBase() {
     }
 
     @Test
+    fun eval_normalizesNegative() {
+        var n = RationalNum(2,-3)
+        assertEquals(IntegerNum(2), n.numerator)
+        assertEquals(IntegerNum(-3), n.denominator)
+
+        n = n.eval() as RationalNum
+        assertEquals(IntegerNum(-2), n.numerator)
+        assertEquals(IntegerNum(3), n.denominator)
+
+        n = RationalNum(-2,-3).eval() as RationalNum
+        assertEquals(IntegerNum(2), n.numerator)
+        assertEquals(IntegerNum(3), n.denominator)
+    }
+
+    @Test
     fun eval_reduces() {
         assertEquals(IntegerNum.TWO, RationalNum(2, 4).numerator)
         assertEquals(IntegerNum.ONE, (RationalNum(2, 4).eval() as RationalNum).numerator)
 
         // Except with Hold
-        assertEquals(IntegerNum.TWO, Hold(RationalNum(2, 4)).eval()[0, false].asNumber().asRational().numerator)
+        assertEquals(IntegerNum.TWO, Hold(RationalNum(2, 4)).eval()[0].asNumber().asRational().numerator)
     }
 
     @Test

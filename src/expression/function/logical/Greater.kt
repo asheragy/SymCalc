@@ -16,11 +16,11 @@ class Greater(vararg e: Expr) : FunctionExpr(Function.GREATER, *e) {
          */
 
         // Simplify
-        val args = all?.toMutableList()
+        val args = args.toMutableList()
 
         run {
             var i = 0
-            while (i < args!!.size - 1) {
+            while (i < args.size - 1) {
                 val comp = compare(args[i], args[i + 1])
                 if (comp === LogicalCompare.TRUE) {
                     if (i == 0) { //First
@@ -41,7 +41,7 @@ class Greater(vararg e: Expr) : FunctionExpr(Function.GREATER, *e) {
         }
 
         // If elements were removed evaluate new instance
-        if (args!!.size < size)
+        if (args.size < size)
             return Greater(*args.toTypedArray()).eval()
 
         if (size == 1)

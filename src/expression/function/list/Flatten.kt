@@ -17,8 +17,8 @@ class Flatten(vararg e: Expr) : FunctionExpr(Function.FLATTEN, *e) {
 
             if (e.isList) {
                 var sublist = e as ListExpr
-                sublist = Flatten(sublist).eval() as ListExpr // TODO eval may be redundant since getAll will eval
-                result.addAll(sublist.all)
+                sublist = Flatten(sublist).eval() as ListExpr
+                result.addAll(sublist.args)
             } else {
                 result.add(e)
             }
