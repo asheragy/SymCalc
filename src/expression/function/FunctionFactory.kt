@@ -1,14 +1,19 @@
 package org.cerion.symcalc.expression.function
 
+import expression.function.list.ConstantArray
+import expression.function.logical.Equal
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.arithmetic.*
+import org.cerion.symcalc.expression.function.calculus.D
 import org.cerion.symcalc.expression.function.core.*
 import org.cerion.symcalc.expression.function.integer.*
 import org.cerion.symcalc.expression.function.list.*
 import org.cerion.symcalc.expression.function.logical.*
 import org.cerion.symcalc.expression.function.plots.*
+import org.cerion.symcalc.expression.function.procedural.If
 import org.cerion.symcalc.expression.function.statistics.*
 import org.cerion.symcalc.expression.function.trig.*
+import java.lang.RuntimeException
 
 class FunctionFactory {
 
@@ -20,6 +25,7 @@ class FunctionFactory {
                 Function.HOLD -> return Hold(*e)
                 Function.NUMBERQ -> return NumberQ(*e)
                 Function.NUMERICQ -> return NumericQ(*e)
+                Function.EQUAL -> return Equal(*e)
 
                 Function.PLUS -> return Plus(*e)
                 Function.SUBTRACT -> return Subtract(*e)
@@ -27,9 +33,12 @@ class FunctionFactory {
                 Function.DIVIDE -> return Divide(*e)
                 Function.POWER -> return Power(*e)
                 Function.MINUS -> return Minus(*e)
+                Function.LOG -> return Log(*e)
+                Function.SQRT -> return Sqrt(*e)
 
                 // Trig
                 Function.SIN -> return Sin(*e)
+                Function.COS -> return Cos(*e)
                 Function.TAN -> return Tan(*e)
 
                 //List
@@ -46,6 +55,8 @@ class FunctionFactory {
                 Function.VECTORQ -> return VectorQ(*e)
                 Function.MATRIXQ -> return MatrixQ(*e)
                 Function.DOT -> return Dot(*e)
+                Function.CONSTANT_ARRAY -> return ConstantArray(*e)
+                Function.TALLY -> return Tally(*e)
 
                 //IntegerNum
                 Function.FACTORIAL -> return Factorial(*e)
@@ -62,6 +73,9 @@ class FunctionFactory {
                 Function.EVENQ -> return EvenQ(*e)
                 Function.ODDQ -> return OddQ(*e)
 
+                // Calculus
+                Function.D -> return D(*e)
+
                 //Logical
                 Function.GREATER -> return Greater(*e)
 
@@ -75,8 +89,15 @@ class FunctionFactory {
                 // Graphics
                 Function.PLOT -> return Plot(*e)
 
-                else -> throw RuntimeException("invalid function name '$name'")
+                // Categorize these
+                Function.SET -> return Set(*e)
+                Function.COMPOUND_EXPRESSION -> return CompoundExpression(*e)
+                Function.IDENTITY_MATRIX -> return IdentityMatrix(*e)
+                Function.IF -> return If(*e)
+                null -> TODO()
             }
+
+            throw RuntimeException("Missing case")
         }
 
         @JvmStatic

@@ -30,7 +30,7 @@ abstract class Expr {
 
     val all: List<Expr>?
         get() {
-            if (!hasProperty(Properties.HOLD) && !env.skipEval) {
+            if (!hasProperty(Properties.HOLD)) {
                 val args = ArrayList<Expr>()
                 for (i in 0 until size)
                     args.add(get(i).eval())
@@ -68,10 +68,13 @@ abstract class Expr {
 
     // Indexes
     operator fun get(index: Int): Expr {
-        return if (!hasProperty(Properties.HOLD) && !env.skipEval) {
+        return args[index]
+        /*
+        return if (!hasProperty(Properties.HOLD)) {
             args[index].eval()
         } else args[index]
 
+         */
     }
 
     operator fun get(index: Int, eval: Boolean): Expr = if (eval) args[index].eval() else args[index]
@@ -125,64 +128,67 @@ abstract class Expr {
         //https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
         //https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
+        // Set environment for every parameter to the current one before its evaluated
+        for (i in 0 until size) {
+            args[i].env = env
+        }
+
+        // Make a copy of this expression to evaluate and return
+        var result = this
+        if (this is FunctionExpr)
+            result = FunctionExpr.createFunction(name)
+        else if (this is ListExpr)
+            result = ListExpr()
+
+        if (this is FunctionExpr || this is ListExpr) {
+            result.env = env
+            for (arg in args) {
+                if (hasProperty(Properties.HOLD))
+                    result.addArg(arg)
+                else
+                    result.addArg(arg.eval())
+            }
+        }
+
         // Associative function, if the same function is a parameter move its parameters to the top level
         if (hasProperty(Properties.ASSOCIATIVE)) {
             var i = 0
             while (i < size) {
-                if (get(i).javaClass == javaClass) {
+                if (result[i].javaClass == javaClass) {
                     // insert these sub parameters at the same position it was removed
-                    val t = mArgs!![i]
-                    mArgs!!.removeAt(i)
-                    mArgs!!.addAll(i, t.args)
+                    val t = result.mArgs!![i]
+                    result.mArgs!!.removeAt(i)
+                    result.mArgs!!.addAll(i, t.args)
                     i--
                 }
                 i++
             }
         }
 
-        env.skipEval = false
-
-        if (isFunction) {
+        if (result is FunctionExpr) {
             try {
-                (this as FunctionExpr).validate()
+                result.validate()
             } catch (e: ValidationException) {
                 return ErrorExpr(e.message!!)
             }
-
         }
-
-        // Set environment for every parameter to the current one before its evaluated
-        for (i in 0 until size) {
-            args[i].env = env
-        }
-
-        // Skip eval for Hold property
-        /*
-		if(!hasProperty(Properties.HOLD)) {
-			for (int i = 0; i < size(); i++) {
-				setArg(i, get(i).eval());
-
-				//Return the first error
-				if (get(i).isError())
-					return get(i);
-			}
-		}
-		*/
 
         // Listable property
-        if (hasProperty(Properties.LISTABLE) && size == 1 && get(0).isList) {
-            val function = this as FunctionExpr
-            val p1 = get(0) as ListExpr
-            val result = ListExpr()
+        if (hasProperty(Properties.LISTABLE) && size == 1 && result[0].isList) {
+            val function = result as FunctionExpr
+            val p1 = result.get(0) as ListExpr
+            val listResult = ListExpr()
 
             for (i in 0 until p1.size)
-                result.add(FunctionExpr.createFunction(function.name, p1[i]))
+                listResult.add(FunctionExpr.createFunction(function.name, p1[i]))
 
-            return result.eval()
+            return listResult.eval()
         }
 
         return try {
-            evaluate()
+            val test = result.evaluate()
+
+            test
         } catch (e: Exception) {
             ErrorExpr(e.toString())
         }

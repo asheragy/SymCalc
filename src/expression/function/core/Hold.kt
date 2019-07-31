@@ -3,6 +3,7 @@ package org.cerion.symcalc.expression.function.core
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
+import java.lang.RuntimeException
 
 class Hold(vararg e: Expr) : FunctionExpr(Function.HOLD, *e) {
 
@@ -14,6 +15,5 @@ class Hold(vararg e: Expr) : FunctionExpr(Function.HOLD, *e) {
     }
 
     override fun validate() {
-        validateParameterCount(1)
     }
 }

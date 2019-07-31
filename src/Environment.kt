@@ -9,9 +9,6 @@ class Environment {
     //Table of variables, x = expr
     private val vars = HashMap<String, Expr>()
 
-    var skipEval = true
-
-
     fun setVar(name: String, value: Expr) {
         vars[name] = value
     }
@@ -19,8 +16,6 @@ class Environment {
     fun getVar(name: String): Expr? {
         return vars[name]
     }
-
-
 
     companion object {
 

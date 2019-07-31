@@ -10,11 +10,10 @@ class CompoundExpressionTest {
 
     @Test
     fun variableScope() {
-
         val e1 = Set(VarExpr("x"), IntegerNum(5))
         val e2 = Plus(IntegerNum(5), VarExpr("x"))
 
-        val e = CompoundExpression(e2, e1, e2)
+        val e = CompoundExpression(e1, e2)
         assertEquals(IntegerNum(10), e.eval())
     }
 }
