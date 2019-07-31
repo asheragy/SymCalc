@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.function
 
+import expression.SymbolExpr
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.NumberExpr
@@ -10,6 +11,9 @@ abstract class FunctionExpr protected constructor(val function: Function, vararg
 
     val isNumeric: Boolean
         get() = hasProperty(Properties.NumericFunction)
+
+    val symbol: SymbolExpr
+        get() = SymbolExpr(name)
 
     init {
         setArgs(*e)

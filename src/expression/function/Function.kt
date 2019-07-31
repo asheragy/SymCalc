@@ -40,6 +40,7 @@ enum class Function constructor(val value: String) {
     DOT("Dot"),
     IDENTITY_MATRIX("IdentityMatrix"),
     TALLY("Tally"),
+    MAP("Map"),
     CONSTANT_ARRAY("ConstantArray"),
 
     //IntegerNum

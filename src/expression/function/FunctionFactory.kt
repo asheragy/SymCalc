@@ -57,6 +57,7 @@ class FunctionFactory {
                 Function.DOT -> return Dot(*e)
                 Function.CONSTANT_ARRAY -> return ConstantArray(*e)
                 Function.TALLY -> return Tally(*e)
+                Function.MAP -> return Map(*e)
 
                 //IntegerNum
                 Function.FACTORIAL -> return Factorial(*e)

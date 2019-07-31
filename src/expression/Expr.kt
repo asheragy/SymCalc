@@ -175,7 +175,8 @@ abstract class Expr {
         CONST,
         ERROR,
         BOOL,
-        GRAPHICS
+        GRAPHICS,
+        SYMBOL
     }
 
     // ssymb = Cases[Map[ToExpression, Names["System`*"]], _Symbol];

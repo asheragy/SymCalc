@@ -13,7 +13,7 @@ class SelectTest {
         val list = ListExpr(IntegerNum.ZERO, IntegerNum.ONE, IntegerNum.TWO, IntegerNum(3))
         val expected = ListExpr(IntegerNum.ZERO, IntegerNum.TWO)
 
-        val e = Select(list, EvenQ())
+        val e = Select(list, EvenQ().symbol)
         assertEquals(expected, e.eval())
     }
 }
