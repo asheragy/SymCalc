@@ -115,13 +115,20 @@ class IntegerNumTest {
 
     @Test
     fun divide() {
-        //Zero
-        divideByZero(i1, i0)
-        divideByZero(i1, RationalNum(i0, i1))
-        divideByZero(i1, RealNum.create(0.0))
-        divideByZero(i1, ComplexNum())
+        assertEquals(IntegerNum(5), IntegerNum(10) / two)
+        assertEquals(IntegerNum(20), IntegerNum(10) / RationalNum(1,2))
+        assertEquals(RationalNum(21, 4), IntegerNum(3) / RationalNum(4,7))
+        assertEquals(RealNum.create(4.273504273504273), IntegerNum(10) / RealNum.create(2.34))
+        assertEquals(IntegerNum(2), IntegerNum(10) / ComplexNum(5,0))
+        assertEquals(ComplexNum(RationalNum(8,13),RationalNum(-12,13)), IntegerNum(4) / ComplexNum(2,3))
+    }
 
-        //Add more later
+    @Test
+    fun divideByZero() {
+        assertFailsWith<ArithmeticException> { one / zero}
+        assertFailsWith<ArithmeticException> { one / RationalNum(zero, one)}
+        assertFailsWith<ArithmeticException> { one / RealNum.create(0.0)}
+        assertFailsWith<ArithmeticException> { one / ComplexNum()}
     }
 
     @Test

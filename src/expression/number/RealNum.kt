@@ -11,10 +11,6 @@ abstract class RealNum : NumberExpr() {
 
     override val numType: NumberType get() = NumberType.REAL
 
-    override fun canExp(other: NumberExpr): Boolean {
-        return other.numType !== NumberType.COMPLEX
-    }
-
     companion object {
 
         fun create(s: String) : RealNum {

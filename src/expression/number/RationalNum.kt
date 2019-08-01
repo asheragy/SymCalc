@@ -120,8 +120,6 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
         }
     }
 
-    override fun canExp(other: NumberExpr): Boolean = !(other.isRational || other.isComplex)
-
     override fun power(other: NumberExpr): NumberExpr {
         val n: IntegerNum
         val d: IntegerNum

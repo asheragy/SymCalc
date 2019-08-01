@@ -1,14 +1,7 @@
 package org.cerion.symcalc.expression.number
 
-import jdk.jshell.spi.ExecutionControl
-import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
-import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.function.integer.Factor
-import org.cerion.symcalc.expression.function.list.Tally
-
 import java.math.BigDecimal
 import java.math.BigInteger
 
@@ -45,18 +38,6 @@ class IntegerNum : NumberExpr {
     override fun toDouble(): Double = intVal.toDouble()
     override fun evaluate(): NumberExpr = if (isNumericalEval) RealNum.create(this) else this
 
-    /*
-    override fun equals(e: NumberExpr): Boolean {
-        if (e.isInteger) {
-            val n = e as IntegerNum
-            if (intVal.compareTo(n.intVal) == 0)
-                return true
-        }
-
-        return false
-    }
-    */
-
     fun intValue(): Int = intVal.toInt()
     fun toBigInteger(): BigInteger = intVal
     fun toBigDecimal(): BigDecimal = BigDecimal(intVal)
@@ -89,39 +70,36 @@ class IntegerNum : NumberExpr {
         if (other.isZero)
             throw ArithmeticException("divide by zero")
 
-        //Int / Int
-        if (other.isInteger) {
-            val n = other as IntegerNum
-            val gcd = this.gcd(n)
+        when (other.numType) {
+            NumberType.INTEGER -> {
+                val n = other as IntegerNum
+                val gcd = this.gcd(n)
 
-            if (gcd.isOne) {
+                if (gcd.isOne) {
+                    return if (isNumericalEval) {
+                        Divide(RealNum.create(toDouble()), RealNum.create(other.toDouble())).eval() as NumberExpr
+                    } else RationalNum(this, n)
+                }
+
+                //Divide both by GCD
+                val a = IntegerNum(intVal.divide(gcd.intVal))
+                val b = IntegerNum(n.intVal.divide(gcd.intVal))
+
+                if (b.isOne)
+                    return a
+
                 return if (isNumericalEval) {
-                    Divide(RealNum.create(toDouble()), RealNum.create(other.toDouble())).eval() as NumberExpr
-                } else RationalNum(this, n)
-
+                    Divide(RealNum.create(a.toDouble()), RealNum.create(b.toDouble())).eval() as NumberExpr
+                }
+                else
+                    RationalNum(a, b)
             }
-
-            //Divide both by GCD
-            val a = IntegerNum(intVal.divide(gcd.intVal))
-            val b = IntegerNum(n.intVal.divide(gcd.intVal))
-
-            if (b.isOne)
-                return a
-
-            return if (isNumericalEval) {
-                Divide(RealNum.create(a.toDouble()), RealNum.create(b.toDouble())).eval() as NumberExpr
-            } else RationalNum(a, b)
-
-        }
-
-        throw NotImplementedError()
-    }
-
-    override fun canExp(other: NumberExpr): Boolean {
-        return when (other.numType) {
-            NumberType.INTEGER -> return true
-            NumberType.REAL -> return true
-            else -> false
+            NumberType.RATIONAL -> {
+                other as RationalNum
+                return Times(this, RationalNum(other.denominator, other.numerator)).eval() as NumberExpr
+            }
+            NumberType.REAL -> return RealNum.create(this) / other
+            NumberType.COMPLEX -> return ComplexNum(this) / other
         }
     }
 
@@ -167,25 +145,11 @@ class IntegerNum : NumberExpr {
     operator fun rem(N: IntegerNum): IntegerNum = IntegerNum(intVal.mod(N.intVal))
 
     override fun compareTo(other: NumberExpr): Int {
-        when (other.numType) {
-            NumberType.INTEGER -> {
-                val n1 = intVal
-                val n2 = other.asInteger().intVal
-                return n1.compareTo(n2)
-            }
-
-            NumberType.RATIONAL -> {
-                return this.toDouble().compareTo(other.asRational().toDouble())
-            }
-
-            NumberType.REAL -> {
-                val n1 = RealNum.create(this)
-                return n1.compareTo(other)
-            }
-
-            NumberType.COMPLEX -> {
-                return ComplexNum(this).compareTo(other)
-            }
+        return when (other.numType) {
+            NumberType.INTEGER -> intVal.compareTo(other.asInteger().intVal)
+            NumberType.RATIONAL -> this.toDouble().compareTo(other.toDouble())
+            NumberType.REAL -> RealNum.create(this).compareTo(other)
+            NumberType.COMPLEX -> ComplexNum(this).compareTo(other)
         }
     }
 

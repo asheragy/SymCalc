@@ -119,11 +119,14 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
             NumberType.COMPLEX -> {
 
                 val conj = other.asComplex().conjugate()
-                val top = (this * conj).asComplex()
+                var top = (this * conj)
+                if (top !is ComplexNum)
+                    top = ComplexNum(top)
+
                 val bottom = other.asComplex() * conj // This should not be a complex number
 
                 if (top.real.isInteger && bottom.isInteger)
-                    resultR = RationalNum(top.real.asInteger(), bottom.asInteger())
+                    resultR = RationalNum(top.real.asInteger(), bottom.asInteger()).evaluate()
                 else
                     resultR = top.real / bottom
 
@@ -139,10 +142,6 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
         }
 
         return ComplexNum(resultR, resultI).evaluate()
-    }
-
-    override fun canExp(other: NumberExpr): Boolean {
-        return false
     }
 
     override fun power(other: NumberExpr): NumberExpr {
