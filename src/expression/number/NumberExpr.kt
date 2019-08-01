@@ -2,6 +2,7 @@ package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.Expr
 import java.lang.Exception
+import java.lang.UnsupportedOperationException
 
 enum class NumberType {
     INTEGER,
@@ -10,6 +11,7 @@ enum class NumberType {
     COMPLEX
 }
 
+@Suppress("CovariantEquals")
 abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
 
     override val type: ExprType get() = ExprType.NUMBER
@@ -35,24 +37,13 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract override fun compareTo(other: NumberExpr): Int
 
     fun equals(other: NumberExpr): Boolean {
-        // TODO ignore type so 1.0==1?
-
-        try {
-            return compareTo(other) == 0
+        return try {
+            compareTo(other) == 0
         }
-        catch (e: NotImplementedError) {
-            return false
+        // Any comparison to complex number with non-zero imaginary is invalid, except equals (always false)
+        catch (e: UnsupportedOperationException) {
+            false
         }
-
-        /*
-        if(numType == other.numType) {
-            if (isComplex && other.isComplex)
-                return asComplex().real.compareTo(other.asComplex().real) == 0 && asComplex().img.compareTo(other.asComplex().img) == 0
-            return compareTo(other) == 0
-        }
-
-        return false
-        */
     }
 
     override fun equals(e: Expr): Boolean = e.isNumber && equals(e as NumberExpr)

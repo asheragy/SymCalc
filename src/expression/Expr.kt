@@ -86,7 +86,7 @@ abstract class Expr {
         return args.toString()
     }
 
-    override fun equals(other: Any?): Boolean {
+    final override fun equals(other: Any?): Boolean {
         if (other is Expr) {
             return this.equals(other)
         }

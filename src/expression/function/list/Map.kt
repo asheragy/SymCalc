@@ -9,17 +9,13 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 
 class Map(vararg e: Expr) : FunctionExpr(Function.MAP, *e) {
 
-    // TODO this is a workaround until 1st parameter can be passed in differently for function copy
-    override val properties: Int
-        get() = Expr.Properties.HOLD.value
-
     override fun evaluate(): Expr {
-        val symbol = args[0] as SymbolExpr
+        val f = args[0] as FunctionExpr
         val list = args[1].eval() as ListExpr
         val result = ListExpr()
 
         for (i in 0 until list.size) {
-            val e = createFunction(symbol.name, list[i])
+            val e = createFunction(f.name, list[i])
             result.add(e.eval())
         }
 
@@ -27,7 +23,7 @@ class Map(vararg e: Expr) : FunctionExpr(Function.MAP, *e) {
     }
 
     override fun validate() {
-        validateParameterType(0, ExprType.SYMBOL)
+        validateParameterType(0, ExprType.FUNCTION)
         validateParameterType(1, ExprType.LIST)
     }
 }

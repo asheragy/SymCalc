@@ -17,3 +17,4 @@ class MapTest {
         assertEquals(ListExpr(0, 1, 0, -1), Map(Sin().symbol, list).eval())
     }
 }
+

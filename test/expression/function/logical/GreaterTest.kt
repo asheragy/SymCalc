@@ -3,18 +3,26 @@ package org.cerion.symcalc.expression.function.logical
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.RationalNum
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class GreaterTest {
 
+    // All number ones should be better tested in NumberExpr tests with more generic comparison function
+
     @Test
-    fun basic() {
+    fun integers() {
         assertEquals(BoolExpr.TRUE, Greater(IntegerNum(2), IntegerNum(1)).eval())
         assertEquals(BoolExpr.FALSE, Greater(IntegerNum(2), IntegerNum(2)).eval())
         assertEquals(BoolExpr.TRUE, Greater(IntegerNum(3), IntegerNum(2), IntegerNum(1)).eval())
         assertEquals(BoolExpr.FALSE, Greater(IntegerNum(3), IntegerNum(1), IntegerNum(2)).eval())
         assertEquals(BoolExpr.FALSE, Greater(IntegerNum(1), IntegerNum(3), IntegerNum(2)).eval())
+    }
+
+    @Test
+    fun integer_withOthers() {
+        assertEquals(BoolExpr.TRUE, Greater(IntegerNum(5), RationalNum(9,2)).eval())
     }
 
     @Test

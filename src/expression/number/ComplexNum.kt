@@ -176,8 +176,7 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
             return real.compareTo(other)
         }
 
-        // TODO this may be implemented but some cases will throw exception
-        throw NotImplementedError()
+        throw UnsupportedOperationException("Unable to compare complex")
     }
 
     companion object {

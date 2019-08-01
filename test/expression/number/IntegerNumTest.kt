@@ -7,6 +7,7 @@ import java.math.BigInteger
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import java.math.BigDecimal
+import kotlin.test.assertFailsWith
 
 class IntegerNumTest {
 
@@ -37,9 +38,9 @@ class IntegerNumTest {
 
     @Test
     fun negate() {
-        verify(-IntegerNum.ZERO, 0)
-        verify(-IntegerNum.ONE, -1)
-        verify(-IntegerNum.TWO, -2)
+        verify(-zero, 0)
+        verify(-one, -1)
+        verify(-two, -2)
         verify(-IntegerNum(-5), 5)
     }
 
@@ -148,6 +149,38 @@ class IntegerNumTest {
         assertEquals(IntegerNum.NEGATIVE_ONE, --n)
     }
 
+    @Test
+    fun compareTo() {
+        assertEquals(0, IntegerNum(5).compareTo(IntegerNum(5)))
+        assertEquals(-1, IntegerNum(5).compareTo(IntegerNum(6)))
+        assertEquals(1, IntegerNum(6).compareTo(IntegerNum(5)))
+
+        assertEquals(0, zero.compareTo(RationalNum(0,1)))
+        assertEquals(-1, IntegerNum(5).compareTo(RationalNum(11,2)))
+        assertEquals(1, IntegerNum(5).compareTo(RationalNum(9,2)))
+
+        assertEquals(0, IntegerNum(5).compareTo(RealNum.create(5.0)))
+        assertEquals(-1, IntegerNum(5).compareTo(RealNum.create(5.00000001)))
+        assertEquals(1, IntegerNum(5).compareTo(RealNum.create(4.999999999)))
+
+        assertEquals(0, IntegerNum.TWO.compareTo(ComplexNum(IntegerNum.TWO, zero)))
+    }
+
+    @Test
+    fun compareTo_LargeNumbers() {
+        val a = IntegerNum("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999998")
+        val b = IntegerNum("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999")
+        assertEquals(1, b.compareTo(a))
+        assertEquals(1, one.compareTo(RationalNum(one,a)))
+        assertEquals(-1, zero.compareTo(RationalNum(one,a)))
+        assertEquals(1, a.compareTo(RationalNum(b,IntegerNum(7))))
+    }
+
+    @Test
+    fun compareTo_complex() {
+        assertFailsWith<UnsupportedOperationException> { one.compareTo(ComplexNum(zero, one)) }
+    }
+
     private fun verify(e: NumberExpr, expected: Long) {
         if (e.numType != NumberType.INTEGER)
             fail("unexpected type: " + e.numType)
@@ -171,5 +204,11 @@ class IntegerNumTest {
         } catch (e: ArithmeticException) {
             //Success
         }
+    }
+
+    companion object {
+        val zero = IntegerNum.ZERO
+        val one = IntegerNum.ONE
+        val two = IntegerNum.TWO
     }
 }

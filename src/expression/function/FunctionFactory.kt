@@ -95,7 +95,7 @@ class FunctionFactory {
                 Function.COMPOUND_EXPRESSION -> return CompoundExpression(*e)
                 Function.IDENTITY_MATRIX -> return IdentityMatrix(*e)
                 Function.IF -> return If(*e)
-                null -> TODO()
+                null -> throw RuntimeException("Function not found")
             }
 
             throw RuntimeException("Missing case")

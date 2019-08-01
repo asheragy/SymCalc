@@ -70,7 +70,7 @@ class Greater(vararg e: Expr) : FunctionExpr(Function.GREATER, *e) {
             if (n1.isComplex || n2.isComplex)
                 return LogicalCompare.ERROR
 
-            return if (n1.toDouble() > n2.toDouble())
+            return if (n1 > n2)
                 LogicalCompare.TRUE
             else
                 LogicalCompare.FALSE

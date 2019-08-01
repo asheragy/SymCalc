@@ -174,17 +174,17 @@ class IntegerNum : NumberExpr {
                 return n1.compareTo(n2)
             }
 
-            NumberType.RATIONAL -> TODO()
+            NumberType.RATIONAL -> {
+                return this.toDouble().compareTo(other.asRational().toDouble())
+            }
+
             NumberType.REAL -> {
                 val n1 = RealNum.create(this)
                 return n1.compareTo(other)
             }
-            NumberType.COMPLEX -> {
-                val complex = other.asComplex()
-                if (complex.img.isZero)
-                    return this.compareTo(complex.real)
 
-                TODO()
+            NumberType.COMPLEX -> {
+                return ComplexNum(this).compareTo(other)
             }
         }
     }

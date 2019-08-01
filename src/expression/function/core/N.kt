@@ -16,7 +16,6 @@ class N(vararg e: Expr) : FunctionExpr(Function.N, *e) {
     }
 
     override fun evaluate(): Expr {
-        // TODO this can use map function?
         val e = args[0]
         val newArgs = mutableListOf<Expr>()
         for (i in 0 until e.args.size) {
