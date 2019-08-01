@@ -1,7 +1,5 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.ErrorExpr
-import org.cerion.symcalc.expression.Expr
 import java.math.RoundingMode
 
 class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : NumberExpr() {
@@ -53,14 +51,8 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
         return if (d.isOne) n else RationalNum(n, d)
     }
 
-    override fun toString(): String = numerator.toString() + "/" + denominator.toString()
-
-    override fun toDouble(): Double {
-        val decN = numerator.toBigDecimal().toDouble()
-        val decD = denominator.toBigDecimal().toDouble()
-        return decN / decD
-    }
-
+    override fun toString(): String = "$numerator/$denominator"
+    override fun toDouble(): Double = numerator.toBigDecimal().toDouble() / denominator.toBigDecimal().toDouble()
     override fun unaryMinus(): NumberExpr = RationalNum(numerator.unaryMinus(), denominator)
 
     fun reciprocal(): NumberExpr = RationalNum(denominator, numerator).evaluate()
@@ -130,32 +122,24 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
                 return RationalNum(n, d)
             }
 
-            //case RATIONAL: //RationalNum ^ RationalNum
-            //	break;
-
             NumberType.REAL -> {
                 val rResult = RealNum.create(this.toDouble())
                 return rResult.power(other)
             }
-            NumberType.RATIONAL -> {
-                // If both sides are reduced there may be nothing to do here...
-                return this
-            }
+            NumberType.RATIONAL -> throw UnsupportedOperationException()
 
             NumberType.COMPLEX -> {
-                val complex = other.asComplex()
-                if (complex.img.isZero)
-                    return this.power(complex.real)
+                other as ComplexNum
+                if (other.img.isZero)
+                    return this.power(other.real)
 
-                TODO()
+                return ComplexNum(this).power(other)
             }
         }
     }
 
     override fun compareTo(other: NumberExpr): Int {
-        // TODO add test to see if 1/2 == 2/4 and check compareTo Complex
-        val result = toDouble().compareTo(other.toDouble())
-        return result
+        return toDouble().compareTo(other.toDouble())
     }
 
     companion object {

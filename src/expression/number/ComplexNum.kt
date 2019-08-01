@@ -37,6 +37,9 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
     override fun unaryMinus(): ComplexNum = ComplexNum(real.unaryMinus(), img.unaryMinus())
 
     override fun toDouble(): Double {
+        if (img.isZero)
+            return real.toDouble()
+
         throw UnsupportedOperationException("Complex cannot be converted to double")
     }
 

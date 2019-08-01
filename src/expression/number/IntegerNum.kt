@@ -45,7 +45,6 @@ class IntegerNum : NumberExpr {
     operator fun plus(N: IntegerNum): IntegerNum = IntegerNum(intVal.add(N.intVal))
     operator fun minus(n: IntegerNum): IntegerNum = IntegerNum(intVal.subtract(n.intVal))
     operator fun times(n: IntegerNum): IntegerNum = IntegerNum(intVal.multiply(n.intVal))
-
     override fun unaryMinus(): IntegerNum = IntegerNum(intVal.negate())
 
     override fun plus(other: NumberExpr): NumberExpr {
@@ -104,18 +103,10 @@ class IntegerNum : NumberExpr {
     }
 
     override fun power(other: NumberExpr): NumberExpr {
-        //NumberExpr result = null;
         when (other.numType) {
             NumberType.INTEGER -> return IntegerNum(intVal.pow(other.asInteger().intVal.toInt()))
-
-            NumberType.RATIONAL -> {
-                throw UnsupportedOperationException()
-            }
-
-            NumberType.REAL -> {
-                val real = RealNum.create(this)
-                return real.power(other)
-            }
+            NumberType.RATIONAL -> throw UnsupportedOperationException()
+            NumberType.REAL -> return RealNum.create(this).power(other)
             NumberType.COMPLEX -> {
                 val complex = other.asComplex()
                 if (complex.img.isZero)

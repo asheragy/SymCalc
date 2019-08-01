@@ -8,6 +8,7 @@ import org.junit.Test
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
+import kotlin.test.assertFailsWith
 
 
 class RationalNumTest : NumberTestBase() {
@@ -17,6 +18,29 @@ class RationalNumTest : NumberTestBase() {
         assertEquals(RationalNum(4, 5), RationalNum(4, 5))
         assertNotEquals(RationalNum(4, 5), RationalNum(4, 4))
         assertNotEquals(RationalNum(4, 5), RationalNum(5, 4))
+    }
+
+    @Test
+    fun compareTo() {
+        assertEquals(-1, RationalNum(1,3).compareTo(IntegerNum(1)))
+        assertEquals(1, RationalNum(1,2).compareTo(IntegerNum(0)))
+        assertEquals(0, RationalNum(16,4).compareTo(IntegerNum(4)))
+
+        assertEquals(-1, RationalNum(1,3).compareTo(RationalNum(1,2)))
+        assertEquals(1, RationalNum(10,3).compareTo(RationalNum(7,3)))
+        assertEquals(0, RationalNum(1,2).compareTo(RationalNum(2,4)))
+
+        assertEquals(-1, RationalNum(-1,2).compareTo(RealNum.create(-0.2)))
+        assertEquals(1, RationalNum(1,2).compareTo(RealNum.create(0.4)))
+        assertEquals(0, RationalNum(1,2).compareTo(RealNum.create(0.5)))
+
+        assertEquals(-1, RationalNum(1,3).compareTo(ComplexNum(1,0)))
+        assertEquals(1, RationalNum(4,3).compareTo(ComplexNum(1,0)))
+    }
+
+    @Test
+    fun compareTo_complex() {
+        assertFailsWith<UnsupportedOperationException> { RationalNum(1,2).compareTo(ComplexNum(IntegerNumTest.zero, IntegerNumTest.one)) }
     }
 
     @Test
@@ -84,5 +108,14 @@ class RationalNumTest : NumberTestBase() {
         //Rational
         assertEquals(RationalNum(1, 2), Subtract(RationalNum(1, 1), RationalNum(1, 2)).eval())
         assertEquals(RationalNum(-1, 2), Subtract(RationalNum(1, 2), IntegerNum.ONE).eval())
+    }
+
+    @Test
+    fun power() {
+        assertEquals(RationalNum(1,8), RationalNum.HALF.power(IntegerNum(3)))
+        assertFailsWith<UnsupportedOperationException> { RationalNum.HALF.power(RationalNum(1,3)) }
+        assertEquals(RealNum.create(0.1088188204120155), RationalNum.HALF.power(RealNum.create(3.2)))
+        assertEquals(RationalNum(1,16), RationalNum.HALF.power(ComplexNum(4,0)))
+        assertFailsWith<UnsupportedOperationException> { RationalNum.HALF.power(ComplexNum(1,1)) }
     }
 }

@@ -4,7 +4,7 @@ import java.math.BigDecimal
 
 abstract class RealNum : NumberExpr() {
 
-    abstract val isWholeNumber: Boolean // TODO better name for this? isInteger() is already taken
+    abstract val isWholeNumber: Boolean
     abstract fun toInteger(): IntegerNum
 
     val isDouble: Boolean get() = this is RealNum_Double
