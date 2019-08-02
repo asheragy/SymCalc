@@ -155,7 +155,6 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
         if (other.isZero)
             return ComplexNum(1, 0)
 
-
         when (other.numType) {
             NumberType.INTEGER -> TODO()
             NumberType.RATIONAL -> TODO()

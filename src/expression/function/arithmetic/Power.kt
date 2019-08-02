@@ -49,6 +49,10 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
                 if (a.isInteger && b.isRational)
                     return integerToRational(a.asInteger(), b.asRational())
+                else if (a.isRational && b.isRational) {
+                    a as RationalNum
+                    return Divide(Power(a.numerator, b), Power(a.denominator, b)).eval()
+                }
 
                 // Complex power implemented here since the result is not always a NumberExpr
                 if (b.isComplex && !b.asComplex().img.isZero)

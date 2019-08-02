@@ -44,6 +44,11 @@ class PowerTest {
     }
 
     @Test
+    fun toRational() {
+        assertEquals(Divide(IntegerNum.ONE, Power(IntegerNum.TWO,RationalNum.HALF)), Power(RationalNum(1,2), RationalNum(1,2)).eval())
+    }
+
+    @Test
     fun ePiI() {
         val approx = ComplexNum(RealNum.create(-1.0), RealNum.create(1.2246467991473532E-16))
         assertEquals(approx, Power(N(E()), Times(N(Pi()), I())).eval())
