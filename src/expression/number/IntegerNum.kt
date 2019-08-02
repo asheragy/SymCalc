@@ -7,7 +7,7 @@ import java.math.BigInteger
 
 class IntegerNum(override val value: BigInteger) : NumberExpr() {
 
-    private val intVal: BigInteger get() = value as BigInteger
+    private val intVal: BigInteger get() = value
 
     override val isZero: Boolean get() = intVal == BigInteger.ZERO
     override val isOne: Boolean get() = intVal == BigInteger.ONE
@@ -37,15 +37,6 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
 
     override fun plus(other: NumberExpr): NumberExpr {
         return if (other.isInteger) plus(other.asInteger()) else other.plus(this)
-    }
-
-    override fun minus(other: NumberExpr): NumberExpr {
-        if (other.isInteger)
-            return minus(other.asInteger())
-
-        //Default reverse order
-        val negative = other.unaryMinus()
-        return negative + this
     }
 
     override fun times(other: NumberExpr): NumberExpr {

@@ -44,6 +44,22 @@ class ComplexNumTest {
     }
 
     @Test
+    fun addition() {
+        assertEquals(ComplexNum(6,1), ComplexNum(1,1) + IntegerNum(5))
+        assertEquals(ComplexNum(RationalNum(3,2),IntegerNum.ONE), ComplexNum(1,1) + RationalNum.HALF)
+        assertEquals(ComplexNum(RealNum.create(6.0),IntegerNum.ONE), ComplexNum(1,1) + RealNum.create(5.0))
+        assertEquals(ComplexNum(2,2), ComplexNum(1,1) + ComplexNum(1,1))
+    }
+
+    @Test
+    fun subtraction() {
+        assertEquals(ComplexNum(-4,1), ComplexNum(1,1) - IntegerNum(5))
+        assertEquals(ComplexNum(RationalNum(1,2),IntegerNum.ONE), ComplexNum(1,1) - RationalNum.HALF)
+        assertEquals(ComplexNum(RealNum.create(-4.0),IntegerNum.ONE), ComplexNum(1,1) - RealNum.create(5.0))
+        assertEquals(ComplexNum(0,0), ComplexNum(1,1) - ComplexNum(1,1))
+    }
+
+    @Test
     fun divide() {
         assertEquals(ComplexNum(2,4), ComplexNum(4,8) / IntegerNum.TWO)
 

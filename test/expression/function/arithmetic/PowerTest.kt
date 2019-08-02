@@ -49,12 +49,15 @@ class PowerTest {
     }
 
     @Test
-    fun ePiI() {
+    fun ePiI_approx() {
         val approx = ComplexNum(RealNum.create(-1.0), RealNum.create(1.2246467991473532E-16))
         assertEquals(approx, Power(N(E()), Times(N(Pi()), I())).eval())
         assertEquals(approx, Power(N(E()), Times(Pi(), I())).eval())
         assertEquals(approx, Power(E(), Times(N(Pi()), I())).eval())
+    }
 
+    @Test
+    fun ePiI() {
         assertEquals(IntegerNum(-1), Power(E(), Times(Pi(), I())).eval())
         assertEquals(IntegerNum(-1), Power(E(), Times(I(), Pi())).eval())
 
@@ -62,5 +65,6 @@ class PowerTest {
         assertEquals(Times(IntegerNum(-1),Power(E(), IntegerNum(5))), Power(E(), Plus(IntegerNum(5), Times(I(), Pi()))).eval())
         assertEquals(IntegerNum.ONE, Power(E(), Times(IntegerNum.TWO, I(), Pi())).eval())
         assertEquals(ComplexNum(0,1), Power(E(), Times(I(), Divide(Pi(), IntegerNum.TWO))).eval())
+        assertEquals(ComplexNum(0,-1), Power(E(), Times(I(), Times(Pi(), RationalNum(3,2)))).eval())
     }
 }

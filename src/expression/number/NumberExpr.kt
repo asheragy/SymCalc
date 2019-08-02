@@ -50,11 +50,14 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     public override fun evaluate(): NumberExpr = this
 
     abstract operator fun plus(other: NumberExpr): NumberExpr
-    abstract operator fun minus(other: NumberExpr): NumberExpr // TODO this might be implemented here as this+other.unaryMinus() after all tests are done
     abstract operator fun times(other: NumberExpr): NumberExpr
     abstract operator fun div(other: NumberExpr): NumberExpr
     abstract fun power(other: NumberExpr): NumberExpr // TODO consider not having this function since the hard work is done in Power() and this avoids unsupported exceptions...
     abstract operator fun unaryMinus(): NumberExpr
+
+    operator fun minus(other: NumberExpr): NumberExpr {
+        return this + other.unaryMinus()
+    }
 
     companion object {
         @JvmStatic fun parse(s: String): NumberExpr {

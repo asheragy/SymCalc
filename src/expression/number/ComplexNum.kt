@@ -61,23 +61,6 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
         return ComplexNum(real + other, img).evaluate()
     }
 
-    override fun minus(other: NumberExpr): NumberExpr {
-        val resultR: NumberExpr
-        val resultI: NumberExpr
-
-        if (other.numType === NumberType.COMPLEX) {
-            val b = other as ComplexNum
-            resultR = real - b.real
-            resultI = img - b.img
-
-        } else {
-            resultR = real.minus(other)
-            resultI = img
-        }
-
-        return ComplexNum(resultR, resultI).evaluate()
-    }
-
     override fun times(other: NumberExpr): NumberExpr {
         val resultR: NumberExpr
         val resultI: NumberExpr

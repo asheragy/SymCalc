@@ -77,8 +77,6 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
         }
     }
 
-    override fun minus(other: NumberExpr): NumberExpr = this + other.unaryMinus()
-
     override fun times(other: NumberExpr): NumberExpr {
         val result: RationalNum
 

@@ -104,28 +104,6 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
         }
     }
 
-    override fun minus(other: NumberExpr): NumberExpr {
-        return this + other.unaryMinus()
-        /*
-        when (other.numType) {
-            NumberType.INTEGER -> TODO()
-            NumberType.RATIONAL -> TODO()
-            NumberType.REAL -> {
-                val real = other.asReal()
-                if(real.isDouble)
-                    return real + this
-
-                real as RealNum_BigDecimal
-
-                // Both are BigDecimal
-                val result = RealNum_BigDecimal( this.bigNumber.subtract(real.bigNumber))
-                return evaluatePrecision(result, this, real)
-            }
-            NumberType.COMPLEX -> TODO()
-        }
-        */
-    }
-
     override fun times(other: NumberExpr): NumberExpr {
         when(other.numType) {
             NumberType.INTEGER -> TODO()

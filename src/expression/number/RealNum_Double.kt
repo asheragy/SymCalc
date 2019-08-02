@@ -43,10 +43,6 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
         }
     }
 
-    override fun minus(other: NumberExpr): NumberExpr {
-        return this + other.unaryMinus()
-    }
-
     override fun times(other: NumberExpr): NumberExpr {
         when (other.numType) {
             NumberType.INTEGER,
