@@ -1,13 +1,9 @@
 package org.cerion.symcalc.expression
 
-class VarExpr(str: String) : Expr() {
+class VarExpr(override val value: String) : Expr() {
 
     override val type: ExprType
         get() = ExprType.VARIABLE
-
-    init {
-        value = str
-    }
 
     override fun treeForm(i: Int) = indent(i, "VarExpr = " + value())
     override fun toString(): String = value()

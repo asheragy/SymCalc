@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Times
 import java.math.BigDecimal
 import java.math.BigInteger
 
-class IntegerNum : NumberExpr {
+class IntegerNum(override val value: BigInteger) : NumberExpr() {
 
     private val intVal: BigInteger get() = value as BigInteger
 
@@ -18,21 +18,9 @@ class IntegerNum : NumberExpr {
     val isOdd: Boolean get() = intVal.testBit(0)
     val signum: Int get() = intVal.signum()
 
-    constructor(n: BigInteger) {
-        value = n
-    }
-
-    constructor(s: String) {
-        value = BigInteger(s)
-    }
-
-    constructor(n: Long) {
-        value = BigInteger.valueOf(n)
-    }
-
-    constructor(n: Int) {
-        value = BigInteger.valueOf(n.toLong())
-    }
+    constructor(s: String) : this(BigInteger(s))
+    constructor(n: Long) : this(BigInteger.valueOf(n))
+    constructor(n: Int) : this(BigInteger.valueOf(n.toLong()))
 
     override fun toString(): String = intVal.toString()
     override fun toDouble(): Double = intVal.toDouble()

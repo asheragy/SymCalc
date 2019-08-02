@@ -4,26 +4,24 @@ import org.cerion.symcalc.expression.function.arithmetic.Power
 import kotlin.math.floor
 import kotlin.math.pow
 
-internal class RealNum_Double(value: Double = 0.0) : RealNum() {
+internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
 
-    private var dNumber: Double = value
+    override val isZero: Boolean get() = value == 0.0
+    override val isOne: Boolean get() = value == 1.0
+    override val isNegative: Boolean get() = value < 0
 
-    override val isZero: Boolean get() = dNumber == 0.0
-    override val isOne: Boolean get() = dNumber == 1.0
-    override val isNegative: Boolean get() = dNumber < 0
-
-    override fun toInteger(): IntegerNum = IntegerNum(dNumber.toLong())
+    override fun toInteger(): IntegerNum = IntegerNum(value.toLong())
     override val isWholeNumber: Boolean
-        get() = dNumber == floor(dNumber) && !java.lang.Double.isInfinite(dNumber)
+        get() = value == floor(value) && !java.lang.Double.isInfinite(value)
 
-    constructor(n: IntegerNum) : this() { dNumber = n.toDouble() }
+    constructor(n: IntegerNum) : this(n.toDouble())
 
     init {
         setNumericalEval(true, SYSTEM_DECIMAL_PRECISION)
     }
 
-    override fun toDouble(): Double = dNumber
-    override fun toString(): String = "" + dNumber
+    override fun toDouble(): Double = value
+    override fun toString(): String = "" + value
 
     override fun compareTo(other: NumberExpr): Int {
         when(other.numType) {
@@ -34,13 +32,13 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
         }
     }
 
-    override fun unaryMinus(): RealNum_Double = RealNum_Double(0 - dNumber)
+    override fun unaryMinus(): RealNum_Double = RealNum_Double(0 - value)
 
     override fun plus(other: NumberExpr): NumberExpr {
         when (other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL,
-            NumberType.REAL -> return create(dNumber + other.toDouble())
+            NumberType.REAL -> return create(value + other.toDouble())
             NumberType.COMPLEX -> return ComplexNum(this) + other
         }
     }
@@ -53,7 +51,7 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
         when (other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL,
-            NumberType.REAL -> return RealNum_Double(dNumber * other.toDouble())
+            NumberType.REAL -> return RealNum_Double(value * other.toDouble())
             NumberType.COMPLEX -> return ComplexNum(this) * other
         }
     }
@@ -62,7 +60,7 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
         when (other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL,
-            NumberType.REAL -> return RealNum_Double(dNumber / other.toDouble())
+            NumberType.REAL -> return RealNum_Double(value / other.toDouble())
             NumberType.COMPLEX -> return ComplexNum(this) / other
         }
     }
@@ -71,7 +69,7 @@ internal class RealNum_Double(value: Double = 0.0) : RealNum() {
         when (other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL,
-            NumberType.REAL -> return create(dNumber.pow(other.toDouble()))
+            NumberType.REAL -> return create(value.pow(other.toDouble()))
             NumberType.COMPLEX -> return Power(this, other).eval() as NumberExpr
         }
     }

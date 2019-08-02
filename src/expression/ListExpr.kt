@@ -3,8 +3,8 @@ package org.cerion.symcalc.expression
 import org.cerion.symcalc.expression.number.IntegerNum
 
 class ListExpr : Expr {
-    override val type: ExprType
-        get() = ExprType.LIST
+    override val value: Any? get() = null
+    override val type: ExprType get() = ExprType.LIST
 
     constructor()
 

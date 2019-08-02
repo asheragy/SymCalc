@@ -32,7 +32,7 @@ class D(vararg e: Expr) : FunctionExpr(Function.D, *e) {
             val func = e as FunctionExpr
             val result: FunctionExpr
 
-            when (func.function) {
+            when (func.value) {
                 Function.PLUS -> {
                     // TODO use map function here, or similar
                     result = Plus()

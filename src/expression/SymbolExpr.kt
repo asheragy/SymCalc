@@ -3,13 +3,9 @@ package expression
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.FunctionFactory
 
-class SymbolExpr(str: String) : Expr() {
+class SymbolExpr(override val value: String) : Expr() {
 
     override val type: ExprType get() = ExprType.SYMBOL
-
-    init {
-        value = str
-    }
 
     override fun toString(): String = "Symbol $value"
     override fun treeForm(i: Int) = indent(i, "Symbol = $name")

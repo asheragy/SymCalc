@@ -1,13 +1,9 @@
 package org.cerion.symcalc.expression
 
-class ErrorExpr(error: String) : Expr() {
+class ErrorExpr(override val value: String) : Expr() {
 
     override val type: ExprType
         get() = ExprType.ERROR
-
-    init {
-        value = error
-    }
 
     override fun treeForm(i: Int) = indent(i, "Error " + this.toString())
     override fun evaluate(): Expr = this

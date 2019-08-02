@@ -5,12 +5,9 @@ import org.cerion.symcalc.expression.constant.*
 import java.util.Hashtable
 
 abstract class ConstExpr : Expr() {
-
-    override val type: ExprType
-        get() = ExprType.CONST
-
-    override val properties: Int
-        get() = Expr.Properties.CONSTANT.value
+    override val value: Any? get() = null
+    override val type: ExprType get() = ExprType.CONST
+    override val properties: Int get() = Expr.Properties.CONSTANT.value
 
     override fun treeForm(i: Int) = indent(i, "Constant: " + toString())
     override fun equals(e: Expr): Boolean = javaClass == e.javaClass

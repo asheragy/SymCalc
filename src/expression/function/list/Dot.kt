@@ -56,10 +56,10 @@ class Dot(vararg e: Expr) : FunctionExpr(Function.DOT, *e) {
         val a = getList(0)
         val b = getList(1)
 
-        if (VectorQ(a).eval().asBool().value() && VectorQ(b).eval().asBool().value()) {
+        if (VectorQ(a).eval().asBool().value && VectorQ(b).eval().asBool().value) {
             if (a.size != b.size)
                 throw ValidationException("Vectors must be same length")
-        } else if (MatrixQ(a).eval().asBool().value() && MatrixQ(b).eval().asBool().value()) {
+        } else if (MatrixQ(a).eval().asBool().value && MatrixQ(b).eval().asBool().value) {
             val ax = a.getList(0)
             val bx = b.getList(0)
 

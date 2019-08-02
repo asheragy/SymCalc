@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression.constant
 
-import org.cerion.symcalc.Environment
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.RealNum

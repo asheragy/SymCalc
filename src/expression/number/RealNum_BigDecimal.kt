@@ -6,16 +6,15 @@ import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.min
 
-class RealNum_BigDecimal(bigDecimal: BigDecimal) : RealNum() {
+class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
     private val bigNumber: BigDecimal
-        get() = value as BigDecimal
+        get() = value
 
     constructor(value: String) : this(BigDecimal(value))
 
     init {
-        this.value = bigDecimal
-        setNumericalEval(true, bigDecimal.scale())
+        setNumericalEval(true, value.scale())
     }
 
     //override val precision: Int

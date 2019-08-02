@@ -4,6 +4,8 @@ import kotlin.UnsupportedOperationException
 
 class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) : NumberExpr() {
 
+    override val value: Any? get() = null
+
     val real: NumberExpr get() = get(0) as NumberExpr
     val img: NumberExpr get() = get(1) as NumberExpr
 
@@ -12,7 +14,7 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
     override val numType: NumberType get() = NumberType.COMPLEX
 
     override val isNegative: Boolean
-        get() = throw NotImplementedError() // TODO need InvalidOperation exception
+        get() = throw UnsupportedOperationException()
 
     init {
         setArg(0, r)
@@ -49,20 +51,6 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
 
         return this
     }
-
-    /*
-    override fun equals(e: NumberExpr): Boolean {
-        if (e.isComplex) {
-            val c = e as ComplexNum
-            return real.equals(c.real) && img.equals(c.img)
-        } else if (img.isZero) {
-            //Non complex number can be equal as long as the imaginary part is zero
-            return real.equals(e)
-        }
-
-        return false
-    }
-    */
 
     override fun plus(other: NumberExpr): NumberExpr {
         if (other.numType === NumberType.COMPLEX) {

@@ -6,8 +6,8 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 
-abstract class FunctionExpr protected constructor(val function: Function, vararg val e: Expr) : Expr() {
-    val name: String = function.toString()
+abstract class FunctionExpr protected constructor(final override val value: Function, vararg val e: Expr) : Expr() {
+    val name: String = value.toString()
 
     val isNumeric: Boolean
         get() = hasProperty(Properties.NumericFunction)
@@ -40,7 +40,7 @@ abstract class FunctionExpr protected constructor(val function: Function, vararg
             return false
 
         val f = e as FunctionExpr
-        if (f.function != function)
+        if (f.value != value)
             return false
 
         if (f.size != size)

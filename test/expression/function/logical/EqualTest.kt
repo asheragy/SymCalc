@@ -22,6 +22,6 @@ class EqualTest {
 
     private fun isEqual(a: Expr, b: Expr) {
         val equal = Equal(a, b).eval()
-        Assert.assertTrue("$a == $b", equal.asBool().value())
+        Assert.assertTrue("$a == $b", equal.asBool().value)
     }
 }

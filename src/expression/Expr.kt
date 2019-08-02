@@ -13,8 +13,7 @@ import java.util.*
 
 abstract class Expr {
 
-    var value: Any? = null
-    protected set
+    abstract val value: Any?
 
     var env = Environment()
         private set

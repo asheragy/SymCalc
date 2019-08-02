@@ -15,11 +15,11 @@ fun assertEqual(expected: Int, actual: Expr) {
 }
 
 fun assertTrue(expected: Expr) {
-    assertTrue(expected.asBool().value())
+    assertTrue(expected.asBool().value)
 }
 
 fun assertFalse(expected: Expr) {
-    assertFalse(expected.asBool().value())
+    assertFalse(expected.asBool().value)
 }
 
 fun listOfNumbers(vararg numbers: Number) : ListExpr {

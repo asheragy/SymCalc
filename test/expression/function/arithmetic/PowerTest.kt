@@ -38,7 +38,7 @@ class PowerTest {
         for(num in nums) {
             for (one in ones) {
                 val power = Power(num, one).eval()
-                assertTrue("Power($num,$one)", Equal(num, power).eval().asBool().value())
+                assertTrue("Power($num,$one)", Equal(num, power).eval().asBool().value)
             }
         }
     }
