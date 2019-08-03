@@ -14,7 +14,7 @@ class UserFunction(private val name: String, private val expr: Expr, vararg vars
             throw IllegalArgumentException()
 
         for (i in vars.indices) {
-            expr.env.setVar(vars[i].value(), params[i])
+            expr.env.setVar(vars[i].value, params[i])
         }
 
         return expr.eval()

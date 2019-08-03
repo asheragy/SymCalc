@@ -7,33 +7,32 @@ import java.math.BigInteger
 
 class IntegerNum(override val value: BigInteger) : NumberExpr() {
 
-    private val intVal: BigInteger get() = value
-
-    override val isZero: Boolean get() = intVal == BigInteger.ZERO
-    override val isOne: Boolean get() = intVal == BigInteger.ONE
+    override val isZero: Boolean get() = value == BigInteger.ZERO
+    override val isOne: Boolean get() = value == BigInteger.ONE
     override val numType: NumberType get() = NumberType.INTEGER
     override val isNegative: Boolean get() = signum == -1
+    override val precision: Int get() = InfinitePrecision
 
-    val isEven: Boolean get() = !intVal.testBit(0)
-    val isOdd: Boolean get() = intVal.testBit(0)
-    val signum: Int get() = intVal.signum()
+    val isEven: Boolean get() = !value.testBit(0)
+    val isOdd: Boolean get() = value.testBit(0)
+    val signum: Int get() = value.signum()
 
     constructor(s: String) : this(BigInteger(s))
     constructor(n: Long) : this(BigInteger.valueOf(n))
     constructor(n: Int) : this(BigInteger.valueOf(n.toLong()))
 
-    override fun toString(): String = intVal.toString()
-    override fun toDouble(): Double = intVal.toDouble()
+    override fun toString(): String = value.toString()
+    override fun toDouble(): Double = value.toDouble()
     override fun evaluate(): NumberExpr = if (isNumericalEval) RealNum.create(this) else this
 
-    fun intValue(): Int = intVal.toInt()
-    fun toBigInteger(): BigInteger = intVal
-    fun toBigDecimal(): BigDecimal = BigDecimal(intVal)
+    fun intValue(): Int = value.toInt()
+    fun toBigInteger(): BigInteger = value
+    fun toBigDecimal(): BigDecimal = BigDecimal(value)
 
-    operator fun plus(N: IntegerNum): IntegerNum = IntegerNum(intVal.add(N.intVal))
-    operator fun minus(n: IntegerNum): IntegerNum = IntegerNum(intVal.subtract(n.intVal))
-    operator fun times(n: IntegerNum): IntegerNum = IntegerNum(intVal.multiply(n.intVal))
-    override fun unaryMinus(): IntegerNum = IntegerNum(intVal.negate())
+    operator fun plus(N: IntegerNum): IntegerNum = IntegerNum(value.add(N.value))
+    operator fun minus(n: IntegerNum): IntegerNum = IntegerNum(value.subtract(n.value))
+    operator fun times(n: IntegerNum): IntegerNum = IntegerNum(value.multiply(n.value))
+    override fun unaryMinus(): IntegerNum = IntegerNum(value.negate())
 
     override fun plus(other: NumberExpr): NumberExpr {
         return if (other.isInteger) plus(other.asInteger()) else other.plus(this)
@@ -60,8 +59,8 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
                 }
 
                 //Divide both by GCD
-                val a = IntegerNum(intVal.divide(gcd.intVal))
-                val b = IntegerNum(n.intVal.divide(gcd.intVal))
+                val a = IntegerNum(value.divide(gcd.value))
+                val b = IntegerNum(n.value.divide(gcd.value))
 
                 if (b.isOne)
                     return a
@@ -83,7 +82,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
 
     override fun power(other: NumberExpr): NumberExpr {
         when (other.numType) {
-            NumberType.INTEGER -> return IntegerNum(intVal.pow(other.asInteger().intVal.toInt()))
+            NumberType.INTEGER -> return IntegerNum(value.pow(other.asInteger().value.toInt()))
             NumberType.RATIONAL -> throw UnsupportedOperationException()
             NumberType.REAL -> return RealNum.create(this).power(other)
             NumberType.COMPLEX -> {
@@ -97,26 +96,26 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
     }
 
     //IntegerNum Specific Functions
-    fun gcd(N: IntegerNum): IntegerNum = IntegerNum(intVal.gcd(N.intVal))
+    fun gcd(N: IntegerNum): IntegerNum = IntegerNum(value.gcd(N.value))
 
     fun powerMod(b: IntegerNum, m: IntegerNum): IntegerNum {
         //Assuming all integers at this point since MathFunc needs to check that
-        val num = intVal
-        val exp = b.intVal
-        val mod = m.intVal
+        val num = value
+        val exp = b.value
+        val mod = m.value
 
         return IntegerNum(num.modPow(exp, mod))
     }
 
-    fun primeQ(): Boolean = intVal.isProbablePrime(5)
+    fun primeQ(): Boolean = value.isProbablePrime(5)
 
-    operator fun inc(): IntegerNum = IntegerNum(intVal.inc())
-    operator fun dec(): IntegerNum = IntegerNum(intVal.minus(BigInteger.ONE))
-    operator fun rem(N: IntegerNum): IntegerNum = IntegerNum(intVal.mod(N.intVal))
+    operator fun inc(): IntegerNum = IntegerNum(value.inc())
+    operator fun dec(): IntegerNum = IntegerNum(value.minus(BigInteger.ONE))
+    operator fun rem(N: IntegerNum): IntegerNum = IntegerNum(value.mod(N.value))
 
     override fun compareTo(other: NumberExpr): Int {
         return when (other.numType) {
-            NumberType.INTEGER -> intVal.compareTo(other.asInteger().intVal)
+            NumberType.INTEGER -> value.compareTo(other.asInteger().value)
             NumberType.RATIONAL -> this.toDouble().compareTo(other.toDouble())
             NumberType.REAL -> RealNum.create(this).compareTo(other)
             NumberType.COMPLEX -> ComplexNum(this).compareTo(other)

@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression.constant
 
-import org.cerion.symcalc.Environment
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.RealNum
@@ -11,7 +10,11 @@ class Pi : ConstExpr() {
     override fun toString(): String = "Pi"
 
     override fun evaluate(): Expr {
-        if (isNumericalEval) {
+        return evaluate(InfinitePrecision)
+    }
+
+    override fun evaluate(precision: Int): Expr {
+        if (precision < InfinitePrecision) {
             if (precision == SYSTEM_DECIMAL_PRECISION)
                 return RealNum.create(Math.PI)
 

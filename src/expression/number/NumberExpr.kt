@@ -17,6 +17,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     override val type: ExprType get() = ExprType.NUMBER
     override val isInteger: Boolean get() = numType == NumberType.INTEGER
 
+    abstract override val precision: Int
     abstract val isZero: Boolean
     abstract val isOne: Boolean
     abstract val numType: NumberType
@@ -43,6 +44,8 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
             false
         }
     }
+
+    // TODO consider some type of toPrecision() function to assist with N() when converting between types
 
     override fun equals(e: Expr): Boolean = e.isNumber && equals(e as NumberExpr)
 

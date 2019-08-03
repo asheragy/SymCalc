@@ -5,15 +5,11 @@ class VarExpr(override val value: String) : Expr() {
     override val type: ExprType
         get() = ExprType.VARIABLE
 
-    override fun treeForm(i: Int) = indent(i, "VarExpr = " + value())
-    override fun toString(): String = value()
-
-    fun value(): String {
-        return value as String
-    }
+    override fun treeForm(i: Int) = indent(i, "VarExpr = $value")
+    override fun toString(): String = value
 
     override fun evaluate(): Expr {
-        var result = getEnvVar(value())
+        var result = getEnvVar(value)
         if (result == null)
             result = this
 
@@ -23,7 +19,7 @@ class VarExpr(override val value: String) : Expr() {
     override fun equals(e: Expr): Boolean {
         if (e.isVariable) {
             val t = e as VarExpr
-            if (value().contentEquals(t.value()))
+            if (value.contentEquals(t.value))
                 return true
         }
 

@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.number
 
 import kotlin.UnsupportedOperationException
+import kotlin.math.min
 
 class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) : NumberExpr() {
 
@@ -12,6 +13,7 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
     override val isZero: Boolean get() = real.isZero && img.isZero
     override val isOne: Boolean get() = real.isOne && img.isZero
     override val numType: NumberType get() = NumberType.COMPLEX
+    override val precision: Int get() = min(real.precision, img.precision)
 
     override val isNegative: Boolean
         get() = throw UnsupportedOperationException()

@@ -7,10 +7,15 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 class E : ConstExpr() {
+
     override fun toString(): String = "E"
 
     override fun evaluate(): Expr {
-        if (isNumericalEval) {
+        return evaluate(InfinitePrecision)
+    }
+
+    override fun evaluate(precision: Int): Expr {
+        if (precision < InfinitePrecision) {
             if (precision == SYSTEM_DECIMAL_PRECISION)
                 return RealNum.create(Math.E)
 
@@ -19,6 +24,7 @@ class E : ConstExpr() {
         else
             return this
     }
+
 
     private fun getEToDigits(n: Int): BigDecimal {
         var e: BigDecimal = BigDecimal.ONE.setScale(n+1)

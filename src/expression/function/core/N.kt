@@ -5,8 +5,9 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.FunctionFactory
-import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.expression.number.*
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class N(vararg e: Expr) : FunctionExpr(Function.N, *e) {
 
@@ -17,6 +18,32 @@ class N(vararg e: Expr) : FunctionExpr(Function.N, *e) {
 
     override fun evaluate(): Expr {
         val e = args[0]
+        val machinePrecision = size == 1
+        val precision = if (machinePrecision) SYSTEM_DECIMAL_PRECISION else get(1).asInteger().intValue()
+
+        if (e is ConstExpr) {
+            return e.evaluate(precision)
+        }
+
+        if (e is RealNum_BigDecimal) {
+            if (machinePrecision)
+                return RealNum.create(e.asNumber().toDouble())
+
+            if (precision < e.precision)
+                return RealNum.create(e.value.setScale(precision, RoundingMode.HALF_UP))
+        }
+
+        if (e is RationalNum) {
+            if (precision > 0) {
+                val a = e.numerator.toBigDecimal()
+                val b = e.denominator.toBigDecimal()
+                val t = a.divide(b, precision, RoundingMode.HALF_UP)
+                return RealNum.create(t)
+            }
+
+            return RealNum.create(e.numerator.toDouble() / e.denominator.toDouble())
+        }
+
         val newArgs = mutableListOf<Expr>()
         for (i in 0 until e.args.size) {
             if (size > 1)

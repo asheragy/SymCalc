@@ -8,10 +8,12 @@ abstract class ConstExpr : Expr() {
     override val value: Any? get() = null
     override val type: ExprType get() = ExprType.CONST
     override val properties: Int get() = Expr.Properties.CONSTANT.value
+    override val precision: Int get() = InfinitePrecision
 
     override fun treeForm(i: Int) = indent(i, "Constant: " + toString())
     override fun equals(e: Expr): Boolean = javaClass == e.javaClass
 
+    abstract fun evaluate(precision: Int): Expr
     abstract override fun toString(): String
 
     private enum class Name {

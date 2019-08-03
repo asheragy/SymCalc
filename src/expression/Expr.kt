@@ -3,6 +3,7 @@ package org.cerion.symcalc.expression
 import expression.function.list.ConstantArray
 import org.cerion.symcalc.Environment
 import org.cerion.symcalc.expression.function.FunctionExpr
+import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealNum
@@ -162,6 +163,10 @@ abstract class Expr {
         }
     }
 
+    fun eval(precision: Int): Expr {
+        return N(this, precision).eval()
+    }
+
     fun print() {
         treeForm(0)
     }
@@ -221,8 +226,9 @@ abstract class Expr {
     //Decimal evaluation precision
     private var evalNumber = false
     private var _precision = InfinitePrecision
-    val precision get() = _precision
+    open val precision get() = _precision
 
+    // TODO this may be obsolete after refactoring precision
     var isNumericalEval: Boolean
         get() = evalNumber || (this is RealNum_Double)
         set(bEval) = setNumericalEval(bEval, SYSTEM_DECIMAL_PRECISION)

@@ -3,6 +3,7 @@ package org.cerion.symcalc.expression.function.arithmetic
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
+import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 
@@ -19,7 +20,6 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
         var sum: NumberExpr = IntegerNum.ZERO
         val list = ArrayList<Expr>()
 
-        //list.addAll(getArgs());
         for (i in 0 until size)
             list.add(get(i))
 
@@ -27,8 +27,7 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
         val minPrecision = list.minBy { it.precision }!!.precision
         for (i in 0 until list.size) {
             if (list[i].precision > minPrecision) {
-                list[i].setNumericalEval(true, minPrecision)
-                list[i] = list[i].eval()
+                list[i] = list[i].eval(minPrecision)
             }
         }
 

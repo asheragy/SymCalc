@@ -48,7 +48,7 @@ class Table(vararg e: Expr) : FunctionExpr(Function.TABLE, *e) {
         val result = ListExpr()
         for (i in 0 until values.size) {
             if (variable != null)
-                setEnvVar(variable.value(), values[i])
+                setEnvVar(variable.value, values[i])
             result.add(expr.eval())
         }
 

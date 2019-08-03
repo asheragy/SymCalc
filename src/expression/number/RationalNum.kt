@@ -8,6 +8,7 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
     override val isOne: Boolean get() = numerator.equals(denominator)
     override val numType: NumberType get() = NumberType.RATIONAL
     override val isNegative: Boolean get() = numerator.isNegative
+    override val precision: Int get() = InfinitePrecision
 
     val numerator: IntegerNum get() = args[0] as IntegerNum
     val denominator: IntegerNum get() = args[1] as IntegerNum
@@ -34,17 +35,6 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
         if (d.signum == -1) {
             n = n.unaryMinus()
             d = d.unaryMinus()
-        }
-
-        if(isNumericalEval) {
-            if (precision > 0) {
-                val a = n.toBigDecimal()
-                val b = d.toBigDecimal()
-                val t = a.divide(b, precision, RoundingMode.HALF_UP)
-                return RealNum.create(t)
-            }
-
-            return RealNum.create(n.toDouble() / d.toDouble())
         }
 
         //Integer since denominator is one

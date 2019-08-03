@@ -9,6 +9,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
     override val isZero: Boolean get() = value == 0.0
     override val isOne: Boolean get() = value == 1.0
     override val isNegative: Boolean get() = value < 0
+    override val precision: Int get() = SYSTEM_DECIMAL_PRECISION
 
     override fun toInteger(): IntegerNum = IntegerNum(value.toLong())
     override val isWholeNumber: Boolean

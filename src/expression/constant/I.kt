@@ -8,6 +8,9 @@ class I : ConstExpr() {
     override fun evaluate(): Expr {
         return ComplexNum(0, 1)
     }
+    override fun evaluate(precision: Int): Expr {
+        return evaluate()
+    }
 
     override fun toString(): String = "i"
 }
