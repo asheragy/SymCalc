@@ -20,7 +20,7 @@ class Log(vararg e: Expr) : FunctionExpr(Function.LOG, *e) {
 
         if (n.isNumber) {
             n as NumberExpr
-            if (n.isNumericalEval)
+            if (n is RealNum_Double)
                 return RealNum.create(ln(n.toDouble()))
         }
 

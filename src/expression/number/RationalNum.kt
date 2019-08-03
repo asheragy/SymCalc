@@ -3,6 +3,7 @@ package org.cerion.symcalc.expression.number
 import java.math.RoundingMode
 
 class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : NumberExpr() {
+
     override val value: Any? get() = null
     override val isZero: Boolean get() = numerator.isZero
     override val isOne: Boolean get() = numerator.equals(denominator)
@@ -41,6 +42,19 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
         return if (d.isOne) n else RationalNum(n, d)
     }
 
+    override fun evaluate(precision: Int): NumberExpr {
+        return when (precision) {
+            InfinitePrecision -> this
+            SYSTEM_DECIMAL_PRECISION -> RealNum.create(numerator.toDouble() / denominator.toDouble())
+            else -> {
+                val a = numerator.toBigDecimal()
+                val b = denominator.toBigDecimal()
+                val t = a.divide(b, precision, RoundingMode.HALF_UP)
+                RealNum.create(t)
+            }
+        }
+    }
+    
     override fun toString(): String = "$numerator/$denominator"
     override fun toDouble(): Double = numerator.toBigDecimal().toDouble() / denominator.toBigDecimal().toDouble()
     override fun unaryMinus(): NumberExpr = RationalNum(numerator.unaryMinus(), denominator)

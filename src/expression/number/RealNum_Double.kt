@@ -17,12 +17,12 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
 
     constructor(n: IntegerNum) : this(n.toDouble())
 
-    init {
-        setNumericalEval(true, SYSTEM_DECIMAL_PRECISION)
-    }
-
     override fun toDouble(): Double = value
     override fun toString(): String = "" + value
+
+    override fun evaluate(precision: Int): NumberExpr {
+        return this // Cannot upgrade precision so do nothing
+    }
 
     override fun compareTo(other: NumberExpr): Int {
         when(other.numType) {

@@ -14,7 +14,7 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
     override val isZero: Boolean get() = value == BigDecimal.ZERO
     override val isOne: Boolean get() = value == BigDecimal.ONE
     override val isNegative: Boolean get() = value.signum() == -1
-    override val precision: Int get() = value.scale()
+    override val precision: Int get() = value.precision()
 
     override fun toInteger(): IntegerNum = IntegerNum(value.toLong())
     override fun toDouble(): Double = value.toDouble()
@@ -52,9 +52,16 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
                 real as RealNum_BigDecimal
 
+                // TODO some issues with this since a zero value is created with 0 precision and loses decimals when added
+                if (other.isZero)
+                    return this
+
                 // Both are BigDecimal
-                val result = RealNum_BigDecimal( this.value.plus(real.value))
-                return evaluatePrecision(result, this, real)
+                val min = min(this.precision, other.precision)
+                val a = this.evaluate(min) as RealNum_BigDecimal
+                val b = other.evaluate(min) as RealNum_BigDecimal
+
+                return RealNum_BigDecimal( a.value.plus(b.value))
             }
 
             else -> {
@@ -65,8 +72,18 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
     override fun times(other: NumberExpr): NumberExpr {
         when(other.numType) {
-            NumberType.INTEGER -> TODO()
-            NumberType.RATIONAL -> TODO()
+            NumberType.INTEGER -> {
+                other as IntegerNum
+                val n = BigDecimal(other.value)
+                return RealNum_BigDecimal(value.times(n))
+            }
+
+            NumberType.RATIONAL -> {
+                other as RationalNum
+                val n = this * other.numerator
+                return n / other.denominator
+            }
+
             NumberType.REAL -> {
                 val real = other.asReal()
                 if(real.isDouble)
@@ -75,7 +92,8 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
                 real as RealNum_BigDecimal
 
                 // Both are BigDecimal
-                val result = RealNum_BigDecimal( this.value.times(real.value))
+                val bd = this.value.times(real.value)
+                val result = RealNum_BigDecimal(bd)
                 return evaluatePrecision(result, this, real)
             }
             NumberType.COMPLEX -> TODO()
@@ -84,7 +102,12 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
     override fun div(other: NumberExpr): NumberExpr {
         when (other.numType) {
-            NumberType.INTEGER -> TODO()
+            NumberType.INTEGER -> {
+                other as IntegerNum
+                val n = BigDecimal(other.value)
+                return RealNum_BigDecimal(value.divide(n))
+            }
+
             NumberType.RATIONAL -> TODO()
             NumberType.REAL -> {
                 val real = other.asReal()
@@ -118,9 +141,19 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
         }
     }
 
+    override fun evaluate(precision: Int): NumberExpr {
+        if (precision == SYSTEM_DECIMAL_PRECISION)
+            return create(toDouble())
+        else if (precision < this.precision) {
+            val leftDigits = value.precision() - value.scale()
+            return RealNum_BigDecimal(value.setScale(precision - leftDigits, RoundingMode.HALF_UP))
+        }
+
+        return this
+    }
+
     private fun evaluatePrecision(result: RealNum_BigDecimal, a: RealNum_BigDecimal, b: RealNum_BigDecimal): RealNum_BigDecimal {
-        // TODO maybe set scale on environment and call evaluate()
-        val min = min(a.value.scale(), b.value.scale())
-        return RealNum_BigDecimal(result.value.setScale(min, RoundingMode.HALF_UP))
+        val min = min(a.value.precision(), b.value.precision())
+        return RealNum_BigDecimal(result.value.round(MathContext(min, RoundingMode.HALF_UP))) // TODO evaluate do this?
     }
 }

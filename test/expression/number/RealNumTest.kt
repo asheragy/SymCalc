@@ -28,7 +28,7 @@ class RealNumTest : NumberTestBase() {
 
         assertTrue(RealNum.create("1.2345").isDouble)
         assertFalse(RealNum.create("1.1234567899999987654321").isDouble)
-        assertEquals(22, RealNum.create("1.1234567899999987654321").precision)
+        assertEquals(23, RealNum.create("1.1234567899999987654321").precision)
     }
 
     @Test
@@ -43,7 +43,7 @@ class RealNumTest : NumberTestBase() {
         assertEquals(RealNum.create(2.12345), N(RealNum.create(2.12345), IntegerNum(100)).eval())
 
         val a = RealNum.create("1.22222222223333333333")
-        val b = RealNum.create("1.222222222233333333331111111111")
+        val b = RealNum.create("1.22222222223333333333111111111")
 
         // N[x_Precision] = Double
         assertTrue(N(a).eval().asReal().isDouble)

@@ -23,7 +23,14 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
 
     override fun toString(): String = value.toString()
     override fun toDouble(): Double = value.toDouble()
-    override fun evaluate(): NumberExpr = if (isNumericalEval) RealNum.create(this) else this
+
+    override fun evaluate(precision: Int): NumberExpr {
+        return when (precision) {
+            InfinitePrecision -> this
+            SYSTEM_DECIMAL_PRECISION -> RealNum.create(this)
+            else -> RealNum_BigDecimal(BigDecimal(value))
+        }
+    }
 
     fun intValue(): Int = value.toInt()
     fun toBigInteger(): BigInteger = value
@@ -53,9 +60,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
                 val gcd = this.gcd(n)
 
                 if (gcd.isOne) {
-                    return if (isNumericalEval) {
-                        Divide(RealNum.create(toDouble()), RealNum.create(other.toDouble())).eval() as NumberExpr
-                    } else RationalNum(this, n)
+                    return RationalNum(this, n)
                 }
 
                 //Divide both by GCD
@@ -65,11 +70,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
                 if (b.isOne)
                     return a
 
-                return if (isNumericalEval) {
-                    Divide(RealNum.create(a.toDouble()), RealNum.create(b.toDouble())).eval() as NumberExpr
-                }
-                else
-                    RationalNum(a, b)
+                return RationalNum(a, b)
             }
             NumberType.RATIONAL -> {
                 other as RationalNum

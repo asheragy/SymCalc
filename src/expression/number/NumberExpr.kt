@@ -32,6 +32,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
 
     abstract override fun toString(): String
     abstract fun toDouble(): Double  //Valid on all but ComplexNum
+    abstract fun evaluate(precision: Int): NumberExpr
 
     abstract override fun compareTo(other: NumberExpr): Int
 
@@ -44,8 +45,6 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
             false
         }
     }
-
-    // TODO consider some type of toPrecision() function to assist with N() when converting between types
 
     override fun equals(e: Expr): Boolean = e.isNumber && equals(e as NumberExpr)
 

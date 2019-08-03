@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.assertFalse
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.core.N
 import org.junit.Assert.assertEquals
@@ -60,14 +59,17 @@ class ComplexNumTest {
     }
 
     @Test
-    fun divide() {
+    fun divide_nonComplex() {
         assertEquals(ComplexNum(2,4), ComplexNum(4,8) / IntegerNum.TWO)
-
         assertEquals(ComplexNum(RationalNum(3,2), RationalNum(7, 2)), ComplexNum(3,7) / IntegerNum.TWO)
 
-        // TODO integer / real needs to work first
-        //assertEquals(ComplexNum(RationalNum(3,2), RationalNum(7, 2)), ComplexNum(3,7) / RealNum.create(2.2))
+        assertEquals(ComplexNum(9, 21), ComplexNum(3,7) / RationalNum(1,3))
 
+        assertEquals(ComplexNum(RealNum.create(1.3636363636363635), RealNum.create(3.1818181818181817)), ComplexNum(3,7) / RealNum.create(2.2))
+    }
+
+    @Test
+    fun divide_Complex() {
         // Divide: all integers
         assertEquals(ComplexNum(RationalNum(29,65), RationalNum(-2, 65)), ComplexNum(2,3) / ComplexNum(4,7))
         assertEquals(ComplexNum(RationalNum(6,25), RationalNum(17, 25)), ComplexNum(3,2) / ComplexNum(4,-3))
@@ -85,8 +87,9 @@ class ComplexNumTest {
     fun reducesToNonComplex() {
         assertEquals(NumberType.INTEGER, (ComplexNum(2,0) + IntegerNum(3)).numType)
         assertEquals(NumberType.INTEGER , (ComplexNum(2,10) + ComplexNum(3, -10)).numType)
+        assertEquals(NumberType.REAL , (ComplexNum(2,10) - ComplexNum(RealNum.create(3.0), RealNum.create(10.0))).numType)
         assertEquals(NumberType.INTEGER, (ComplexNum(1,1) * ComplexNum(1, -1)).numType)
-        // TODO add more operators here
+        assertEquals(NumberType.RATIONAL, (ComplexNum(1,0) / ComplexNum(2, 0)).numType)
     }
 
 }

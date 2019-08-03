@@ -54,6 +54,11 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
         return this
     }
 
+    override fun evaluate(precision: Int): NumberExpr {
+        return ComplexNum(real.evaluate(precision), img.evaluate(precision))
+    }
+
+
     override fun plus(other: NumberExpr): NumberExpr {
         if (other.numType === NumberType.COMPLEX) {
             val b = other.asComplex()

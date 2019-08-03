@@ -9,6 +9,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.expression.number.RealNum_Double
 
 abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : FunctionExpr(t, *e) {
 
@@ -23,7 +24,7 @@ abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : Fun
         val e = get(0)
         if (e.isNumber) {
             e as NumberExpr
-            if (e.isNumericalEval && !e.isComplex) {
+            if (e is RealNum_Double) {
                 return evaluateAsDouble(e.toDouble())
             }
         }

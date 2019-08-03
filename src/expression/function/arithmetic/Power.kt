@@ -102,51 +102,46 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
     }
 
     private fun integerToRational(a: IntegerNum, b: RationalNum): Expr {
-
         val pow = Math.pow(a.toDouble(), b.toDouble())
         val real = RealNum.create(pow)
 
-        if (!isNumericalEval) {
-            if (real.isWholeNumber)
-                return real.toInteger()
-            else {
-                // factor out any numbers that are the Nth root of the denominator
-                val t = Factor(a)
-                val factors = Tally(t).eval().asList()
-                val denominator = b.denominator
+        if (real.isWholeNumber)
+            return real.toInteger()
+        else {
+            // factor out any numbers that are the Nth root of the denominator
+            val t = Factor(a)
+            val factors = Tally(t).eval().asList()
+            val denominator = b.denominator
 
-                var multiply = IntegerNum.ONE
+            var multiply = IntegerNum.ONE
 
-                run {
-                    var i = 0
-                    while (i < factors.size) {
-                        val key = factors[i][0].asInteger()
-                        val v = factors[i][1].asInteger()
+            run {
+                var i = 0
+                while (i < factors.size) {
+                    val key = factors[i][0].asInteger()
+                    val v = factors[i][1].asInteger()
 
-                        // Factor it out
-                        if (v >= denominator) {
-                            multiply *= key
-                            factors[i] = ListExpr(key, v - denominator)
-                        } else
-                            i++
-                    }
+                    // Factor it out
+                    if (v >= denominator) {
+                        multiply *= key
+                        factors[i] = ListExpr(key, v - denominator)
+                    } else
+                        i++
                 }
-
-                if (multiply.isOne)
-                    return Power(a, b)
-
-                // Factor out multiples
-                //Expr result = new Power(this, num);
-                var root = IntegerNum.ONE
-                for (i in 0 until factors.size) {
-                    root = Times(root, factors[i][0], factors[i][1]).eval().asInteger()
-                }
-
-                return Times(multiply, Power(root, b))
             }
-        }
 
-        return real
+            if (multiply.isOne)
+                return Power(a, b)
+
+            // Factor out multiples
+            //Expr result = new Power(this, num);
+            var root = IntegerNum.ONE
+            for (i in 0 until factors.size) {
+                root = Times(root, factors[i][0], factors[i][1]).eval().asInteger()
+            }
+
+            return Times(multiply, Power(root, b))
+        }
     }
 
     override fun toString(): String {

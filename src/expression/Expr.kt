@@ -7,7 +7,6 @@ import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealNum
-import org.cerion.symcalc.expression.number.RealNum_Double
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 import java.util.*
@@ -28,8 +27,8 @@ abstract class Expr {
 
     abstract val type: ExprType
 
-    protected open val properties: Int
-        get() = Properties.NONE.value
+    open val precision get() = InfinitePrecision
+    protected open val properties: Int get() = Properties.NONE.value
 
     val size get() = if (mArgs != null) mArgs!!.size else 0
 
@@ -221,21 +220,6 @@ abstract class Expr {
         }
 
         return false
-    }
-
-    //Decimal evaluation precision
-    private var evalNumber = false
-    private var _precision = InfinitePrecision
-    open val precision get() = _precision
-
-    // TODO this may be obsolete after refactoring precision
-    var isNumericalEval: Boolean
-        get() = evalNumber || (this is RealNum_Double)
-        set(bEval) = setNumericalEval(bEval, SYSTEM_DECIMAL_PRECISION)
-
-    fun setNumericalEval(bEval: Boolean, digits: Int = SYSTEM_DECIMAL_PRECISION) {
-        evalNumber = bEval
-        _precision = if (digits >= 0) digits else SYSTEM_DECIMAL_PRECISION
     }
 
     companion object {
