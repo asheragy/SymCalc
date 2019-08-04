@@ -1,12 +1,8 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.constant.E
-import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.core.N
 import org.junit.Assert.*
 import org.junit.Test
-
 import java.math.BigDecimal
 import kotlin.test.assertFalse
 
@@ -57,25 +53,16 @@ class RealNumTest : NumberTestBase() {
     }
 
     @Test
-    fun precision_Arithmetic() {
+    fun precision_double_bigDec() {
+        //PrecisionA + MachinePrecision = MachinePrecision
         val a = RealNum_BigDecimal("0.33")
         val b = RealNum_BigDecimal("0.3333333333")
-
-        // PrecisionA + PrecisionB = Precision of lowest
-        assertEquals(RealNum_BigDecimal("0.66"), a + b)
-        assertEquals(RealNum_BigDecimal("0.00"), a - b)
-        assertEquals(RealNum_BigDecimal("0.11"), a * b)
-        assertEquals(RealNum_BigDecimal("0.99"), a / b)
-
-        //PrecisionA + MachinePrecision = MachinePrecision
         val c = RealNum.create(1/3.0)
-        assertEquals(RealNum.create(0.6633333333333333), a + c)
-        assertEquals(RealNum.create(-0.0033333333333332993), a - c)
-        assertEquals(RealNum.create(0.11), a * b)
-        // TODO check this one its different in mathematica
-        assertEquals(RealNum.create(1.01010101010101), a / c)
 
-        assertEquals("5.85987", Plus(N(E(), IntegerNum(10)), N(Pi(), IntegerNum(5))).eval().toString())
+        assertEquals(RealNum_BigDecimal("0.6633333333333333"), a + c)
+        assertEquals(RealNum_BigDecimal("-0.0033333333333332993"), a - c)
+        assertEquals(RealNum_BigDecimal("0.11"), a * b)
+        assertEquals(RealNum_BigDecimal("0.99"), a / c)
     }
 
     @Test
@@ -83,6 +70,8 @@ class RealNumTest : NumberTestBase() {
         // TODO N[1/3,2] + N[1/3,10] = 0.67
         // 0.33 + 0.3333333333 = 0.66
         // When evaluated 1/3 is stored at higher precision for calculations but ultimately displays as whatever was specified
+        //val x = RationalNum(1,3)
+        //assertEquals(IntegerNum.ONE, Plus(N(x,2), N(x,10)).eval())
     }
 
     @Test

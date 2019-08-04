@@ -19,6 +19,7 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
     override fun toInteger(): IntegerNum = IntegerNum(value.toLong())
     override fun toDouble(): Double = value.toDouble()
     override fun toString(): String = value.toString()
+    override fun unaryMinus(): RealNum_BigDecimal = RealNum_BigDecimal(value.negate())
 
     override fun compareTo(other: NumberExpr): Int {
         if (other.isReal && !other.asReal().isDouble) {
@@ -29,32 +30,22 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
         return toDouble().compareTo(other.toDouble())
     }
 
-    override fun unaryMinus(): RealNum_BigDecimal {
-        return RealNum_BigDecimal(value.negate())
-    }
-
     override fun plus(other: NumberExpr): NumberExpr {
-
         when (other.numType) {
             NumberType.INTEGER -> {
                 val bigDec = other.asInteger().toBigDecimal()
                 return RealNum_BigDecimal( this.value.plus(bigDec))
             }
-
             NumberType.RATIONAL -> {
-                return this + N(other, precision).eval() as NumberExpr
+                val n = N(other, precision).eval()
+                return this + n as NumberExpr
             }
-
             NumberType.REAL -> {
                 val real = other.asReal()
                 if(real.isDouble)
                     return real + this
 
                 real as RealNum_BigDecimal
-
-                // TODO some issues with this since a zero value is created with 0 precision and loses decimals when added
-                if (other.isZero)
-                    return this
 
                 // Both are BigDecimal
                 val min = min(this.precision, other.precision)
@@ -63,8 +54,7 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
                 return RealNum_BigDecimal( a.value.plus(b.value))
             }
-
-            else -> {
+            NumberType.COMPLEX -> {
                 return other + this
             }
         }
@@ -96,7 +86,11 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
                 val result = RealNum_BigDecimal(bd)
                 return evaluatePrecision(result, this, real)
             }
-            NumberType.COMPLEX -> TODO()
+
+            NumberType.COMPLEX -> {
+                other as ComplexNum
+                return ComplexNum(this * other.real, this * other.img)
+            }
         }
     }
 
@@ -105,14 +99,20 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
             NumberType.INTEGER -> {
                 other as IntegerNum
                 val n = BigDecimal(other.value)
-                return RealNum_BigDecimal(value.divide(n))
+                return RealNum_BigDecimal(value.divide(n, MathContext(precision, RoundingMode.HALF_UP)))
             }
 
-            NumberType.RATIONAL -> TODO()
+            NumberType.RATIONAL -> {
+                other as RationalNum
+                return (this * other.denominator) / other.numerator
+            }
+
             NumberType.REAL -> {
-                val real = other.asReal()
-                if(real.isDouble)
-                    return real / this
+                var real = other.asReal()
+                if(real.isDouble) {
+                    real = RealNum_BigDecimal(BigDecimal(real.toDouble()))
+                    //return create(toDouble() / real.toDouble())
+                }
 
                 real as RealNum_BigDecimal
 
@@ -120,12 +120,14 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
                 val result = RealNum_BigDecimal( this.value.divide(real.value, RoundingMode.HALF_UP))
                 return evaluatePrecision(result, this, real)
             }
-            NumberType.COMPLEX -> TODO()
+
+            NumberType.COMPLEX -> {
+                return ComplexNum(this) / other
+            }
         }
     }
 
     override fun power(other: NumberExpr): NumberExpr {
-
         // Special case square root
         if(other.isRational && other.equals(RationalNum(1,2)))
             return RealNum_BigDecimal(value.sqrt(MathContext.DECIMAL32))

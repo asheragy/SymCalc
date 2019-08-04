@@ -4,6 +4,8 @@ import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import java.math.BigDecimal
 import java.math.BigInteger
+import java.math.MathContext
+import java.math.RoundingMode
 
 class IntegerNum(override val value: BigInteger) : NumberExpr() {
 
@@ -28,7 +30,15 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
         return when (precision) {
             InfinitePrecision -> this
             SYSTEM_DECIMAL_PRECISION -> RealNum.create(this)
-            else -> RealNum_BigDecimal(BigDecimal(value))
+            else -> {
+                if (isZero)
+                    return RealNum.create(0.0) // Prevents lost precision for BigDecimal(0)
+
+                var bd = BigDecimal(value, MathContext(precision, RoundingMode.HALF_UP))
+                bd = bd.setScale(precision)
+                return RealNum_BigDecimal(bd)
+            }
+
         }
     }
 

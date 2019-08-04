@@ -1,12 +1,12 @@
 package expression.number
 
-import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RationalNum
-import org.cerion.symcalc.expression.number.RealNum
-import org.cerion.symcalc.expression.number.RealNum_BigDecimal
-import org.junit.Assert.*
+import org.cerion.symcalc.expression.constant.E
+import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.expression.function.arithmetic.Plus
+import org.cerion.symcalc.expression.function.core.N
+import org.cerion.symcalc.expression.number.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.math.BigDecimal
 
 class RealNum_BigDecimalTest {
 
@@ -24,10 +24,35 @@ class RealNum_BigDecimalTest {
     }
 
     @Test
+    fun precision_lowestOfTwo() {
+        val a = RealNum_BigDecimal("0.33")
+        val b = RealNum_BigDecimal("0.3333333333")
+
+        // PrecisionA + PrecisionB = Precision of lowest
+        assertEquals(RealNum_BigDecimal("0.66"), a + b)
+        assertEquals(RealNum_BigDecimal("0.00"), a - b)
+        assertEquals(RealNum_BigDecimal("0.11"), a * b)
+        assertEquals(RealNum_BigDecimal("0.99"), a / b)
+
+        // using N()
+        assertEquals(RealNum_BigDecimal("5.85987"), Plus(N(E(), IntegerNum(10)), N(Pi(), IntegerNum(5))).eval())
+    }
+
+    @Test
     fun multiply() {
         assertEquals(RealNum_BigDecimal("0.0002468"), RealNum_BigDecimal("0.0001234") * IntegerNum.TWO)
         assertEquals(RealNum_BigDecimal("0.0001851"), RealNum_BigDecimal("0.0001234") * RationalNum(3,2))
         assertEquals(RealNum.create(0.0037427219999999995), RealNum_BigDecimal("0.0001234") * RealNum.create(30.33))
         assertEquals(RealNum_BigDecimal("0.003743"), RealNum_BigDecimal("0.0001234") * RealNum_BigDecimal("30.33"))
+        assertEquals(ComplexNum(RealNum_BigDecimal("0.0002468"),RealNum_BigDecimal("0.0003702")), RealNum_BigDecimal("0.0001234") * ComplexNum(2,3))
+    }
+
+    @Test
+    fun divide() {
+        assertEquals(RealNum_BigDecimal("0.0000617"), RealNum_BigDecimal("0.0001234") / IntegerNum.TWO)
+        assertEquals(RealNum_BigDecimal("0.00008227"), RealNum_BigDecimal("0.0001234") / RationalNum(3,2))
+        assertEquals(RealNum_BigDecimal("0.0329747"), RealNum_BigDecimal("1.0001234") / RealNum.create(30.33))
+        assertEquals(RealNum_BigDecimal("0.03297"), RealNum_BigDecimal("1.0001234") / RealNum_BigDecimal("30.33"))
+        assertEquals(ComplexNum(RealNum_BigDecimal("0.00001898"),RealNum_BigDecimal("-0.00002848")), RealNum_BigDecimal("0.0001234") / ComplexNum(2,3))
     }
 }
