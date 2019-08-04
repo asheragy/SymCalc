@@ -9,14 +9,4 @@ import kotlin.test.assertFailsWith
 
 class NumberExprTest {
 
-    @Test
-    fun unsupportedOperations() {
-        val integer = IntegerNum.ONE
-        //val real = RealNum.create(0.0)
-        val rational = RationalNum(1,2)
-        val complex = ComplexNum(1,1)
-
-        assertFailsWith<UnsupportedOperationException> { integer.power(rational) }
-        assertFailsWith<UnsupportedOperationException> { integer.power(complex) }
-    }
 }

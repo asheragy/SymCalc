@@ -109,13 +109,4 @@ class RationalNumTest : NumberTestBase() {
         assertEquals(RationalNum(1, 2), Subtract(RationalNum(1, 1), RationalNum(1, 2)).eval())
         assertEquals(RationalNum(-1, 2), Subtract(RationalNum(1, 2), IntegerNum.ONE).eval())
     }
-
-    @Test
-    fun power() {
-        assertEquals(RationalNum(1,8), RationalNum.HALF.power(IntegerNum(3)))
-        assertFailsWith<UnsupportedOperationException> { RationalNum.HALF.power(RationalNum(1,3)) }
-        assertEquals(RealNum.create(0.1088188204120155), RationalNum.HALF.power(RealNum.create(3.2)))
-        assertEquals(RationalNum(1,16), RationalNum.HALF.power(ComplexNum(4,0)))
-        assertFailsWith<UnsupportedOperationException> { RationalNum.HALF.power(ComplexNum(1,1)) }
-    }
 }

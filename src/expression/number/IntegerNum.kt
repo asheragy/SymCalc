@@ -91,21 +91,6 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
         }
     }
 
-    override fun power(other: NumberExpr): NumberExpr {
-        when (other.numType) {
-            NumberType.INTEGER -> return IntegerNum(value.pow(other.asInteger().value.toInt()))
-            NumberType.RATIONAL -> throw UnsupportedOperationException()
-            NumberType.REAL -> return RealNum.create(this).power(other)
-            NumberType.COMPLEX -> {
-                val complex = other.asComplex()
-                if (complex.img.isZero)
-                    return this.power(complex.real)
-
-                return ComplexNum(this).power(other)
-            }
-        }
-    }
-
     //IntegerNum Specific Functions
     fun gcd(N: IntegerNum): IntegerNum = IntegerNum(value.gcd(N.value))
 

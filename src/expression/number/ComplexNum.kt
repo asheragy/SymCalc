@@ -125,24 +125,6 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
         return ComplexNum(resultR, resultI).evaluate()
     }
 
-    override fun power(other: NumberExpr): NumberExpr {
-        // TODO This fixes the single use case
-        if (other.isOne)
-            return this
-
-        if (other.isZero)
-            return IntegerNum.ONE
-
-        when (other.numType) {
-            NumberType.INTEGER -> TODO()
-            NumberType.RATIONAL -> TODO()
-            NumberType.REAL -> TODO()
-            NumberType.COMPLEX -> {
-                throw UnsupportedOperationException()
-            }
-        }
-    }
-
     override fun compareTo(other: NumberExpr): Int {
         if(other.isComplex) {
             val o = other.asComplex()

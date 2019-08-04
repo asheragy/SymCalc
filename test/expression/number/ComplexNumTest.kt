@@ -79,11 +79,6 @@ class ComplexNumTest {
     }
 
     @Test
-    fun power() {
-        assertEquals(ComplexNum(RealNum.create(-1.947977671863125), RealNum.create(3.493620327099486)), N(Power(IntegerNum(2), ComplexNum(2,3))).eval())
-    }
-
-    @Test
     fun reducesToNonComplex() {
         assertEquals(NumberType.INTEGER, (ComplexNum(2,0) + IntegerNum(3)).numType)
         assertEquals(NumberType.INTEGER , (ComplexNum(2,10) + ComplexNum(3, -10)).numType)

@@ -61,14 +61,4 @@ class RealNum_DoubleTest {
         assertEquals(RealNum.create(0.5), RealNum.create(5.0) / RealNum.create(BigDecimal.TEN))
         assertEquals(ComplexNum(RealNum.create(5.0), RealNum.create(-10.0)), RealNum.create(50.0) / ComplexNum(2,4))
     }
-
-    @Test
-    fun power() {
-        assertEquals(RealNum.create(625.0), RealNum.create(5.0).power(IntegerNum(4)))
-        assertEquals(RealNum.create(2.23606797749979), RealNum.create(5.0).power(RationalNum(1,2)))
-        assertEquals(RealNum.create(55.90169943749474), RealNum.create(5.0).power(RealNum.create(2.5)))
-        assertEquals(RealNum.create(125.0), RealNum.create(5.0).power(RealNum.create(BigDecimal(3.0))))
-        assertEquals(RealNum.create(100.0), RealNum.create(10.0).power(ComplexNum(2,0)))
-        assertEquals(ComplexNum(RealNum.create(24.70195964872899), RealNum.create(3.848790655850832)), RealNum.create(5.0).power(ComplexNum(2,4)))
-    }
 }

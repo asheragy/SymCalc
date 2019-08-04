@@ -14,7 +14,10 @@ import org.cerion.symcalc.expression.function.list.Tally
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.*
+import java.math.MathContext
+import java.math.RoundingMode
 import kotlin.math.min
+import kotlin.math.pow
 
 class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
@@ -31,19 +34,28 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
         if (b.isNumber) {
             b as NumberExpr
+            // Zero/Identity is just a shortcut for special case, unit tests should still pass if this is commented out
+            if (b.isZero)
+                return IntegerNum.ONE
+            if (b.isOne)
+                return a
+        }
 
-            if(a.isNumber || a.isConst) {
-                // Zero/Identity is just a shortcut for special case, unit tests should still pass if this is commented out
+        if (b is Plus) {
+            val result = Times()
+            b.args.forEach { result.add(Power(a, it)) }
 
-                // Zero
-                if (b.isZero)
-                    return IntegerNum.ONE
+            return result.eval()
+        }
 
-                //Identity
-                if (b.isOne)
-                    return a
-            }
+        // Euler's Identity
+        if (a is E && b is Times && b.size == 2 && b[0] is ComplexNum) {
+            val img = Times(b[0].asNumber().asComplex().img, b[1])
+            return complexPower(a, IntegerNum.ZERO, img)
+        }
 
+        if (b.isNumber) {
+            b as NumberExpr
             if (a.isNumber) {
                 a as NumberExpr
 
@@ -58,25 +70,19 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
                 if (b.isComplex && !b.asComplex().img.isZero)
                     return complexPower(a, b.asComplex())
 
-                return a.power(b)
+                if (a is IntegerNum)
+                    return a.power(b)
+                else if (a is RationalNum)
+                    return a.power(b)
+                else if (a is RealNum)
+                    return a.power(b)
+
+                TODO("Complex")
             }
 
             // TODO this is not the right check, just gets past the current issue
             if (a.isConst && b is ComplexNum)
                 return complexPower(a, b)
-        }
-
-        if (b is Plus) {
-            val result = Times()
-            b.args.forEach { result.add(Power(a, it)) }
-
-            return result.eval()
-        }
-
-        // Euler's Identity
-        if (a is E && b is Times && b.size == 2 && b[0] is ComplexNum) {
-            val img = Times(b[0].asNumber().asComplex().img, b[1])
-            return complexPower(a, IntegerNum.ZERO, img)
         }
 
         return this
@@ -151,5 +157,100 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
     @Throws(ValidationException::class)
     override fun validate() {
         validateParameterCount(2)
+    }
+}
+
+private fun IntegerNum.power(other: NumberExpr): NumberExpr {
+    when (other.numType) {
+        NumberType.INTEGER -> return IntegerNum(value.pow(other.asInteger().value.toInt()))
+        NumberType.RATIONAL -> throw UnsupportedOperationException()
+        NumberType.REAL -> return RealNum.create(this).power(other)
+        NumberType.COMPLEX -> {
+            val complex = other.asComplex()
+            if (complex.img.isZero)
+                return this.power(complex.real)
+
+            return ComplexNum(this).power(other)
+        }
+    }
+}
+
+private fun RationalNum.power(other: NumberExpr): NumberExpr {
+    val n: IntegerNum
+    val d: IntegerNum
+    when (other.numType) {
+        NumberType.INTEGER -> {
+            n = numerator.power(other) as IntegerNum
+            d = denominator.power(other) as IntegerNum
+            return RationalNum(n, d)
+        }
+
+        NumberType.REAL -> {
+            val rResult = RealNum.create(this.toDouble())
+            return rResult.power(other)
+        }
+        NumberType.RATIONAL -> throw UnsupportedOperationException()
+
+        NumberType.COMPLEX -> {
+            other as ComplexNum
+            if (other.img.isZero)
+                return this.power(other.real)
+
+            return ComplexNum(this).power(other)
+        }
+    }
+}
+
+private fun RealNum.power(other: NumberExpr): NumberExpr {
+    if (this is RealNum_BigDecimal)
+        return this.power(other)
+
+    this as RealNum_Double
+    return this.power(other)
+}
+
+private fun RealNum_Double.power(other: NumberExpr): NumberExpr {
+    when (other.numType) {
+        NumberType.INTEGER,
+        NumberType.RATIONAL,
+        NumberType.REAL -> return RealNum.Companion.create(value.pow(other.toDouble()))
+        NumberType.COMPLEX -> return Power(this, other).eval() as NumberExpr
+    }
+}
+
+private fun RealNum_BigDecimal.power(other: NumberExpr): NumberExpr {
+    // Special case square root
+    if(other.isRational && other.equals(RationalNum(1,2)))
+        return RealNum_BigDecimal(value.sqrt(MathContext(precision, RoundingMode.HALF_UP)))
+
+    when (other.numType) {
+        NumberType.INTEGER -> {
+            val number = value.pow(other.asInteger().intValue(), MathContext(precision, RoundingMode.HALF_UP))
+            return RealNum_BigDecimal(number)
+        }
+        NumberType.RATIONAL ->
+            TODO("Need to implement Nth root function which is not easy")
+        NumberType.REAL -> {
+            other as RealNum
+            if (other.isDouble)
+                return RealNum.Companion.create(toDouble().pow(other.toDouble()))
+
+            TODO("Need formula")
+        }
+
+        NumberType.COMPLEX -> {
+            return ComplexNum(this).power(other)
+        }
+    }
+}
+
+private fun ComplexNum.power(other: NumberExpr): NumberExpr {
+    when (other.numType) {
+        NumberType.INTEGER -> TODO()
+        NumberType.RATIONAL -> TODO()
+        NumberType.REAL -> TODO()
+        NumberType.COMPLEX -> {
+            throw UnsupportedOperationException()
+        }
     }
 }

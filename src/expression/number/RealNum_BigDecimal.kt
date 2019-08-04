@@ -128,32 +128,6 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
         }
     }
 
-    override fun power(other: NumberExpr): NumberExpr {
-        // Special case square root
-        if(other.isRational && other.equals(RationalNum(1,2)))
-            return RealNum_BigDecimal(value.sqrt(MathContext(precision, RoundingMode.HALF_UP)))
-
-        when (other.numType) {
-            NumberType.INTEGER -> {
-                val number = value.pow(other.asInteger().intValue(), MathContext(precision, RoundingMode.HALF_UP))
-                return RealNum_BigDecimal(number)
-            }
-            NumberType.RATIONAL ->
-                TODO("Need to implement Nth root function which is not easy")
-            NumberType.REAL -> {
-                other as RealNum
-                if (other.isDouble)
-                    return create(toDouble().pow(other.toDouble()))
-
-                TODO("Need formula")
-            }
-
-            NumberType.COMPLEX -> {
-                return ComplexNum(this).power(other)
-            }
-        }
-    }
-
     override fun evaluate(precision: Int): NumberExpr {
         if (precision == SYSTEM_DECIMAL_PRECISION)
             return create(toDouble())

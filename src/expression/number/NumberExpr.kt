@@ -54,7 +54,6 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract operator fun plus(other: NumberExpr): NumberExpr
     abstract operator fun times(other: NumberExpr): NumberExpr
     abstract operator fun div(other: NumberExpr): NumberExpr
-    abstract fun power(other: NumberExpr): NumberExpr // TODO consider not having this function since the hard work is done in Power() and this avoids unsupported exceptions...
     abstract operator fun unaryMinus(): NumberExpr
 
     operator fun minus(other: NumberExpr): NumberExpr {

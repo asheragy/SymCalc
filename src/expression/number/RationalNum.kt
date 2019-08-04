@@ -114,32 +114,6 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
         }
     }
 
-    override fun power(other: NumberExpr): NumberExpr {
-        val n: IntegerNum
-        val d: IntegerNum
-        when (other.numType) {
-            NumberType.INTEGER -> {
-                n = numerator.power(other) as IntegerNum
-                d = denominator.power(other) as IntegerNum
-                return RationalNum(n, d)
-            }
-
-            NumberType.REAL -> {
-                val rResult = RealNum.create(this.toDouble())
-                return rResult.power(other)
-            }
-            NumberType.RATIONAL -> throw UnsupportedOperationException()
-
-            NumberType.COMPLEX -> {
-                other as ComplexNum
-                if (other.img.isZero)
-                    return this.power(other.real)
-
-                return ComplexNum(this).power(other)
-            }
-        }
-    }
-
     override fun compareTo(other: NumberExpr): Int {
         return toDouble().compareTo(other.toDouble())
     }

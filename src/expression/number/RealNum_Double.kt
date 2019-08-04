@@ -61,13 +61,4 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
             NumberType.COMPLEX -> return ComplexNum(this) / other
         }
     }
-
-    override fun power(other: NumberExpr): NumberExpr {
-        when (other.numType) {
-            NumberType.INTEGER,
-            NumberType.RATIONAL,
-            NumberType.REAL -> return create(value.pow(other.toDouble()))
-            NumberType.COMPLEX -> return Power(this, other).eval() as NumberExpr
-        }
-    }
 }
