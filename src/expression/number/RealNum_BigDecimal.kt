@@ -5,6 +5,7 @@ import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.min
+import kotlin.math.pow
 
 class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
@@ -130,16 +131,26 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
     override fun power(other: NumberExpr): NumberExpr {
         // Special case square root
         if(other.isRational && other.equals(RationalNum(1,2)))
-            return RealNum_BigDecimal(value.sqrt(MathContext.DECIMAL32))
+            return RealNum_BigDecimal(value.sqrt(MathContext(precision, RoundingMode.HALF_UP)))
 
         when (other.numType) {
             NumberType.INTEGER -> {
-                val number = value.pow(other.asInteger().intValue())
+                val number = value.pow(other.asInteger().intValue(), MathContext(precision, RoundingMode.HALF_UP))
                 return RealNum_BigDecimal(number)
             }
-            NumberType.RATIONAL -> TODO()
-            NumberType.REAL -> TODO()
-            NumberType.COMPLEX -> TODO()
+            NumberType.RATIONAL ->
+                TODO("Need to implement Nth root function which is not easy")
+            NumberType.REAL -> {
+                other as RealNum
+                if (other.isDouble)
+                    return create(toDouble().pow(other.toDouble()))
+
+                TODO("Need formula")
+            }
+
+            NumberType.COMPLEX -> {
+                return ComplexNum(this).power(other)
+            }
         }
     }
 
@@ -156,6 +167,6 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
     private fun evaluatePrecision(result: RealNum_BigDecimal, a: RealNum_BigDecimal, b: RealNum_BigDecimal): RealNum_BigDecimal {
         val min = min(a.value.precision(), b.value.precision())
-        return RealNum_BigDecimal(result.value.round(MathContext(min, RoundingMode.HALF_UP))) // TODO evaluate do this?
+        return RealNum_BigDecimal(result.value.round(MathContext(min, RoundingMode.HALF_UP)))
     }
 }

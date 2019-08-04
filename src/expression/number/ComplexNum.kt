@@ -131,7 +131,7 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
             return this
 
         if (other.isZero)
-            return ComplexNum(1, 0)
+            return IntegerNum.ONE
 
         when (other.numType) {
             NumberType.INTEGER -> TODO()

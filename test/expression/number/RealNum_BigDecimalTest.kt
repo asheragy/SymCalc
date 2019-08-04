@@ -55,4 +55,21 @@ class RealNum_BigDecimalTest {
         assertEquals(RealNum_BigDecimal("0.03297"), RealNum_BigDecimal("1.0001234") / RealNum_BigDecimal("30.33"))
         assertEquals(ComplexNum(RealNum_BigDecimal("0.00001898"),RealNum_BigDecimal("-0.00002848")), RealNum_BigDecimal("0.0001234") / ComplexNum(2,3))
     }
+
+    @Test
+    fun power() {
+        assertEquals(RealNum_BigDecimal("1.0002468"), RealNum_BigDecimal("1.0001234").power(IntegerNum.TWO))
+        assertEquals(RealNum_BigDecimal("1.00006170"), RealNum_BigDecimal("1.0001234").power(RationalNum(1,2))) // square root
+
+        // Needs Nth root formula
+        //assertEquals(RealNum_BigDecimal("0.00008227"), RealNum_BigDecimal("0.0001234").power(RationalNum(3,4)))
+
+        assertEquals(RealNum.create("4.028321734216929"), RealNum_BigDecimal("2.0001234").power(RealNum.create(2.01)))
+
+        // Needs some type of power formula
+        //assertEquals(RealNum_BigDecimal("0.03297"), RealNum_BigDecimal("1.0001234") / RealNum_BigDecimal("30.33"))
+
+        // Implemented as complex ^ complex
+        //assertEquals(ComplexNum(RealNum_BigDecimal("0.00001898"),RealNum_BigDecimal("-0.00002848")), RealNum_BigDecimal("0.0001234") / ComplexNum(2,3))
+    }
 }
