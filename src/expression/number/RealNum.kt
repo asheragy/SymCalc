@@ -11,6 +11,8 @@ abstract class RealNum : NumberExpr() {
 
     override val numType: NumberType get() = NumberType.REAL
 
+    // TODO add a ToRational function for Rationalize[]
+
     companion object {
 
         fun create(s: String) : RealNum {

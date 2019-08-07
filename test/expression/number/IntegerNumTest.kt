@@ -1,12 +1,9 @@
 package org.cerion.symcalc.expression.number
 
-import org.junit.Test
-
-import java.math.BigInteger
-
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
-import java.math.BigDecimal
+import org.junit.Test
+import java.math.BigInteger
 import kotlin.test.assertFailsWith
 
 class IntegerNumTest {

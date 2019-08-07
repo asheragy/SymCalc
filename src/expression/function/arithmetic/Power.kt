@@ -104,36 +104,41 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         val sin = Sin(clog)
         val pow = Power(a, b)
 
-        return Times(pow, Plus(cos, Times(I(), sin))).eval()
+        val result = Times(pow, Plus(cos, Times(I(), sin)))
+        val e = result.eval()
+
+        // If not evaluated fully return the original expression
+        if (e is Times)
+            return this
+
+        return e
     }
 
     private fun integerToRational(a: IntegerNum, b: RationalNum): Expr {
         val pow = Math.pow(a.toDouble(), b.toDouble())
         val real = RealNum.create(pow)
 
-        if (real.isWholeNumber)
+        if (real.isWholeNumber) // TODO this does not seem to work for a lot of cases probably better to just remove so its consistent
             return real.toInteger()
         else {
             // factor out any numbers that are the Nth root of the denominator
-            val t = Factor(a)
+            val t = Factor(a).eval()
             val factors = Tally(t).eval().asList()
+
             val denominator = b.denominator
-
             var multiply = IntegerNum.ONE
+            var i = 0
 
-            run {
-                var i = 0
-                while (i < factors.size) {
-                    val key = factors[i][0].asInteger()
-                    val v = factors[i][1].asInteger()
+            while (i < factors.size) {
+                val key = factors[i][0].asInteger()
+                val v = factors[i][1].asInteger()
 
-                    // Factor it out
-                    if (v >= denominator) {
-                        multiply *= key
-                        factors[i] = ListExpr(key, v - denominator)
-                    } else
-                        i++
-                }
+                // Factor it out
+                if (v >= denominator) {
+                    multiply *= key
+                    factors[i] = ListExpr(key, v - denominator)
+                } else
+                    i++
             }
 
             if (multiply.isOne)
@@ -143,10 +148,16 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
             //Expr result = new Power(this, num);
             var root = IntegerNum.ONE
             for (i in 0 until factors.size) {
-                root = Times(root, factors[i][0], factors[i][1]).eval().asInteger()
+                val f1 = factors[i][0]
+                val f2 = factors[i][1] as IntegerNum
+                if (f2.isZero)
+                    continue
+
+                root = Times(root, f1, f2).eval().asInteger()
             }
 
-            return Times(multiply, Power(root, b))
+            val nthRoot = Times(multiply, Power(root, b))
+            return Power(nthRoot, b.numerator).eval()
         }
     }
 
@@ -162,7 +173,14 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
 private fun IntegerNum.power(other: NumberExpr): NumberExpr {
     when (other.numType) {
-        NumberType.INTEGER -> return IntegerNum(value.pow(other.asInteger().value.toInt()))
+        NumberType.INTEGER -> {
+            val intVal = other.asInteger().value.toInt()
+            if (intVal < 0)
+                return RationalNum(IntegerNum.ONE, IntegerNum(value.pow(-intVal)))
+            else
+                return IntegerNum(value.pow(intVal))
+        }
+
         NumberType.RATIONAL -> throw UnsupportedOperationException()
         NumberType.REAL -> return RealNum.create(this).power(other)
         NumberType.COMPLEX -> {
