@@ -6,8 +6,7 @@ import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.RationalNum
+import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealNum
 import kotlin.math.cos
 
@@ -22,7 +21,7 @@ class Cos(vararg e: Expr) : TrigBase(Function.COS, *e) {
             return IntegerNum.ONE
 
         if (e.isNumber && e.asNumber().isRational) {
-            e as RationalNum
+            e as Rational
             if (e.denominator == IntegerNum.TWO)
                 return IntegerNum.ZERO
         }

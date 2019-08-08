@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RationalNum
+import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealNum
 import kotlin.math.sin
 
@@ -23,7 +23,7 @@ class Sin(vararg e: Expr) : TrigBase(Function.SIN, *e) {
         if (e is IntegerNum)
             return IntegerNum.ZERO
 
-        if (e is RationalNum) {
+        if (e is Rational) {
             val mod = Mod(e.numerator, Times(IntegerNum.TWO, e.denominator).eval().asInteger()).eval().asInteger().intValue()
 
             val ratio =
@@ -31,7 +31,7 @@ class Sin(vararg e: Expr) : TrigBase(Function.SIN, *e) {
                 IntegerNum((2)) -> IntegerNum.ONE
                 IntegerNum(3) -> sqrt3Over2
                 IntegerNum(4) -> oneOverSqrt2
-                IntegerNum(6) -> RationalNum(1,2)
+                IntegerNum(6) -> Rational(1,2)
                 else -> return this
             }
 
@@ -45,7 +45,7 @@ class Sin(vararg e: Expr) : TrigBase(Function.SIN, *e) {
     }
 
     companion object {
-        val sqrt3Over2 = Times(RationalNum(1,2), Power(IntegerNum(3), RationalNum(1,2)))
-        val oneOverSqrt2 = Power(IntegerNum.TWO, RationalNum(-1,2))
+        val sqrt3Over2 = Times(Rational(1,2), Power(IntegerNum(3), Rational(1,2)))
+        val oneOverSqrt2 = Power(IntegerNum.TWO, Rational(-1,2))
     }
 }

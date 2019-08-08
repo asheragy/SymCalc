@@ -62,7 +62,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
                 if (a.isInteger && b.isRational)
                     return integerToRational(a.asInteger(), b.asRational())
                 else if (a.isRational && b.isRational) {
-                    a as RationalNum
+                    a as Rational
                     return Divide(Power(a.numerator, b), Power(a.denominator, b)).eval()
                 }
 
@@ -72,7 +72,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
                 if (a is IntegerNum)
                     return a.power(b)
-                else if (a is RationalNum)
+                else if (a is Rational)
                     return a.power(b)
                 else if (a is RealNum)
                     return a.power(b)
@@ -114,7 +114,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         return e
     }
 
-    private fun integerToRational(a: IntegerNum, b: RationalNum): Expr {
+    private fun integerToRational(a: IntegerNum, b: Rational): Expr {
         val pow = Math.pow(a.toDouble(), b.toDouble())
         val real = RealNum.create(pow)
 
@@ -186,7 +186,7 @@ private fun IntegerNum.power(other: NumberExpr): NumberExpr {
     }
 }
 
-private fun RationalNum.power(other: NumberExpr): NumberExpr {
+private fun Rational.power(other: NumberExpr): NumberExpr {
     val n: IntegerNum
     val d: IntegerNum
     when (other.numType) {
@@ -232,7 +232,7 @@ private fun RealNum_Double.power(other: NumberExpr): NumberExpr {
 
 private fun RealNum_BigDecimal.power(other: NumberExpr): NumberExpr {
     // Special case square root
-    if(other.isRational && other.equals(RationalNum(1,2)))
+    if(other.isRational && other.equals(Rational(1,2)))
         return RealNum_BigDecimal(value.sqrt(MathContext(precision, RoundingMode.HALF_UP)))
 
     when (other.numType) {

@@ -19,8 +19,8 @@ class PowerTest {
 
     @Test
     fun toPowerZero() {
-        val zeros = arrayOf(IntegerNum.ZERO, RationalNum.ZERO, RealNum.create(0.0), RealNum_BigDecimal(BigDecimal.ZERO), ComplexNum(0,0))
-        val nums = arrayOf(IntegerNum(5), RationalNum(2,3), RealNum.create(3.14), RealNum_BigDecimal(BigDecimal.TEN), ComplexNum(7,9))
+        val zeros = arrayOf(IntegerNum.ZERO, Rational.ZERO, RealNum.create(0.0), RealNum_BigDecimal(BigDecimal.ZERO), ComplexNum(0,0))
+        val nums = arrayOf(IntegerNum(5), Rational(2,3), RealNum.create(3.14), RealNum_BigDecimal(BigDecimal.TEN), ComplexNum(7,9))
 
         for(num in nums) {
             for (zero in zeros) {
@@ -31,8 +31,8 @@ class PowerTest {
 
     @Test
     fun toPowerOne() {
-        val ones = arrayOf(IntegerNum.ONE, RationalNum.ONE, RealNum.create(1.0), RealNum_BigDecimal(BigDecimal.ONE), ComplexNum(1,0))
-        val nums = arrayOf(IntegerNum(5), RationalNum(2,3), RealNum.create(3.14), RealNum_BigDecimal(BigDecimal.TEN), ComplexNum(7,9))
+        val ones = arrayOf(IntegerNum.ONE, Rational.ONE, RealNum.create(1.0), RealNum_BigDecimal(BigDecimal.ONE), ComplexNum(1,0))
+        val nums = arrayOf(IntegerNum(5), Rational(2,3), RealNum.create(3.14), RealNum_BigDecimal(BigDecimal.TEN), ComplexNum(7,9))
 
         for(num in nums) {
             for (one in ones) {
@@ -59,13 +59,13 @@ class PowerTest {
         assertEquals(Times(IntegerNum(-1),Power(E(), IntegerNum(5))), Power(E(), Plus(IntegerNum(5), Times(I(), Pi()))).eval())
         assertEquals(IntegerNum.ONE, Power(E(), Times(IntegerNum.TWO, I(), Pi())).eval())
         assertEquals(ComplexNum(0,1), Power(E(), Times(I(), Divide(Pi(), IntegerNum.TWO))).eval())
-        assertEquals(ComplexNum(0,-1), Power(E(), Times(I(), Times(Pi(), RationalNum(3,2)))).eval())
+        assertEquals(ComplexNum(0,-1), Power(E(), Times(I(), Times(Pi(), Rational(3,2)))).eval())
     }
 
     @Test
     fun toConstant() {
         assertEquals(Power(IntegerNum(3), Pi()), Power(IntegerNum(3), Pi()).eval())
-        assertEquals(Power(RationalNum(2,3), Pi()), Power(RationalNum(2,3), Pi()).eval())
+        assertEquals(Power(Rational(2,3), Pi()), Power(Rational(2,3), Pi()).eval())
         assertEquals(RealNum.create(31.54428070019754), Power(RealNum.create(3.0), Pi()).eval())
         // TODO assertEquals(Power(IntegerNum(3), Pi()), Power(RealNum_BigDecimal("3.0"), Pi()).eval())
         assertEquals(Power(ComplexNum(3,3), Pi()), Power(ComplexNum(3,3), Pi()).eval())
@@ -74,7 +74,7 @@ class PowerTest {
     @Test
     fun fromConstant() {
         assertEquals(Power(Pi(), IntegerNum(3)), Power(Pi(), IntegerNum(3)).eval())
-        assertEquals(Power(Pi(), RationalNum(2,3)), Power(Pi(), RationalNum(2,3)).eval())
+        assertEquals(Power(Pi(), Rational(2,3)), Power(Pi(), Rational(2,3)).eval())
         assertEquals(RealNum.create(31.006276680299816), Power(Pi(), RealNum.create(3.0)).eval())
         //TODO assertEquals(Power(IntegerNum(3), Pi()), Power(Pi(), RealNum_BigDecimal("3.0")).eval())
         assertEquals(Power(Pi(), ComplexNum(3,3)), Power(Pi(), ComplexNum(3,3)).eval())
@@ -88,14 +88,14 @@ class PowerTest {
 
     @Test
     fun integerToRational() {
-        assertEquals(IntegerNum(4), Power(IntegerNum(16), RationalNum(1,2)).eval())
-        assertEquals(IntegerNum(3125), Power(IntegerNum(125), RationalNum(5,3)).eval())
-        assertEquals(RationalNum(IntegerNum.ONE, IntegerNum(3125)), Power(IntegerNum(125), RationalNum(-5,3)).eval())
-        assertEquals(IntegerNum(7), Power(IntegerNum(16807), RationalNum(1,5)).eval())
+        assertEquals(IntegerNum(4), Power(IntegerNum(16), Rational(1,2)).eval())
+        assertEquals(IntegerNum(3125), Power(IntegerNum(125), Rational(5,3)).eval())
+        assertEquals(Rational(IntegerNum.ONE, IntegerNum(3125)), Power(IntegerNum(125), Rational(-5,3)).eval())
+        assertEquals(IntegerNum(7), Power(IntegerNum(16807), Rational(1,5)).eval())
 
         // Not able to fully evaluate
-        assertEquals(Power(IntegerNum(3), RationalNum(1,3)), Power(IntegerNum(3), RationalNum(1,3)).eval())
-        assertEquals(Power(IntegerNum(29), RationalNum(2,3)), Power(IntegerNum(29), RationalNum(2,3)).eval())
+        assertEquals(Power(IntegerNum(3), Rational(1,3)), Power(IntegerNum(3), Rational(1,3)).eval())
+        assertEquals(Power(IntegerNum(29), Rational(2,3)), Power(IntegerNum(29), Rational(2,3)).eval())
         // TODO need to factor denominator and reduce
         //assertEquals(Power(IntegerNum(23), RationalNum(1,2)), Power(IntegerNum(529), RationalNum(1,4)).eval())
     }
@@ -130,19 +130,19 @@ class PowerTest {
 
     @Test
     fun rationalToInteger() {
-        assertEquals(RationalNum(1,8), Power(RationalNum.HALF, IntegerNum(3)).eval())
-        assertEquals(RationalNum(1048576, 9765625), Power(RationalNum(4,5), IntegerNum(10)).eval())
-        assertEquals(RationalNum(9765625, 1048576), Power(RationalNum(4,5), IntegerNum(-10)).eval())
-        assertEquals(RationalNum(IntegerNum.ONE, IntegerNum("4294967296")), Power(RationalNum(1,2), IntegerNum(32)).eval())
-        assertEquals(RationalNum(IntegerNum.ONE, IntegerNum("340282366920938463463374607431768211456")), Power(RationalNum(1,2), IntegerNum(128)).eval())
+        assertEquals(Rational(1,8), Power(Rational.HALF, IntegerNum(3)).eval())
+        assertEquals(Rational(1048576, 9765625), Power(Rational(4,5), IntegerNum(10)).eval())
+        assertEquals(Rational(9765625, 1048576), Power(Rational(4,5), IntegerNum(-10)).eval())
+        assertEquals(Rational(IntegerNum.ONE, IntegerNum("4294967296")), Power(Rational(1,2), IntegerNum(32)).eval())
+        assertEquals(Rational(IntegerNum.ONE, IntegerNum("340282366920938463463374607431768211456")), Power(Rational(1,2), IntegerNum(128)).eval())
     }
 
     @Test
     fun rationalToRational() {
-        assertEquals(Divide(IntegerNum.ONE, Power(IntegerNum.TWO,RationalNum.HALF)), Power(RationalNum(1,2), RationalNum(1,2)).eval())
-        assertEquals(RationalNum(4,9), Power(RationalNum(8,27), RationalNum(2,3)).eval())
-        assertEquals(IntegerNum(2), Power(RationalNum(1,4), RationalNum(-1,2)).eval())
-        assertEquals(RationalNum.HALF, Power(RationalNum(1,4), RationalNum(1,2)).eval())
+        assertEquals(Divide(IntegerNum.ONE, Power(IntegerNum.TWO,Rational.HALF)), Power(Rational(1,2), Rational(1,2)).eval())
+        assertEquals(Rational(4,9), Power(Rational(8,27), Rational(2,3)).eval())
+        assertEquals(IntegerNum(2), Power(Rational(1,4), Rational(-1,2)).eval())
+        assertEquals(Rational.HALF, Power(Rational(1,4), Rational(1,2)).eval())
 
         // TODO equal but should simplify to the same expression
         //assertEquals(Power(IntegerNum.TWO, RationalNum.HALF), Power(RationalNum.HALF, RationalNum.HALF.unaryMinus()).eval())
@@ -150,8 +150,8 @@ class PowerTest {
 
     @Test
     fun rationalToReal() {
-        assertEquals(RealNum.create(0.1088188204120155), Power(RationalNum.HALF, RealNum.create(3.2)).eval())
-        assertEquals(RealNum.create(9.18958683997628), Power(RationalNum.HALF, RealNum.create(-3.2)).eval())
+        assertEquals(RealNum.create(0.1088188204120155), Power(Rational.HALF, RealNum.create(3.2)).eval())
+        assertEquals(RealNum.create(9.18958683997628), Power(Rational.HALF, RealNum.create(-3.2)).eval())
 
         // TODO need BigDecimal power
         //assertEquals(RealNum_BigDecimal("0.11"), Power(RationalNum.HALF, RealNum_BigDecimal("3.1")).eval())
@@ -162,15 +162,15 @@ class PowerTest {
     @Test
     fun rationalToComplex() {
         // No imaginary
-        assertEquals(RationalNum(1,16), Power(RationalNum.HALF, ComplexNum(4,0)).eval())
+        assertEquals(Rational(1,16), Power(Rational.HALF, ComplexNum(4,0)).eval())
 
-        assertEquals(ComplexNum(0.011466060921456358, -0.061439233775702734), N(Power(RationalNum.HALF, ComplexNum(4,2))).eval())
+        assertEquals(ComplexNum(0.011466060921456358, -0.061439233775702734), N(Power(Rational.HALF, ComplexNum(4,2))).eval())
         // TODO 2.93531 + 15.7284 I
         // Fixed elsewhere, same as some other cases
         //assertEquals(ComplexNum(xx, xx), Power(RationalNum.HALF, ComplexNum(-4.0,-2.0)).eval())
 
         // Cannot eval
-        assertEquals(Power(RationalNum.HALF, ComplexNum(4,2)), Power(RationalNum.HALF, ComplexNum(4,2)).eval())
+        assertEquals(Power(Rational.HALF, ComplexNum(4,2)), Power(Rational.HALF, ComplexNum(4,2)).eval())
     }
 
     @Test
@@ -186,14 +186,14 @@ class PowerTest {
 
     @Test
     fun realToRational() {
-        assertEquals(RealNum.create(2.23606797749979), Power(RealNum.create(5.0), RationalNum(1,2)).eval())
-        assertEquals(RealNum.create(2040886.0816112224), Power(RealNum.create(1.2345), RationalNum(12345,179)).eval())
-        assertEquals(RealNum.create(4.89983252377579E-7), Power(RealNum.create(1.2345), RationalNum(-12345,179)).eval())
+        assertEquals(RealNum.create(2.23606797749979), Power(RealNum.create(5.0), Rational(1,2)).eval())
+        assertEquals(RealNum.create(2040886.0816112224), Power(RealNum.create(1.2345), Rational(12345,179)).eval())
+        assertEquals(RealNum.create(4.89983252377579E-7), Power(RealNum.create(1.2345), Rational(-12345,179)).eval())
         // TODO not sure why this does not work ~1.37163
         //assertEquals(RealNum.create(1.0), Power(RealNum.create(-1.2345), RationalNum(3,2)).eval())
 
-        assertEquals(RealNum_BigDecimal("2"), Power(RealNum_BigDecimal("4.0"), RationalNum.HALF).eval())
-        assertEquals(RealNum_BigDecimal("1.00006170"), Power(RealNum_BigDecimal("1.0001234"), RationalNum(1,2)).eval()) // square root
+        assertEquals(RealNum_BigDecimal("2"), Power(RealNum_BigDecimal("4.0"), Rational.HALF).eval())
+        assertEquals(RealNum_BigDecimal("1.00006170"), Power(RealNum_BigDecimal("1.0001234"), Rational(1,2)).eval()) // square root
 
         // TODO not implemented yet, add more tests
         //assertEquals(RealNum_BigDecimal("2"), Power(RealNum_BigDecimal("4.0"), RationalNum(1,3)).eval())
@@ -224,7 +224,7 @@ class PowerTest {
 
         // Double
         assertEquals(ComplexNum(24.70195964872899, 3.848790655850832), Power(RealNum.create(5.0), ComplexNum(2,4)).eval())
-        assertEquals(ComplexNum(1.5502967700299068, 1.6113906803859945), Power(RealNum.create(5.0), ComplexNum(RationalNum.HALF,RationalNum.HALF)).eval())
+        assertEquals(ComplexNum(1.5502967700299068, 1.6113906803859945), Power(RealNum.create(5.0), ComplexNum(Rational.HALF,Rational.HALF)).eval())
         assertEquals(ComplexNum(24.70195964872899, 3.848790655850832), Power(RealNum.create(5.0), ComplexNum(2.0,4.0)).eval())
         assertEquals(ComplexNum(52.40487058561866, -147.56137608427574), Power(RealNum.create(5.0), ComplexNum(piBigDec,piBigDec)).eval())
 

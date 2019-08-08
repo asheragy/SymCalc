@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -76,7 +75,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
                 val gcd = this.gcd(n)
 
                 if (gcd.isOne) {
-                    return RationalNum(this, n)
+                    return Rational(this, n)
                 }
 
                 //Divide both by GCD
@@ -86,11 +85,11 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
                 if (b.isOne)
                     return a
 
-                return RationalNum(a, b)
+                return Rational(a, b)
             }
             NumberType.RATIONAL -> {
-                other as RationalNum
-                return Times(this, RationalNum(other.denominator, other.numerator)).eval() as NumberExpr
+                other as Rational
+                return Times(this, Rational(other.denominator, other.numerator)).eval() as NumberExpr
             }
             NumberType.REAL -> return RealNum.create(this) / other
             NumberType.COMPLEX -> return ComplexNum(this) / other
@@ -127,7 +126,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
     fun pow(other: IntegerNum): NumberExpr {
         val intVal = other.asInteger().value.toInt()
         if (intVal < 0)
-            return RationalNum(ONE, IntegerNum(value.pow(-intVal)))
+            return Rational(ONE, IntegerNum(value.pow(-intVal)))
         else
             return IntegerNum(value.pow(intVal))
     }

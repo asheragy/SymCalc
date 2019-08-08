@@ -108,12 +108,12 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
                 val bottom = other.asComplex() * conj // This should not be a complex number
 
                 if (top.real.isInteger && bottom.isInteger)
-                    resultR = RationalNum(top.real.asInteger(), bottom.asInteger()).evaluate()
+                    resultR = Rational(top.real.asInteger(), bottom.asInteger()).evaluate()
                 else
                     resultR = top.real / bottom
 
                 if (top.img.isInteger && bottom.isInteger)
-                    resultI = RationalNum(top.img.asInteger(), bottom.asInteger())
+                    resultI = Rational(top.img.asInteger(), bottom.asInteger())
                 else
                     resultI = top.img / bottom
             }

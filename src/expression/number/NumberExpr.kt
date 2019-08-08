@@ -27,7 +27,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     val isRational: Boolean get() = numType == NumberType.RATIONAL
     val isComplex: Boolean get() = numType == NumberType.COMPLEX
 
-    fun asRational(): RationalNum = this as RationalNum
+    fun asRational(): Rational = this as Rational
     fun asComplex(): ComplexNum = this as ComplexNum
 
     abstract override fun toString(): String

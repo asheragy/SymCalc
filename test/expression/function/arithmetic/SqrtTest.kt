@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression.function.arithmetic
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RationalNum
+import org.cerion.symcalc.expression.number.Rational
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -19,7 +19,7 @@ class SqrtTest {
     @Test
     fun basic() {
         // Converts to power
-        assertEquals(Power(IntegerNum(3), RationalNum(1, 2)), Sqrt(IntegerNum(3)).eval())
+        assertEquals(Power(IntegerNum(3), Rational(1, 2)), Sqrt(IntegerNum(3)).eval())
 
         // Evaluates when square number
         assertEquals(IntegerNum(3), Sqrt(IntegerNum(9)).eval())
@@ -30,11 +30,11 @@ class SqrtTest {
     @Test
     fun reduces() {
         // 8 = 2*sqrt(2)
-        assertEquals(Times(IntegerNum(2), Power(IntegerNum(2), RationalNum(1, 2))),
+        assertEquals(Times(IntegerNum(2), Power(IntegerNum(2), Rational(1, 2))),
                 Sqrt(IntegerNum(8)).eval())
 
         // 497664 = 288 * sqrt(6)
-        assertEquals(Times(IntegerNum(288), Power(IntegerNum(6), RationalNum(1, 2))),
+        assertEquals(Times(IntegerNum(288), Power(IntegerNum(6), Rational(1, 2))),
                 Sqrt(IntegerNum(497664)).eval())
     }
 }

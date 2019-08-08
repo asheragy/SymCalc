@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.function.statistics
 import org.cerion.symcalc.assertEqual
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RationalNum
+import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.listOfNumbers
 import org.junit.Assert.assertEquals
@@ -40,7 +40,7 @@ class VarianceTest {
     @Test
     fun integers_evalAsRational() {
         val list = listOfNumbers(9, 2, 5, 4, 12, 7, 8, 11, 9, 3, 7, 4, 12, 5, 4, 10, 9, 6, 9, 4)
-        assertEquals(RationalNum(178,19), Variance(list).eval())
+        assertEquals(Rational(178,19), Variance(list).eval())
     }
 
 }

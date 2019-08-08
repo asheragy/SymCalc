@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.function.logical
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RationalNum
+import org.cerion.symcalc.expression.number.Rational
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -22,7 +22,7 @@ class GreaterTest {
 
     @Test
     fun integer_withOthers() {
-        assertEquals(BoolExpr.TRUE, Greater(IntegerNum(5), RationalNum(9,2)).eval())
+        assertEquals(BoolExpr.TRUE, Greater(IntegerNum(5), Rational(9,2)).eval())
     }
 
     @Test

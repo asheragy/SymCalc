@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RationalNum
+import org.cerion.symcalc.expression.number.Rational
 
 class Bernoulli(vararg e: Expr) : FunctionExpr(Function.BERNOULLI, *e) {
 
@@ -17,7 +17,7 @@ class Bernoulli(vararg e: Expr) : FunctionExpr(Function.BERNOULLI, *e) {
 
         when {
             N.isZero -> result = IntegerNum.ONE
-            N.isOne -> result = RationalNum(-1,2)
+            N.isOne -> result = Rational(-1,2)
             else -> {
                 var res: NumberExpr = IntegerNum.ZERO
                 val n = N.intValue()

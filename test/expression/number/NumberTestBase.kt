@@ -1,13 +1,12 @@
 package org.cerion.symcalc.expression.number
 
-import java.math.BigDecimal
 import kotlin.test.assertEquals
 
 abstract class NumberTestBase {
 
     fun assertIdentity(n: NumberExpr) {
         assertAdd(n, n, IntegerNum.ZERO)
-        assertAdd(n, n, RationalNum.ZERO)
+        assertAdd(n, n, Rational.ZERO)
         assertAdd(n, n, RealNum.create(0.0))
         // This makes the number lose precision so not sure if its valid or not
         //assertAdd(n, n, RealNum.create(BigDecimal(0.0)))

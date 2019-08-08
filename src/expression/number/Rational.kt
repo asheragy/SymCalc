@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression.number
 
 import java.math.RoundingMode
 
-class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : NumberExpr() {
+class Rational constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : NumberExpr() {
 
     override val value: Any? get() = null
     override val isZero: Boolean get() = numerator.isZero
@@ -39,7 +39,7 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
         }
 
         //Integer since denominator is one
-        return if (d.isOne) n else RationalNum(n, d)
+        return if (d.isOne) n else Rational(n, d)
     }
 
     override fun evaluate(precision: Int): NumberExpr {
@@ -57,24 +57,24 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
     
     override fun toString(): String = "$numerator/$denominator"
     override fun toDouble(): Double = numerator.toBigDecimal().toDouble() / denominator.toBigDecimal().toDouble()
-    override fun unaryMinus(): NumberExpr = RationalNum(numerator.unaryMinus(), denominator)
+    override fun unaryMinus(): NumberExpr = Rational(numerator.unaryMinus(), denominator)
 
-    fun reciprocal(): NumberExpr = RationalNum(denominator, numerator).evaluate()
+    fun reciprocal(): NumberExpr = Rational(denominator, numerator).evaluate()
 
     override fun plus(other: NumberExpr): NumberExpr {
-        val result: RationalNum
+        val result: Rational
         when (other.numType) {
             NumberType.INTEGER -> {
                 val norm = other.asInteger() * denominator
-                return RationalNum(numerator.plus(norm), denominator)
+                return Rational(numerator.plus(norm), denominator)
             }
 
             NumberType.RATIONAL -> {
-                val div = other as RationalNum
+                val div = other as Rational
                 val n1 = div.numerator * denominator
                 val n2 = numerator * div.denominator
 
-                result = RationalNum(n1 + n2, denominator * div.denominator)
+                result = Rational(n1 + n2, denominator * div.denominator)
                 return result.evaluate()
             }
             else -> return other + this
@@ -82,16 +82,16 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
     }
 
     override fun times(other: NumberExpr): NumberExpr {
-        val result: RationalNum
+        val result: Rational
 
         when (other.numType) {
             NumberType.INTEGER -> {
-                result = RationalNum(numerator * other.asInteger(), denominator)
+                result = Rational(numerator * other.asInteger(), denominator)
                 return result.evaluate()
             }
             NumberType.RATIONAL -> {
-                val t = other as RationalNum
-                result = RationalNum(numerator * t.numerator, denominator * t.denominator)
+                val t = other as Rational
+                result = Rational(numerator * t.numerator, denominator * t.denominator)
                 return result.evaluate()
             }
             else -> return other * this
@@ -99,15 +99,15 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
     }
 
     override fun div(other: NumberExpr): NumberExpr {
-        val result: RationalNum
+        val result: Rational
         when (other.numType) {
             NumberType.INTEGER -> {
-                result = RationalNum(numerator, denominator * other.asInteger())
+                result = Rational(numerator, denominator * other.asInteger())
                 return result.evaluate()
             }
             NumberType.RATIONAL -> {
-                val t = other as RationalNum
-                result = RationalNum(numerator * t.denominator, denominator * t.numerator)
+                val t = other as Rational
+                result = Rational(numerator * t.denominator, denominator * t.numerator)
                 return result.evaluate()
             }
             else -> return other * this
@@ -119,8 +119,8 @@ class RationalNum constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : N
     }
 
     companion object {
-        val ZERO = RationalNum(IntegerNum.ZERO, IntegerNum.ONE)
-        val ONE = RationalNum(IntegerNum.ONE, IntegerNum.ONE)
-        val HALF = RationalNum(IntegerNum.ONE, IntegerNum.TWO)
+        val ZERO = Rational(IntegerNum.ZERO, IntegerNum.ONE)
+        val ONE = Rational(IntegerNum.ONE, IntegerNum.ONE)
+        val HALF = Rational(IntegerNum.ONE, IntegerNum.TWO)
     }
 }

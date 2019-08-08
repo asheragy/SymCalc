@@ -8,7 +8,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.statistics.RandomInteger
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RationalNum
+import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealNum
 import org.junit.Test
 
@@ -38,13 +38,13 @@ class TableTest {
         assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr()).eval().type)
 
         // If copies, first list parameter must be integer
-        assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr(RationalNum(2, 3))).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr(Rational(2, 3))).eval().type)
 
         // If 2+ parameters first must be a variable
         assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr(IntegerNum(2), IntegerNum(3))).eval().type)
 
         // if 2,3,4 parameters others must be integer
-        assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr(VarExpr("a"), RationalNum(1, 2))).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr(VarExpr("a"), Rational(1, 2))).eval().type)
         assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr(VarExpr("a"), IntegerNum(5), Pi())).eval().type)
         assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr(VarExpr("a"), IntegerNum(5), IntegerNum(6), RealNum.create(2.34))).eval().type)
     }

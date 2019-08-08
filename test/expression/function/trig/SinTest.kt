@@ -36,15 +36,15 @@ class SinTest {
     fun basicPi() {
         assertEquals(IntegerNum.ZERO, Sin(IntegerNum.ZERO).eval())
         assertEquals(IntegerNum.ONE, Sin(Divide(Pi(), IntegerNum.TWO)).eval())
-        assertEquals(IntegerNum.ONE, Sin(Times(Pi(), RationalNum(1,2))).eval())
+        assertEquals(IntegerNum.ONE, Sin(Times(Pi(), Rational(1,2))).eval())
         assertEquals(IntegerNum.ZERO, Sin(Pi()).eval())
-        assertEquals(IntegerNum.NEGATIVE_ONE, Sin(Times(Pi(), RationalNum(3,2))).eval())
+        assertEquals(IntegerNum.NEGATIVE_ONE, Sin(Times(Pi(), Rational(3,2))).eval())
         assertEquals(IntegerNum.ZERO, Sin(Times(Pi(),IntegerNum.TWO)).eval())
     }
 
     @Test
     fun valuesNotEvaluated() {
-        val e = Sin(Times(Pi(), RationalNum(1,5)))
+        val e = Sin(Times(Pi(), Rational(1,5)))
         assertEquals(e, e.eval())
     }
 
@@ -53,7 +53,7 @@ class SinTest {
         // Test cycles with increments of Pi / 2
         val expected = ListExpr(IntegerNum.ZERO, IntegerNum.ONE, IntegerNum.ZERO, IntegerNum.NEGATIVE_ONE)
 
-        val step = Times(Pi(), RationalNum(1,2))
+        val step = Times(Pi(), Rational(1,2))
         for(i in -10 until 10) {
             val sin = Sin(Times(IntegerNum(i), step))
             val pos = (((i % 4) + 4) % 4) // mod but handles negative values
@@ -68,7 +68,7 @@ class SinTest {
         val negativeValues = Minus(values).eval()
         val expected = Join(values, negativeValues).eval()
 
-        val step = Times(Pi(), RationalNum(1,3))
+        val step = Times(Pi(), Rational(1,3))
         for(i in -15 until 15) {
             val sin = Sin(Times(IntegerNum(i), step))
             val pos = (((i % 6) + 6) % 6) // mod but handles negative values
@@ -83,7 +83,7 @@ class SinTest {
         val negativeValues = Minus(values).eval()
         val expected = Join(values, negativeValues).eval()
 
-        val step = Times(Pi(), RationalNum(1,4))
+        val step = Times(Pi(), Rational(1,4))
         for(i in -20 until 20) {
             val x = Times(IntegerNum(i), step).eval()
             val sin = Sin(x)
@@ -95,11 +95,11 @@ class SinTest {
     @Test
     fun basicPiCycles_over6() {
         // Test cycles with increments of Pi / 6
-        val values = ListExpr(IntegerNum.ZERO, RationalNum(1,2), sqrt3Over2, IntegerNum.ONE, sqrt3Over2, RationalNum(1,2))
+        val values = ListExpr(IntegerNum.ZERO, Rational(1,2), sqrt3Over2, IntegerNum.ONE, sqrt3Over2, Rational(1,2))
         val negativeValues = Minus(values).eval()
         val expected = Join(values, negativeValues).eval()
 
-        val step = Times(Pi(), RationalNum(1,6))
+        val step = Times(Pi(), Rational(1,6))
         for(i in -30 until 30) {
             val x = Times(IntegerNum(i), step).eval()
             val sin = Sin(x)
@@ -109,7 +109,7 @@ class SinTest {
     }
 
     companion object {
-        val sqrt3Over2 = Times(RationalNum(1,2), Power(IntegerNum(3), RationalNum(1,2)))
-        val oneOverSqrt2 = Power(IntegerNum.TWO, RationalNum(-1,2))
+        val sqrt3Over2 = Times(Rational(1,2), Power(IntegerNum(3), Rational(1,2)))
+        val oneOverSqrt2 = Power(IntegerNum.TWO, Rational(-1,2))
     }
 }

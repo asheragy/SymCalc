@@ -41,7 +41,7 @@ class RealNum_BigDecimalTest {
     @Test
     fun multiply() {
         assertEquals(RealNum_BigDecimal("0.0002468"), RealNum_BigDecimal("0.0001234") * IntegerNum.TWO)
-        assertEquals(RealNum_BigDecimal("0.0001851"), RealNum_BigDecimal("0.0001234") * RationalNum(3,2))
+        assertEquals(RealNum_BigDecimal("0.0001851"), RealNum_BigDecimal("0.0001234") * Rational(3,2))
         assertEquals(RealNum.create(0.0037427219999999995), RealNum_BigDecimal("0.0001234") * RealNum.create(30.33))
         assertEquals(RealNum_BigDecimal("0.003743"), RealNum_BigDecimal("0.0001234") * RealNum_BigDecimal("30.33"))
         assertEquals(ComplexNum(RealNum_BigDecimal("0.0002468"),RealNum_BigDecimal("0.0003702")), RealNum_BigDecimal("0.0001234") * ComplexNum(2,3))
@@ -50,7 +50,7 @@ class RealNum_BigDecimalTest {
     @Test
     fun divide() {
         assertEquals(RealNum_BigDecimal("0.0000617"), RealNum_BigDecimal("0.0001234") / IntegerNum.TWO)
-        assertEquals(RealNum_BigDecimal("0.00008227"), RealNum_BigDecimal("0.0001234") / RationalNum(3,2))
+        assertEquals(RealNum_BigDecimal("0.00008227"), RealNum_BigDecimal("0.0001234") / Rational(3,2))
         assertEquals(RealNum_BigDecimal("0.0329747"), RealNum_BigDecimal("1.0001234") / RealNum.create(30.33))
         assertEquals(RealNum_BigDecimal("0.03297"), RealNum_BigDecimal("1.0001234") / RealNum_BigDecimal("30.33"))
         assertEquals(ComplexNum(RealNum_BigDecimal("0.00001898"),RealNum_BigDecimal("-0.00002848")), RealNum_BigDecimal("0.0001234") / ComplexNum(2,3))

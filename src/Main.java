@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.number.NumberExpr;
 import org.cerion.symcalc.expression.function.arithmetic.Plus;
 import org.cerion.symcalc.expression.number.ComplexNum;
 import org.cerion.symcalc.expression.number.IntegerNum;
-import org.cerion.symcalc.expression.number.RationalNum;
+import org.cerion.symcalc.expression.number.Rational;
 import org.cerion.symcalc.expression.number.RealNum;
 
 public class Main 
@@ -36,7 +36,7 @@ public class Main
 	{
 		NumberExpr[] nums = new NumberExpr[6];
 		nums[0] = IntegerNum.ONE;
-		nums[1] = RationalNum.Companion.getONE();
+		nums[1] = Rational.Companion.getONE();
 		nums[2] = RealNum.Companion.create(1.0);
 		nums[3] = new ComplexNum(nums[0],nums[0]);
 		nums[4] = new ComplexNum(nums[1],nums[1]);

@@ -5,7 +5,6 @@ import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.min
-import kotlin.math.pow
 
 class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
@@ -70,7 +69,7 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
             }
 
             NumberType.RATIONAL -> {
-                other as RationalNum
+                other as Rational
                 val n = this * other.numerator
                 return n / other.denominator
             }
@@ -104,7 +103,7 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
             }
 
             NumberType.RATIONAL -> {
-                other as RationalNum
+                other as Rational
                 return (this * other.denominator) / other.numerator
             }
 
