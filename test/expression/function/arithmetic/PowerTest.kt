@@ -81,10 +81,9 @@ class PowerTest {
     }
 
     @Test
-    fun integerToInteger() {
-        assertEquals(IntegerNum(-243), Power(IntegerNum(-3), IntegerNum(5)).eval())
-        assertEquals(IntegerNum("910043815000214977332758527534256632492715260325658624"), Power(IntegerNum(12), IntegerNum(50)).eval())
-        assertEquals(RationalNum(IntegerNum.ONE, IntegerNum(243)), Power(IntegerNum(3), IntegerNum(-5)).eval())
+    fun numberExpr_pow() {
+        // More tests in corresponding NumberExpr class, only 1 basic here per type to verify Power() calls it
+        assertEquals(IntegerNum(9), Power(IntegerNum(3), IntegerNum.TWO).eval())
     }
 
     @Test
@@ -236,6 +235,13 @@ class PowerTest {
         //assertEquals(ComplexNum(1.5502967700299068, 1.6113906803859945), Power(bigDec, ComplexNum(RationalNum.HALF,RationalNum.HALF)).eval())
         //assertEquals(ComplexNum(24.70195964872899, 3.848790655850832), Power(bigDec, ComplexNum(2.0,4.0)).eval())
         //assertEquals(ComplexNum(52.40487058561866, -147.56137608427574), Power(bigDec, ComplexNum(piBigDec,piBigDec)).eval())
+    }
+
+    @Test
+    fun complexToInteger() {
+        // TODO need to implement this as formula, may work on others too which is good
+        //assertEquals(IntegerNum(4096), Power(ComplexNum(1,1), IntegerNum(24)).eval())
+        //assertEquals(ComplexNum(4096, 4096), Power(ComplexNum(1,1), IntegerNum(25)).eval())
     }
 
 }

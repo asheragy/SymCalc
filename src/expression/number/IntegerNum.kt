@@ -8,6 +8,12 @@ import java.math.MathContext
 import java.math.RoundingMode
 
 class IntegerNum(override val value: BigInteger) : NumberExpr() {
+    companion object {
+        @JvmField val ZERO = IntegerNum(0)
+        @JvmField val ONE = IntegerNum(1)
+        @JvmField val TWO = IntegerNum(2)
+        @JvmField val NEGATIVE_ONE = IntegerNum(-1)
+    }
 
     override val isZero: Boolean get() = value == BigInteger.ZERO
     override val isOne: Boolean get() = value == BigInteger.ONE
@@ -118,10 +124,11 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
         }
     }
 
-    companion object {
-        @JvmField val ZERO = IntegerNum(0)
-        @JvmField val ONE = IntegerNum(1)
-        @JvmField val TWO = IntegerNum(2)
-        @JvmField val NEGATIVE_ONE = IntegerNum(-1)
+    fun pow(other: IntegerNum): NumberExpr {
+        val intVal = other.asInteger().value.toInt()
+        if (intVal < 0)
+            return RationalNum(ONE, IntegerNum(value.pow(-intVal)))
+        else
+            return IntegerNum(value.pow(intVal))
     }
 }

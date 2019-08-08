@@ -172,6 +172,13 @@ class IntegerNumTest {
         assertFailsWith<UnsupportedOperationException> { one.compareTo(ComplexNum(zero, one)) }
     }
 
+    @Test
+    fun pow() {
+        assertEquals(IntegerNum(-243), IntegerNum(-3).pow(IntegerNum(5)))
+        assertEquals(IntegerNum("910043815000214977332758527534256632492715260325658624"), IntegerNum(12).pow(IntegerNum(50)))
+        assertEquals(RationalNum(IntegerNum.ONE, IntegerNum(243)), IntegerNum(3).pow(IntegerNum(-5)))
+    }
+
     private fun verify(e: NumberExpr, expected: Long) {
         if (e.numType != NumberType.INTEGER)
             fail("unexpected type: " + e.numType)

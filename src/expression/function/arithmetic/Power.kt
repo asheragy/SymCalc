@@ -173,14 +173,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
 private fun IntegerNum.power(other: NumberExpr): NumberExpr {
     when (other.numType) {
-        NumberType.INTEGER -> {
-            val intVal = other.asInteger().value.toInt()
-            if (intVal < 0)
-                return RationalNum(IntegerNum.ONE, IntegerNum(value.pow(-intVal)))
-            else
-                return IntegerNum(value.pow(intVal))
-        }
-
+        NumberType.INTEGER -> return this.pow(other as IntegerNum)
         NumberType.RATIONAL -> throw UnsupportedOperationException()
         NumberType.REAL -> return RealNum.create(this).power(other)
         NumberType.COMPLEX -> {
@@ -232,7 +225,8 @@ private fun RealNum_Double.power(other: NumberExpr): NumberExpr {
         NumberType.INTEGER,
         NumberType.RATIONAL,
         NumberType.REAL -> return RealNum.Companion.create(value.pow(other.toDouble()))
-        NumberType.COMPLEX -> return Power(this, other).eval() as NumberExpr
+        NumberType.COMPLEX ->
+            return Power(this, other).eval() as NumberExpr
     }
 }
 
