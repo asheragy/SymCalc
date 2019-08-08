@@ -198,9 +198,9 @@ private fun RationalNum.power(other: NumberExpr): NumberExpr {
     val d: IntegerNum
     when (other.numType) {
         NumberType.INTEGER -> {
-            n = numerator.power(other) as IntegerNum
-            d = denominator.power(other) as IntegerNum
-            return RationalNum(n, d)
+            val top = numerator.power(other) // These could be rational on negative integer
+            val bottom = denominator.power(other)
+            return Divide(top, bottom).eval() as NumberExpr
         }
 
         NumberType.REAL -> {
