@@ -32,4 +32,9 @@ class TimesTest {
         assertTrue(e.isFunction("times"))
         assertEquals(3, e.size.toLong())
     }
+
+    @Test
+    fun reducesDivide() {
+        //assertEquals(Times(Pi1(), IntegerNum.TWO), Times(Divide(Pi, IntegerNum(4)), IntegerNum.TWO).eval())
+    }
 }

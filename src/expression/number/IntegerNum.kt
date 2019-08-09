@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -12,6 +13,8 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
         @JvmField val ONE = IntegerNum(1)
         @JvmField val TWO = IntegerNum(2)
         @JvmField val NEGATIVE_ONE = IntegerNum(-1)
+        val MAX_INT = IntegerNum(Int.MAX_VALUE)
+        val MIN_INT = IntegerNum(Int.MIN_VALUE)
     }
 
     override val isZero: Boolean get() = value == BigInteger.ZERO
@@ -47,7 +50,13 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
         }
     }
 
-    fun intValue(): Int = value.toInt()
+    fun intValue(): Int {
+        if (this > MAX_INT || this < MIN_INT)
+            throw OperationException("int value is out of range")
+
+        return value.toInt()
+    }
+
     fun toBigInteger(): BigInteger = value
     fun toBigDecimal(): BigDecimal = BigDecimal(value)
 
@@ -126,7 +135,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
     fun pow(other: IntegerNum): NumberExpr {
         val intVal = other.asInteger().value.toInt()
         if (intVal < 0)
-            return Rational(ONE, IntegerNum(value.pow(-intVal)))
+            return Rational(ONE, IntegerNum(value.pow(-intVal))) // TODO this could be integer in some cases
         else
             return IntegerNum(value.pow(intVal))
     }

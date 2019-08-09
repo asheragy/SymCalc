@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.exception.OperationException
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Test
@@ -177,6 +178,14 @@ class IntegerNumTest {
         assertEquals(IntegerNum(-243), IntegerNum(-3).pow(IntegerNum(5)))
         assertEquals(IntegerNum("910043815000214977332758527534256632492715260325658624"), IntegerNum(12).pow(IntegerNum(50)))
         assertEquals(Rational(IntegerNum.ONE, IntegerNum(243)), IntegerNum(3).pow(IntegerNum(-5)))
+    }
+
+    @Test
+    fun intValue() {
+        assertEquals(Int.MAX_VALUE, IntegerNum("2147483647").intValue())
+        assertEquals(Int.MIN_VALUE, IntegerNum("-2147483648").intValue())
+        assertFailsWith<OperationException> { IntegerNum("2147483648").intValue() }
+        assertFailsWith<OperationException> { IntegerNum("-2147483649").intValue() }
     }
 
     private fun verify(e: NumberExpr, expected: Long) {

@@ -2,6 +2,7 @@ package org.cerion.symcalc.expression.function
 
 import expression.function.list.ConstantArray
 import expression.function.logical.Equal
+import expression.function.trig.ArcTan
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.calculus.D
@@ -40,6 +41,7 @@ class FunctionFactory {
                 Function.SIN -> return Sin(*e)
                 Function.COS -> return Cos(*e)
                 Function.TAN -> return Tan(*e)
+                Function.ARCTAN -> return ArcTan(*e)
 
                 //List
                 Function.TOTAL -> return Total(*e)

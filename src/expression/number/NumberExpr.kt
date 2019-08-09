@@ -60,6 +60,10 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
         return this + other.unaryMinus()
     }
 
+    fun square(): NumberExpr {
+        return this * this
+    }
+
     companion object {
         @JvmStatic fun parse(s: String): NumberExpr {
             if (s.indexOf('i') > -1)

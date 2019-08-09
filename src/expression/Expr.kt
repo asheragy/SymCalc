@@ -158,7 +158,7 @@ abstract class Expr {
             result.evaluate()
         }
         catch (e: Exception) {
-            ErrorExpr(e.toString())
+            ErrorExpr(e.message!!)
         }
     }
 

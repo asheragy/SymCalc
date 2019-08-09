@@ -1,8 +1,10 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
 import expression.constant.I
+import expression.function.trig.ArcTan
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.ConstExpr
+import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.E
@@ -31,6 +33,11 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
             a = N(a, minPrecision).eval()
         if ((b is ConstExpr || b is Times) && minPrecision < b.precision)
             b = N(b, minPrecision).eval()
+
+        // Power to power is just multiplied exponents
+        if (a is Power) {
+            return Power(a[0], Times(a[1], b)).eval()
+        }
 
         if (b.isNumber) {
             b as NumberExpr
@@ -76,8 +83,8 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
                     return a.power(b)
                 else if (a is RealNum)
                     return a.power(b)
-
-                TODO("Complex")
+                else if (a is ComplexNum)
+                    return complexToPower(a, b)
             }
 
             // TODO this is not the right check, just gets past the current issue
@@ -86,6 +93,16 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         }
 
         return this
+    }
+
+    private fun complexToPower(a: ComplexNum, N: NumberExpr): Expr {
+        val theta = ArcTan(Divide(a.img, a.real)).eval()
+        val r = Sqrt(Plus(a.real.square(), a.img.square())).eval()
+        val rN = Power(r, N).eval()
+        val cos = Cos(Times(theta, N)).eval()
+        val sin = Sin(Times(theta, N)).eval()
+
+        return Times(rN, Plus(cos, Times(I(), sin))).eval()
     }
 
     private fun complexPower(a: Expr, n: ComplexNum): Expr {
@@ -258,11 +275,9 @@ private fun RealNum_BigDecimal.power(other: NumberExpr): NumberExpr {
 
 private fun ComplexNum.power(other: NumberExpr): NumberExpr {
     when (other.numType) {
-        NumberType.INTEGER -> TODO()
-        NumberType.RATIONAL -> TODO()
-        NumberType.REAL -> TODO()
-        NumberType.COMPLEX -> {
-            throw UnsupportedOperationException()
-        }
+        NumberType.INTEGER,
+        NumberType.RATIONAL,
+        NumberType.REAL,
+        NumberType.COMPLEX -> TODO()
     }
 }
