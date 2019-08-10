@@ -17,14 +17,6 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
         for (i in 0 until size)
             list.add(get(i))
 
-        // TODO this should be done in Expr class, may only apply to ConstExpr so that is a factor
-        val minPrecision = list.minBy { it.precision }!!.precision
-        for (i in 0 until list.size) {
-            if (list[i].precision > minPrecision) {
-                list[i] = list[i].eval(minPrecision)
-            }
-        }
-
         // Combine number values
         val numberItems = list.filterIsInstance<NumberExpr>()
         list.removeIf { it is NumberExpr }

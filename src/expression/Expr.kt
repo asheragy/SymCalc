@@ -10,6 +10,7 @@ import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 import java.util.*
+import kotlin.math.min
 
 abstract class Expr {
 
@@ -121,6 +122,18 @@ abstract class Expr {
                     result.addArg(arg)
                 else
                     result.addArg(arg.eval())
+            }
+
+            // Evaluate precision on sibling elements, numbers already handled but 
+            if (size > 0) {
+                val minPrecision = result.args.minBy { it.precision }!!.precision
+                for (i in 0 until result.args.size) {
+                    if (result.args[i] !is NumberExpr && minPrecision < result.args[i].precision) {
+                        val temp = result.args[i].eval(minPrecision)
+                        if (temp !is N)
+                            result.mArgs!![i] = temp
+                    }
+                }
             }
         }
 

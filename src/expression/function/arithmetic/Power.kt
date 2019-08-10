@@ -27,13 +27,6 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         var a = get(0)
         var b = get(1)
 
-        // TODO this should be done in Expr class, may only apply to ConstExpr so that is a factor
-        val minPrecision = min(a.precision, b.precision)
-        if (a is ConstExpr && minPrecision < a.precision)
-            a = N(a, minPrecision).eval()
-        if ((b is ConstExpr || b is Times) && minPrecision < b.precision)
-            b = N(b, minPrecision).eval()
-
         // Power to power is just multiplied exponents
         if (a is Power) {
             return Power(a[0], Times(a[1], b)).eval()

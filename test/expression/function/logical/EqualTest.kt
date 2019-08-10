@@ -1,6 +1,8 @@
 package expression.function.logical
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.ComplexNum
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
@@ -18,6 +20,11 @@ class EqualTest {
             for (n2 in numbers)
                 isEqual(n1, n2)
         }
+    }
+
+    @Test
+    fun precision_evaluatedFirst() {
+        isEqual(Pi(), N(Pi()))
     }
 
     private fun isEqual(a: Expr, b: Expr) {
