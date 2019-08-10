@@ -11,7 +11,6 @@ import org.cerion.symcalc.expression.number.Rational
 class Bernoulli(vararg e: Expr) : FunctionExpr(Function.BERNOULLI, *e) {
 
     override fun evaluate(): Expr {
-
         val result: Expr
         var N = get(0).asInteger()
 

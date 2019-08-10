@@ -94,14 +94,13 @@ class RealNumTest : NumberTestBase() {
 
     @Test
     fun equals() {
-
         val n1 = RealNum.create(5.0)
         val n2 = RealNum.create(6.0)
         val n3 = RealNum.create(5.0)
         val n4 = IntegerNum(5)
 
         assertNotEquals(n1, n2)
-        assertEquals(n1, n4)
+        assertNotEquals(n1, n4)
         assertEquals(n1, n3)
 
         //Add BigDecimal cases or switch class to only use that type

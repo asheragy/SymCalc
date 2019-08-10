@@ -37,6 +37,9 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract override fun compareTo(other: NumberExpr): Int
 
     fun equals(other: NumberExpr): Boolean {
+        if (this.numType != other.numType)
+            return false
+
         return try {
             compareTo(other) == 0
         }

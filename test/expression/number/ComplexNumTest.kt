@@ -53,7 +53,7 @@ class ComplexNumTest {
         assertEquals(ComplexNum(-4,1), ComplexNum(1,1) - IntegerNum(5))
         assertEquals(ComplexNum(Rational(1,2),IntegerNum.ONE), ComplexNum(1,1) - Rational.HALF)
         assertEquals(ComplexNum(RealNum.create(-4.0),IntegerNum.ONE), ComplexNum(1,1) - RealNum.create(5.0))
-        assertEquals(ComplexNum(0,0), ComplexNum(1,1) - ComplexNum(1,1))
+        assertEquals(IntegerNum.ZERO, ComplexNum(1,1) - ComplexNum(1,1))
     }
 
     @Test

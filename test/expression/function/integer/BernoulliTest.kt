@@ -21,7 +21,7 @@ class BernoulliTest {
         assertEquals(IntegerNum(1), Bernoulli(IntegerNum(0)).eval())
         assertEquals(Rational(-1,2), Bernoulli(IntegerNum(1)).eval())
         assertEquals(Rational(1,6), Bernoulli(IntegerNum(2)).eval())
-        assertEquals(Rational(0, 1), Bernoulli(IntegerNum(3)).eval())
+        assertEquals(IntegerNum.ZERO, Bernoulli(IntegerNum(3)).eval())
         assertEquals(Rational(-1, 30), Bernoulli(IntegerNum(4)).eval())
     }
 

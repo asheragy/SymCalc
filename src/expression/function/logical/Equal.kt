@@ -4,6 +4,7 @@ import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
+import kotlin.math.min
 
 class Equal(vararg e: Expr) : FunctionExpr(Function.EQUAL, *e) {
 
@@ -11,10 +12,16 @@ class Equal(vararg e: Expr) : FunctionExpr(Function.EQUAL, *e) {
         if (size == 1)
             return BoolExpr.TRUE
 
-        val a = get(0)
-        val b = get(1)
+        var a = get(0)
+        var b = get(1)
         if (a.isNumber && b.isNumber) {
-            return BoolExpr(a.asNumber().equals(b.asNumber()))
+            val minPrecision = min(a.precision, b.precision)
+            if (minPrecision < a.precision)
+                a = a.eval(minPrecision)
+            if (minPrecision < b.precision)
+                b = b.eval(minPrecision)
+
+            return BoolExpr(a.equals(b))
         }
 
         return this
