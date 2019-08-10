@@ -175,6 +175,7 @@ class IntegerNumTest {
 
     @Test
     fun pow() {
+        assertEquals(IntegerNum.ONE, IntegerNum.ONE.pow(IntegerNum(-2)))
         assertEquals(IntegerNum(-243), IntegerNum(-3).pow(IntegerNum(5)))
         assertEquals(IntegerNum("910043815000214977332758527534256632492715260325658624"), IntegerNum(12).pow(IntegerNum(50)))
         assertEquals(Rational(IntegerNum.ONE, IntegerNum(243)), IntegerNum(3).pow(IntegerNum(-5)))

@@ -42,45 +42,31 @@ class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
             }
         }
 
-        // TODO may be able to get number vs non number list via filter
-        //Multiply numbers
-        var product: NumberExpr = IntegerNum.ONE
-        val it = list.iterator()
-        while (it.hasNext()) {
-            val e = it.next()
-            if (e.isNumber) {
-                val n = e as NumberExpr
-                if (!n.isOne)
-                    product*= n
-                it.remove()
-            }
+        val numberItems = list.filterIsInstance<NumberExpr>()
+        list.removeIf { it is NumberExpr }
+        val product = numberItems.fold(IntegerNum.ONE as NumberExpr) { acc, n -> acc * n }
+        if (product.isZero)
+            return IntegerNum.ZERO
+        else if(!product.isOne || list.size == 0)
+            list.add(0, product)
+
+        if (list.size > 1) {
+            return Times(*list.toTypedArray())
         }
 
-        //At least 1 non-number value
-        if (list.size > 0) {
-            //Only add number if not one
-            if (!product.isOne)
-                list.add(0, product)
-
-            return if (list.size == 1) list[0] else Times(*list.toTypedArray())
-
-        }
-
-        return product
+        return list[0]
     }
 
     override fun toString(): String {
         if (size > 0) {
-            var s = get(0).toString()
-            for (i in 1 until size) {
-                val e = get(i)
-                if (e is Plus || e is Subtract)
-                    s += " * ($e)"
+            val strings = args.map {
+                if (it is Plus || it is Subtract)
+                    "($it)"
                 else
-                    s += " * $e"
+                    it.toString()
             }
 
-            return s
+            return strings.joinToString(" * ")
         }
 
         return super.toString()

@@ -19,6 +19,8 @@ class TimesTest {
 
     @Test
     fun timesOne() {
+        assertEquals(IntegerNum.ONE, Times(IntegerNum.ONE, IntegerNum.ONE).eval())
+
         // 1 * Sin(x) = Sin(x)
         val sinx = Sin(VarExpr("x"))
         assertEquals(sinx, Times(IntegerNum.ONE, sinx).eval())

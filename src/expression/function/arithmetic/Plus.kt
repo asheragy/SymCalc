@@ -13,9 +13,7 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
         get() = Properties.ASSOCIATIVE.value or Properties.NumericFunction.value or Properties.Orderless.value
 
     override fun evaluate(): Expr {
-        var sum: NumberExpr = IntegerNum.ZERO
         val list = ArrayList<Expr>()
-
         for (i in 0 until size)
             list.add(get(i))
 
@@ -27,15 +25,12 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
             }
         }
 
-        // TODO try extracting numbers via filter
-        val it = list.iterator()
-        while (it.hasNext()) {
-            val e = it.next()
-            if (e.isNumber) {
-                sum+= e.asNumber()
-                it.remove()
-            }
-        }
+        // Combine number values
+        val numberItems = list.filterIsInstance<NumberExpr>()
+        list.removeIf { it is NumberExpr }
+        val sum = numberItems.fold(IntegerNum.ZERO as NumberExpr) { acc, n -> acc + n }
+        if (!sum.isZero)
+            list.add(sum)
 
         //At least 1 non-number value
         if (list.size > 0) {
@@ -58,10 +53,6 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
                     break
                 }
             }
-
-            //Only add number if non-zero
-            if (!sum.isZero)
-                list.add(0, sum)
 
             //If only 1 entry just return it
             return if (list.size == 1) list[0] else Plus(*list.toTypedArray())

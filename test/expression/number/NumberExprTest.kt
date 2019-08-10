@@ -9,9 +9,9 @@ import org.junit.Test
 class NumberExprTest {
 
     @Test
-    fun equals() {
+    fun equals_afterEval() {
         // TODO Integer(1) == Complex(1,0) but for unit tests that may not what we want
-        assertEquals(IntegerNum.ONE, ComplexNum(1, 0).eval())
+        assertEquals(IntegerNum.ONE, ComplexNum(1, 0))
         //assertNotEquals(IntegerNum.ONE, ComplexNum(1, 0))
     }
 }

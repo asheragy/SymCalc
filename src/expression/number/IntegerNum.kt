@@ -135,7 +135,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
     fun pow(other: IntegerNum): NumberExpr {
         val intVal = other.asInteger().value.toInt()
         if (intVal < 0)
-            return Rational(ONE, IntegerNum(value.pow(-intVal))) // TODO this could be integer in some cases
+            return Rational(ONE, IntegerNum(value.pow(-intVal))).evaluate()
         else
             return IntegerNum(value.pow(intVal))
     }
