@@ -236,4 +236,11 @@ abstract class Expr {
 
     // Extensions for convenience
     fun toList(size: Int): ListExpr = ConstantArray(this, IntegerNum(size)).eval().asList()
+
+    override fun hashCode(): Int {
+        var result = value?.hashCode() ?: 0
+        result = 31 * result + (mArgs?.hashCode() ?: 0)
+        result = 31 * result + type.hashCode()
+        return result
+    }
 }

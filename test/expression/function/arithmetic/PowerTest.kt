@@ -239,9 +239,10 @@ class PowerTest {
 
     @Test
     fun complexToInteger() {
-        // TODO need to implement this as formula, may work on others too which is good
         assertEquals(IntegerNum(4096), Power(ComplexNum(1,1), IntegerNum(24)).eval())
-        //assertEquals(ComplexNum(4096, 4096), Power(ComplexNum(1,1), IntegerNum(25)).eval())
+        assertEquals(ComplexNum(4096, 4096), Power(ComplexNum(1,1), IntegerNum(25)).eval())
+
+        // TODO add more
     }
 
 }

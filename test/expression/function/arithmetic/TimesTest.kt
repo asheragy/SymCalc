@@ -1,13 +1,21 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
 import org.cerion.symcalc.expression.VarExpr
+import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Rational
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class TimesTest {
+
+    @Test
+    fun toString_Parenthesis() {
+        assertEquals("2 * 3 * 4", Times(IntegerNum.TWO, IntegerNum(3), IntegerNum(4)).toString())
+        assertEquals("2 * (3 + 4)", Times(IntegerNum.TWO, Plus(IntegerNum(3), IntegerNum(4))).toString())
+    }
 
     @Test
     fun timesOne() {
@@ -34,7 +42,14 @@ class TimesTest {
     }
 
     @Test
-    fun reducesDivide() {
-        //assertEquals(Times(Pi1(), IntegerNum.TWO), Times(Divide(Pi, IntegerNum(4)), IntegerNum.TWO).eval())
+    fun transforms() {
+        // 2*(Pi/2 + Pi) = 3*Pi
+        val e = Times(IntegerNum.TWO,Plus(Pi(), Divide(Pi(), IntegerNum.TWO))).eval()
+        assertEquals(Times(IntegerNum(3), Pi()), e)
+    }
+
+    @Test
+    fun powersCombined() {
+        assertEquals(IntegerNum.TWO, Times(Power(IntegerNum.TWO, Rational.HALF), Power(IntegerNum.TWO, Rational.HALF)).eval())
     }
 }

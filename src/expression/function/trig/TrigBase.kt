@@ -45,6 +45,7 @@ abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : Fun
             return evaluatePiFactoredOut(times.eval())
         }
 
+        // TODO not sure if this is needed anymore, Pi/int should eval to Rational * Pi
         if (e is Divide && e.args[0] is Pi) {
             return evaluatePiFactoredOut(Divide(IntegerNum.ONE, e.args[1]).eval())
         }

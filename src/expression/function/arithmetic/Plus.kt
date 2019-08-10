@@ -3,20 +3,16 @@ package org.cerion.symcalc.expression.function.arithmetic
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.function.core.N
-import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.IntegerNum
-
-import java.util.ArrayList
-import kotlin.math.min
+import org.cerion.symcalc.expression.number.NumberExpr
+import java.util.*
 
 class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
 
     override val properties: Int
-        get() = Expr.Properties.ASSOCIATIVE.value or Expr.Properties.NumericFunction.value or Properties.Orderless.value
+        get() = Properties.ASSOCIATIVE.value or Properties.NumericFunction.value or Properties.Orderless.value
 
     override fun evaluate(): Expr {
-
         var sum: NumberExpr = IntegerNum.ZERO
         val list = ArrayList<Expr>()
 
@@ -31,6 +27,7 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
             }
         }
 
+        // TODO try extracting numbers via filter
         val it = list.iterator()
         while (it.hasNext()) {
             val e = it.next()
@@ -42,13 +39,32 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
 
         //At least 1 non-number value
         if (list.size > 0) {
+            val groups = list.groupBy { it.toString() }
+            for (group in groups) {
+                if (group.value.size > 1) {
+                    list.removeIf { it.toString() == group.key }
+                    list.add(Times(IntegerNum(group.value.size), group.value.first()))
+                }
+            }
+
+            // See if any elements can be added to a Times()
+            for (arg in list) {
+                if (arg is Times && arg.size == 2 && arg[1] !is NumberExpr) {
+                    while (list.contains(arg[1])) {
+                        arg[0] = Plus(arg[0], IntegerNum.ONE).eval()
+                        list.remove(arg[1])
+                    }
+                    // TODO continuing this loop after removing elements causes error, rewrite to fix this so it can work multiple times
+                    break
+                }
+            }
+
             //Only add number if non-zero
             if (!sum.isZero)
                 list.add(0, sum)
 
             //If only 1 entry just return it
             return if (list.size == 1) list[0] else Plus(*list.toTypedArray())
-
         }
 
         return sum
@@ -58,7 +74,14 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
 
     override fun toString(): String {
         if (size > 0) {
-            return args.joinToString(" + ")
+            val strings = args.map {
+                if (it is Times)
+                    "($it)"
+                else
+                    it.toString()
+            }
+
+            return strings.joinToString(" + ")
         }
 
         return super.toString()
