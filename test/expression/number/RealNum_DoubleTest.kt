@@ -6,7 +6,18 @@ import org.junit.Test
 import java.math.BigDecimal
 import kotlin.test.assertFailsWith
 
-class RealNum_DoubleTest {
+class RealNum_DoubleTest : NumberTestBase() {
+
+    @Test
+    fun identity() {
+        val n = RealNum_Double(3.14)
+
+        assertAdd(n, n, IntegerNum.ZERO)
+        assertAdd(n, n, Rational.ZERO)
+        assertAdd(n, n, RealNum_Double(0.0))
+        assertAdd(n, n, RealNum_BigDecimal(BigDecimal(0.0)))
+        assertAdd(n, n, Complex.ZERO)
+    }
 
     @Test
     fun compare() {

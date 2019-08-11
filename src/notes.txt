@@ -8,6 +8,7 @@ Links
 Maybe important features
 - Cannot define variable with same name as function (case insensitive)
 - UserFunction requires name, does it need to?  How do these really work?  Is it just an expression?  May not be implemented correctly here / Function[]
+- NumberExpr should maybe not do conversions between types of different precision, Int+Rational is fine but Int+Double should be converted before ever getting there
 
 Non-Important Features
 - Integer to string, full number spelled out

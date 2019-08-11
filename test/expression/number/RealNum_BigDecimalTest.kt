@@ -7,9 +7,21 @@ import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.math.BigDecimal
 import kotlin.test.assertFailsWith
 
-class RealNum_BigDecimalTest {
+class RealNum_BigDecimalTest : NumberTestBase() {
+
+    @Test
+    fun identity() {
+        val n = RealNum_BigDecimal("3.141592653589793238462643383279")
+
+        assertAdd(n, n, IntegerNum.ZERO)
+        assertAdd(n, n, Rational.ZERO)
+        assertAdd(RealNum_Double(3.141592653589793), n, RealNum_Double(0.0))
+        assertAdd(n, n, RealNum_BigDecimal(BigDecimal(0.0)))
+        assertAdd(n, n, Complex.ZERO)
+    }
 
     @Test
     fun precision() {

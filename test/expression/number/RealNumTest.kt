@@ -8,19 +8,12 @@ import kotlin.test.assertFalse
 
 class RealNumTest : NumberTestBase() {
 
-    private val RealDouble = RealNum.create(1.12345)
+    private val RealDouble = RealNum_Double(1.12345)
     private val RealBigDec = RealNum_BigDecimal("1.1234567890987654321")
 
     @Test
-    fun identity() {
-        // TODO
-        //assertIdentity(RealDouble)
-        //assertIdentity(RealBigDec)
-    }
-
-    @Test
     fun addition() {
-        assertAdd(RealNum.create(2.2469067890987655), RealDouble, RealBigDec)
+        assertAdd(RealNum_Double(2.2469067890987655), RealDouble, RealBigDec)
         assertAdd(RealNum.create("2.2469135781975308642"), RealBigDec, RealBigDec)
     }
 
