@@ -7,7 +7,7 @@ import java.lang.UnsupportedOperationException
 enum class NumberType {
     INTEGER,
     RATIONAL,
-    REAL,
+    REAL, // TODO these are different enough should consider splitting into 2 actual types with no shared base class
     COMPLEX
 }
 
@@ -31,7 +31,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     fun asComplex(): Complex = this as Complex
 
     abstract override fun toString(): String
-    abstract fun toDouble(): Double  //Valid on all but ComplexNum
+    abstract fun toDouble(): Double  //Valid on all but ComplexNum // TODO consider removing, evaluate(precision) can replace in some cases
     abstract fun evaluate(precision: Int): NumberExpr
 
     abstract override fun compareTo(other: NumberExpr): Int
@@ -78,7 +78,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
 
         @JvmStatic fun create(n: Number) : NumberExpr {
             if (n is Double)
-                return RealNum.create(n)
+                return RealNum_Double(n)
             else if (n is Int)
                 return IntegerNum(n)
 

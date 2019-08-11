@@ -4,6 +4,7 @@ import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.expression.number.RealNum_BigDecimal
+import org.cerion.symcalc.expression.number.RealNum_Double
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -11,7 +12,7 @@ class ETest {
     @Test
     fun basic() {
         assertEquals(E(), E().eval())
-        assertEquals(RealNum.create(2.718281828459045), N(E()).eval())
+        assertEquals(RealNum_Double(2.718281828459045), N(E()).eval())
 
         assertEquals(RealNum_BigDecimal("2.7183"), N(E(), IntegerNum(4)).eval())
         assertEquals(RealNum_BigDecimal("2.71828"), N(E(), IntegerNum(5)).eval())

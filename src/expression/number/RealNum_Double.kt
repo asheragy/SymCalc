@@ -9,11 +9,8 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
     override val isNegative: Boolean get() = value < 0
     override val precision: Int get() = SYSTEM_DECIMAL_PRECISION
 
-    override fun toInteger(): IntegerNum = IntegerNum(value.toLong())
-    override val isWholeNumber: Boolean
+    val isWholeNumber: Boolean
         get() = value == floor(value) && !java.lang.Double.isInfinite(value)
-
-    constructor(n: IntegerNum) : this(n.toDouble())
 
     override fun toDouble(): Double = value
     override fun toString(): String = "" + value

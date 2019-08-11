@@ -13,6 +13,7 @@ import org.cerion.symcalc.expression.function.list.Tally
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.*
+import java.math.BigInteger
 import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.pow
@@ -20,13 +21,16 @@ import kotlin.math.pow
 class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
     public override fun evaluate(): Expr {
-        var a = get(0)
-        var b = get(1)
+        val a = get(0)
+        val b = get(1)
 
         // Power to power is just multiplied exponents
         if (a is Power) {
             return Power(a[0], Times(a[1], b)).eval()
         }
+
+        if (a is NumberExpr && a.isOne)
+            return a
 
         if (b.isNumber) {
             b as NumberExpr
@@ -132,50 +136,56 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
     }
 
     private fun integerToRational(a: IntegerNum, b: Rational): Expr {
-        val pow = Math.pow(a.toDouble(), b.toDouble())
-        val real = RealNum.create(pow)
-
-        if (real.isWholeNumber) // TODO this does not seem to work for a lot of cases probably better to just remove so its consistent
-            return real.toInteger()
-        else {
-            // factor out any numbers that are the Nth root of the denominator
-            val t = Factor(a).eval()
-            val factors = Tally(t).eval().asList()
-
-            val denominator = b.denominator
-            var multiply = IntegerNum.ONE
-
-            var i = 0
-            while (i < factors.size) {
-                val key = factors[i][0].asInteger()
-                val v = factors[i][1].asInteger()
-
-                // Factor it out
-                if (v >= denominator) {
-                    multiply *= key
-                    factors[i] = ListExpr(key, v - denominator)
-                } else
-                    i++
-            }
-
-            if (multiply.isOne)
-                return Power(a, b)
-
-            // Factor out multiples
-            //Expr result = new Power(this, num);
-            var root = IntegerNum.ONE
-            for (j in 0 until factors.size) {
-                val f1 = factors[j][0]
-                val f2 = factors[j][1] as IntegerNum
-                if (f2.isZero)
-                    continue
-
-                root = Times(root, f1, f2).eval().asInteger()
-            }
-
-            val nthRoot = Times(multiply, Power(root, b))
-            return Power(nthRoot, b.numerator).eval()
+        // Performance: Use faster method for square root
+        /* One other method for any value but may need additional checks
+             - Calculate using Math.pow() after converting to doubles
+             - isWholeNumber = floor(value) && !java.lang.Double.isInfinite(value)
+             - Then convert to integer and return
+        */
+        if (b == Rational.HALF) {
+            val sqrt = a.value.sqrtAndRemainder()
+            if (sqrt[1].compareTo(BigInteger.ZERO) == 0)
+                return IntegerNum(sqrt[0])
         }
+
+        // factor out any numbers that are the Nth root of the denominator
+        val t = Factor(a).eval()
+        val factors = Tally(t).eval().asList()
+
+        val denominator = b.denominator
+        var multiply = IntegerNum.ONE
+
+        var i = 0
+        while (i < factors.size) {
+            val key = factors[i][0].asInteger()
+            val v = factors[i][1].asInteger()
+
+            // Factor it out
+            if (v >= denominator) {
+                multiply *= key
+                factors[i] = ListExpr(key, v - denominator)
+            } else
+                i++
+        }
+
+        if (multiply.isOne)
+            return Power(a, b)
+
+        // Factor out multiples
+        //Expr result = new Power(this, num);
+        var root = IntegerNum.ONE
+        for (j in 0 until factors.size) {
+            val f1 = factors[j][0]
+            val f2 = factors[j][1] as IntegerNum
+            if (f2.isZero)
+                continue
+
+            root = Times(root, f1, f2).eval().asInteger()
+        }
+
+        val nthRoot = Times(multiply, Power(root, b))
+        return Power(nthRoot, b.numerator).eval()
+
     }
 
     override fun toString(): String {
@@ -193,9 +203,6 @@ private fun IntegerNum.power(other: NumberExpr): NumberExpr {
         NumberType.INTEGER -> return this.pow(other as IntegerNum)
         NumberType.RATIONAL -> throw UnsupportedOperationException()
         NumberType.REAL -> {
-            if (other is RealNum_Double)
-                return RealNum.create(this).power(other)
-
             val real = this.evaluate(other.precision) as RealNum
             return real.power(other)
         }
@@ -256,7 +263,7 @@ private fun RealNum_Double.power(other: NumberExpr): NumberExpr {
     when (other.numType) {
         NumberType.INTEGER,
         NumberType.RATIONAL,
-        NumberType.REAL -> return RealNum.Companion.create(value.pow(other.toDouble()))
+        NumberType.REAL -> return RealNum_Double(value.pow(other.toDouble()))
         NumberType.COMPLEX ->
             return Power(this, other).eval() as NumberExpr
     }
@@ -277,8 +284,8 @@ private fun RealNum_BigDecimal.power(other: NumberExpr): NumberExpr {
         }
         NumberType.REAL -> {
             other as RealNum
-            if (other.isDouble)
-                return RealNum.Companion.create(toDouble().pow(other.toDouble()))
+            if (other is RealNum_Double)
+                return RealNum_Double(toDouble().pow(other.value))
 
             return this.pow(other as RealNum_BigDecimal)
         }

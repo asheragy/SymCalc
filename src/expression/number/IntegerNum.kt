@@ -37,7 +37,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
     override fun evaluate(precision: Int): NumberExpr {
         return when (precision) {
             InfinitePrecision -> this
-            SYSTEM_DECIMAL_PRECISION -> RealNum.create(this)
+            SYSTEM_DECIMAL_PRECISION -> RealNum_Double(toDouble())
             else -> {
                 //if (isZero)
                 //    return RealNum.create(0.0) // Prevents lost precision for BigDecimal(0)
@@ -46,7 +46,6 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
                 bd = bd.setScale(precision)
                 return RealNum_BigDecimal(bd)
             }
-
         }
     }
 
@@ -131,7 +130,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
         return when (other.numType) {
             NumberType.INTEGER -> value.compareTo(other.asInteger().value)
             NumberType.RATIONAL -> this.toDouble().compareTo(other.toDouble())
-            NumberType.REAL -> RealNum.create(this).compareTo(other)
+            NumberType.REAL -> evaluate(other.precision).compareTo(other)
             NumberType.COMPLEX -> Complex(this).compareTo(other)
         }
     }

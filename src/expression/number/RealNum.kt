@@ -4,17 +4,10 @@ import java.math.BigDecimal
 
 abstract class RealNum : NumberExpr() {
 
-    abstract val isWholeNumber: Boolean
-    abstract fun toInteger(): IntegerNum
-
-    val isDouble: Boolean get() = this is RealNum_Double
-
+    //val isDouble: Boolean get() = this is RealNum_Double
     override val numType: NumberType get() = NumberType.REAL
 
-    // TODO add a ToRational function for Rationalize[]
-
     companion object {
-
         fun create(s: String) : RealNum {
             val value = java.lang.Double.parseDouble(s)
 
@@ -24,9 +17,7 @@ abstract class RealNum : NumberExpr() {
             return RealNum_Double(value)
         }
 
-        fun create(n: IntegerNum): RealNum = RealNum_Double(n)
+        @Deprecated("use constructor directly", ReplaceWith("RealNum_Double(n)", "org.cerion.symcalc.expression.number.RealNum_Double"))
         fun create(n: Double): RealNum = RealNum_Double(n)
-
-        fun create(bigDecimal: BigDecimal): RealNum = RealNum_BigDecimal(bigDecimal)
     }
 }

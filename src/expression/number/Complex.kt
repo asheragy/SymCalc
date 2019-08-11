@@ -24,7 +24,7 @@ class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) 
     }
 
     constructor(r: Int, i: Int) : this(IntegerNum(r.toLong()), IntegerNum(i.toLong()))
-    constructor(r: Double, i: Double) : this(RealNum.create(r), RealNum.create(i))
+    constructor(r: Double, i: Double) : this(RealNum_Double(r), RealNum_Double(i))
 
     constructor(s: String): this() {
         val num = s.substring(0, s.length - 1)

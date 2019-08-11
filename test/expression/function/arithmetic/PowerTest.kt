@@ -92,7 +92,7 @@ class PowerTest {
         assertEquals(Complex(0.0, 64.36342999999998), Power(Complex(IntegerNum(0), RealNum.create(2.3)), IntegerNum(5)).eval())
 
         // BigDec to BigDec
-        assertEquals(RealNum_BigDecimal("13.26969"), Power(RealNum_BigDecimal("3.000001"), RealNum.create(BigDecimal("2.35340583128859694839201928385968473749596868726265"))).eval())
+        assertEquals(RealNum_BigDecimal("13.26969"), Power(RealNum_BigDecimal("3.000001"), RealNum_BigDecimal("2.35340583128859694839201928385968473749596868726265")).eval())
     }
 
     @Test
@@ -118,7 +118,7 @@ class PowerTest {
         assertEquals(RealNum.create(31.489135652454948), Power(IntegerNum(3), RealNum.create(3.14)).eval())
 
         // Big Decimal
-        assertEquals(RealNum_BigDecimal("31.54428070019754396"), Power(IntegerNum(3), RealNum.create(BigDecimal("3.1415926535897932385"))).eval())
+        assertEquals(RealNum_BigDecimal("31.54428070019754396"), Power(IntegerNum(3), RealNum_BigDecimal("3.1415926535897932385")).eval())
     }
 
     @Test
@@ -206,7 +206,7 @@ class PowerTest {
     fun realToReal() {
         // Double/Double
         assertEquals(RealNum.create(55.90169943749474), Power(RealNum.create(5.0), RealNum.create(2.5)).eval())
-        assertEquals(RealNum.create(125.0), Power(RealNum.create(5.0), RealNum.create(BigDecimal(3.0))).eval())
+        assertEquals(RealNum.create(125.0), Power(RealNum.create(5.0), RealNum_BigDecimal(3.0)).eval())
 
         // Double/BigDecimal
         assertEquals(RealNum.create(36.33783888017471), Power(RealNum_BigDecimal("3.14"), RealNum.create(3.14)).eval())

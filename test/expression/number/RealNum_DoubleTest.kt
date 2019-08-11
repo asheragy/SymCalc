@@ -31,7 +31,7 @@ class RealNum_DoubleTest {
         assertEquals(RealNum.create(10.0), RealNum.create(5.0) + IntegerNum(5))
         assertEquals(RealNum.create(5.5), RealNum.create(5.0) + Rational(1,2))
         assertEquals(RealNum.create(9.9), RealNum.create(5.0) + RealNum.create(4.9))
-        assertEquals(RealNum.create(15.0), RealNum.create(5.0) + RealNum.create(BigDecimal.TEN))
+        assertEquals(RealNum.create(15.0), RealNum.create(5.0) + RealNum_BigDecimal(BigDecimal.TEN))
         assertEquals(Complex(RealNum.create(10.0), IntegerNum(4)), RealNum.create(5.0) + Complex(5,4))
     }
 
@@ -40,7 +40,7 @@ class RealNum_DoubleTest {
         assertEquals(RealNum.create(1.0), RealNum.create(5.0) - IntegerNum(4))
         assertEquals(RealNum.create(4.5), RealNum.create(5.0) - Rational(1,2))
         assertEquals(RealNum.create(0.5), RealNum.create(5.0) - RealNum.create(4.5))
-        assertEquals(RealNum.create(-5.0), RealNum.create(5.0) - RealNum.create(BigDecimal.TEN))
+        assertEquals(RealNum.create(-5.0), RealNum.create(5.0) - RealNum_BigDecimal(BigDecimal.TEN))
         assertEquals(Complex(RealNum.create(-5.0), IntegerNum(4)), RealNum.create(5.0) - Complex(10,-4))
     }
 
@@ -49,7 +49,7 @@ class RealNum_DoubleTest {
         assertEquals(RealNum.create(20.0), RealNum.create(5.0) * IntegerNum(4))
         assertEquals(RealNum.create(2.5), RealNum.create(5.0) * Rational(1,2))
         assertEquals(RealNum.create(22.5), RealNum.create(5.0) * RealNum.create(4.5))
-        assertEquals(RealNum.create(50.0), RealNum.create(5.0) * RealNum.create(BigDecimal.TEN))
+        assertEquals(RealNum.create(50.0), RealNum.create(5.0) * RealNum_BigDecimal(BigDecimal.TEN))
         assertEquals(Complex(RealNum.create(50.0), RealNum.create(-20.0)), RealNum.create(5.0) * Complex(10,-4))
     }
 
@@ -58,7 +58,7 @@ class RealNum_DoubleTest {
         assertEquals(RealNum.create(1.25), RealNum.create(5.0) / IntegerNum(4))
         assertEquals(RealNum.create(10.0), RealNum.create(5.0) / Rational(1,2))
         assertEquals(RealNum.create(2.0), RealNum.create(5.0) / RealNum.create(2.5))
-        assertEquals(RealNum.create(0.5), RealNum.create(5.0) / RealNum.create(BigDecimal.TEN))
+        assertEquals(RealNum.create(0.5), RealNum.create(5.0) / RealNum_BigDecimal(BigDecimal.TEN))
         assertEquals(Complex(RealNum.create(5.0), RealNum.create(-10.0)), RealNum.create(50.0) / Complex(2,4))
     }
 }

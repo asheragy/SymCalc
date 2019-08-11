@@ -9,23 +9,13 @@ import kotlin.test.assertFalse
 class RealNumTest : NumberTestBase() {
 
     private val RealDouble = RealNum.create(1.12345)
-    private val RealBigDec = RealNum.create(BigDecimal("1.1234567890987654321"))
+    private val RealBigDec = RealNum_BigDecimal("1.1234567890987654321")
 
     @Test
     fun identity() {
         // TODO
         //assertIdentity(RealDouble)
         //assertIdentity(RealBigDec)
-    }
-
-    @Test
-    fun constructor_createsCorrectType() {
-        assertEquals(true, RealNum.create(1.2345).isDouble)
-        assertEquals(false, RealNum.create(BigDecimal("1.12345")).isDouble)
-
-        assertTrue(RealNum.create("1.2345").isDouble)
-        assertFalse(RealNum.create("1.1234567899999987654321").isDouble)
-        assertEquals(23, RealNum.create("1.1234567899999987654321").precision)
     }
 
     @Test
@@ -39,12 +29,12 @@ class RealNumTest : NumberTestBase() {
         // N[Double, x] = RealDouble (no change to value)
         assertEquals(RealNum.create(2.12345), N(RealNum.create(2.12345), IntegerNum(100)).eval())
 
-        val a = RealNum.create("1.22222222223333333333")
-        val b = RealNum.create("1.22222222223333333333111111111")
+        val a = RealNum_BigDecimal("1.22222222223333333333")
+        val b = RealNum_BigDecimal("1.22222222223333333333111111111")
 
         // N[x_Precision] = Double
-        assertTrue(N(a).eval().asReal().isDouble)
-        assertEquals(RealNum.create(1.2222222222333334), N(a).eval())
+        assertEquals(RealNum_Double(1.2222222222333334), N(a).eval())
+        assertEquals(RealNum_Double(1.2222222222333334), N(a).eval())
 
         // N[x_Precision, y] = Same if Y is larger than X
         assertEquals(30, N(b, IntegerNum(40)).eval().asReal().precision)
@@ -63,7 +53,7 @@ class RealNumTest : NumberTestBase() {
         assertEquals(RealNum_Double(0.6633333333333333), a + c)
         assertEquals(RealNum_Double(-0.0033333333333332993), a - c)
         assertEquals(RealNum_BigDecimal("0.11"), a * b)
-        assertEquals(RealNum_BigDecimal("0.99"), a / c) // TODO should this be double?
+        assertEquals(RealNum_Double(0.9900000000000001), a / c)
     }
 
     @Test

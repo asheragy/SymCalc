@@ -4,7 +4,9 @@ import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
+import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
+import java.math.BigInteger
 
 class Sqrt(vararg e: Expr) : FunctionExpr(Function.SQRT, *e) {
 

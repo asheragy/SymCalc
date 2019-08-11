@@ -10,20 +10,19 @@ import kotlin.math.min
 class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
     constructor(value: String) : this(BigDecimal(value))
+    constructor(value: Double) : this(BigDecimal(value))
 
-    override val isWholeNumber: Boolean get() = throw NotImplementedError()
     override val isZero: Boolean get() = value == BigDecimal.ZERO
     override val isOne: Boolean get() = value == BigDecimal.ONE
     override val isNegative: Boolean get() = value.signum() == -1
     override val precision: Int get() = value.precision()
 
-    override fun toInteger(): IntegerNum = IntegerNum(value.toLong())
     override fun toDouble(): Double = value.toDouble()
     override fun toString(): String = "$value`$precision"
     override fun unaryMinus(): RealNum_BigDecimal = RealNum_BigDecimal(value.negate())
 
     override fun compareTo(other: NumberExpr): Int {
-        if (other.isReal && !other.asReal().isDouble) {
+        if (other.isReal && other.asReal() !is RealNum_Double) {
             val bigDec = other.asReal() as RealNum_BigDecimal
             return value.compareTo(bigDec.value)
         }
@@ -43,7 +42,7 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
             }
             NumberType.REAL -> {
                 val real = other.asReal()
-                if(real.isDouble)
+                if(real is RealNum_Double)
                     return real + this
 
                 real as RealNum_BigDecimal
@@ -77,7 +76,7 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
             NumberType.REAL -> {
                 val real = other.asReal()
-                if(real.isDouble)
+                if(real is RealNum_Double)
                     return real * this
 
                 real as RealNum_BigDecimal
@@ -109,10 +108,9 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
             }
 
             NumberType.REAL -> {
-                var real = other.asReal()
-                if(real.isDouble) {
-                    real = RealNum_BigDecimal(BigDecimal(real.toDouble()))
-                    //return create(toDouble() / real.toDouble())
+                val real = other.asReal()
+                if(real is RealNum_Double) {
+                    return RealNum_Double(toDouble() / real.value)
                 }
 
                 real as RealNum_BigDecimal

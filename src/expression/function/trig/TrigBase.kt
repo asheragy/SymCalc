@@ -16,7 +16,7 @@ abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : Fun
     override val properties: Int
         get() = Expr.Properties.LISTABLE.value
 
-    protected abstract fun evaluateAsDouble(d: Double): Expr
+    protected abstract fun evaluateAsDouble(d: Double): Expr // TODO can just return double directly
     protected abstract fun evaluate(e: Expr): Expr
     protected abstract fun evaluatePiFactoredOut(e: Expr): Expr
 

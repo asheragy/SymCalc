@@ -9,10 +9,11 @@ import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealNum
+import org.cerion.symcalc.expression.number.RealNum_Double
 import kotlin.math.sin
 
 class Sin(vararg e: Expr) : TrigBase(Function.SIN, *e) {
-    override fun evaluateAsDouble(d: Double): Expr = RealNum.create(sin(d))
+    override fun evaluateAsDouble(d: Double): Expr = RealNum_Double(sin(d))
 
     override fun evaluate(e: Expr): Expr {
         return this

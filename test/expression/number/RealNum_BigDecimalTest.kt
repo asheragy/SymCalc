@@ -3,13 +3,10 @@ package expression.number
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.lang.ArithmeticException
-import java.math.BigDecimal
 import kotlin.test.assertFailsWith
 
 class RealNum_BigDecimalTest {
@@ -20,6 +17,7 @@ class RealNum_BigDecimalTest {
         assertEquals(1, RealNum_BigDecimal("0.0000000001").precision)
         assertEquals(2, RealNum_BigDecimal("0.0000000011").precision)
         assertEquals(13, RealNum_BigDecimal("111.0000000011").precision)
+        assertEquals(23, RealNum_BigDecimal("1.1234567899999987654321").precision)
     }
 
     @Test
@@ -60,7 +58,7 @@ class RealNum_BigDecimalTest {
     fun divide() {
         assertEquals(RealNum_BigDecimal("0.0000617"), RealNum_BigDecimal("0.0001234") / IntegerNum.TWO)
         assertEquals(RealNum_BigDecimal("0.00008227"), RealNum_BigDecimal("0.0001234") / Rational(3,2))
-        assertEquals(RealNum_BigDecimal("0.0329747"), RealNum_BigDecimal("1.0001234") / RealNum.create(30.33))
+        assertEquals(RealNum_Double(0.03297472469502143), RealNum_BigDecimal("1.0001234") / RealNum.create(30.33))
         assertEquals(RealNum_BigDecimal("0.03297"), RealNum_BigDecimal("1.0001234") / RealNum_BigDecimal("30.33"))
         assertEquals(Complex(RealNum_BigDecimal("0.00001898"),RealNum_BigDecimal("-0.00002848")), RealNum_BigDecimal("0.0001234") / Complex(2,3))
     }
