@@ -2,7 +2,7 @@ package expression.constant
 
 import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.core.Hold
-import org.cerion.symcalc.expression.number.ComplexNum
+import org.cerion.symcalc.expression.number.Complex
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.junit.Assert.*
 import org.junit.Test
@@ -22,12 +22,12 @@ class ITest {
 
     @Test
     fun eval() {
-        assertEquals(ComplexNum(0, 1), I().eval())
+        assertEquals(Complex(0, 1), I().eval())
     }
 
     @Test
     fun arithmetic() {
-        assertEquals(ComplexNum(2, 1), Plus(IntegerNum(2), I()).eval())
-        assertEquals(ComplexNum(0, 5), Times(IntegerNum(5), I()).eval())
+        assertEquals(Complex(2, 1), Plus(IntegerNum(2), I()).eval())
+        assertEquals(Complex(0, 5), Times(IntegerNum(5), I()).eval())
     }
 }

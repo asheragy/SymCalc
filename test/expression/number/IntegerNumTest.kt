@@ -117,8 +117,8 @@ class IntegerNumTest {
         assertEquals(IntegerNum(20), IntegerNum(10) / Rational(1,2))
         assertEquals(Rational(21, 4), IntegerNum(3) / Rational(4,7))
         assertEquals(RealNum.create(4.273504273504273), IntegerNum(10) / RealNum.create(2.34))
-        assertEquals(IntegerNum(2), IntegerNum(10) / ComplexNum(5,0))
-        assertEquals(ComplexNum(Rational(8,13),Rational(-12,13)), IntegerNum(4) / ComplexNum(2,3))
+        assertEquals(IntegerNum(2), IntegerNum(10) / Complex(5,0))
+        assertEquals(Complex(Rational(8,13),Rational(-12,13)), IntegerNum(4) / Complex(2,3))
     }
 
     @Test
@@ -126,7 +126,7 @@ class IntegerNumTest {
         assertFailsWith<ArithmeticException> { one / zero}
         assertFailsWith<ArithmeticException> { one / Rational(zero, one)}
         assertFailsWith<ArithmeticException> { one / RealNum.create(0.0)}
-        assertFailsWith<ArithmeticException> { one / ComplexNum()}
+        assertFailsWith<ArithmeticException> { one / Complex()}
     }
 
     @Test
@@ -155,7 +155,7 @@ class IntegerNumTest {
         assertEquals(-1, IntegerNum(5).compareTo(RealNum.create(5.00000001)))
         assertEquals(1, IntegerNum(5).compareTo(RealNum.create(4.999999999)))
 
-        assertEquals(0, IntegerNum.TWO.compareTo(ComplexNum(IntegerNum.TWO, zero)))
+        assertEquals(0, IntegerNum.TWO.compareTo(Complex(IntegerNum.TWO, zero)))
     }
 
     @Test
@@ -170,7 +170,7 @@ class IntegerNumTest {
 
     @Test
     fun compareTo_complex() {
-        assertFailsWith<UnsupportedOperationException> { one.compareTo(ComplexNum(zero, one)) }
+        assertFailsWith<UnsupportedOperationException> { one.compareTo(Complex(zero, one)) }
     }
 
     @Test

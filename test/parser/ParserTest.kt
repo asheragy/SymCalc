@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.number.ComplexNum
+import org.cerion.symcalc.expression.number.Complex
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -81,10 +81,10 @@ class ParserTest {
     @Test
     fun complexNumbers() {
         var e = Expr.parse("5i")
-        assertEquals(ComplexNum(0,5), e.eval())
+        assertEquals(Complex(0,5), e.eval())
 
         e = Expr.parse("2 + 5i")
         assertTrue(e is Plus)
-        assertEquals(ComplexNum(2,5), e.eval())
+        assertEquals(Complex(2,5), e.eval())
     }
 }

@@ -1,8 +1,6 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.function.arithmetic.Power
 import kotlin.math.floor
-import kotlin.math.pow
 
 internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
 
@@ -29,7 +27,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
             NumberType.INTEGER,
             NumberType.RATIONAL,
             NumberType.REAL -> return toDouble().compareTo(other.toDouble())
-            NumberType.COMPLEX -> return ComplexNum(this).compareTo(other)
+            NumberType.COMPLEX -> return Complex(this).compareTo(other)
         }
     }
 
@@ -40,7 +38,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
             NumberType.INTEGER,
             NumberType.RATIONAL,
             NumberType.REAL -> return create(value + other.toDouble())
-            NumberType.COMPLEX -> return ComplexNum(this) + other
+            NumberType.COMPLEX -> return Complex(this) + other
         }
     }
 
@@ -49,7 +47,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
             NumberType.INTEGER,
             NumberType.RATIONAL,
             NumberType.REAL -> return RealNum_Double(value * other.toDouble())
-            NumberType.COMPLEX -> return ComplexNum(this) * other
+            NumberType.COMPLEX -> return Complex(this) * other
         }
     }
 
@@ -58,7 +56,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
             NumberType.INTEGER,
             NumberType.RATIONAL,
             NumberType.REAL -> return RealNum_Double(value / other.toDouble())
-            NumberType.COMPLEX -> return ComplexNum(this) / other
+            NumberType.COMPLEX -> return Complex(this) / other
         }
     }
 }

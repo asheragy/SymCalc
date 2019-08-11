@@ -88,8 +88,8 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
             }
 
             NumberType.COMPLEX -> {
-                other as ComplexNum
-                return ComplexNum(this * other.real, this * other.img)
+                other as Complex
+                return Complex(this * other.real, this * other.img)
             }
         }
     }
@@ -122,7 +122,7 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
             }
 
             NumberType.COMPLEX -> {
-                return ComplexNum(this) / other
+                return Complex(this) / other
             }
         }
     }

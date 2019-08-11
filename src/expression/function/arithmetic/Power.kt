@@ -3,23 +3,18 @@ package org.cerion.symcalc.expression.function.arithmetic
 import expression.constant.I
 import expression.function.trig.ArcTan
 import org.cerion.symcalc.exception.ValidationException
-import org.cerion.symcalc.expression.ConstExpr
-import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.function.integer.Factor
-import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.function.list.Tally
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.*
 import java.math.MathContext
 import java.math.RoundingMode
-import kotlin.math.min
 import kotlin.math.pow
 
 class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
@@ -50,7 +45,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         }
 
         // Euler's Identity
-        if (a is E && b is Times && b.size == 2 && b[0] is ComplexNum) {
+        if (a is E && b is Times && b.size == 2 && b[0] is Complex) {
             val img = Times(b[0].asNumber().asComplex().img, b[1])
             return complexPower(a, IntegerNum.ZERO, img)
         }
@@ -77,19 +72,19 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
                     return a.power(b)
                 else if (a is RealNum)
                     return a.power(b)
-                else if (a is ComplexNum)
+                else if (a is Complex)
                     return complexToPower(a, b)
             }
 
             // TODO this is not the right check, just gets past the current issue
-            if (a.isConst && b is ComplexNum)
+            if (a.isConst && b is Complex)
                 return complexPower(a, b)
         }
 
         return this
     }
 
-    private fun complexToPower(a: ComplexNum, N: NumberExpr): Expr {
+    private fun complexToPower(a: Complex, N: NumberExpr): Expr {
         if (N is IntegerNum) {
             return a.pow(N.intValue())
         }
@@ -103,7 +98,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         return Times(rN, Plus(cos, Times(I(), sin))).eval()
     }
 
-    private fun complexPower(a: Expr, n: ComplexNum): Expr {
+    private fun complexPower(a: Expr, n: Complex): Expr {
         return complexPower(a, n.real, n.img)
     }
 
@@ -142,8 +137,8 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
             val denominator = b.denominator
             var multiply = IntegerNum.ONE
-            var i = 0
 
+            var i = 0
             while (i < factors.size) {
                 val key = factors[i][0].asInteger()
                 val v = factors[i][1].asInteger()
@@ -162,9 +157,9 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
             // Factor out multiples
             //Expr result = new Power(this, num);
             var root = IntegerNum.ONE
-            for (i in 0 until factors.size) {
-                val f1 = factors[i][0]
-                val f2 = factors[i][1] as IntegerNum
+            for (j in 0 until factors.size) {
+                val f1 = factors[j][0]
+                val f2 = factors[j][1] as IntegerNum
                 if (f2.isZero)
                     continue
 
@@ -196,7 +191,7 @@ private fun IntegerNum.power(other: NumberExpr): NumberExpr {
             if (complex.img.isZero)
                 return this.power(complex.real)
 
-            return ComplexNum(this).power(other)
+            return Complex(this).power(other)
         }
     }
 }
@@ -218,11 +213,11 @@ private fun Rational.power(other: NumberExpr): NumberExpr {
         NumberType.RATIONAL -> throw UnsupportedOperationException()
 
         NumberType.COMPLEX -> {
-            other as ComplexNum
+            other as Complex
             if (other.img.isZero)
                 return this.power(other.real)
 
-            return ComplexNum(this).power(other)
+            return Complex(this).power(other)
         }
     }
 }
@@ -266,12 +261,12 @@ private fun RealNum_BigDecimal.power(other: NumberExpr): NumberExpr {
         }
 
         NumberType.COMPLEX -> {
-            return ComplexNum(this).power(other)
+            return Complex(this).power(other)
         }
     }
 }
 
-private fun ComplexNum.power(other: NumberExpr): NumberExpr {
+private fun Complex.power(other: NumberExpr): NumberExpr {
     when (other.numType) {
         NumberType.INTEGER,
         NumberType.RATIONAL,

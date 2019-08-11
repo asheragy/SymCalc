@@ -34,13 +34,13 @@ class RationalTest : NumberTestBase() {
         assertEquals(1, Rational(1,2).compareTo(RealNum.create(0.4)))
         assertEquals(0, Rational(1,2).compareTo(RealNum.create(0.5)))
 
-        assertEquals(-1, Rational(1,3).compareTo(ComplexNum(1,0)))
-        assertEquals(1, Rational(4,3).compareTo(ComplexNum(1,0)))
+        assertEquals(-1, Rational(1,3).compareTo(Complex(1,0)))
+        assertEquals(1, Rational(4,3).compareTo(Complex(1,0)))
     }
 
     @Test
     fun compareTo_complex() {
-        assertFailsWith<UnsupportedOperationException> { Rational(1,2).compareTo(ComplexNum(IntegerNumTest.zero, IntegerNumTest.one)) }
+        assertFailsWith<UnsupportedOperationException> { Rational(1,2).compareTo(Complex(IntegerNumTest.zero, IntegerNumTest.one)) }
     }
 
     @Test

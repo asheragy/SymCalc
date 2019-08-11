@@ -101,7 +101,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
                 return Times(this, Rational(other.denominator, other.numerator)).eval() as NumberExpr
             }
             NumberType.REAL -> return RealNum.create(this) / other
-            NumberType.COMPLEX -> return ComplexNum(this) / other
+            NumberType.COMPLEX -> return Complex(this) / other
         }
     }
 
@@ -128,7 +128,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
             NumberType.INTEGER -> value.compareTo(other.asInteger().value)
             NumberType.RATIONAL -> this.toDouble().compareTo(other.toDouble())
             NumberType.REAL -> RealNum.create(this).compareTo(other)
-            NumberType.COMPLEX -> ComplexNum(this).compareTo(other)
+            NumberType.COMPLEX -> Complex(this).compareTo(other)
         }
     }
 

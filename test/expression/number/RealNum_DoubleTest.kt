@@ -22,8 +22,8 @@ class RealNum_DoubleTest {
         assertEquals(-1, RealNum.create(5.12344).compareTo(RealNum.create(5.12345)))
         assertEquals(1, RealNum.create(5.12346).compareTo(RealNum.create(5.12345)))
 
-        assertEquals(0, RealNum.create(0.0001).compareTo(ComplexNum(RealNum.create((0.0001)), IntegerNumTest.zero)))
-        assertFailsWith<UnsupportedOperationException> { RealNum.create(5.0).compareTo(ComplexNum(IntegerNumTest.zero, IntegerNumTest.one)) }
+        assertEquals(0, RealNum.create(0.0001).compareTo(Complex(RealNum.create((0.0001)), IntegerNumTest.zero)))
+        assertFailsWith<UnsupportedOperationException> { RealNum.create(5.0).compareTo(Complex(IntegerNumTest.zero, IntegerNumTest.one)) }
     }
 
     @Test
@@ -32,7 +32,7 @@ class RealNum_DoubleTest {
         assertEquals(RealNum.create(5.5), RealNum.create(5.0) + Rational(1,2))
         assertEquals(RealNum.create(9.9), RealNum.create(5.0) + RealNum.create(4.9))
         assertEquals(RealNum.create(15.0), RealNum.create(5.0) + RealNum.create(BigDecimal.TEN))
-        assertEquals(ComplexNum(RealNum.create(10.0), IntegerNum(4)), RealNum.create(5.0) + ComplexNum(5,4))
+        assertEquals(Complex(RealNum.create(10.0), IntegerNum(4)), RealNum.create(5.0) + Complex(5,4))
     }
 
     @Test
@@ -41,7 +41,7 @@ class RealNum_DoubleTest {
         assertEquals(RealNum.create(4.5), RealNum.create(5.0) - Rational(1,2))
         assertEquals(RealNum.create(0.5), RealNum.create(5.0) - RealNum.create(4.5))
         assertEquals(RealNum.create(-5.0), RealNum.create(5.0) - RealNum.create(BigDecimal.TEN))
-        assertEquals(ComplexNum(RealNum.create(-5.0), IntegerNum(4)), RealNum.create(5.0) - ComplexNum(10,-4))
+        assertEquals(Complex(RealNum.create(-5.0), IntegerNum(4)), RealNum.create(5.0) - Complex(10,-4))
     }
 
     @Test
@@ -50,7 +50,7 @@ class RealNum_DoubleTest {
         assertEquals(RealNum.create(2.5), RealNum.create(5.0) * Rational(1,2))
         assertEquals(RealNum.create(22.5), RealNum.create(5.0) * RealNum.create(4.5))
         assertEquals(RealNum.create(50.0), RealNum.create(5.0) * RealNum.create(BigDecimal.TEN))
-        assertEquals(ComplexNum(RealNum.create(50.0), RealNum.create(-20.0)), RealNum.create(5.0) * ComplexNum(10,-4))
+        assertEquals(Complex(RealNum.create(50.0), RealNum.create(-20.0)), RealNum.create(5.0) * Complex(10,-4))
     }
 
     @Test
@@ -59,6 +59,6 @@ class RealNum_DoubleTest {
         assertEquals(RealNum.create(10.0), RealNum.create(5.0) / Rational(1,2))
         assertEquals(RealNum.create(2.0), RealNum.create(5.0) / RealNum.create(2.5))
         assertEquals(RealNum.create(0.5), RealNum.create(5.0) / RealNum.create(BigDecimal.TEN))
-        assertEquals(ComplexNum(RealNum.create(5.0), RealNum.create(-10.0)), RealNum.create(50.0) / ComplexNum(2,4))
+        assertEquals(Complex(RealNum.create(5.0), RealNum.create(-10.0)), RealNum.create(50.0) / Complex(2,4))
     }
 }

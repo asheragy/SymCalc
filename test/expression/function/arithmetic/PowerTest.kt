@@ -5,7 +5,6 @@ import expression.function.logical.Equal
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Divide
-import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
@@ -19,8 +18,8 @@ class PowerTest {
 
     @Test
     fun toPowerZero() {
-        val zeros = arrayOf(IntegerNum.ZERO, Rational.ZERO, RealNum.create(0.0), RealNum_BigDecimal(BigDecimal.ZERO), ComplexNum(0,0))
-        val nums = arrayOf(IntegerNum(5), Rational(2,3), RealNum.create(3.14), RealNum_BigDecimal(BigDecimal.TEN), ComplexNum(7,9))
+        val zeros = arrayOf(IntegerNum.ZERO, Rational.ZERO, RealNum.create(0.0), RealNum_BigDecimal(BigDecimal.ZERO), Complex(0,0))
+        val nums = arrayOf(IntegerNum(5), Rational(2,3), RealNum.create(3.14), RealNum_BigDecimal(BigDecimal.TEN), Complex(7,9))
 
         for(num in nums) {
             for (zero in zeros) {
@@ -31,8 +30,8 @@ class PowerTest {
 
     @Test
     fun toPowerOne() {
-        val ones = arrayOf(IntegerNum.ONE, Rational.ONE, RealNum.create(1.0), RealNum_BigDecimal(BigDecimal.ONE), ComplexNum(1,0))
-        val nums = arrayOf(IntegerNum(5), Rational(2,3), RealNum.create(3.14), RealNum_BigDecimal(BigDecimal.TEN), ComplexNum(7,9))
+        val ones = arrayOf(IntegerNum.ONE, Rational.ONE, RealNum.create(1.0), RealNum_BigDecimal(BigDecimal.ONE), Complex(1,0))
+        val nums = arrayOf(IntegerNum(5), Rational(2,3), RealNum.create(3.14), RealNum_BigDecimal(BigDecimal.TEN), Complex(7,9))
 
         for(num in nums) {
             for (one in ones) {
@@ -44,7 +43,7 @@ class PowerTest {
 
     @Test
     fun ePiI_approx() {
-        val approx = ComplexNum(RealNum.create(-1.0), RealNum.create(1.2246467991473532E-16))
+        val approx = Complex(RealNum.create(-1.0), RealNum.create(1.2246467991473532E-16))
         assertEquals(approx, Power(N(E()), Times(N(Pi()), I())).eval())
         assertEquals(approx, Power(N(E()), Times(Pi(), I())).eval())
         assertEquals(approx, Power(E(), Times(N(Pi()), I())).eval())
@@ -58,8 +57,8 @@ class PowerTest {
         // Variations
         //assertEquals(Times(IntegerNum(-1),Power(E(), IntegerNum(5))), Power(E(), Plus(IntegerNum(5), Times(I(), Pi()))).eval())
         assertEquals(IntegerNum.ONE, Power(E(), Times(IntegerNum.TWO, I(), Pi())).eval())
-        assertEquals(ComplexNum(0,1), Power(E(), Times(I(), Divide(Pi(), IntegerNum.TWO))).eval())
-        assertEquals(ComplexNum(0,-1), Power(E(), Times(I(), Times(Pi(), Rational(3,2)))).eval())
+        assertEquals(Complex(0,1), Power(E(), Times(I(), Divide(Pi(), IntegerNum.TWO))).eval())
+        assertEquals(Complex(0,-1), Power(E(), Times(I(), Times(Pi(), Rational(3,2)))).eval())
     }
 
     @Test
@@ -68,7 +67,7 @@ class PowerTest {
         assertEquals(Power(Rational(2,3), Pi()), Power(Rational(2,3), Pi()).eval())
         assertEquals(RealNum.create(31.54428070019754), Power(RealNum.create(3.0), Pi()).eval())
         // TODO assertEquals(Power(IntegerNum(3), Pi()), Power(RealNum_BigDecimal("3.0"), Pi()).eval())
-        assertEquals(Power(ComplexNum(3,3), Pi()), Power(ComplexNum(3,3), Pi()).eval())
+        assertEquals(Power(Complex(3,3), Pi()), Power(Complex(3,3), Pi()).eval())
     }
 
     @Test
@@ -77,7 +76,7 @@ class PowerTest {
         assertEquals(Power(Pi(), Rational(2,3)), Power(Pi(), Rational(2,3)).eval())
         assertEquals(RealNum.create(31.006276680299816), Power(Pi(), RealNum.create(3.0)).eval())
         //TODO assertEquals(Power(IntegerNum(3), Pi()), Power(Pi(), RealNum_BigDecimal("3.0")).eval())
-        assertEquals(Power(Pi(), ComplexNum(3,3)), Power(Pi(), ComplexNum(3,3)).eval())
+        assertEquals(Power(Pi(), Complex(3,3)), Power(Pi(), Complex(3,3)).eval())
     }
 
     @Test
@@ -88,8 +87,8 @@ class PowerTest {
         assertEquals(IntegerNum(9), Power(IntegerNum(3), IntegerNum.TWO).eval())
 
         // Complex to Int
-        assertEquals(ComplexNum(Rational(2823, 16), Rational(6121, 32)), Power(ComplexNum(IntegerNum(3), Rational.HALF), IntegerNum(5)).eval())
-        assertEquals(ComplexNum(0.0, 64.36342999999998), Power(ComplexNum(IntegerNum(0), RealNum.create(2.3)), IntegerNum(5)).eval())
+        assertEquals(Complex(Rational(2823, 16), Rational(6121, 32)), Power(Complex(IntegerNum(3), Rational.HALF), IntegerNum(5)).eval())
+        assertEquals(Complex(0.0, 64.36342999999998), Power(Complex(IntegerNum(0), RealNum.create(2.3)), IntegerNum(5)).eval())
     }
 
     @Test
@@ -123,14 +122,14 @@ class PowerTest {
     @Test
     fun integerToComplex() {
         // imaginary zero
-        assertEquals(IntegerNum(32), Power(IntegerNum(2), ComplexNum(5,0)).eval())
+        assertEquals(IntegerNum(32), Power(IntegerNum(2), Complex(5,0)).eval())
 
         // Cannot fully evaluate
-        assertEquals(Power(IntegerNum(2), ComplexNum(2,3)), Power(IntegerNum(2), ComplexNum(2,3)).eval())
+        assertEquals(Power(IntegerNum(2), Complex(2,3)), Power(IntegerNum(2), Complex(2,3)).eval())
 
-        assertEquals(ComplexNum(RealNum.create(-0.48699441796578125), RealNum.create(0.8734050817748715)), N(Power(IntegerNum(2), ComplexNum(0,3))).eval())
-        assertEquals(ComplexNum(RealNum.create(-1.947977671863125), RealNum.create(3.493620327099486)), N(Power(IntegerNum(2), ComplexNum(2,3))).eval())
-        assertEquals(ComplexNum(RealNum.create(-1.947977671863125), RealNum.create(3.493620327099486)), Power(IntegerNum(2), ComplexNum(RealNum.create(2.0),RealNum.create(3.0))).eval())
+        assertEquals(Complex(RealNum.create(-0.48699441796578125), RealNum.create(0.8734050817748715)), N(Power(IntegerNum(2), Complex(0,3))).eval())
+        assertEquals(Complex(RealNum.create(-1.947977671863125), RealNum.create(3.493620327099486)), N(Power(IntegerNum(2), Complex(2,3))).eval())
+        assertEquals(Complex(RealNum.create(-1.947977671863125), RealNum.create(3.493620327099486)), Power(IntegerNum(2), Complex(RealNum.create(2.0),RealNum.create(3.0))).eval())
     }
 
     @Test
@@ -166,13 +165,13 @@ class PowerTest {
     @Test
     fun rationalToComplex() {
         // No imaginary
-        assertEquals(Rational(1,16), Power(Rational.HALF, ComplexNum(4,0)).eval())
+        assertEquals(Rational(1,16), Power(Rational.HALF, Complex(4,0)).eval())
 
-        assertEquals(ComplexNum(0.011466060921456358, -0.061439233775702734), N(Power(Rational.HALF, ComplexNum(4,2))).eval())
-        assertEquals(ComplexNum(2.9353115958928275, 15.7284438465799), Power(Rational.HALF, ComplexNum(-4.0,-2.0)).eval())
+        assertEquals(Complex(0.011466060921456358, -0.061439233775702734), N(Power(Rational.HALF, Complex(4,2))).eval())
+        assertEquals(Complex(2.9353115958928275, 15.7284438465799), Power(Rational.HALF, Complex(-4.0,-2.0)).eval())
 
         // Cannot eval
-        assertEquals(Power(Rational.HALF, ComplexNum(4,2)), Power(Rational.HALF, ComplexNum(4,2)).eval())
+        assertEquals(Power(Rational.HALF, Complex(4,2)), Power(Rational.HALF, Complex(4,2)).eval())
     }
 
     @Test
@@ -221,21 +220,21 @@ class PowerTest {
         val piBigDec = RealNum_BigDecimal("3.14")
 
         // Zero imaginary
-        assertEquals(RealNum.create(100.0), Power(RealNum.create(10.0), ComplexNum(2,0)).eval())
-        assertEquals(RealNum_BigDecimal("9.86"), Power(piBigDec, ComplexNum(2,0)).eval())
+        assertEquals(RealNum.create(100.0), Power(RealNum.create(10.0), Complex(2,0)).eval())
+        assertEquals(RealNum_BigDecimal("9.86"), Power(piBigDec, Complex(2,0)).eval())
 
         // Double
-        assertEquals(ComplexNum(24.70195964872899, 3.848790655850832), Power(RealNum.create(5.0), ComplexNum(2,4)).eval())
-        assertEquals(ComplexNum(1.5502967700299068, 1.6113906803859945), Power(RealNum.create(5.0), ComplexNum(Rational.HALF,Rational.HALF)).eval())
-        assertEquals(ComplexNum(24.70195964872899, 3.848790655850832), Power(RealNum.create(5.0), ComplexNum(2.0,4.0)).eval())
-        assertEquals(ComplexNum(52.40487058561866, -147.56137608427574), Power(RealNum.create(5.0), ComplexNum(piBigDec,piBigDec)).eval())
+        assertEquals(Complex(24.70195964872899, 3.848790655850832), Power(RealNum.create(5.0), Complex(2,4)).eval())
+        assertEquals(Complex(1.5502967700299068, 1.6113906803859945), Power(RealNum.create(5.0), Complex(Rational.HALF,Rational.HALF)).eval())
+        assertEquals(Complex(24.70195964872899, 3.848790655850832), Power(RealNum.create(5.0), Complex(2.0,4.0)).eval())
+        assertEquals(Complex(52.40487058561866, -147.56137608427574), Power(RealNum.create(5.0), Complex(piBigDec,piBigDec)).eval())
 
         // BigDec
         val bigDec = RealNum_BigDecimal("5.0001")
         // TODO none working but multiple reasons
         //assertEquals(ComplexNum(24.70195964872899, 3.848790655850832), Power(bigDec, ComplexNum(2,4)).eval())
         //assertEquals(ComplexNum(1.5502967700299068, 1.6113906803859945), Power(bigDec, ComplexNum(RationalNum.HALF,RationalNum.HALF)).eval())
-        assertEquals(ComplexNum(24.70263974545859, 3.8509208127549734), Power(bigDec, ComplexNum(2.0,4.0)).eval())
+        assertEquals(Complex(24.70263974545859, 3.8509208127549734), Power(bigDec, Complex(2.0,4.0)).eval())
         //assertEquals(ComplexNum(52.40487058561866, -147.56137608427574), Power(bigDec, ComplexNum(piBigDec,piBigDec)).eval())
     }
 

@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.trig.*
-import org.cerion.symcalc.expression.number.ComplexNum
+import org.cerion.symcalc.expression.number.Complex
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealNum
@@ -22,7 +22,7 @@ class DTest {
         Assert.assertEquals(IntegerNum.ZERO, D(IntegerNum.TWO, VarExpr("x")).eval())
         Assert.assertEquals(IntegerNum.ZERO, D(RealNum.create(2.354), VarExpr("x")).eval())
         Assert.assertEquals(IntegerNum.ZERO, D(Rational(4, 6), VarExpr("x")).eval())
-        Assert.assertEquals(IntegerNum.ZERO, D(ComplexNum.ZERO, VarExpr("x")).eval())
+        Assert.assertEquals(IntegerNum.ZERO, D(Complex.ZERO, VarExpr("x")).eval())
 
         // Constant
         Assert.assertEquals(IntegerNum.ZERO, D(Pi(), VarExpr("x")).eval())

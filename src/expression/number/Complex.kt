@@ -1,11 +1,9 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.function.arithmetic.Divide
-import kotlin.UnsupportedOperationException
 import kotlin.math.abs
 import kotlin.math.min
 
-class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) : NumberExpr() {
+class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) : NumberExpr() {
 
     override val value: Any? get() = null
 
@@ -38,10 +36,10 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
             setArg(1, parse(num))
     }
 
-    fun conjugate(): ComplexNum = ComplexNum(real, img.unaryMinus())
+    fun conjugate(): Complex = Complex(real, img.unaryMinus())
 
     override fun toString(): String = real.toString() + (if(img.isNegative) "" else "+") + img.toString() + "i"
-    override fun unaryMinus(): ComplexNum = ComplexNum(real.unaryMinus(), img.unaryMinus())
+    override fun unaryMinus(): Complex = Complex(real.unaryMinus(), img.unaryMinus())
 
     override fun toDouble(): Double {
         if (img.isZero)
@@ -58,17 +56,17 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
     }
 
     override fun evaluate(precision: Int): NumberExpr {
-        return ComplexNum(real.evaluate(precision), img.evaluate(precision))
+        return Complex(real.evaluate(precision), img.evaluate(precision))
     }
 
 
     override fun plus(other: NumberExpr): NumberExpr {
         if (other.numType === NumberType.COMPLEX) {
             val b = other.asComplex()
-            return ComplexNum(real + b.real, img + b.img).evaluate()
+            return Complex(real + b.real, img + b.img).evaluate()
         }
 
-        return ComplexNum(real + other, img).evaluate()
+        return Complex(real + other, img).evaluate()
     }
 
     override fun times(other: NumberExpr): NumberExpr {
@@ -92,7 +90,7 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
             }
         }
 
-        return ComplexNum(resultR, resultI).evaluate()
+        return Complex(resultR, resultI).evaluate()
     }
 
     override fun div(other: NumberExpr): NumberExpr {
@@ -104,8 +102,8 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
 
                 val conj = other.asComplex().conjugate()
                 var top = (this * conj)
-                if (top !is ComplexNum)
-                    top = ComplexNum(top)
+                if (top !is Complex)
+                    top = Complex(top)
 
                 val bottom = other.asComplex() * conj // This should not be a complex number
 
@@ -125,7 +123,7 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
             }
         }
 
-        return ComplexNum(resultR, resultI).evaluate()
+        return Complex(resultR, resultI).evaluate()
     }
 
     fun pow(n: Int): NumberExpr {
@@ -136,8 +134,7 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
             if (i % 2 == 1)
                 result *= total
 
-            total = total * total
-
+            total *= total
             i /= 2
         }
 
@@ -163,6 +160,6 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
     }
 
     companion object {
-        @JvmField val ZERO = ComplexNum()
+        @JvmField val ZERO = Complex()
     }
 }

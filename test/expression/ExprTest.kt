@@ -15,7 +15,7 @@ class ExprTest {
         assertTrue(IntegerNum(5).isInteger)
         assertFalse(RealNum.create(5.0).isInteger)
         assertFalse(Rational(1,2).isInteger)
-        assertFalse(ComplexNum(1,1).isInteger)
+        assertFalse(Complex(1,1).isInteger)
 
         assertFalse(ListExpr().isInteger)
     }

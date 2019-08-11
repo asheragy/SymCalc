@@ -28,7 +28,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     val isComplex: Boolean get() = numType == NumberType.COMPLEX
 
     fun asRational(): Rational = this as Rational
-    fun asComplex(): ComplexNum = this as ComplexNum
+    fun asComplex(): Complex = this as Complex
 
     abstract override fun toString(): String
     abstract fun toDouble(): Double  //Valid on all but ComplexNum
@@ -70,7 +70,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     companion object {
         @JvmStatic fun parse(s: String): NumberExpr {
             if (s.indexOf('i') > -1)
-                return ComplexNum(s)
+                return Complex(s)
 
             return if (s.indexOf('.') > 0) RealNum.create(s) else IntegerNum(s)
 
