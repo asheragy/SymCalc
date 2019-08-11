@@ -12,6 +12,7 @@ import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.function.integer.Factor
+import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.function.list.Tally
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
@@ -89,6 +90,17 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
     }
 
     private fun complexToPower(a: ComplexNum, N: NumberExpr): Expr {
+        if (a.real.isZero && N is IntegerNum) {
+            val mod = Mod(N, IntegerNum(4)).eval().asInteger().intValue()
+            val power = Power(a.img, N).eval() as NumberExpr
+            return when (mod) {
+                1 -> ComplexNum(IntegerNum.ZERO, power)
+                2 -> power.unaryMinus()
+                3 -> ComplexNum(IntegerNum.ZERO, power.unaryMinus())
+                else -> power
+            }
+        }
+
         val theta = ArcTan(Divide(a.img, a.real)).eval()
         val r = Sqrt(Plus(a.real.square(), a.img.square())).eval()
         val rN = Power(r, N).eval()

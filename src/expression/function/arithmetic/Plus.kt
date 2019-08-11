@@ -34,15 +34,12 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
                 }
             }
 
-            // See if any elements can be added to a Times()
-            for (arg in list) {
-                if (arg is Times && arg.size == 2 && arg[1] !is NumberExpr) {
-                    while (list.contains(arg[1])) {
-                        arg[0] = Plus(arg[0], IntegerNum.ONE).eval()
-                        list.remove(arg[1])
-                    }
-                    // TODO continuing this loop after removing elements causes error, rewrite to fix this so it can work multiple times
-                    break
+            // If element is also contained in Times(), remove it and increment by 1  (2*Pi) + Pi = 3*Pi
+            val timesArg = list.filter { it is Times && it.size == 2 && it[0] is NumberExpr && it[1] !is NumberExpr }
+            for (times in timesArg) {
+                while (list.contains(times[1])) {
+                    times[0] = Plus(times[0], IntegerNum.ONE).eval()
+                    list.remove(times[1])
                 }
             }
 

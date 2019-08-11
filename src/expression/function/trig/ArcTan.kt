@@ -6,6 +6,9 @@ import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.trig.TrigBase
 import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.expression.number.RealNum
+import java.lang.Math.atan
 
 class ArcTan(vararg e: Expr) : TrigBase(Function.ARCTAN, *e) {
 
@@ -18,7 +21,11 @@ class ArcTan(vararg e: Expr) : TrigBase(Function.ARCTAN, *e) {
             return Divide(Pi(), IntegerNum(4))
         }
 
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (e is NumberExpr) {
+            return RealNum.create(atan(e.toDouble()))
+        }
+
+        TODO("not implemented: $this") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun evaluatePiFactoredOut(e: Expr): Expr {

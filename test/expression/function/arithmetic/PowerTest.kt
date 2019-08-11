@@ -124,8 +124,7 @@ class PowerTest {
 
         assertEquals(ComplexNum(RealNum.create(-0.48699441796578125), RealNum.create(0.8734050817748715)), N(Power(IntegerNum(2), ComplexNum(0,3))).eval())
         assertEquals(ComplexNum(RealNum.create(-1.947977671863125), RealNum.create(3.493620327099486)), N(Power(IntegerNum(2), ComplexNum(2,3))).eval())
-        // TODO this should work but is probably not a Power() issue
-        //assertEquals(ComplexNum(RealNum.create(-1.947977671863125), RealNum.create(3.493620327099486)), Power(IntegerNum(2), ComplexNum(RealNum.create(2.0),RealNum.create(3.0))).eval())
+        assertEquals(ComplexNum(RealNum.create(-1.947977671863125), RealNum.create(3.493620327099486)), Power(IntegerNum(2), ComplexNum(RealNum.create(2.0),RealNum.create(3.0))).eval())
     }
 
     @Test
@@ -144,8 +143,7 @@ class PowerTest {
         assertEquals(IntegerNum(2), Power(Rational(1,4), Rational(-1,2)).eval())
         assertEquals(Rational.HALF, Power(Rational(1,4), Rational(1,2)).eval())
 
-        // TODO equal but should simplify to the same expression
-        //assertEquals(Power(IntegerNum.TWO, RationalNum.HALF), Power(RationalNum.HALF, RationalNum.HALF.unaryMinus()).eval())
+        assertEquals(Power(IntegerNum.TWO, Rational.HALF), Power(Rational.HALF, Rational.HALF.unaryMinus()).eval())
     }
 
     @Test
@@ -165,9 +163,7 @@ class PowerTest {
         assertEquals(Rational(1,16), Power(Rational.HALF, ComplexNum(4,0)).eval())
 
         assertEquals(ComplexNum(0.011466060921456358, -0.061439233775702734), N(Power(Rational.HALF, ComplexNum(4,2))).eval())
-        // TODO 2.93531 + 15.7284 I
-        // Fixed elsewhere, same as some other cases
-        //assertEquals(ComplexNum(xx, xx), Power(RationalNum.HALF, ComplexNum(-4.0,-2.0)).eval())
+        assertEquals(ComplexNum(2.9353115958928275, 15.7284438465799), Power(Rational.HALF, ComplexNum(-4.0,-2.0)).eval())
 
         // Cannot eval
         assertEquals(Power(Rational.HALF, ComplexNum(4,2)), Power(Rational.HALF, ComplexNum(4,2)).eval())
@@ -189,8 +185,8 @@ class PowerTest {
         assertEquals(RealNum.create(2.23606797749979), Power(RealNum.create(5.0), Rational(1,2)).eval())
         assertEquals(RealNum.create(2040886.0816112224), Power(RealNum.create(1.2345), Rational(12345,179)).eval())
         assertEquals(RealNum.create(4.89983252377579E-7), Power(RealNum.create(1.2345), Rational(-12345,179)).eval())
-        // TODO not sure why this does not work ~1.37163
-        //assertEquals(RealNum.create(1.0), Power(RealNum.create(-1.2345), RationalNum(3,2)).eval())
+        // TODO this invovles sqrt of negative so output is complex, need tests like this in other functions as well...
+        //assertEquals(RealNum.create(1.0), Power(RealNum.create(-1.2345), Rational(3,2)).eval())
 
         assertEquals(RealNum_BigDecimal("2"), Power(RealNum_BigDecimal("4.0"), Rational.HALF).eval())
         assertEquals(RealNum_BigDecimal("1.00006170"), Power(RealNum_BigDecimal("1.0001234"), Rational(1,2)).eval()) // square root
@@ -233,14 +229,41 @@ class PowerTest {
         // TODO none working but multiple reasons
         //assertEquals(ComplexNum(24.70195964872899, 3.848790655850832), Power(bigDec, ComplexNum(2,4)).eval())
         //assertEquals(ComplexNum(1.5502967700299068, 1.6113906803859945), Power(bigDec, ComplexNum(RationalNum.HALF,RationalNum.HALF)).eval())
-        //assertEquals(ComplexNum(24.70195964872899, 3.848790655850832), Power(bigDec, ComplexNum(2.0,4.0)).eval())
+        assertEquals(ComplexNum(24.70263974545859, 3.8509208127549734), Power(bigDec, ComplexNum(2.0,4.0)).eval())
         //assertEquals(ComplexNum(52.40487058561866, -147.56137608427574), Power(bigDec, ComplexNum(piBigDec,piBigDec)).eval())
     }
 
     @Test
+    fun complexToInteger_noReal() {
+        assertEquals(IntegerNum(10000), Power(ComplexNum(0,10), IntegerNum(4)).eval())
+        assertEquals(ComplexNum(0, 100000), Power(ComplexNum(0,10), IntegerNum(5)).eval())
+        assertEquals(IntegerNum(-1000000), Power(ComplexNum(0,10), IntegerNum(6)).eval())
+        assertEquals(ComplexNum(0, -10000000), Power(ComplexNum(0,10), IntegerNum(7)).eval())
+
+        assertEquals(Rational(1,10000), Power(ComplexNum(0,10), IntegerNum(-4)).eval())
+        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(-1,100000)), Power(ComplexNum(0,10), IntegerNum(-5)).eval())
+        assertEquals(Rational(-1,1000000), Power(ComplexNum(0,10), IntegerNum(-6)).eval())
+        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(1,10000000)), Power(ComplexNum(0,10), IntegerNum(-7)).eval())
+
+        // Non integer imaginary part
+        assertEquals(ComplexNum(IntegerNum.ZERO, RealNum.create(3125.0)), Power(ComplexNum(0.0,5.0), IntegerNum(5)).eval())
+        assertEquals(ComplexNum(IntegerNum.ZERO, RealNum.create(-0.00032)), Power(ComplexNum(0.0,5.0), IntegerNum(-5)).eval())
+
+        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(243,32)), Power(ComplexNum(Rational.ZERO,Rational(3,2)), IntegerNum(5)).eval())
+        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(-32,243)), Power(ComplexNum(Rational.ZERO,Rational(3,2)), IntegerNum(-5)).eval())
+        //assertEquals(ComplexNum(IntegerNum.ZERO, Rational(1,10000000)), Power(ComplexNum(0,10), IntegerNum(-7)).eval())
+    }
+
+    @Test
     fun complexToInteger() {
+        assertEquals(IntegerNum(4), Power(ComplexNum(2,0), IntegerNum(2)).eval())
         assertEquals(IntegerNum(4096), Power(ComplexNum(1,1), IntegerNum(24)).eval())
+        assertEquals(Rational(1, 4096), Power(ComplexNum(1,1), IntegerNum(-24)).eval())
         assertEquals(ComplexNum(4096, 4096), Power(ComplexNum(1,1), IntegerNum(25)).eval())
+
+        // TODO need ArcTan to work with more values or some other way to calculate this, iterative?
+        // Also add more negative powers to check differences there
+        //assertEquals(Rational(103595049,51872200), Power(ComplexNum(5,-4), IntegerNum(10)).eval())
 
         // TODO add more
     }

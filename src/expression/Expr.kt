@@ -10,7 +10,6 @@ import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 import java.util.*
-import kotlin.math.min
 
 abstract class Expr {
 
@@ -124,7 +123,7 @@ abstract class Expr {
                     result.addArg(arg.eval())
             }
 
-            // Evaluate precision on sibling elements, numbers already handled but 
+            // Evaluate precision on sibling elements, numbers already handled but its possible that could be done here as well, need to try that
             if (size > 0) {
                 val minPrecision = result.args.minBy { it.precision }!!.precision
                 for (i in 0 until result.args.size) {

@@ -17,9 +17,8 @@ class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
 
         // Transform 2*(a+b) to 2a + 2b
         if (size == 2 && args[1] is Plus) {
-            val p = args[1]
-            // TODO if Plus has 3+ args this needs to be changed, should be a way to map rather than using a loop
-            val e = Plus(Times(args[0], p[0]), Times(args[0], p[1])).eval()
+            val newArgs = args[1].args.map { Times(args[0], it) }
+            val e = Plus(*newArgs.toTypedArray()).eval()
             if (e !is Plus) // If Plus eval is not any better don't use this value
                 return e
         }
