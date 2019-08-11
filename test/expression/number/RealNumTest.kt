@@ -67,15 +67,6 @@ class RealNumTest : NumberTestBase() {
     }
 
     @Test
-    fun precision_Rounding() {
-        // TODO N[1/3,2] + N[1/3,10] = 0.67
-        // 0.33 + 0.3333333333 = 0.66
-        // When evaluated 1/3 is stored at higher precision for calculations but ultimately displays as whatever was specified
-        //val x = RationalNum(1,3)
-        //assertEquals(IntegerNum.ONE, Plus(N(x,2), N(x,10)).eval())
-    }
-
-    @Test
     fun comparePrecision() {
         val a = RealNum.create("1.000000000000000000000000000000000001")
         val b = RealNum.create("1.000000000000000000000000000000000002")

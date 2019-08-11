@@ -21,7 +21,7 @@ class ArcTan(vararg e: Expr) : TrigBase(Function.ARCTAN, *e) {
             return Divide(Pi(), IntegerNum(4))
         }
 
-        TODO("not implemented: $this") //To change body of created functions use File | Settings | File Templates.
+        return this
     }
 
     override fun evaluatePiFactoredOut(e: Expr): Expr {

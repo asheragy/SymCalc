@@ -10,8 +10,6 @@ import org.cerion.symcalc.expression.number.IntegerNum
 class Factorial(vararg e: Expr) : FunctionExpr(Function.FACTORIAL, *e) {
 
     override fun evaluate(): Expr {
-        //TODO can work on non-integer
-
         var result = IntegerNum.ONE
         var N = get(0).asInteger()
         while (N > IntegerNum.ONE) {

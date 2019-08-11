@@ -13,8 +13,6 @@ import org.cerion.symcalc.expression.number.RealNum
 
 class StandardDeviation(vararg e: Expr) : FunctionExpr(Function.STANDARD_DEVIATION, *e) {
 
-    // TODO add some other more advanced usages but ignoring for now, matrix and dist parameters
-
     override fun evaluate(): Expr {
         val list = get(0).asList()
         val variance = Variance(list)

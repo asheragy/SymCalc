@@ -8,8 +8,6 @@ import org.cerion.symcalc.expression.number.NumberType
 class Mod(vararg e: Expr) : FunctionExpr(Function.MOD, *e) {
 
     override fun evaluate(): Expr {
-        //TODO can work on non-integers
-
         val a = get(0).asInteger()
         val b = get(1).asInteger()
 

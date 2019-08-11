@@ -5,6 +5,30 @@ Links
 - https://www.desmos.com/calculator
 - http://reference.wolfram.com/language/JLink/ref/java/com/wolfram/jlink/Expr.html
 
+Maybe important features
+- Cannot define variable with same name as function (case insensitive)
+- UserFunction requires name, does it need to?  How do these really work?  Is it just an expression?  May not be implemented correctly here / Function[]
+
 Non-Important Features
 - Integer to string, full number spelled out
 - Help info ?functionName
+
+Partially implemented features to do later
+- Factorial: can work with non-integer values but needs Gamma function first
+- Mod: can work with non-integers
+- Fibonacci: zero/negatives and non-integer
+- ConstantArray: 2nd parameter can be N-dimensional
+- RandomInteger: Research more, input may be bit length or something different than implementation
+- StandardDeviation: Has more advanced usages, matrix/dist parameters
+- ArcTan: Added minimum to get complex power working
+
+
+
+Different implementation than Mathematica, may not matter unless other use cases come up later
+@Test
+fun precision_Rounding() {
+    // 0.33 + 0.3333333333 = 0.66
+    // When evaluated 1/3 is stored at higher precision for calculations but ultimately displays as whatever was specified
+    //val x = RationalNum(1,3)
+    //assertEquals(IntegerNum.ONE, Plus(N(x,2), N(x,10)).eval())
+}

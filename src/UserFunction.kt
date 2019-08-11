@@ -3,7 +3,6 @@ package org.cerion.symcalc
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
 
-// TODO is name required? Anonymous functions should work, maybe UserFunction is just an expression...
 class UserFunction(private val name: String, private val expr: Expr, vararg vars: VarExpr) {
 
     private val vars: List<VarExpr> = vars.asList()

@@ -8,7 +8,6 @@ class FibonacciTest {
 
     @Test
     fun basic() {
-        // TODO zero and negatives
         assertEquals(IntegerNum(1), Fibonacci(IntegerNum(1)).eval())
         assertEquals(IntegerNum(1), Fibonacci(IntegerNum(2)).eval())
         assertEquals(IntegerNum(2), Fibonacci(IntegerNum(3)).eval())
