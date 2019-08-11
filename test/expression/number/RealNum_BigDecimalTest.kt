@@ -7,6 +7,8 @@ import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.lang.ArithmeticException
+import kotlin.test.assertFailsWith
 
 class RealNum_BigDecimalTest {
 
@@ -54,5 +56,30 @@ class RealNum_BigDecimalTest {
         assertEquals(RealNum_BigDecimal("0.0329747"), RealNum_BigDecimal("1.0001234") / RealNum.create(30.33))
         assertEquals(RealNum_BigDecimal("0.03297"), RealNum_BigDecimal("1.0001234") / RealNum_BigDecimal("30.33"))
         assertEquals(Complex(RealNum_BigDecimal("0.00001898"),RealNum_BigDecimal("-0.00002848")), RealNum_BigDecimal("0.0001234") / Complex(2,3))
+    }
+
+    @Test
+    fun pow() {
+        assertEquals(RealNum_BigDecimal("36"), power("3.14", "3.14"))
+        assertEquals(RealNum_BigDecimal("36.45"), power("3.1415", "3.1415"))
+        assertEquals(RealNum_BigDecimal("36.462159607207911770990826022"), power("3.14159265358979323846264338328", "3.14159265358979323846264338328"))
+        assertEquals(RealNum_BigDecimal("36.46"), power("3.1415", "3.14159265358979323846264338328"))
+        assertEquals(RealNum_BigDecimal("36.46"), power("3.14159265358979323846264338328", "3.1415"))
+    }
+
+    @Test
+    fun pow_negativeExp() {
+        assertEquals(RealNum_BigDecimal("0.028"), power("3.14", "-3.14"))
+        assertEquals(RealNum_BigDecimal("0.02743"), power("3.1415", "-3.1415"))
+    }
+
+    @Test
+    fun pow_negativeBase() {
+        // Expected for now...
+        assertFailsWith<ArithmeticException> { power("-3.14", "3.14") }
+    }
+
+    private fun power(a: String, b: String): NumberExpr {
+        return RealNum_BigDecimal(a).pow(RealNum_BigDecimal(b))
     }
 }

@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number
 
+import expression.number.BigDecimalMath
 import org.cerion.symcalc.expression.function.core.N
 import java.math.BigDecimal
 import java.math.MathContext
@@ -125,6 +126,11 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
                 return Complex(this) / other
             }
         }
+    }
+
+    fun pow(other: RealNum_BigDecimal): NumberExpr {
+        val bigDec = BigDecimalMath.pow(value, other.value)
+        return RealNum_BigDecimal(bigDec)
     }
 
     override fun evaluate(precision: Int): NumberExpr {
