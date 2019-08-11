@@ -3,11 +3,13 @@ package expression.number
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
+import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.lang.ArithmeticException
+import java.math.BigDecimal
 import kotlin.test.assertFailsWith
 
 class RealNum_BigDecimalTest {
@@ -18,6 +20,11 @@ class RealNum_BigDecimalTest {
         assertEquals(1, RealNum_BigDecimal("0.0000000001").precision)
         assertEquals(2, RealNum_BigDecimal("0.0000000011").precision)
         assertEquals(13, RealNum_BigDecimal("111.0000000011").precision)
+    }
+
+    @Test
+    fun precision_Zero() {
+        assertEquals(RealNum_BigDecimal("0.0000000001"), RealNum_BigDecimal("0.0000000001") + RealNum_BigDecimal("0.0000000000"))
     }
 
     @Test
@@ -65,6 +72,8 @@ class RealNum_BigDecimalTest {
         assertEquals(RealNum_BigDecimal("36.462159607207911770990826022"), power("3.14159265358979323846264338328", "3.14159265358979323846264338328"))
         assertEquals(RealNum_BigDecimal("36.46"), power("3.1415", "3.14159265358979323846264338328"))
         assertEquals(RealNum_BigDecimal("36.46"), power("3.14159265358979323846264338328", "3.1415"))
+
+        assertEquals(RealNum_BigDecimal("13.2696645139"), power("3.00000000000","2.35340583128859694839201928385968473749596868726265"))
     }
 
     @Test

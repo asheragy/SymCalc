@@ -4,16 +4,16 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.trig.TrigBase
-import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.RealNum
+import org.cerion.symcalc.expression.number.*
+import org.cerion.symcalc.expression.number.RealNum_Double
 import java.lang.Math.atan
 
 class ArcTan(vararg e: Expr) : TrigBase(Function.ARCTAN, *e) {
 
     override fun evaluateAsDouble(d: Double): Expr {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return RealNum_Double(kotlin.math.atan(d))
     }
 
     override fun evaluate(e: Expr): Expr {
@@ -21,15 +21,12 @@ class ArcTan(vararg e: Expr) : TrigBase(Function.ARCTAN, *e) {
             return Divide(Pi(), IntegerNum(4))
         }
 
-        if (e is NumberExpr) {
-            return RealNum.create(atan(e.toDouble()))
-        }
-
         TODO("not implemented: $this") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun evaluatePiFactoredOut(e: Expr): Expr {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        // Can't really do anything with this, maybe have this function as a subset of TrigBase since it does not apply to inverse functions
+        return evaluate(Times(Pi(), e))
     }
 
 }

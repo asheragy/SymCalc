@@ -76,6 +76,11 @@ class RationalTest : NumberTestBase() {
     }
 
     @Test
+    fun eval_precision() {
+        assertEquals(RealNum_BigDecimal("0"), Rational(0,1).eval(10))
+    }
+
+    @Test
     fun eval_toReal() {
         assertEquals(RealNum.create(0.3333333333333333), N(Rational(1,3)).eval())
 

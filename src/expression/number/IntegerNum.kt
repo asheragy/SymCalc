@@ -39,8 +39,8 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
             InfinitePrecision -> this
             SYSTEM_DECIMAL_PRECISION -> RealNum.create(this)
             else -> {
-                if (isZero)
-                    return RealNum.create(0.0) // Prevents lost precision for BigDecimal(0)
+                //if (isZero)
+                //    return RealNum.create(0.0) // Prevents lost precision for BigDecimal(0)
 
                 var bd = BigDecimal(value, MathContext(precision, RoundingMode.HALF_UP))
                 bd = bd.setScale(precision)
@@ -100,7 +100,11 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
                 other as Rational
                 return Times(this, Rational(other.denominator, other.numerator)).eval() as NumberExpr
             }
-            NumberType.REAL -> return RealNum.create(this) / other
+
+            NumberType.REAL -> {
+                return evaluate(other.precision) / other
+            }
+
             NumberType.COMPLEX -> return Complex(this) / other
         }
     }

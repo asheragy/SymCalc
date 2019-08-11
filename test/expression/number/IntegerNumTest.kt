@@ -116,7 +116,8 @@ class IntegerNumTest {
         assertEquals(IntegerNum(5), IntegerNum(10) / two)
         assertEquals(IntegerNum(20), IntegerNum(10) / Rational(1,2))
         assertEquals(Rational(21, 4), IntegerNum(3) / Rational(4,7))
-        assertEquals(RealNum.create(4.273504273504273), IntegerNum(10) / RealNum.create(2.34))
+        assertEquals(RealNum_Double(4.273504273504273), IntegerNum(10) / RealNum_Double(2.34))
+        assertEquals(RealNum_BigDecimal("4.27"), IntegerNum(10) / RealNum_BigDecimal("2.34"))
         assertEquals(IntegerNum(2), IntegerNum(10) / Complex(5,0))
         assertEquals(Complex(Rational(8,13),Rational(-12,13)), IntegerNum(4) / Complex(2,3))
     }

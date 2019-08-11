@@ -84,10 +84,17 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         return this
     }
 
-    private fun complexToPower(a: Complex, N: NumberExpr): Expr {
+    private fun complexToPower(z: Complex, N: NumberExpr): Expr {
         if (N is IntegerNum) {
-            return a.pow(N.intValue())
+            return z.pow(N.intValue())
         }
+
+        var a = z
+        if (N.precision < z.precision)
+            a = z.evaluate(N.precision) as Complex
+
+        if (a.precision == InfinitePrecision)
+            return this
 
         val theta = ArcTan(Divide(a.img, a.real)).eval()
         val r = Sqrt(Plus(a.real.square(), a.img.square())).eval()
@@ -185,13 +192,23 @@ private fun IntegerNum.power(other: NumberExpr): NumberExpr {
     when (other.numType) {
         NumberType.INTEGER -> return this.pow(other as IntegerNum)
         NumberType.RATIONAL -> throw UnsupportedOperationException()
-        NumberType.REAL -> return RealNum.create(this).power(other)
+        NumberType.REAL -> {
+            if (other is RealNum_Double)
+                return RealNum.create(this).power(other)
+
+            val real = this.evaluate(other.precision) as RealNum
+            return real.power(other)
+        }
         NumberType.COMPLEX -> {
+            throw UnsupportedOperationException()
+            /*
             val complex = other.asComplex()
             if (complex.img.isZero)
                 return this.power(complex.real)
 
             return Complex(this).power(other)
+
+             */
         }
     }
 }
@@ -207,18 +224,23 @@ private fun Rational.power(other: NumberExpr): NumberExpr {
         }
 
         NumberType.REAL -> {
-            val rResult = RealNum.create(this.toDouble())
-            return rResult.power(other)
+            val real = this.evaluate(other.precision) as RealNum
+            return real.power(other)
         }
         NumberType.RATIONAL -> throw UnsupportedOperationException()
 
         NumberType.COMPLEX -> {
+            throw UnsupportedOperationException()
+            /*
             other as Complex
             if (other.img.isZero)
                 return this.power(other.real)
 
             return Complex(this).power(other)
+
+             */
         }
+
     }
 }
 
@@ -250,27 +272,33 @@ private fun RealNum_BigDecimal.power(other: NumberExpr): NumberExpr {
             val number = value.pow(other.asInteger().intValue(), MathContext(precision, RoundingMode.HALF_UP))
             return RealNum_BigDecimal(number)
         }
-        NumberType.RATIONAL ->
-            TODO("Need to implement Nth root function which is not easy")
+        NumberType.RATIONAL -> {
+            return this.power(other.evaluate(precision))
+        }
         NumberType.REAL -> {
             other as RealNum
             if (other.isDouble)
                 return RealNum.Companion.create(toDouble().pow(other.toDouble()))
 
-            TODO("Need formula")
+            return this.pow(other as RealNum_BigDecimal)
         }
 
         NumberType.COMPLEX -> {
-            return Complex(this).power(other)
+            throw UnsupportedOperationException()
+            //return Complex(this).power(other)
         }
     }
 }
 
+/*
 private fun Complex.power(other: NumberExpr): NumberExpr {
     when (other.numType) {
         NumberType.INTEGER,
         NumberType.RATIONAL,
         NumberType.REAL,
-        NumberType.COMPLEX -> TODO()
+        NumberType.COMPLEX ->
+
     }
 }
+
+ */

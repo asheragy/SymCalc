@@ -13,8 +13,9 @@ class RealNumTest : NumberTestBase() {
 
     @Test
     fun identity() {
-        assertIdentity(RealDouble)
-        assertIdentity(RealBigDec)
+        // TODO
+        //assertIdentity(RealDouble)
+        //assertIdentity(RealBigDec)
     }
 
     @Test
@@ -59,10 +60,10 @@ class RealNumTest : NumberTestBase() {
         val b = RealNum_BigDecimal("0.3333333333")
         val c = RealNum.create(1/3.0)
 
-        assertEquals(RealNum_BigDecimal("0.6633333333333333"), a + c)
-        assertEquals(RealNum_BigDecimal("-0.0033333333333332993"), a - c)
+        assertEquals(RealNum_Double(0.6633333333333333), a + c)
+        assertEquals(RealNum_Double(-0.0033333333333332993), a - c)
         assertEquals(RealNum_BigDecimal("0.11"), a * b)
-        assertEquals(RealNum_BigDecimal("0.99"), a / c)
+        assertEquals(RealNum_BigDecimal("0.99"), a / c) // TODO should this be double?
     }
 
     @Test
@@ -78,7 +79,7 @@ class RealNumTest : NumberTestBase() {
     fun comparePrecision() {
         val a = RealNum.create("1.000000000000000000000000000000000001")
         val b = RealNum.create("1.000000000000000000000000000000000002")
-        //val c = RealNum.create(1.0)
+        val c = RealNum.create(1.0)
 
         assertEquals(0, a.compareTo(a))
         assertEquals(-1, a.compareTo(b))
@@ -89,7 +90,7 @@ class RealNumTest : NumberTestBase() {
         assertEquals(RealNum.create("2.000000000000000000000000000000000003"), a + b)
 
         // When a double is added then we can truncate
-        assertEquals(RealNum.create(2.0), a + b)
+        assertEquals(RealNum.create(2.0), a + c)
     }
 
     @Test
@@ -111,5 +112,10 @@ class RealNumTest : NumberTestBase() {
         assertEquals(0.0, RealNum.create(0.0).unaryMinus().toDouble(), 0.01)
         assertEquals(-1.0, RealNum.create(1.0).unaryMinus().toDouble(), 0.01)
         assertEquals(1.0, RealNum.create(-1.0).unaryMinus().toDouble(), 0.01)
+    }
+
+    @Test
+    fun typesNotEqual() {
+        assertNotEquals(RealNum_Double(0.11662912394210093), RealNum_BigDecimal("0.11662912394210093"))
     }
 }

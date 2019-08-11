@@ -19,7 +19,7 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
     override fun toInteger(): IntegerNum = IntegerNum(value.toLong())
     override fun toDouble(): Double = value.toDouble()
-    override fun toString(): String = value.toString()
+    override fun toString(): String = "$value`$precision"
     override fun unaryMinus(): RealNum_BigDecimal = RealNum_BigDecimal(value.negate())
 
     override fun compareTo(other: NumberExpr): Int {
@@ -138,7 +138,11 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
             return create(toDouble())
         else if (precision < this.precision) {
             val leftDigits = value.precision() - value.scale()
-            return RealNum_BigDecimal(value.setScale(precision - leftDigits, RoundingMode.HALF_UP))
+            val newScale = precision - leftDigits
+            if (newScale == 0)
+                return this
+
+            return RealNum_BigDecimal(value.setScale(newScale, RoundingMode.HALF_UP))
         }
 
         return this
@@ -146,6 +150,9 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
     private fun evaluatePrecision(result: RealNum_BigDecimal, a: RealNum_BigDecimal, b: RealNum_BigDecimal): RealNum_BigDecimal {
         val min = min(a.value.precision(), b.value.precision())
+        if (min == 0 && a.isZero || b.isZero)
+            return result
+
         return RealNum_BigDecimal(result.value.round(MathContext(min, RoundingMode.HALF_UP)))
     }
 }
