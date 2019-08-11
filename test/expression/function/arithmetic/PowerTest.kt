@@ -83,7 +83,13 @@ class PowerTest {
     @Test
     fun numberExpr_pow() {
         // More tests in corresponding NumberExpr class, only 1 basic here per type to verify Power() calls it
+
+        // Int to Int
         assertEquals(IntegerNum(9), Power(IntegerNum(3), IntegerNum.TWO).eval())
+
+        // Complex to Int
+        assertEquals(ComplexNum(Rational(2823, 16), Rational(6121, 32)), Power(ComplexNum(IntegerNum(3), Rational.HALF), IntegerNum(5)).eval())
+        assertEquals(ComplexNum(0.0, 64.36342999999998), Power(ComplexNum(IntegerNum(0), RealNum.create(2.3)), IntegerNum(5)).eval())
     }
 
     @Test
@@ -234,38 +240,8 @@ class PowerTest {
     }
 
     @Test
-    fun complexToInteger_noReal() {
-        assertEquals(IntegerNum(10000), Power(ComplexNum(0,10), IntegerNum(4)).eval())
-        assertEquals(ComplexNum(0, 100000), Power(ComplexNum(0,10), IntegerNum(5)).eval())
-        assertEquals(IntegerNum(-1000000), Power(ComplexNum(0,10), IntegerNum(6)).eval())
-        assertEquals(ComplexNum(0, -10000000), Power(ComplexNum(0,10), IntegerNum(7)).eval())
+    fun complexToRational() {
 
-        assertEquals(Rational(1,10000), Power(ComplexNum(0,10), IntegerNum(-4)).eval())
-        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(-1,100000)), Power(ComplexNum(0,10), IntegerNum(-5)).eval())
-        assertEquals(Rational(-1,1000000), Power(ComplexNum(0,10), IntegerNum(-6)).eval())
-        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(1,10000000)), Power(ComplexNum(0,10), IntegerNum(-7)).eval())
-
-        // Non integer imaginary part
-        assertEquals(ComplexNum(IntegerNum.ZERO, RealNum.create(3125.0)), Power(ComplexNum(0.0,5.0), IntegerNum(5)).eval())
-        assertEquals(ComplexNum(IntegerNum.ZERO, RealNum.create(-0.00032)), Power(ComplexNum(0.0,5.0), IntegerNum(-5)).eval())
-
-        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(243,32)), Power(ComplexNum(Rational.ZERO,Rational(3,2)), IntegerNum(5)).eval())
-        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(-32,243)), Power(ComplexNum(Rational.ZERO,Rational(3,2)), IntegerNum(-5)).eval())
-        //assertEquals(ComplexNum(IntegerNum.ZERO, Rational(1,10000000)), Power(ComplexNum(0,10), IntegerNum(-7)).eval())
-    }
-
-    @Test
-    fun complexToInteger() {
-        assertEquals(IntegerNum(4), Power(ComplexNum(2,0), IntegerNum(2)).eval())
-        assertEquals(IntegerNum(4096), Power(ComplexNum(1,1), IntegerNum(24)).eval())
-        assertEquals(Rational(1, 4096), Power(ComplexNum(1,1), IntegerNum(-24)).eval())
-        assertEquals(ComplexNum(4096, 4096), Power(ComplexNum(1,1), IntegerNum(25)).eval())
-
-        // TODO need ArcTan to work with more values or some other way to calculate this, iterative?
-        // Also add more negative powers to check differences there
-        //assertEquals(Rational(103595049,51872200), Power(ComplexNum(5,-4), IntegerNum(10)).eval())
-
-        // TODO add more
     }
 
 }

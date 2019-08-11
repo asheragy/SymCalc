@@ -1,6 +1,8 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.expression.function.arithmetic.Divide
 import kotlin.UnsupportedOperationException
+import kotlin.math.abs
 import kotlin.math.min
 
 class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) : NumberExpr() {
@@ -124,6 +126,25 @@ class ComplexNum(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZER
         }
 
         return ComplexNum(resultR, resultI).evaluate()
+    }
+
+    fun pow(n: Int): NumberExpr {
+        var total: NumberExpr = this
+        var result: NumberExpr = IntegerNum.ONE
+        var i = abs(n)
+        while(i > 0) {
+            if (i % 2 == 1)
+                result *= total
+
+            total = total * total
+
+            i /= 2
+        }
+
+        if (n < 0)
+            return IntegerNum.ONE / result
+
+        return result
     }
 
     override fun compareTo(other: NumberExpr): Int {

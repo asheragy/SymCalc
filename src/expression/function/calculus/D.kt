@@ -16,13 +16,13 @@ class D(vararg e: Expr) : FunctionExpr(Function.D, *e) {
 
     override fun evaluate(): Expr {
         val e = get(0)
-        val `var` = get(1) as VarExpr
+        val x = get(1) as VarExpr
 
         if (e.isNumber || e.isConst)
             return IntegerNum.ZERO
 
         if (e.isVariable) {
-            return if (e.asVar().equals(`var`))
+            return if (e.asVar().equals(x))
                 IntegerNum.ONE
             else
                 IntegerNum.ZERO
@@ -33,27 +33,10 @@ class D(vararg e: Expr) : FunctionExpr(Function.D, *e) {
             val result: FunctionExpr
 
             when (func.value) {
-                Function.PLUS -> {
-                    // TODO use map function here, or similar
-                    result = Plus()
-                    for (ee in func.args)
-                        result.add(D(ee, `var`))
-                }
-
-                Function.SUBTRACT -> {
-                    result = Subtract()
-                    for (ee in func.args)
-                        result.add(D(ee, `var`))
-                }
-
-                Function.SIN -> result = Times(
-                        D(func[0], `var`),
-                        Cos(func[0]))
-
-                Function.COS -> result = Times(
-                        IntegerNum(-1),
-                        D(func[0], `var`),
-                        Sin(func[0]))
+                Function.PLUS -> result = Plus(*func.args.map { D(it, x) }.toTypedArray())
+                Function.SUBTRACT -> result = Subtract(*func.args.map { D(it, x) }.toTypedArray())
+                Function.SIN -> result = Times(D(func[0], x), Cos(func[0]))
+                Function.COS -> result = Times(IntegerNum(-1), D(func[0], x), Sin(func[0]))
 
                 else -> return this
             }

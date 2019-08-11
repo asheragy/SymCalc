@@ -85,4 +85,44 @@ class ComplexNumTest {
         assertEquals(NumberType.RATIONAL, (ComplexNum(1,0) / ComplexNum(2, 0)).numType)
     }
 
+    @Test
+    fun pow_realOnly() {
+        assertEquals(IntegerNum(1), ComplexNum(2,0).pow(0))
+        assertEquals(IntegerNum(2), ComplexNum(2,0).pow(1))
+        assertEquals(IntegerNum(4), ComplexNum(2,0).pow(2))
+        assertEquals(IntegerNum(8), ComplexNum(2,0).pow(3))
+        assertEquals(IntegerNum("4294967296"), ComplexNum(2,0).pow(32))
+        assertEquals(Rational(1,2), ComplexNum(2,0).pow(-1))
+        assertEquals(Rational(1,4), ComplexNum(2,0).pow(-2))
+        assertEquals(Rational(1,32), ComplexNum(2,0).pow(-5))
+    }
+
+    @Test
+    fun pow() {
+        assertEquals(ComplexNum(0, -177147), ComplexNum(0,3).pow(11))
+        assertEquals(IntegerNum(4096), ComplexNum(1,1).pow(24))
+        assertEquals(Rational(1, 4096), ComplexNum(1,1).pow(-24))
+        assertEquals(ComplexNum(4096, 4096), ComplexNum(1,1).pow(25))
+        assertEquals(ComplexNum(103595049,-51872200), ComplexNum(5,-4).pow(10))
+
+        /* From before refactoring to iterative, probably unnecessary to have too many tests since number types are unimportant now
+        assertEquals(IntegerNum(10000), Power(ComplexNum(0,10), IntegerNum(4)).eval())
+        assertEquals(ComplexNum(0, 100000), Power(ComplexNum(0,10), IntegerNum(5)).eval())
+        assertEquals(IntegerNum(-1000000), Power(ComplexNum(0,10), IntegerNum(6)).eval())
+        assertEquals(ComplexNum(0, -10000000), Power(ComplexNum(0,10), IntegerNum(7)).eval())
+
+        assertEquals(Rational(1,10000), Power(ComplexNum(0,10), IntegerNum(-4)).eval())
+        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(-1,100000)), Power(ComplexNum(0,10), IntegerNum(-5)).eval())
+        assertEquals(Rational(-1,1000000), Power(ComplexNum(0,10), IntegerNum(-6)).eval())
+        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(1,10000000)), Power(ComplexNum(0,10), IntegerNum(-7)).eval())
+
+        // Non integer imaginary part
+        assertEquals(ComplexNum(IntegerNum.ZERO, RealNum.create(3125.0)), Power(ComplexNum(0.0,5.0), IntegerNum(5)).eval())
+        assertEquals(ComplexNum(IntegerNum.ZERO, RealNum.create(-0.00032)), Power(ComplexNum(0.0,5.0), IntegerNum(-5)).eval())
+
+        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(243,32)), Power(ComplexNum(Rational.ZERO,Rational(3,2)), IntegerNum(5)).eval())
+        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(-32,243)), Power(ComplexNum(Rational.ZERO,Rational(3,2)), IntegerNum(-5)).eval())
+        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(1,10000000)), Power(ComplexNum(0,10), IntegerNum(-7)).eval())
+         */
+    }
 }
