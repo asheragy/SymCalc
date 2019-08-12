@@ -132,7 +132,7 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
 
     override fun evaluate(precision: Int): NumberExpr {
         if (precision == SYSTEM_DECIMAL_PRECISION)
-            return create(toDouble())
+            return RealNum_Double(toDouble())
         else if (precision < this.precision) {
             val leftDigits = value.precision() - value.scale()
             val newScale = precision - leftDigits

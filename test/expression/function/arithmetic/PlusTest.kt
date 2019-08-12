@@ -8,6 +8,7 @@ import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealNum
+import org.cerion.symcalc.expression.number.RealNum_Double
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -52,7 +53,7 @@ class PlusTest {
 
     @Test
     fun toStringTest() {
-        assertEquals("5 + 3.14 + E", Plus(IntegerNum(5), RealNum.create(3.14), E()).toString())
+        assertEquals("5 + 3.14 + E", Plus(IntegerNum(5), RealNum_Double(3.14), E()).toString())
     }
 
     @Test

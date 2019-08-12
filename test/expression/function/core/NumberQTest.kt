@@ -3,10 +3,7 @@ package org.cerion.symcalc.expression.function.core
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.number.Complex
-import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealNum
+import org.cerion.symcalc.expression.number.*
 import org.junit.Assert
 import org.junit.Test
 
@@ -21,7 +18,7 @@ class NumberQTest {
     @Test
     fun basic() {
         Assert.assertEquals(BoolExpr.TRUE, NumberQ(IntegerNum(5)).eval())
-        Assert.assertEquals(BoolExpr.TRUE, NumberQ(RealNum.create(2.34)).eval())
+        Assert.assertEquals(BoolExpr.TRUE, NumberQ(RealNum_Double(2.34)).eval())
         Assert.assertEquals(BoolExpr.TRUE, NumberQ(Rational(2, 3)).eval())
         Assert.assertEquals(BoolExpr.TRUE, NumberQ(Complex(5, 7)).eval())
 

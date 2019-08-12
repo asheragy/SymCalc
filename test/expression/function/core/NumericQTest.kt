@@ -7,6 +7,7 @@ import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.RealNum
+import org.cerion.symcalc.expression.number.RealNum_Double
 import org.junit.Assert
 import org.junit.Test
 
@@ -17,7 +18,7 @@ class NumericQTest {
     fun basic() {
         // Number
         Assert.assertEquals(BoolExpr.TRUE, NumericQ(IntegerNum(5)).eval())
-        Assert.assertEquals(BoolExpr.TRUE, NumericQ(RealNum.create(4.576)).eval())
+        Assert.assertEquals(BoolExpr.TRUE, NumericQ(RealNum_Double(4.576)).eval())
 
         // Constant
         Assert.assertEquals(BoolExpr.TRUE, NumericQ(Pi()).eval())

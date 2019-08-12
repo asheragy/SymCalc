@@ -1,10 +1,9 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.function.core.N
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import java.math.BigDecimal
-import kotlin.test.assertFalse
 
 class RealNumTest : NumberTestBase() {
 
@@ -14,13 +13,13 @@ class RealNumTest : NumberTestBase() {
     @Test
     fun addition() {
         assertAdd(RealNum_Double(2.2469067890987655), RealDouble, RealBigDec)
-        assertAdd(RealNum.create("2.2469135781975308642"), RealBigDec, RealBigDec)
+        assertAdd(RealNum_BigDecimal("2.2469135781975308642"), RealBigDec, RealBigDec)
     }
 
     @Test
     fun precision() {
         // N[Double, x] = RealDouble (no change to value)
-        assertEquals(RealNum.create(2.12345), N(RealNum.create(2.12345), IntegerNum(100)).eval())
+        assertEquals(RealNum_Double(2.12345), N(RealNum_Double(2.12345), IntegerNum(100)).eval())
 
         val a = RealNum_BigDecimal("1.22222222223333333333")
         val b = RealNum_BigDecimal("1.22222222223333333333111111111")
@@ -41,7 +40,7 @@ class RealNumTest : NumberTestBase() {
         //PrecisionA + MachinePrecision = MachinePrecision
         val a = RealNum_BigDecimal("0.33")
         val b = RealNum_BigDecimal("0.3333333333")
-        val c = RealNum.create(1/3.0)
+        val c = RealNum_Double(1/3.0)
 
         assertEquals(RealNum_Double(0.6633333333333333), a + c)
         assertEquals(RealNum_Double(-0.0033333333333332993), a - c)
@@ -51,27 +50,27 @@ class RealNumTest : NumberTestBase() {
 
     @Test
     fun comparePrecision() {
-        val a = RealNum.create("1.000000000000000000000000000000000001")
-        val b = RealNum.create("1.000000000000000000000000000000000002")
-        val c = RealNum.create(1.0)
+        val a = RealNum_BigDecimal("1.000000000000000000000000000000000001")
+        val b = RealNum_BigDecimal("1.000000000000000000000000000000000002")
+        val c = RealNum_Double(1.0)
 
         assertEquals(0, a.compareTo(a))
         assertEquals(-1, a.compareTo(b))
         assertEquals(1, b.compareTo(a))
 
         // Double check equals is not getting truncated to double
-        assertNotEquals(RealNum.create("2.000000000000000000000000000000000002"), a + b)
-        assertEquals(RealNum.create("2.000000000000000000000000000000000003"), a + b)
+        assertNotEquals(RealNum_BigDecimal("2.000000000000000000000000000000000002"), a + b)
+        assertEquals(RealNum_BigDecimal("2.000000000000000000000000000000000003"), a + b)
 
         // When a double is added then we can truncate
-        assertEquals(RealNum.create(2.0), a + c)
+        assertEquals(RealNum_Double(2.0), a + c)
     }
 
     @Test
     fun equals() {
-        val n1 = RealNum.create(5.0)
-        val n2 = RealNum.create(6.0)
-        val n3 = RealNum.create(5.0)
+        val n1 = RealNum_Double(5.0)
+        val n2 = RealNum_Double(6.0)
+        val n3 = RealNum_Double(5.0)
         val n4 = IntegerNum(5)
 
         assertNotEquals(n1, n2)

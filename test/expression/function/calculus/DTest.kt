@@ -7,10 +7,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.trig.*
-import org.cerion.symcalc.expression.number.Complex
-import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealNum
+import org.cerion.symcalc.expression.number.*
 import org.junit.Assert
 import org.junit.Test
 
@@ -20,7 +17,7 @@ class DTest {
     fun single() {
         // Numbers
         Assert.assertEquals(IntegerNum.ZERO, D(IntegerNum.TWO, VarExpr("x")).eval())
-        Assert.assertEquals(IntegerNum.ZERO, D(RealNum.create(2.354), VarExpr("x")).eval())
+        Assert.assertEquals(IntegerNum.ZERO, D(RealNum_Double(2.354), VarExpr("x")).eval())
         Assert.assertEquals(IntegerNum.ZERO, D(Rational(4, 6), VarExpr("x")).eval())
         Assert.assertEquals(IntegerNum.ZERO, D(Complex.ZERO, VarExpr("x")).eval())
 

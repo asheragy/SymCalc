@@ -3,6 +3,7 @@ package org.cerion.symcalc.expression.number
 import org.cerion.symcalc.expression.Expr
 import java.lang.Exception
 import java.lang.UnsupportedOperationException
+import java.math.BigDecimal
 
 enum class NumberType {
     INTEGER,
@@ -72,8 +73,16 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
             if (s.indexOf('i') > -1)
                 return Complex(s)
 
-            return if (s.indexOf('.') > 0) RealNum.create(s) else IntegerNum(s)
+            return if (s.indexOf('.') > 0) {
+                val value = java.lang.Double.parseDouble(s)
 
+                if (value.toString().length < s.length)
+                    return RealNum_BigDecimal(BigDecimal(s))
+
+                return RealNum_Double(value)
+            }
+            else
+                IntegerNum(s)
         }
 
         @JvmStatic fun create(n: Number) : NumberExpr {

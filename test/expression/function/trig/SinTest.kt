@@ -20,7 +20,7 @@ class SinTest {
         assertEquals(Sin(IntegerNum(5)), Sin(IntegerNum(5)).eval())
 
         // Evals to number
-        assertEquals(RealNum.create(-0.9589242746631385), N(Sin(IntegerNum(5))).eval())
+        assertEquals(RealNum_Double(-0.9589242746631385), N(Sin(IntegerNum(5))).eval())
     }
 
     @Test

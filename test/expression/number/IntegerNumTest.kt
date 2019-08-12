@@ -126,7 +126,7 @@ class IntegerNumTest {
     fun divideByZero() {
         assertFailsWith<ArithmeticException> { one / zero}
         assertFailsWith<ArithmeticException> { one / Rational(zero, one)}
-        assertFailsWith<ArithmeticException> { one / RealNum.create(0.0)}
+        assertFailsWith<ArithmeticException> { one / RealNum_Double(0.0) }
         assertFailsWith<ArithmeticException> { one / Complex()}
     }
 
@@ -152,9 +152,9 @@ class IntegerNumTest {
         assertEquals(-1, IntegerNum(5).compareTo(Rational(11,2)))
         assertEquals(1, IntegerNum(5).compareTo(Rational(9,2)))
 
-        assertEquals(0, IntegerNum(5).compareTo(RealNum.create(5.0)))
-        assertEquals(-1, IntegerNum(5).compareTo(RealNum.create(5.00000001)))
-        assertEquals(1, IntegerNum(5).compareTo(RealNum.create(4.999999999)))
+        assertEquals(0, IntegerNum(5).compareTo(RealNum_Double(5.0)))
+        assertEquals(-1, IntegerNum(5).compareTo(RealNum_Double(5.00000001)))
+        assertEquals(1, IntegerNum(5).compareTo(RealNum_Double(4.999999999)))
 
         assertEquals(0, IntegerNum.TWO.compareTo(Complex(IntegerNum.TWO, zero)))
     }

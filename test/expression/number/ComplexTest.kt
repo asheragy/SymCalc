@@ -44,7 +44,7 @@ class ComplexTest {
     fun addition() {
         assertEquals(Complex(6,1), Complex(1,1) + IntegerNum(5))
         assertEquals(Complex(Rational(3,2),IntegerNum.ONE), Complex(1,1) + Rational.HALF)
-        assertEquals(Complex(RealNum.create(6.0),IntegerNum.ONE), Complex(1,1) + RealNum.create(5.0))
+        assertEquals(Complex(RealNum_Double(6.0),IntegerNum.ONE), Complex(1,1) + RealNum_Double(5.0))
         assertEquals(Complex(2,2), Complex(1,1) + Complex(1,1))
     }
 
@@ -52,7 +52,7 @@ class ComplexTest {
     fun subtraction() {
         assertEquals(Complex(-4,1), Complex(1,1) - IntegerNum(5))
         assertEquals(Complex(Rational(1,2),IntegerNum.ONE), Complex(1,1) - Rational.HALF)
-        assertEquals(Complex(RealNum.create(-4.0),IntegerNum.ONE), Complex(1,1) - RealNum.create(5.0))
+        assertEquals(Complex(RealNum_Double(-4.0),IntegerNum.ONE), Complex(1,1) - RealNum_Double(5.0))
         assertEquals(IntegerNum.ZERO, Complex(1,1) - Complex(1,1))
     }
 
@@ -63,7 +63,7 @@ class ComplexTest {
 
         assertEquals(Complex(9, 21), Complex(3,7) / Rational(1,3))
 
-        assertEquals(Complex(RealNum.create(1.3636363636363635), RealNum.create(3.1818181818181817)), Complex(3,7) / RealNum.create(2.2))
+        assertEquals(Complex(RealNum_Double(1.3636363636363635), RealNum_Double(3.1818181818181817)), Complex(3,7) / RealNum_Double(2.2))
     }
 
     @Test
@@ -73,14 +73,14 @@ class ComplexTest {
         assertEquals(Complex(Rational(6,25), Rational(17, 25)), Complex(3,2) / Complex(4,-3))
 
         // Divide: real
-        assertEquals(Complex(RealNum.create(0.4461538461538462), RealNum.create(-0.03076923076923077)), Complex(RealNum.create(2.0),IntegerNum(3)) / Complex(4,7))
+        assertEquals(Complex(RealNum_Double(0.4461538461538462), RealNum_Double(-0.03076923076923077)), Complex(RealNum_Double(2.0),IntegerNum(3)) / Complex(4,7))
     }
 
     @Test
     fun reducesToNonComplex() {
         assertEquals(NumberType.INTEGER, (Complex(2,0) + IntegerNum(3)).numType)
         assertEquals(NumberType.INTEGER , (Complex(2,10) + Complex(3, -10)).numType)
-        assertEquals(NumberType.REAL , (Complex(2,10) - Complex(RealNum.create(3.0), RealNum.create(10.0))).numType)
+        assertEquals(NumberType.REAL , (Complex(2,10) - Complex(RealNum_Double(3.0), RealNum_Double(10.0))).numType)
         assertEquals(NumberType.INTEGER, (Complex(1,1) * Complex(1, -1)).numType)
         assertEquals(NumberType.RATIONAL, (Complex(1,0) / Complex(2, 0)).numType)
     }

@@ -10,6 +10,7 @@ import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealNum
+import org.cerion.symcalc.expression.number.RealNum_Double
 import org.junit.Test
 
 import org.junit.Assert.assertEquals
@@ -46,7 +47,7 @@ class TableTest {
         // if 2,3,4 parameters others must be integer
         assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr(VarExpr("a"), Rational(1, 2))).eval().type)
         assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr(VarExpr("a"), IntegerNum(5), Pi())).eval().type)
-        assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr(VarExpr("a"), IntegerNum(5), IntegerNum(6), RealNum.create(2.34))).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(IntegerNum(2), ListExpr(VarExpr("a"), IntegerNum(5), IntegerNum(6), RealNum_Double(2.34))).eval().type)
     }
 
     @Test
