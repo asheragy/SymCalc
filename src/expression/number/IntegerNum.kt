@@ -32,7 +32,6 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
     constructor(n: Int) : this(BigInteger.valueOf(n.toLong()))
 
     override fun toString(): String = value.toString()
-    override fun toDouble(): Double = value.toDouble()
 
     override fun evaluate(precision: Int): NumberExpr {
         return when (precision) {

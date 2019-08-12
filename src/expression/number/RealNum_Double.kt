@@ -23,7 +23,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
         when(other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL -> return this.compareTo(other.evaluate(SYSTEM_DECIMAL_PRECISION))
-            NumberType.REAL -> return toDouble().compareTo(other.toDouble())
+            NumberType.REAL -> return toDouble().compareTo(other.asReal().toDouble())
             NumberType.COMPLEX -> return Complex(this).compareTo(other)
         }
     }
@@ -34,7 +34,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
         when (other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL -> return this + other.evaluate(SYSTEM_DECIMAL_PRECISION)
-            NumberType.REAL -> return RealNum_Double(value + other.toDouble())
+            NumberType.REAL -> return RealNum_Double(value + other.asReal().toDouble())
             NumberType.COMPLEX -> return Complex(this) + other
         }
     }
@@ -43,7 +43,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
         when (other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL -> return this * other.evaluate(SYSTEM_DECIMAL_PRECISION)
-            NumberType.REAL -> return RealNum_Double(value * other.toDouble())
+            NumberType.REAL -> return RealNum_Double(value * other.asReal().toDouble())
             NumberType.COMPLEX -> return Complex(this) * other
         }
     }
@@ -52,7 +52,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
         when (other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL -> return this / other.evaluate(SYSTEM_DECIMAL_PRECISION)
-            NumberType.REAL -> return RealNum_Double(value / other.toDouble())
+            NumberType.REAL -> return RealNum_Double(value / other.asReal().toDouble())
             NumberType.COMPLEX -> return Complex(this) / other
         }
     }

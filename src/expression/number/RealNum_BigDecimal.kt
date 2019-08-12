@@ -22,12 +22,11 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
     override fun unaryMinus(): RealNum_BigDecimal = RealNum_BigDecimal(value.negate())
 
     override fun compareTo(other: NumberExpr): Int {
-        if (other.isReal && other.asReal() !is RealNum_Double) {
-            val bigDec = other.asReal() as RealNum_BigDecimal
-            return value.compareTo(bigDec.value)
+        if (other is RealNum_BigDecimal) {
+            return value.compareTo(other.value)
         }
 
-        return toDouble().compareTo(other.toDouble())
+        return evaluate(SYSTEM_DECIMAL_PRECISION).compareTo(other.evaluate(SYSTEM_DECIMAL_PRECISION))
     }
 
     override fun plus(other: NumberExpr): NumberExpr {

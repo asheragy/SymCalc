@@ -41,10 +41,6 @@ class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) 
     override fun toString(): String = real.toString() + (if(img.isNegative) "" else "+") + img.toString() + "i"
     override fun unaryMinus(): Complex = Complex(real.unaryMinus(), img.unaryMinus())
 
-    override fun toDouble(): Double {
-        throw UnsupportedOperationException("Complex cannot be converted to double")
-    }
-
     override fun evaluate(): NumberExpr {
         if(img.isZero)
             return real

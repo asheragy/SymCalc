@@ -41,7 +41,7 @@ class Rational constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : Numb
         //Integer since denominator is one
         return if (d.isOne) n else Rational(n, d)
     }
-
+    
     override fun evaluate(precision: Int): NumberExpr {
         return when (precision) {
             InfinitePrecision -> this
@@ -56,7 +56,6 @@ class Rational constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : Numb
     }
     
     override fun toString(): String = "$numerator/$denominator"
-    override fun toDouble(): Double = numerator.toBigDecimal().toDouble() / denominator.toBigDecimal().toDouble()
     override fun unaryMinus(): NumberExpr = Rational(numerator.unaryMinus(), denominator)
 
     fun reciprocal(): NumberExpr = Rational(denominator, numerator).evaluate()
