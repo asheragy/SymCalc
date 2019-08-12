@@ -25,7 +25,7 @@ abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : Fun
         if (e.isNumber) {
             e as NumberExpr
             if (e is RealNum_Double) {
-                return evaluateAsDouble(e.toDouble())
+                return evaluateAsDouble(e.value)
             }
         }
 

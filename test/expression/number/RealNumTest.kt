@@ -83,9 +83,9 @@ class RealNumTest : NumberTestBase() {
 
     @Test
     fun negate() {
-        assertEquals(0.0, RealNum.create(0.0).unaryMinus().toDouble(), 0.01)
-        assertEquals(-1.0, RealNum.create(1.0).unaryMinus().toDouble(), 0.01)
-        assertEquals(1.0, RealNum.create(-1.0).unaryMinus().toDouble(), 0.01)
+        assertEquals(RealNum_Double(0.0), RealNum_Double(0.0).unaryMinus())
+        assertEquals(RealNum_Double(-1.0), RealNum_Double(1.0).unaryMinus())
+        assertEquals(RealNum_Double(1.0), RealNum_Double(-1.0).unaryMinus())
     }
 
     @Test

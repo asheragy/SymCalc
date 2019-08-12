@@ -22,7 +22,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
     override fun compareTo(other: NumberExpr): Int {
         when(other.numType) {
             NumberType.INTEGER,
-            NumberType.RATIONAL,
+            NumberType.RATIONAL -> return this.compareTo(other.evaluate(SYSTEM_DECIMAL_PRECISION))
             NumberType.REAL -> return toDouble().compareTo(other.toDouble())
             NumberType.COMPLEX -> return Complex(this).compareTo(other)
         }
@@ -33,8 +33,8 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
     override fun plus(other: NumberExpr): NumberExpr {
         when (other.numType) {
             NumberType.INTEGER,
-            NumberType.RATIONAL,
-            NumberType.REAL -> return create(value + other.toDouble())
+            NumberType.RATIONAL -> return this + other.evaluate(SYSTEM_DECIMAL_PRECISION)
+            NumberType.REAL -> return RealNum_Double(value + other.toDouble())
             NumberType.COMPLEX -> return Complex(this) + other
         }
     }
@@ -42,7 +42,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
     override fun times(other: NumberExpr): NumberExpr {
         when (other.numType) {
             NumberType.INTEGER,
-            NumberType.RATIONAL,
+            NumberType.RATIONAL -> return this * other.evaluate(SYSTEM_DECIMAL_PRECISION)
             NumberType.REAL -> return RealNum_Double(value * other.toDouble())
             NumberType.COMPLEX -> return Complex(this) * other
         }
@@ -51,7 +51,7 @@ internal class RealNum_Double(override val value: Double = 0.0) : RealNum() {
     override fun div(other: NumberExpr): NumberExpr {
         when (other.numType) {
             NumberType.INTEGER,
-            NumberType.RATIONAL,
+            NumberType.RATIONAL -> return this / other.evaluate(SYSTEM_DECIMAL_PRECISION)
             NumberType.REAL -> return RealNum_Double(value / other.toDouble())
             NumberType.COMPLEX -> return Complex(this) / other
         }

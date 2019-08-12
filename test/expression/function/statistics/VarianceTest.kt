@@ -4,7 +4,7 @@ import org.cerion.symcalc.assertEqual
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealNum
+import org.cerion.symcalc.expression.number.RealNum_Double
 import org.cerion.symcalc.listOfNumbers
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -16,7 +16,7 @@ class VarianceTest {
         val numbers = arrayOf(1.21, 3.4, 2.0, 4.66, 1.5, 5.61, 7.22)
         val list = ListExpr()
         for (number in numbers)
-            list.add(RealNum.create(number))
+            list.add(RealNum_Double(number))
 
         assertEqual(5.16122380952381, Variance(list).eval())
     }
@@ -30,8 +30,7 @@ class VarianceTest {
     @Test
     fun real() {
         var list = listOfNumbers(1.1, 1.2, 1.3)
-        val e = Variance(list).eval()
-        assertEquals(RealNum.create(0.01).toDouble(), (e as RealNum).toDouble(), 0.000000001)
+        assertEquals(RealNum_Double(0.009999999999999995), Variance(list).eval())
 
         list = listOfNumbers(1.21, 3.4, 2.0, 4.66, 1.5, 5.61, 7.22)
         assertEqual(5.16122380952381, Variance(list).eval())

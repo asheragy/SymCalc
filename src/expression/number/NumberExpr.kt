@@ -31,6 +31,8 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     fun asComplex(): Complex = this as Complex
 
     abstract override fun toString(): String
+
+    @Deprecated("use other means to convert")
     abstract fun toDouble(): Double  //Valid on all but ComplexNum // TODO consider removing, evaluate(precision) can replace in some cases
     abstract fun evaluate(precision: Int): NumberExpr
 

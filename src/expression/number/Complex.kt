@@ -42,9 +42,6 @@ class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) 
     override fun unaryMinus(): Complex = Complex(real.unaryMinus(), img.unaryMinus())
 
     override fun toDouble(): Double {
-        if (img.isZero)
-            return real.toDouble()
-
         throw UnsupportedOperationException("Complex cannot be converted to double")
     }
 
@@ -147,6 +144,9 @@ class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) 
     override fun compareTo(other: NumberExpr): Int {
         if(other.isComplex) {
             val o = other.asComplex()
+            if (img.isZero && o.img.isZero)
+                return real.compareTo(o.real)
+
             if (real == o.real && img == o.img)
                 return 0
 

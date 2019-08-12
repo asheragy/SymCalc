@@ -262,7 +262,7 @@ private fun RealNum.power(other: NumberExpr): NumberExpr {
 private fun RealNum_Double.power(other: NumberExpr): NumberExpr {
     when (other.numType) {
         NumberType.INTEGER,
-        NumberType.RATIONAL,
+        NumberType.RATIONAL -> return this.power(other.evaluate(precision))
         NumberType.REAL -> return RealNum_Double(value.pow(other.toDouble()))
         NumberType.COMPLEX ->
             return Power(this, other).eval() as NumberExpr
