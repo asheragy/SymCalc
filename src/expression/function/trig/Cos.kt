@@ -7,12 +7,11 @@ import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealNum
-import org.cerion.symcalc.expression.number.RealNum_Double
 import kotlin.math.cos
 
-class Cos(vararg e: Expr) : TrigBase(Function.COS, *e) {
-    override fun evaluateAsDouble(d: Double): Expr = RealNum_Double(cos(d))
+class Cos(vararg e: Expr) : TrigBase(Function.COS, *e), StandardTrigFunction {
+
+    override fun evaluateAsDouble(d: Double): Double = cos(d)
 
     override fun evaluatePiFactoredOut(e: Expr): Expr {
         if (e is IntegerNum) {

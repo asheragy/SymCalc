@@ -1,48 +1,48 @@
 package org.cerion.symcalc.expression.function.trig
 
 import org.cerion.symcalc.exception.ValidationException
-import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealNum_Double
+import org.cerion.symcalc.expression.Expr as Expr1
 
-abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : FunctionExpr(t, *e) {
+interface StandardTrigFunction {
+    fun evaluatePiFactoredOut(e: Expr1): Expr1
+}
+
+abstract class TrigBase protected constructor(t: Function, vararg e: Expr1) : FunctionExpr(t, *e) {
 
     override val properties: Int
-        get() = Expr.Properties.LISTABLE.value
+        get() = Expr1.Properties.LISTABLE.value
 
-    protected abstract fun evaluateAsDouble(d: Double): Expr // TODO can just return double directly
-    protected abstract fun evaluate(e: Expr): Expr
-    protected abstract fun evaluatePiFactoredOut(e: Expr): Expr
+    protected abstract fun evaluateAsDouble(d: Double): Double
+    protected abstract fun evaluate(e: Expr1): Expr1
 
-    public override fun evaluate(): Expr {
+    public override fun evaluate(): Expr1 {
         val e = get(0)
         if (e.isNumber) {
             e as NumberExpr
             if (e is RealNum_Double) {
-                return evaluateAsDouble(e.value)
+                return RealNum_Double(evaluateAsDouble(e.value))
             }
         }
 
-        if (e.isNumber && e.asNumber().isZero)
-            return evaluatePiFactoredOut(IntegerNum.ZERO)
+        if (this is StandardTrigFunction) {
+            if (e.isNumber && e.asNumber().isZero)
+                return evaluatePiFactoredOut(IntegerNum.ZERO)
 
-        if (e is Pi)
-            return evaluatePiFactoredOut(IntegerNum.ONE)
+            if (e is Pi)
+                return evaluatePiFactoredOut(IntegerNum.ONE)
 
-        if (e is Times) {
-            val index = e.args.indexOfFirst { it is Pi }
-            val times = Times()
-            for (i in 0 until e.args.size)
-                if (i != index)
-                    times.add(e.args[i])
-
-            return evaluatePiFactoredOut(times.eval())
+            if (e is Times && e.args.contains(Pi())) {
+                val args = e.args.toMutableList()
+                args.remove(Pi())
+                return evaluatePiFactoredOut(Times(*args.toTypedArray()).eval())
+            }
         }
 
         return evaluate(e)

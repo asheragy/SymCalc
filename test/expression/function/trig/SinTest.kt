@@ -46,6 +46,8 @@ class SinTest {
     fun valuesNotEvaluated() {
         val e = Sin(Times(Pi(), Rational(1,5)))
         assertEquals(e, e.eval())
+
+        assertEquals(Sin(Times(IntegerNum(3), Power(IntegerNum.TWO, Rational.HALF))), Sin(Times(IntegerNum(3), Power(IntegerNum.TWO, Rational.HALF))).eval())
     }
 
     @Test
