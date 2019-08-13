@@ -191,7 +191,8 @@ class PowerTest {
         assertEquals(RealNum_Double(2.23606797749979), Power(RealNum_Double(5.0), Rational(1,2)).eval())
         assertEquals(RealNum_Double(2040886.0816112224), Power(RealNum_Double(1.2345), Rational(12345,179)).eval())
         assertEquals(RealNum_Double(4.89983252377579E-7), Power(RealNum_Double(1.2345), Rational(-12345,179)).eval())
-        // TODO this invovles sqrt of negative so output is complex, need tests like this in other functions as well...
+
+        // TODO This invovles the Nth root so technically there are N answers and only 1 real, mathematica seems to give complex answer most of the time not sure what to do here yet
         //assertEquals(RealNum.create(1.0), Power(RealNum.create(-1.2345), Rational(3,2)).eval())
 
         assertEquals(RealNum_BigDecimal("2"), Power(RealNum_BigDecimal("4.0"), Rational.HALF).eval())
@@ -230,10 +231,13 @@ class PowerTest {
         assertEquals(Complex(1.5502967700299068, 1.6113906803859945), Power(RealNum_Double(5.0), Complex(Rational.HALF,Rational.HALF)).eval())
         assertEquals(Complex(24.70195964872899, 3.848790655850832), Power(RealNum_Double(5.0), Complex(2.0,4.0)).eval())
         assertEquals(Complex(52.40487058561866, -147.56137608427574), Power(RealNum_Double(5.0), Complex(piBigDec,piBigDec)).eval())
+    }
 
+    @Test
+    fun realBigDecToComplex() {
         // BigDec
         val bigDec = RealNum_BigDecimal("5.0001")
-        // TODO none working but multiple reasons
+        // TODO Needs at least log of BigDec
         //assertEquals(Complex(24.70195964872899, 3.848790655850832), Power(bigDec, Complex(2,4)).eval())
         //assertEquals(Complex(1.5502967700299068, 1.6113906803859945), Power(bigDec, Complex(Rational.HALF,Rational.HALF)).eval())
         assertEquals(Complex(24.70263974545859, 3.8509208127549734), Power(bigDec, Complex(2.0,4.0)).eval())
@@ -268,7 +272,10 @@ class PowerTest {
 
     @Test
     fun complexToComplex() {
+        assertEquals(Complex(0.2739572538301212, 0.5837007587586147), Power(Complex(1.0, 1.0), Complex(1.0,1.0)).eval())
+        // Add more tests when BigDec can work, Int/Rational cannot be evaluated and RealDouble is simple to not need much testing
 
+        // Cannot eval
+        assertEquals(Power(Complex(1, 1), Complex(1,1)), Power(Complex(1, 1), Complex(1,1)).eval())
     }
-
 }

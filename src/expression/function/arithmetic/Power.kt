@@ -2,6 +2,7 @@ package org.cerion.symcalc.expression.function.arithmetic
 
 import expression.constant.I
 import expression.function.trig.ArcTan
+import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
@@ -67,8 +68,12 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
                 }
 
                 // Complex power implemented here since the result is not always a NumberExpr
-                if (b.isComplex && !b.asComplex().img.isZero)
+                if (b.isComplex && !b.asComplex().img.isZero) {
+                    if (a is Complex)
+                        return complexToPower(a, b)
+
                     return complexPower(a, b.asComplex())
+                }
 
                 if (a is IntegerNum)
                     return a.power(b)
@@ -93,6 +98,9 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
             return z.pow(N.intValue())
         }
 
+        if (N is Complex)
+            return complexToPowerFull(z, N)
+
         var a = z
         if (N.precision < z.precision)
             a = z.evaluate(N.precision) as Complex
@@ -109,16 +117,31 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         return Times(rN, Plus(cos, Times(I(), sin))).eval()
     }
 
+    private fun complexToPowerFull(x: Complex, y: Complex): Expr {
+        // http://mathworld.wolfram.com/ComplexExponentiation.html
+        val a = x.real
+        val b = x.img
+
+        val theta = ArcTan(a / b).eval()
+        val a2b2 = a.square() + b.square()
+        val exp1 = Power(a2b2, y / IntegerNum.TWO)
+        val exp2 = Power(E(), Times(I(), y, theta))
+
+        val result = Times(exp1, exp2).eval()
+        if (result is NumberExpr)
+            return result
+
+        return this
+    }
+
     private fun complexPower(a: Expr, n: Complex): Expr {
         return complexPower(a, n.real, n.img)
     }
 
-    private fun complexPower(a: Expr, real: Expr, img: Expr): Expr {
-        if (a.isNumber && a.asNumber().isComplex && !a.asNumber().asComplex().img.isZero)
-            TODO("This only handles a^(b + ci)")
-
-        val b = real
-        val c = img
+    // a^(b + ic)
+    fun complexPower(a: Expr, b: Expr, c: Expr): Expr {
+        if (a is Complex)
+            throw OperationException("Function only supports non-complex to complex power")
 
         val clog = Times(c, Log(a))
         val cos = Cos(clog)
@@ -129,10 +152,10 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         val e = result.eval()
 
         // If not evaluated fully return the original expression
-        if (e is Times)
-            return this
+        if (e is NumberExpr)
+            return e
 
-        return e
+        return this
     }
 
     private fun integerToRational(a: IntegerNum, b: Rational): Expr {
@@ -221,8 +244,6 @@ private fun IntegerNum.power(other: NumberExpr): NumberExpr {
 }
 
 private fun Rational.power(other: NumberExpr): NumberExpr {
-    val n: IntegerNum
-    val d: IntegerNum
     when (other.numType) {
         NumberType.INTEGER -> {
             val top = numerator.power(other) // These could be rational on negative integer

@@ -13,8 +13,6 @@ class SymbolExpr(override val value: String) : Expr() {
     val name: String = value
 
     override fun evaluate(): Expr {
-        // TODO add variable lookup from env
-
         val function = FunctionFactory.createInstance(name)
         return function
     }

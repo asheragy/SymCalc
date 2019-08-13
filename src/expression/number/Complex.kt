@@ -23,8 +23,17 @@ class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) 
         setArg(1, i)
     }
 
-    constructor(r: Int, i: Int) : this(IntegerNum(r.toLong()), IntegerNum(i.toLong()))
-    constructor(r: Double, i: Double) : this(RealNum_Double(r), RealNum_Double(i))
+    constructor(r: Number, i: Number) : this() {
+        if (r is Int)
+            setArg(0, IntegerNum(r))
+        else
+            setArg(0, RealNum_Double(r.toDouble()))
+
+        if (i is Int)
+            setArg(1, IntegerNum(i))
+        else
+            setArg(1, RealNum_Double(i.toDouble()))
+    }
 
     constructor(s: String): this() {
         val num = s.substring(0, s.length - 1)
