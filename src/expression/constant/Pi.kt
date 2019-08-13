@@ -29,7 +29,7 @@ class Pi : ConstExpr() {
     private fun getPiToDigits(n: Int): BigDecimal {
         var sum = calc(0, n+2)
 
-        // TODO change loop limit to something that makes sense
+        // TODO_LP change loop limit to something that makes sense
         for(i in 1..10000) {
             val prev = sum
             sum += calc(i, n+2)
@@ -38,7 +38,7 @@ class Pi : ConstExpr() {
                 return sum.setScale(n, RoundingMode.HALF_UP)
         }
 
-        // TODO this means we did not calculate exactly...
+        // TODO_LP this means we did not calculate exactly...
         return sum
     }
 
