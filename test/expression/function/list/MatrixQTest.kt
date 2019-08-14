@@ -4,7 +4,6 @@ import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.expression.number.RealNum_Double
 import org.junit.Assert
 import org.junit.Test

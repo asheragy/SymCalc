@@ -3,7 +3,6 @@ package org.cerion.symcalc.expression.function.integer
 import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.expression.number.RealNum_Double
 import org.junit.Assert.*
 import org.junit.Test

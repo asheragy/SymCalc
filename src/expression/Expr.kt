@@ -6,7 +6,6 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 import java.util.*
@@ -62,7 +61,7 @@ abstract class Expr {
     // Casting
     fun asList(): ListExpr = this as ListExpr
     fun asInteger(): IntegerNum = this as IntegerNum
-    fun asReal(): RealNum = this as RealNum
+    //fun asReal(): RealNum = this as RealNum
     fun asBool(): BoolExpr = this as BoolExpr
     fun asVar(): VarExpr = this as VarExpr
     fun asNumber(): NumberExpr = this as NumberExpr

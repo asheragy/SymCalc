@@ -5,11 +5,6 @@ import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.junit.Assert.*
 
-
-fun assertEqual(expected: Double, actual: Expr) {
-    assertEquals(expected, actual.asReal().toDouble(), 0.0)
-}
-
 fun assertEqual(expected: Int, actual: Expr) {
     assertEquals(expected, actual.asInteger().intValue())
 }

@@ -18,7 +18,7 @@ class VarianceTest {
         for (number in numbers)
             list.add(RealNum_Double(number))
 
-        assertEqual(5.16122380952381, Variance(list).eval())
+        assertEquals(RealNum_Double(5.16122380952381), Variance(list).eval())
     }
 
     @Test
@@ -33,7 +33,7 @@ class VarianceTest {
         assertEquals(RealNum_Double(0.009999999999999995), Variance(list).eval())
 
         list = listOfNumbers(1.21, 3.4, 2.0, 4.66, 1.5, 5.61, 7.22)
-        assertEqual(5.16122380952381, Variance(list).eval())
+        assertEquals(RealNum_Double(5.16122380952381), Variance(list).eval())
     }
 
     @Test

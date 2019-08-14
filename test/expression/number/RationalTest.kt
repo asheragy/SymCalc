@@ -84,7 +84,7 @@ class RationalTest : NumberTestBase() {
     fun eval_toReal() {
         assertEquals(RealNum_Double(0.3333333333333333), N(Rational(1,3)).eval())
 
-        val bigDec = N(Rational(1,3), IntegerNum(50)).eval().asReal()
+        val bigDec = N(Rational(1,3), IntegerNum(50)).eval().asNumber().asBigDec()
         assertEquals(50, bigDec.precision)
         assertEquals(RealNum_BigDecimal("0.33333333333333333333333333333333333333333333333333"), bigDec)
     }

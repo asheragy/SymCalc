@@ -5,7 +5,6 @@ import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.expression.number.RealNum_Double
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals

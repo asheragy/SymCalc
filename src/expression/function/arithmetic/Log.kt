@@ -6,7 +6,6 @@ import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.expression.number.RealNum_Double
 import kotlin.math.ln
 

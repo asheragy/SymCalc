@@ -80,7 +80,7 @@ class ComplexTest {
     fun reducesToNonComplex() {
         assertEquals(NumberType.INTEGER, (Complex(2,0) + IntegerNum(3)).numType)
         assertEquals(NumberType.INTEGER , (Complex(2,10) + Complex(3, -10)).numType)
-        assertEquals(NumberType.REAL , (Complex(2,10) - Complex(RealNum_Double(3.0), RealNum_Double(10.0))).numType)
+        assertEquals(NumberType.REAL_DOUBLE , (Complex(2,10) - Complex(RealNum_Double(3.0), RealNum_Double(10.0))).numType)
         assertEquals(NumberType.INTEGER, (Complex(1,1) * Complex(1, -1)).numType)
         assertEquals(NumberType.RATIONAL, (Complex(1,0) / Complex(2, 0)).numType)
     }

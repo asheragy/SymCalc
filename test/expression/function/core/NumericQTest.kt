@@ -6,7 +6,6 @@ import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.expression.number.RealNum_Double
 import org.junit.Assert
 import org.junit.Test

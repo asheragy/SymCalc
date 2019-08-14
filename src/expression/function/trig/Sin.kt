@@ -8,8 +8,6 @@ import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealNum
-import org.cerion.symcalc.expression.number.RealNum_Double
 import kotlin.math.sin
 
 class Sin(vararg e: Expr) : TrigBase(Function.SIN, *e), StandardTrigFunction {

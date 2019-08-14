@@ -4,6 +4,7 @@ import org.cerion.symcalc.assertEqual
 import org.cerion.symcalc.expression.function.arithmetic.Sqrt
 import org.cerion.symcalc.expression.function.statistics.StandardDeviation
 import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.expression.number.RealNum_Double
 import org.cerion.symcalc.listOfNumbers
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -19,6 +20,6 @@ class StandardDeviationTest {
     @Test
     fun real() {
         val list = listOfNumbers(1.21, 3.4, 2.0, 4.66, 1.5, 5.61, 7.22)
-        assertEqual(2.271832698400965, StandardDeviation(list).eval())
+        assertEquals(RealNum_Double(2.271832698400965), StandardDeviation(list).eval())
     }
 }

@@ -7,7 +7,6 @@ import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.expression.number.RealNum_Double
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

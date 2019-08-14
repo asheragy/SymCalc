@@ -7,17 +7,18 @@ import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.min
 
-class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
+class RealNum_BigDecimal(override val value: BigDecimal) : NumberExpr() {
 
     constructor(value: String) : this(BigDecimal(value))
     constructor(value: Double) : this(BigDecimal(value))
 
+    override val numType: NumberType get() = NumberType.REAL_BIGDEC
     override val isZero: Boolean get() = value == BigDecimal.ZERO
     override val isOne: Boolean get() = value == BigDecimal.ONE
     override val isNegative: Boolean get() = value.signum() == -1
     override val precision: Int get() = value.precision()
 
-    override fun toDouble(): Double = value.toDouble()
+    fun toDouble(): Double = value.toDouble()
     override fun toString(): String = "$value`$precision"
     override fun unaryMinus(): RealNum_BigDecimal = RealNum_BigDecimal(value.negate())
 
@@ -39,14 +40,11 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
                 val n = N(other, precision).eval()
                 return this + n as NumberExpr
             }
-            NumberType.REAL -> {
-                val real = other.asReal()
-                if(real is RealNum_Double)
-                    return real + this
+            NumberType.REAL_DOUBLE -> return other.asDouble() + this
 
-                real as RealNum_BigDecimal
+            NumberType.REAL_BIGDEC -> {
+                other as RealNum_BigDecimal
 
-                // Both are BigDecimal
                 val min = min(this.precision, other.precision)
                 val a = this.evaluate(min) as RealNum_BigDecimal
                 val b = other.evaluate(min) as RealNum_BigDecimal
@@ -72,18 +70,14 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
                 val n = this * other.numerator
                 return n / other.denominator
             }
-
-            NumberType.REAL -> {
-                val real = other.asReal()
-                if(real is RealNum_Double)
-                    return real * this
-
-                real as RealNum_BigDecimal
+            NumberType.REAL_DOUBLE -> return other.asDouble() * this
+            NumberType.REAL_BIGDEC -> {
+                other as RealNum_BigDecimal
 
                 // Both are BigDecimal
-                val bd = this.value.times(real.value)
+                val bd = this.value.times(other.value)
                 val result = RealNum_BigDecimal(bd)
-                return evaluatePrecision(result, this, real)
+                return evaluatePrecision(result, this, other)
             }
 
             NumberType.COMPLEX -> {
@@ -105,18 +99,11 @@ class RealNum_BigDecimal(override val value: BigDecimal) : RealNum() {
                 other as Rational
                 return (this * other.denominator) / other.numerator
             }
-
-            NumberType.REAL -> {
-                val real = other.asReal()
-                if(real is RealNum_Double) {
-                    return RealNum_Double(toDouble() / real.value)
-                }
-
-                real as RealNum_BigDecimal
-
-                // Both are BigDecimal
-                val result = RealNum_BigDecimal( this.value.divide(real.value, RoundingMode.HALF_UP))
-                return evaluatePrecision(result, this, real)
+            NumberType.REAL_DOUBLE -> return RealNum_Double(toDouble() / other.asDouble().value)
+            NumberType.REAL_BIGDEC -> {
+                other as RealNum_BigDecimal
+                val result = RealNum_BigDecimal( this.value.divide(other.value, RoundingMode.HALF_UP))
+                return evaluatePrecision(result, this, other)
             }
 
             NumberType.COMPLEX -> {

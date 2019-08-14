@@ -2,7 +2,6 @@ package org.cerion.symcalc.expression.constant
 
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.expression.number.RealNum_BigDecimal
 import org.cerion.symcalc.expression.number.RealNum_Double
 import java.math.BigDecimal

@@ -9,7 +9,6 @@ import org.cerion.symcalc.expression.function.statistics.RandomInteger
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealNum
 import org.cerion.symcalc.expression.number.RealNum_Double
 import org.junit.Test
 

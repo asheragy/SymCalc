@@ -29,10 +29,10 @@ class RealNumTest : NumberTestBase() {
         assertEquals(RealNum_Double(1.2222222222333334), N(a).eval())
 
         // N[x_Precision, y] = Same if Y is larger than X
-        assertEquals(30, N(b, IntegerNum(40)).eval().asReal().precision)
+        assertEquals(30, N(b, IntegerNum(40)).eval().precision)
 
         // N[x_Precision, y] = Y Precision if Y is smaller than X
-        assertEquals(20, N(b, IntegerNum(20)).eval().asReal().precision)
+        assertEquals(20, N(b, IntegerNum(20)).eval().precision)
     }
 
     @Test

@@ -8,7 +8,8 @@ import java.math.BigDecimal
 enum class NumberType {
     INTEGER,
     RATIONAL,
-    REAL, // TODO these are different enough should consider splitting into 2 actual types with no shared base class
+    REAL_DOUBLE,
+    REAL_BIGDEC,
     COMPLEX
 }
 
@@ -24,10 +25,12 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract val numType: NumberType
     abstract val isNegative: Boolean
 
-    val isReal: Boolean get() = numType == NumberType.REAL
+    //val isReal: Boolean get() = numType == NumberType.REAL
     val isRational: Boolean get() = numType == NumberType.RATIONAL
     val isComplex: Boolean get() = numType == NumberType.COMPLEX
 
+    fun asDouble(): RealNum_Double = this as RealNum_Double
+    fun asBigDec(): RealNum_BigDecimal = this as RealNum_BigDecimal
     fun asRational(): Rational = this as Rational
     fun asComplex(): Complex = this as Complex
 
