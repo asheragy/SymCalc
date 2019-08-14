@@ -153,7 +153,7 @@ abstract class Expr {
         // Listable property
         if (hasProperty(Properties.LISTABLE) && size == 1 && result[0].isList) {
             val function = result as FunctionExpr
-            val p1 = result.get(0) as ListExpr
+            val p1 = result[0] as ListExpr
             val listResult = ListExpr()
 
             for (i in 0 until p1.size)

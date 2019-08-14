@@ -1,8 +1,8 @@
 package expression.number;
 
-import java.security.* ;
-import java.util.* ;
-import java.math.* ;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
 
 
 /** BigDecimal special functions.
@@ -13,6 +13,7 @@ import java.math.* ;
 * <a href="http://dfp.sourceforge.net/">dfp</a>
 * <a href="http://jscience.org/">JScience</a>
 */
+@SuppressWarnings({"BigDecimalMethodWithoutRoundingCalled", "WeakerAccess", "FieldCanBeLocal", "ConditionalBreakInInfiniteLoop", "CanBeFinal", "DanglingJavadoc", "RedundantCast", "unused"})
 public class BigDecimalMath
 {
 

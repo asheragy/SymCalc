@@ -22,7 +22,6 @@ class Fourier(vararg e: Expr) : FunctionExpr(Function.FOURIER, *e) {
         if (N == 1)
             return list
 
-        println("FFT: " + list.toString())
         var result = ListExpr()
         val a0 = ListExpr()
         val a1 = ListExpr()
@@ -40,15 +39,9 @@ class Fourier(vararg e: Expr) : FunctionExpr(Function.FOURIER, *e) {
 
         val y0 = recursiveFFT(a0)
         val y1 = recursiveFFT(a1)
-        //MathList y0 = new MathList();
-        //MathList y1 = new MathList();
-        //y0.add(Number.getNumber("4"));
-        //y0.add(Number.getNumber("-2"));
-        //y1.add(Number.getNumber("2"));
-        //y1.add(Number.getNumber("-2"));
 
-        println("y0 = " + y0.toString())
-        println("y1 = " + y1.toString())
+        //println("y0 = $y0")
+        //println("y1 = $y1")
 
         for (k in 0 until y0.size) {
             val num1 = y0[k] as NumberExpr
@@ -60,6 +53,7 @@ class Fourier(vararg e: Expr) : FunctionExpr(Function.FOURIER, *e) {
             //w2 = w2.multiply(Number.getNumber("-1"));
         }
 
+        // TODO_LP Check this class again, add tests, etc
 
         //Fix order
         val temp = ListExpr()

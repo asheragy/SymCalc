@@ -28,10 +28,9 @@ abstract class ConstExpr : Expr() {
         }
 
         @JvmStatic fun getConstant(name: String): ConstExpr {
-            val n = lookup(name)
-            when (n) {
-                ConstExpr.Name.PI -> return Pi()
-                ConstExpr.Name.E -> return E()
+            when (this.lookup(name)) {
+                Name.PI -> return Pi()
+                Name.E -> return E()
             }
 
             throw IllegalArgumentException("invalid constant")

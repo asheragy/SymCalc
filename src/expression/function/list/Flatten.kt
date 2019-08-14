@@ -29,6 +29,6 @@ class Flatten(vararg e: Expr) : FunctionExpr(Function.FLATTEN, *e) {
 
     @Throws(ValidationException::class)
     override fun validate() {
-        validateParameterType(0, Expr.ExprType.LIST)
+        validateParameterType(0, ExprType.LIST)
     }
 }

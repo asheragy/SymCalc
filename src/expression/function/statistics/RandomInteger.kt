@@ -9,7 +9,7 @@ import java.util.Random
 
 class RandomInteger(vararg e: Expr) : FunctionExpr(Function.RANDOM_INTEGER, *e) {
 
-    constructor(max: Int) : this(IntegerNum(max)) {}
+    constructor(max: Int) : this(IntegerNum(max))
 
     override fun evaluate(): Expr {
 

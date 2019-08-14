@@ -3,11 +3,9 @@ package org.cerion.symcalc.expression.function.integer
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.arithmetic.Subtract
+import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
-import org.cerion.symcalc.expression.number.IntegerNum
 
 class Fibonacci(vararg e: Expr) : FunctionExpr(Function.FIBONACCI, *e) {
 
@@ -36,6 +34,7 @@ class Fibonacci(vararg e: Expr) : FunctionExpr(Function.FIBONACCI, *e) {
         return fib
     }
 
+    /*
     private fun fibRecursive(n: IntegerNum): IntegerNum {
         return fibRecursive(n, IntegerNum.ZERO, IntegerNum.ONE)
     }
@@ -48,6 +47,7 @@ class Fibonacci(vararg e: Expr) : FunctionExpr(Function.FIBONACCI, *e) {
         val b = Plus(first,second).eval().asInteger()
         return fibRecursive(a, b, first)
     }
+     */
 
     override fun validate() {
         validateParameterCount(1)

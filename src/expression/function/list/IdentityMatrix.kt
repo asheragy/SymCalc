@@ -27,7 +27,7 @@ class IdentityMatrix(vararg e: Expr) : FunctionExpr(Function.IDENTITY_MATRIX, *e
     @Throws(ValidationException::class)
     override fun validate() {
         validateParameterCount(1)
-        validateParameterType(0, Expr.ExprType.NUMBER)
+        validateParameterType(0, ExprType.NUMBER)
         validateNumberType(0, NumberType.INTEGER)
 
         val n = getInteger(0).intValue()

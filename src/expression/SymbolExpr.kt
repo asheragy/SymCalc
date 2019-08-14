@@ -13,7 +13,6 @@ class SymbolExpr(override val value: String) : Expr() {
     val name: String = value
 
     override fun evaluate(): Expr {
-        val function = FunctionFactory.createInstance(name)
-        return function
+        return FunctionFactory.createInstance(name)
     }
 }

@@ -54,7 +54,7 @@ class ListExpr : Expr {
     override fun evaluate(): ListExpr = this
 
     override fun treeForm(i: Int) {
-        indent(i, "List: " + size)
+        indent(i, "List: $size")
         for (j in 0 until size)
             get(j).treeForm(i + 1)
     }

@@ -71,7 +71,7 @@ class Table(vararg e: Expr) : FunctionExpr(Function.TABLE, *e) {
 		 */
 
         validateParameterCount(2)
-        validateParameterType(1, Expr.ExprType.LIST)
+        validateParameterType(1, ExprType.LIST)
 
         val list = getList(1)
         if (list.size == 0)

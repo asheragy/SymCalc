@@ -5,7 +5,6 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberExpr
-import kotlin.math.min
 
 class Equal(vararg e: Expr) : FunctionExpr(Function.EQUAL, *e) {
 

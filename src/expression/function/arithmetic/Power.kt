@@ -75,16 +75,13 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
                     return complexPower(a, b.asComplex())
                 }
 
-                if (a is IntegerNum)
-                    return a.power(b)
-                else if (a is Rational)
-                    return a.power(b)
-                else if (a is RealDouble)
-                    return a.power(b)
-                else if (a is RealBigDec)
-                    return a.power(b)
-                else if (a is Complex)
-                    return complexToPower(a, b)
+                when (a) {
+                    is IntegerNum -> return a.power(b)
+                    is Rational -> return a.power(b)
+                    is RealDouble -> return a.power(b)
+                    is RealBigDec -> return a.power(b)
+                    is Complex -> return complexToPower(a, b)
+                }
             }
 
             // TODO this is not the right check, just gets past the current issue
@@ -141,7 +138,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
     }
 
     // a^(b + ic)
-    fun complexPower(a: Expr, b: Expr, c: Expr): Expr {
+    private fun complexPower(a: Expr, b: Expr, c: Expr): Expr {
         if (a is Complex)
             throw OperationException("Function only supports non-complex to complex power")
 
@@ -224,16 +221,16 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 }
 
 private fun IntegerNum.power(other: NumberExpr): NumberExpr {
-    when (other.numType) {
-        NumberType.INTEGER -> return this.pow(other as IntegerNum)
+    return when (other.numType) {
+        NumberType.INTEGER -> this.pow(other as IntegerNum)
         NumberType.RATIONAL -> throw UnsupportedOperationException()
         NumberType.REAL_DOUBLE -> {
             val real = this.evaluate(other.precision) as RealDouble
-            return real.power(other)
+            real.power(other)
         }
         NumberType.REAL_BIGDEC -> {
             val real = this.evaluate(other.precision) as RealBigDec
-            return real.power(other)
+            real.power(other)
         }
         NumberType.COMPLEX -> throw UnsupportedOperationException()
     }

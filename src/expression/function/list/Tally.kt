@@ -41,6 +41,6 @@ class Tally(vararg e: Expr) : FunctionExpr(Function.TALLY, *e) {
     @Throws(ValidationException::class)
     override fun validate() {
         validateParameterCount(1)
-        validateParameterType(0, Expr.ExprType.LIST)
+        validateParameterType(0, ExprType.LIST)
     }
 }
