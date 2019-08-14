@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.function.list
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RealNum_Double
+import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Assert
 import org.junit.Test
 
@@ -14,7 +14,7 @@ class VectorQTest {
     fun isVector() {
         Assert.assertEquals(BoolExpr.TRUE, VectorQ(ListExpr()).eval())
         Assert.assertEquals(BoolExpr.TRUE, VectorQ(ListExpr(IntegerNum(3))).eval())
-        Assert.assertEquals(BoolExpr.TRUE, VectorQ(ListExpr(IntegerNum(3), RealNum_Double(2.35))).eval())
+        Assert.assertEquals(BoolExpr.TRUE, VectorQ(ListExpr(IntegerNum(3), RealDouble(2.35))).eval())
     }
 
     @Test

@@ -11,7 +11,7 @@ class EqualTest {
 
     @Test
     fun numbers() {
-        val numbers = arrayOf(IntegerNum(2), Rational(4,2), RealNum_Double(2.0), Complex(2,0))
+        val numbers = arrayOf(IntegerNum(2), Rational(4,2), RealDouble(2.0), Complex(2,0))
 
         for(n1 in numbers) {
             for (n2 in numbers)

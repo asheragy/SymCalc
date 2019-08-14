@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.RealNum_Double
+import org.cerion.symcalc.expression.number.RealDouble
 import org.cerion.symcalc.expression.Expr as Expr1
 
 interface StandardTrigFunction {
@@ -26,8 +26,8 @@ abstract class TrigBase protected constructor(t: Function, vararg e: Expr1) : Fu
         val e = get(0)
         if (e.isNumber) {
             e as NumberExpr
-            if (e is RealNum_Double) {
-                return RealNum_Double(evaluateAsDouble(e.value))
+            if (e is RealDouble) {
+                return RealDouble(evaluateAsDouble(e.value))
             }
         }
 

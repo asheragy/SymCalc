@@ -18,7 +18,7 @@ class NumberQTest {
     @Test
     fun basic() {
         Assert.assertEquals(BoolExpr.TRUE, NumberQ(IntegerNum(5)).eval())
-        Assert.assertEquals(BoolExpr.TRUE, NumberQ(RealNum_Double(2.34)).eval())
+        Assert.assertEquals(BoolExpr.TRUE, NumberQ(RealDouble(2.34)).eval())
         Assert.assertEquals(BoolExpr.TRUE, NumberQ(Rational(2, 3)).eval())
         Assert.assertEquals(BoolExpr.TRUE, NumberQ(Complex(5, 7)).eval())
 

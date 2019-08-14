@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.RealNum_Double
+import org.cerion.symcalc.expression.number.RealDouble
 import kotlin.math.ln
 
 class Log(vararg e: Expr) : FunctionExpr(Function.LOG, *e) {
@@ -19,8 +19,8 @@ class Log(vararg e: Expr) : FunctionExpr(Function.LOG, *e) {
 
         if (n.isNumber) {
             n as NumberExpr
-            if (n is RealNum_Double)
-                return RealNum_Double(ln(n.value))
+            if (n is RealDouble)
+                return RealDouble(ln(n.value))
         }
 
         if (n is E)

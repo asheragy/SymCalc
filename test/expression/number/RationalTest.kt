@@ -30,9 +30,9 @@ class RationalTest : NumberTestBase() {
         assertEquals(1, Rational(10,3).compareTo(Rational(7,3)))
         assertEquals(0, Rational(1,2).compareTo(Rational(2,4)))
 
-        assertEquals(-1, Rational(-1,2).compareTo(RealNum_Double(-0.2)))
-        assertEquals(1, Rational(1,2).compareTo(RealNum_Double(0.4)))
-        assertEquals(0, Rational(1,2).compareTo(RealNum_Double(0.5)))
+        assertEquals(-1, Rational(-1,2).compareTo(RealDouble(-0.2)))
+        assertEquals(1, Rational(1,2).compareTo(RealDouble(0.4)))
+        assertEquals(0, Rational(1,2).compareTo(RealDouble(0.5)))
 
         assertEquals(-1, Rational(1,3).compareTo(Complex(1,0)))
         assertEquals(1, Rational(4,3).compareTo(Complex(1,0)))
@@ -77,16 +77,16 @@ class RationalTest : NumberTestBase() {
 
     @Test
     fun eval_precision() {
-        assertEquals(RealNum_BigDecimal("0"), Rational(0,1).eval(10))
+        assertEquals(RealBigDec("0"), Rational(0,1).eval(10))
     }
 
     @Test
     fun eval_toReal() {
-        assertEquals(RealNum_Double(0.3333333333333333), N(Rational(1,3)).eval())
+        assertEquals(RealDouble(0.3333333333333333), N(Rational(1,3)).eval())
 
         val bigDec = N(Rational(1,3), IntegerNum(50)).eval().asNumber().asBigDec()
         assertEquals(50, bigDec.precision)
-        assertEquals(RealNum_BigDecimal("0.33333333333333333333333333333333333333333333333333"), bigDec)
+        assertEquals(RealBigDec("0.33333333333333333333333333333333333333333333333333"), bigDec)
     }
 
     @Test

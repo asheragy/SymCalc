@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RealNum_Double
+import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Assert
 import org.junit.Test
 
@@ -13,7 +13,7 @@ class IdentityMatrixTest {
     @Test
     fun validate() {
         // Non-integers
-        Assert.assertEquals(Expr.ExprType.ERROR, IdentityMatrix(RealNum_Double(2.34)).eval().type)
+        Assert.assertEquals(Expr.ExprType.ERROR, IdentityMatrix(RealDouble(2.34)).eval().type)
         Assert.assertEquals(Expr.ExprType.ERROR, IdentityMatrix(Pi()).eval().type)
 
         // Zero

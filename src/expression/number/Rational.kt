@@ -45,12 +45,12 @@ class Rational constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : Numb
     override fun evaluate(precision: Int): NumberExpr {
         return when (precision) {
             InfinitePrecision -> this
-            SYSTEM_DECIMAL_PRECISION -> RealNum_Double(numerator.value.toDouble() / denominator.value.toDouble())
+            SYSTEM_DECIMAL_PRECISION -> RealDouble(numerator.value.toDouble() / denominator.value.toDouble())
             else -> {
                 val a = numerator.toBigDecimal()
                 val b = denominator.toBigDecimal()
                 val t = a.divide(b, precision, RoundingMode.HALF_UP)
-                RealNum_BigDecimal(t)
+                RealBigDec(t)
             }
         }
     }

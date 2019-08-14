@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression.function.trig
 
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RealNum_Double
+import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -21,7 +21,7 @@ class TanTest {
         eval = tan2.eval()
         assertTrue("not a number", eval.isNumber)
 
-        assertEquals(RealNum_Double(-3.380515006246586), eval)
+        assertEquals(RealDouble(-3.380515006246586), eval)
     }
 }
 

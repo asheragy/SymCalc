@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RealNum_Double
+import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Assert
 import org.junit.Test
 
@@ -13,7 +13,7 @@ class MatrixQTest {
     @Test
     fun isMatrix() {
         val a = IntegerNum(3)
-        val b = RealNum_Double(6.32)
+        val b = RealDouble(6.32)
         val c = VarExpr("x")
 
         // 0x0
@@ -32,7 +32,7 @@ class MatrixQTest {
     @Test
     fun isNotMatrix() {
         val a = IntegerNum(3)
-        val b = RealNum_Double(6.32)
+        val b = RealDouble(6.32)
         val c = VarExpr("x")
 
         // Not a list

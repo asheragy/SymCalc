@@ -36,14 +36,14 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
     override fun evaluate(precision: Int): NumberExpr {
         return when (precision) {
             InfinitePrecision -> this
-            SYSTEM_DECIMAL_PRECISION -> RealNum_Double(value.toDouble())
+            SYSTEM_DECIMAL_PRECISION -> RealDouble(value.toDouble())
             else -> {
                 //if (isZero)
                 //    return RealNum.create(0.0) // Prevents lost precision for BigDecimal(0)
 
                 var bd = BigDecimal(value, MathContext(precision, RoundingMode.HALF_UP))
                 bd = bd.setScale(precision)
-                return RealNum_BigDecimal(bd)
+                return RealBigDec(bd)
             }
         }
     }

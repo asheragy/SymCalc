@@ -29,8 +29,8 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     val isRational: Boolean get() = numType == NumberType.RATIONAL
     val isComplex: Boolean get() = numType == NumberType.COMPLEX
 
-    fun asDouble(): RealNum_Double = this as RealNum_Double
-    fun asBigDec(): RealNum_BigDecimal = this as RealNum_BigDecimal
+    fun asDouble(): RealDouble = this as RealDouble
+    fun asBigDec(): RealBigDec = this as RealBigDec
     fun asRational(): Rational = this as Rational
     fun asComplex(): Complex = this as Complex
 
@@ -80,9 +80,9 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
                 val value = java.lang.Double.parseDouble(s)
 
                 if (value.toString().length < s.length)
-                    return RealNum_BigDecimal(BigDecimal(s))
+                    return RealBigDec(BigDecimal(s))
 
-                return RealNum_Double(value)
+                return RealDouble(value)
             }
             else
                 IntegerNum(s)
@@ -90,7 +90,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
 
         @JvmStatic fun create(n: Number) : NumberExpr {
             if (n is Double)
-                return RealNum_Double(n)
+                return RealDouble(n)
             else if (n is Int)
                 return IntegerNum(n)
 

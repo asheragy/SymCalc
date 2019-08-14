@@ -17,7 +17,7 @@ class DTest {
     fun single() {
         // Numbers
         Assert.assertEquals(IntegerNum.ZERO, D(IntegerNum.TWO, VarExpr("x")).eval())
-        Assert.assertEquals(IntegerNum.ZERO, D(RealNum_Double(2.354), VarExpr("x")).eval())
+        Assert.assertEquals(IntegerNum.ZERO, D(RealDouble(2.354), VarExpr("x")).eval())
         Assert.assertEquals(IntegerNum.ZERO, D(Rational(4, 6), VarExpr("x")).eval())
         Assert.assertEquals(IntegerNum.ZERO, D(Complex.ZERO, VarExpr("x")).eval())
 

@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.Complex
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RealNum_Double
+import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -21,7 +21,7 @@ class ParserTest {
         assertTrue(Expr.parse("1 ^ 2") is Power)
 
         assertEquals(Pi(), Expr.parse("Pi"))
-        assertEquals(RealNum_Double(3.44), Expr.parse("2.34 + 1.1").eval())
+        assertEquals(RealDouble(3.44), Expr.parse("2.34 + 1.1").eval())
         assertEquals(IntegerNum(3), Expr.parse("Plus(1,2)").eval())
     }
 

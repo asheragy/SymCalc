@@ -27,12 +27,12 @@ class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) 
         if (r is Int)
             setArg(0, IntegerNum(r))
         else
-            setArg(0, RealNum_Double(r.toDouble()))
+            setArg(0, RealDouble(r.toDouble()))
 
         if (i is Int)
             setArg(1, IntegerNum(i))
         else
-            setArg(1, RealNum_Double(i.toDouble()))
+            setArg(1, RealDouble(i.toDouble()))
     }
 
     constructor(s: String): this() {

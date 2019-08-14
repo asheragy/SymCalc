@@ -1,12 +1,11 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
-import org.cerion.symcalc.assertEqual
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealNum_Double
+import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -18,7 +17,7 @@ class DivideTest {
         var e: Expr = Divide(IntegerNum(5), IntegerNum(3))
         assertEquals("5/3", e.eval().toString())
 
-        assertEquals(RealNum_Double(1.6666666666666667), N(e).eval())
+        assertEquals(RealDouble(1.6666666666666667), N(e).eval())
 
         e = Divide(IntegerNum(10), IntegerNum(6))
         e = N(e).eval()

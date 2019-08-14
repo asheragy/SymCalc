@@ -1,17 +1,12 @@
 package org.cerion.symcalc.expression.number
 
-import kotlin.math.floor
-
-class RealNum_Double(override val value: Double = 0.0) : NumberExpr() {
+class RealDouble(override val value: Double = 0.0) : NumberExpr() {
 
     override val numType: NumberType get() = NumberType.REAL_DOUBLE
     override val isZero: Boolean get() = value == 0.0
     override val isOne: Boolean get() = value == 1.0
     override val isNegative: Boolean get() = value < 0
     override val precision: Int get() = SYSTEM_DECIMAL_PRECISION
-
-    val isWholeNumber: Boolean
-        get() = value == floor(value) && !java.lang.Double.isInfinite(value)
 
     override fun toString(): String = "" + value
 
@@ -30,14 +25,14 @@ class RealNum_Double(override val value: Double = 0.0) : NumberExpr() {
         }
     }
 
-    override fun unaryMinus(): RealNum_Double = RealNum_Double(0 - value)
+    override fun unaryMinus(): RealDouble = RealDouble(0 - value)
 
     override fun plus(other: NumberExpr): NumberExpr {
         when (other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL -> return this + other.evaluate(SYSTEM_DECIMAL_PRECISION)
-            NumberType.REAL_DOUBLE -> return RealNum_Double(value + other.asDouble().value)
-            NumberType.REAL_BIGDEC -> return RealNum_Double(value + other.asBigDec().toDouble())
+            NumberType.REAL_DOUBLE -> return RealDouble(value + other.asDouble().value)
+            NumberType.REAL_BIGDEC -> return RealDouble(value + other.asBigDec().toDouble())
             NumberType.COMPLEX -> return Complex(this) + other
         }
     }
@@ -46,8 +41,8 @@ class RealNum_Double(override val value: Double = 0.0) : NumberExpr() {
         when (other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL -> return this * other.evaluate(SYSTEM_DECIMAL_PRECISION)
-            NumberType.REAL_DOUBLE -> return RealNum_Double(value * other.asDouble().value)
-            NumberType.REAL_BIGDEC -> return RealNum_Double(value * other.asBigDec().toDouble())
+            NumberType.REAL_DOUBLE -> return RealDouble(value * other.asDouble().value)
+            NumberType.REAL_BIGDEC -> return RealDouble(value * other.asBigDec().toDouble())
             NumberType.COMPLEX -> return Complex(this) * other
 
         }
@@ -57,8 +52,8 @@ class RealNum_Double(override val value: Double = 0.0) : NumberExpr() {
         when (other.numType) {
             NumberType.INTEGER,
             NumberType.RATIONAL -> return this / other.evaluate(SYSTEM_DECIMAL_PRECISION)
-            NumberType.REAL_DOUBLE -> return RealNum_Double(value / other.asDouble().value)
-            NumberType.REAL_BIGDEC -> return RealNum_Double(value / other.asBigDec().toDouble())
+            NumberType.REAL_DOUBLE -> return RealDouble(value / other.asDouble().value)
+            NumberType.REAL_BIGDEC -> return RealDouble(value / other.asBigDec().toDouble())
             NumberType.COMPLEX -> return Complex(this) / other
         }
     }

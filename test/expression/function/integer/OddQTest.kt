@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.IntegerNum
-import org.cerion.symcalc.expression.number.RealNum_Double
+import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -24,7 +24,7 @@ class OddQTest {
     @Test
     fun nonIntegerInput() {
         val e = ListExpr()
-        val num = RealNum_Double(3.0)
+        val num = RealDouble(3.0)
 
         assertEquals(BoolExpr.FALSE, OddQ(e).eval())
         assertEquals(BoolExpr.FALSE, OddQ(num).eval())
