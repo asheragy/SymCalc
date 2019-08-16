@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression.number
 
-import expression.number.BigDecimalMath
 import org.cerion.symcalc.expression.function.core.N
+import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -16,7 +16,7 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
     override val isZero: Boolean get() = value == BigDecimal.ZERO
     override val isOne: Boolean get() = value == BigDecimal.ONE
     override val isNegative: Boolean get() = value.signum() == -1
-    override val precision: Int get() = value.precision()
+    override val precision: Int get() = value.precision() // TODO verify this matches mathematica more, I think its off by 1 now
 
     fun toDouble(): Double = value.toDouble()
     override fun toString(): String = "$value`$precision"

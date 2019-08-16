@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SymCalc.iml" filepath="$PROJECT_DIR$/SymCalc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/anc/anc.iml" filepath="$PROJECT_DIR$/anc/anc.iml" />
     </modules>
   </component>
 </project>

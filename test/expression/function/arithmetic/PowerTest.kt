@@ -237,10 +237,10 @@ class PowerTest {
     fun realBigDecToComplex() {
         // BigDec
         val bigDec = RealBigDec("5.0001")
-        // TODO Needs at least log of BigDec
+        // TODO Needs at least Cos of BigDec
         //assertEquals(Complex(24.70195964872899, 3.848790655850832), Power(bigDec, Complex(2,4)).eval())
         //assertEquals(Complex(1.5502967700299068, 1.6113906803859945), Power(bigDec, Complex(Rational.HALF,Rational.HALF)).eval())
-        assertEquals(Complex(24.70263974545859, 3.8509208127549734), Power(bigDec, Complex(2.0,4.0)).eval())
+        assertEquals(Complex(24.701991088784933, 3.855079473838341), Power(bigDec, Complex(2.0,4.0)).eval())
         //assertEquals(Complex(52.40487058561866, -147.56137608427574), Power(bigDec, Complex(piBigDec,piBigDec)).eval())
     }
 
