@@ -142,10 +142,10 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         if (a is Complex)
             throw OperationException("Function only supports non-complex to complex power")
 
-        val clog = Times(c, Log(a))
-        val cos = Cos(clog)
-        val sin = Sin(clog)
-        val pow = Power(a, b)
+        val clog = Times(c, Log(a)).eval()
+        val cos = Cos(clog).eval()
+        val sin = Sin(clog).eval()
+        val pow = Power(a, b).eval()
 
         val result = Times(pow, Plus(cos, Times(I(), sin)))
         val e = result.eval()
