@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.arithmetic.*
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 
 class Variance(vararg e: Expr) : FunctionExpr(Function.VARIANCE, *e) {
 
@@ -16,11 +16,11 @@ class Variance(vararg e: Expr) : FunctionExpr(Function.VARIANCE, *e) {
 
         for (i in 0 until list.size) {
             val e = list[i]
-            val square = Power(Subtract(e, mean), IntegerNum.TWO).eval() // (a - b)^2
+            val square = Power(Subtract(e, mean), Integer.TWO).eval() // (a - b)^2
             sum.add(square)
         }
 
-        val result = Divide(sum, IntegerNum(list.size - 1))
+        val result = Divide(sum, Integer(list.size - 1))
 
         return result.eval()
     }

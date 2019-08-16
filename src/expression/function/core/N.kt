@@ -5,14 +5,14 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.FunctionFactory
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 
 class N(vararg e: Expr) : FunctionExpr(Function.N, *e) {
 
     constructor(e: Expr, precision: Int) : this(e) {
         if (precision > SYSTEM_DECIMAL_PRECISION)
-            add(IntegerNum(precision))
+            add(Integer(precision))
     }
 
     override fun evaluate(): Expr {

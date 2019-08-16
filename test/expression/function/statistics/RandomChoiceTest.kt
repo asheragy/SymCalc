@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.function.statistics
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -14,7 +14,7 @@ class RandomChoiceTest {
     fun basic() {
         val a = VarExpr("a")
         val b = VarExpr("b")
-        val c = IntegerNum(6)
+        val c = Integer(6)
 
         val e = RandomChoice(ListExpr(a, b, c))
         val found = booleanArrayOf(false, false, false)
@@ -39,8 +39,8 @@ class RandomChoiceTest {
     fun basicList() {
         val a = VarExpr("a")
         val b = VarExpr("b")
-        val c = IntegerNum(6)
-        var e: Expr = RandomChoice(ListExpr(a, b, c), IntegerNum(100))
+        val c = Integer(6)
+        var e: Expr = RandomChoice(ListExpr(a, b, c), Integer(100))
         e = e.eval()
 
         assertTrue(e.isList)

@@ -9,29 +9,29 @@ import kotlin.test.assertFailsWith
 
 class IntegerNumTest {
 
-    private val i0 = IntegerNum(0)
-    private val i1 = IntegerNum(1)
-    private val i3 = IntegerNum(3)
-    private val i5 = IntegerNum(5)
-    private val neg = IntegerNum(-17)
-    private val big = IntegerNum("99999999999999999999999999999999999999999999")
+    private val i0 = Integer(0)
+    private val i1 = Integer(1)
+    private val i3 = Integer(3)
+    private val i5 = Integer(5)
+    private val neg = Integer(-17)
+    private val big = Integer("99999999999999999999999999999999999999999999")
 
     @Test
     fun stringConstructor() {
-        verify(IntegerNum("0"), 0)
-        verify(IntegerNum("5"), 5)
-        verify(IntegerNum("-5"), -5)
-        verify(IntegerNum("1234567890"), 1234567890)
-        verify(IntegerNum("-1234567890"), -1234567890)
+        verify(Integer("0"), 0)
+        verify(Integer("5"), 5)
+        verify(Integer("-5"), -5)
+        verify(Integer("1234567890"), 1234567890)
+        verify(Integer("-1234567890"), -1234567890)
 
-        verify(IntegerNum("9999999999999999999999999999999999999999"), BigInteger("9999999999999999999999999999999999999999"))
+        verify(Integer("9999999999999999999999999999999999999999"), BigInteger("9999999999999999999999999999999999999999"))
     }
 
     @Test
     fun constants() {
-        verify(IntegerNum.ZERO, 0)
-        verify(IntegerNum.ONE, 1)
-        verify(IntegerNum.TWO, 2)
+        verify(Integer.ZERO, 0)
+        verify(Integer.ONE, 1)
+        verify(Integer.TWO, 2)
     }
 
     @Test
@@ -39,7 +39,7 @@ class IntegerNumTest {
         verify(-zero, 0)
         verify(-one, -1)
         verify(-two, -2)
-        verify(-IntegerNum(-5), 5)
+        verify(-Integer(-5), 5)
     }
 
     @Test
@@ -113,13 +113,13 @@ class IntegerNumTest {
 
     @Test
     fun divide() {
-        assertEquals(IntegerNum(5), IntegerNum(10) / two)
-        assertEquals(IntegerNum(20), IntegerNum(10) / Rational(1,2))
-        assertEquals(Rational(21, 4), IntegerNum(3) / Rational(4,7))
-        assertEquals(RealDouble(4.273504273504273), IntegerNum(10) / RealDouble(2.34))
-        assertEquals(RealBigDec("4.27"), IntegerNum(10) / RealBigDec("2.34"))
-        assertEquals(IntegerNum(2), IntegerNum(10) / Complex(5,0))
-        assertEquals(Complex(Rational(8,13),Rational(-12,13)), IntegerNum(4) / Complex(2,3))
+        assertEquals(Integer(5), Integer(10) / two)
+        assertEquals(Integer(20), Integer(10) / Rational(1,2))
+        assertEquals(Rational(21, 4), Integer(3) / Rational(4,7))
+        assertEquals(RealDouble(4.273504273504273), Integer(10) / RealDouble(2.34))
+        assertEquals(RealBigDec("4.27"), Integer(10) / RealBigDec("2.34"))
+        assertEquals(Integer(2), Integer(10) / Complex(5,0))
+        assertEquals(Complex(Rational(8,13),Rational(-12,13)), Integer(4) / Complex(2,3))
     }
 
     @Test
@@ -132,41 +132,41 @@ class IntegerNumTest {
 
     @Test
     fun inc_dec() {
-        var n = IntegerNum.NEGATIVE_ONE
-        assertEquals(IntegerNum.ZERO, ++n)
-        assertEquals(IntegerNum.ONE, ++n)
-        assertEquals(IntegerNum.TWO, ++n)
+        var n = Integer.NEGATIVE_ONE
+        assertEquals(Integer.ZERO, ++n)
+        assertEquals(Integer.ONE, ++n)
+        assertEquals(Integer.TWO, ++n)
 
-        assertEquals(IntegerNum.ONE, --n)
-        assertEquals(IntegerNum.ZERO, --n)
-        assertEquals(IntegerNum.NEGATIVE_ONE, --n)
+        assertEquals(Integer.ONE, --n)
+        assertEquals(Integer.ZERO, --n)
+        assertEquals(Integer.NEGATIVE_ONE, --n)
     }
 
     @Test
     fun compareTo() {
-        assertEquals(0, IntegerNum(5).compareTo(IntegerNum(5)))
-        assertEquals(-1, IntegerNum(5).compareTo(IntegerNum(6)))
-        assertEquals(1, IntegerNum(6).compareTo(IntegerNum(5)))
+        assertEquals(0, Integer(5).compareTo(Integer(5)))
+        assertEquals(-1, Integer(5).compareTo(Integer(6)))
+        assertEquals(1, Integer(6).compareTo(Integer(5)))
 
         assertEquals(0, zero.compareTo(Rational(0,1)))
-        assertEquals(-1, IntegerNum(5).compareTo(Rational(11,2)))
-        assertEquals(1, IntegerNum(5).compareTo(Rational(9,2)))
+        assertEquals(-1, Integer(5).compareTo(Rational(11,2)))
+        assertEquals(1, Integer(5).compareTo(Rational(9,2)))
 
-        assertEquals(0, IntegerNum(5).compareTo(RealDouble(5.0)))
-        assertEquals(-1, IntegerNum(5).compareTo(RealDouble(5.00000001)))
-        assertEquals(1, IntegerNum(5).compareTo(RealDouble(4.999999999)))
+        assertEquals(0, Integer(5).compareTo(RealDouble(5.0)))
+        assertEquals(-1, Integer(5).compareTo(RealDouble(5.00000001)))
+        assertEquals(1, Integer(5).compareTo(RealDouble(4.999999999)))
 
-        assertEquals(0, IntegerNum.TWO.compareTo(Complex(IntegerNum.TWO, zero)))
+        assertEquals(0, Integer.TWO.compareTo(Complex(Integer.TWO, zero)))
     }
 
     @Test
     fun compareTo_LargeNumbers() {
-        val a = IntegerNum("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999998")
-        val b = IntegerNum("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999")
+        val a = Integer("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999998")
+        val b = Integer("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999")
         assertEquals(1, b.compareTo(a))
         assertEquals(1, one.compareTo(Rational(one,a)))
         assertEquals(-1, zero.compareTo(Rational(one,a)))
-        assertEquals(1, a.compareTo(Rational(b,IntegerNum(7))))
+        assertEquals(1, a.compareTo(Rational(b, Integer(7))))
     }
 
     @Test
@@ -176,25 +176,25 @@ class IntegerNumTest {
 
     @Test
     fun pow() {
-        assertEquals(IntegerNum.ONE, IntegerNum.ONE.pow(IntegerNum(-2)))
-        assertEquals(IntegerNum(-243), IntegerNum(-3).pow(IntegerNum(5)))
-        assertEquals(IntegerNum("910043815000214977332758527534256632492715260325658624"), IntegerNum(12).pow(IntegerNum(50)))
-        assertEquals(Rational(IntegerNum.ONE, IntegerNum(243)), IntegerNum(3).pow(IntegerNum(-5)))
+        assertEquals(Integer.ONE, Integer.ONE.pow(Integer(-2)))
+        assertEquals(Integer(-243), Integer(-3).pow(Integer(5)))
+        assertEquals(Integer("910043815000214977332758527534256632492715260325658624"), Integer(12).pow(Integer(50)))
+        assertEquals(Rational(Integer.ONE, Integer(243)), Integer(3).pow(Integer(-5)))
     }
 
     @Test
     fun intValue() {
-        assertEquals(Int.MAX_VALUE, IntegerNum("2147483647").intValue())
-        assertEquals(Int.MIN_VALUE, IntegerNum("-2147483648").intValue())
-        assertFailsWith<OperationException> { IntegerNum("2147483648").intValue() }
-        assertFailsWith<OperationException> { IntegerNum("-2147483649").intValue() }
+        assertEquals(Int.MAX_VALUE, Integer("2147483647").intValue())
+        assertEquals(Int.MIN_VALUE, Integer("-2147483648").intValue())
+        assertFailsWith<OperationException> { Integer("2147483648").intValue() }
+        assertFailsWith<OperationException> { Integer("-2147483649").intValue() }
     }
 
     private fun verify(e: NumberExpr, expected: Long) {
         if (e.numType != NumberType.INTEGER)
             fail("unexpected type: " + e.numType)
 
-        val n = e as IntegerNum
+        val n = e as Integer
         assertEquals(expected, n.intValue().toLong())
     }
 
@@ -202,7 +202,7 @@ class IntegerNumTest {
         if (e.numType != NumberType.INTEGER)
             fail("unexpected type: " + e.numType)
 
-        val n = e as IntegerNum
+        val n = e as Integer
         assertEquals(expected, n.toBigInteger())
     }
 
@@ -216,8 +216,8 @@ class IntegerNumTest {
     }
 
     companion object {
-        val zero = IntegerNum.ZERO
-        val one = IntegerNum.ONE
-        val two = IntegerNum.TWO
+        val zero = Integer.ZERO
+        val one = Integer.ONE
+        val two = Integer.TWO
     }
 }

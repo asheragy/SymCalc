@@ -4,7 +4,7 @@ import expression.function.list.ConstantArray
 import org.cerion.symcalc.Environment
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.core.N
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
@@ -56,11 +56,11 @@ abstract class Expr {
     }
 
     fun getList(index: Int): ListExpr = get(index) as ListExpr
-    fun getInteger(index: Int): IntegerNum = get(index) as IntegerNum
+    fun getInteger(index: Int): Integer = get(index) as Integer
 
     // Casting
     fun asList(): ListExpr = this as ListExpr
-    fun asInteger(): IntegerNum = this as IntegerNum
+    fun asInteger(): Integer = this as Integer
     //fun asReal(): RealNum = this as RealNum
     fun asBool(): BoolExpr = this as BoolExpr
     fun asVar(): VarExpr = this as VarExpr
@@ -246,7 +246,7 @@ abstract class Expr {
     }
 
     // Extensions for convenience
-    fun toList(size: Int): ListExpr = ConstantArray(this, IntegerNum(size)).eval().asList()
+    fun toList(size: Int): ListExpr = ConstantArray(this, Integer(size)).eval().asList()
 
     override fun hashCode(): Int {
         var result = value?.hashCode() ?: 0

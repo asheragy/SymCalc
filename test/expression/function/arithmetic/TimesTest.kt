@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.function.arithmetic
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.trig.Sin
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -13,24 +13,24 @@ class TimesTest {
 
     @Test
     fun toString_Parenthesis() {
-        assertEquals("2 * 3 * 4", Times(IntegerNum.TWO, IntegerNum(3), IntegerNum(4)).toString())
-        assertEquals("2 * (3 + 4)", Times(IntegerNum.TWO, Plus(IntegerNum(3), IntegerNum(4))).toString())
+        assertEquals("2 * 3 * 4", Times(Integer.TWO, Integer(3), Integer(4)).toString())
+        assertEquals("2 * (3 + 4)", Times(Integer.TWO, Plus(Integer(3), Integer(4))).toString())
     }
 
     @Test
     fun timesOne() {
-        assertEquals(IntegerNum.ONE, Times(IntegerNum.ONE, IntegerNum.ONE).eval())
+        assertEquals(Integer.ONE, Times(Integer.ONE, Integer.ONE).eval())
 
         // 1 * Sin(x) = Sin(x)
         val sinx = Sin(VarExpr("x"))
-        assertEquals(sinx, Times(IntegerNum.ONE, sinx).eval())
+        assertEquals(sinx, Times(Integer.ONE, sinx).eval())
     }
 
     @Test
     fun doubleEval() {
-        val e = Times(IntegerNum.TWO, IntegerNum.TWO)
-        assertEquals(IntegerNum(4), e.eval())
-        assertEquals(IntegerNum(4), e.eval())
+        val e = Times(Integer.TWO, Integer.TWO)
+        assertEquals(Integer(4), e.eval())
+        assertEquals(Integer(4), e.eval())
     }
 
     @Test
@@ -46,12 +46,12 @@ class TimesTest {
     @Test
     fun transforms() {
         // 2*(Pi/2 + Pi) = 3*Pi
-        val e = Times(IntegerNum.TWO,Plus(Pi(), Divide(Pi(), IntegerNum.TWO))).eval()
-        assertEquals(Times(IntegerNum(3), Pi()), e)
+        val e = Times(Integer.TWO,Plus(Pi(), Divide(Pi(), Integer.TWO))).eval()
+        assertEquals(Times(Integer(3), Pi()), e)
     }
 
     @Test
     fun powersCombined() {
-        assertEquals(IntegerNum.TWO, Times(Power(IntegerNum.TWO, Rational.HALF), Power(IntegerNum.TWO, Rational.HALF)).eval())
+        assertEquals(Integer.TWO, Times(Power(Integer.TWO, Rational.HALF), Power(Integer.TWO, Rational.HALF)).eval())
     }
 }

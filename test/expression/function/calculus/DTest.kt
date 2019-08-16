@@ -16,30 +16,30 @@ class DTest {
     @Test
     fun single() {
         // Numbers
-        Assert.assertEquals(IntegerNum.ZERO, D(IntegerNum.TWO, VarExpr("x")).eval())
-        Assert.assertEquals(IntegerNum.ZERO, D(RealDouble(2.354), VarExpr("x")).eval())
-        Assert.assertEquals(IntegerNum.ZERO, D(Rational(4, 6), VarExpr("x")).eval())
-        Assert.assertEquals(IntegerNum.ZERO, D(Complex.ZERO, VarExpr("x")).eval())
+        Assert.assertEquals(Integer.ZERO, D(Integer.TWO, VarExpr("x")).eval())
+        Assert.assertEquals(Integer.ZERO, D(RealDouble(2.354), VarExpr("x")).eval())
+        Assert.assertEquals(Integer.ZERO, D(Rational(4, 6), VarExpr("x")).eval())
+        Assert.assertEquals(Integer.ZERO, D(Complex.ZERO, VarExpr("x")).eval())
 
         // Constant
-        Assert.assertEquals(IntegerNum.ZERO, D(Pi(), VarExpr("x")).eval())
+        Assert.assertEquals(Integer.ZERO, D(Pi(), VarExpr("x")).eval())
 
         // D(x,x) = 1
-        Assert.assertEquals(IntegerNum.ONE, D(VarExpr("x"), VarExpr("x")).eval())
+        Assert.assertEquals(Integer.ONE, D(VarExpr("x"), VarExpr("x")).eval())
 
         // D(x,y) = 0
-        Assert.assertEquals(IntegerNum.ZERO, D(VarExpr("y"), VarExpr("x")).eval())
+        Assert.assertEquals(Integer.ZERO, D(VarExpr("y"), VarExpr("x")).eval())
     }
 
     @Test
     fun basic() {
         // D(1 + x) = 1
-        Assert.assertEquals(IntegerNum.ONE,
-                D(Plus(VarExpr("x"), VarExpr("y"), IntegerNum(5)), VarExpr("x")).eval())
+        Assert.assertEquals(Integer.ONE,
+                D(Plus(VarExpr("x"), VarExpr("y"), Integer(5)), VarExpr("x")).eval())
 
         // D(x - 5) = 1
-        Assert.assertEquals(IntegerNum.ONE,
-                D(Subtract(VarExpr("x"), IntegerNum(5)), VarExpr("x")).eval())
+        Assert.assertEquals(Integer.ONE,
+                D(Subtract(VarExpr("x"), Integer(5)), VarExpr("x")).eval())
     }
 
     @Test
@@ -50,7 +50,7 @@ class DTest {
         Assert.assertEquals(expected, actual)
 
         // D(Cos(x)) = -Sin(x)
-        expected = Times(IntegerNum(-1), Sin(VarExpr("x")))
+        expected = Times(Integer(-1), Sin(VarExpr("x")))
         actual = D(Cos(VarExpr("x")), VarExpr("x")).eval()
         Assert.assertEquals(expected, actual)
     }

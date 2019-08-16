@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression.function.integer
 
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -8,6 +8,6 @@ class BinomialTest {
 
     @Test
     fun basic() {
-        assertEquals(IntegerNum(120), Binomial(IntegerNum(10), IntegerNum(3)).eval())
+        assertEquals(Integer(120), Binomial(Integer(10), Integer(3)).eval())
     }
 }

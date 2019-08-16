@@ -85,14 +85,14 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
                 return RealDouble(value)
             }
             else
-                IntegerNum(s)
+                Integer(s)
         }
 
         @JvmStatic fun create(n: Number) : NumberExpr {
             if (n is Double)
                 return RealDouble(n)
             else if (n is Int)
-                return IntegerNum(n)
+                return Integer(n)
 
             throw Exception()
         }

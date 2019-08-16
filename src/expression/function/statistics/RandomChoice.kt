@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.list.Table
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 
 class RandomChoice(vararg e: Expr) : FunctionExpr(Function.RANDOM_CHOICE, *e) {
 
@@ -15,7 +15,7 @@ class RandomChoice(vararg e: Expr) : FunctionExpr(Function.RANDOM_CHOICE, *e) {
             return Table(RandomChoice(list), ListExpr(getInteger(1))).eval()
         }
 
-        val rand = RandomInteger(list.size - 1).eval() as IntegerNum
+        val rand = RandomInteger(list.size - 1).eval() as Integer
         return list[rand.intValue()]
 
         /* Other cases

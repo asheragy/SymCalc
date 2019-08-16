@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression.function.statistics
 
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealDouble
 import org.cerion.symcalc.listOfNumbers
@@ -23,7 +23,7 @@ class VarianceTest {
     @Test
     fun integer() {
         val list = listOfNumbers(600, 470, 170, 430, 300)
-        assertEquals(IntegerNum(27130), Variance(list).eval())
+        assertEquals(Integer(27130), Variance(list).eval())
     }
 
     @Test

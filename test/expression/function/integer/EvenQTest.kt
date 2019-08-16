@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Test
 
@@ -13,7 +13,7 @@ import org.junit.Assert.*
 class EvenQTest {
     @Test
     fun invalidParameterCount() {
-        var e: Expr = EvenQ(IntegerNum.ONE, IntegerNum.TWO)
+        var e: Expr = EvenQ(Integer.ONE, Integer.TWO)
         assertTrue(e.eval().isError)
 
         e = EvenQ()
@@ -31,9 +31,9 @@ class EvenQTest {
 
     @Test
     fun basicTest() {
-        assertEquals(BoolExpr.TRUE, EvenQ(IntegerNum.ZERO).eval())
-        assertEquals(BoolExpr.FALSE, EvenQ(IntegerNum.ONE).eval())
-        assertEquals(BoolExpr.TRUE, EvenQ(IntegerNum.TWO).eval())
+        assertEquals(BoolExpr.TRUE, EvenQ(Integer.ZERO).eval())
+        assertEquals(BoolExpr.FALSE, EvenQ(Integer.ONE).eval())
+        assertEquals(BoolExpr.TRUE, EvenQ(Integer.TWO).eval())
 
         // negative
         assertEquals(BoolExpr.TRUE, EvenQ(NumberExpr.parse("-34")).eval())

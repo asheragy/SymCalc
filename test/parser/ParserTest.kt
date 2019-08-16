@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.Complex
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -22,14 +22,14 @@ class ParserTest {
 
         assertEquals(Pi(), Expr.parse("Pi"))
         assertEquals(RealDouble(3.44), Expr.parse("2.34 + 1.1").eval())
-        assertEquals(IntegerNum(3), Expr.parse("Plus(1,2)").eval())
+        assertEquals(Integer(3), Expr.parse("Plus(1,2)").eval())
     }
 
     @Test
     fun brackets() {
-        assertEquals(IntegerNum(14), Expr.parse("2 + (3 * 4)").eval())
-        assertEquals(IntegerNum(20), Expr.parse("(2 + 3) * 4").eval())
-        assertEquals(IntegerNum(20), Expr.parse("(((2 + 3) * 4))").eval())
+        assertEquals(Integer(14), Expr.parse("2 + (3 * 4)").eval())
+        assertEquals(Integer(20), Expr.parse("(2 + 3) * 4").eval())
+        assertEquals(Integer(20), Expr.parse("(((2 + 3) * 4))").eval())
     }
 
     @Test

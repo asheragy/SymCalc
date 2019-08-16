@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 
 class Tally(vararg e: Expr) : FunctionExpr(Function.TALLY, *e) {
 
@@ -23,7 +23,7 @@ class Tally(vararg e: Expr) : FunctionExpr(Function.TALLY, *e) {
                 val (key, value) = Pair(keyval[0], keyval[1].asInteger())
 
                 if (e.equals(key)) {
-                    val v2 = Plus(value, IntegerNum.ONE).eval().asInteger()
+                    val v2 = Plus(value, Integer.ONE).eval().asInteger()
                     keyval = ListExpr(e, v2)
                     result[j] = keyval
                     found = true
@@ -32,7 +32,7 @@ class Tally(vararg e: Expr) : FunctionExpr(Function.TALLY, *e) {
             }
 
             if (!found)
-                result.add(ListExpr(e, IntegerNum.ONE))
+                result.add(ListExpr(e, Integer.ONE))
         }
 
         return result

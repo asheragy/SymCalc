@@ -22,9 +22,9 @@ class RationalTest : NumberTestBase() {
 
     @Test
     fun compareTo() {
-        assertEquals(-1, Rational(1,3).compareTo(IntegerNum(1)))
-        assertEquals(1, Rational(1,2).compareTo(IntegerNum(0)))
-        assertEquals(0, Rational(16,4).compareTo(IntegerNum(4)))
+        assertEquals(-1, Rational(1,3).compareTo(Integer(1)))
+        assertEquals(1, Rational(1,2).compareTo(Integer(0)))
+        assertEquals(0, Rational(16,4).compareTo(Integer(4)))
 
         assertEquals(-1, Rational(1,3).compareTo(Rational(1,2)))
         assertEquals(1, Rational(10,3).compareTo(Rational(7,3)))
@@ -54,25 +54,25 @@ class RationalTest : NumberTestBase() {
     @Test
     fun eval_normalizesNegative() {
         var n = Rational(2,-3)
-        assertEquals(IntegerNum(2), n.numerator)
-        assertEquals(IntegerNum(-3), n.denominator)
+        assertEquals(Integer(2), n.numerator)
+        assertEquals(Integer(-3), n.denominator)
 
         n = n.eval() as Rational
-        assertEquals(IntegerNum(-2), n.numerator)
-        assertEquals(IntegerNum(3), n.denominator)
+        assertEquals(Integer(-2), n.numerator)
+        assertEquals(Integer(3), n.denominator)
 
         n = Rational(-2,-3).eval() as Rational
-        assertEquals(IntegerNum(2), n.numerator)
-        assertEquals(IntegerNum(3), n.denominator)
+        assertEquals(Integer(2), n.numerator)
+        assertEquals(Integer(3), n.denominator)
     }
 
     @Test
     fun eval_reduces() {
-        assertEquals(IntegerNum.TWO, Rational(2, 4).numerator)
-        assertEquals(IntegerNum.ONE, (Rational(2, 4).eval() as Rational).numerator)
+        assertEquals(Integer.TWO, Rational(2, 4).numerator)
+        assertEquals(Integer.ONE, (Rational(2, 4).eval() as Rational).numerator)
 
         // Except with Hold
-        assertEquals(IntegerNum.TWO, Hold(Rational(2, 4)).eval()[0].asNumber().asRational().numerator)
+        assertEquals(Integer.TWO, Hold(Rational(2, 4)).eval()[0].asNumber().asRational().numerator)
     }
 
     @Test
@@ -84,7 +84,7 @@ class RationalTest : NumberTestBase() {
     fun eval_toReal() {
         assertEquals(RealDouble(0.3333333333333333), N(Rational(1,3)).eval())
 
-        val bigDec = N(Rational(1,3), IntegerNum(50)).eval().asNumber().asBigDec()
+        val bigDec = N(Rational(1,3), Integer(50)).eval().asNumber().asBigDec()
         assertEquals(50, bigDec.precision)
         assertEquals(RealBigDec("0.33333333333333333333333333333333333333333333333333"), bigDec)
     }
@@ -92,26 +92,26 @@ class RationalTest : NumberTestBase() {
     @Test
     fun addition() {
         //Integer
-        assertAdd(IntegerNum(1), Rational(1, 2), Rational(1, 2))
-        assertEquals(IntegerNum(1), Plus(Rational(1, 2), Rational(2, 4)).eval())
-        assertEquals(IntegerNum(0), Plus(Rational(-1, 2), Rational(2, 4)).eval())
-        assertEquals(IntegerNum.TWO, Plus(Rational(1, 1), IntegerNum.ONE).eval())
+        assertAdd(Integer(1), Rational(1, 2), Rational(1, 2))
+        assertEquals(Integer(1), Plus(Rational(1, 2), Rational(2, 4)).eval())
+        assertEquals(Integer(0), Plus(Rational(-1, 2), Rational(2, 4)).eval())
+        assertEquals(Integer.TWO, Plus(Rational(1, 1), Integer.ONE).eval())
 
         //Rational
         assertEquals(Rational(3, 2), Plus(Rational(1, 1), Rational(1, 2)).eval())
-        assertEquals(Rational(1, 2), Plus(Rational(-1, 2), IntegerNum.ONE).eval())
+        assertEquals(Rational(1, 2), Plus(Rational(-1, 2), Integer.ONE).eval())
     }
 
     @Test
     fun subtract() {
         //Integer
-        assertEquals(IntegerNum.ZERO, Subtract(Rational(1, 2), Rational(1, 2)).eval())
-        assertEquals(IntegerNum.ZERO, Subtract(Rational(1, 2), Rational(2, 4)).eval())
-        assertEquals(IntegerNum.TWO, Subtract(Rational(5, 2), Rational(1, 2)).eval())
-        assertEquals(IntegerNum(-5), Subtract(Rational(1, 2), Rational(11, 2)).eval())
+        assertEquals(Integer.ZERO, Subtract(Rational(1, 2), Rational(1, 2)).eval())
+        assertEquals(Integer.ZERO, Subtract(Rational(1, 2), Rational(2, 4)).eval())
+        assertEquals(Integer.TWO, Subtract(Rational(5, 2), Rational(1, 2)).eval())
+        assertEquals(Integer(-5), Subtract(Rational(1, 2), Rational(11, 2)).eval())
 
         //Rational
         assertEquals(Rational(1, 2), Subtract(Rational(1, 1), Rational(1, 2)).eval())
-        assertEquals(Rational(-1, 2), Subtract(Rational(1, 2), IntegerNum.ONE).eval())
+        assertEquals(Rational(-1, 2), Subtract(Rational(1, 2), Integer.ONE).eval())
     }
 }

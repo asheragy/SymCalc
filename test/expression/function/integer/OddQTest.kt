@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Test
 
@@ -14,7 +14,7 @@ class OddQTest {
 
     @Test
     fun invalidParameterCount() {
-        var e: Expr = OddQ(IntegerNum.ONE, IntegerNum.TWO)
+        var e: Expr = OddQ(Integer.ONE, Integer.TWO)
         assertTrue(e.eval().isError)
 
         e = OddQ()
@@ -32,9 +32,9 @@ class OddQTest {
 
     @Test
     fun basicTest() {
-        assertEquals(BoolExpr.FALSE, OddQ(IntegerNum.ZERO).eval())
-        assertEquals(BoolExpr.TRUE, OddQ(IntegerNum.ONE).eval())
-        assertEquals(BoolExpr.FALSE, OddQ(IntegerNum.TWO).eval())
+        assertEquals(BoolExpr.FALSE, OddQ(Integer.ZERO).eval())
+        assertEquals(BoolExpr.TRUE, OddQ(Integer.ONE).eval())
+        assertEquals(BoolExpr.FALSE, OddQ(Integer.TWO).eval())
 
         // negative
         assertEquals(BoolExpr.FALSE, OddQ(NumberExpr.parse("-34")).eval())

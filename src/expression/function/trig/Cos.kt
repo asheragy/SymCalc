@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.integer.Mod
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.nevec.rjm.BigDecimalMath
@@ -16,34 +16,34 @@ class Cos(vararg e: Expr) : TrigBase(Function.COS, *e), StandardTrigFunction {
     override fun evaluateAsDouble(d: Double): Double = cos(d)
 
     override fun evaluatePiFactoredOut(e: Expr): Expr {
-        if (e is IntegerNum) {
+        if (e is Integer) {
             if (e.isOdd)
-                return IntegerNum.NEGATIVE_ONE
-            return IntegerNum.ONE
+                return Integer.NEGATIVE_ONE
+            return Integer.ONE
         }
 
         if (e is Rational) {
-            var offset = IntegerNum.ZERO
+            var offset = Integer.ZERO
 
             val ratio =
             when(e.denominator) {
-                IntegerNum((2)) -> IntegerNum.ZERO
-                IntegerNum(3) -> {
-                    offset = IntegerNum.ONE
+                Integer((2)) -> Integer.ZERO
+                Integer(3) -> {
+                    offset = Integer.ONE
                     Rational.HALF
                 }
-                IntegerNum(4) -> {
-                    offset = IntegerNum.TWO
+                Integer(4) -> {
+                    offset = Integer.TWO
                     oneOverSqrt2
                 }
-                IntegerNum(6) -> {
-                    offset = IntegerNum(3)
+                Integer(6) -> {
+                    offset = Integer(3)
                     sqrt3Over2
                 }
                 else -> return this
             }
 
-            val mod = Mod(Plus(e.numerator, offset), Times(IntegerNum.TWO, e.denominator).eval().asInteger()).eval().asInteger().intValue()
+            val mod = Mod(Plus(e.numerator, offset), Times(Integer.TWO, e.denominator).eval().asInteger()).eval().asInteger().intValue()
 
             if (mod >= e.denominator.intValue())
                 return Minus(ratio).eval()
@@ -61,31 +61,31 @@ class Cos(vararg e: Expr) : TrigBase(Function.COS, *e), StandardTrigFunction {
     override fun evaluate(e: Expr): Expr {
 
         // Even*Pi = 1 / Odd*Pi = -1
-        if (e is Times && e.args.any { it is Pi } && e.args.any { it is IntegerNum }) {
+        if (e is Times && e.args.any { it is Pi } && e.args.any { it is Integer }) {
             val removeIntegers = Times()
             e.args.forEach {
-                if (it !is IntegerNum)
+                if (it !is Integer)
                     removeIntegers.add(it)
             }
             val cos = Cos(removeIntegers)
 
-            val theInteger = e.args.first { it is IntegerNum } as IntegerNum
+            val theInteger = e.args.first { it is Integer } as Integer
             if (theInteger.isEven)
-                return Times(IntegerNum.NEGATIVE_ONE, cos).eval()
+                return Times(Integer.NEGATIVE_ONE, cos).eval()
 
             return cos.eval()
         }
 
         // Pi / Integer
-        if (e is Divide && e.args[1] == IntegerNum.TWO) {
-            return IntegerNum.ZERO
+        if (e is Divide && e.args[1] == Integer.TWO) {
+            return Integer.ZERO
         }
 
         return this
     }
 
     companion object {
-        val sqrt3Over2 = Times(Rational(1,2), Power(IntegerNum(3), Rational(1,2)))
-        val oneOverSqrt2 = Power(IntegerNum.TWO, Rational(-1,2))
+        val sqrt3Over2 = Times(Rational(1,2), Power(Integer(3), Rational(1,2)))
+        val oneOverSqrt2 = Power(Integer.TWO, Rational(-1,2))
     }
 }

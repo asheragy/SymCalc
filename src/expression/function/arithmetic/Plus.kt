@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.function.arithmetic
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import java.util.*
 
@@ -20,7 +20,7 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
         // Combine number values
         val numberItems = list.filterIsInstance<NumberExpr>()
         list.removeIf { it is NumberExpr }
-        val sum = numberItems.fold(IntegerNum.ZERO as NumberExpr) { acc, n -> acc + n }
+        val sum = numberItems.fold(Integer.ZERO as NumberExpr) { acc, n -> acc + n }
         if (!sum.isZero)
             list.add(sum)
 
@@ -30,7 +30,7 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
             for (group in groups) {
                 if (group.value.size > 1) {
                     list.removeIf { it.toString() == group.key }
-                    list.add(Times(IntegerNum(group.value.size), group.value.first()))
+                    list.add(Times(Integer(group.value.size), group.value.first()))
                 }
             }
 
@@ -38,7 +38,7 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
             val timesArg = list.filter { it is Times && it.size == 2 && it[0] is NumberExpr && it[1] !is NumberExpr }
             for (times in timesArg) {
                 while (list.contains(times[1])) {
-                    times[0] = Plus(times[0], IntegerNum.ONE).eval()
+                    times[0] = Plus(times[0], Integer.ONE).eval()
                     list.remove(times[1])
                 }
             }

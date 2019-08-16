@@ -16,7 +16,7 @@ class RealNum_BigDecimalTest : NumberTestBase() {
     fun identity() {
         val n = RealBigDec("3.141592653589793238462643383279")
 
-        assertAdd(n, n, IntegerNum.ZERO)
+        assertAdd(n, n, Integer.ZERO)
         assertAdd(n, n, Rational.ZERO)
         assertAdd(RealDouble(3.141592653589793), n, RealDouble(0.0))
         assertAdd(n, n, RealBigDec(BigDecimal(0.0)))
@@ -54,12 +54,12 @@ class RealNum_BigDecimalTest : NumberTestBase() {
         assertEquals(RealBigDec("0.99"), a / b)
 
         // using N()
-        assertEquals(RealBigDec("5.85987"), Plus(N(E(), IntegerNum(10)), N(Pi(), IntegerNum(5))).eval())
+        assertEquals(RealBigDec("5.85987"), Plus(N(E(), Integer(10)), N(Pi(), Integer(5))).eval())
     }
 
     @Test
     fun multiply() {
-        assertEquals(RealBigDec("0.0002468"), RealBigDec("0.0001234") * IntegerNum.TWO)
+        assertEquals(RealBigDec("0.0002468"), RealBigDec("0.0001234") * Integer.TWO)
         assertEquals(RealBigDec("0.0001851"), RealBigDec("0.0001234") * Rational(3,2))
         assertEquals(RealDouble(0.0037427219999999995), RealBigDec("0.0001234") * RealDouble(30.33))
         assertEquals(RealBigDec("0.003743"), RealBigDec("0.0001234") * RealBigDec("30.33"))
@@ -68,7 +68,7 @@ class RealNum_BigDecimalTest : NumberTestBase() {
 
     @Test
     fun divide() {
-        assertEquals(RealBigDec("0.0000617"), RealBigDec("0.0001234") / IntegerNum.TWO)
+        assertEquals(RealBigDec("0.0000617"), RealBigDec("0.0001234") / Integer.TWO)
         assertEquals(RealBigDec("0.00008227"), RealBigDec("0.0001234") / Rational(3,2))
         assertEquals(RealDouble(0.03297472469502143), RealBigDec("1.0001234") / RealDouble(30.33))
         assertEquals(RealBigDec("0.03297"), RealBigDec("1.0001234") / RealBigDec("30.33"))

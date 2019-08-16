@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
@@ -38,10 +38,10 @@ abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : Fun
                 return evaluateAsBigDecimal(e)
 
             if (e.isNumber && e.asNumber().isZero)
-                return evaluatePiFactoredOut(IntegerNum.ZERO)
+                return evaluatePiFactoredOut(Integer.ZERO)
 
             if (e is Pi)
-                return evaluatePiFactoredOut(IntegerNum.ONE)
+                return evaluatePiFactoredOut(Integer.ONE)
 
             if (e is Times && e.args.contains(Pi())) {
                 val args = e.args.toMutableList()

@@ -19,7 +19,7 @@ class RealNumTest : NumberTestBase() {
     @Test
     fun precision() {
         // N[Double, x] = RealDouble (no change to value)
-        assertEquals(RealDouble(2.12345), N(RealDouble(2.12345), IntegerNum(100)).eval())
+        assertEquals(RealDouble(2.12345), N(RealDouble(2.12345), Integer(100)).eval())
 
         val a = RealBigDec("1.22222222223333333333")
         val b = RealBigDec("1.22222222223333333333111111111")
@@ -29,10 +29,10 @@ class RealNumTest : NumberTestBase() {
         assertEquals(RealDouble(1.2222222222333334), N(a).eval())
 
         // N[x_Precision, y] = Same if Y is larger than X
-        assertEquals(30, N(b, IntegerNum(40)).eval().precision)
+        assertEquals(30, N(b, Integer(40)).eval().precision)
 
         // N[x_Precision, y] = Y Precision if Y is smaller than X
-        assertEquals(20, N(b, IntegerNum(20)).eval().precision)
+        assertEquals(20, N(b, Integer(20)).eval().precision)
     }
 
     @Test
@@ -71,7 +71,7 @@ class RealNumTest : NumberTestBase() {
         val n1 = RealDouble(5.0)
         val n2 = RealDouble(6.0)
         val n3 = RealDouble(5.0)
-        val n4 = IntegerNum(5)
+        val n4 = Integer(5)
 
         assertNotEquals(n1, n2)
         assertNotEquals(n1, n4)

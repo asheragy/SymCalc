@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
@@ -30,7 +30,7 @@ class Log(vararg e: Expr) : FunctionExpr(Function.LOG, *e) {
         }
 
         if (n is E)
-            return IntegerNum.ONE
+            return Integer.ONE
 
         return this
     }

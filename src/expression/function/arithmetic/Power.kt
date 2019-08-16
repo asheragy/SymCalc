@@ -37,7 +37,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
             b as NumberExpr
             // Zero/Identity is just a shortcut for special case, unit tests should still pass if this is commented out
             if (b.isZero)
-                return IntegerNum.ONE
+                return Integer.ONE
             if (b.isOne)
                 return a
         }
@@ -52,7 +52,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         // Euler's Identity
         if (a is E && b is Times && b.size == 2 && b[0] is Complex) {
             val img = Times(b[0].asNumber().asComplex().img, b[1])
-            return complexPower(a, IntegerNum.ZERO, img)
+            return complexPower(a, Integer.ZERO, img)
         }
 
         if (b.isNumber) {
@@ -76,7 +76,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
                 }
 
                 when (a) {
-                    is IntegerNum -> return a.power(b)
+                    is Integer -> return a.power(b)
                     is Rational -> return a.power(b)
                     is RealDouble -> return a.power(b)
                     is RealBigDec -> return a.power(b)
@@ -93,7 +93,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
     }
 
     private fun complexToPower(z: Complex, N: NumberExpr): Expr {
-        if (N is IntegerNum) {
+        if (N is Integer) {
             return z.pow(N.intValue())
         }
 
@@ -123,7 +123,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
         val theta = ArcTan(a / b).eval()
         val a2b2 = a.square() + b.square()
-        val exp1 = Power(a2b2, y / IntegerNum.TWO)
+        val exp1 = Power(a2b2, y / Integer.TWO)
         val exp2 = Power(E(), Times(I(), y, theta))
 
         val result = Times(exp1, exp2).eval()
@@ -157,7 +157,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         return this
     }
 
-    private fun integerToRational(a: IntegerNum, b: Rational): Expr {
+    private fun integerToRational(a: Integer, b: Rational): Expr {
         // Performance: Use faster method for square root
         /* One other method for any value but may need additional checks
              - Calculate using Math.pow() after converting to doubles
@@ -167,7 +167,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         if (b == Rational.HALF) {
             val sqrt = a.value.sqrtAndRemainder()
             if (sqrt[1].compareTo(BigInteger.ZERO) == 0)
-                return IntegerNum(sqrt[0])
+                return Integer(sqrt[0])
         }
 
         // factor out any numbers that are the Nth root of the denominator
@@ -175,7 +175,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         val factors = Tally(t).eval().asList()
 
         val denominator = b.denominator
-        var multiply = IntegerNum.ONE
+        var multiply = Integer.ONE
 
         var i = 0
         while (i < factors.size) {
@@ -195,10 +195,10 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
         // Factor out multiples
         //Expr result = new Power(this, num);
-        var root = IntegerNum.ONE
+        var root = Integer.ONE
         for (j in 0 until factors.size) {
             val f1 = factors[j][0]
-            val f2 = factors[j][1] as IntegerNum
+            val f2 = factors[j][1] as Integer
             if (f2.isZero)
                 continue
 
@@ -220,9 +220,9 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
     }
 }
 
-private fun IntegerNum.power(other: NumberExpr): NumberExpr {
+private fun Integer.power(other: NumberExpr): NumberExpr {
     return when (other.numType) {
-        NumberType.INTEGER -> this.pow(other as IntegerNum)
+        NumberType.INTEGER -> this.pow(other as Integer)
         NumberType.RATIONAL -> throw UnsupportedOperationException()
         NumberType.REAL_DOUBLE -> {
             val real = this.evaluate(other.precision) as RealDouble

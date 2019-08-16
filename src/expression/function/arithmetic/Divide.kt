@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.function.arithmetic
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.Rational
 
@@ -23,8 +23,8 @@ class Divide(vararg e: Expr) : FunctionExpr(Function.DIVIDE, *e) {
                 return a
 
             // Factor out rational number if it can't be evaluated
-            if (b is IntegerNum && !a.isNumber)
-                return Times(Rational(IntegerNum.ONE, b), a).eval()
+            if (b is Integer && !a.isNumber)
+                return Times(Rational(Integer.ONE, b), a).eval()
         }
 
         if (a.isNumber && b.isNumber)

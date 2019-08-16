@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 
 class Mean(vararg e: Expr) : FunctionExpr(Function.MEAN, *e) {
 
@@ -14,7 +14,7 @@ class Mean(vararg e: Expr) : FunctionExpr(Function.MEAN, *e) {
 
         val list = get(0) as ListExpr
         var result: Expr = Plus(*list.args.toTypedArray())
-        result = Divide(result, IntegerNum(list.size))
+        result = Divide(result, Integer(list.size))
 
         return result.eval()
     }

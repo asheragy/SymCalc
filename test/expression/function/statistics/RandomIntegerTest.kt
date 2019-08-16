@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression.function.statistics
 
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -15,7 +15,7 @@ class RandomIntegerTest {
         val count = intArrayOf(0, 0)
 
         for (i in 0..9999) {
-            val n = e.eval() as IntegerNum
+            val n = e.eval() as Integer
             val x = n.intValue()
             count[x]++
         }
@@ -26,7 +26,7 @@ class RandomIntegerTest {
 
     @Test
     fun maxValue() {
-        val e = RandomInteger(IntegerNum(10))
+        val e = RandomInteger(Integer(10))
         val found = intArrayOf(0, 5, 10)
 
         for (i in 0..9999) {
@@ -48,7 +48,7 @@ class RandomIntegerTest {
 
     @Test
     fun range() {
-        val e = RandomInteger(ListExpr(IntegerNum(10), IntegerNum(20)))
+        val e = RandomInteger(ListExpr(Integer(10), Integer(20)))
         val found = intArrayOf(10, 15, 20)
 
         for (i in 0..9999) {
@@ -74,11 +74,11 @@ class RandomIntegerTest {
 
     @Test
     fun numbersAreRandom() {
-        val e = RandomInteger(IntegerNum(10))
+        val e = RandomInteger(Integer(10))
 
-        val prev = IntegerNum(-99)
+        val prev = Integer(-99)
         for (i in 0..4) {
-            val curr = e.eval() as IntegerNum
+            val curr = e.eval() as Integer
             if (!prev.equals(curr))
                 return
         }

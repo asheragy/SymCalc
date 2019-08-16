@@ -4,7 +4,7 @@ import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.*
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 
 class Table(vararg e: Expr) : FunctionExpr(Function.TABLE, *e) {
 
@@ -13,23 +13,23 @@ class Table(vararg e: Expr) : FunctionExpr(Function.TABLE, *e) {
         val argList = get(1) as ListExpr
 
         if (argList.size == 1)
-            return evaluate(expr, null, IntegerNum.ONE, argList.getInteger(0), IntegerNum.ONE)
+            return evaluate(expr, null, Integer.ONE, argList.getInteger(0), Integer.ONE)
 
         val v = argList[0] as VarExpr
 
         if (argList.size == 2 && argList[1].isList)
             return evaluate(expr, v, argList.getList(1))
         else if (argList.size == 2)
-            return evaluate(expr, v, IntegerNum.ONE, argList.getInteger(1), IntegerNum.ONE)
+            return evaluate(expr, v, Integer.ONE, argList.getInteger(1), Integer.ONE)
         else if (argList.size == 3)
-            return evaluate(expr, v, argList.getInteger(1), argList.getInteger(2), IntegerNum.ONE)
+            return evaluate(expr, v, argList.getInteger(1), argList.getInteger(2), Integer.ONE)
         else if (argList.size == 4)
             return evaluate(expr, v, argList.getInteger(1), argList.getInteger(2), argList.getInteger(3))
 
         return ErrorExpr("Table() unexpected case")
     }
 
-    private fun evaluate(expr: Expr, `var`: VarExpr?, iMin: IntegerNum, iMax: IntegerNum, iStep: IntegerNum): Expr {
+    private fun evaluate(expr: Expr, `var`: VarExpr?, iMin: Integer, iMax: Integer, iStep: Integer): Expr {
         val min = iMin.intValue()
         val max = iMax.intValue()
         val step = iStep.intValue()
@@ -37,7 +37,7 @@ class Table(vararg e: Expr) : FunctionExpr(Function.TABLE, *e) {
         val values = ListExpr()
         var i = min
         while (i <= max) {
-            values.add(IntegerNum(i.toLong()))
+            values.add(Integer(i.toLong()))
             i += step
         }
 

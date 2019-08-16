@@ -5,14 +5,14 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberType
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 
 class Factorial(vararg e: Expr) : FunctionExpr(Function.FACTORIAL, *e) {
 
     override fun evaluate(): Expr {
-        var result = IntegerNum.ONE
+        var result = Integer.ONE
         var N = get(0).asInteger()
-        while (N > IntegerNum.ONE) {
+        while (N > Integer.ONE) {
             result*= N
             N--
         }

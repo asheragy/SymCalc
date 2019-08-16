@@ -3,7 +3,7 @@ package org.cerion.symcalc
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.junit.Test
 
 import org.junit.Assert.assertEquals
@@ -20,7 +20,7 @@ class UserFunctionTest {
         assertEquals(input, output)
 
         // Number
-        input = IntegerNum(5)
+        input = Integer(5)
         output = uf.eval(input)
         assertEquals(input, output)
 
@@ -35,12 +35,12 @@ class UserFunctionTest {
         val e = Plus(VarExpr("x"), VarExpr("x"))
         val uf = UserFunction("foo", e, VarExpr("x"))
 
-        var input: Expr = IntegerNum(5)
+        var input: Expr = Integer(5)
         var output = uf.eval(input)
-        assertEquals(IntegerNum(10), output)
+        assertEquals(Integer(10), output)
 
-        input = IntegerNum(1)
+        input = Integer(1)
         output = uf.eval(input)
-        assertEquals(IntegerNum(2), output)
+        assertEquals(Integer(2), output)
     }
 }

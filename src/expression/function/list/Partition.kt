@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.Function
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberType
 
 class Partition(vararg e: Expr) : FunctionExpr(Function.PARTITION, *e) {
@@ -13,7 +13,7 @@ class Partition(vararg e: Expr) : FunctionExpr(Function.PARTITION, *e) {
     override fun evaluate(): Expr {
 
         val input = get(0) as ListExpr
-        val n = (get(1) as IntegerNum).intValue()
+        val n = (get(1) as Integer).intValue()
         val result = ListExpr()
 
         for (i in 0 until input.size / n) {

@@ -12,7 +12,7 @@ class ExprTest {
 
     @Test
     fun isInteger() {
-        assertTrue(IntegerNum(5).isInteger)
+        assertTrue(Integer(5).isInteger)
         assertFalse(RealDouble(5.0).isInteger)
         assertFalse(Rational(1,2).isInteger)
         assertFalse(Complex(1,1).isInteger)
@@ -22,7 +22,7 @@ class ExprTest {
 
     @Test
     fun evalutationExceptionGenerates_errorExpr() {
-        val bigInt = IntegerNum("10000000000") // .intValue() should throw exception
+        val bigInt = Integer("10000000000") // .intValue() should throw exception
         assertEquals(Expr.ExprType.ERROR, Fibonacci(bigInt).eval().type)
         assertEquals(Expr.ExprType.ERROR, Power(RealBigDec("3.0"), bigInt).eval().type)
     }

@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression
 
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.junit.Test
 
 import org.junit.Assert.assertEquals
@@ -23,7 +23,7 @@ class BoolExprTest {
         assertEquals(e2, e2)
 
         // Different object type
-        assertNotEquals(e1, IntegerNum(5))
+        assertNotEquals(e1, Integer(5))
         assertNotEquals(e1, ListExpr())
     }
 

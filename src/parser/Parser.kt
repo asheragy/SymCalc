@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 
 class ParseException(message: String?) : Exception(message)
@@ -125,7 +125,7 @@ class Parser(private val lex: Lexer) {
             if (next.isNumber)
                 next = (next as NumberExpr).unaryMinus()
             else
-                next = Times(IntegerNum("-1"), next)
+                next = Times(Integer("-1"), next)
 
             return next
         }

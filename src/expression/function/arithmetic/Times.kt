@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 
 import java.util.ArrayList
 
@@ -43,9 +43,9 @@ class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
 
         val numberItems = list.filterIsInstance<NumberExpr>()
         list.removeIf { it is NumberExpr }
-        val product = numberItems.fold(IntegerNum.ONE as NumberExpr) { acc, n -> acc * n }
+        val product = numberItems.fold(Integer.ONE as NumberExpr) { acc, n -> acc * n }
         if (product.isZero)
-            return IntegerNum.ZERO
+            return Integer.ZERO
         else if(!product.isOne || list.size == 0)
             list.add(0, product)
 

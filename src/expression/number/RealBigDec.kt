@@ -60,7 +60,7 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
     override fun times(other: NumberExpr): NumberExpr {
         when(other.numType) {
             NumberType.INTEGER -> {
-                other as IntegerNum
+                other as Integer
                 val n = BigDecimal(other.value)
                 return RealBigDec(value.times(n))
             }
@@ -90,7 +90,7 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
     override fun div(other: NumberExpr): NumberExpr {
         when (other.numType) {
             NumberType.INTEGER -> {
-                other as IntegerNum
+                other as Integer
                 val n = BigDecimal(other.value)
                 return RealBigDec(value.divide(n, MathContext(precision, RoundingMode.HALF_UP)))
             }

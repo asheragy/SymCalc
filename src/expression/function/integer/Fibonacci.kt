@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.function.integer
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 
@@ -16,14 +16,14 @@ class Fibonacci(vararg e: Expr) : FunctionExpr(Function.FIBONACCI, *e) {
         return fibIterative(n)
     }
 
-    private fun fibIterative(n: IntegerNum): IntegerNum {
-        var a: NumberExpr = IntegerNum.ZERO
-        var b: NumberExpr = IntegerNum.ONE
-        var fib: IntegerNum = IntegerNum.ZERO
+    private fun fibIterative(n: Integer): Integer {
+        var a: NumberExpr = Integer.ZERO
+        var b: NumberExpr = Integer.ONE
+        var fib: Integer = Integer.ZERO
 
         //first 2 values are 0 and 1 so don't start loop unless 2 or higher
         if (n.isOne)
-            fib = IntegerNum(1)
+            fib = Integer(1)
 
         for (i in 1 until n.intValue()) {
             fib = (a + b).asInteger()

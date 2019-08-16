@@ -5,13 +5,13 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberType
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 
 class GCD(vararg e: Expr) : FunctionExpr(Function.GCD, *e) {
 
     override fun evaluate(): Expr {
-        val a = get(0) as IntegerNum
-        val b = get(1) as IntegerNum
+        val a = get(0) as Integer
+        val b = get(1) as Integer
 
         val gcd = a.gcd(b)
 

@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.core.Hold
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.junit.Test
 
 import org.junit.Assert.assertEquals
@@ -14,7 +14,7 @@ class HoldTest {
 
     @Test
     fun basicEval() {
-        var e: Expr = Hold(Plus(IntegerNum.ONE, IntegerNum.ONE))
+        var e: Expr = Hold(Plus(Integer.ONE, Integer.ONE))
         e = e.eval()
 
         assertTrue(e.isFunction("hold"))
@@ -25,7 +25,7 @@ class HoldTest {
     @Test
     fun varExprNotEvaluated() {
         var e: Expr = Hold(Plus(VarExpr("x"), VarExpr("x")))
-        e.env.setVar("x", IntegerNum(5))
+        e.env.setVar("x", Integer(5))
 
         // Verify plus is not evaluated and is x+x, not 5+5
         e = e.eval()[0][0]

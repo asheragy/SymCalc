@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression.number
 
 import java.math.RoundingMode
 
-class Rational constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : NumberExpr() {
+class Rational constructor(n: Integer, d: Integer = Integer.ONE) : NumberExpr() {
 
     override val value: Any? get() = null
     override val isZero: Boolean get() = numerator.isZero
@@ -11,21 +11,21 @@ class Rational constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : Numb
     override val isNegative: Boolean get() = numerator.isNegative
     override val precision: Int get() = InfinitePrecision
 
-    val numerator: IntegerNum get() = args[0] as IntegerNum
-    val denominator: IntegerNum get() = args[1] as IntegerNum
+    val numerator: Integer get() = args[0] as Integer
+    val denominator: Integer get() = args[1] as Integer
 
     init {
         setArg(0, n)
         setArg(1, d)
     }
 
-    constructor(n: Int, d: Int) : this(IntegerNum(n.toLong()), IntegerNum(d.toLong()))
+    constructor(n: Int, d: Int) : this(Integer(n.toLong()), Integer(d.toLong()))
 
     override fun evaluate(): NumberExpr {
         //Reduce with GCD
         val gcd = numerator.gcd(denominator)
-        var n: IntegerNum = numerator
-        var d: IntegerNum = denominator
+        var n: Integer = numerator
+        var d: Integer = denominator
 
         if (!gcd.isOne) {
             n = n.div(gcd).asInteger()
@@ -121,8 +121,8 @@ class Rational constructor(n: IntegerNum, d: IntegerNum = IntegerNum.ONE) : Numb
     }
 
     companion object {
-        val ZERO = Rational(IntegerNum.ZERO, IntegerNum.ONE)
-        val ONE = Rational(IntegerNum.ONE, IntegerNum.ONE)
-        val HALF = Rational(IntegerNum.ONE, IntegerNum.TWO)
+        val ZERO = Rational(Integer.ZERO, Integer.ONE)
+        val ONE = Rational(Integer.ONE, Integer.ONE)
+        val HALF = Rational(Integer.ONE, Integer.TWO)
     }
 }

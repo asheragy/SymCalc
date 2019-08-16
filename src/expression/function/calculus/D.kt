@@ -10,7 +10,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 
 class D(vararg e: Expr) : FunctionExpr(Function.D, *e) {
 
@@ -19,13 +19,13 @@ class D(vararg e: Expr) : FunctionExpr(Function.D, *e) {
         val x = get(1) as VarExpr
 
         if (e.isNumber || e.isConst)
-            return IntegerNum.ZERO
+            return Integer.ZERO
 
         if (e.isVariable) {
             return if (e.asVar().equals(x))
-                IntegerNum.ONE
+                Integer.ONE
             else
-                IntegerNum.ZERO
+                Integer.ZERO
         }
 
         if (e.isFunction) {
@@ -36,7 +36,7 @@ class D(vararg e: Expr) : FunctionExpr(Function.D, *e) {
                 Function.PLUS -> result = Plus(*func.args.map { D(it, x) }.toTypedArray())
                 Function.SUBTRACT -> result = Subtract(*func.args.map { D(it, x) }.toTypedArray())
                 Function.SIN -> result = Times(D(func[0], x), Cos(func[0]))
-                Function.COS -> result = Times(IntegerNum(-1), D(func[0], x), Sin(func[0]))
+                Function.COS -> result = Times(Integer(-1), D(func[0], x), Sin(func[0]))
 
                 else -> return this
             }

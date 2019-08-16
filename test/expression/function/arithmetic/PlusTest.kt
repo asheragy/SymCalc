@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Assert.assertEquals
@@ -16,14 +16,14 @@ class PlusTest {
 
     @Test
     fun basicAddition() {
-        assertEquals(IntegerNum.TWO, Plus(IntegerNum.ONE, IntegerNum.ONE).eval())
-        assertEquals(IntegerNum(101), Plus(IntegerNum.ONE, IntegerNum.ONE, IntegerNum(99)).eval())
-        assertEquals(Rational(-1,2), Plus(IntegerNum.ONE, Rational(1,2), IntegerNum.ONE, IntegerNum(-3)).eval())
+        assertEquals(Integer.TWO, Plus(Integer.ONE, Integer.ONE).eval())
+        assertEquals(Integer(101), Plus(Integer.ONE, Integer.ONE, Integer(99)).eval())
+        assertEquals(Rational(-1,2), Plus(Integer.ONE, Rational(1,2), Integer.ONE, Integer(-3)).eval())
     }
 
     @Test
     fun doubleEval() {
-        val e = Plus(IntegerNum.ONE, IntegerNum.ONE)
+        val e = Plus(Integer.ONE, Integer.ONE)
         assertEqual(2, e.eval())
         assertEqual(2, e.eval())
     }
@@ -41,7 +41,7 @@ class PlusTest {
     @Test
     fun identityProperty() {
         val v = VarExpr("x")
-        val n = IntegerNum(0)
+        val n = Integer(0)
 
         var e: Expr = Plus(v, n)
         assertEquals(v, e.eval())
@@ -52,16 +52,16 @@ class PlusTest {
 
     @Test
     fun toStringTest() {
-        assertEquals("5 + 3.14 + E", Plus(IntegerNum(5), RealDouble(3.14), E()).toString())
+        assertEquals("5 + 3.14 + E", Plus(Integer(5), RealDouble(3.14), E()).toString())
     }
 
     @Test
     fun multipleTerms_Times() {
-        assertEquals(Times(Pi(), IntegerNum.TWO), Plus(Pi(), Pi()).eval())
+        assertEquals(Times(Pi(), Integer.TWO), Plus(Pi(), Pi()).eval())
     }
 
     @Test
     fun nestedTimes() {
-        assertEquals(Times(IntegerNum(3), Pi()), Plus(Times(IntegerNum(2), Pi()), Pi()).eval())
+        assertEquals(Times(Integer(3), Pi()), Plus(Times(Integer(2), Pi()), Pi()).eval())
     }
 }

@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.junit.Test
 
 import org.junit.Assert.assertEquals
@@ -16,7 +16,7 @@ class VarExprTest {
         val v3 = VarExpr("x")
 
         assertNotEquals(v1, v2)
-        assertNotEquals(v1, IntegerNum(5))
+        assertNotEquals(v1, Integer(5))
         assertEquals(v1, v3)
     }
 
@@ -24,22 +24,22 @@ class VarExprTest {
     fun eval() {
         val x = VarExpr("x")
 
-        x.env.setVar("x", IntegerNum(5))
-        assertEquals(IntegerNum(5), x.eval())
+        x.env.setVar("x", Integer(5))
+        assertEquals(Integer(5), x.eval())
 
-        x.env.setVar("x", IntegerNum(2))
-        assertEquals(IntegerNum(2), x.eval())
+        x.env.setVar("x", Integer(2))
+        assertEquals(Integer(2), x.eval())
     }
 
     @Test
     fun evalFunction() {
         val e = Plus(VarExpr("x"), VarExpr("x"))
 
-        e.env.setVar("x", IntegerNum(5))
-        assertEquals(IntegerNum(10), e.eval())
+        e.env.setVar("x", Integer(5))
+        assertEquals(Integer(10), e.eval())
 
-        e.env.setVar("x", IntegerNum(3))
-        assertEquals(IntegerNum(6), e.eval())
+        e.env.setVar("x", Integer(3))
+        assertEquals(Integer(6), e.eval())
     }
 
 }

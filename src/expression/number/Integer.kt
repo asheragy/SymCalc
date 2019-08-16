@@ -7,14 +7,14 @@ import java.math.BigInteger
 import java.math.MathContext
 import java.math.RoundingMode
 
-class IntegerNum(override val value: BigInteger) : NumberExpr() {
+class Integer(override val value: BigInteger) : NumberExpr() {
     companion object {
-        @JvmField val ZERO = IntegerNum(0)
-        @JvmField val ONE = IntegerNum(1)
-        @JvmField val TWO = IntegerNum(2)
-        @JvmField val NEGATIVE_ONE = IntegerNum(-1)
-        val MAX_INT = IntegerNum(Int.MAX_VALUE)
-        val MIN_INT = IntegerNum(Int.MIN_VALUE)
+        @JvmField val ZERO = Integer(0)
+        @JvmField val ONE = Integer(1)
+        @JvmField val TWO = Integer(2)
+        @JvmField val NEGATIVE_ONE = Integer(-1)
+        val MAX_INT = Integer(Int.MAX_VALUE)
+        val MIN_INT = Integer(Int.MIN_VALUE)
     }
 
     override val isZero: Boolean get() = value == BigInteger.ZERO
@@ -58,10 +58,10 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
     fun toBigInteger(): BigInteger = value
     fun toBigDecimal(): BigDecimal = BigDecimal(value)
 
-    operator fun plus(N: IntegerNum): IntegerNum = IntegerNum(value.add(N.value))
-    operator fun minus(n: IntegerNum): IntegerNum = IntegerNum(value.subtract(n.value))
-    operator fun times(n: IntegerNum): IntegerNum = IntegerNum(value.multiply(n.value))
-    override fun unaryMinus(): IntegerNum = IntegerNum(value.negate())
+    operator fun plus(N: Integer): Integer = Integer(value.add(N.value))
+    operator fun minus(n: Integer): Integer = Integer(value.subtract(n.value))
+    operator fun times(n: Integer): Integer = Integer(value.multiply(n.value))
+    override fun unaryMinus(): Integer = Integer(value.negate())
 
     override fun plus(other: NumberExpr): NumberExpr {
         return if (other.isInteger) plus(other.asInteger()) else other.plus(this)
@@ -78,7 +78,7 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
 
         when (other.numType) {
             NumberType.INTEGER -> {
-                val n = other as IntegerNum
+                val n = other as Integer
                 val gcd = this.gcd(n)
 
                 if (gcd.isOne) {
@@ -86,8 +86,8 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
                 }
 
                 //Divide both by GCD
-                val a = IntegerNum(value.divide(gcd.value))
-                val b = IntegerNum(n.value.divide(gcd.value))
+                val a = Integer(value.divide(gcd.value))
+                val b = Integer(n.value.divide(gcd.value))
 
                 if (b.isOne)
                     return a
@@ -107,22 +107,22 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
     }
 
     //IntegerNum Specific Functions
-    fun gcd(N: IntegerNum): IntegerNum = IntegerNum(value.gcd(N.value))
+    fun gcd(N: Integer): Integer = Integer(value.gcd(N.value))
 
-    fun powerMod(b: IntegerNum, m: IntegerNum): IntegerNum {
+    fun powerMod(b: Integer, m: Integer): Integer {
         //Assuming all integers at this point since MathFunc needs to check that
         val num = value
         val exp = b.value
         val mod = m.value
 
-        return IntegerNum(num.modPow(exp, mod))
+        return Integer(num.modPow(exp, mod))
     }
 
     fun primeQ(): Boolean = value.isProbablePrime(5)
 
-    operator fun inc(): IntegerNum = IntegerNum(value.inc())
-    operator fun dec(): IntegerNum = IntegerNum(value.minus(BigInteger.ONE))
-    operator fun rem(N: IntegerNum): IntegerNum = IntegerNum(value.mod(N.value))
+    operator fun inc(): Integer = Integer(value.inc())
+    operator fun dec(): Integer = Integer(value.minus(BigInteger.ONE))
+    operator fun rem(N: Integer): Integer = Integer(value.mod(N.value))
 
     override fun compareTo(other: NumberExpr): Int {
         return when (other.numType) {
@@ -134,11 +134,11 @@ class IntegerNum(override val value: BigInteger) : NumberExpr() {
         }
     }
 
-    fun pow(other: IntegerNum): NumberExpr {
+    fun pow(other: Integer): NumberExpr {
         val intVal = other.asInteger().value.toInt()
         if (intVal < 0)
-            return Rational(ONE, IntegerNum(value.pow(-intVal))).evaluate()
+            return Rational(ONE, Integer(value.pow(-intVal))).evaluate()
         else
-            return IntegerNum(value.pow(intVal))
+            return Integer(value.pow(intVal))
     }
 }

@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.integer.Mod
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.nevec.rjm.BigDecimalMath
@@ -20,18 +20,18 @@ class Tan(vararg e: Expr) : TrigBase(Function.TAN, *e), StandardTrigFunction {
 
     override fun evaluatePiFactoredOut(e: Expr): Expr {
         // Pi * Integer = 0
-        if (e is IntegerNum)
-            return IntegerNum.ZERO
+        if (e is Integer)
+            return Integer.ZERO
 
         if (e is Rational) {
-            val mod = Mod(e.numerator, Times(IntegerNum.TWO, e.denominator).eval().asInteger()).eval().asInteger().intValue()
+            val mod = Mod(e.numerator, Times(Integer.TWO, e.denominator).eval().asInteger()).eval().asInteger().intValue()
 
             val ratio =
                     when(e.denominator) {
-                        IntegerNum((2)) -> ComplexInfinity()
-                        IntegerNum(3) -> sqrt3
-                        IntegerNum(4) -> IntegerNum.ONE
-                        IntegerNum(6) -> oneOverSqrt3
+                        Integer((2)) -> ComplexInfinity()
+                        Integer(3) -> sqrt3
+                        Integer(4) -> Integer.ONE
+                        Integer(6) -> oneOverSqrt3
                         else -> return this
                     }
 
@@ -50,7 +50,7 @@ class Tan(vararg e: Expr) : TrigBase(Function.TAN, *e), StandardTrigFunction {
     }
 
     companion object {
-        val sqrt3 = Power(IntegerNum(3), Rational(1,2))
-        val oneOverSqrt3 = Power(IntegerNum(3), Rational(-1,2))
+        val sqrt3 = Power(Integer(3), Rational(1,2))
+        val oneOverSqrt3 = Power(Integer(3), Rational(-1,2))
     }
 }

@@ -12,12 +12,12 @@ class NumberQTest {
     @Test
     fun validation() {
         Assert.assertTrue(NumberQ().eval().isError)
-        Assert.assertTrue(NumberQ(IntegerNum(5), IntegerNum(5)).eval().isError)
+        Assert.assertTrue(NumberQ(Integer(5), Integer(5)).eval().isError)
     }
 
     @Test
     fun basic() {
-        Assert.assertEquals(BoolExpr.TRUE, NumberQ(IntegerNum(5)).eval())
+        Assert.assertEquals(BoolExpr.TRUE, NumberQ(Integer(5)).eval())
         Assert.assertEquals(BoolExpr.TRUE, NumberQ(RealDouble(2.34)).eval())
         Assert.assertEquals(BoolExpr.TRUE, NumberQ(Rational(2, 3)).eval())
         Assert.assertEquals(BoolExpr.TRUE, NumberQ(Complex(5, 7)).eval())
@@ -30,7 +30,7 @@ class NumberQTest {
 
         // Unless assigned to something that is NumberQ=true
         val e = CompoundExpression(
-                Set(VarExpr("x"), IntegerNum(5)),
+                Set(VarExpr("x"), Integer(5)),
                 NumberQ(VarExpr("x")))
 
         Assert.assertEquals(BoolExpr.TRUE, e.eval())

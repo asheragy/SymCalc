@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.function.arithmetic
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.junit.Test
 
 import org.junit.Assert.assertEquals
@@ -15,7 +15,7 @@ class SubtractTest {
     fun parser() {
         //Verify a-b = Subtract(a,b)
         val expr = Expr.parse("5-1")
-        val e = expr.eval() as IntegerNum
+        val e = expr.eval() as Integer
         assertEquals(4, e.intValue().toLong())
     }
 
@@ -25,15 +25,15 @@ class SubtractTest {
         assertTrue(e.isError)
 
 
-        e = get(IntegerNum(5))
+        e = get(Integer(5))
         assertTrue(e.isError)
 
-        e = get(IntegerNum(1), IntegerNum(2), IntegerNum(3))
+        e = get(Integer(1), Integer(2), Integer(3))
         assertTrue(e.isError)
 
         //List sizes
-        val a = IntegerNum(0).toList(2)
-        val b = IntegerNum(0).toList(3)
+        val a = Integer(0).toList(2)
+        val b = Integer(0).toList(3)
 
         e = get(a, b)
         assertTrue(e.isError)
@@ -42,24 +42,24 @@ class SubtractTest {
     @Test
     fun basicNumbers() {
 
-        var t = getI(IntegerNum(5), IntegerNum(3))
+        var t = getI(Integer(5), Integer(3))
         assertEquals(2, t.intValue().toLong())
 
-        t = getI(IntegerNum(3), IntegerNum(5))
+        t = getI(Integer(3), Integer(5))
         assertEquals(-2, t.intValue().toLong())
     }
 
     @Test
     fun nested() {
-        var e: Expr = Subtract(IntegerNum(1), IntegerNum(2))
-        e = Subtract(IntegerNum(5), e)
+        var e: Expr = Subtract(Integer(1), Integer(2))
+        e = Subtract(Integer(5), e)
 
-        assertEquals(IntegerNum(6), e.eval())
+        assertEquals(Integer(6), e.eval())
     }
 
     @Test
     fun identity() {
-        val e = get(VarExpr("a"), IntegerNum(0))
+        val e = get(VarExpr("a"), Integer(0))
 
         assertTrue(VarExpr("a").equals(e))
     }
@@ -67,8 +67,8 @@ class SubtractTest {
     @Test
     fun lists() {
 
-        val a = IntegerNum(10).toList(5)
-        val i = IntegerNum(3)
+        val a = Integer(10).toList(5)
+        val i = Integer(3)
 
         //List - Single
         var e = get(a, i)
@@ -78,7 +78,7 @@ class SubtractTest {
         assertEquals(5, l.size.toLong())
 
         for (n in 0..4)
-            assertEquals(7, (l[n] as IntegerNum).intValue().toLong())
+            assertEquals(7, (l[n] as Integer).intValue().toLong())
 
         //Single - List
         e = get(i, a)
@@ -87,7 +87,7 @@ class SubtractTest {
         assertEquals(5, l.size.toLong())
 
         for (n in 0..4)
-            assertEquals(-7, (l[n] as IntegerNum).intValue().toLong())
+            assertEquals(-7, (l[n] as Integer).intValue().toLong())
     }
 
 
@@ -95,9 +95,9 @@ class SubtractTest {
         return Subtract(*e).eval()
     }
 
-    private fun getI(vararg e: Expr): IntegerNum {
+    private fun getI(vararg e: Expr): Integer {
         val t = Subtract(*e).eval()
 
-        return t as IntegerNum
+        return t as Integer
     }
 }

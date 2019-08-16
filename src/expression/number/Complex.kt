@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.number
 import kotlin.math.abs
 import kotlin.math.min
 
-class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) : NumberExpr() {
+class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : NumberExpr() {
 
     override val value: Any? get() = null
 
@@ -25,12 +25,12 @@ class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) 
 
     constructor(r: Number, i: Number) : this() {
         if (r is Int)
-            setArg(0, IntegerNum(r))
+            setArg(0, Integer(r))
         else
             setArg(0, RealDouble(r.toDouble()))
 
         if (i is Int)
-            setArg(1, IntegerNum(i))
+            setArg(1, Integer(i))
         else
             setArg(1, RealDouble(i.toDouble()))
     }
@@ -40,7 +40,7 @@ class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) 
 
         if (num.isEmpty())
         //If passed just "i" its complex number 1
-            setArg(1, IntegerNum.ONE)
+            setArg(1, Integer.ONE)
         else
             setArg(1, parse(num))
     }
@@ -130,7 +130,7 @@ class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) 
 
     fun pow(n: Int): NumberExpr {
         var total: NumberExpr = this
-        var result: NumberExpr = IntegerNum.ONE
+        var result: NumberExpr = Integer.ONE
         var i = abs(n)
         while(i > 0) {
             if (i % 2 == 1)
@@ -141,7 +141,7 @@ class Complex(r: NumberExpr = IntegerNum.ZERO, i: NumberExpr = IntegerNum.ZERO) 
         }
 
         if (n < 0)
-            return IntegerNum.ONE / result
+            return Integer.ONE / result
 
         return result
     }

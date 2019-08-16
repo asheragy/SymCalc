@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression.function.list
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.number.IntegerNum
+import org.cerion.symcalc.expression.number.Integer
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -11,25 +11,25 @@ class FlattenTest {
 
     @Test
     fun validateParameters() {
-        var e: Expr = Flatten(IntegerNum.ZERO)
+        var e: Expr = Flatten(Integer.ZERO)
         e = e.eval()
         assertTrue(e.isError)
     }
 
     @Test
     fun singleList() {
-        var e = Flatten(ListExpr(IntegerNum.ZERO, L1)).eval()
-        verify(ListExpr(IntegerNum.ZERO, IntegerNum.ONE, IntegerNum.TWO), e)
+        var e = Flatten(ListExpr(Integer.ZERO, L1)).eval()
+        verify(ListExpr(Integer.ZERO, Integer.ONE, Integer.TWO), e)
 
-        e = Flatten(ListExpr(L1, IntegerNum.ZERO)).eval()
-        verify(ListExpr(IntegerNum.ONE, IntegerNum.TWO, IntegerNum.ZERO), e)
+        e = Flatten(ListExpr(L1, Integer.ZERO)).eval()
+        verify(ListExpr(Integer.ONE, Integer.TWO, Integer.ZERO), e)
     }
 
     @Test
     fun nestedList() {
-        val list = ListExpr(IntegerNum.ZERO, L1, ListExpr(L2, L3))
-        val expected = ListExpr(IntegerNum.ZERO, IntegerNum.ONE, IntegerNum.TWO,
-                IntegerNum(3), IntegerNum(4), IntegerNum(5), IntegerNum(6))
+        val list = ListExpr(Integer.ZERO, L1, ListExpr(L2, L3))
+        val expected = ListExpr(Integer.ZERO, Integer.ONE, Integer.TWO,
+                Integer(3), Integer(4), Integer(5), Integer(6))
 
         verify(expected, Flatten(list).eval())
     }
@@ -43,8 +43,8 @@ class FlattenTest {
     }
 
     companion object {
-        private val L1 = ListExpr(IntegerNum.ONE, IntegerNum.TWO)
-        private val L2 = ListExpr(IntegerNum(3), IntegerNum(4))
-        private val L3 = ListExpr(IntegerNum(5), IntegerNum(6))
+        private val L1 = ListExpr(Integer.ONE, Integer.TWO)
+        private val L2 = ListExpr(Integer(3), Integer(4))
+        private val L3 = ListExpr(Integer(5), Integer(6))
     }
 }

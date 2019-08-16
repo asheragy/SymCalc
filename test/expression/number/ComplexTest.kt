@@ -9,8 +9,8 @@ class ComplexTest {
     @Test
     fun equals() {
         assertEquals(Complex(0, 0), Complex.ZERO)
-        assertEquals(Complex(1, 0).eval(), IntegerNum.ONE)
-        assertNotEquals(Complex(1, 1), IntegerNum.ONE)
+        assertEquals(Complex(1, 0).eval(), Integer.ONE)
+        assertNotEquals(Complex(1, 1), Integer.ONE)
         assertEquals(Complex(5, 6), Complex(5, 6))
         assertNotEquals(Complex(5, 6), Complex(5, 7))
         assertNotEquals(Complex(5, 6), Complex(6, 6))
@@ -42,24 +42,24 @@ class ComplexTest {
 
     @Test
     fun addition() {
-        assertEquals(Complex(6,1), Complex(1,1) + IntegerNum(5))
-        assertEquals(Complex(Rational(3,2),IntegerNum.ONE), Complex(1,1) + Rational.HALF)
-        assertEquals(Complex(RealDouble(6.0),IntegerNum.ONE), Complex(1,1) + RealDouble(5.0))
+        assertEquals(Complex(6,1), Complex(1,1) + Integer(5))
+        assertEquals(Complex(Rational(3,2),Integer.ONE), Complex(1,1) + Rational.HALF)
+        assertEquals(Complex(RealDouble(6.0),Integer.ONE), Complex(1,1) + RealDouble(5.0))
         assertEquals(Complex(2,2), Complex(1,1) + Complex(1,1))
     }
 
     @Test
     fun subtraction() {
-        assertEquals(Complex(-4,1), Complex(1,1) - IntegerNum(5))
-        assertEquals(Complex(Rational(1,2),IntegerNum.ONE), Complex(1,1) - Rational.HALF)
-        assertEquals(Complex(RealDouble(-4.0),IntegerNum.ONE), Complex(1,1) - RealDouble(5.0))
-        assertEquals(IntegerNum.ZERO, Complex(1,1) - Complex(1,1))
+        assertEquals(Complex(-4,1), Complex(1,1) - Integer(5))
+        assertEquals(Complex(Rational(1,2),Integer.ONE), Complex(1,1) - Rational.HALF)
+        assertEquals(Complex(RealDouble(-4.0),Integer.ONE), Complex(1,1) - RealDouble(5.0))
+        assertEquals(Integer.ZERO, Complex(1,1) - Complex(1,1))
     }
 
     @Test
     fun divide_nonComplex() {
-        assertEquals(Complex(2,4), Complex(4,8) / IntegerNum.TWO)
-        assertEquals(Complex(Rational(3,2), Rational(7, 2)), Complex(3,7) / IntegerNum.TWO)
+        assertEquals(Complex(2,4), Complex(4,8) / Integer.TWO)
+        assertEquals(Complex(Rational(3,2), Rational(7, 2)), Complex(3,7) / Integer.TWO)
 
         assertEquals(Complex(9, 21), Complex(3,7) / Rational(1,3))
 
@@ -73,12 +73,12 @@ class ComplexTest {
         assertEquals(Complex(Rational(6,25), Rational(17, 25)), Complex(3,2) / Complex(4,-3))
 
         // Divide: real
-        assertEquals(Complex(RealDouble(0.4461538461538462), RealDouble(-0.03076923076923077)), Complex(RealDouble(2.0),IntegerNum(3)) / Complex(4,7))
+        assertEquals(Complex(RealDouble(0.4461538461538462), RealDouble(-0.03076923076923077)), Complex(RealDouble(2.0), Integer(3)) / Complex(4,7))
     }
 
     @Test
     fun reducesToNonComplex() {
-        assertEquals(NumberType.INTEGER, (Complex(2,0) + IntegerNum(3)).numType)
+        assertEquals(NumberType.INTEGER, (Complex(2,0) + Integer(3)).numType)
         assertEquals(NumberType.INTEGER , (Complex(2,10) + Complex(3, -10)).numType)
         assertEquals(NumberType.REAL_DOUBLE , (Complex(2,10) - Complex(RealDouble(3.0), RealDouble(10.0))).numType)
         assertEquals(NumberType.INTEGER, (Complex(1,1) * Complex(1, -1)).numType)
@@ -87,11 +87,11 @@ class ComplexTest {
 
     @Test
     fun pow_realOnly() {
-        assertEquals(IntegerNum(1), Complex(2,0).pow(0))
-        assertEquals(IntegerNum(2), Complex(2,0).pow(1))
-        assertEquals(IntegerNum(4), Complex(2,0).pow(2))
-        assertEquals(IntegerNum(8), Complex(2,0).pow(3))
-        assertEquals(IntegerNum("4294967296"), Complex(2,0).pow(32))
+        assertEquals(Integer(1), Complex(2,0).pow(0))
+        assertEquals(Integer(2), Complex(2,0).pow(1))
+        assertEquals(Integer(4), Complex(2,0).pow(2))
+        assertEquals(Integer(8), Complex(2,0).pow(3))
+        assertEquals(Integer("4294967296"), Complex(2,0).pow(32))
         assertEquals(Rational(1,2), Complex(2,0).pow(-1))
         assertEquals(Rational(1,4), Complex(2,0).pow(-2))
         assertEquals(Rational(1,32), Complex(2,0).pow(-5))
@@ -100,7 +100,7 @@ class ComplexTest {
     @Test
     fun pow() {
         assertEquals(Complex(0, -177147), Complex(0,3).pow(11))
-        assertEquals(IntegerNum(4096), Complex(1,1).pow(24))
+        assertEquals(Integer(4096), Complex(1,1).pow(24))
         assertEquals(Rational(1, 4096), Complex(1,1).pow(-24))
         assertEquals(Complex(4096, 4096), Complex(1,1).pow(25))
         assertEquals(Complex(103595049,-51872200), Complex(5,-4).pow(10))
