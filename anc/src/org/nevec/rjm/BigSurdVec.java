@@ -149,8 +149,8 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                         {
                                 BigSurd v = newter.elementAt(ex) ;
                                 /* try to merge terms[j] and newter[ex].
-                                * todo = r * v with r a rational number is needed. 
-                                * Replaces v with v+todo = v*(1+r) if this reduction works.
+                                * to-do = r * v with r a rational number is needed.
+                                * Replaces v with v+to-do = v*(1+r) if this reduction works.
                                 */
                                 BigSurd r = todo.divide(v) ;
                                 if ( r.isRational() )

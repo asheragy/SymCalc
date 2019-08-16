@@ -9,9 +9,13 @@ import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.expression.number.RealBigDec
+import org.nevec.rjm.BigDecimalMath
 import kotlin.math.tan
 
 class Tan(vararg e: Expr) : TrigBase(Function.TAN, *e), StandardTrigFunction {
+
+    override fun evaluateAsBigDecimal(n: RealBigDec): RealBigDec = RealBigDec(BigDecimalMath.tan(n.value))
     override fun evaluateAsDouble(d: Double): Double = tan(d)
 
     override fun evaluatePiFactoredOut(e: Expr): Expr {

@@ -10,6 +10,7 @@ import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.function.list.Join
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Assert
 import org.junit.Test
@@ -89,6 +90,12 @@ class TanTest {
             val pos = (((i % 12) + 12) % 12) // mod but handles negative values
             Assert.assertEquals("$x", expected[pos], tan.eval())
         }
+    }
+
+    @Test
+    fun bigDecimal() {
+        // TODO_LP Implement on own there are some issues with precision such as too many digits
+        assertEquals(RealBigDec("-3.3804"), Tan(RealBigDec("5.00001")).eval())
     }
 
     companion object {

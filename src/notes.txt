@@ -5,6 +5,8 @@ Links
 - https://www.desmos.com/calculator
 - http://reference.wolfram.com/language/JLink/ref/java/com/wolfram/jlink/Expr.html
 
+https://phauer.com/2018/best-practices-unit-testing-kotlin/
+
 Maybe important features
 - Cannot define variable with same name as function (case insensitive)
 - UserFunction requires name, does it need to?  How do these really work?  Is it just an expression?  May not be implemented correctly here / Function[]

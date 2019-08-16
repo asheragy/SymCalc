@@ -377,7 +377,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
         */
         public Ifactor divide(final Ifactor oth)
         {
-                /* todo: it'd probably be faster to cancel the gcd(this,oth) first in the prime power
+                /* to-do: it'd probably be faster to cancel the gcd(this,oth) first in the prime power
                 * representation, which would avoid a more strenous factorization of the integer ratio
                 */
                 return  new Ifactor(n.divide(oth.n)) ;

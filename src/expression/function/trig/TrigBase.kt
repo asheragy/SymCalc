@@ -1,28 +1,30 @@
 package org.cerion.symcalc.expression.function.trig
 
 import org.cerion.symcalc.exception.ValidationException
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
-import org.cerion.symcalc.expression.Expr as Expr1
 
 interface StandardTrigFunction {
-    fun evaluatePiFactoredOut(e: Expr1): Expr1
+    fun evaluatePiFactoredOut(e: Expr): Expr
+    fun evaluateAsBigDecimal(n: RealBigDec): RealBigDec
 }
 
-abstract class TrigBase protected constructor(t: Function, vararg e: Expr1) : FunctionExpr(t, *e) {
+abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : FunctionExpr(t, *e) {
 
     override val properties: Int
-        get() = Expr1.Properties.LISTABLE.value
+        get() = Expr.Properties.LISTABLE.value
 
     protected abstract fun evaluateAsDouble(d: Double): Double
-    protected abstract fun evaluate(e: Expr1): Expr1
+    protected abstract fun evaluate(e: Expr): Expr
 
-    public override fun evaluate(): Expr1 {
+    public override fun evaluate(): Expr {
         val e = get(0)
         if (e.isNumber) {
             e as NumberExpr
@@ -32,6 +34,9 @@ abstract class TrigBase protected constructor(t: Function, vararg e: Expr1) : Fu
         }
 
         if (this is StandardTrigFunction) {
+            if (e is RealBigDec)
+                return evaluateAsBigDecimal(e)
+
             if (e.isNumber && e.asNumber().isZero)
                 return evaluatePiFactoredOut(IntegerNum.ZERO)
 

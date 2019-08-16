@@ -523,7 +523,7 @@ class RatPoly
                 }
 
                 RatPoly resul = new RatPoly() ;
-                /* todo: If the polynomial division is exact, we could leave
+                /* to-do: If the polynomial division is exact, we could leave
                 * the loop earlier, indeed
                 */
                 for(int n=0; n <= nmax ; n++)

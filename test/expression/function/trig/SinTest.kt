@@ -110,6 +110,12 @@ class SinTest {
         }
     }
 
+    @Test
+    fun bigDecimal() {
+        // TODO_LP Implement on own there are some issues with precision such as too many digits
+        assertEquals(RealBigDec("-0.958919"), Sin(RealBigDec("5.00001")).eval())
+    }
+
     companion object {
         val sqrt3Over2 = Times(Rational(1,2), Power(IntegerNum(3), Rational(1,2)))
         val oneOverSqrt2 = Power(IntegerNum.TWO, Rational(-1,2))

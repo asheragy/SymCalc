@@ -7,6 +7,8 @@ import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.IntegerNum
 import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.expression.number.RealBigDec
+import org.nevec.rjm.BigDecimalMath
 import kotlin.math.cos
 
 class Cos(vararg e: Expr) : TrigBase(Function.COS, *e), StandardTrigFunction {
@@ -50,6 +52,10 @@ class Cos(vararg e: Expr) : TrigBase(Function.COS, *e), StandardTrigFunction {
         }
 
         return this
+    }
+
+    override fun evaluateAsBigDecimal(n: RealBigDec): RealBigDec {
+        return RealBigDec(BigDecimalMath.cos(n.value))
     }
 
     override fun evaluate(e: Expr): Expr {
