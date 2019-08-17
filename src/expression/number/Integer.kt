@@ -1,7 +1,12 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.exception.OperationException
+import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
+import org.cerion.symcalc.expression.function.integer.Factor
+import org.cerion.symcalc.expression.function.list.Tally
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.math.MathContext
@@ -140,5 +145,74 @@ class Integer(override val value: BigInteger) : NumberExpr() {
             return Rational(ONE, Integer(value.pow(-intVal))).evaluate()
         else
             return Integer(value.pow(intVal))
+    }
+
+    fun pow(b: Rational): Expr {
+        // Performance: Use faster method for square root
+        /* One other method for any value but may need additional checks
+             - Calculate using Math.pow() after converting to doubles
+             - isWholeNumber = floor(value) && !java.lang.Double.isInfinite(value)
+             - Then convert to integer and return
+        */
+        val a = this
+
+        if (b == Rational.HALF) {
+            val sqrt = a.value.sqrtAndRemainder()
+            if (sqrt[1].compareTo(BigInteger.ZERO) == 0)
+                return Integer(sqrt[0])
+        }
+
+        // factor out any numbers that are the Nth root of the denominator
+        val t = Factor(a).eval()
+        val factors = Tally(t).eval().asList()
+
+        var denominator = b.denominator
+        val numerator = b.numerator
+        var multiply = ONE
+
+        var i = 0
+        while (i < factors.size) {
+            val key = factors[i][0].asInteger()
+            val v = factors[i][1].asInteger()
+
+            // TODO_LP seems like this function can be rewritten to be cleaner, recursion on each reduce step maybe
+
+            // Factor it out
+            if (v >= denominator) {
+                multiply *= key
+                val count = v - denominator
+                factors[i] = ListExpr(key, count)
+                if (count.isZero)
+                    i++
+            }
+            else {
+                if ((denominator % v).isZero && !v.isOne && denominator.isEven) {
+                    factors[i] = ListExpr(key, v / TWO)
+                    denominator = (denominator / TWO) as Integer
+                }
+                else {
+                    i++
+                }
+            }
+        }
+
+        if (multiply.isOne && b.denominator == denominator)
+            return Power(a, b)
+
+        // Factor out multiples
+        //Expr result = new Power(this, num);
+        var root = ONE
+        for (j in 0 until factors.size) {
+            val f1 = factors[j][0]
+            val f2 = factors[j][1] as Integer
+            if (f2.isZero)
+                continue
+
+            root = Times(root, f1, f2).eval().asInteger()
+        }
+
+        val nthRoot = Times(multiply, Power(root, Rational(numerator, denominator)))
+        return Power(nthRoot, numerator).eval()
+
     }
 }

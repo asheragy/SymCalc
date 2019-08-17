@@ -1,5 +1,11 @@
 package org.cerion.symcalc.expression.number
 
+import expression.constant.I
+import expression.function.trig.ArcTan
+import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.constant.E
+import org.cerion.symcalc.expression.function.arithmetic.Power
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -146,6 +152,23 @@ class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : Numb
             return Integer.ONE / result
 
         return result
+    }
+
+    fun pow(z: Complex): Expr {
+        // http://mathworld.wolfram.com/ComplexExponentiation.html
+        val a = real
+        val b = img
+
+        val theta = ArcTan(a / b).eval()
+        val a2b2 = a.square() + b.square()
+        val exp1 = Power(a2b2, z / Integer.TWO)
+        val exp2 = Power(E(), Times(I(), z, theta))
+
+        val result = Times(exp1, exp2).eval()
+        if (result is NumberExpr)
+            return result
+
+        return Power(this, z)
     }
 
     override fun compareTo(other: NumberExpr): Int {

@@ -5,16 +5,12 @@ import expression.function.trig.ArcTan
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.function.integer.Factor
-import org.cerion.symcalc.expression.function.list.Tally
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.*
-import java.math.BigInteger
 import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.pow
@@ -56,8 +52,8 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         }
 
         if (a is NumberExpr && b is NumberExpr) {
-            if (a.isInteger && b.isRational)
-                return integerToRational(a.asInteger(), b.asRational())
+            if (a is Integer && b is Rational)
+                return a.pow(b)
             else if (a.isRational && b.isRational) {
                 a as Rational
                 return Divide(Power(a.numerator, b), Power(a.denominator, b)).eval()
@@ -89,7 +85,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         }
 
         if (N is Complex)
-            return complexToPowerFull(z, N)
+            return z.pow(N)
 
         var a = z
         if (N.precision < z.precision)
@@ -108,23 +104,6 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         val img = Times(rN, sin)
 
         return Plus(real, Times(img,I())).eval()
-    }
-
-    private fun complexToPowerFull(x: Complex, y: Complex): Expr {
-        // http://mathworld.wolfram.com/ComplexExponentiation.html
-        val a = x.real
-        val b = x.img
-
-        val theta = ArcTan(a / b).eval()
-        val a2b2 = a.square() + b.square()
-        val exp1 = Power(a2b2, y / Integer.TWO)
-        val exp2 = Power(E(), Times(I(), y, theta))
-
-        val result = Times(exp1, exp2).eval()
-        if (result is NumberExpr)
-            return result
-
-        return this
     }
 
     private fun complexPower(a: Expr, n: Complex): Expr {
@@ -149,73 +128,6 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
             return e
 
         return this
-    }
-
-    private fun integerToRational(a: Integer, b: Rational): Expr {
-        // Performance: Use faster method for square root
-        /* One other method for any value but may need additional checks
-             - Calculate using Math.pow() after converting to doubles
-             - isWholeNumber = floor(value) && !java.lang.Double.isInfinite(value)
-             - Then convert to integer and return
-        */
-        if (b == Rational.HALF) {
-            val sqrt = a.value.sqrtAndRemainder()
-            if (sqrt[1].compareTo(BigInteger.ZERO) == 0)
-                return Integer(sqrt[0])
-        }
-
-        // factor out any numbers that are the Nth root of the denominator
-        val t = Factor(a).eval()
-        val factors = Tally(t).eval().asList()
-
-        var denominator = b.denominator
-        val numerator = b.numerator
-        var multiply = Integer.ONE
-
-        var i = 0
-        while (i < factors.size) {
-            val key = factors[i][0].asInteger()
-            val v = factors[i][1].asInteger()
-
-            // TODO_LP seems like this function can be rewritten to be cleaner, recursion on each reduce step maybe
-
-            // Factor it out
-            if (v >= denominator) {
-                multiply *= key
-                val count = v - denominator
-                factors[i] = ListExpr(key, count)
-                if (count.isZero)
-                    i++
-            }
-            else {
-                if ((denominator % v).isZero && !v.isOne && denominator.isEven) {
-                    factors[i] = ListExpr(key, v / Integer.TWO)
-                    denominator = (denominator / Integer.TWO) as Integer
-                }
-                else {
-                    i++
-                }
-            }
-        }
-
-        if (multiply.isOne && b.denominator == denominator)
-            return Power(a, b)
-
-        // Factor out multiples
-        //Expr result = new Power(this, num);
-        var root = Integer.ONE
-        for (j in 0 until factors.size) {
-            val f1 = factors[j][0]
-            val f2 = factors[j][1] as Integer
-            if (f2.isZero)
-                continue
-
-            root = Times(root, f1, f2).eval().asInteger()
-        }
-
-        val nthRoot = Times(multiply, Power(root, Rational(numerator, denominator)))
-        return Power(nthRoot, numerator).eval()
-
     }
 
     override fun toString(): String {
