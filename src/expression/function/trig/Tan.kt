@@ -5,8 +5,6 @@ import org.cerion.symcalc.expression.constant.ComplexInfinity
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
-import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
@@ -24,8 +22,6 @@ class Tan(vararg e: Expr) : TrigBase(Function.TAN, *e), StandardTrigFunction {
             return Integer.ZERO
 
         if (e is Rational) {
-            val mod = Mod(e.numerator, Times(Integer.TWO, e.denominator).eval().asInteger()).eval().asInteger().intValue()
-
             val ratio =
                     when(e.denominator) {
                         Integer((2)) -> ComplexInfinity()
@@ -35,7 +31,8 @@ class Tan(vararg e: Expr) : TrigBase(Function.TAN, *e), StandardTrigFunction {
                         else -> return this
                     }
 
-            val position = mod.toDouble() / (e.denominator.intValue() * 2)
+            val mod = e.numerator % (Integer.TWO * e.denominator)
+            val position = mod.intValue().toDouble() / (e.denominator.intValue() * 2)
             if (position in 0.250001..0.50 || position in 0.750001..1.0)
                 return Minus(ratio).eval()
 

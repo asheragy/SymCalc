@@ -10,7 +10,6 @@ import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.integer.Factor
-import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.function.list.Tally
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
@@ -183,21 +182,17 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
             // Factor it out
             if (v >= denominator) {
                 multiply *= key
-                factors[i] = ListExpr(key, v - denominator)
+                val count = v - denominator
+                factors[i] = ListExpr(key, count)
+                if (count.isZero)
+                    i++
             }
             else {
-                // TODO operator overloading Integer.mod
-                val mod = Mod(denominator, v).eval()
-                if (mod is Integer && mod.isZero && !v.isOne && denominator.isEven) {
-                    //multiply *= key
+                if ((denominator % v).isZero && !v.isOne && denominator.isEven) {
                     factors[i] = ListExpr(key, v / Integer.TWO)
                     denominator = (denominator / Integer.TWO) as Integer
                 }
                 else {
-                    // TODO look into why this is hit
-                    if (mod !is Integer)
-                        println("TEst")
-
                     i++
                 }
             }

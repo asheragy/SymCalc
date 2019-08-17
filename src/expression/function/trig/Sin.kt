@@ -5,7 +5,6 @@ import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
@@ -27,8 +26,6 @@ class Sin(vararg e: Expr) : TrigBase(Function.SIN, *e), StandardTrigFunction {
             return Integer.ZERO
 
         if (e is Rational) {
-            val mod = Mod(e.numerator, Times(Integer.TWO, e.denominator).eval().asInteger()).eval().asInteger().intValue()
-
             val ratio =
             when(e.denominator) {
                 Integer((2)) -> Integer.ONE
@@ -38,7 +35,8 @@ class Sin(vararg e: Expr) : TrigBase(Function.SIN, *e), StandardTrigFunction {
                 else -> return this
             }
 
-            if (mod > e.denominator.intValue())
+            val mod = e.numerator % (Integer.TWO * e.denominator)
+            if (mod > e.denominator)
                 return Minus(ratio).eval()
 
             return ratio

@@ -3,8 +3,10 @@ package org.cerion.symcalc.expression.function.trig
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.Function
-import org.cerion.symcalc.expression.function.arithmetic.*
-import org.cerion.symcalc.expression.function.integer.Mod
+import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.expression.function.arithmetic.Minus
+import org.cerion.symcalc.expression.function.arithmetic.Power
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
@@ -43,9 +45,8 @@ class Cos(vararg e: Expr) : TrigBase(Function.COS, *e), StandardTrigFunction {
                 else -> return this
             }
 
-            val mod = Mod(Plus(e.numerator, offset), Times(Integer.TWO, e.denominator).eval().asInteger()).eval().asInteger().intValue()
-
-            if (mod >= e.denominator.intValue())
+            val mod = (e.numerator + offset) % (Integer.TWO * e.denominator)
+            if (mod >= e.denominator)
                 return Minus(ratio).eval()
 
             return ratio
