@@ -11,8 +11,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.math.BigDecimal
 import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
-class RealNum_BigDecimalTest : NumberTestBase() {
+class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun identity() {
@@ -27,6 +28,13 @@ class RealNum_BigDecimalTest : NumberTestBase() {
 
     @Test
     fun precision() {
+        assertEquals(10, RealBigDec("1234567890").precision)
+        assertEquals(10, RealBigDec("12.34567890").precision)
+        assertEquals(10, RealBigDec("12345678.90").precision)
+        assertEquals(10, RealBigDec(".1234567890").precision)
+        assertEquals(10, RealBigDec(".0000000000000000000001234567890").precision)
+        assertEquals(11, RealBigDec("12345678900").precision)
+
         assertEquals(11, RealBigDec("1.0000000001").precision)
         assertEquals(1, RealBigDec("0.0000000001").precision)
         assertEquals(2, RealBigDec("0.0000000011").precision)
@@ -35,8 +43,11 @@ class RealNum_BigDecimalTest : NumberTestBase() {
     }
 
     @Test
-    fun precision_Zero() {
-        assertEquals(RealBigDec("0.0000000001"), RealBigDec("0.0000000001") + RealBigDec("0.0000000000"))
+    fun isZero() {
+        assertTrue(RealBigDec(0.0).isZero)
+        assertTrue(RealBigDec("0").isZero)
+        assertTrue(RealBigDec("0.00000000").isZero)
+        assertTrue((RealBigDec("3.14") - RealBigDec("3.14")).isZero)
     }
 
     @Test
@@ -61,6 +72,7 @@ class RealNum_BigDecimalTest : NumberTestBase() {
 
     @Test
     fun add() {
+        assertEquals(RealBigDec("0.0000000001"), RealBigDec("0.0000000001") + RealBigDec("0.0000000000"))
         assertEquals(RealBigDec("0.3607293"), RealBigDec("0.0000000") + RealBigDec("0.3607293"))
     }
 

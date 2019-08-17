@@ -6,7 +6,7 @@ import org.junit.Test
 import java.math.BigDecimal
 import kotlin.test.assertFailsWith
 
-class RealNum_DoubleTest : NumberTestBase() {
+class RealDoubleTest : NumberTestBase() {
 
     @Test
     fun identity() {

@@ -13,10 +13,10 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
     constructor(value: Double) : this(BigDecimal(value))
 
     override val numType: NumberType get() = NumberType.REAL_BIGDEC
-    override val isZero: Boolean get() = value == BigDecimal.ZERO // TODO add tests for this equals may ignore precision
+    override val isZero: Boolean get() = value.compareTo(BigDecimal.ZERO) == 0
     override val isOne: Boolean get() = value == BigDecimal.ONE
     override val isNegative: Boolean get() = value.signum() == -1
-    override val precision: Int get() = value.precision() // TODO verify this matches mathematica more, I think its off by 1 now
+    override val precision: Int get() = value.precision()
 
     fun toDouble(): Double = value.toDouble()
     override fun toString(): String = "$value`$precision"
@@ -46,10 +46,9 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
                 other as RealBigDec
 
                 // TODO_LP issue with zero and precision, this is just a workaround until more is learned on how it
-                // TODO replace with isZero when that is fixed
-                if (value.compareTo(BigDecimal.ZERO) == 0)
+                if (isZero)
                     return other
-                if (other.value.compareTo(BigDecimal.ZERO) == 0)
+                if (other.isZero)
                     return this
 
                 val min = min(this.precision, other.precision)
