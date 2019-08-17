@@ -105,8 +105,7 @@ class PowerTest {
         // Not able to fully evaluate
         assertEquals(Power(Integer(3), Rational(1,3)), Power(Integer(3), Rational(1,3)).eval())
         assertEquals(Power(Integer(29), Rational(2,3)), Power(Integer(29), Rational(2,3)).eval())
-        // TODO need to factor denominator and reduce
-        //assertEquals(Power(IntegerNum(23), RationalNum(1,2)), Power(IntegerNum(529), RationalNum(1,4)).eval())
+        assertEquals(Power(Integer(23), Rational(1,2)), Power(Integer(529), Rational(1,4)).eval())
     }
 
     @Test
@@ -192,7 +191,7 @@ class PowerTest {
         assertEquals(RealDouble(2040886.0816112224), Power(RealDouble(1.2345), Rational(12345,179)).eval())
         assertEquals(RealDouble(4.89983252377579E-7), Power(RealDouble(1.2345), Rational(-12345,179)).eval())
 
-        // TODO This invovles the Nth root so technically there are N answers and only 1 real, mathematica seems to give complex answer most of the time not sure what to do here yet
+        // TODO_LP This invovles the Nth root so technically there are N answers and only 1 real, mathematica seems to give complex answer most of the time not sure what to do here yet
         //assertEquals(RealNum.create(1.0), Power(RealNum.create(-1.2345), Rational(3,2)).eval())
 
         assertEquals(RealBigDec("2"), Power(RealBigDec("4.0"), Rational.HALF).eval())

@@ -10,6 +10,7 @@ import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.integer.Factor
+import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.function.list.Tally
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
@@ -55,38 +56,29 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
             return complexPower(a, Integer.ZERO, img)
         }
 
-        if (b.isNumber) {
-            b as NumberExpr
-            if (a.isNumber) {
-                a as NumberExpr
-
-                if (a.isInteger && b.isRational)
-                    return integerToRational(a.asInteger(), b.asRational())
-                else if (a.isRational && b.isRational) {
-                    a as Rational
-                    return Divide(Power(a.numerator, b), Power(a.denominator, b)).eval()
-                }
-
-                // Complex power implemented here since the result is not always a NumberExpr
-                if (b.isComplex && !b.asComplex().img.isZero) {
-                    if (a is Complex)
-                        return complexToPower(a, b)
-
-                    return complexPower(a, b.asComplex())
-                }
-
-                when (a) {
-                    is Integer -> return a.power(b)
-                    is Rational -> return a.power(b)
-                    is RealDouble -> return a.power(b)
-                    is RealBigDec -> return a.power(b)
-                    is Complex -> return complexToPower(a, b)
-                }
+        if (a is NumberExpr && b is NumberExpr) {
+            if (a.isInteger && b.isRational)
+                return integerToRational(a.asInteger(), b.asRational())
+            else if (a.isRational && b.isRational) {
+                a as Rational
+                return Divide(Power(a.numerator, b), Power(a.denominator, b)).eval()
             }
 
-            // TODO this is not the right check, just gets past the current issue
-            if (a.isConst && b is Complex)
-                return complexPower(a, b)
+            // Complex power implemented here since the result is not always a NumberExpr
+            if (b.isComplex && !b.asComplex().img.isZero) {
+                if (a is Complex)
+                    return complexToPower(a, b)
+
+                return complexPower(a, b.asComplex())
+            }
+
+            when (a) {
+                is Integer -> return a.power(b)
+                is Rational -> return a.power(b)
+                is RealDouble -> return a.power(b)
+                is RealBigDec -> return a.power(b)
+                is Complex -> return complexToPower(a, b)
+            }
         }
 
         return this
@@ -177,7 +169,8 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         val t = Factor(a).eval()
         val factors = Tally(t).eval().asList()
 
-        val denominator = b.denominator
+        var denominator = b.denominator
+        val numerator = b.numerator
         var multiply = Integer.ONE
 
         var i = 0
@@ -185,15 +178,32 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
             val key = factors[i][0].asInteger()
             val v = factors[i][1].asInteger()
 
+            // TODO_LP seems like this function can be rewritten to be cleaner, recursion on each reduce step maybe
+
             // Factor it out
             if (v >= denominator) {
                 multiply *= key
                 factors[i] = ListExpr(key, v - denominator)
-            } else
-                i++
+            }
+            else {
+                // TODO operator overloading Integer.mod
+                val mod = Mod(denominator, v).eval()
+                if (mod is Integer && mod.isZero && !v.isOne && denominator.isEven) {
+                    //multiply *= key
+                    factors[i] = ListExpr(key, v / Integer.TWO)
+                    denominator = (denominator / Integer.TWO) as Integer
+                }
+                else {
+                    // TODO look into why this is hit
+                    if (mod !is Integer)
+                        println("TEst")
+
+                    i++
+                }
+            }
         }
 
-        if (multiply.isOne)
+        if (multiply.isOne && b.denominator == denominator)
             return Power(a, b)
 
         // Factor out multiples
@@ -208,8 +218,8 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
             root = Times(root, f1, f2).eval().asInteger()
         }
 
-        val nthRoot = Times(multiply, Power(root, b))
-        return Power(nthRoot, b.numerator).eval()
+        val nthRoot = Times(multiply, Power(root, Rational(numerator, denominator)))
+        return Power(nthRoot, numerator).eval()
 
     }
 
@@ -285,16 +295,3 @@ private fun RealBigDec.power(other: NumberExpr): NumberExpr {
         NumberType.COMPLEX -> throw UnsupportedOperationException()
     }
 }
-
-/*
-private fun Complex.power(other: NumberExpr): NumberExpr {
-    when (other.numType) {
-        NumberType.INTEGER,
-        NumberType.RATIONAL,
-        NumberType.REAL,
-        NumberType.COMPLEX ->
-
-    }
-}
-
- */
