@@ -1,8 +1,9 @@
 package org.cerion.symcalc.expression.number
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
+
 
 class ComplexTest {
 
@@ -10,7 +11,7 @@ class ComplexTest {
     fun equals() {
         assertEquals(Complex(0, 0), Complex.ZERO)
         assertEquals(Complex(1, 0).eval(), Integer.ONE)
-        assertNotEquals(Complex(1, 1), Integer.ONE)
+        assertNotEquals(Complex(1, 1).eval(), Integer.ONE)
         assertEquals(Complex(5, 6), Complex(5, 6))
         assertNotEquals(Complex(5, 6), Complex(5, 7))
         assertNotEquals(Complex(5, 6), Complex(6, 6))

@@ -40,7 +40,7 @@ class RationalTest : NumberTestBase() {
 
     @Test
     fun compareTo_complex() {
-        assertFailsWith<UnsupportedOperationException> { Rational(1,2).compareTo(Complex(IntegerNumTest.zero, IntegerNumTest.one)) }
+        assertFailsWith<UnsupportedOperationException> { Rational(1,2).compareTo(Complex(IntegerTest.zero, IntegerTest.one)) }
     }
 
     @Test

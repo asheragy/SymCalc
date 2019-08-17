@@ -1,13 +1,12 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.exception.OperationException
-import org.junit.Assert.assertEquals
-import org.junit.Assert.fail
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.math.BigInteger
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class IntegerNumTest {
+class IntegerTest {
 
     private val i0 = Integer(0)
     private val i1 = Integer(1)
@@ -191,28 +190,17 @@ class IntegerNumTest {
     }
 
     private fun verify(e: NumberExpr, expected: Long) {
-        if (e.numType != NumberType.INTEGER)
-            fail("unexpected type: " + e.numType)
+        assertEquals(NumberType.INTEGER, e.numType, "unexpected type: " + e.numType)
 
         val n = e as Integer
         assertEquals(expected, n.intValue().toLong())
     }
 
     private fun verify(e: NumberExpr, expected: BigInteger) {
-        if (e.numType != NumberType.INTEGER)
-            fail("unexpected type: " + e.numType)
+        assertEquals(NumberType.INTEGER, e.numType, "unexpected type: " + e.numType)
 
         val n = e as Integer
         assertEquals(expected, n.toBigInteger())
-    }
-
-    private fun divideByZero(n: NumberExpr, exp: NumberExpr) {
-        try {
-            verify(n.div(exp), 0)
-            assert(true)
-        } catch (e: ArithmeticException) {
-            //Success
-        }
     }
 
     companion object {

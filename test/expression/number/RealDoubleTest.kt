@@ -33,8 +33,8 @@ class RealDoubleTest : NumberTestBase() {
         assertEquals(-1, RealDouble(5.12344).compareTo(RealDouble(5.12345)))
         assertEquals(1, RealDouble(5.12346).compareTo(RealDouble(5.12345)))
 
-        assertEquals(0, RealDouble(0.0001).compareTo(Complex(RealDouble((0.0001)), IntegerNumTest.zero)))
-        assertFailsWith<UnsupportedOperationException> { RealDouble(5.0).compareTo(Complex(IntegerNumTest.zero, IntegerNumTest.one)) }
+        assertEquals(0, RealDouble(0.0001).compareTo(Complex(RealDouble((0.0001)), IntegerTest.zero)))
+        assertFailsWith<UnsupportedOperationException> { RealDouble(5.0).compareTo(Complex(IntegerTest.zero, IntegerTest.one)) }
     }
 
     @Test

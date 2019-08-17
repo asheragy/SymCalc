@@ -5,7 +5,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
 
-class RealNumTest : NumberTestBase() {
+class RealTest : NumberTestBase() {
 
     private val RealDouble = RealDouble(1.12345)
     private val RealBigDec = RealBigDec("1.1234567890987654321")
