@@ -1,10 +1,13 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
+import expression.constant.I
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.trig.Sin
+import org.cerion.symcalc.expression.number.Complex
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.expression.number.RealBigDec
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -48,6 +51,13 @@ class TimesTest {
         // 2*(Pi/2 + Pi) = 3*Pi
         val e = Times(Integer.TWO,Plus(Pi(), Divide(Pi(), Integer.TWO))).eval()
         assertEquals(Times(Integer(3), Pi()), e)
+
+        val x = RealBigDec("1.6475490")
+        val y = RealBigDec("0.93267057")
+        val z=  RealBigDec("0.3607293")
+        // x * (y + iz)
+        assertEquals(Complex("1.5366205", "0.5943192"), Times(x, Plus(y, Times(I(), z))).eval())
+        assertEquals(Complex("1.5366205", "0.5943192"), Plus(Times(x, y), Times(I(), x, z)).eval())
     }
 
     @Test

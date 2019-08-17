@@ -1,8 +1,10 @@
 package expression.number
 
+import expression.constant.I
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
 import org.junit.Assert.assertEquals
@@ -55,6 +57,11 @@ class RealNum_BigDecimalTest : NumberTestBase() {
 
         // using N()
         assertEquals(RealBigDec("5.85987"), Plus(N(E(), Integer(10)), N(Pi(), Integer(5))).eval())
+    }
+
+    @Test
+    fun add() {
+        assertEquals(RealBigDec("0.3607293"), RealBigDec("0.0000000") + RealBigDec("0.3607293"))
     }
 
     @Test

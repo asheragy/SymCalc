@@ -35,6 +35,8 @@ class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : Numb
             setArg(1, RealDouble(i.toDouble()))
     }
 
+    constructor(r: String, i: String): this(RealBigDec(r), RealBigDec(i))
+
     constructor(s: String): this() {
         val num = s.substring(0, s.length - 1)
 

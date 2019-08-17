@@ -238,8 +238,8 @@ class PowerTest {
         // BigDec
         //val piBigDec = RealBigDec("3.1416")
         val bigDec = RealBigDec("5.0001")
-        assertEquals(Complex(RealBigDec("25.001"), RealBigDec("3.855")), Power(bigDec, Complex(2,4)).eval())
-        assertEquals(Complex(RealBigDec("1.5653"), RealBigDec("1.6114")), Power(bigDec, Complex(Rational.HALF,Rational.HALF)).eval())
+        assertEquals(Complex(RealBigDec("24.702"), RealBigDec("3.855")), Power(bigDec, Complex(2,4)).eval())
+        assertEquals(Complex(RealBigDec("1.5503"), RealBigDec("1.6114")), Power(bigDec, Complex(Rational.HALF,Rational.HALF)).eval())
         assertEquals(Complex(24.701991088784933, 3.855079473838341), Power(bigDec, Complex(2.0,4.0)).eval())
         // TODO_LP Some issues with precision here most likely related to other pending to-dos related to precision
         //assertEquals(Complex(RealBigDec("52.9"), RealBigDec("-147.8")), Power(bigDec, Complex(piBigDec,piBigDec)).eval())
@@ -256,8 +256,8 @@ class PowerTest {
         assertEquals(Complex(1.7989074399478673,1.1117859405028423), Power(Complex(RealDouble(2.0), Integer(4)), Rational.HALF).eval())
         assertEquals(Complex(0.07690324994251796,-0.18717392051825588), Power(Complex(RealDouble(2.0), Integer(4)), Rational(-16,15)).eval())
 
-        // TODO need to implement ArcTan BigDec
-        //assertEquals(Complex(1.7989074399478673,1.1117859405028423), Power(Complex(RealNum_BigDecimal("2.000001"),IntegerNum(4)), Rational.HALF).eval())
+        // TODO_LP precision may not be correct but its related to other operations not this one
+        assertEquals(Complex("1.5366205", "0.5943192"), Power(Complex(RealBigDec("2.000001"), Integer(4)), Rational.THIRD).eval())
     }
 
     @Test
@@ -267,8 +267,7 @@ class PowerTest {
 
         assertEquals(Complex(1.309544770737814, 6.174162506105573), Power(Complex(RealDouble(2.0), Integer(4)), RealBigDec("1.23")).eval())
 
-        // TODO need to implement ArcTan with BigDec
-        //assertEquals(Complex(0.03287406851910734, -0.1549926705899962), Power(Complex(2,4), RealNum_BigDecimal("1.23")).eval())
+        assertEquals(Complex("1.3", "6.2"), Power(Complex(2,4), RealBigDec("1.23")).eval())
     }
 
     @Test

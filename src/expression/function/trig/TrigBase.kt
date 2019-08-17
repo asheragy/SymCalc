@@ -13,7 +13,6 @@ import org.cerion.symcalc.expression.number.RealDouble
 
 interface StandardTrigFunction {
     fun evaluatePiFactoredOut(e: Expr): Expr
-    fun evaluateAsBigDecimal(n: RealBigDec): RealBigDec
 }
 
 abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : FunctionExpr(t, *e) {
@@ -23,20 +22,19 @@ abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : Fun
 
     protected abstract fun evaluateAsDouble(d: Double): Double
     protected abstract fun evaluate(e: Expr): Expr
+    protected abstract fun evaluateAsBigDecimal(n: RealBigDec): RealBigDec
 
     public override fun evaluate(): Expr {
         val e = get(0)
         if (e.isNumber) {
             e as NumberExpr
-            if (e is RealDouble) {
+            if (e is RealDouble)
                 return RealDouble(evaluateAsDouble(e.value))
-            }
+            if (e is RealBigDec)
+                return evaluateAsBigDecimal(e)
         }
 
         if (this is StandardTrigFunction) {
-            if (e is RealBigDec)
-                return evaluateAsBigDecimal(e)
-
             if (e.isNumber && e.asNumber().isZero)
                 return evaluatePiFactoredOut(Integer.ZERO)
 

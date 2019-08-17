@@ -124,5 +124,6 @@ class Rational constructor(n: Integer, d: Integer = Integer.ONE) : NumberExpr() 
         val ZERO = Rational(Integer.ZERO, Integer.ONE)
         val ONE = Rational(Integer.ONE, Integer.ONE)
         val HALF = Rational(Integer.ONE, Integer.TWO)
+        val THIRD = Rational(Integer.ONE, Integer(3))
     }
 }
