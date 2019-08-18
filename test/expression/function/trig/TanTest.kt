@@ -12,8 +12,7 @@ import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -73,7 +72,7 @@ class TanTest {
             val x = Times(Integer(i), step).eval()
             val tan = Tan(x)
             val pos = (((i % 8) + 8) % 8) // mod but handles negative values
-            Assert.assertEquals("$x", expected[pos], tan.eval())
+            assertEquals(expected[pos], tan.eval(), "$x")
         }
     }
 
@@ -88,7 +87,7 @@ class TanTest {
             val x = Times(Integer(i), step).eval()
             val tan = Tan(x)
             val pos = (((i % 12) + 12) % 12) // mod but handles negative values
-            Assert.assertEquals("$x", expected[pos], tan.eval())
+            assertEquals(expected[pos], tan.eval(), "$x")
         }
     }
 

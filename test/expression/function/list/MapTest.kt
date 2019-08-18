@@ -7,8 +7,8 @@ import org.cerion.symcalc.expression.function.list.Map
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class MapTest {
     @Test

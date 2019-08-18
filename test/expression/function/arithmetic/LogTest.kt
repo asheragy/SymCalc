@@ -3,8 +3,8 @@ package expression.function.arithmetic
 import org.cerion.symcalc.expression.function.arithmetic.Log
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class LogTest {
 

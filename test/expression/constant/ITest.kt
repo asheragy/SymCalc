@@ -4,8 +4,8 @@ import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.core.Hold
 import org.cerion.symcalc.expression.number.Complex
 import org.cerion.symcalc.expression.number.Integer
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class ITest {
 

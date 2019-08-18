@@ -2,9 +2,9 @@ package org.cerion.symcalc.expression.function.statistics
 
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.Integer
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class RandomIntegerTest {
 
@@ -20,8 +20,8 @@ class RandomIntegerTest {
             count[x]++
         }
 
-        assertTrue("0 count = " + count[0], count[0] > 4800)
-        assertTrue("1 count = " + count[1], count[1] > 4800)
+        assertTrue(count[0] > 4800, "0 count = " + count[0])
+        assertTrue(count[1] > 4800, "1 count = " + count[1])
     }
 
     @Test

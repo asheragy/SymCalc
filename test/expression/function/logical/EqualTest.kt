@@ -4,8 +4,8 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertTrue
 
 class EqualTest {
 
@@ -26,6 +26,6 @@ class EqualTest {
 
     private fun isEqual(a: Expr, b: Expr) {
         val equal = Equal(a, b).eval()
-        Assert.assertTrue("$a == $b", equal.asBool().value)
+        assertTrue(equal.asBool().value, "$a == $b")
     }
 }

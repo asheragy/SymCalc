@@ -9,8 +9,7 @@ import org.cerion.symcalc.expression.function.list.Join
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class CosTest {
@@ -24,7 +23,7 @@ class CosTest {
         for(i in -10 until 10) {
             val cos = Cos(Times(Integer(i), step))
             val pos = (((i % 4) + 4) % 4) // mod but handles negative values
-            Assert.assertEquals(expected[pos], cos.eval())
+            assertEquals(expected[pos], cos.eval())
         }
     }
 
@@ -39,7 +38,7 @@ class CosTest {
         for(i in -15 until 15) {
             val cos = Cos(Times(Integer(i), step))
             val pos = (((i % 6) + 6) % 6) // mod but handles negative values
-            Assert.assertEquals(expected[pos], cos.eval())
+            assertEquals(expected[pos], cos.eval())
         }
     }
 
@@ -55,7 +54,7 @@ class CosTest {
             val x = Times(Integer(i), step).eval()
             val cos = Cos(x)
             val pos = (((i % 8) + 8) % 8) // mod but handles negative values
-            Assert.assertEquals("$x", expected[pos], cos.eval())
+            assertEquals(expected[pos], cos.eval(), "$x")
         }
     }
 
@@ -71,7 +70,7 @@ class CosTest {
             val x = Times(Integer(i), step).eval()
             val cos = Cos(x)
             val pos = (((i % 12) + 12) % 12) // mod but handles negative values
-            Assert.assertEquals("$x", expected[pos], cos.eval())
+            assertEquals(expected[pos], cos.eval(), "$x")
         }
     }
 
