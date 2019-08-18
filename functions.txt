@@ -1,28 +1,22 @@
-Basic:
-Divide DivideBy Plus Power Sqrt Subtract SubtractFrom Times TimesBy Log Log10 Log2 Exp
-
-Trig:
-Sin Cos Tan Csc Sec Cot ArcCos ArcCot ArcCsc ArcSec ArcSin ArcTan Sinc
-
-Calculus:
-D Dt Integrate
-
-Logic:
-And Or Not Nand Nor Xor Implies Equivalent Equal Unequal
+Basic: Divide DivideBy Plus Power Sqrt Subtract SubtractFrom Times TimesBy Log Log10 Log2 Exp AddTo
+Trig: Sin Cos Tan Csc Sec Cot ArcCos ArcCot ArcCsc ArcSec ArcSin ArcTan Sinc
+Calculus: D Dt Integrate
+Logic: And Or Not Nand Nor Xor Implies Equivalent Equal Unequal
 
 List:
 ArrayFlatten Flatten FlattenAt Partition Join Sequence Sort SortBy Reverse RotateLeft RotateRight Transpose
 ArrayPad Riffle PadLeft PadRight Intersection Complement Split SplitBy Gather GatherBy Union Tally DeleteDuplicates Tuples Subsets Permutations RandomSample AppendTo
-Accumulate ConstantArray
+Accumulate ConstantArray Apply ArrayQ ArrayDepth Array
 
-Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN
+Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN ArithmeticGeometricMean
 Spheroidal: SpheroidalPS SpheroidalPSPrime SpheroidalQS SpheroidalQSPrime SpheroidalS1 SpheroidalS1Prime SpheroidalS2 SpheroidalS2Prime SpheroidalRadialFactor SpheroidalEigenvalue SpheroidalJoiningFactor
 Hyperbolic: Sinh Cosh Tanh Csch Sech Coth ArcSinh ArcCosh ArcTanh ArcCsch ArcSech ArcCoth
 Fourier:  Fourier FourierCoefficient FourierCosCoefficient FourierCosSeries FourierCosTransform FourierDCT FourierDST FourierParameters FourierSequenceTransform FourierSeries FourierSinCoefficient FourierSinSeries FourierSinTransform FourierTransform FourierTrigSeries InverseFourier InverseFourierCosTransform InverseFourierSequenceTransform InverseFourierSinTransform InverseFourierTransform
+Geometric: AffineTransform AppellF1
 
 Constants: I Pi E Degree GoldenRatio EulerGamma StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber ComplexInfinity DirectedInfinity Infinity Indeterminate
 Recurrence: Fibonacci LucasL BernoulliB NorlundB EulerE StirlingS1 StirlingS2 HarmonicNumber PolyGamma Zeta LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB
-Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator
+Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Arg Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator
 Integer: Mod PowerMod Quotient QuotientRemainder GCD LCM Divisible EvenQ OddQ FactorInteger Divisors IntegerPartitions IntegerDigits FrobeniusNumber FrobeniusSolve
 Bitwise: BitAnd BitClear BitGet BitLength BitNot BitOr BitSet BitShiftLeft BitShiftRight BitXor
 
@@ -31,96 +25,13 @@ Fractions: Apart Together Cancel Numerator Denominator PolynomialQuotient Polyno
 Timing: AbsoluteTime AbsoluteTiming
 Primes: Prime PrimeNu PrimeOmega PrimePi PrimePowerQ Primes PrimeZetaP NextPrime RandomPrime ZetaZero RiemannR RiemannSiegelZ CoprimeQ PrimeQ LiouvilleLambda MangoldtLambda
 Expressions: Part Length First Last Most Rest Take Drop Extract ReplacePart Append Prepend Insert Delete DeleteCases Position Cases Map MapAll MapAt Heads Sow Reap
+Core: Accuracy AccuracyGoal Precision PrecisionGoal WorkingPrecision Hold HoldAll HoldAllComplete HoldComplete HoldFirst HoldForm HoldPattern HoldRest AtomQ Attributes
+Bessel-Related: AiryAi AiryAiPrime AiryAiZero AiryBi AiryBiPrime AiryBiZero BesselI BesselJ BesselJZero BesselK BesselY BesselYZero SphericalBesselJ SphericalBesselY SphericalHankelH1 SphericalHankelH2 HankelH1 HankelH2 KelvinBei KelvinBer KelvinKei KelvinKer StruveH StruveL AngerJ WeberE
+AlgebraicTheory: AlgebraicIntegerQ AlgebraicNumber AlgebraicNumberDenominator AlgebraicNumberNorm AlgebraicNumberPolynomial AlgebraicNumberTrace AlgebraicUnitQ
+Polynomial: ApartSquareFree
+Optimization: ArgMax ArgMin NMaximize NMaxValue NMinimize NMinValue FindMaximum FindMaxValue FindMinimum FindMinValue FindFit Maximize Minimize MaxValue MinValue NArgMax NArgMin FindArgMax FindArgMin FindShortestTour
 
 
-
-
-Accuracy
-AccuracyGoal
-AddTo
-AffineTransform
-After
-AiryAi
-AiryAiPrime
-AiryAiZero
-AiryBi
-AiryBiPrime
-AiryBiZero
-AlgebraicIntegerQ
-AlgebraicNumber
-AlgebraicNumberDenominator
-AlgebraicNumberNorm
-AlgebraicNumberPolynomial
-AlgebraicNumberTrace
-AlgebraicRules
-AlgebraicRulesData
-Algebraics
-AlgebraicUnitQ
-Alias
-Alignment
-AlignmentMarker
-AlignmentPoint
-All
-AllowInlineCells
-AllowScriptLevelChange
-Alternatives
-AmbientLight
-Analytic
-AnchoredSearch
-AngerJ
-ApartSquareFree
-Appearance
-AppearanceElements
-AppellF1
-Apply
-Arg
-ArgMax
-ArgMin
-ArgumentCountQ
-ArithmeticGeometricMean
-Array
-ArrayDepth
-ArrayPlot
-ArrayQ
-ArrayRules
-Arrow
-Arrow3DBox
-ArrowBox
-Arrowheads
-AspectRatio
-AspectRatioFixed
-Assuming
-Assumptions
-AstronomicalData
-AtomQ
-Attributes
-
-AutoAction
-AutoDelete
-AutoEvaluateEvents
-AutoGeneratedPackage
-AutoIndent
-AutoIndentSpacings
-AutoItalicWords
-AutoloadPath
-AutoMatch
-Automatic
-AutoMultiplicationSymbol
-AutoNumberFormatting
-AutoOpenNotebooks
-AutoOpenPalettes
-AutorunSequencing
-AutoScaling
-AutoScroll
-AutoSpacing
-AutoStyleOptions
-AutoStyleWords
-Axes
-AxesEdge
-AxesLabel
-AxesOrigin
-AxesStyle
-Axis
 Band
 BarChart
 BarChart3D
@@ -140,12 +51,6 @@ BeginFrontEndInteractionPacket
 BeginPackage
 Below
 BernsteinBasis
-BesselI
-BesselJ
-BesselJZero
-BesselK
-BesselY
-BesselYZero
 Beta
 BetaRegularized
 BezierCurve
@@ -697,26 +602,18 @@ FillingStyle
 FilterRules
 FinancialData
 Find
-FindArgMax
-FindArgMin
 FindClusters
 FindCurvePath
 FindDivisions
 FindFile
-FindFit
 FindGeneratingFunction
 FindGeoLocation
 FindInstance
 FindLinearRecurrence
 FindList
-FindMaximum
-FindMaxValue
-FindMinimum
-FindMinValue
 FindRoot
 FindSequenceFunction
 FindSettings
-FindShortestTour
 Fine
 FinishDynamic
 FiniteAbelianGroupCount
@@ -896,8 +793,6 @@ Gudermannian
 GumbelDistribution
 HalfNormalDistribution
 HammingDistance
-HankelH1
-HankelH2
 HankelMatrix
 HarmonicMean
 HarmonicMeanFilter
@@ -924,14 +819,6 @@ HilbertMatrix
 Histogram
 Histogram3D
 HitMissTransform
-Hold
-HoldAll
-HoldAllComplete
-HoldComplete
-HoldFirst
-HoldForm
-HoldPattern
-HoldRest
 HomeDirectory
 HomePage
 Horizontal
@@ -1086,10 +973,6 @@ Joined
 JoinForm
 JordanDecomposition
 K
-KelvinBei
-KelvinBer
-KelvinKei
-KelvinKer
 KernelObject
 Kernels
 KleinInvariantJ
@@ -1265,7 +1148,6 @@ MatrixQ
 MatrixRank
 MaxBend
 MaxFilter
-Maximize
 MaxIterations
 MaxMemoryUsed
 MaxPlotPoints
@@ -1274,7 +1156,6 @@ MaxRecursion
 MaxStepFraction
 MaxSteps
 MaxStepSize
-MaxValue
 MaxwellDistribution
 Mean
 MeanDeviation
@@ -1310,13 +1191,11 @@ Method
 MethodOptions
 MinFilter
 MinimalPolynomial
-Minimize
 Minors
 MinRecursion
 MinSize
 Minus
 MinusPlus
-MinValue
 Missing
 Modal
 Mode
@@ -1350,8 +1229,6 @@ Multiplicity
 N
 NameQ
 Names
-NArgMax
-NArgMin
 NBernoulliB
 NCache
 NDSolve
@@ -1378,10 +1255,6 @@ NHoldAll
 NHoldFirst
 NHoldRest
 NIntegrate
-NMaximize
-NMaxValue
-NMinimize
-NMinValue
 NominalInterestRate
 NominalVariables
 NonAssociative
@@ -1662,8 +1535,6 @@ Precedes
 PrecedesEqual
 PrecedesSlantEqual
 PrecedesTilde
-Precision
-PrecisionGoal
 PreDecrement
 PreemptProtect
 PreferencesPath
@@ -2019,10 +1890,6 @@ SpellingOptions
 SpellingSuggestionsPacket
 Sphere
 SphereBox
-SphericalBesselJ
-SphericalBesselY
-SphericalHankelH1
-SphericalHankelH2
 SphericalHarmonicY
 SphericalPlot3D
 SphericalRegion
@@ -2098,8 +1965,6 @@ StripBoxes
 StripOnInput
 StripWrapperBoxes
 StructuredSelection
-StruveH
-StruveL
 Stub
 StudentTDistribution
 Subfactorial
@@ -2337,7 +2202,6 @@ VerifyConvergence
 WaitAll
 WaitNext
 WaitUntil
-WeberE
 Wedge
 WeibullDistribution
 WeierstrassHalfPeriods
@@ -2352,7 +2216,6 @@ While
 WhittakerM
 WhittakerW
 With
-WorkingPrecision
 Wronskian
 Xnor
 YuleDissimilarity
