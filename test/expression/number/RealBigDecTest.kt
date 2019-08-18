@@ -1,17 +1,16 @@
 package expression.number
 
-import expression.constant.I
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.math.BigDecimal
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
+
 
 class RealBigDecTest : NumberTestBase() {
 
@@ -67,7 +66,7 @@ class RealBigDecTest : NumberTestBase() {
         assertEquals(RealBigDec("0.99"), a / b)
 
         // using N()
-        assertEquals(RealBigDec("5.85987"), Plus(N(E(), Integer(10)), N(Pi(), Integer(5))).eval())
+        assertEquals(RealBigDec("5.8599"), Plus(N(E(), Integer(10)), N(Pi(), Integer(5))).eval())
     }
 
     @Test
