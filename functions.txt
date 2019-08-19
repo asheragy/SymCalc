@@ -1,126 +1,43 @@
 Basic: Divide DivideBy Plus Power Sqrt Subtract SubtractFrom Times TimesBy Log Log10 Log2 Exp AddTo
 Trig: Sin Cos Tan Csc Sec Cot ArcCos ArcCot ArcCsc ArcSec ArcSin ArcTan Sinc
 Calculus: D Dt Integrate
-Logic: And Or Not Nand Nor Xor Implies Equivalent Equal Unequal
+Logic: And Or Not Nand Nor Xor Implies Equivalent Equal Unequal BooleanConvert BooleanCountingFunction BooleanFunction BooleanMaxterms BooleanMinimize BooleanMinterms BooleanTable BooleanVariables
 
 List:
 ArrayFlatten Flatten FlattenAt Partition Join Sequence Sort SortBy Reverse RotateLeft RotateRight Transpose
 ArrayPad Riffle PadLeft PadRight Intersection Complement Split SplitBy Gather GatherBy Union Tally DeleteDuplicates Tuples Subsets Permutations RandomSample AppendTo
-Accumulate ConstantArray Apply ArrayQ ArrayDepth Array
+Accumulate ConstantArray Apply ArrayQ ArrayDepth Array Band BinCounts
 
 Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN ArithmeticGeometricMean
 Spheroidal: SpheroidalPS SpheroidalPSPrime SpheroidalQS SpheroidalQSPrime SpheroidalS1 SpheroidalS1Prime SpheroidalS2 SpheroidalS2Prime SpheroidalRadialFactor SpheroidalEigenvalue SpheroidalJoiningFactor
 Hyperbolic: Sinh Cosh Tanh Csch Sech Coth ArcSinh ArcCosh ArcTanh ArcCsch ArcSech ArcCoth
 Fourier:  Fourier FourierCoefficient FourierCosCoefficient FourierCosSeries FourierCosTransform FourierDCT FourierDST FourierParameters FourierSequenceTransform FourierSeries FourierSinCoefficient FourierSinSeries FourierSinTransform FourierTransform FourierTrigSeries InverseFourier InverseFourierCosTransform InverseFourierSequenceTransform InverseFourierSinTransform InverseFourierTransform
 Geometric: AffineTransform AppellF1
+Curve/Splines: BernsteinBasis BezierFunction SplineClosed SplineDegree SplineKnots SplineWeights BSplineFunction BSplineBasis InterpolatingFunction InterpolatingPolynomial Interpolation InterpolationOrder InterpolationPoints InterpolationPrecision
+Special: Beta BetaRegularized Gamma
+Bessel-Related: AiryAi AiryAiPrime AiryAiZero AiryBi AiryBiPrime AiryBiZero BesselI BesselJ BesselJZero BesselK BesselY BesselYZero SphericalBesselJ SphericalBesselY SphericalHankelH1 SphericalHankelH2 HankelH1 HankelH2 KelvinBei KelvinBer KelvinKei KelvinKer StruveH StruveL AngerJ WeberE
 
 Constants: I Pi E Degree GoldenRatio EulerGamma StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber ComplexInfinity DirectedInfinity Infinity Indeterminate
 Recurrence: Fibonacci LucasL BernoulliB NorlundB EulerE StirlingS1 StirlingS2 HarmonicNumber PolyGamma Zeta LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB
-Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Arg Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator
+Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Arg Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator BaseForm
 Integer: Mod PowerMod Quotient QuotientRemainder GCD LCM Divisible EvenQ OddQ FactorInteger Divisors IntegerPartitions IntegerDigits FrobeniusNumber FrobeniusSolve
 Bitwise: BitAnd BitClear BitGet BitLength BitNot BitOr BitSet BitShiftLeft BitShiftRight BitXor
 
-Statistics: BernoulliDistribution BetaBinomialDistribution BetaDistribution BetaNegativeBinomialDistribution BinomialDistribution HypergeometricDistribution NegativeBinomialDistribution GeometricDistribution PoissonDistribution DiscreteUniformDistribution ZipfDistribution LogSeriesDistribution
+Statistics: BernoulliDistribution BetaBinomialDistribution BetaDistribution BetaNegativeBinomialDistribution BinomialDistribution HypergeometricDistribution NegativeBinomialDistribution GeometricDistribution PoissonDistribution DiscreteUniformDistribution ZipfDistribution LogSeriesDistribution BinLists BrayCurtisDistance
 Fractions: Apart Together Cancel Numerator Denominator PolynomialQuotient PolynomialRemainder Residue PadeApproximant ExpandAll ExpandDenominator ExpandNumerator
 Timing: AbsoluteTime AbsoluteTiming
 Primes: Prime PrimeNu PrimeOmega PrimePi PrimePowerQ Primes PrimeZetaP NextPrime RandomPrime ZetaZero RiemannR RiemannSiegelZ CoprimeQ PrimeQ LiouvilleLambda MangoldtLambda
 Expressions: Part Length First Last Most Rest Take Drop Extract ReplacePart Append Prepend Insert Delete DeleteCases Position Cases Map MapAll MapAt Heads Sow Reap
-Core: Accuracy AccuracyGoal Precision PrecisionGoal WorkingPrecision Hold HoldAll HoldAllComplete HoldComplete HoldFirst HoldForm HoldPattern HoldRest AtomQ Attributes
-Bessel-Related: AiryAi AiryAiPrime AiryAiZero AiryBi AiryBiPrime AiryBiZero BesselI BesselJ BesselJZero BesselK BesselY BesselYZero SphericalBesselJ SphericalBesselY SphericalHankelH1 SphericalHankelH2 HankelH1 HankelH2 KelvinBei KelvinBer KelvinKei KelvinKer StruveH StruveL AngerJ WeberE
+Core: Accuracy AccuracyGoal Precision PrecisionGoal WorkingPrecision Hold HoldAll HoldAllComplete HoldComplete HoldFirst HoldForm HoldPattern HoldRest AtomQ Attributes ByteCount
+
 AlgebraicTheory: AlgebraicIntegerQ AlgebraicNumber AlgebraicNumberDenominator AlgebraicNumberNorm AlgebraicNumberPolynomial AlgebraicNumberTrace AlgebraicUnitQ
 Polynomial: ApartSquareFree
 Optimization: ArgMax ArgMin NMaximize NMaxValue NMinimize NMinValue FindMaximum FindMaxValue FindMinimum FindMinValue FindFit Maximize Minimize MaxValue MinValue NArgMax NArgMin FindArgMax FindArgMin FindShortestTour
+UnknownCategory: BarnesG
+Programming: Break Continue Goto Do For While NestWhile Nest If Switch Return Throw Catch Block
 
 
-Band
-BarChart
-BarChart3D
-BarnesG
-BarOrigin
-BarSpacing
-BaseForm
-Baseline
-BaselinePosition
-BaseStyle
-Because
-Beep
-Before
-Begin
-BeginDialogPacket
-BeginFrontEndInteractionPacket
-BeginPackage
-Below
-BernsteinBasis
-Beta
-BetaRegularized
-BezierCurve
-BezierCurve3DBox
-BezierCurve3DBoxOptions
-BezierCurveBox
-BezierCurveBoxOptions
-BezierFunction
-Binarize
-BinaryFormat
-BinaryImageQ
-BinaryRead
-BinaryReadList
-BinaryWrite
-BinCounts
-BinLists
-Blank
-BlankForm
-BlankNullSequence
-BlankSequence
-Blend
-Block
-BlockRandom
-Blur
-Bold
-Bookmarks
-BooleanConvert
-BooleanCountingFunction
-BooleanFunction
-BooleanMaxterms
-BooleanMinimize
-BooleanMinterms
-Booleans
-BooleanTable
-BooleanVariables
-Bottom
-BottomHatTransform
-BoundaryStyle
-Bounds
-Box
-BoxBaselineShift
-BoxData
-BoxDimensions
-Boxed
-Boxes
-BoxForm
-BoxFormFormatTypes
-BoxFrame
-BoxID
-BoxMargins
-BoxMatrix
-BoxRatios
-BoxRegion
-BoxRotation
-BoxRotationPoint
-BoxStyle
-BracketingBar
-BrayCurtisDistance
-Break
-BrowserCategory
-BSplineBasis
-BSplineCurve
-BSplineCurve3DBox
-BSplineCurveBox
-BSplineCurveBoxOptions
-BSplineFunction
-BSplineSurface
-BSplineSurface3DBox
-ByteCount
-ByteOrdering
+
 C
 CachedValue
 CacheGraphics
@@ -132,7 +49,6 @@ CapForm
 CapitalDifferentialD
 CarmichaelLambda
 Casoratian
-Catch
 CauchyDistribution
 CDF
 CellularAutomaton
@@ -244,7 +160,6 @@ Contexts
 ContextToFilename
 ContextToFileName
 Continuation
-Continue
 ContinuedFraction
 ContinuedFractionK
 ContinuousAction
@@ -453,7 +368,6 @@ DivisorSigma
 DivisorSum
 DMSList
 DMSString
-Do
 DockedCells
 DocumentNotebook
 DOSTextFormat
@@ -629,7 +543,6 @@ FlipView
 FlushPrintOutputPacket
 Fold
 FoldList
-For
 ForAll
 Format
 FormatRules
@@ -678,7 +591,6 @@ FunctionInterpolation
 FunctionSpace
 FutureValue
 FutureValueList
-Gamma
 GammaDistribution
 GammaRegularized
 GapPenalty
@@ -725,7 +637,6 @@ GetPageBreakInformationPacket
 GlobalPreferences
 GlobalSession
 Glow
-Goto
 Gradient
 GradientFilter
 GraphData
@@ -847,7 +758,6 @@ Hyphenation
 HyphenationOptions
 Identity
 IdentityMatrix
-If
 IgnoreCase
 Im
 Import
@@ -914,12 +824,6 @@ Interactive
 InterestRate
 Interlaced
 Interleaving
-InterpolatingFunction
-InterpolatingPolynomial
-Interpolation
-InterpolationOrder
-InterpolationPoints
-InterpolationPrecision
 Interpretation
 InterpretationBox
 InterpretationBoxOptions
@@ -1239,12 +1143,10 @@ NeedCurrentFrontEndSymbolsPacket
 NeedlemanWunschSimilarity
 Needs
 Negative
-Nest
 NestedGreaterGreater
 NestedLessLess
 NestedScriptRules
 NestList
-NestWhile
 NestWhileList
 NevilleThetaC
 NevilleThetaD
@@ -1683,7 +1585,6 @@ ResetMenusPacket
 Resolve
 Resultant
 ResumePacket
-Return
 ReturnExpressionPacket
 ReturnInputFormPacket
 ReturnPacket
@@ -1894,10 +1795,6 @@ SphericalHarmonicY
 SphericalPlot3D
 SphericalRegion
 Splice
-SplineClosed
-SplineDegree
-SplineKnots
-SplineWeights
 SpokenString
 SqrtBox
 SqrtBoxOptions
@@ -2001,7 +1898,6 @@ SuperStar
 SurfaceColor
 SurfaceGraphics
 SuspendPacket
-Switch
 Symbol
 SymbolName
 SymmetricMatrixQ
@@ -2063,7 +1959,6 @@ ThisLink
 Thread
 ThreeJSymbol
 Through
-Throw
 Thumbnail
 Ticks
 TicksStyle
@@ -2212,7 +2107,6 @@ WeierstrassSigma
 WeierstrassZeta
 Weights
 Which
-While
 WhittakerM
 WhittakerW
 With
