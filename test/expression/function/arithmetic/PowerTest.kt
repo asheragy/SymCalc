@@ -88,25 +88,15 @@ class PowerTest {
         // Int to Int
         assertEquals(Integer(9), Power(Integer(3), Integer.TWO).eval())
 
+        // Int to Rational
+        assertEquals(Integer(7), Power(Integer(16807), Rational(1,5)).eval())
+
         // Complex to Int
         assertEquals(Complex(Rational(2823, 16), Rational(6121, 32)), Power(Complex(Integer(3), Rational.HALF), Integer(5)).eval())
         assertEquals(Complex(0.0, 64.36342999999998), Power(Complex(Integer(0), RealDouble(2.3)), Integer(5)).eval())
 
         // BigDec to BigDec
         assertEquals(RealBigDec("13.26969"), Power(RealBigDec("3.000001"), RealBigDec("2.35340583128859694839201928385968473749596868726265")).eval())
-    }
-
-    @Test
-    fun integerToRational() {
-        assertEquals(Integer(4), Power(Integer(16), Rational(1,2)).eval())
-        assertEquals(Integer(3125), Power(Integer(125), Rational(5,3)).eval())
-        assertEquals(Rational(Integer.ONE, Integer(3125)), Power(Integer(125), Rational(-5,3)).eval())
-        assertEquals(Integer(7), Power(Integer(16807), Rational(1,5)).eval())
-
-        // Not able to fully evaluate
-        assertEquals(Power(Integer(3), Rational(1,3)), Power(Integer(3), Rational(1,3)).eval())
-        assertEquals(Power(Integer(29), Rational(2,3)), Power(Integer(29), Rational(2,3)).eval())
-        assertEquals(Power(Integer(23), Rational(1,2)), Power(Integer(529), Rational(1,4)).eval())
     }
 
     @Test

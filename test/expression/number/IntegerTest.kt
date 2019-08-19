@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.exception.OperationException
+import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.junit.jupiter.api.Test
 import java.math.BigInteger
 import kotlin.test.assertEquals
@@ -179,6 +180,25 @@ class IntegerTest {
         assertEquals(Integer(-243), Integer(-3).pow(Integer(5)))
         assertEquals(Integer("910043815000214977332758527534256632492715260325658624"), Integer(12).pow(Integer(50)))
         assertEquals(Rational(Integer.ONE, Integer(243)), Integer(3).pow(Integer(-5)))
+    }
+
+    @Test
+    fun powToRational() {
+        assertEquals(Integer(4), Integer(16).pow(Rational(1,2)))
+        assertEquals(Integer(3125), Integer(125).pow(Rational(5,3)))
+        assertEquals(Rational(Integer.ONE, Integer(3125)), Integer(125).pow(Rational(-5,3)))
+        assertEquals(Integer(7), Integer(16807).pow(Rational(1,5)))
+    }
+
+    @Test
+    fun powToRational_partialeval() {
+        // Not able to fully evaluate
+        assertEquals(Power(Integer(3), Rational(1,3)), Integer(3).pow(Rational(1,3)))
+        assertEquals(Power(Integer(29), Rational(2,3)), Integer(29).pow(Rational(2,3)))
+        assertEquals(Power(Integer(23), Rational(1,2)), Integer(529).pow(Rational(1,4)))
+
+        // TODO make this work
+        //assertEquals(Times(Power(Integer(5), Rational(2,3)), Power(Integer(7), Rational(1,3))), Integer(175).pow(Rational.THIRD))
     }
 
     @Test

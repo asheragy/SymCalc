@@ -1,8 +1,7 @@
 package org.cerion.symcalc.expression
 
-import org.junit.Test
-
-import org.junit.Assert.assertNotEquals
+import org.junit.jupiter.api.Test
+import kotlin.test.assertNotEquals
 
 class ErrorExprTest {
 

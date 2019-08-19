@@ -1,9 +1,9 @@
 package expression.number
 
 import org.cerion.symcalc.expression.number.*
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.math.BigDecimal
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class RealDoubleTest : NumberTestBase() {

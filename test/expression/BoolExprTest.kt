@@ -1,10 +1,9 @@
 package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.expression.number.Integer
-import org.junit.Test
-
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 
 class BoolExprTest {
@@ -23,8 +22,8 @@ class BoolExprTest {
         assertEquals(e2, e2)
 
         // Different object type
-        assertNotEquals(e1, Integer(5))
-        assertNotEquals(e1, ListExpr())
+        assertNotEquals(e1 as Expr, Integer(5))
+        assertNotEquals(e1 as Expr, ListExpr())
     }
 
 }
