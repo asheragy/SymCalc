@@ -4,35 +4,36 @@ import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.number.*
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class NumberQTest {
 
     @Test
     fun validation() {
-        Assert.assertTrue(NumberQ().eval().isError)
-        Assert.assertTrue(NumberQ(Integer(5), Integer(5)).eval().isError)
+        assertTrue(NumberQ().eval().isError)
+        assertTrue(NumberQ(Integer(5), Integer(5)).eval().isError)
     }
 
     @Test
     fun basic() {
-        Assert.assertEquals(BoolExpr.TRUE, NumberQ(Integer(5)).eval())
-        Assert.assertEquals(BoolExpr.TRUE, NumberQ(RealDouble(2.34)).eval())
-        Assert.assertEquals(BoolExpr.TRUE, NumberQ(Rational(2, 3)).eval())
-        Assert.assertEquals(BoolExpr.TRUE, NumberQ(Complex(5, 7)).eval())
+        assertEquals(BoolExpr.TRUE, NumberQ(Integer(5)).eval())
+        assertEquals(BoolExpr.TRUE, NumberQ(RealDouble(2.34)).eval())
+        assertEquals(BoolExpr.TRUE, NumberQ(Rational(2, 3)).eval())
+        assertEquals(BoolExpr.TRUE, NumberQ(Complex(5, 7)).eval())
 
         // Constant is not
-        Assert.assertEquals(BoolExpr.FALSE, NumberQ(Pi()).eval())
+        assertEquals(BoolExpr.FALSE, NumberQ(Pi()).eval())
 
         // Variable is not
-        Assert.assertEquals(BoolExpr.FALSE, NumberQ(VarExpr("x")).eval())
+        assertEquals(BoolExpr.FALSE, NumberQ(VarExpr("x")).eval())
 
         // Unless assigned to something that is NumberQ=true
         val e = CompoundExpression(
                 Set(VarExpr("x"), Integer(5)),
                 NumberQ(VarExpr("x")))
 
-        Assert.assertEquals(BoolExpr.TRUE, e.eval())
+        assertEquals(BoolExpr.TRUE, e.eval())
     }
 }

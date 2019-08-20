@@ -8,9 +8,9 @@ import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealDouble
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class PlusTest {
 

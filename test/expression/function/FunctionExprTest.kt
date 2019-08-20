@@ -8,9 +8,10 @@ import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class FunctionExprTest {
+
     @Test
     fun equals() {
         val f1 = Plus(Integer(3), RealDouble(5.0))
