@@ -11,7 +11,7 @@ import java.util.ArrayList
 class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
 
     override val properties: Int
-        get() = Properties.ASSOCIATIVE.value or Expr.Properties.NumericFunction.value or Properties.Orderless.value
+        get() = Properties.Flat.value or Expr.Properties.NumericFunction.value or Properties.Orderless.value
 
     override fun evaluate(): Expr {
 

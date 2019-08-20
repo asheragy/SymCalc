@@ -98,6 +98,9 @@ abstract class Expr {
     protected abstract fun evaluate(): Expr
 
     fun eval(): Expr {
+        if (this is Integer) // TODO seems to be slightly after see if anything else can be done to reduce calls to this
+            return this
+
         //https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
         //https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
@@ -106,6 +109,7 @@ abstract class Expr {
             args[i].env = env
         }
 
+        // TODO should evaluate all args in mutableList then construct new object at the very end, try to make args/margs non-mutable
         // Make a copy of this expression to evaluate and return
         var result = this
         if (this is FunctionExpr)
@@ -136,9 +140,9 @@ abstract class Expr {
         }
 
         // Associative function, if the same function is a parameter move its parameters to the top level
-        if (hasProperty(Properties.ASSOCIATIVE)) {
+        if (hasProperty(Properties.Flat)) {
             var i = 0
-            while (i < size) {
+            while (i < result.size) {
                 if (result[i].javaClass == javaClass) {
                     // insert these sub parameters at the same position it was removed
                     val t = result.mArgs!![i]
@@ -199,7 +203,7 @@ abstract class Expr {
         NONE(0),
         HOLD(1),
         LISTABLE(2),
-        ASSOCIATIVE(4),
+        Flat(4),
         CONSTANT(8),
         NumericFunction(16),
         Orderless(32)

@@ -2,6 +2,7 @@ package org.cerion.symcalc.expression.function.arithmetic
 
 import expression.constant.I
 import org.cerion.symcalc.expression.VarExpr
+import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.Complex
@@ -37,13 +38,18 @@ class TimesTest {
     }
 
     @Test
-    fun associativeProperty() {
-        val inner = Times(VarExpr("x"), VarExpr("y"))
+    fun flatProperty() {
+        val x = VarExpr("x")
+        val y = VarExpr("y")
+        val inner = Times(x, y)
         val outer = Times(VarExpr("z"), inner)
 
         val e = outer.eval()
         assertTrue(e.isFunction("times"))
         assertEquals(3, e.size.toLong())
+
+        // TODO if this was x * x it should factor out a 2 which its currently not
+        assertEquals(Times(Integer(4), x, y), Times(Times(Integer.TWO, x), Times(Integer.TWO, y)).eval())
     }
 
     @Test

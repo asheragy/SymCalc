@@ -2,6 +2,7 @@ package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.function.arithmetic.Power
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.junit.jupiter.api.Test
 import java.math.BigInteger
 import kotlin.test.assertEquals
@@ -184,10 +185,23 @@ class IntegerTest {
 
     @Test
     fun powToRational() {
+        assertEquals(Integer.ONE, Integer(1).pow(Rational(7, 5)))
         assertEquals(Integer(4), Integer(16).pow(Rational(1,2)))
         assertEquals(Integer(3125), Integer(125).pow(Rational(5,3)))
         assertEquals(Rational(Integer.ONE, Integer(3125)), Integer(125).pow(Rational(-5,3)))
         assertEquals(Integer(7), Integer(16807).pow(Rational(1,5)))
+    }
+
+    @Test
+    fun powToRational_improperFraction() {
+        assertEquals(Times(Integer(32), Power(Integer(2), Rational.HALF)), Integer(2).pow(Rational(11, 2)))
+        assertEquals(Times(Integer(3125), Power(Integer(5), Rational(3, 4))), Integer(5).pow(Rational(23, 4)))
+    }
+
+    @Test
+    fun powToRational_largeSqrt() {
+        // Special case sqrt is much faster if perfect square
+        assertEquals(Integer("314159265358979"), Integer("98696044010893382709735922441").pow(Rational.HALF))
     }
 
     @Test
@@ -196,9 +210,13 @@ class IntegerTest {
         assertEquals(Power(Integer(3), Rational(1,3)), Integer(3).pow(Rational(1,3)))
         assertEquals(Power(Integer(29), Rational(2,3)), Integer(29).pow(Rational(2,3)))
         assertEquals(Power(Integer(23), Rational(1,2)), Integer(529).pow(Rational(1,4)))
+    }
 
-        // TODO make this work
-        //assertEquals(Times(Power(Integer(5), Rational(2,3)), Power(Integer(7), Rational(1,3))), Integer(175).pow(Rational.THIRD))
+    @Test
+    fun powToRational_partialReduce() {
+        assertEquals(Times(Integer(3), Power(Integer(3), Rational(1,3))), Integer(81).pow(Rational.THIRD))
+        assertEquals(Times(Integer(3), Power(Integer(3), Rational(2,3))), Integer(243).pow(Rational(1,3)))
+        assertEquals(Times(Power(Integer(5), Rational(2,3)), Power(Integer(7), Rational(1,3))), Integer(175).pow(Rational.THIRD))
     }
 
     @Test

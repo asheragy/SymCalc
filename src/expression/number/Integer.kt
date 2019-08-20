@@ -166,53 +166,26 @@ class Integer(override val value: BigInteger) : NumberExpr() {
         val t = Factor(a).eval()
         val factors = Tally(t).eval().asList()
 
-        var denominator = b.denominator
-        val numerator = b.numerator
-        var multiply = ONE
+        // All roots factored out, apply power / reduce to proper fraction
+        if (factors.size == 1 && factors[0][1] == ONE) {
+            if (b > ONE) {
+                val whole = Integer(b.numerator.intValue() / b.denominator.intValue())
 
-        var i = 0
-        while (i < factors.size) {
-            val key = factors[i][0].asInteger()
-            val v = factors[i][1].asInteger()
-
-            // TODO_LP seems like this function can be rewritten to be cleaner, recursion on each reduce step maybe
-
-            // Factor it out
-            if (v >= denominator) {
-                multiply *= key
-                val count = v - denominator
-                factors[i] = ListExpr(key, count)
-                if (count.isZero)
-                    i++
+                return Times(Power(a, whole), Power(a, b - whole)).eval()
             }
-            else {
-                if ((denominator % v).isZero && !v.isOne && denominator.isEven) {
-                    factors[i] = ListExpr(key, v / TWO)
-                    denominator = (denominator / TWO) as Integer
-                }
-                else {
-                    i++
-                }
-            }
-        }
 
-        if (multiply.isOne && b.denominator == denominator)
             return Power(a, b)
-
-        // Factor out multiples
-        //Expr result = new Power(this, num);
-        var root = ONE
-        for (j in 0 until factors.size) {
-            val f1 = factors[j][0]
-            val f2 = factors[j][1] as Integer
-            if (f2.isZero)
-                continue
-
-            root = Times(root, f1, f2).eval().asInteger()
         }
 
-        val nthRoot = Times(multiply, Power(root, Rational(numerator, denominator)))
-        return Power(nthRoot, numerator).eval()
+        val times = Times()
+        for (factor in factors.args) {
+            factor as ListExpr
+            val n = factor[0]
+            val x = factor[1] as Integer
 
+            times.add(Power(n, b * x))
+        }
+
+        return times.eval()
     }
 }
