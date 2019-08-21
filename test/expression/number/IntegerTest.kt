@@ -210,6 +210,7 @@ class IntegerTest {
         assertEquals(Power(Integer(3), Rational(1,3)), Integer(3).pow(Rational(1,3)))
         assertEquals(Power(Integer(29), Rational(2,3)), Integer(29).pow(Rational(2,3)))
         assertEquals(Power(Integer(23), Rational(1,2)), Integer(529).pow(Rational(1,4)))
+        assertEquals(Power(Integer(6), Rational.HALF), Integer(6).pow(Rational.HALF))
     }
 
     @Test

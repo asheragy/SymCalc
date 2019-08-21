@@ -148,6 +148,9 @@ class Integer(override val value: BigInteger) : NumberExpr() {
     }
 
     fun pow(b: Rational): Expr {
+        if (this.isOne)
+            return this
+
         // Performance: Use faster method for square root
         /* One other method for any value but may need additional checks
              - Calculate using Math.pow() after converting to doubles
@@ -177,10 +180,14 @@ class Integer(override val value: BigInteger) : NumberExpr() {
             return Power(a, b)
         }
 
+        // No factors means nothing to reduce
+        if (factors.args.all { (it[1] as Integer).isOne })
+            return Power(a, b)
+
         val times = Times()
         for (factor in factors.args) {
             factor as ListExpr
-            val n = factor[0]
+            val n = factor[0] as Integer
             val x = factor[1] as Integer
 
             times.add(Power(n, b * x))

@@ -27,14 +27,30 @@ class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
         for (i in 0 until size)
             list += get(i)
 
-        // Transform x^y * x^z to x^yz
+        // Transform x^a * x^b to x^(a+b)
         if (list.count { it is Power } > 1) {
             val groups = list.filterIsInstance<Power>().groupBy { it[0] }
             list.removeIf { it is Power }
             for (group in groups) {
-                if (group.value.size == 2) {
+                if (group.value.size == 2) { // TODO allow 3+
                     val times = Power(group.key, Plus(group.value[0][1], group.value[1][1])).eval()
                     list.add(times)
+                }
+                else
+                    list.add(group.value[0])
+            }
+        }
+
+        // Transform a^x * b^x = (ab)^x
+        if (list.count { it is Power } > 1) {
+            val groups = list.filterIsInstance<Power>().groupBy { it[1] }
+            list.removeIf { it is Power }
+            for (group in groups) {
+                if (group.value.size == 2) { // TODO allow 3+
+                    val t = Times(group.value[0][0], group.value[1][0]).eval()
+                    var e: Expr = Power(t, group.key)
+                    e = e.eval()
+                    list.add(e)
                 }
                 else
                     list.add(group.value[0])

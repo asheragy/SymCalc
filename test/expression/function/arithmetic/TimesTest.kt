@@ -68,5 +68,6 @@ class TimesTest {
     @Test
     fun powersCombined() {
         assertEquals(Integer.TWO, Times(Power(Integer.TWO, Rational.HALF), Power(Integer.TWO, Rational.HALF)).eval())
+        assertEquals(Power(Integer(6), Rational.HALF), Times(Power(Integer.TWO, Rational.HALF), Power(Integer(3), Rational.HALF)).eval())
     }
 }
