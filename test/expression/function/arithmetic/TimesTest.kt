@@ -37,18 +37,12 @@ class TimesTest {
     }
 
     @Test
-    fun flatProperty() { // TODO Should be in FunctionExpr
+    fun factorDuplicates() {
         val x = VarExpr("x")
         val y = VarExpr("y")
-        val inner = Times(x, y)
-        val outer = Times(VarExpr("z"), inner)
-
-        val e = outer.eval()
-        assertTrue(e.isFunction("times"))
-        assertEquals(3, e.size.toLong())
-
-        // TODO if this was x * x it should factor out a 2 which its currently not
-        assertEquals(Times(Integer(4), x, y), Times(Times(Integer.TWO, x), Times(Integer.TWO, y)).eval())
+        assertEquals(Times(Integer(2), x), Times(x, x).eval())
+        assertEquals(Times(Integer(3), x), Times(x, x, x).eval())
+        assertEquals(Times(Integer(4), x, y), Times(x, x, y, y).eval())
     }
 
     @Test

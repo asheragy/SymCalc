@@ -3,9 +3,8 @@ package org.cerion.symcalc.expression.function.arithmetic
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 
 class SqrtTest {

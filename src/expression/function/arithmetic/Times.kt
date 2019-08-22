@@ -56,6 +56,17 @@ class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
             }
         }
 
+        // Factor non-numeric duplicates
+        val nonNumerics = list.filter { it !is NumberExpr }
+        val groups = nonNumerics.groupBy { it }
+        for (group in groups) {
+            if(group.value.size > 1) {
+                list.removeAll { it == group.value[0] }
+                list.add(Integer(group.value.size))
+                list.add(group.value[0])
+            }
+        }
+
         val numberItems = list.filterIsInstance<NumberExpr>()
         list.removeIf { it is NumberExpr }
         val product = numberItems.fold(Integer.ONE as NumberExpr) { acc, n -> acc * n }
