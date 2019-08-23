@@ -1,12 +1,16 @@
 package org.cerion.symcalc.expression.function
 
+import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.arithmetic.Times
+import org.cerion.symcalc.expression.function.statistics.RandomInteger
+import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealDouble
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.jupiter.api.Test
@@ -51,4 +55,11 @@ class FunctionExprTest {
 
         kotlin.test.assertEquals(Times(Integer(4), x, y), Times(Times(Integer.TWO, x), Times(Integer.TWO, y)).eval())
     }
+
+    @Test
+    fun listableProperty() {
+        val list = ListExpr(RealDouble(2.4), RealDouble(0.4), RealDouble(1.4))
+        assertEquals(ListExpr(RealDouble(0.675463180551151), RealDouble(0.3894183423086505), RealDouble(0.9854497299884601)), Sin(list).eval())
+    }
+
 }

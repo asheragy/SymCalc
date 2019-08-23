@@ -24,15 +24,6 @@ class SinTest {
     }
 
     @Test
-    fun listParameter() {
-        val params = ListExpr(Integer.ONE, VarExpr("x"), RandomInteger())
-        val e = Sin(params).eval()
-
-        assertTrue(e.isList)
-        assertTrue(e[0].isFunction("sin"))
-    }
-
-    @Test
     fun basicPi() {
         assertEquals(Integer.ZERO, Sin(Integer.ZERO).eval())
         assertEquals(Integer.ONE, Sin(Divide(Pi(), Integer.TWO)).eval())

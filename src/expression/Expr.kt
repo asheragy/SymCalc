@@ -129,30 +129,17 @@ abstract class Expr {
 
         // Associative function, if the same function is a parameter move its parameters to the top level
         if (hasProperty(Properties.Flat)) {
-            var i = 0
-            while (i < newArgs.size) {
-                // TODO filter may work better for this
-                if (newArgs[i].javaClass == javaClass) {
-                    // insert these sub parameters at the same position it was removed
-                    val t = newArgs[i]
-                    newArgs.removeAt(i)
-                    newArgs.addAll(i, t.args)
-                    i--
-                }
-                i++
+            val same = newArgs.filter { it.javaClass == javaClass  }
+            if (same.isNotEmpty()) {
+                newArgs.removeIf { it.javaClass == javaClass }
+                same.forEach { newArgs.addAll(it.args) }
             }
         }
 
         // Listable property
         if (hasProperty(Properties.LISTABLE) && size == 1 && newArgs[0].isList) {
-            // TODO map may work here
-            val p1 = newArgs[0] as ListExpr
-            val listResult = ListExpr()
-
-            for (i in 0 until p1.size)
-                listResult.add(FunctionExpr.createFunction(name, p1[i]))
-
-            return listResult.eval()
+            val listArgs = newArgs[0].args.map { FunctionExpr.createFunction(name, it) }
+            return ListExpr(*listArgs.toTypedArray()).eval()
         }
 
         val function = FunctionExpr.createFunction(name, *newArgs.toTypedArray())
@@ -193,9 +180,8 @@ abstract class Expr {
         HOLD(1),
         LISTABLE(2),
         Flat(4),
-        CONSTANT(8), // TODO if this is removed properties can belong just to functionExpr
-        NumericFunction(16),
-        Orderless(32)
+        NumericFunction(8),
+        Orderless(16)
     }
 
     protected enum class LogicalCompare {
