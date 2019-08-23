@@ -9,7 +9,6 @@ import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealDouble
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
-import java.util.*
 
 abstract class Expr {
 
@@ -28,7 +27,7 @@ abstract class Expr {
     abstract val type: ExprType
 
     open val precision get() = InfinitePrecision
-    protected open val properties: Int get() = Properties.NONE.value
+
 
     val size get() = if (mArgs != null) mArgs!!.size else 0
 
@@ -113,7 +112,7 @@ abstract class Expr {
         if (this !is FunctionExpr)
             return this.evaluate()
 
-        val newArgs = args.map { if (hasProperty(Properties.HOLD)) it else it.eval() }.toMutableList()
+        val newArgs = args.map { if (hasProperty(FunctionExpr.Properties.HOLD)) it else it.eval() }.toMutableList()
 
         // Evaluate precision on sibling elements, numbers already handled but its possible that could be done here as well, need to try that
         if (size > 0) {
@@ -128,7 +127,7 @@ abstract class Expr {
         }
 
         // Associative function, if the same function is a parameter move its parameters to the top level
-        if (hasProperty(Properties.Flat)) {
+        if (hasProperty(FunctionExpr.Properties.Flat)) {
             val same = newArgs.filter { it.javaClass == javaClass  }
             if (same.isNotEmpty()) {
                 newArgs.removeIf { it.javaClass == javaClass }
@@ -137,7 +136,7 @@ abstract class Expr {
         }
 
         // Listable property
-        if (hasProperty(Properties.LISTABLE) && size == 1 && newArgs[0].isList) {
+        if (hasProperty(FunctionExpr.Properties.LISTABLE) && size == 1 && newArgs[0].isList) {
             val listArgs = newArgs[0].args.map { FunctionExpr.createFunction(name, it) }
             return ListExpr(*listArgs.toTypedArray()).eval()
         }
@@ -173,27 +172,11 @@ abstract class Expr {
         SYMBOL
     }
 
-    // ssymb = Cases[Map[ToExpression, Names["System`*"]], _Symbol];
-    // nfuns = Select[ssymb, MemberQ[Attributes[#], HoldFirst] &]
-    enum class Properties constructor(val value: Int) {
-        NONE(0),
-        HOLD(1),
-        LISTABLE(2),
-        Flat(4),
-        NumericFunction(8),
-        Orderless(16)
-    }
-
     protected enum class LogicalCompare {
         TRUE,
         FALSE,
         UNKNOWN,
         ERROR
-    }
-
-    protected fun hasProperty(attr: Properties): Boolean {
-        val attrs = properties
-        return attr.value and attrs != 0
     }
 
     protected fun indent(i: Int, s: String) {

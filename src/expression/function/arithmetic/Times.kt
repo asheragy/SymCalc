@@ -6,12 +6,10 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.Integer
 
-import java.util.ArrayList
-
 class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
 
     override val properties: Int
-        get() = Properties.Flat.value or Expr.Properties.NumericFunction.value or Properties.Orderless.value
+        get() = Properties.Flat.value or Properties.NumericFunction.value or Properties.Orderless.value
 
     override fun evaluate(): Expr {
 

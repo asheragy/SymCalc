@@ -15,5 +15,5 @@ class Minus(vararg e: Expr) : FunctionExpr(Function.MINUS, *e) {
     }
 
     override val properties: Int
-        get() = Expr.Properties.LISTABLE.value
+        get() = Properties.LISTABLE.value
 }

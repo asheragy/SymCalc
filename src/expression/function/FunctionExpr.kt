@@ -9,6 +9,8 @@ import org.cerion.symcalc.expression.number.NumberType
 abstract class FunctionExpr protected constructor(final override val value: Function, vararg val e: Expr) : Expr() {
     val name: String = value.toString()
 
+    open val properties: Int get() = Properties.NONE.value
+
     val isNumeric: Boolean
         get() = hasProperty(Properties.NumericFunction)
 
@@ -107,6 +109,22 @@ abstract class FunctionExpr protected constructor(final override val value: Func
 
         val error = "$name called with $size parameters, expected $min to $max"
         throw ValidationException(error)
+    }
+
+    fun hasProperty(attr: Properties): Boolean {
+        val attrs = properties
+        return attr.value and attrs != 0
+    }
+
+    // ssymb = Cases[Map[ToExpression, Names["System`*"]], _Symbol];
+    // nfuns = Select[ssymb, MemberQ[Attributes[#], HoldFirst] &]
+    enum class Properties constructor(val value: Int) {
+        NONE(0),
+        HOLD(1),
+        LISTABLE(2),
+        Flat(4),
+        NumericFunction(8),
+        Orderless(16)
     }
 
     companion object {

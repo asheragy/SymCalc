@@ -18,7 +18,7 @@ interface StandardTrigFunction {
 abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : FunctionExpr(t, *e) {
 
     override val properties: Int
-        get() = Expr.Properties.LISTABLE.value
+        get() = Properties.LISTABLE.value
 
     protected abstract fun evaluateAsDouble(d: Double): Double
     protected abstract fun evaluate(e: Expr): Expr
