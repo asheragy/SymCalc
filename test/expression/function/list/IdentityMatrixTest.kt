@@ -5,22 +5,22 @@ import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealDouble
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class IdentityMatrixTest {
 
     @Test
     fun validate() {
         // Non-integers
-        Assert.assertEquals(Expr.ExprType.ERROR, IdentityMatrix(RealDouble(2.34)).eval().type)
-        Assert.assertEquals(Expr.ExprType.ERROR, IdentityMatrix(Pi()).eval().type)
+        assertEquals(Expr.ExprType.ERROR, IdentityMatrix(RealDouble(2.34)).eval().type)
+        assertEquals(Expr.ExprType.ERROR, IdentityMatrix(Pi()).eval().type)
 
         // Zero
-        Assert.assertEquals(Expr.ExprType.ERROR, IdentityMatrix(Integer.ZERO).eval().type)
+        assertEquals(Expr.ExprType.ERROR, IdentityMatrix(Integer.ZERO).eval().type)
 
         // Negative
-        Assert.assertEquals(Expr.ExprType.ERROR, IdentityMatrix(Integer(-10)).eval().type)
+        assertEquals(Expr.ExprType.ERROR, IdentityMatrix(Integer(-10)).eval().type)
     }
 
     @Test
@@ -32,6 +32,6 @@ class IdentityMatrixTest {
                 ListExpr(Integer.ZERO, Integer.ZERO, Integer.ONE)
         )
 
-        Assert.assertEquals(expected, e.eval())
+        assertEquals(expected, e.eval())
     }
 }

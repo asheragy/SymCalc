@@ -3,9 +3,9 @@ package org.cerion.symcalc.expression.function.list
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.Integer
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class FlattenTest {
 
