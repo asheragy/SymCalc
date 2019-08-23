@@ -6,6 +6,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.expression.number.RealDouble
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 import java.util.*
@@ -61,7 +62,6 @@ abstract class Expr {
     // Casting
     fun asList(): ListExpr = this as ListExpr
     fun asInteger(): Integer = this as Integer
-    //fun asReal(): RealNum = this as RealNum
     fun asBool(): BoolExpr = this as BoolExpr
     fun asVar(): VarExpr = this as VarExpr
     fun asNumber(): NumberExpr = this as NumberExpr
@@ -98,7 +98,8 @@ abstract class Expr {
     protected abstract fun evaluate(): Expr
 
     fun eval(): Expr {
-        if (this is Integer) // TODO seems to be slightly after see if anything else can be done to reduce calls to this
+        // not sure if this improves anything but helps with debugging
+        if (this is Integer || this is RealDouble || this is BoolExpr)
             return this
 
         //https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
@@ -109,32 +110,19 @@ abstract class Expr {
             args[i].env = env
         }
 
-        // TODO should evaluate all args in mutableList then construct new object at the very end, try to make args/margs non-mutable
-        // Make a copy of this expression to evaluate and return
-        var result = this
-        if (this is FunctionExpr)
-            result = FunctionExpr.createFunction(name)
-        else if (this is ListExpr)
-            result = ListExpr()
+        if (this !is FunctionExpr)
+            return this.evaluate()
 
-        if (this is FunctionExpr || this is ListExpr) {
-            result.env = env
-            for (arg in args) {
-                if (hasProperty(Properties.HOLD))
-                    result.addArg(arg)
-                else
-                    result.addArg(arg.eval())
-            }
+        val newArgs = args.map { if (hasProperty(Properties.HOLD)) it else it.eval() }.toMutableList()
 
-            // Evaluate precision on sibling elements, numbers already handled but its possible that could be done here as well, need to try that
-            if (size > 0) {
-                val minPrecision = result.args.minBy { it.precision }!!.precision
-                for (i in 0 until result.args.size) {
-                    if (result.args[i] !is NumberExpr && minPrecision < result.args[i].precision) {
-                        val temp = result.args[i].eval(minPrecision)
-                        if (temp !is N)
-                            result.mArgs!![i] = temp
-                    }
+        // Evaluate precision on sibling elements, numbers already handled but its possible that could be done here as well, need to try that
+        if (size > 0) {
+            val minPrecision = newArgs.minBy { it.precision }!!.precision
+            for (i in 0 until newArgs.size) {
+                if (newArgs[i] !is NumberExpr && minPrecision < newArgs[i].precision) {
+                    val temp = newArgs[i].eval(minPrecision)
+                    if (temp !is N)
+                        newArgs[i] = temp
                 }
             }
         }
@@ -142,12 +130,13 @@ abstract class Expr {
         // Associative function, if the same function is a parameter move its parameters to the top level
         if (hasProperty(Properties.Flat)) {
             var i = 0
-            while (i < result.size) {
-                if (result[i].javaClass == javaClass) {
+            while (i < newArgs.size) {
+                // TODO filter may work better for this
+                if (newArgs[i].javaClass == javaClass) {
                     // insert these sub parameters at the same position it was removed
-                    val t = result.mArgs!![i]
-                    result.mArgs!!.removeAt(i)
-                    result.mArgs!!.addAll(i, t.args)
+                    val t = newArgs[i]
+                    newArgs.removeAt(i)
+                    newArgs.addAll(i, t.args)
                     i--
                 }
                 i++
@@ -155,25 +144,25 @@ abstract class Expr {
         }
 
         // Listable property
-        if (hasProperty(Properties.LISTABLE) && size == 1 && result[0].isList) {
-            val function = result as FunctionExpr
-            val p1 = result[0] as ListExpr
+        if (hasProperty(Properties.LISTABLE) && size == 1 && newArgs[0].isList) {
+            // TODO map may work here
+            val p1 = newArgs[0] as ListExpr
             val listResult = ListExpr()
 
             for (i in 0 until p1.size)
-                listResult.add(FunctionExpr.createFunction(function.name, p1[i]))
+                listResult.add(FunctionExpr.createFunction(name, p1[i]))
 
             return listResult.eval()
         }
 
-        return try {
-            if (result is FunctionExpr)
-                result.validate()
-
-            result.evaluate()
+        val function = FunctionExpr.createFunction(name, *newArgs.toTypedArray())
+        try {
+            (function as Expr).env = env
+            function.validate()
+            return function.evaluate()
         }
         catch (e: Exception) {
-            ErrorExpr(e.message!!)
+            return ErrorExpr(e.message!!)
         }
     }
 
@@ -204,7 +193,7 @@ abstract class Expr {
         HOLD(1),
         LISTABLE(2),
         Flat(4),
-        CONSTANT(8),
+        CONSTANT(8), // TODO if this is removed properties can belong just to functionExpr
         NumericFunction(16),
         Orderless(32)
     }

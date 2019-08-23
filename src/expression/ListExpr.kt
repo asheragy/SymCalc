@@ -51,7 +51,7 @@ class ListExpr : Expr {
         return false
     }
 
-    override fun evaluate(): ListExpr = this
+    override fun evaluate(): ListExpr = ListExpr(*args.map { it.eval() }.toTypedArray())
 
     override fun treeForm(i: Int) {
         indent(i, "List: $size")
