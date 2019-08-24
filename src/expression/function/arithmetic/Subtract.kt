@@ -23,14 +23,7 @@ class Subtract(vararg e: Expr) : FunctionExpr(Function.SUBTRACT, *e) {
         if (a is ListExpr || b is ListExpr) {
             if (a is ListExpr && b is ListExpr) {
                 if (a.size == b.size) {
-                    val result = ListExpr()
-                    for (i in 0 until a.size) {
-                        var e: Expr = Subtract(a[i], b[i])
-                        e = e.eval()
-                        result.add(e)
-                    }
-
-                    return result
+                    return ListExpr(*a.args.mapIndexed { index, expr -> Subtract(expr, b[index]).eval() }.toTypedArray())
                 }
 
                 return ErrorExpr("list sizes not equal")

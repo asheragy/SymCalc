@@ -10,14 +10,8 @@ class Map(vararg e: Expr) : FunctionExpr(Function.MAP, *e) {
     override fun evaluate(): Expr {
         val f = args[0] as FunctionExpr
         val list = args[1].eval() as ListExpr
-        val result = ListExpr()
 
-        for (i in 0 until list.size) {
-            val e = createFunction(f.name, list[i])
-            result.add(e.eval())
-        }
-
-        return result
+        return ListExpr(list.args.map { createFunction(f.name, it).eval() })
     }
 
     override fun validate() {

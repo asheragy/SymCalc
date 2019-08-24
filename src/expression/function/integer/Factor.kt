@@ -11,10 +11,10 @@ class Factor(vararg e: Expr) : FunctionExpr(Function.FACTOR, *e) {
     override fun evaluate(): Expr {
         var num = get(0) as Integer
 
-        val list = ListExpr()
+        val listArgs = mutableListOf<Expr>()
         while (num.isEven) {
             num = (num / Integer.TWO).asInteger()
-            list.add(Integer.TWO)
+            listArgs.add(Integer.TWO)
         }
 
         // Continue factoring 3+
@@ -26,7 +26,7 @@ class Factor(vararg e: Expr) : FunctionExpr(Function.FACTOR, *e) {
 
                 val mod = num.rem(test)
                 if (mod.isZero) {
-                    list.add(test)
+                    listArgs.add(test)
                     num = (num / test).asInteger()
                 } else {
                     test+= Integer.TWO
@@ -34,10 +34,10 @@ class Factor(vararg e: Expr) : FunctionExpr(Function.FACTOR, *e) {
                 }
             }
 
-            list.add(num)
+            listArgs.add(num)
         }
 
-        return list
+        return ListExpr(listArgs)
     }
 
     override fun validate() {

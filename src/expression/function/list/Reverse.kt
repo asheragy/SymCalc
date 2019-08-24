@@ -10,12 +10,12 @@ class Reverse(vararg e: Expr) : FunctionExpr(Function.REVERSE, *e) {
     override fun evaluate(): Expr {
         if (get(0) is ListExpr) {
             val list = get(0)
-            val result = ListExpr()
+            val result = mutableListOf<Expr>()
 
             for (i in list.size downTo 1)
                 result.add(list[i - 1])
 
-            return result
+            return ListExpr(result)
         }
 
         return this

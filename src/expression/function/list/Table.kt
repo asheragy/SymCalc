@@ -29,30 +29,28 @@ class Table(vararg e: Expr) : FunctionExpr(Function.TABLE, *e) {
         return ErrorExpr("Table() unexpected case")
     }
 
-    private fun evaluate(expr: Expr, `var`: VarExpr?, iMin: Integer, iMax: Integer, iStep: Integer): Expr {
+    private fun evaluate(expr: Expr, x: VarExpr?, iMin: Integer, iMax: Integer, iStep: Integer): Expr {
         val min = iMin.intValue()
         val max = iMax.intValue()
         val step = iStep.intValue()
 
-        val values = ListExpr()
+        val values = mutableListOf<Expr>()
         var i = min
         while (i <= max) {
             values.add(Integer(i.toLong()))
             i += step
         }
 
-        return evaluate(expr, `var`, values)
+        return evaluate(expr, x, ListExpr(values))
     }
 
-    private fun evaluate(expr: Expr, variable: VarExpr?, values: ListExpr): Expr {
-        val result = ListExpr()
-        for (i in 0 until values.size) {
+    private fun evaluate(expr: Expr, variable: VarExpr?, values: ListExpr): ListExpr {
+        return ListExpr(values.args.map {
             if (variable != null)
-                setEnvVar(variable.value, values[i])
-            result.add(expr.eval())
-        }
+                setEnvVar(variable.value, it)
 
-        return result
+            expr.eval()
+        })
     }
 
     override val properties: Int

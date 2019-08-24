@@ -11,17 +11,17 @@ class IdentityMatrix(vararg e: Expr) : FunctionExpr(Function.IDENTITY_MATRIX, *e
 
     override fun evaluate(): Expr {
         val n = getInteger(0).intValue()
-        val result = ListExpr()
+        val result = mutableListOf<Expr>()
 
         for (i in 0 until n) {
-            val sublist = ListExpr()
+            val sublist = mutableListOf<Integer>()
             for (j in 0 until n)
                 sublist.add(if (i == j) Integer.ONE else Integer.ZERO)
 
-            result.add(sublist)
+            result.add(ListExpr(sublist))
         }
 
-        return result
+        return ListExpr(result)
     }
 
     @Throws(ValidationException::class)

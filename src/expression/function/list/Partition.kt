@@ -14,10 +14,10 @@ class Partition(vararg e: Expr) : FunctionExpr(Function.PARTITION, *e) {
 
         val input = get(0) as ListExpr
         val n = (get(1) as Integer).intValue()
-        val result = ListExpr()
+        val result = mutableListOf<Expr>()
 
         for (i in 0 until input.size / n) {
-            val sublist = ListExpr()
+            val sublist = mutableListOf<Expr>()
 
             for (j in 0 until n) {
                 val pos = i * n + j
@@ -27,10 +27,10 @@ class Partition(vararg e: Expr) : FunctionExpr(Function.PARTITION, *e) {
                 sublist.add(input[pos])
             }
 
-            result.add(sublist)
+            result.add(ListExpr(sublist))
         }
 
-        return result
+        return ListExpr(result)
     }
 
     @Throws(ValidationException::class)

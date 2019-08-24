@@ -11,13 +11,9 @@ class IntegerDigits(vararg e: Expr) : FunctionExpr(Function.INTEGER_DIGITS, *e) 
 
     public override fun evaluate(): Expr {
         val num = get(0) as Integer
-        val list = ListExpr()
-
         val s = num.toString()
-        for (i in 0 until s.length)
-            list.add(NumberExpr.parse("" + s[i]))
 
-        return list
+        return ListExpr(s.map { NumberExpr.parse("" + it) })
     }
 
     override fun validate() {

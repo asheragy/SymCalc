@@ -10,7 +10,7 @@ class Select(vararg e: Expr) : FunctionExpr(Function.SELECT, *e) {
 
     override fun evaluate(): Expr {
         val list = this[0].asList().eval()
-        val result = ListExpr()
+        val result = mutableListOf<Expr>()
 
         for (i in 0 until list.size) {
             val f = (args[1] as FunctionExpr)
@@ -21,7 +21,7 @@ class Select(vararg e: Expr) : FunctionExpr(Function.SELECT, *e) {
             }
         }
 
-        return result
+        return ListExpr(result)
     }
 
     override fun validate() {

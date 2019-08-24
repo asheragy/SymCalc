@@ -7,6 +7,7 @@ class ListExpr(vararg e: Expr) : Expr() {
     override val type: ExprType get() = ExprType.LIST
 
     constructor() : this(*emptyArray<Expr>())
+    constructor(items: List<Expr>) : this(*items.toTypedArray())
 
     init {
         setArgs(*e)

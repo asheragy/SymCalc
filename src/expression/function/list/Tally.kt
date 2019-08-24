@@ -11,7 +11,7 @@ import org.cerion.symcalc.expression.number.Integer
 class Tally(vararg e: Expr) : FunctionExpr(Function.TALLY, *e) {
 
     override fun evaluate(): Expr {
-        val result = ListExpr()
+        val result = mutableListOf<Expr>()
 
         val list = getList(0)
         for (i in 0 until list.size) {
@@ -35,7 +35,7 @@ class Tally(vararg e: Expr) : FunctionExpr(Function.TALLY, *e) {
                 result.add(ListExpr(e, Integer.ONE))
         }
 
-        return result
+        return ListExpr(result)
     }
 
     @Throws(ValidationException::class)

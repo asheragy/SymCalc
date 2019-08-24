@@ -21,7 +21,7 @@ class Range(vararg e: Expr) : FunctionExpr(Function.RANGE, *e) {
     }
 
     private fun range(min: NumberExpr, max: NumberExpr, step: NumberExpr): ListExpr {
-        val list = ListExpr()
+        val list = mutableListOf<Expr>()
         var current = min
 
         while(current <= max) {
@@ -29,7 +29,7 @@ class Range(vararg e: Expr) : FunctionExpr(Function.RANGE, *e) {
             current += step
         }
 
-        return list
+        return ListExpr(list)
     }
 
     override fun validate() {
