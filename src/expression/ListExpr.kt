@@ -2,24 +2,17 @@ package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.expression.number.NumberExpr
 
-class ListExpr : Expr {
+class ListExpr(vararg e: Expr) : Expr() {
     override val value: Any? get() = null
     override val type: ExprType get() = ExprType.LIST
 
-    constructor()
+    constructor() : this(*emptyArray<Expr>())
 
-    constructor(t: Expr) {
-        setArg(0, t)
-    }
-
-    constructor(vararg e: Expr) {
+    init {
         setArgs(*e)
     }
 
-    constructor(vararg n: Number) {
-        for(i in n)
-            add(NumberExpr.create(i))
-    }
+    constructor(vararg n: Number): this(*n.map { NumberExpr.create(it) }.toTypedArray())
 
     operator fun plusAssign(e: Expr) = add(e)
 
@@ -50,23 +43,12 @@ class ListExpr : Expr {
         return false
     }
 
+    override fun toString(): String = "{" + args.joinToString(", ") + "}"
     override fun evaluate(): ListExpr = ListExpr(*args.map { it.eval() }.toTypedArray())
 
     override fun treeForm(i: Int) {
         indent(i, "List: $size")
         for (j in 0 until size)
             get(j).treeForm(i + 1)
-    }
-
-    override fun toString(): String {
-        var ret = "{"
-        for (i in 0 until size) {
-            if (i > 0) ret += "," //dont add comma on first element
-            //Eval before printing
-            ret += get(i).toString()
-        }
-
-        ret += "}"
-        return ret
     }
 }

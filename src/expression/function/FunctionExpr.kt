@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 
-abstract class FunctionExpr protected constructor(final override val value: Function, vararg val e: Expr) : Expr() {
+abstract class FunctionExpr protected constructor(final override val value: Function, vararg e: Expr) : Expr() {
     val name: String = value.toString()
 
     open val properties: Int get() = Properties.NONE.value
@@ -25,7 +25,7 @@ abstract class FunctionExpr protected constructor(final override val value: Func
         get() = ExprType.FUNCTION
 
     override fun toString(): String {
-        return name + argString()
+        return name + args.toString()
     }
 
     override fun treeForm(i: Int) {

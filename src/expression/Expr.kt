@@ -72,10 +72,6 @@ abstract class Expr {
         setArg(size, e)
     }
 
-    protected fun argString(): String {
-        return args.toString()
-    }
-
     final override fun equals(other: Any?): Boolean {
         if (other is Expr) {
             return this.equals(other)

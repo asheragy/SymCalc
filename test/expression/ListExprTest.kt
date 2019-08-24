@@ -1,12 +1,20 @@
 package org.cerion.symcalc.expression
 
+import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.number.Integer
-import org.junit.Test
+import org.cerion.symcalc.expression.number.RealDouble
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 
 class ListExprTest {
+
+    @Test
+    fun toStringTest() {
+        assertEquals("{5, 3.14, Pi}", ListExpr(Integer(5), RealDouble(3.14), Pi()).toString())
+    }
 
     @Test
     fun equals() {
