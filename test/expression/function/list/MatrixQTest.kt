@@ -5,8 +5,8 @@ import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealDouble
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class MatrixQTest {
 
@@ -17,13 +17,13 @@ class MatrixQTest {
         val c = VarExpr("x")
 
         // 0x0
-        Assert.assertEquals(BoolExpr.TRUE, MatrixQ(ListExpr(ListExpr())).eval())
+        assertEquals(BoolExpr.TRUE, MatrixQ(ListExpr(ListExpr())).eval())
 
         // 1x1
-        Assert.assertEquals(BoolExpr.TRUE, MatrixQ(ListExpr(ListExpr(a))).eval())
+        assertEquals(BoolExpr.TRUE, MatrixQ(ListExpr(ListExpr(a))).eval())
 
         // 2x3
-        Assert.assertEquals(BoolExpr.TRUE, MatrixQ(ListExpr(
+        assertEquals(BoolExpr.TRUE, MatrixQ(ListExpr(
                 ListExpr(a, b, c),
                 ListExpr(c, b, a)
         )).eval())
@@ -36,19 +36,19 @@ class MatrixQTest {
         val c = VarExpr("x")
 
         // Not a list
-        Assert.assertEquals(BoolExpr.FALSE, MatrixQ(a).eval())
+        assertEquals(BoolExpr.FALSE, MatrixQ(a).eval())
 
         // Not 2 dimension
-        Assert.assertEquals(BoolExpr.FALSE, MatrixQ(ListExpr(a, b)).eval())
+        assertEquals(BoolExpr.FALSE, MatrixQ(ListExpr(a, b)).eval())
 
         // More than 2 dimension
-        Assert.assertEquals(BoolExpr.FALSE, MatrixQ(ListExpr(
+        assertEquals(BoolExpr.FALSE, MatrixQ(ListExpr(
                 ListExpr(a, b, c),
                 ListExpr(c, b, ListExpr(c))
         )).eval())
 
         // Size does not match
-        Assert.assertEquals(BoolExpr.FALSE, MatrixQ(ListExpr(
+        assertEquals(BoolExpr.FALSE, MatrixQ(ListExpr(
                 ListExpr(a, b, c),
                 ListExpr(c, b)
         )).eval())

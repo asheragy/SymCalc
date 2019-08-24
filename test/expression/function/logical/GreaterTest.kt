@@ -4,8 +4,8 @@ import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class GreaterTest {
 
