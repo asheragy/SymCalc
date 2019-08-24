@@ -1,46 +1,44 @@
 package org.cerion.symcalc.expression.function.list
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.NumberType
+import org.cerion.symcalc.expression.number.NumberExpr
 
-// TODO add tests
+// TODO_LP Implemented with just NumberExpr, this function works on numeric values such as Pi and Sqrt[2]
 class Range(vararg e: Expr) : FunctionExpr(Function.RANGE, *e) {
 
     override fun evaluate(): Expr {
+        if (size == 1)
+            return range(Integer.ONE, get(0) as NumberExpr, Integer.ONE)
 
-        if (get(0).isInteger) {
-            var num = (get(0) as Integer).intValue()
+        if (size == 2)
+            return range(get(0) as NumberExpr, get(1) as NumberExpr, Integer.ONE)
 
-            val listResult = ListExpr()
-            var i = 1 //default start at 1
+        return range(get(0) as NumberExpr, get(1) as NumberExpr, get(2) as NumberExpr)
+    }
 
-            //if 2nd parameter range is num1 to num2
-            if (size > 1 && get(1).isInteger) {
-                i = (get(0) as Integer).intValue()
-                num = (get(1) as Integer).intValue()
-            }
+    private fun range(min: NumberExpr, max: NumberExpr, step: NumberExpr): ListExpr {
+        val list = ListExpr()
+        var current = min
 
-            //Step by 1 or 3rd parameter
-            var iStep = 1
-            if (size > 2 && get(2).isInteger)
-                iStep = (get(2) as Integer).intValue()
-
-            while (i <= num) {
-                listResult.add(Integer(i.toLong()))
-                i += iStep
-            }
-
-            return listResult
+        while(current <= max) {
+            list.add(current)
+            current += step
         }
 
-        return this
+        return list
     }
 
     override fun validate() {
-        //validateNumberType(0, NumberType.INTEGER)
+        validateParameterType(0, ExprType.NUMBER)
+        if (size > 1)
+            validateParameterType(1, ExprType.NUMBER)
+        else if (size > 2)
+            validateParameterType(1, ExprType.NUMBER)
+
+        validateParameterRage(1, 3)
     }
 }

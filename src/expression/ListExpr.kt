@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression
 
-import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.NumberExpr
 
 class ListExpr : Expr {
     override val value: Any? get() = null
@@ -16,9 +16,9 @@ class ListExpr : Expr {
         setArgs(*e)
     }
 
-    constructor(vararg n: Int) {
+    constructor(vararg n: Number) {
         for(i in n)
-            add(Integer(i))
+            add(NumberExpr.create(i))
     }
 
     operator fun plusAssign(e: Expr) = add(e)
