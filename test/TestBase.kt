@@ -3,7 +3,8 @@ package org.cerion.symcalc
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.NumberExpr
-import org.junit.Assert.*
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 fun assertEqual(expected: Int, actual: Expr) {
     assertEquals(expected, actual.asInteger().intValue())
@@ -11,10 +12,6 @@ fun assertEqual(expected: Int, actual: Expr) {
 
 fun assertTrue(expected: Expr) {
     assertTrue(expected.asBool().value)
-}
-
-fun assertFalse(expected: Expr) {
-    assertFalse(expected.asBool().value)
 }
 
 fun listOfNumbers(vararg numbers: Number) : ListExpr {

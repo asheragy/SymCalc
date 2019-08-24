@@ -2,11 +2,9 @@ package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.number.Integer
-import org.junit.Test
-
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
-
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 class VarExprTest {
     @Test
@@ -16,7 +14,7 @@ class VarExprTest {
         val v3 = VarExpr("x")
 
         assertNotEquals(v1, v2)
-        assertNotEquals(v1, Integer(5))
+        assertNotEquals(v1 as Expr, Integer(5))
         assertEquals(v1, v3)
     }
 

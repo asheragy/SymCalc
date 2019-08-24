@@ -4,11 +4,10 @@ import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.core.Hold
 import org.cerion.symcalc.expression.function.core.N
-import org.junit.Test
-
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNotEquals
 
 
 class RationalTest : NumberTestBase() {

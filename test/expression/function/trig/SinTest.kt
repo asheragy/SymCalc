@@ -1,16 +1,19 @@
 package org.cerion.symcalc.expression.function.trig
 
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.*
+import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.expression.function.arithmetic.Minus
+import org.cerion.symcalc.expression.function.arithmetic.Power
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.function.list.Join
-import org.cerion.symcalc.expression.function.statistics.RandomInteger
-import org.cerion.symcalc.expression.number.*
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.expression.number.RealDouble
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class SinTest {
 
@@ -81,7 +84,7 @@ class SinTest {
             val x = Times(Integer(i), step).eval()
             val sin = Sin(x)
             val pos = (((i % 8) + 8) % 8) // mod but handles negative values
-            assertEquals("$x", expected[pos], sin.eval())
+            assertEquals(expected[pos], sin.eval(), "$x")
         }
     }
 
@@ -97,7 +100,7 @@ class SinTest {
             val x = Times(Integer(i), step).eval()
             val sin = Sin(x)
             val pos = (((i % 12) + 12) % 12) // mod but handles negative values
-            assertEquals("$x", expected[pos], sin.eval())
+            assertEquals(expected[pos], sin.eval(), "$x")
         }
     }
 

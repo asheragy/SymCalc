@@ -1,9 +1,9 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.function.core.N
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 class RealTest : NumberTestBase() {
 
@@ -74,7 +74,7 @@ class RealTest : NumberTestBase() {
         val n4 = Integer(5)
 
         assertNotEquals(n1, n2)
-        assertNotEquals(n1, n4)
+        assertNotEquals(n1 as NumberExpr, n4)
         assertEquals(n1, n3)
 
         //Add BigDecimal cases or switch class to only use that type
@@ -89,6 +89,6 @@ class RealTest : NumberTestBase() {
 
     @Test
     fun typesNotEqual() {
-        assertNotEquals(RealDouble(0.11662912394210093), RealBigDec("0.11662912394210093"))
+        assertNotEquals(RealDouble(0.11662912394210093) as NumberExpr, RealBigDec("0.11662912394210093"))
     }
 }
