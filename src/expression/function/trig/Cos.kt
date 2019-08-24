@@ -1,9 +1,7 @@
 package org.cerion.symcalc.expression.function.trig
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.Function
-import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
@@ -60,28 +58,6 @@ class Cos(vararg e: Expr) : TrigBase(Function.COS, *e), StandardTrigFunction {
     }
 
     override fun evaluate(e: Expr): Expr {
-
-        // Even*Pi = 1 / Odd*Pi = -1
-        if (e is Times && e.args.any { it is Pi } && e.args.any { it is Integer }) {
-            val removeIntegers = Times()
-            e.args.forEach {
-                if (it !is Integer)
-                    removeIntegers.add(it)
-            }
-            val cos = Cos(removeIntegers)
-
-            val theInteger = e.args.first { it is Integer } as Integer
-            if (theInteger.isEven)
-                return Times(Integer.NEGATIVE_ONE, cos).eval()
-
-            return cos.eval()
-        }
-
-        // Pi / Integer
-        if (e is Divide && e.args[1] == Integer.TWO) {
-            return Integer.ZERO
-        }
-
         return this
     }
 

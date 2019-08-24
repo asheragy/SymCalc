@@ -14,18 +14,9 @@ class ListExpr(vararg e: Expr) : Expr() {
 
     constructor(vararg n: Number): this(*n.map { NumberExpr.create(it) }.toTypedArray())
 
-    operator fun plusAssign(e: Expr) = add(e)
-
+    @Deprecated("use constructor instead", ReplaceWith("constructor"))
     fun add(t: Expr) {
         addArg(t)
-    }
-
-    fun addAll(items: List<Expr>?) {
-        if (items != null) {
-            for (e in items) {
-                add(e)
-            }
-        }
     }
 
     override fun equals(e: Expr): Boolean {

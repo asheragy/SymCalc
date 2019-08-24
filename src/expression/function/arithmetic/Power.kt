@@ -38,10 +38,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         }
 
         if (b is Plus) {
-            val result = Times()
-            b.args.forEach { result.add(Power(a, it)) }
-
-            return result.eval()
+            return Times(*b.args.map { Power(a, it) }.toTypedArray()).eval()
         }
 
         // Euler's Identity

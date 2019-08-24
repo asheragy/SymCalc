@@ -184,15 +184,14 @@ class Integer(override val value: BigInteger) : NumberExpr() {
         if (factors.args.all { (it[1] as Integer).isOne })
             return Power(a, b)
 
-        val times = Times()
+        val items = mutableListOf<Expr>()
         for (factor in factors.args) {
-            factor as ListExpr
             val n = factor[0] as Integer
             val x = factor[1] as Integer
 
-            times.add(Power(n, b * x))
+            items.add(Power(n, b * x))
         }
 
-        return times.eval()
+        return Times(*items.toTypedArray()).eval()
     }
 }

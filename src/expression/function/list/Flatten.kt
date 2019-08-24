@@ -10,20 +10,20 @@ class Flatten(vararg e: Expr) : FunctionExpr(Function.FLATTEN, *e) {
 
     override fun evaluate(): Expr {
         val l = get(0) as ListExpr
-        val result = ListExpr()
+        val items = mutableListOf<Expr>()
 
         for (i in 0 until l.size) {
             val e = l[i]
 
             if (e is ListExpr) {
                 val sublist = Flatten(e).eval() as ListExpr
-                result.addAll(sublist.args)
+                items.addAll(sublist.args)
             } else {
-                result.add(e)
+                items.add(e)
             }
         }
 
-        return result
+        return ListExpr(*items.toTypedArray())
     }
 
     @Throws(ValidationException::class)

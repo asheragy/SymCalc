@@ -151,18 +151,18 @@ class Parser(private val lex: Lexer) {
                 println("missing ident (")
 
             getNext()
-            val mf = FunctionExpr.createFunction(ident, expr())
+            val functionArgs = mutableListOf(expr())
 
             //Add additional parameters
             while (token == ',')
             {
                 getNext()
-                mf.add(expr())
+                functionArgs.add(expr())
             }
 
             if (token == ')') {
                 getNext()
-                return mf
+                return FunctionExpr.createFunction(ident, *functionArgs.toTypedArray())
             } else
                 throw ParseException("Function missing closing ')'")
 

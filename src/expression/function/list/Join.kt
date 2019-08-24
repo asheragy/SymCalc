@@ -9,14 +9,14 @@ import org.cerion.symcalc.expression.function.Function
 class Join(vararg e: Expr) : FunctionExpr(Function.JOIN, *e) {
 
     override fun evaluate(): Expr {
-        val result = ListExpr()
+        val items = mutableListOf<Expr>()
 
         for (i in 0 until size) {
             val e = get(i) as ListExpr
-            result.addAll(e.args)
+            items.addAll(e.args)
         }
 
-        return result
+        return ListExpr(*items.toTypedArray())
     }
 
     @Throws(ValidationException::class)
