@@ -38,14 +38,13 @@ abstract class FunctionExpr protected constructor(final override val value: Func
     abstract fun validate()
 
     override fun equals(e: Expr): Boolean {
-        if (!e.isFunction)
+        if (e !is FunctionExpr)
             return false
 
-        val f = e as FunctionExpr
-        if (f.value != value)
+        if (e.value != value)
             return false
 
-        if (f.size != size)
+        if (e.size != size)
             return false
 
         if (hasProperty(Properties.Orderless)) {
@@ -62,7 +61,7 @@ abstract class FunctionExpr protected constructor(final override val value: Func
         }
         else {
             for (i in 0 until size) {
-                if (!get(i).equals(f[i]))
+                if (!get(i).equals(e[i]))
                     return false
             }
         }

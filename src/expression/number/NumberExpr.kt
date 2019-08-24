@@ -17,7 +17,6 @@ enum class NumberType {
 abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
 
     override val type: ExprType get() = ExprType.NUMBER
-    override val isInteger: Boolean get() = numType == NumberType.INTEGER
 
     abstract override val precision: Int
     abstract val isZero: Boolean
@@ -53,7 +52,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
         }
     }
 
-    override fun equals(e: Expr): Boolean = e.isNumber && equals(e as NumberExpr)
+    override fun equals(e: Expr): Boolean = e is NumberExpr && this.equals(e)
 
     override fun treeForm(i: Int) = indent(i, "Number $this")
     public override fun evaluate(): NumberExpr = this

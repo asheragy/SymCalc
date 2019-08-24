@@ -19,8 +19,7 @@ class Log(vararg e: Expr) : FunctionExpr(Function.LOG, *e) {
     override fun evaluate(): Expr {
         val n = get(0)
 
-        if (n.isNumber) {
-            n as NumberExpr
+        if (n is NumberExpr) {
             if (n is RealDouble)
                 return RealDouble(ln(n.value))
             if (n is RealBigDec) {

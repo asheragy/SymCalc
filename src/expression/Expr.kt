@@ -28,17 +28,11 @@ abstract class Expr {
 
     open val precision get() = InfinitePrecision
 
-
     val size get() = if (mArgs != null) mArgs!!.size else 0
 
-    val isNumber: Boolean get() = type == ExprType.NUMBER
-    open val isInteger: Boolean get() = isNumber && asInteger().isInteger
+    val isInteger: Boolean get() = this is Integer
     val isList: Boolean get() = type == ExprType.LIST
-    val isFunction: Boolean get() = type == ExprType.FUNCTION
     val isError: Boolean get() = type == ExprType.ERROR
-    val isVariable: Boolean get() = type == ExprType.VARIABLE
-    val isBool: Boolean get() = type == ExprType.BOOL
-    val isConst: Boolean get() = type == ExprType.CONST
 
     protected fun setArgs(vararg args: Expr) {
         if (mArgs == null)
@@ -62,7 +56,6 @@ abstract class Expr {
     fun asList(): ListExpr = this as ListExpr
     fun asInteger(): Integer = this as Integer
     fun asBool(): BoolExpr = this as BoolExpr
-    fun asVar(): VarExpr = this as VarExpr
     fun asNumber(): NumberExpr = this as NumberExpr
 
     protected fun setArg(index: Int, e: Expr) {
@@ -136,7 +129,7 @@ abstract class Expr {
         }
 
         // Listable property
-        if (hasProperty(FunctionExpr.Properties.LISTABLE) && size == 1 && newArgs[0].isList) {
+        if (hasProperty(FunctionExpr.Properties.LISTABLE) && size == 1 && newArgs[0] is ListExpr) {
             val listArgs = newArgs[0].args.map { FunctionExpr.createFunction(name, it) }
             return ListExpr(*listArgs.toTypedArray()).eval()
         }
@@ -186,9 +179,8 @@ abstract class Expr {
     }
 
     fun isFunction(name: String): Boolean {
-        if (isFunction) {
-            val e = this as FunctionExpr
-            if (name.compareTo(e.name, ignoreCase = true) == 0)
+        if (this is FunctionExpr) {
+            if (name.compareTo(this.name, ignoreCase = true) == 0)
                 return true
         }
 

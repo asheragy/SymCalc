@@ -8,8 +8,8 @@ import org.cerion.symcalc.expression.function.Function
 class Reverse(vararg e: Expr) : FunctionExpr(Function.REVERSE, *e) {
 
     override fun evaluate(): Expr {
-        if (get(0).isList) {
-            val list = get(0).asList()
+        if (get(0) is ListExpr) {
+            val list = get(0)
             val result = ListExpr()
 
             for (i in list.size downTo 1)

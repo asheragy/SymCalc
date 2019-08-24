@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.function.calculus
 
 
+import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
@@ -11,6 +12,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.NumberExpr
 
 class D(vararg e: Expr) : FunctionExpr(Function.D, *e) {
 
@@ -18,25 +20,24 @@ class D(vararg e: Expr) : FunctionExpr(Function.D, *e) {
         val e = get(0)
         val x = get(1) as VarExpr
 
-        if (e.isNumber || e.isConst)
+        if (e is NumberExpr || e is ConstExpr)
             return Integer.ZERO
 
-        if (e.isVariable) {
-            return if (e.asVar().equals(x))
+        if (e is VarExpr) {
+            return if (e == x)
                 Integer.ONE
             else
                 Integer.ZERO
         }
 
-        if (e.isFunction) {
-            val func = e as FunctionExpr
+        if (e is FunctionExpr) {
             val result: FunctionExpr
 
-            when (func.value) {
-                Function.PLUS -> result = Plus(*func.args.map { D(it, x) }.toTypedArray())
-                Function.SUBTRACT -> result = Subtract(*func.args.map { D(it, x) }.toTypedArray())
-                Function.SIN -> result = Times(D(func[0], x), Cos(func[0]))
-                Function.COS -> result = Times(Integer(-1), D(func[0], x), Sin(func[0]))
+            when (e.value) {
+                Function.PLUS -> result = Plus(*e.args.map { D(it, x) }.toTypedArray())
+                Function.SUBTRACT -> result = Subtract(*e.args.map { D(it, x) }.toTypedArray())
+                Function.SIN -> result = Times(D(e[0], x), Cos(e[0]))
+                Function.COS -> result = Times(Integer(-1), D(e[0], x), Sin(e[0]))
 
                 else -> return this
             }

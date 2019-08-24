@@ -10,7 +10,7 @@ import org.cerion.symcalc.expression.number.NumberType
 class Fibonacci(vararg e: Expr) : FunctionExpr(Function.FIBONACCI, *e) {
 
     override fun evaluate(): Expr {
-        val n = get(0).asInteger()
+        val n = get(0) as Integer
 
         //return fibRecursive(n)
         return fibIterative(n)

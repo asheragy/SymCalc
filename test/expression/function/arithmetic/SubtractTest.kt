@@ -23,7 +23,6 @@ class SubtractTest {
         var e = get()
         assertTrue(e.isError)
 
-
         e = get(Integer(5))
         assertTrue(e.isError)
 

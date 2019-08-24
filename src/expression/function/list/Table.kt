@@ -17,7 +17,7 @@ class Table(vararg e: Expr) : FunctionExpr(Function.TABLE, *e) {
 
         val v = argList[0] as VarExpr
 
-        if (argList.size == 2 && argList[1].isList)
+        if (argList.size == 2 && argList[1] is ListExpr)
             return evaluate(expr, v, argList.getList(1))
         else if (argList.size == 2)
             return evaluate(expr, v, Integer.ONE, argList.getInteger(1), Integer.ONE)
@@ -86,10 +86,10 @@ class Table(vararg e: Expr) : FunctionExpr(Function.TABLE, *e) {
 
         // If more than 1 parameter first must be variable and the rest integers
         if (list.size > 1) {
-            if (!list[0].isVariable)
+            if (list[0] !is VarExpr)
                 throw ValidationException("first list parameter must be variable")
 
-            if (list.size >= 2 && !list[1].isInteger && !list[1].isList)
+            if (list.size >= 2 && !list[1].isInteger && list[1] !is ListExpr)
                 throw ValidationException("first list parameter at position 1 must be integer OR value list")
             if (list.size >= 3 && !list[2].isInteger)
                 throw ValidationException("first list parameter at position 2 must be integer")

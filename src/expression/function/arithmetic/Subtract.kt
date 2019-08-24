@@ -5,6 +5,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.number.NumberExpr
 
 class Subtract(vararg e: Expr) : FunctionExpr(Function.SUBTRACT, *e) {
 
@@ -13,14 +14,14 @@ class Subtract(vararg e: Expr) : FunctionExpr(Function.SUBTRACT, *e) {
         val b = get(1)
 
         //Identity
-        if (b.isNumber && b.asNumber().isZero)
+        if (b is NumberExpr && b.isZero)
             return a
 
-        if (a.isNumber && b.isNumber)
-            return a.asNumber() - b.asNumber()
+        if (a is NumberExpr && b is NumberExpr)
+            return a - b
 
-        if (a.isList || b.isList) {
-            if (a.isList && b.isList) {
+        if (a is ListExpr || b is ListExpr) {
+            if (a is ListExpr && b is ListExpr) {
                 if (a.size == b.size) {
                     val result = ListExpr()
                     for (i in 0 until a.size) {
@@ -33,7 +34,7 @@ class Subtract(vararg e: Expr) : FunctionExpr(Function.SUBTRACT, *e) {
                 }
 
                 return ErrorExpr("list sizes not equal")
-            } else return if (a.isList)
+            } else return if (a is ListExpr)
                 Subtract(a, b.toList(a.size)).eval()
             else
                 Subtract(a.toList(b.size), b).eval()

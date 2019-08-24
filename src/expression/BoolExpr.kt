@@ -11,8 +11,8 @@ class BoolExpr(override val value: Boolean) : Expr() {
     }
 
     override fun equals(e: Expr): Boolean {
-        if (e.isBool)
-            return e.asBool().value == value
+        if (e is BoolExpr)
+            return e.value == value
 
         return false
     }

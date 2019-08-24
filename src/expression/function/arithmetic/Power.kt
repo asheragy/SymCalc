@@ -29,8 +29,7 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         if (a is NumberExpr && a.isOne)
             return a
 
-        if (b.isNumber) {
-            b as NumberExpr
+        if (b is NumberExpr) {
             // Zero/Identity is just a shortcut for special case, unit tests should still pass if this is commented out
             if (b.isZero)
                 return Integer.ONE

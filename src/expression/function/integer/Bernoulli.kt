@@ -12,7 +12,7 @@ class Bernoulli(vararg e: Expr) : FunctionExpr(Function.BERNOULLI, *e) {
 
     override fun evaluate(): Expr {
         val result: Expr
-        var N = get(0).asInteger()
+        var N = get(0) as Integer
 
         when {
             N.isZero -> result = Integer.ONE
@@ -24,7 +24,7 @@ class Bernoulli(vararg e: Expr) : FunctionExpr(Function.BERNOULLI, *e) {
 
                 for (i in 0 until n) {
                     val bin = Binomial(Integer(n + 1), Integer(i))
-                    val t = bin.eval().asInteger()
+                    val t = bin.eval() as Integer
 
                     val bern = Bernoulli(Integer(i))
                     var b = bern.eval().asNumber()

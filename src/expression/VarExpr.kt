@@ -17,9 +17,8 @@ class VarExpr(override val value: String) : Expr() {
     }
 
     override fun equals(e: Expr): Boolean {
-        if (e.isVariable) {
-            val t = e as VarExpr
-            if (value.contentEquals(t.value))
+        if (e is VarExpr) {
+            if (value.contentEquals(e.value))
                 return true
         }
 

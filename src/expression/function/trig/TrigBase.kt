@@ -26,16 +26,14 @@ abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : Fun
 
     public override fun evaluate(): Expr {
         val e = get(0)
-        if (e.isNumber) {
-            e as NumberExpr
-            if (e is RealDouble)
-                return RealDouble(evaluateAsDouble(e.value))
-            if (e is RealBigDec)
-                return evaluateAsBigDecimal(e)
-        }
+
+        if (e is RealDouble)
+            return RealDouble(evaluateAsDouble(e.value))
+        if (e is RealBigDec)
+            return evaluateAsBigDecimal(e)
 
         if (this is StandardTrigFunction) {
-            if (e.isNumber && e.asNumber().isZero)
+            if (e is NumberExpr && e.isZero)
                 return evaluatePiFactoredOut(Integer.ZERO)
 
             if (e is Pi)

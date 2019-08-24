@@ -8,10 +8,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.function.list.Join
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealBigDec
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -29,7 +26,7 @@ class TanTest {
         // Evals to number
         val tan2 = N(tan)
         eval = tan2.eval()
-        assertTrue(eval.isNumber, "not a number")
+        assertTrue(eval is NumberExpr, "not a number")
 
         assertEquals(RealDouble(-3.380515006246586), eval)
     }

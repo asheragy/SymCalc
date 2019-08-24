@@ -36,11 +36,10 @@ class ListExpr : Expr {
     }
 
     override fun equals(e: Expr): Boolean {
-        if (e.isList) {
-            val list = e.asList()
-            if (list.size == size) {
-                for (i in 0 until list.size) {
-                    if (!list[i].equals(get(i)))
+        if (e is ListExpr) {
+            if (e.size == size) {
+                for (i in 0 until e.size) {
+                    if (!e[i].equals(get(i)))
                         return false
                 }
 

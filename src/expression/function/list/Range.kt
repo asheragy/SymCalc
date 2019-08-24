@@ -5,7 +5,9 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.NumberType
 
+// TODO add tests
 class Range(vararg e: Expr) : FunctionExpr(Function.RANGE, *e) {
 
     override fun evaluate(): Expr {
@@ -39,5 +41,6 @@ class Range(vararg e: Expr) : FunctionExpr(Function.RANGE, *e) {
     }
 
     override fun validate() {
+        //validateNumberType(0, NumberType.INTEGER)
     }
 }

@@ -5,14 +5,17 @@ import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
+import org.cerion.symcalc.expression.number.Integer
 
 class EvenQ(vararg e: Expr) : FunctionExpr(Function.EVENQ, *e) {
 
     override fun evaluate(): Expr {
-        if (!get(0).isInteger)
-            return BoolExpr.FALSE
+        val n = get(0)
+        if (n is Integer) {
+            return BoolExpr(n.isEven)
+        }
 
-        return if (get(0).asInteger().isEven) BoolExpr.TRUE else BoolExpr.FALSE
+        return BoolExpr.FALSE
     }
 
     @Throws(ValidationException::class)

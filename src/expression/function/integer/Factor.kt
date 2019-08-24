@@ -9,7 +9,7 @@ import org.cerion.symcalc.expression.number.NumberType
 class Factor(vararg e: Expr) : FunctionExpr(Function.FACTOR, *e) {
 
     override fun evaluate(): Expr {
-        var num = get(0).asInteger()
+        var num = get(0) as Integer
 
         val list = ListExpr()
         while (num.isEven) {

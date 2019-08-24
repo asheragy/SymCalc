@@ -11,7 +11,8 @@ class Factorial(vararg e: Expr) : FunctionExpr(Function.FACTORIAL, *e) {
 
     override fun evaluate(): Expr {
         var result = Integer.ONE
-        var N = get(0).asInteger()
+        var N = get(0) as Integer
+
         while (N > Integer.ONE) {
             result*= N
             N--

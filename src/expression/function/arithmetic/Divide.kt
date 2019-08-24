@@ -23,12 +23,12 @@ class Divide(vararg e: Expr) : FunctionExpr(Function.DIVIDE, *e) {
                 return a
 
             // Factor out rational number if it can't be evaluated
-            if (b is Integer && !a.isNumber)
+            if (b is Integer && a !is NumberExpr)
                 return Times(Rational(Integer.ONE, b), a).eval()
         }
 
-        if (a.isNumber && b.isNumber)
-            return a.asNumber() / b.asNumber()
+        if (a is NumberExpr && b is NumberExpr)
+            return a / b
 
         return this
     }

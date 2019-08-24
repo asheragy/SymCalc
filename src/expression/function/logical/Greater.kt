@@ -64,13 +64,11 @@ class Greater(vararg e: Expr) : FunctionExpr(Function.GREATER, *e) {
 
     private fun compare(e1: Expr, e2: Expr): LogicalCompare {
 
-        if (e1.isNumber && e2.isNumber) {
-            val n1 = e1 as NumberExpr
-            val n2 = e2 as NumberExpr
-            if (n1.isComplex || n2.isComplex)
+        if (e1 is NumberExpr && e2 is NumberExpr) {
+            if (e1.isComplex || e2.isComplex)
                 return LogicalCompare.ERROR
 
-            return if (n1 > n2)
+            return if (e1 > e2)
                 LogicalCompare.TRUE
             else
                 LogicalCompare.FALSE
