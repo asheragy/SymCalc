@@ -43,24 +43,23 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
 
         // Euler's Identity
         if (a is E && b is Times && b.size == 2 && b[0] is Complex) {
-            val img = Times(b[0].asNumber().asComplex().img, b[1])
+            val img = Times((b[0] as Complex).img, b[1])
             return complexPower(a, Integer.ZERO, img)
         }
 
         if (a is NumberExpr && b is NumberExpr) {
             if (a is Integer && b is Rational)
                 return a.pow(b)
-            else if (a.isRational && b.isRational) {
-                a as Rational
+            else if (a is Rational && b is Rational) {
                 return Divide(Power(a.numerator, b), Power(a.denominator, b)).eval()
             }
 
             // Complex power implemented here since the result is not always a NumberExpr
-            if (b.isComplex && !b.asComplex().img.isZero) {
+            if (b is Complex && !b.img.isZero) {
                 if (a is Complex)
                     return complexToPower(a, b)
 
-                return complexPower(a, b.asComplex())
+                return complexPower(a, b)
             }
 
             when (a) {
@@ -173,28 +172,30 @@ private fun Rational.power(other: NumberExpr): NumberExpr {
 }
 
 private fun RealDouble.power(other: NumberExpr): NumberExpr {
-    when (other.numType) {
-        NumberType.INTEGER,
-        NumberType.RATIONAL -> return this.power(other.evaluate(precision))
-        NumberType.REAL_DOUBLE -> return RealDouble(value.pow(other.asDouble().value))
-        NumberType.REAL_BIGDEC -> return RealDouble(value.pow(other.asBigDec().toDouble()))
-        NumberType.COMPLEX -> return Power(this, other).eval() as NumberExpr
+    when (other) {
+        is Integer,
+        is Rational -> return this.power(other.evaluate(precision))
+        is RealDouble -> return RealDouble(value.pow(other.value))
+        is RealBigDec -> return RealDouble(value.pow(other.toDouble()))
+        is Complex -> return Power(this, other).eval() as NumberExpr
+        else -> throw NotImplementedError()
     }
 }
 
 private fun RealBigDec.power(other: NumberExpr): NumberExpr {
     // Special case square root
-    if(other.isRational && other.equals(Rational(1,2)))
+    if(other == Rational.HALF)
         return RealBigDec(value.sqrt(MathContext(precision, RoundingMode.HALF_UP)))
 
-    when (other.numType) {
-        NumberType.INTEGER -> {
-            val number = value.pow(other.asInteger().intValue(), MathContext(precision, RoundingMode.HALF_UP))
+    when (other) {
+        is Integer -> {
+            val number = value.pow(other.intValue(), MathContext(precision, RoundingMode.HALF_UP))
             return RealBigDec(number)
         }
-        NumberType.RATIONAL -> return this.power(other.evaluate(precision))
-        NumberType.REAL_DOUBLE -> return RealDouble(toDouble().pow(other.asDouble().value))
-        NumberType.REAL_BIGDEC -> return this.pow(other as RealBigDec)
-        NumberType.COMPLEX -> throw UnsupportedOperationException()
+        is Rational -> return this.power(other.evaluate(precision))
+        is RealDouble -> return RealDouble(toDouble().pow(other.value))
+        is RealBigDec -> return this.pow(other)
+        is Complex -> throw UnsupportedOperationException()
+        else -> throw NotImplementedError()
     }
 }

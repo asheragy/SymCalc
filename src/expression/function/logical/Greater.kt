@@ -3,6 +3,7 @@ package org.cerion.symcalc.expression.function.logical
 import org.cerion.symcalc.expression.*
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
+import org.cerion.symcalc.expression.number.Complex
 import org.cerion.symcalc.expression.number.NumberExpr
 
 class Greater(vararg e: Expr) : FunctionExpr(Function.GREATER, *e) {
@@ -65,7 +66,7 @@ class Greater(vararg e: Expr) : FunctionExpr(Function.GREATER, *e) {
     private fun compare(e1: Expr, e2: Expr): LogicalCompare {
 
         if (e1 is NumberExpr && e2 is NumberExpr) {
-            if (e1.isComplex || e2.isComplex)
+            if (e1 is Complex || e2 is Complex)
                 return LogicalCompare.ERROR
 
             return if (e1 > e2)

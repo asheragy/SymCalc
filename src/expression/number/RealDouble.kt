@@ -15,46 +15,48 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr() {
     }
 
     override fun compareTo(other: NumberExpr): Int {
-        when(other.numType) {
-            NumberType.INTEGER,
-            NumberType.RATIONAL -> return this.compareTo(other.evaluate(SYSTEM_DECIMAL_PRECISION))
-            NumberType.REAL_DOUBLE -> return value.compareTo(other.asDouble().value)
-            NumberType.REAL_BIGDEC -> return value.compareTo(other.asBigDec().toDouble())
-            NumberType.COMPLEX -> return Complex(this).compareTo(other)
-
+        when(other) {
+            is Integer,
+            is Rational -> return this.compareTo(other.evaluate(SYSTEM_DECIMAL_PRECISION))
+            is RealDouble -> return value.compareTo(other.value)
+            is RealBigDec -> return value.compareTo(other.toDouble())
+            is Complex -> return Complex(this).compareTo(other)
+            else -> throw NotImplementedError()
         }
     }
 
     override fun unaryMinus(): RealDouble = RealDouble(0 - value)
 
     override fun plus(other: NumberExpr): NumberExpr {
-        when (other.numType) {
-            NumberType.INTEGER,
-            NumberType.RATIONAL -> return this + other.evaluate(SYSTEM_DECIMAL_PRECISION)
-            NumberType.REAL_DOUBLE -> return RealDouble(value + other.asDouble().value)
-            NumberType.REAL_BIGDEC -> return RealDouble(value + other.asBigDec().toDouble())
-            NumberType.COMPLEX -> return Complex(this) + other
+        when (other) {
+            is Integer,
+            is Rational -> return this + other.evaluate(SYSTEM_DECIMAL_PRECISION)
+            is RealDouble -> return RealDouble(value + other.value)
+            is RealBigDec -> return RealDouble(value + other.toDouble())
+            is Complex -> return Complex(this) + other
+            else -> throw NotImplementedError()
         }
     }
 
     override fun times(other: NumberExpr): NumberExpr {
-        when (other.numType) {
-            NumberType.INTEGER,
-            NumberType.RATIONAL -> return this * other.evaluate(SYSTEM_DECIMAL_PRECISION)
-            NumberType.REAL_DOUBLE -> return RealDouble(value * other.asDouble().value)
-            NumberType.REAL_BIGDEC -> return RealDouble(value * other.asBigDec().toDouble())
-            NumberType.COMPLEX -> return Complex(this) * other
-
+        when (other) {
+            is Integer,
+            is Rational -> return this * other.evaluate(SYSTEM_DECIMAL_PRECISION)
+            is RealDouble -> return RealDouble(value * other.value)
+            is RealBigDec -> return RealDouble(value * other.toDouble())
+            is Complex -> return Complex(this) * other
+            else -> throw NotImplementedError()
         }
     }
 
     override fun div(other: NumberExpr): NumberExpr {
-        when (other.numType) {
-            NumberType.INTEGER,
-            NumberType.RATIONAL -> return this / other.evaluate(SYSTEM_DECIMAL_PRECISION)
-            NumberType.REAL_DOUBLE -> return RealDouble(value / other.asDouble().value)
-            NumberType.REAL_BIGDEC -> return RealDouble(value / other.asBigDec().toDouble())
-            NumberType.COMPLEX -> return Complex(this) / other
+        when (other) {
+            is Integer,
+            is Rational -> return this / other.evaluate(SYSTEM_DECIMAL_PRECISION)
+            is RealDouble -> return RealDouble(value / other.value)
+            is RealBigDec -> return RealDouble(value / other.toDouble())
+            is Complex -> return Complex(this) / other
+            else -> throw NotImplementedError()
         }
     }
 }

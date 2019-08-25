@@ -45,8 +45,8 @@ class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : Numb
 
     override fun plus(other: NumberExpr): NumberExpr {
         if (other.numType === NumberType.COMPLEX) {
-            val b = other.asComplex()
-            return Complex(real + b.real, img + b.img).evaluate()
+            other as Complex
+            return Complex(real + other.real, img + other.img).evaluate()
         }
 
         return Complex(real + other, img).evaluate()
@@ -58,11 +58,12 @@ class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : Numb
 
         when (other.numType) {
             NumberType.COMPLEX -> {
+                other as Complex
                 //(a+bi)(c+di) = (ac-bd) + (bc+ad)i
                 val a = this.real
                 val b = this.img
-                val c = other.asComplex().real
-                val d = other.asComplex().img
+                val c = other.real
+                val d = other.img
 
                 resultR = (a * c) - (b * d)
                 resultI = (b * c) + (a * d)
@@ -82,13 +83,13 @@ class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : Numb
 
         when(other.numType) {
             NumberType.COMPLEX -> {
-
-                val conj = other.asComplex().conjugate()
+                other as Complex
+                val conj = other.conjugate()
                 var top = (this * conj)
                 if (top !is Complex)
                     top = Complex(top)
 
-                val bottom = other.asComplex() * conj // This should not be a complex number
+                val bottom = other * conj // This should not be a complex number
 
                 if (top.real.isInteger && bottom.isInteger)
                     resultR = Rational(top.real.asInteger(), bottom.asInteger()).evaluate()
@@ -145,12 +146,11 @@ class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : Numb
     }
 
     override fun compareTo(other: NumberExpr): Int {
-        if(other.isComplex) {
-            val o = other.asComplex()
-            if (img.isZero && o.img.isZero)
-                return real.compareTo(o.real)
+        if(other is Complex) {
+            if (img.isZero && other.img.isZero)
+                return real.compareTo(other.real)
 
-            if (real == o.real && img == o.img)
+            if (real == other.real && img == other.img)
                 return 0
 
             // Can't compare so they are either equal or not able to determine

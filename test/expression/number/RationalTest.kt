@@ -71,7 +71,7 @@ class RationalTest : NumberTestBase() {
         assertEquals(Integer.ONE, (Rational(2, 4).eval() as Rational).numerator)
 
         // Except with Hold
-        assertEquals(Integer.TWO, Hold(Rational(2, 4)).eval()[0].asNumber().asRational().numerator)
+        assertEquals(Integer.TWO, (Hold(Rational(2, 4)).eval()[0] as Rational).numerator)
     }
 
     @Test
@@ -83,7 +83,7 @@ class RationalTest : NumberTestBase() {
     fun eval_toReal() {
         assertEquals(RealDouble(0.3333333333333333), N(Rational(1,3)).eval())
 
-        val bigDec = N(Rational(1,3), Integer(50)).eval().asNumber().asBigDec()
+        val bigDec = N(Rational(1,3), Integer(50)).eval() as RealBigDec
         assertEquals(50, bigDec.precision)
         assertEquals(RealBigDec("0.33333333333333333333333333333333333333333333333333"), bigDec)
     }

@@ -31,20 +31,18 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
     }
 
     override fun plus(other: NumberExpr): NumberExpr {
-        when (other.numType) {
-            NumberType.INTEGER -> {
-                val bigDec = other.asInteger().toBigDecimal()
+        when (other) {
+            is Integer -> {
+                val bigDec = other.toBigDecimal()
                 return RealBigDec( this.value.plus(bigDec))
             }
-            NumberType.RATIONAL -> {
+            is Rational -> {
                 val n = N(other, Integer(precision)).eval()
                 return this + n as NumberExpr
             }
-            NumberType.REAL_DOUBLE -> return other.asDouble() + this
+            is RealDouble -> return other + this
 
-            NumberType.REAL_BIGDEC -> {
-                other as RealBigDec
-
+            is RealBigDec -> {
                 // TODO_LP issue with zero and precision, this is just a workaround until more is learned on how it
                 if (isZero)
                     return other
@@ -57,64 +55,46 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
 
                 return RealBigDec( a.value.plus(b.value))
             }
-            NumberType.COMPLEX -> {
+            is Complex -> {
                 return other + this
             }
+            else -> throw NotImplementedError()
         }
     }
 
     override fun times(other: NumberExpr): NumberExpr {
-        when(other.numType) {
-            NumberType.INTEGER -> {
-                other as Integer
-                val n = BigDecimal(other.value)
-                return RealBigDec(value.times(n))
-            }
-
-            NumberType.RATIONAL -> {
-                other as Rational
-                val n = this * other.numerator
-                return n / other.denominator
-            }
-            NumberType.REAL_DOUBLE -> return other.asDouble() * this
-            NumberType.REAL_BIGDEC -> {
-                other as RealBigDec
-
+        when(other) {
+            is Integer -> return RealBigDec(value.times(other.value.toBigDecimal()))
+            is Rational -> return (this * other.numerator) / other.denominator
+            is RealDouble -> return other * this
+            is RealBigDec -> {
                 // Both are BigDecimal
                 val bd = this.value.times(other.value)
                 val result = RealBigDec(bd)
                 return evaluatePrecision(result, this, other)
             }
 
-            NumberType.COMPLEX -> {
-                other as Complex
-                return Complex(this * other.real, this * other.img)
-            }
+            is Complex -> return Complex(this * other.real, this * other.img)
+            else -> throw NotImplementedError()
         }
     }
 
     override fun div(other: NumberExpr): NumberExpr {
-        when (other.numType) {
-            NumberType.INTEGER -> {
-                other as Integer
+        when (other) {
+            is Integer -> {
                 val n = BigDecimal(other.value)
                 return RealBigDec(value.divide(n, MathContext(precision, RoundingMode.HALF_UP)))
             }
 
-            NumberType.RATIONAL -> {
-                other as Rational
-                return (this * other.denominator) / other.numerator
-            }
-            NumberType.REAL_DOUBLE -> return RealDouble(toDouble() / other.asDouble().value)
-            NumberType.REAL_BIGDEC -> {
-                other as RealBigDec
+            is Rational -> return (this * other.denominator) / other.numerator
+            is RealDouble -> return RealDouble(toDouble() / other.value)
+            is RealBigDec -> {
                 val result = RealBigDec( this.value.divide(other.value, RoundingMode.HALF_UP))
                 return evaluatePrecision(result, this, other)
             }
 
-            NumberType.COMPLEX -> {
-                return Complex(this) / other
-            }
+            is Complex -> return Complex(this) / other
+            else -> throw NotImplementedError()
         }
     }
 

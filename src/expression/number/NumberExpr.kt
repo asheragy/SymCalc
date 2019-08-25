@@ -24,19 +24,8 @@ abstract class NumberExpr(vararg e: Expr) : Expr(*e), Comparable<NumberExpr> {
     abstract val numType: NumberType
     abstract val isNegative: Boolean
 
-    //val isReal: Boolean get() = numType == NumberType.REAL
-    val isRational: Boolean get() = numType == NumberType.RATIONAL
-    val isComplex: Boolean get() = numType == NumberType.COMPLEX
-
-    fun asDouble(): RealDouble = this as RealDouble
-    fun asBigDec(): RealBigDec = this as RealBigDec
-    fun asRational(): Rational = this as Rational
-    fun asComplex(): Complex = this as Complex
-
-    abstract override fun toString(): String
-
     abstract fun evaluate(precision: Int): NumberExpr
-
+    abstract override fun toString(): String
     abstract override fun compareTo(other: NumberExpr): Int
 
     fun equals(other: NumberExpr): Boolean {
