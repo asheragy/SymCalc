@@ -15,11 +15,6 @@ class ListExpr(vararg e: Expr) : Expr() {
 
     constructor(vararg n: Number): this(*n.map { NumberExpr.create(it) }.toTypedArray())
 
-    @Deprecated("use constructor instead", ReplaceWith("constructor"))
-    fun add(t: Expr) {
-        addArg(t)
-    }
-
     override fun equals(e: Expr): Boolean {
         if (e is ListExpr) {
             if (e.size == size) {

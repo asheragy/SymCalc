@@ -9,7 +9,7 @@ import org.cerion.symcalc.expression.number.NumberExpr
 class Fourier(vararg e: Expr) : FunctionExpr(Function.FOURIER, *e) {
 
     override fun evaluate(): Expr {
-        return recursiveFFT(get(0).asList())
+        return ListExpr(recursiveFFT(get(0).args))
     }
 
     override fun validate() {
@@ -17,14 +17,14 @@ class Fourier(vararg e: Expr) : FunctionExpr(Function.FOURIER, *e) {
         validateParameterType(0, ExprType.LIST)
     }
 
-    private fun recursiveFFT(list: ListExpr): ListExpr {
+    private fun recursiveFFT(list: List<Expr>): List<Expr> {
         val N = list.size
         if (N == 1)
             return list
 
-        var result = ListExpr()
-        val a0 = ListExpr()
-        val a1 = ListExpr()
+        var result = mutableListOf<Expr>()
+        val a0 = mutableListOf<Expr>()
+        val a1 = mutableListOf<Expr>()
         run {
             var i = 0
             while (i < N) {
@@ -56,7 +56,7 @@ class Fourier(vararg e: Expr) : FunctionExpr(Function.FOURIER, *e) {
         // TODO_LP Check this class again, add tests, etc
 
         //Fix order
-        val temp = ListExpr()
+        val temp = mutableListOf<Expr>()
         for (i in 0 until y0.size) {
             temp.add(result[i])
             temp.add(result[i + y0.size])
@@ -64,6 +64,5 @@ class Fourier(vararg e: Expr) : FunctionExpr(Function.FOURIER, *e) {
         result = temp
 
         return result
-
     }
 }

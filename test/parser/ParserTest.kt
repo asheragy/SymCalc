@@ -1,6 +1,8 @@
 package org.cerion.symcalc.parser
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Power
@@ -38,6 +40,13 @@ class ParserTest {
         assertTrue(Expr.parse("(2").isError)
         assertTrue(Expr.parse("(2+1))").isError)
         assertTrue(Expr.parse("Plus(1,2").isError)
+    }
+
+    @Test
+    fun list() {
+        assertEquals(ListExpr(1,2,3,4,5), Expr.parse("{1,2,3,4,5}"))
+        assertEquals(Plus(ListExpr(1,2,3), VarExpr("x")), Expr.parse("{1,2,3} + x"))
+        assertEquals(Plus(VarExpr("x"), ListExpr(1,2,3)), Expr.parse("x + {1,2,3}"))
     }
 
     @Test

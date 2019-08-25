@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
-import org.cerion.symcalc.assertEqual
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.constant.E
@@ -24,8 +23,8 @@ class PlusTest {
     @Test
     fun doubleEval() {
         val e = Plus(Integer.ONE, Integer.ONE)
-        assertEqual(2, e.eval())
-        assertEqual(2, e.eval())
+        assertEquals(Integer(2), e.eval())
+        assertEquals(Integer(2), e.eval())
     }
 
     @Test

@@ -132,16 +132,16 @@ class Parser(private val lex: Lexer) {
         // Lists
         else if (token == '{') {
             getNext()
-            val ml = ListExpr(expr())
+            val items = mutableListOf(expr())
 
             while (token == ',') {
                 getNext()
-                ml.add(expr())
+                items.add(expr())
             }
             if (token != '}')
                 println("Edit: missing }")
             getNext()
-            return ml
+            return ListExpr(items)
         }
         // Function
         else if (token == FUNC) {

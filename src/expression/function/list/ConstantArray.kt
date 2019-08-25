@@ -12,11 +12,11 @@ class ConstantArray(vararg e: Expr) : FunctionExpr(Function.CONSTANT_ARRAY, *e) 
         val expr = get(0)
         val count = get(1).asInteger()
 
-        val list = ListExpr()
+        val list = mutableListOf<Expr>()
         for(i in 1..count.intValue())
             list.add(expr)
 
-        return list
+        return ListExpr(list)
     }
 
     override fun validate() {
