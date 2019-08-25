@@ -37,7 +37,7 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
                 return RealBigDec( this.value.plus(bigDec))
             }
             NumberType.RATIONAL -> {
-                val n = N(other, precision).eval()
+                val n = N(other, Integer(precision)).eval()
                 return this + n as NumberExpr
             }
             NumberType.REAL_DOUBLE -> return other.asDouble() + this

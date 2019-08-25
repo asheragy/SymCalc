@@ -18,11 +18,7 @@ class Dot(vararg e: Expr) : FunctionExpr(Function.DOT, *e) {
     }
 
     private fun evalVector(a: ListExpr, b: ListExpr): Expr {
-        val sum = Plus()
-        for (i in 0 until a.size)
-            sum += Times(a[i],b[i])
-
-        return sum.eval()
+        return Plus(*a.args.mapIndexed { index, expr -> Times(expr,b[index]) }.toTypedArray()).eval()
     }
 
     private fun evalMatrix(a: ListExpr, b: ListExpr): Expr {
@@ -33,18 +29,14 @@ class Dot(vararg e: Expr) : FunctionExpr(Function.DOT, *e) {
             val subItems = mutableListOf<Expr>()
 
             for (j in 0 until a.size) {
-                val sum = Plus()
-
-                for (k in 0 until ax.size)
-                    sum += Times(ax[k],b[k][j])
-
+                val sum = Plus(*ax.args.mapIndexed { index, expr -> Times(expr,b[index][j]) }.toTypedArray())
                 subItems.add(sum.eval())
             }
 
-            items.add(ListExpr(*subItems.toTypedArray()))
+            items.add(ListExpr(subItems))
         }
 
-        return ListExpr(*items.toTypedArray())
+        return ListExpr(items)
     }
 
     @Throws(ValidationException::class)

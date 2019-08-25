@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 
-abstract class FunctionExpr protected constructor(final override val value: Function, vararg e: Expr) : Expr() {
+abstract class FunctionExpr protected constructor(final override val value: Function, vararg e: Expr) : Expr(*e) {
     val name: String = value.toString()
 
     open val properties: Int get() = Properties.NONE.value
@@ -16,10 +16,6 @@ abstract class FunctionExpr protected constructor(final override val value: Func
 
     val symbol: SymbolExpr
         get() = SymbolExpr(name)
-
-    init {
-        setArgs(*e)
-    }
 
     override val type: ExprType
         get() = ExprType.FUNCTION
@@ -67,10 +63,6 @@ abstract class FunctionExpr protected constructor(final override val value: Func
         }
 
         return true
-    }
-
-    fun add(t: Expr) {
-        setArgs(t)
     }
 
     @Throws(ValidationException::class)

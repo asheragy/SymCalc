@@ -2,16 +2,12 @@ package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.expression.number.NumberExpr
 
-class ListExpr(vararg e: Expr) : Expr() {
+class ListExpr(vararg e: Expr) : Expr(*e) {
     override val value: Any? get() = null
     override val type: ExprType get() = ExprType.LIST
 
     constructor() : this(*emptyArray<Expr>())
     constructor(items: List<Expr>) : this(*items.toTypedArray())
-
-    init {
-        setArgs(*e)
-    }
 
     constructor(vararg n: Number): this(*n.map { NumberExpr.create(it) }.toTypedArray())
 

@@ -18,11 +18,11 @@ class GCD(vararg e: Expr) : FunctionExpr(Function.GCD, *e) {
         if (size == 2)
             return gcd
 
-        val next = GCD(gcd)
+        val next = mutableListOf<Expr>(gcd)
         for(i in 2 until size)
             next.add(args[i])
 
-        return next.eval()
+        return GCD(*next.toTypedArray()).eval()
     }
 
     @Throws(ValidationException::class)

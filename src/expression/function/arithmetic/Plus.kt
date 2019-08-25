@@ -50,8 +50,6 @@ class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
         return sum
     }
 
-    operator fun plusAssign(e: Expr) = add(e)
-
     override fun toString(): String {
         if (size > 0) {
             val strings = args.map {

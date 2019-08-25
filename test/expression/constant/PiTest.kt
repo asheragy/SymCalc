@@ -26,7 +26,7 @@ class PiTest {
     fun digitsTest() {
         // Check Nth digit for accuracy
         val checkDigit : (Int, Int) -> Unit = { pos, n ->
-            val test = N(Pi(), pos+2).eval() as RealBigDec
+            val test = N(Pi(), Integer(pos+2)).eval() as RealBigDec
             val digit = test.value.toString().substring(pos+1,pos+2)
             assertEquals(n.toString(), digit, "expected $n at position $pos")
         }

@@ -10,7 +10,7 @@ import org.cerion.symcalc.expression.number.RealDouble
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 
-abstract class Expr {
+abstract class Expr(vararg e: Expr) {
 
     abstract val value: Any?
 
@@ -34,7 +34,11 @@ abstract class Expr {
     val isList: Boolean get() = type == ExprType.LIST
     val isError: Boolean get() = type == ExprType.ERROR
 
-    protected fun setArgs(vararg args: Expr) {
+    init {
+        setArgs(*e)
+    }
+
+    private fun setArgs(vararg args: Expr) {
         if (mArgs == null)
             mArgs = ArrayList()
 
@@ -142,7 +146,7 @@ abstract class Expr {
     }
 
     fun eval(precision: Int): Expr {
-        return N(this, precision).eval()
+        return N(this, Integer(precision)).eval()
     }
 
     fun print() {
