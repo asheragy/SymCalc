@@ -9,7 +9,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Times
 import kotlin.math.abs
 import kotlin.math.min
 
-class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : NumberExpr() {
+class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : NumberExpr(r, i) {
 
     override val value: Any? get() = null
 
@@ -24,34 +24,8 @@ class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : Numb
     override val isNegative: Boolean
         get() = throw UnsupportedOperationException()
 
-    init {
-        setArg(0, r)
-        setArg(1, i)
-    }
-
-    constructor(r: Number, i: Number) : this() {
-        if (r is Int)
-            setArg(0, Integer(r))
-        else
-            setArg(0, RealDouble(r.toDouble()))
-
-        if (i is Int)
-            setArg(1, Integer(i))
-        else
-            setArg(1, RealDouble(i.toDouble()))
-    }
-
+    constructor(r: Number, i: Number) : this(create(r), create(i))
     constructor(r: String, i: String): this(RealBigDec(r), RealBigDec(i))
-
-    constructor(s: String): this() {
-        val num = s.substring(0, s.length - 1)
-
-        if (num.isEmpty())
-        //If passed just "i" its complex number 1
-            setArg(1, Integer.ONE)
-        else
-            setArg(1, parse(num))
-    }
 
     fun conjugate(): Complex = Complex(real, img.unaryMinus())
 
@@ -68,7 +42,6 @@ class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : Numb
     override fun evaluate(precision: Int): NumberExpr {
         return Complex(real.evaluate(precision), img.evaluate(precision))
     }
-
 
     override fun plus(other: NumberExpr): NumberExpr {
         if (other.numType === NumberType.COMPLEX) {

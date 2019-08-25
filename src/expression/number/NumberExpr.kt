@@ -14,7 +14,7 @@ enum class NumberType {
 }
 
 @Suppress("CovariantEquals")
-abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
+abstract class NumberExpr(vararg e: Expr) : Expr(*e), Comparable<NumberExpr> {
 
     override val type: ExprType get() = ExprType.NUMBER
 
@@ -72,8 +72,15 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
 
     companion object {
         @JvmStatic fun parse(s: String): NumberExpr {
-            if (s.indexOf('i') > -1)
-                return Complex(s)
+            if (s.indexOf('i') > -1) {
+                val num = s.substring(0, s.length - 1)
+
+                if (num.isEmpty())
+                //If passed just "i" its complex number 1
+                    return Complex(Integer.ZERO, Integer.ONE)
+                else
+                    return Complex(Integer.ZERO, parse(num))
+            }
 
             return if (s.indexOf('.') > 0) {
                 val value = java.lang.Double.parseDouble(s)

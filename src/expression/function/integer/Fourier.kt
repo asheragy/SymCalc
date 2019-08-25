@@ -9,7 +9,7 @@ import org.cerion.symcalc.expression.number.NumberExpr
 class Fourier(vararg e: Expr) : FunctionExpr(Function.FOURIER, *e) {
 
     override fun evaluate(): Expr {
-        return ListExpr(recursiveFFT(get(0).args))
+        return ListExpr(recursiveFFT(get(0).args.toList()))
     }
 
     override fun validate() {
