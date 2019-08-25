@@ -17,9 +17,8 @@ abstract class Expr(vararg e: Expr) {
     var env = Environment()
         private set
 
-    private var mArgs: MutableList<Expr>? = null
-    val args: List<Expr>
-        get() = if(mArgs != null) mArgs!! else emptyList()
+    val args: List<Expr> = listOf(*e)
+    val size = args.size
 
     protected fun getEnvVar(name: String): Expr? = env.getVar(name)
     protected fun setEnvVar(name: String, e: Expr) = env.setVar(name, e)
@@ -28,30 +27,11 @@ abstract class Expr(vararg e: Expr) {
 
     open val precision get() = InfinitePrecision
 
-    val size get() = if (mArgs != null) mArgs!!.size else 0
-
     val isInteger: Boolean get() = this is Integer
     val isList: Boolean get() = type == ExprType.LIST
     val isError: Boolean get() = type == ExprType.ERROR
 
-    init {
-        setArgs(*e)
-    }
-
-    private fun setArgs(vararg args: Expr) {
-        if (mArgs == null)
-            mArgs = ArrayList()
-
-        for (k in args) {
-            mArgs!!.add(k)
-        }
-    }
-
-    // Indexes
     operator fun get(index: Int): Expr = args[index]
-    operator fun set(index: Int, e: Expr) {
-        mArgs!![index] = e
-    }
 
     fun getList(index: Int): ListExpr = get(index) as ListExpr
     fun getInteger(index: Int): Integer = get(index) as Integer
@@ -61,20 +41,6 @@ abstract class Expr(vararg e: Expr) {
     fun asInteger(): Integer = this as Integer
     fun asBool(): BoolExpr = this as BoolExpr
     fun asNumber(): NumberExpr = this as NumberExpr
-
-    protected fun setArg(index: Int, e: Expr) {
-        if (mArgs == null)
-            mArgs = ArrayList()
-
-        if (index == mArgs!!.size)
-            mArgs!!.add(e)
-        else
-            mArgs!![index] = e
-    }
-
-    protected fun addArg(e: Expr) {
-        setArg(size, e)
-    }
 
     final override fun equals(other: Any?): Boolean {
         if (other is Expr) {
@@ -204,7 +170,7 @@ abstract class Expr(vararg e: Expr) {
 
     override fun hashCode(): Int {
         var result = value?.hashCode() ?: 0
-        result = 31 * result + (mArgs?.hashCode() ?: 0)
+        result = 31 * result + (args.hashCode())
         result = 31 * result + type.hashCode()
         return result
     }
