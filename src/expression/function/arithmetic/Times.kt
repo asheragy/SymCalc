@@ -66,11 +66,12 @@ class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
         }
 
         val numberItems = list.filterIsInstance<NumberExpr>()
+        if (numberItems.contains(Integer.ZERO)) // If zero is an integer return integer/infinite precision rather than double/etc
+            return Integer.ZERO
+
         list.removeIf { it is NumberExpr }
         val product = numberItems.fold(Integer.ONE as NumberExpr) { acc, n -> acc * n }
-        if (product.isZero)
-            return Integer.ZERO
-        else if(!product.isOne || list.size == 0)
+        if(!product.isOne || list.size == 0)
             list.add(0, product)
 
         if (list.size > 1) {

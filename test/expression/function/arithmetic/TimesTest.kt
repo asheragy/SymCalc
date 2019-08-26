@@ -4,10 +4,7 @@ import expression.constant.I
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.trig.Sin
-import org.cerion.symcalc.expression.number.Complex
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -19,6 +16,27 @@ class TimesTest {
         assertEquals("2 * 3 * 4", Times(Integer.TWO, Integer(3), Integer(4)).toString())
         assertEquals("2 * (3 + 4)", Times(Integer.TWO, Plus(Integer(3), Integer(4))).toString())
     }
+
+    @Test
+    fun timesIntegerZero() {
+        assertEquals(Integer.ZERO, Times(Integer(5), Integer.ZERO).eval())
+        assertEquals(Integer.ZERO, Times(Rational(1,3), Integer.ZERO).eval())
+        assertEquals(Integer.ZERO, Times(RealDouble(3.14), Integer.ZERO).eval())
+        assertEquals(Integer.ZERO, Times(RealBigDec("3.14"), Integer.ZERO).eval())
+        assertEquals(Integer.ZERO, Times(Complex(RealDouble(2.0), Rational.HALF), Integer.ZERO).eval())
+        assertEquals(Integer.ZERO, Times(Pi(), Integer.ZERO).eval())
+    }
+
+    @Test
+    fun timesRealZero() {
+        assertEquals(RealDouble(), Times(Integer(5), RealDouble()).eval())
+        assertEquals(RealDouble(), Times(Rational(1,3), RealDouble()).eval())
+        assertEquals(RealDouble(), Times(RealDouble(3.14), RealDouble()).eval())
+        assertEquals(RealDouble(), Times(RealBigDec("3.14"), RealDouble()).eval())
+        assertEquals(RealDouble(), Times(Complex(RealDouble(2.0), Rational.HALF), RealDouble()).eval())
+        assertEquals(RealDouble(), Times(Pi(), RealDouble()).eval())
+    }
+
 
     @Test
     fun timesOne() {
