@@ -163,6 +163,7 @@ class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : Numb
     }
 
     companion object {
-        @JvmField val ZERO = Complex()
+        @JvmField val ZERO = Complex() // TODO should never be used except for a test to show it evaluates to integer zero
+        @JvmField val I = Complex(0, 1)
     }
 }
