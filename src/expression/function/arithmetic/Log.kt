@@ -22,20 +22,11 @@ class Log(vararg e: Expr) : FunctionExpr(Function.LOG, *e) {
         val n = get(0)
 
         if (n is NumberExpr) {
-            if (n.isNegative) {
-                // TODO maybe can generalize all of this after checking the rational case
-                if (n is Integer)
-                    return Plus(PI_I, Log(n.unaryMinus()))
-                if (n is Rational) {
-                    if (n > Integer.NEGATIVE_ONE)
-                        return Plus(PI_I, Times(Integer(-1), Log(n.unaryMinus())))
-                    else
-                        return Plus(PI_I, Log(n.unaryMinus()))
-                }
-
+            if (n.isNegative)
                 return Plus(PI_I, Log(n.unaryMinus())).eval()
-            }
 
+            if (n is Rational && n < Integer.ONE)
+                return Times(Integer.NEGATIVE_ONE, Log(n.reciprocal()))
             if (n is RealDouble)
                 return RealDouble(ln(n.value))
             if (n is RealBigDec) {
@@ -46,6 +37,9 @@ class Log(vararg e: Expr) : FunctionExpr(Function.LOG, *e) {
 
         if (n is E)
             return Integer.ONE
+
+        if (n is Power && n.args[0] is E)
+            return n.args[1]
 
         return this
     }

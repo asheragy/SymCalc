@@ -3,9 +3,7 @@ package expression.function.arithmetic
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.Log
-import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.arithmetic.Times
+import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -21,12 +19,16 @@ class LogTest {
 
     @Test
     fun rational() {
-        // TODO simplified to -1 * Log
+        // Greater than 1
+        assertEquals(Log(Rational(7,6)), Log(Rational(7,6)).eval())
+
+        // Less than 1
+        assertEquals(Times(Integer(-1), Log(Rational(7,6))), Log(Rational(6,7)).eval())
     }
 
     @Test
     fun zero() {
-        // TODO
+        // TODO_LP
         // need directed infinity
         //assertEquals(Integer.ZERO, Log(Integer.ZERO).eval())
     }
@@ -35,7 +37,7 @@ class LogTest {
     fun negative() {
         assertEquals(Plus(Times(Complex.I, Pi()), Log(Integer(10))), Log(Integer(-10)).eval())
         assertEquals(Plus(Times(Complex.I, Pi()), Log(Rational(4,3))), Log(Rational(-4, 3)).eval())
-        assertEquals(Plus(Times(Complex.I, Pi()), Times(Integer(-1), Log(Rational(1,3)))), Log(Rational(-1, 3)).eval())
+        assertEquals(Plus(Times(Complex.I, Pi()), Times(Integer(-1), Log(Integer(3)))), Log(Rational(-1, 3)).eval())
 
         assertEquals(Complex(RealDouble(-1.3862943611198906), RealDouble(3.141592653589793)), Log(RealDouble(-0.25)).eval())
         assertEquals(Complex(RealDouble(2.322387720290225), RealDouble(3.141592653589793)), Log(RealDouble(-10.2)).eval())
@@ -45,7 +47,7 @@ class LogTest {
     @Test
     fun e() {
         assertEquals(Integer.ONE, Log(E()).eval())
-        // TODO add variations
+        assertEquals(Integer(7), Log(Power(E(),Integer(7))).eval())
     }
 
     @Test
