@@ -9,7 +9,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Times
 import kotlin.math.abs
 import kotlin.math.min
 
-class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : NumberExpr(r, i) {
+class Complex(r: NumberExpr, i: NumberExpr) : NumberExpr(r, i) {
 
     override val value: Any? get() = null
 
@@ -24,6 +24,7 @@ class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : Numb
     override val isNegative: Boolean
         get() = throw UnsupportedOperationException()
 
+    constructor(r: NumberExpr) : this(r, Integer.ZERO)
     constructor(r: Number, i: Number) : this(create(r), create(i))
     constructor(r: String, i: String): this(RealBigDec(r), RealBigDec(i))
 
@@ -163,7 +164,7 @@ class Complex(r: NumberExpr = Integer.ZERO, i: NumberExpr = Integer.ZERO) : Numb
     }
 
     companion object {
-        @JvmField val ZERO = Complex() // TODO should never be used except for a test to show it evaluates to integer zero
+        @JvmField val ZERO = Complex(Integer.ZERO, Integer.ZERO)
         @JvmField val I = Complex(0, 1)
     }
 }

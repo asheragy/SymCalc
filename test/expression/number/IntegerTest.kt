@@ -128,7 +128,7 @@ class IntegerTest {
         assertFailsWith<ArithmeticException> { one / zero}
         assertFailsWith<ArithmeticException> { one / Rational(zero, one)}
         assertFailsWith<ArithmeticException> { one / RealDouble(0.0) }
-        assertFailsWith<ArithmeticException> { one / Complex()}
+        assertFailsWith<ArithmeticException> { one / Complex.ZERO}
     }
 
     @Test
