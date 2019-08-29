@@ -31,7 +31,6 @@ class Pi : ConstExpr() {
     private var four: BigDecimal = BigDecimal.ZERO
 
     private fun getPiToDigits(scale: Int): BigDecimal {
-
         // Initialize
         one = BigDecimal(1.0).setScale(scale)
         two = BigDecimal(2.0).setScale(scale)
@@ -39,7 +38,7 @@ class Pi : ConstExpr() {
 
         var sum = calc(0, scale)
 
-        // TODO_LP change loop limit to something that makes sense
+        // FEAT look into another algorithm this one is slow after 2000+ digits
         for(i in 1..10000) {
             val prev = sum
             sum += calc(i, scale)

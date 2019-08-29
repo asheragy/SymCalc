@@ -12,6 +12,8 @@ class RandomInteger(vararg e: Expr) : FunctionExpr(Function.RANDOM_INTEGER, *e) 
 
     constructor(max: Int) : this(Integer(max))
 
+    // TODO_LP Research more, input may be bit length or something different than implementation
+
     override fun evaluate(): Expr {
 
         if (size == 0) { //Default no parameters is random 0 or 1

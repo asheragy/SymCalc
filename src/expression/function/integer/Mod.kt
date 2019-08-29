@@ -8,6 +8,8 @@ import org.cerion.symcalc.expression.number.NumberType
 
 class Mod(vararg e: Expr) : FunctionExpr(Function.MOD, *e) {
 
+    // FEAT can work with non-integers
+
     override fun evaluate(): Expr {
         val a = get(0) as Integer
         val b = get(1) as Integer

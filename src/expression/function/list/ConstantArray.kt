@@ -8,6 +8,8 @@ import org.cerion.symcalc.expression.number.NumberType
 
 class ConstantArray(vararg e: Expr) : FunctionExpr(Function.CONSTANT_ARRAY, *e) {
 
+    // FEAT 2nd parameter can be N-dimensional
+
     override fun evaluate(): Expr {
         val expr = get(0)
         val count = get(1).asInteger()

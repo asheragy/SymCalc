@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 
-// TODO_LP Implemented with just NumberExpr, this function works on numeric values such as Pi and Sqrt[2]
+// FEAT Implemented with just NumberExpr, this function works on numeric values such as Pi and Sqrt[2]
 class Range(vararg e: Expr) : FunctionExpr(Function.RANGE, *e) {
 
     override fun evaluate(): Expr {

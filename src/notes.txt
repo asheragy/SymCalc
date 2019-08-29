@@ -16,18 +16,7 @@ Non-Important Features
 - Integer to string, full number spelled out
 - Help info ?functionName
 
-Partially implemented features to do later
-- Factorial: can work with non-integer values but needs Gamma function first
-- Mod: can work with non-integers
-- Fibonacci: zero/negatives and non-integer
-- ConstantArray: 2nd parameter can be N-dimensional
-- RandomInteger: Research more, input may be bit length or something different than implementation
-- StandardDeviation: Has more advanced usages, matrix/dist parameters
-- ArcTan: Added minimum to get complex power working
-
-
-
-Different implementation than Mathematica, may not matter unless other use cases come up later
+// TODO_LP Different implementation than Mathematica, may not matter unless other use cases come up later
 @Test
 fun precision_Rounding() {
     // 0.33 + 0.3333333333 = 0.66

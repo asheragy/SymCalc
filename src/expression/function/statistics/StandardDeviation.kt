@@ -7,6 +7,8 @@ import org.cerion.symcalc.expression.function.arithmetic.Sqrt
 
 class StandardDeviation(vararg e: Expr) : FunctionExpr(Function.STANDARD_DEVIATION, *e) {
 
+    // FEAT Has more advanced usages, matrix/dist parameters
+
     override fun evaluate(): Expr {
         val list = get(0).asList()
         val variance = Variance(list)

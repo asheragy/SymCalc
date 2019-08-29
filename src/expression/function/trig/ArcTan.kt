@@ -11,6 +11,8 @@ import org.nevec.rjm.BigDecimalMath
 
 class ArcTan(vararg e: Expr) : TrigBase(Function.ARCTAN, *e) {
 
+    // FEAT added minimum to get complex power working
+
     override fun evaluateAsBigDecimal(n: RealBigDec): RealBigDec = RealBigDec(BigDecimalMath.atan(n.value))
     override fun evaluateAsDouble(d: Double): Double = kotlin.math.atan(d)
 

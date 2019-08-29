@@ -9,6 +9,8 @@ import org.cerion.symcalc.expression.number.Integer
 
 class Factorial(vararg e: Expr) : FunctionExpr(Function.FACTORIAL, *e) {
 
+    // FEAT can work with non-integer values but needs Gamma function first
+
     override fun evaluate(): Expr {
         var result = Integer.ONE
         var N = get(0) as Integer
