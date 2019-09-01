@@ -11,6 +11,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.*
+import org.nevec.rjm.BigDecimalMath
 import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.pow
@@ -185,7 +186,7 @@ private fun RealDouble.power(other: NumberExpr): NumberExpr {
 private fun RealBigDec.power(other: NumberExpr): NumberExpr {
     // Special case square root
     if(other == Rational.HALF)
-        return RealBigDec(value.sqrt(MathContext(precision, RoundingMode.HALF_UP)))
+        return RealBigDec(BigDecimalMath.sqrt(value)) // BigDecimal.sqrt() needs Java 9 support in android to work
 
     when (other) {
         is Integer -> {

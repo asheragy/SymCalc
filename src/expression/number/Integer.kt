@@ -2,11 +2,11 @@ package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.integer.Factor
 import org.cerion.symcalc.expression.function.list.Tally
+import org.nevec.rjm.BigIntegerMath
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.math.MathContext
@@ -160,9 +160,10 @@ class Integer(override val value: BigInteger) : NumberExpr() {
         val a = this
 
         if (b == Rational.HALF) {
-            val sqrt = a.value.sqrtAndRemainder()
-            if (sqrt[1].compareTo(BigInteger.ZERO) == 0)
-                return Integer(sqrt[0])
+            // BigInteger.sqrtAndRemainder() needs Java 9 to work in Android
+            val sqrt = BigIntegerMath.isqrt(a.value)
+            if (sqrt * sqrt == a.value)
+                return Integer(sqrt)
         }
 
         // factor out any numbers that are the Nth root of the denominator
