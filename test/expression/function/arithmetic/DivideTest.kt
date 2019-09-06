@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.constant.ComplexInfinity
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.Integer
@@ -35,5 +36,15 @@ class DivideTest {
     @Test
     fun rationalFactoredOut() {
         assertEquals(Times(Rational(1,2), Pi()), Divide(Pi(), Integer.TWO).eval())
+    }
+
+    @Test
+    fun divideByZero() {
+        assertEquals(ComplexInfinity(), Divide(Integer(1), Integer(0)).eval())
+    }
+
+    @Test
+    fun divideByInfinity() {
+        assertEquals(Integer.ZERO, Divide(Integer(1), ComplexInfinity()).eval())
     }
 }

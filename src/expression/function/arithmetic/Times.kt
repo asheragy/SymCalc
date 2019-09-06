@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.constant.ComplexInfinity
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberExpr
@@ -74,11 +75,13 @@ class Times(vararg e: Expr) : FunctionExpr(Function.TIMES, *e) {
         if(!product.isOne || list.size == 0)
             list.add(0, product)
 
-        if (list.size > 1) {
-            return Times(*list.toTypedArray())
-        }
+        if (list.size == 1)
+            return list[0]
 
-        return list[0]
+        if (list.contains(ComplexInfinity()))
+            return ComplexInfinity()
+
+        return Times(*list.toTypedArray())
     }
 
     override fun toString(): String {

@@ -4,6 +4,7 @@ import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.expression.constant.ComplexInfinity
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.number.NumberExpr
 
@@ -20,6 +21,7 @@ class Subtract(vararg e: Expr) : FunctionExpr(Function.SUBTRACT, *e) {
         if (a is NumberExpr && b is NumberExpr)
             return a - b
 
+        // TODO this may be part of listable property and not done here
         if (a is ListExpr || b is ListExpr) {
             if (a is ListExpr && b is ListExpr) {
                 if (a.size == b.size) {
@@ -32,6 +34,9 @@ class Subtract(vararg e: Expr) : FunctionExpr(Function.SUBTRACT, *e) {
             else
                 Subtract(a.toList(b.size), b).eval()
         }
+
+        if (a is ComplexInfinity || b is ComplexInfinity)
+            return ComplexInfinity()
 
         return this
     }

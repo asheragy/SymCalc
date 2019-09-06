@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.constant.ComplexInfinity
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
@@ -19,6 +20,9 @@ class Divide(vararg e: Expr) : FunctionExpr(Function.DIVIDE, *e) {
         }
 
         if (b is NumberExpr) {
+            if (b.isZero)
+                return ComplexInfinity()
+
             if (b.isOne) //Identity
                 return a
 
@@ -29,6 +33,9 @@ class Divide(vararg e: Expr) : FunctionExpr(Function.DIVIDE, *e) {
 
         if (a is NumberExpr && b is NumberExpr)
             return a / b
+
+        if (b is ComplexInfinity)
+            return Integer.ZERO
 
         return this
     }
