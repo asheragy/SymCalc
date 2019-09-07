@@ -161,9 +161,8 @@ abstract class Expr(vararg e: Expr) {
             return p.e
         }
 
-        // TODO the system one
         const val InfinitePrecision = Int.MAX_VALUE
-        const val SYSTEM_DECIMAL_PRECISION = -1 // numbers evaluated to whatever primitive types hold
+        const val MachinePrecision = -1 // numbers evaluated to whatever primitive types hold
     }
 
     // Extensions for convenience

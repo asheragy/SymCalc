@@ -17,7 +17,7 @@ class E : ConstExpr() {
 
     override fun evaluate(precision: Int): Expr {
         if (precision < InfinitePrecision) {
-            if (precision == SYSTEM_DECIMAL_PRECISION)
+            if (precision == MachinePrecision)
                 return RealDouble(Math.E)
 
             return RealBigDec( getEToDigits(precision) )

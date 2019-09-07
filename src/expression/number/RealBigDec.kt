@@ -26,7 +26,7 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
             return value.compareTo(other.value)
         }
 
-        return evaluate(SYSTEM_DECIMAL_PRECISION).compareTo(other.evaluate(SYSTEM_DECIMAL_PRECISION))
+        return evaluate(MachinePrecision).compareTo(other.evaluate(MachinePrecision))
     }
 
     override fun plus(other: NumberExpr): NumberExpr {
@@ -105,7 +105,7 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
     }
 
     override fun evaluate(precision: Int): NumberExpr {
-        if (precision == SYSTEM_DECIMAL_PRECISION)
+        if (precision == MachinePrecision)
             return RealDouble(toDouble())
         else if (precision < this.precision) {
             val leftDigits = value.precision() - value.scale()

@@ -232,7 +232,7 @@ class IntegerTest {
     @Test
     fun evalPrecision() {
         assertEquals(Integer(5), Integer(5).evaluate(Expr.InfinitePrecision))
-        assertEquals(RealDouble(5.0), Integer(5).evaluate(Expr.SYSTEM_DECIMAL_PRECISION))
+        assertEquals(RealDouble(5.0), Integer(5).evaluate(Expr.MachinePrecision))
 
         assertEquals("5.0000`5", Integer(5).evaluate(5).toString())
         assertEquals("25.000`5", Integer(25).evaluate(5).toString())

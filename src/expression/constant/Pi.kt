@@ -5,7 +5,6 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
 import java.math.BigDecimal
-import java.math.MathContext
 import java.math.RoundingMode
 
 class Pi : ConstExpr() {
@@ -17,7 +16,7 @@ class Pi : ConstExpr() {
 
     override fun evaluate(precision: Int): Expr {
         if (precision < InfinitePrecision) {
-            if (precision == SYSTEM_DECIMAL_PRECISION)
+            if (precision == MachinePrecision)
                 return RealDouble(Math.PI)
 
             return RealBigDec( getPiToDigits(precision) )

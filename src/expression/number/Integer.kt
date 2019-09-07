@@ -41,7 +41,7 @@ class Integer(override val value: BigInteger) : NumberExpr() {
     override fun evaluate(precision: Int): NumberExpr {
         return when (precision) {
             InfinitePrecision -> this
-            SYSTEM_DECIMAL_PRECISION -> RealDouble(value.toDouble())
+            MachinePrecision -> RealDouble(value.toDouble())
             else -> {
                 var bd = BigDecimal(value, MathContext(precision, RoundingMode.HALF_UP))
                 if (precision > bd.precision())
@@ -130,7 +130,7 @@ class Integer(override val value: BigInteger) : NumberExpr() {
     override fun compareTo(other: NumberExpr): Int {
         return when (other.numType) {
             NumberType.INTEGER -> value.compareTo(other.asInteger().value)
-            NumberType.RATIONAL -> this.compareTo(other.evaluate(SYSTEM_DECIMAL_PRECISION))
+            NumberType.RATIONAL -> this.compareTo(other.evaluate(MachinePrecision))
             NumberType.REAL_DOUBLE,
             NumberType.REAL_BIGDEC -> evaluate(other.precision).compareTo(other)
             NumberType.COMPLEX -> Complex(this).compareTo(other)

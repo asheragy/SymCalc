@@ -6,7 +6,7 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr() {
     override val isZero: Boolean get() = value == 0.0
     override val isOne: Boolean get() = value == 1.0
     override val isNegative: Boolean get() = value < 0
-    override val precision: Int get() = SYSTEM_DECIMAL_PRECISION
+    override val precision: Int get() = MachinePrecision
 
     override fun toString(): String = "" + value
 
@@ -17,7 +17,7 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr() {
     override fun compareTo(other: NumberExpr): Int {
         when(other) {
             is Integer,
-            is Rational -> return this.compareTo(other.evaluate(SYSTEM_DECIMAL_PRECISION))
+            is Rational -> return this.compareTo(other.evaluate(MachinePrecision))
             is RealDouble -> return value.compareTo(other.value)
             is RealBigDec -> return value.compareTo(other.toDouble())
             is Complex -> return Complex(this).compareTo(other)
@@ -30,7 +30,7 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr() {
     override fun plus(other: NumberExpr): NumberExpr {
         when (other) {
             is Integer,
-            is Rational -> return this + other.evaluate(SYSTEM_DECIMAL_PRECISION)
+            is Rational -> return this + other.evaluate(MachinePrecision)
             is RealDouble -> return RealDouble(value + other.value)
             is RealBigDec -> return RealDouble(value + other.toDouble())
             is Complex -> return Complex(this) + other
@@ -41,7 +41,7 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr() {
     override fun times(other: NumberExpr): NumberExpr {
         when (other) {
             is Integer,
-            is Rational -> return this * other.evaluate(SYSTEM_DECIMAL_PRECISION)
+            is Rational -> return this * other.evaluate(MachinePrecision)
             is RealDouble -> return RealDouble(value * other.value)
             is RealBigDec -> return RealDouble(value * other.toDouble())
             is Complex -> return Complex(this) * other
@@ -52,7 +52,7 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr() {
     override fun div(other: NumberExpr): NumberExpr {
         when (other) {
             is Integer,
-            is Rational -> return this / other.evaluate(SYSTEM_DECIMAL_PRECISION)
+            is Rational -> return this / other.evaluate(MachinePrecision)
             is RealDouble -> return RealDouble(value / other.value)
             is RealBigDec -> return RealDouble(value / other.toDouble())
             is Complex -> return Complex(this) / other

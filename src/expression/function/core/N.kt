@@ -12,7 +12,7 @@ class N(vararg e: Expr) : FunctionExpr(Function.N, *e) {
     override fun evaluate(): Expr {
         val e = args[0]
         val machinePrecision = size == 1
-        val precision = if (machinePrecision) SYSTEM_DECIMAL_PRECISION else get(1).asInteger().intValue()
+        val precision = if (machinePrecision) MachinePrecision else get(1).asInteger().intValue()
 
         if (e is ConstExpr)
             return e.evaluate(precision)

@@ -40,7 +40,7 @@ class Rational constructor(n: Integer, d: Integer = Integer.ONE) : NumberExpr(n,
     override fun evaluate(precision: Int): NumberExpr {
         return when (precision) {
             InfinitePrecision -> this
-            SYSTEM_DECIMAL_PRECISION -> RealDouble(numerator.value.toDouble() / denominator.value.toDouble())
+            MachinePrecision -> RealDouble(numerator.value.toDouble() / denominator.value.toDouble())
             else -> {
                 val a = numerator.toBigDecimal()
                 val b = denominator.toBigDecimal()
@@ -112,7 +112,7 @@ class Rational constructor(n: Integer, d: Integer = Integer.ONE) : NumberExpr(n,
         if (other is Complex)
             return Complex(this).compareTo(other)
 
-        return evaluate(SYSTEM_DECIMAL_PRECISION).compareTo(other)
+        return evaluate(MachinePrecision).compareTo(other)
     }
 
     companion object {
