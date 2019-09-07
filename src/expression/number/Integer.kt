@@ -45,7 +45,7 @@ class Integer(override val value: BigInteger) : NumberExpr() {
             else -> {
                 //if (isZero)
                 //    return RealNum.create(0.0) // Prevents lost precision for BigDecimal(0)
-
+                // TODO look into this more it may be incorrect
                 var bd = BigDecimal(value, MathContext(precision, RoundingMode.HALF_UP))
                 bd = bd.setScale(precision)
                 return RealBigDec(bd)
