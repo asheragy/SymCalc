@@ -1,7 +1,11 @@
 package expression.function.integer
 
+import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.expression.function.arithmetic.Plus
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.jupiter.api.Test
@@ -23,4 +27,23 @@ internal class ModTest {
         assertEquals(RealBigDec("5.650"), Mod(Integer(25), RealBigDec("6.45")).eval())
         assertEquals(RealBigDec("0.80"), Mod(Integer(-25), RealBigDec("6.45")).eval())
     }
+
+    @Test
+    fun pi() {
+        assertEquals(Plus(Integer(25), Times(Integer(-7), Pi())), Mod(Integer(25), Pi()).eval())
+        assertEquals(Plus(Integer(25), Times(Integer(-6), Pi())), Mod(Integer(25), Times(Integer(2), Pi())).eval())
+
+        assertEquals(Plus(Integer(-25), Times(Integer(8), Pi())), Mod(Integer(-25), Pi()).eval())
+        assertEquals(Plus(Integer(-25), Times(Integer(9), Pi())), Mod(Integer(-25), Times(Integer(3), Pi())).eval())
+
+        assertEquals(Plus(Rational(25, 2), Times(Integer(-3), Pi())), Mod(Rational(25, 2), Pi()).eval())
+    }
+
+    @Test
+    fun pi_precision() {
+        assertEquals(RealDouble(3.008851424871448), Mod(RealDouble(25.0), Pi()).eval())
+        assertEquals(RealBigDec("3.02"), Mod(RealBigDec("25.0"), Pi()).eval())
+        assertEquals(RealBigDec("6.16"), Mod(RealBigDec("25.0"), Times(Integer(2), Pi())).eval())
+    }
+
 }

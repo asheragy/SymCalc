@@ -1,5 +1,7 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.core.Hold
@@ -112,5 +114,13 @@ class RationalTest : NumberTestBase() {
         //Rational
         assertEquals(Rational(1, 2), Subtract(Rational(1, 1), Rational(1, 2)).eval())
         assertEquals(Rational(-1, 2), Subtract(Rational(1, 2), Integer.ONE).eval())
+    }
+
+    @Test
+    fun divide() {
+        // TODO_LP add others
+
+        // Real
+        assertEquals(RealDouble(3.9808917197452227), Divide(Rational(25, 2), RealDouble(3.14)).eval())
     }
 }

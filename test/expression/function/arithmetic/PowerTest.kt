@@ -197,7 +197,7 @@ class PowerTest {
     fun realToReal() {
         // Double/Double
         assertEquals(RealDouble(55.90169943749474), Power(RealDouble(5.0), RealDouble(2.5)).eval())
-        assertEquals(RealDouble(125.0), Power(RealDouble(5.0), RealBigDec(3.0)).eval())
+        assertEquals(RealDouble(125.0), Power(RealDouble(5.0), RealBigDec("3.0")).eval())
 
         // Double/BigDecimal
         assertEquals(RealDouble(36.33783888017471), Power(RealBigDec("3.14"), RealDouble(3.14)).eval())

@@ -104,7 +104,7 @@ class Rational constructor(n: Integer, d: Integer = Integer.ONE) : NumberExpr(n,
                 result = Rational(numerator * t.denominator, denominator * t.numerator)
                 return result.evaluate()
             }
-            else -> return other * this
+            else -> return (Integer.ONE / other) * this
         }
     }
 

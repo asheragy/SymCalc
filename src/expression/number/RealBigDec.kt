@@ -10,7 +10,6 @@ import kotlin.math.min
 class RealBigDec(override val value: BigDecimal) : NumberExpr() {
 
     constructor(value: String) : this(BigDecimal(value))
-    constructor(value: Double) : this(BigDecimal(value))
 
     override val numType: NumberType get() = NumberType.REAL_BIGDEC
     override val isZero: Boolean get() = value.compareTo(BigDecimal.ZERO) == 0

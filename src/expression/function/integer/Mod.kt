@@ -3,6 +3,10 @@ package org.cerion.symcalc.expression.function.integer
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
+import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.expression.function.arithmetic.Plus
+import org.cerion.symcalc.expression.function.arithmetic.Subtract
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.*
 import kotlin.math.floor
 import kotlin.math.min
@@ -13,10 +17,10 @@ class Mod(vararg e: Expr) : FunctionExpr(Function.MOD, *e) {
 
     override fun evaluate(): Expr {
         var a = get(0) as NumberExpr
-        var b = get(1) as NumberExpr
+        var b = get(1)
 
         // TODO need better way of doing this
-        if (a.precision != b.precision) {
+        if (b is NumberExpr && a.precision != b.precision) {
             val min = min(a.precision, b.precision)
             a = a.evaluate(min)
             b = b.evaluate(min)
@@ -40,12 +44,21 @@ class Mod(vararg e: Expr) : FunctionExpr(Function.MOD, *e) {
             return RealBigDec(c)
         }
 
+        if (a is Integer || a is Rational) {
+            // Numerical eval to get closest integer value as multiplier for unknown value B
+            val bn = b.eval(SYSTEM_DECIMAL_PRECISION)
+            val whole = Divide(a, bn).eval()
+            if (whole is RealDouble) {
+                val floor = Integer(floor(whole.value).toInt())
+                return Plus(a, Times(floor.unaryMinus(), b)).eval()
+            }
+        }
+
         return this
     }
 
     override fun validate() {
         validateParameterCount(2)
         validateParameterType(0, ExprType.NUMBER)
-        validateParameterType(1, ExprType.NUMBER)
     }
 }

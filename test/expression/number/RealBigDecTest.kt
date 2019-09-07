@@ -43,7 +43,7 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun isZero() {
-        assertTrue(RealBigDec(0.0).isZero)
+        assertTrue(RealBigDec("0.0").isZero)
         assertTrue(RealBigDec("0").isZero)
         assertTrue(RealBigDec("0.00000000").isZero)
         assertTrue((RealBigDec("3.14") - RealBigDec("3.14")).isZero)
