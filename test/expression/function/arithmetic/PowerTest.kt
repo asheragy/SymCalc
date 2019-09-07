@@ -256,7 +256,6 @@ class PowerTest {
         assertEquals(Complex(0.03287406851910734, -0.1549926705899962), Power(Complex(2,4), RealDouble(-1.23)).eval())
 
         assertEquals(Complex(1.309544770737814, 6.174162506105573), Power(Complex(RealDouble(2.0), Integer(4)), RealBigDec("1.23")).eval())
-
         assertEquals(Complex("1.3", "6.2"), Power(Complex(2,4), RealBigDec("1.23")).eval())
     }
 

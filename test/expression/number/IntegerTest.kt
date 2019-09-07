@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.exception.OperationException
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.junit.jupiter.api.Test
@@ -226,6 +227,17 @@ class IntegerTest {
         assertEquals(Int.MIN_VALUE, Integer("-2147483648").intValue())
         assertFailsWith<OperationException> { Integer("2147483648").intValue() }
         assertFailsWith<OperationException> { Integer("-2147483649").intValue() }
+    }
+
+    @Test
+    fun evalPrecision() {
+        assertEquals(Integer(5), Integer(5).evaluate(Expr.InfinitePrecision))
+        assertEquals(RealDouble(5.0), Integer(5).evaluate(Expr.SYSTEM_DECIMAL_PRECISION))
+
+        assertEquals("5.0000`5", Integer(5).evaluate(5).toString())
+        assertEquals("25.000`5", Integer(25).evaluate(5).toString())
+        assertEquals("1.23E+4`3", Integer(12321).evaluate(3).toString())
+        assertEquals("1.2346E+8`5", Integer(123456789).evaluate(5).toString())
     }
 
     private fun verify(e: NumberExpr, expected: Long) {

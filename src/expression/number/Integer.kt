@@ -43,11 +43,9 @@ class Integer(override val value: BigInteger) : NumberExpr() {
             InfinitePrecision -> this
             SYSTEM_DECIMAL_PRECISION -> RealDouble(value.toDouble())
             else -> {
-                //if (isZero)
-                //    return RealNum.create(0.0) // Prevents lost precision for BigDecimal(0)
-                // TODO look into this more it may be incorrect
                 var bd = BigDecimal(value, MathContext(precision, RoundingMode.HALF_UP))
-                bd = bd.setScale(precision)
+                if (precision > bd.precision())
+                    bd = bd.setScale(precision - bd.precision())
                 return RealBigDec(bd)
             }
         }

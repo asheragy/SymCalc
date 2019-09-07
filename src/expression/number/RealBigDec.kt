@@ -88,7 +88,9 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
             is Rational -> return (this * other.denominator) / other.numerator
             is RealDouble -> return RealDouble(toDouble() / other.value)
             is RealBigDec -> {
-                val result = RealBigDec( this.value.divide(other.value, RoundingMode.HALF_UP))
+                val mc = MathContext(precision, RoundingMode.HALF_UP)
+                val result = RealBigDec( this.value.divide(other.value, mc))
+
                 return evaluatePrecision(result, this, other)
             }
 
@@ -122,6 +124,10 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
         if (min == 0 && a.isZero || b.isZero)
             return result
 
-        return RealBigDec(result.value.round(MathContext(min, RoundingMode.HALF_UP)))
+        var ret = RealBigDec(result.value.round(MathContext(min, RoundingMode.HALF_UP)))
+        if (result.precision < min)
+            ret = RealBigDec(result.value.setScale(min-1, RoundingMode.HALF_UP))
+
+        return ret
     }
 }

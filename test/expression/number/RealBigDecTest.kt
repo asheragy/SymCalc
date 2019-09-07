@@ -94,6 +94,11 @@ class RealBigDecTest : NumberTestBase() {
     }
 
     @Test
+    fun dividePrecision() {
+        assertEquals("2.00`3", (RealBigDec("4.00") / RealBigDec("2.00")).toString())
+    }
+
+    @Test
     fun pow() {
         assertEquals(RealBigDec("36"), power("3.14", "3.14"))
         assertEquals(RealBigDec("36.45"), power("3.1415", "3.1415"))

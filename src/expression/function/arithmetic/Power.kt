@@ -90,11 +90,11 @@ class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
         if (a.precision == InfinitePrecision)
             return this
 
-        val theta = ArcTan(Divide(a.img, a.real))
-        val r = Sqrt(Plus(a.real.square(), a.img.square()))
-        val rN = Power(r, N)
-        val cos = Cos(Times(theta, N))
-        val sin = Sin(Times(theta, N))
+        val theta = ArcTan(Divide(a.img, a.real)).eval()
+        val r = Sqrt(Plus(a.real.square(), a.img.square())).eval()
+        val rN = Power(r, N).eval()
+        val cos = Cos(Times(theta, N)).eval()
+        val sin = Sin(Times(theta, N)).eval()
 
         val real = Times(rN, cos)
         val img = Times(rN, sin)
