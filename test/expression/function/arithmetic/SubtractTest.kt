@@ -58,37 +58,17 @@ class SubtractTest {
     @Test
     fun identity() {
         val e = get(VarExpr("a"), Integer(0))
-
         assertTrue(VarExpr("a").equals(e))
     }
 
     @Test
     fun lists() {
-
-        val a = Integer(10).toList(5)
-        val i = Integer(3)
-
-        //List - Single
-        var e = get(a, i)
-        assertTrue(e.isList)
-
-        var l = e as ListExpr
-        assertEquals(5, l.size.toLong())
-
-        for (n in 0..4)
-            assertEquals(7, (l[n] as Integer).intValue().toLong())
-
-        //Single - List
-        e = get(i, a)
-
-        l = e as ListExpr
-        assertEquals(5, l.size.toLong())
-
-        for (n in 0..4)
-            assertEquals(-7, (l[n] as Integer).intValue().toLong())
+        assertEquals(ListExpr(-6,3,3), Subtract(ListExpr(1,5,8), ListExpr(7,2,5)).eval())
+        assertEquals(ListExpr(1,2,3), Subtract(ListExpr(3,4,5), Integer(2)).eval())
+        assertEquals(ListExpr(7,6,5), Subtract(Integer(10), ListExpr(3,4,5)).eval())
     }
 
-
+    // TODO remove this pattern and just use regular eval
     private operator fun get(vararg e: Expr): Expr {
         return Subtract(*e).eval()
     }

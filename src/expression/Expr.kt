@@ -95,9 +95,21 @@ abstract class Expr(vararg e: Expr) {
         }
 
         // Listable property
-        if (hasProperty(FunctionExpr.Properties.LISTABLE) && size == 1 && newArgs[0] is ListExpr) {
-            val listArgs = newArgs[0].args.map { FunctionExpr.createFunction(name, it) }
-            return ListExpr(*listArgs.toTypedArray()).eval()
+        if (hasProperty(FunctionExpr.Properties.LISTABLE) && newArgs.any { it is ListExpr }) {
+            if (size == 1) {
+                val listArgs = newArgs[0].args.map { FunctionExpr.createFunction(name, it) }
+                return ListExpr(*listArgs.toTypedArray()).eval()
+            }
+            else if (size == 2 && newArgs[0] is ListExpr || newArgs[1] is ListExpr) {
+                val list1 = if(newArgs[0] is ListExpr) newArgs[0] as ListExpr else newArgs[0].toList(newArgs[1].size)
+                val list2 = if(newArgs[1] is ListExpr) newArgs[1] as ListExpr else newArgs[1].toList(newArgs[0].size)
+
+                if (list1.size != list2.size)
+                    return ErrorExpr("lists of unequal lengths cannot be combined")
+
+                val listArgs = list1.args.mapIndexed { index, expr -> FunctionExpr.createFunction(name, expr, list2[index]) }
+                return ListExpr(*listArgs.toTypedArray()).eval()
+            }
         }
 
         val function = FunctionExpr.createFunction(name, *newArgs.toTypedArray())

@@ -1,14 +1,15 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
-import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.ComplexInfinity
 import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberExpr
 
 class Subtract(vararg e: Expr) : FunctionExpr(Function.SUBTRACT, *e) {
+
+    override val properties: Int
+        get() = Properties.LISTABLE.value
 
     public override fun evaluate(): Expr {
         val a = get(0)
@@ -20,20 +21,6 @@ class Subtract(vararg e: Expr) : FunctionExpr(Function.SUBTRACT, *e) {
 
         if (a is NumberExpr && b is NumberExpr)
             return a - b
-
-        // TODO this may be part of listable property and not done here
-        if (a is ListExpr || b is ListExpr) {
-            if (a is ListExpr && b is ListExpr) {
-                if (a.size == b.size) {
-                    return ListExpr(*a.args.mapIndexed { index, expr -> Subtract(expr, b[index]).eval() }.toTypedArray())
-                }
-
-                return ErrorExpr("list sizes not equal")
-            } else return if (a is ListExpr)
-                Subtract(a, b.toList(a.size)).eval()
-            else
-                Subtract(a.toList(b.size), b).eval()
-        }
 
         if (a is ComplexInfinity || b is ComplexInfinity)
             return ComplexInfinity()
