@@ -2,10 +2,7 @@ package org.cerion.symcalc.expression.function.trig
 
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.Divide
-import org.cerion.symcalc.expression.function.arithmetic.Minus
-import org.cerion.symcalc.expression.function.arithmetic.Power
-import org.cerion.symcalc.expression.function.arithmetic.Times
+import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.function.list.Join
 import org.cerion.symcalc.expression.number.Integer
@@ -106,8 +103,22 @@ class SinTest {
 
     @Test
     fun bigDecimal() {
-        // TODO_LP Implement on own there are some issues with precision such as too many digits
-        assertEquals(RealBigDec("-0.958919"), Sin(RealBigDec("5.00001")).eval())
+        assertEquals(RealBigDec("0.93"), Sin(RealBigDec("1.2")).eval())
+        assertEquals(RealBigDec("0.72066"), Sin(RealBigDec("0.80475")).eval())
+        assertEquals(RealBigDec("-0.958921"), Sin(RealBigDec("5.00001")).eval())
+
+        assertEquals(RealBigDec("0.84147098480789650665250232163029899962256306079837"), Sin(RealBigDec("1.0000000000000000000000000000000000000000000000000")).eval())
+    }
+
+    @Test
+    fun debug() {
+        val answer = RealBigDec("0.84147098480789650665250232163029899962256306079837")
+        val bd = RealBigDec("1.0000000000000000000000000000000000000000000000000")
+
+        val sin = Sin(bd).eval()
+        println(answer)
+        println(sin)
+        println(Subtract(sin, answer).eval())
     }
 
     companion object {

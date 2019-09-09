@@ -225,14 +225,12 @@ class PowerTest {
 
     @Test
     fun realBigDecToComplex() {
-        // BigDec
-        //val piBigDec = RealBigDec("3.1416")
+        val piBigDec = RealBigDec("3.1416")
         val bigDec = RealBigDec("5.0001")
-        assertEquals(Complex(RealBigDec("24.702"), RealBigDec("3.855")), Power(bigDec, Complex(2,4)).eval())
-        assertEquals(Complex(RealBigDec("1.5503"), RealBigDec("1.6114")), Power(bigDec, Complex(Rational.HALF,Rational.HALF)).eval())
+        assertEquals(Complex(RealBigDec("24.702"), RealBigDec("3.8552")), Power(bigDec, Complex(2,4)).eval())
+        assertEquals(Complex(RealBigDec("1.5503"), RealBigDec("1.6115")), Power(bigDec, Complex(Rational.HALF,Rational.HALF)).eval())
         assertEquals(Complex(24.701991088784933, 3.855079473838341), Power(bigDec, Complex(2.0,4.0)).eval())
-        // TODO_LP Some issues with precision here most likely related to other pending to-dos related to precision
-        //assertEquals(Complex(RealBigDec("52.9"), RealBigDec("-147.8")), Power(bigDec, Complex(piBigDec,piBigDec)).eval())
+        assertEquals(Complex(RealBigDec("52.96"), RealBigDec("-147.8")), Power(bigDec, Complex(piBigDec,piBigDec)).eval())
     }
 
     @Test
