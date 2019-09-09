@@ -11,7 +11,7 @@ import java.util.*
 class Plus(vararg e: Expr) : FunctionExpr(Function.PLUS, *e) {
 
     override val properties: Int
-        get() = Properties.Flat.value or Properties.NumericFunction.value or Properties.Orderless.value
+        get() = Properties.Flat.value or Properties.NumericFunction.value or Properties.Orderless.value or Properties.LISTABLE.value
 
     override fun evaluate(): Expr {
         val list = ArrayList<Expr>()

@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.function
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.ExprTest
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
@@ -59,6 +60,12 @@ class FunctionExprTest {
     fun listableProperty() {
         val list = ListExpr(RealDouble(2.4), RealDouble(0.4), RealDouble(1.4))
         assertEquals(ListExpr(RealDouble(0.675463180551151), RealDouble(0.3894183423086505), RealDouble(0.9854497299884601)), Sin(list).eval())
+    }
+
+    @Test
+    fun listable_differentSizes() {
+        assertEquals(Expr.ExprType.ERROR, Plus(ListExpr(1,2,3), ListExpr(4,5)).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Subtract(ListExpr(1,2), ListExpr(4,5,6)).eval().type)
     }
 
 }
