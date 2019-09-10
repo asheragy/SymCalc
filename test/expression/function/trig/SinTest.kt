@@ -110,17 +110,6 @@ class SinTest {
         assertEquals(RealBigDec("0.84147098480789650665250232163029899962256306079837"), Sin(RealBigDec("1.0000000000000000000000000000000000000000000000000")).eval())
     }
 
-    @Test
-    fun debug() {
-        val answer = RealBigDec("0.84147098480789650665250232163029899962256306079837")
-        val bd = RealBigDec("1.0000000000000000000000000000000000000000000000000")
-
-        val sin = Sin(bd).eval()
-        println(answer)
-        println(sin)
-        println(Subtract(sin, answer).eval())
-    }
-
     companion object {
         val sqrt3Over2 = Times(Rational(1,2), Power(Integer(3), Rational(1,2)))
         val oneOverSqrt2 = Power(Integer.TWO, Rational(-1,2))

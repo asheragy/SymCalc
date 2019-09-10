@@ -1,11 +1,13 @@
 package org.cerion.symcalc.expression.function.trig
 
+import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.function.integer.Factorial
+import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
@@ -55,14 +57,24 @@ class Sin(vararg e: Expr) : TrigBase(Function.SIN, *e), StandardTrigFunction {
     override fun evaluateAsBigDecimal(x: RealBigDec): RealBigDec {
         val mc = MathContext(x.precision+5, RoundingMode.HALF_UP)
 
-        // TODO add 2 pi so input is more normalized
-        // TODO optimize then copy to Cos
-        var result = x.value
-        for(i in 1..100) {
+        // Normalize to range of 0 to 2pi
+        val x2pi =
+                if (x.value.toDouble() >= 0 && x.value.toDouble() < (2*Math.PI))
+                    x
+                else
+                    Mod(x, Times(Integer(2), Pi())).eval() as RealBigDec
+
+        var result = x2pi.value
+        var factorial = BigDecimal(1.0)
+        val xsquared = x2pi.value.pow(2)
+        var power = x2pi.value
+
+        // Taylor series x - x^3/3! + x^5/5! ...
+        for(i in 1..1000) {
             val n = (i * 2) + 1
-            val pow = x.value.pow(n, mc)
-            val fact = Factorial(Integer(n)).eval().asInteger()
-            val e = pow.divide(BigDecimal(fact.value), mc)
+            power = power.multiply(xsquared, mc)                 // x^n
+            factorial = factorial.times(BigDecimal(n * (n-1)))   // n!
+            val e = power.divide(factorial, mc)
 
             val t = if (i % 2 == 0)
                         result.add(e, mc)
@@ -70,11 +82,11 @@ class Sin(vararg e: Expr) : TrigBase(Function.SIN, *e), StandardTrigFunction {
                         result.subtract(e, mc)
 
             if (t == result)
-                break
+                return RealBigDec(result.round(MathContext(x.precision, RoundingMode.HALF_UP)))
 
             result = t
         }
 
-        return RealBigDec(result.round(MathContext(x.precision, RoundingMode.HALF_UP)))
+        throw IterationLimitExceeded()
     }
 }
