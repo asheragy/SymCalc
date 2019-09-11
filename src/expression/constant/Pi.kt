@@ -1,10 +1,13 @@
 package org.cerion.symcalc.expression.constant
 
+import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
+import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
+import java.math.MathContext
 import java.math.RoundingMode
 
 class Pi : ConstExpr() {
@@ -25,11 +28,59 @@ class Pi : ConstExpr() {
             return this
     }
 
+    private fun getPiToDigits(precision: Int): BigDecimal {
+        // https://en.wikipedia.org/wiki/Chudnovsky_algorithm
+        // 426880*Sqrt(10005)/Pi = Sum (6k!)(545140134k+13591409) / (3k)!(k!)^3(-262537412640768000)^k
+
+        val mc = MathContext(precision + 10, RoundingMode.HALF_UP)
+        val bd54 = BigDecimal(545140134)
+        val bd13 = BigDecimal(13591409)
+        val bd26 = BigDecimal("-262537412640768000")
+
+        // Calculate sum
+        var sum = BigDecimal(0)
+        for(k in 0..100) {
+            val n1 = factorial(6 * k)
+            var numerator = bd54.multiply(BigDecimal(k))
+            numerator = numerator.add(bd13)
+            numerator = numerator.multiply(n1)
+
+            val d1 = factorial(3 * k)
+            val d2 = factorial(k).pow(3)
+            val d3 = bd26.pow(k)
+            val denominator = d1.multiply(d2).multiply(d3)
+
+            val next = numerator.divide(denominator, mc)
+            val t = sum.add(next, mc)
+            if (t == sum) {
+                // Divide this constant value by sum to get Pi
+                var c = BigDecimalMath.sqrt(BigDecimal("10005"), mc)
+                c = c.multiply(BigDecimal("426880"))
+
+                return c.divide(sum, MathContext(precision, RoundingMode.HALF_UP))
+            }
+
+            sum = t
+        }
+
+        throw IterationLimitExceeded()
+    }
+
+    private fun factorial(k: Int): BigDecimal {
+        var bd = BigDecimal(1.0)
+        for(i in 1..k) {
+            bd = bd.multiply(BigDecimal(i))
+        }
+
+        return bd
+    }
+
+    /*
     private var one: BigDecimal = BigDecimal.ZERO
     private var two: BigDecimal = BigDecimal.ZERO
     private var four: BigDecimal = BigDecimal.ZERO
 
-    private fun getPiToDigits(scale: Int): BigDecimal {
+    private fun getPiToDigits2(scale: Int): BigDecimal {
         // Initialize
         one = BigDecimal(1.0).setScale(scale)
         two = BigDecimal(2.0).setScale(scale)
@@ -66,4 +117,5 @@ class Pi : ConstExpr() {
 
         return result.setScale(scale, RoundingMode.HALF_UP)
     }
+     */
 }

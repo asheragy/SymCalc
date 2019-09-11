@@ -23,6 +23,14 @@ class PiTest {
     }
 
     @Test
+    fun debug() {
+        var pi = N(Pi(), Integer(50)).eval();
+
+        println(pi)
+        println("3.1415926535897932385")
+    }
+
+    @Test
     fun digitsTest() {
         // Check Nth digit for accuracy
         val checkDigit : (Int, Int) -> Unit = { pos, n ->
@@ -41,7 +49,7 @@ class PiTest {
         checkDigit(50, 0)
         checkDigit(100, 9)
         checkDigit(200, 6)
-        //checkDigit(500, 2)
+        //checkDigit(500, 2) // TODO bigDecimal sqrt is what makes this hang
         //checkDigit(1000, 9)
 
         //checkDigit(5000, 1) // too slow at this point

@@ -185,6 +185,7 @@ private fun RealDouble.power(other: NumberExpr): NumberExpr {
 
 private fun RealBigDec.power(other: NumberExpr): NumberExpr {
     // Special case square root
+    // TODO if 0.500000... has enough precision this check fails
     if(other == Rational.HALF)
         return RealBigDec(BigDecimalMath.sqrt(value)) // BigDecimal.sqrt() needs Java 9 support in android to work
 
