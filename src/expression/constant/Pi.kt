@@ -39,7 +39,7 @@ class Pi : ConstExpr() {
 
         // Calculate sum
         var sum = BigDecimal(0)
-        for(k in 0..100) {
+        for(k in 0..5000) {
             val n1 = factorial(6 * k)
             var numerator = bd54.multiply(BigDecimal(k))
             numerator = numerator.add(bd13)
@@ -54,9 +54,11 @@ class Pi : ConstExpr() {
             val t = sum.add(next, mc)
             if (t == sum) {
                 // Divide this constant value by sum to get Pi
+                println("getting root")
                 var c = BigDecimalMath.sqrt(BigDecimal("10005"), mc)
                 c = c.multiply(BigDecimal("426880"))
 
+                println("done")
                 return c.divide(sum, MathContext(precision, RoundingMode.HALF_UP))
             }
 

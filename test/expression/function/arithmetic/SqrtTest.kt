@@ -1,9 +1,13 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.expression.number.RealBigDec
 import org.junit.jupiter.api.Test
+import org.nevec.rjm.BigDecimalMath
 import kotlin.test.assertEquals
 
 
@@ -24,6 +28,13 @@ class SqrtTest {
         assertEquals(Integer(3), Sqrt(Integer(9)).eval())
         assertEquals(Integer(4), Sqrt(Integer(16)).eval())
         assertEquals(Integer("985236412054"), Sqrt(Integer("970690787637039276498916")).eval())
+    }
+
+    @Test
+    fun large() {
+        val big = Rational(1,3).evaluate(50) as RealBigDec
+        // TODO validate this test has correct output and switch to use Sqrt() function after fixing issue with == Rational.HALF
+        assertEquals(RealBigDec("0.57735026918962576450914878050195745564760175127012"), RealBigDec(BigDecimalMath.sqrt(big.value)))
     }
 
     @Test

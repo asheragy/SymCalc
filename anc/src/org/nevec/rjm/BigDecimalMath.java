@@ -216,7 +216,13 @@ public class BigDecimalMath
                         */
                         if ( Math.abs(BigDecimal.ONE.subtract(x.divide(s.pow(2,locmc),locmc)).doubleValue()) < eps)
                                 break ;
-                        s = s.add(x.divide(s,locmc)).divide(half,locmc) ;
+
+                        // Workaround for the above not working when exponent is less than -238 or whatever max on double is
+                        BigDecimal t = s.add(x.divide(s,locmc)).divide(half,locmc) ;
+                        if (t.compareTo(s) == 0)
+                                break;
+                        s = t;
+
                         /* debugging
                         * System.out.println("itr "+x.round(locmc).toString() + " " + s.round(locmc).toString()) ;
                         */
@@ -296,8 +302,15 @@ public class BigDecimalMath
                         MathContext locmc = new MathContext( c.precision() ) ;
                         c = c.divide(nth,locmc) ;
                         s = s. subtract(c) ;
+
+                        double cd = c.doubleValue();
+                        double sd = s.doubleValue();
+
                         if ( Math.abs( c.doubleValue()/s.doubleValue()) < eps)
                                 break ;
+
+                        if (c.scale() - c.precision() == mc.getPrecision())
+                                return s;
                 }
                 return s.round(new MathContext( err2prec(eps)) ) ;
         } /* BigDecimalMath.root */
