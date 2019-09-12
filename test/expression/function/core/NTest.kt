@@ -18,4 +18,9 @@ class NTest {
         e = Plus(N(Integer(5)), Pi())
         assertEquals(RealDouble(8.141592653589793), e.eval())
     }
+
+    @Test
+    fun zeroPrecision() {
+        // TODO this should work assertEquals(RealBigDec("0.0"), N(Pi(), Integer(0)).eval())
+    }
 }

@@ -14,20 +14,33 @@ class PiTest {
         assertEquals(Pi(), Pi().eval())
         assertEquals(RealDouble(3.141592653589793), N(Pi()).eval())
 
-        assertEquals(RealBigDec("3.142"), N(Pi(), Integer(4)).eval())
-        assertEquals(RealBigDec("3.1416"), N(Pi(), Integer(5)).eval())
-
-        assertEquals(RealBigDec("3.1415926535897932385"), N(Pi(), Integer(20)).eval())
-        assertEquals(RealBigDec("3.1415926535897932384626433832795028841971693993751"), N(Pi(), Integer(50)).eval())
+        assertEquals(RealBigDec("3.0"), N(Pi(), Integer(1)).eval())
+        assertEquals(RealBigDec("3.14"), N(Pi(), Integer(3)).eval())
         assertEquals(RealBigDec("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170680"), N(Pi(), Integer(100)).eval())
     }
 
     @Test
-    fun debug() {
-        var pi = N(Pi(), Integer(50)).eval();
+    fun rounding() {
+        // The last digit rounded up from full pi value
+        assertEquals(RealBigDec("3.142"), N(Pi(), Integer(4)).eval())
+        assertEquals(RealBigDec("3.1416"), N(Pi(), Integer(5)).eval())
+        assertEquals(RealBigDec("3.14159265359"), N(Pi(), Integer(12)).eval())
+        assertEquals(RealBigDec("3.1415926535897932385"), N(Pi(), Integer(20)).eval())
 
-        println(pi)
-        println("3.1415926535897932385")
+        // Not rounded
+        assertEquals(RealBigDec("3.1"), N(Pi(), Integer(2)).eval())
+        assertEquals(RealBigDec("3.141592653589793238"), N(Pi(), Integer(19)).eval())
+    }
+
+    @Test
+    fun first50digits() {
+        val pi50 = "3.1415926535897932384626433832795028841971693993751"
+
+        for(i in 2..50) {
+            val expected = pi50.substring(0, i + 1)
+            val actual = N(Pi(), Integer(i+1)).eval() // Generate 2 extra digits or rounding will be off in some positions
+            assertEquals(expected, actual.toString().substring(0, i + 1))
+        }
     }
 
     @Test
