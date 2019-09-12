@@ -38,7 +38,7 @@ class PiTest {
 
         for(i in 2..50) {
             val expected = pi50.substring(0, i + 1)
-            val actual = N(Pi(), Integer(i+1)).eval() // Generate 2 extra digits or rounding will be off in some positions
+            val actual = N(Pi(), Integer(i+2)).eval() // Generate 2 extra digits or rounding will be off in some positions
             assertEquals(expected, actual.toString().substring(0, i + 1))
         }
     }
@@ -52,15 +52,6 @@ class PiTest {
             assertEquals(n.toString(), digit, "expected $n at position $pos")
         }
 
-        // TODO replace most of this with something that just checks the first 50 digits
-        checkDigit(1, 1)
-        checkDigit(2, 4)
-        checkDigit(3, 1)
-        checkDigit(4, 5)
-
-        checkDigit(10, 5)
-        checkDigit(25, 3)
-        checkDigit(50, 0)
         checkDigit(100, 9)
         checkDigit(200, 6)
 

@@ -13,7 +13,7 @@ class ArcTan(vararg e: Expr) : TrigBase(Function.ARCTAN, *e) {
 
     // FEAT added minimum to get complex power working
 
-    override fun evaluateAsBigDecimal(n: RealBigDec): RealBigDec = RealBigDec(BigDecimalMath.atan(n.value))
+    override fun evaluateAsBigDecimal(x: RealBigDec): RealBigDec = RealBigDec(BigDecimalMath.atan(x.value))
     override fun evaluateAsDouble(d: Double): Double = kotlin.math.atan(d)
 
     override fun evaluate(e: Expr): Expr {

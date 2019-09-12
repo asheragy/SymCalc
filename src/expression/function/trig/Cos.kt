@@ -53,8 +53,8 @@ class Cos(vararg e: Expr) : TrigBase(Function.COS, *e), StandardTrigFunction {
         return this
     }
 
-    override fun evaluateAsBigDecimal(n: RealBigDec): RealBigDec {
-        return RealBigDec(BigDecimalMath.cos(n.value))
+    override fun evaluateAsBigDecimal(x: RealBigDec): RealBigDec {
+        return RealBigDec(BigDecimalMath.cos(x.value))
     }
 
     override fun evaluate(e: Expr): Expr {

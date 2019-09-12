@@ -6,6 +6,7 @@ import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.FunctionFactory
 import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.expression.number.RealBigDec
 
 class N(vararg e: Expr) : FunctionExpr(Function.N, *e) {
 
@@ -13,6 +14,9 @@ class N(vararg e: Expr) : FunctionExpr(Function.N, *e) {
         val e = args[0]
         val machinePrecision = size == 1
         val precision = if (machinePrecision) MachinePrecision else get(1).asInteger().intValue()
+
+        if (precision == 0)
+            return RealBigDec.ZERO
 
         if (e is ConstExpr)
             return e.evaluate(precision)

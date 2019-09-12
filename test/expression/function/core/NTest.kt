@@ -4,6 +4,8 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -21,6 +23,7 @@ class NTest {
 
     @Test
     fun zeroPrecision() {
-        // TODO this should work assertEquals(RealBigDec("0.0"), N(Pi(), Integer(0)).eval())
+        assertEquals(RealBigDec("0.0"), N(Rational(1,3), Integer(0)).eval())
+        assertEquals(RealBigDec("0.0"), N(Pi(), Integer(0)).eval())
     }
 }

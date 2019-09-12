@@ -9,6 +9,10 @@ import kotlin.math.min
 
 class RealBigDec(override val value: BigDecimal) : NumberExpr() {
 
+    companion object {
+        val ZERO = RealBigDec(BigDecimal("0.0"))
+    }
+
     constructor(value: String) : this(BigDecimal(value))
 
     override val numType: NumberType get() = NumberType.REAL_BIGDEC

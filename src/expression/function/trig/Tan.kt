@@ -13,7 +13,7 @@ import kotlin.math.tan
 
 class Tan(vararg e: Expr) : TrigBase(Function.TAN, *e), StandardTrigFunction {
 
-    override fun evaluateAsBigDecimal(n: RealBigDec): RealBigDec = RealBigDec(BigDecimalMath.tan(n.value))
+    override fun evaluateAsBigDecimal(x: RealBigDec): RealBigDec = RealBigDec(BigDecimalMath.tan(x.value))
     override fun evaluateAsDouble(d: Double): Double = tan(d)
 
     override fun evaluatePiFactoredOut(e: Expr): Expr {
