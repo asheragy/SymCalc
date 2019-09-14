@@ -1,14 +1,20 @@
 package org.cerion.symcalc.expression.function.trig
 
+import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
+import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.nevec.rjm.BigDecimalMath
+import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 import kotlin.math.cos
 
 class Cos(vararg e: Expr) : TrigBase(Function.COS, *e), StandardTrigFunction {
@@ -54,7 +60,39 @@ class Cos(vararg e: Expr) : TrigBase(Function.COS, *e), StandardTrigFunction {
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): RealBigDec {
-        return RealBigDec(BigDecimalMath.cos(x.value))
+        val mc = MathContext(x.precision+5, RoundingMode.HALF_UP)
+
+        // Normalize to range of 0 to 2pi
+        val x2pi =
+                if (x.value.toDouble() >= 0 && x.value.toDouble() < (2*Math.PI))
+                    x
+                else
+                    Mod(x, Times(Integer(2), Pi())).eval() as RealBigDec
+
+        var result = BigDecimal(1.0)
+        var factorial = BigDecimal(1.0)
+        val xsquared = x2pi.value.pow(2)
+        var power = BigDecimal(1.0)
+
+        // Taylor series 1 - x^2/2! + x^4/4! ...
+        for(i in 1..1000) {
+            val n = i * 2
+            power = power.multiply(xsquared, mc)                 // x^n
+            factorial = factorial.times(BigDecimal(n * (n-1)))   // n!
+            val e = power.divide(factorial, mc)
+
+            val t = if (i % 2 == 0)
+                result.add(e, mc)
+            else
+                result.subtract(e, mc)
+
+            if (t == result)
+                return RealBigDec(result.round(MathContext(x.precision, RoundingMode.HALF_UP)))
+
+            result = t
+        }
+
+        throw IterationLimitExceeded()
     }
 
     override fun evaluate(e: Expr): Expr {

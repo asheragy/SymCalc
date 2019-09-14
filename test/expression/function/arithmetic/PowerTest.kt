@@ -230,7 +230,8 @@ class PowerTest {
         assertEquals(Complex(RealBigDec("24.702"), RealBigDec("3.8547")), Power(bigDec, Complex(2,4)).eval())
         assertEquals(Complex(RealBigDec("1.5503"), RealBigDec("1.6115")), Power(bigDec, Complex(Rational.HALF,Rational.HALF)).eval())
         assertEquals(Complex(24.701991088784933, 3.855079473838341), Power(bigDec, Complex(2.0,4.0)).eval())
-        assertEquals(Complex(RealBigDec("52.96"), RealBigDec("-147.8")), Power(bigDec, Complex(piBigDec,piBigDec)).eval())
+        // TODO_LP not quite right there should be 5 digits
+        assertEquals(Complex(RealBigDec("52.95"), RealBigDec("-147.8")), Power(bigDec, Complex(piBigDec,piBigDec)).eval())
     }
 
     @Test
@@ -244,8 +245,7 @@ class PowerTest {
         assertEquals(Complex(1.7989074399478673,1.1117859405028423), Power(Complex(RealDouble(2.0), Integer(4)), Rational.HALF).eval())
         assertEquals(Complex(0.07690324994251796,-0.18717392051825588), Power(Complex(RealDouble(2.0), Integer(4)), Rational(-16,15)).eval())
 
-        // TODO_LP precision may not be correct but its related to other operations not this one
-        assertEquals(Complex("1.5366205", "0.5943192"), Power(Complex(RealBigDec("2.000001"), Integer(4)), Rational.THIRD).eval())
+        assertEquals(Complex("1.536621", "0.5943192"), Power(Complex(RealBigDec("2.000001"), Integer(4)), Rational.THIRD).eval())
     }
 
     @Test

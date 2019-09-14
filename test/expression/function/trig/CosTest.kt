@@ -76,8 +76,11 @@ class CosTest {
 
     @Test
     fun bigDecimal() {
-        // TODO_LP Implement on own there are some issues with precision such as too many digits
-        assertEquals(RealBigDec("0.28368"), Cos(RealBigDec("5.00001")).eval())
+        assertEquals(RealBigDec("0.36"), Cos(RealBigDec("1.2")).eval())
+        assertEquals(RealBigDec("0.69329"), Cos(RealBigDec("0.80475")).eval())
+        assertEquals(RealBigDec("0.283672"), Cos(RealBigDec("5.00001")).eval())
+
+        assertEquals(RealBigDec("0.54030230586813971740093660744297660373231042061792"), Cos(RealBigDec("1.0000000000000000000000000000000000000000000000000")).eval())
     }
 
     companion object {
