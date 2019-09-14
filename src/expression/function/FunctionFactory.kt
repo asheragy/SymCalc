@@ -41,6 +41,7 @@ object FunctionFactory {
             Function.POWER -> return Power(*e)
             Function.MINUS -> return Minus(*e)
             Function.LOG -> return Log(*e)
+            Function.EXP -> return Exp(*e)
             Function.SQRT -> return Sqrt(*e)
 
             // Trig
