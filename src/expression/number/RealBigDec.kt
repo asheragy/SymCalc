@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.function.core.N
 import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
@@ -121,6 +122,34 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
         }
 
         return this
+    }
+
+    fun exp(): RealBigDec {
+        val mc = MathContext(precision + 2, RoundingMode.HALF_UP)
+
+        if (isNegative) {
+            val denominator = this.unaryMinus().exp()
+            return (Integer.ONE.evaluate(precision) / denominator) as RealBigDec
+        }
+
+        // Maclaurin series 1 + x + x^2/2! + x^3/3! + ...
+        var result = value.plus(BigDecimal.ONE)
+        var factorial = BigDecimal.ONE
+        var power = value
+
+        for(i in 2..1000) {
+            power = power.multiply(value, mc)
+            factorial = factorial.multiply(BigDecimal(i))
+            var term = power.divide(factorial, mc)
+            term = result.add(term, mc)
+
+            if (result == term)
+                return RealBigDec(result.round(MathContext(precision, RoundingMode.HALF_UP)))
+
+            result = term
+        }
+
+        throw IterationLimitExceeded()
     }
 
     private fun evaluatePrecision(result: RealBigDec, a: RealBigDec, b: RealBigDec): RealBigDec {

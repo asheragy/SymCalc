@@ -6,6 +6,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import java.math.BigDecimal
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -107,6 +108,16 @@ class RealBigDecTest : NumberTestBase() {
         assertEquals(RealBigDec("36.46"), power("3.14159265358979323846264338328", "3.1415"))
 
         assertEquals(RealBigDec("13.2696645139"), power("3.00000000000","2.35340583128859694839201928385968473749596868726265"))
+    }
+
+    @Test
+    fun exp() {
+        assertAll(
+                { assertEquals(RealBigDec("1.0"), RealBigDec("0.0").exp()) },
+                { assertEquals(RealBigDec("23.139"), RealBigDec("3.1415").exp()) },
+                { assertEquals(RealBigDec("23.140692632779269005729086367948547380266106242600"), (Pi().eval(50) as RealBigDec).exp()) },
+                { assertEquals(RealBigDec("0.00001671469609"), RealBigDec("-10.99922222").exp()) }
+        )
     }
 
     @Test
