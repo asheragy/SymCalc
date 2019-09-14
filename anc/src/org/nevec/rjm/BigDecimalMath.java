@@ -960,180 +960,6 @@ public class BigDecimalMath
                 }
         } /* BigDecimalMath.powRound */
 
-        /** Trigonometric sine.
-        * @param x The argument in radians.
-        * @return sin(x) in the range -1 to 1.
-        * @since 2009-06-01
-        * @author Richard J. Mathar
-        */
-        static public BigDecimal sin(final BigDecimal x)
-        {
-                if ( x.compareTo(BigDecimal.ZERO) < 0)
-                        return sin(x.negate()).negate() ;
-                else if ( x.compareTo(BigDecimal.ZERO) == 0 )
-                        return BigDecimal.ZERO ;
-                else
-                {
-                        /* reduce modulo 2pi
-                        */
-                        BigDecimal res = mod2pi(x) ;
-                        double errpi = 0.5*Math.abs(x.ulp().doubleValue()) ;
-                        MathContext mc = new MathContext( 2+err2prec(3.14159,errpi) ) ;
-                        BigDecimal p= pi(mc) ;
-                        mc = new MathContext( x.precision() ) ;
-                        if ( res.compareTo(p) > 0 )
-                        {
-                                /* pi<x<=2pi: sin(x)= - sin(x-pi)
-                                */
-                                return sin(subtractRound(res,p)) .negate() ;
-                        }
-                        else if ( res.multiply(new BigDecimal("2")).compareTo(p) > 0 )
-                        {
-                                /* pi/2<x<=pi: sin(x)= sin(pi-x)
-                                */
-                                return sin(subtractRound(p,res)) ;
-                        }
-                        else
-                        {
-                                /* for the range 0<=x<Pi/2 one could use sin(2x)=2sin(x)cos(x)
-                                * to split this further. Here, use the sine up to pi/4 and the cosine higher up.
-                                */
-                                if ( res.multiply(new BigDecimal("4")).compareTo(p) > 0 )
-                                {
-                                        /* x>pi/4: sin(x) = cos(pi/2-x)
-                                        */
-                                        return cos( subtractRound(p.divide(new BigDecimal("2")),res) ) ;
-                                }
-                                else
-                                {
-                                        /* Simple Taylor expansion, sum_{i=1..infinity} (-1)^(..)res^(2i+1)/(2i+1)! */
-                                        BigDecimal resul = res ;
-
-                                        /* x^i */
-                                        BigDecimal xpowi = res ;
-
-                                        /* 2i+1 factorial */
-                                        BigInteger ifac = BigInteger.ONE ;
-
-                                        /* The error in the result is set by the error in x itself.
-                                        */
-                                        double xUlpDbl = res.ulp().doubleValue() ;
-
-                                        /* The error in the result is set by the error in x itself.
-                                        * We need at most k terms to squeeze x^(2k+1)/(2k+1)! below this value.
-                                        * x^(2k+1) < x.ulp; (2k+1)*log10(x) < -x.precision; 2k*log10(x)< -x.precision;
-                                        * 2k*(-log10(x)) > x.precision; 2k*log10(1/x) > x.precision
-                                        */
-                                        int k = (int)(res.precision()/Math.log10(1.0/res.doubleValue()))/2 ;
-                                        MathContext mcTay = new MathContext( err2prec(res.doubleValue(),xUlpDbl/k) ) ;
-                                        for(int i=1 ; ; i++)
-                                        {
-                                                /* TBD: at which precision will 2*i or 2*i+1 overflow? 
-                                                */
-                                                ifac = ifac.multiply(new BigInteger(""+(2*i) ) ) ;
-                                                ifac = ifac.multiply( new BigInteger(""+(2*i+1)) ) ;
-                                                xpowi = xpowi.multiply(res).multiply(res).negate() ;
-                                                BigDecimal corr = xpowi.divide(new BigDecimal(ifac),mcTay) ;
-                                                resul = resul.add( corr ) ;
-                                                if ( corr.abs().doubleValue() < 0.5*xUlpDbl ) 
-                                                        break ;
-                                        }
-                                        /* The error in the result is set by the error in x itself.
-                                        */
-                                        mc = new MathContext(res.precision() ) ;
-                                        return resul.round(mc) ;
-                                }
-                        }
-                }
-        } /* sin */
-
-        /** Trigonometric cosine.
-        * @param x The argument in radians.
-        * @return cos(x) in the range -1 to 1.
-        * @since 2009-06-01
-        * @author Richard J. Mathar
-        */
-        static public BigDecimal cos(final BigDecimal x)
-        {
-                if ( x.compareTo(BigDecimal.ZERO) < 0)
-                        return cos(x.negate());
-                else if ( x.compareTo(BigDecimal.ZERO) == 0 )
-                        return BigDecimal.ONE ;
-                else
-                {
-                        /* reduce modulo 2pi
-                        */
-                        BigDecimal res = mod2pi(x) ;
-                        double errpi = 0.5*Math.abs(x.ulp().doubleValue()) ;
-                        MathContext mc = new MathContext( 2+err2prec(3.14159,errpi) ) ;
-                        BigDecimal p= pi(mc) ;
-                        mc = new MathContext( x.precision() ) ;
-                        if ( res.compareTo(p) > 0 )
-                        {
-                                /* pi<x<=2pi: cos(x)= - cos(x-pi)
-                                */
-                                return cos( subtractRound(res,p)) .negate() ;
-                        }
-                        else if ( res.multiply(new BigDecimal("2")).compareTo(p) > 0 )
-                        {
-                                /* pi/2<x<=pi: cos(x)= -cos(pi-x)
-                                */
-                                return cos( subtractRound(p,res)).negate() ;
-                        }
-                        else
-                        {
-                                /* for the range 0<=x<Pi/2 one could use cos(2x)= 1-2*sin^2(x)
-                                * to split this further, or use the cos up to pi/4 and the sine higher up.
-                                        throw new ProviderException("Not implemented: cosine ") ;
-                                */
-                                if ( res.multiply(new BigDecimal("4")).compareTo(p) > 0 )
-                                {
-                                        /* x>pi/4: cos(x) = sin(pi/2-x)
-                                        */
-                                        return sin( subtractRound(p.divide(new BigDecimal("2")),res) ) ;
-                                }
-                                else
-                                {
-                                        /* Simple Taylor expansion, sum_{i=0..infinity} (-1)^(..)res^(2i)/(2i)! */
-                                        BigDecimal resul = BigDecimal.ONE ;
-
-                                        /* x^i */
-                                        BigDecimal xpowi = BigDecimal.ONE ;
-
-                                        /* 2i factorial */
-                                        BigInteger ifac = BigInteger.ONE ;
-
-                                        /* The absolute error in the result is the error in x^2/2 which is x times the error in x.
-                                        */
-                                        double xUlpDbl = 0.5*res.ulp().doubleValue()*res.doubleValue() ;
-
-                                        /* The error in the result is set by the error in x^2/2 itself, xUlpDbl.
-                                        * We need at most k terms to push x^(2k+1)/(2k+1)! below this value.
-                                        * x^(2k) < xUlpDbl; (2k)*log(x) < log(xUlpDbl);
-                                        */
-                                        int k = (int)(Math.log(xUlpDbl)/Math.log(res.doubleValue()) )/2 ;
-                                        MathContext mcTay = new MathContext( err2prec(1.,xUlpDbl/k) ) ;
-                                        for(int i=1 ; ; i++)
-                                        {
-                                                /* TBD: at which precision will 2*i-1 or 2*i overflow? 
-                                                */
-                                                ifac = ifac.multiply(new BigInteger(""+(2*i-1) ) ) ;
-                                                ifac = ifac.multiply( new BigInteger(""+(2*i)) ) ;
-                                                xpowi = xpowi.multiply(res).multiply(res).negate() ;
-                                                BigDecimal corr = xpowi.divide(new BigDecimal(ifac),mcTay) ;
-                                                resul = resul.add( corr ) ;
-                                                if ( corr.abs().doubleValue() < 0.5*xUlpDbl ) 
-                                                        break ;
-                                        }
-                                        /* The error in the result is governed by the error in x itself.
-                                        */
-                                        mc = new MathContext( err2prec(resul.doubleValue(),xUlpDbl) ) ;
-                                        return resul.round(mc) ;
-                                }
-                        }
-                }
-        } /* BigDecimalMath.cos */
-
         /** The trigonometric tangent.
         * @param x the argument in radians.
         * @return the tan(x)
@@ -2440,33 +2266,6 @@ public class BigDecimalMath
                 return resul.round(mc) ;
         } /* addRound */
 
-        /** Add and round according to the larger of the two ulp's.
-        * @param x The left summand
-        * @param y The right summand
-        * @return The sum x+y.
-        * @since 2010-07-19
-        * @author Richard J. Mathar
-        */
-        static public BigComplex addRound(final BigComplex x, final BigDecimal y)
-        {
-                final BigDecimal R = addRound(x.re,y) ;
-                return new BigComplex(R,x.im) ;
-        } /* addRound */
-
-        /** Add and round according to the larger of the two ulp's.
-        * @param x The left summand
-        * @param y The right summand
-        * @return The sum x+y.
-        * @since 2010-07-19
-        * @author Richard J. Mathar
-        */
-        static public BigComplex addRound(final BigComplex x, final BigComplex y)
-        {
-                final BigDecimal R = addRound(x.re,y.re) ;
-                final BigDecimal I = addRound(x.im,y.im) ;
-                return new BigComplex(R,I) ;
-        } /* addRound */
-
         /** Subtract and round according to the larger of the two ulp's.
         * @param x The left term.
         * @param y The right term.
@@ -2481,20 +2280,6 @@ public class BigDecimalMath
                 double errR = Math.abs( y.ulp().doubleValue()/2. ) + Math.abs( x.ulp().doubleValue()/2. ) ;
                 MathContext mc = new MathContext( err2prec(resul.doubleValue(),errR) ) ;
                 return resul.round(mc) ;
-        } /* subtractRound */
-
-        /** Subtract and round according to the larger of the two ulp's.
-        * @param x The left summand
-        * @param y The right summand
-        * @return The difference x-y.
-        * @since 2010-07-19
-        * @author Richard J. Mathar
-        */
-        static public BigComplex subtractRound(final BigComplex x, final BigComplex y)
-        {
-                final BigDecimal R = subtractRound(x.re,y.re) ;
-                final BigDecimal I = subtractRound(x.im,y.im) ;
-                return new BigComplex(R,I) ;
         } /* subtractRound */
 
         /** Multiply and round.
@@ -2512,34 +2297,6 @@ public class BigDecimalMath
                 */
                 MathContext mc = new MathContext( Math.min(x.precision(),y.precision()) ) ;
                 return resul.round(mc) ;
-        } /* multiplyRound */
-
-        /** Multiply and round.
-        * @param x The left factor.
-        * @param y The right factor.
-        * @return The product x*y.
-        * @since 2010-07-19
-        * @author Richard J. Mathar
-        */
-        static public BigComplex multiplyRound(final BigComplex x, final BigDecimal y)
-        {
-                BigDecimal R = multiplyRound(x.re,y) ;
-                BigDecimal I = multiplyRound(x.im,y) ;
-                return new BigComplex(R,I) ;
-        } /* multiplyRound */
-
-        /** Multiply and round.
-        * @param x The left factor.
-        * @param y The right factor.
-        * @return The product x*y.
-        * @since 2010-07-19
-        * @author Richard J. Mathar
-        */
-        static public BigComplex multiplyRound(final BigComplex x, final BigComplex y)
-        {
-                BigDecimal R = subtractRound(multiplyRound(x.re,y.re), multiplyRound(x.im,y.im)) ;
-                BigDecimal I = addRound(multiplyRound(x.re,y.im), multiplyRound(x.im,y.re)) ;
-                return new BigComplex(R,I) ;
         } /* multiplyRound */
 
         /** Multiply and round.
@@ -2618,54 +2375,6 @@ public class BigDecimalMath
                 return scalePrec(resul,mc) ;
         }
 
-        /** Build the inverse and maintain the approximate accuracy.
-        * @param z The denominator
-        * @return The divided 1/z = [Re(z)-i*Im(z)]/ [Re^2 z + Im^2 z]
-        * @since 2010-07-19
-        * @author Richard J. Mathar
-        */
-        static public BigComplex invertRound(final BigComplex z)
-        {
-                if (z.im.compareTo(BigDecimal.ZERO) == 0)
-                {
-                        /* In this case with vanishing Im(x), the result is  simply 1/Re z.
-                        */
-                        final MathContext mc = new MathContext( z.re.precision() ) ;
-                        return new BigComplex( BigDecimal.ONE.divide( z.re, mc) ) ;
-                }
-                else if (z.re.compareTo(BigDecimal.ZERO) == 0)
-                {
-                        /* In this case with vanishing Re(z), the result is  simply -i/Im z
-                        */
-                        final MathContext mc = new MathContext( z.im.precision() ) ;
-                        return new BigComplex(BigDecimal.ZERO, BigDecimal.ONE.divide( z.im, mc).negate() ) ;
-                }
-                else 
-                {
-                        /* 1/(x.re+I*x.im) = 1/(x.re+x.im^2/x.re) - I /(x.im +x.re^2/x.im)
-                        */
-                        BigDecimal R  = addRound(z.re, divideRound(multiplyRound(z.im,z.im), z.re) ) ;
-                        BigDecimal I  = addRound(z.im, divideRound(multiplyRound(z.re,z.re), z.im) ) ;
-                        MathContext mc = new MathContext( 1+R.precision() ) ;
-                        R = BigDecimal.ONE.divide(R,mc) ;
-                        mc = new MathContext( 1+I.precision() ) ;
-                        I = BigDecimal.ONE.divide(I,mc) ;
-                        return new BigComplex(R,I.negate()) ;
-                }
-        }
-
-        /** Divide and round.
-        * @param x The numerator
-        * @param y The denominator
-        * @return the divided x/y
-        * @since 2010-07-19
-        * @author Richard J. Mathar
-        */
-        static public BigComplex divideRound(final BigComplex x, final BigComplex y)
-        {
-                return multiplyRound( x, invertRound(y) ) ;
-        }
-
         /** Divide and round.
         * @param x The numerator
         * @param n The denominator
@@ -2712,30 +2421,6 @@ public class BigDecimalMath
         } /* divideRound */
 
         /** Divide and round.
-        * @param n The numerator
-        * @param x The denominator
-        * @return the divided n/x
-        * @since 2012-03-01
-        * @author Richard J. Mathar
-        */
-        static public BigComplex divideRound(final BigInteger n, final BigComplex x)
-        {
-                /* catch case of real-valued denominator first
-                */
-                if ( x.im.compareTo(BigDecimal.ZERO) == 0 )
-                        return new BigComplex( divideRound(n,x.re),BigDecimal.ZERO ) ;
-                else if ( x.re.compareTo(BigDecimal.ZERO) == 0 )
-                        return new BigComplex( BigDecimal.ZERO, divideRound(n,x.im).negate() ) ;
-                        
-                BigComplex z = invertRound(x) ;
-                /* n/(x+iy) = nx/(x^2+y^2) -nyi/(x^2+y^2)       
-                */
-                BigDecimal repart = multiplyRound(z.re, n) ;
-                BigDecimal impart = multiplyRound(z.im, n) ;
-                return new BigComplex( repart, impart) ;
-        } /* divideRound */
-
-        /** Divide and round.
         * @param n The numerator.
         * @param x The denominator.
         * @return the divided n/x.
@@ -2760,18 +2445,6 @@ public class BigDecimalMath
         static public BigDecimal scalePrec(final BigDecimal x, int d)
         {
                 return x.setScale(d+x.scale()) ;
-        }
-
-        /** Append decimal zeros to the value. This returns a value which appears to have
-        * a higher precision than the input.
-        * @param x The input value
-        * @param d The (positive) value of zeros to be added as least significant digits.
-        * @return The same value as the input but with increased (pseudo) precision.
-        * @author Richard J. Mathar
-        */
-        static public BigComplex scalePrec(final BigComplex x, int d)
-        {
-                return new BigComplex( scalePrec(x.re,d),scalePrec(x.im,d)) ;
         }
 
         /** Boost the precision by appending decimal zeros to the value. This returns a value which appears to have
