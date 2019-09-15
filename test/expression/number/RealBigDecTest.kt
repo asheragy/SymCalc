@@ -118,11 +118,11 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun pow() {
-        assertEquals(RealBigDec("36"), power("3.14", "3.14"))
-        assertEquals(RealBigDec("36.45"), power("3.1415", "3.1415"))
-        assertEquals(RealBigDec("36.462159607207911770990826022"), power("3.14159265358979323846264338328", "3.14159265358979323846264338328"))
-        assertEquals(RealBigDec("36.46"), power("3.1415", "3.14159265358979323846264338328"))
-        assertEquals(RealBigDec("36.46"), power("3.14159265358979323846264338328", "3.1415"))
+        assertEquals(RealBigDec("36.3"), power("3.14", "3.14"))
+        assertEquals(RealBigDec("36.455"), power("3.1415", "3.1415"))
+        assertEquals(RealBigDec("36.4621596072079117709908260227"), power("3.14159265358979323846264338328", "3.14159265358979323846264338328"))
+        assertEquals(RealBigDec("36.459"), power("3.1415", "3.14159265358979323846264338328"))
+        assertEquals(RealBigDec("36.458"), power("3.14159265358979323846264338328", "3.1415"))
 
         assertEquals(RealBigDec("13.2696645139"), power("3.00000000000","2.35340583128859694839201928385968473749596868726265"))
     }
@@ -139,8 +139,8 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun pow_negativeExp() {
-        assertEquals(RealBigDec("0.028"), power("3.14", "-3.14"))
-        assertEquals(RealBigDec("0.02743"), power("3.1415", "-3.1415"))
+        assertEquals(RealBigDec("0.0275"), power("3.14", "-3.14"))
+        assertEquals(RealBigDec("0.027431"), power("3.1415", "-3.1415"))
     }
 
     @Test

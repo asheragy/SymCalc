@@ -113,9 +113,15 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
         if (isZero)
             return ZERO
 
-        // TODO implement this on own but need to figure out some precision stuff first
-        val bigDec = BigDecimalMath.pow(value, other.value)
-        return RealBigDec(bigDec)
+        val p = min(precision, other.precision)
+        val mc = MathContext(p + 2, RoundingMode.HALF_UP)
+        val x = value.setScale(accuracy + 2).round(mc) // Add 2 extra digits so scale/precision is correct
+
+        val logx = BigDecimalMath.log(x)
+        val ylogx = other.value.multiply(logx, mc)
+        val result = RealBigDec(ylogx).exp()
+
+        return result.evaluate(p) // scale back down precision
     }
 
     override fun evaluate(precision: Int): NumberExpr {
