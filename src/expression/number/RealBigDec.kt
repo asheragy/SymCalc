@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.exception.IterationLimitExceeded
+import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.function.core.N
 import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
@@ -21,6 +22,7 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
     override val isOne: Boolean get() = value == BigDecimal.ONE
     override val isNegative: Boolean get() = value.signum() == -1
     override val precision: Int get() = value.precision()
+    val accuracy: Int get() = value.scale()
 
     fun toDouble(): Double = value.toDouble()
     override fun toString(): String = "$value`$precision"
@@ -105,6 +107,13 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
     }
 
     fun pow(other: RealBigDec): NumberExpr {
+        if (isNegative)
+            throw OperationException("lhs cannot be negative")
+
+        if (isZero)
+            return ZERO
+
+        // TODO implement this on own but need to figure out some precision stuff first
         val bigDec = BigDecimalMath.pow(value, other.value)
         return RealBigDec(bigDec)
     }

@@ -38,6 +38,6 @@ class E : ConstExpr() {
             i++
         }
 
-        return e.setScale(n, RoundingMode.HALF_UP)
+        return e.setScale(n-1, RoundingMode.HALF_UP)
     }
 }

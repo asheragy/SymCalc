@@ -1,5 +1,6 @@
 package expression.number
 
+import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
@@ -43,6 +44,14 @@ class RealBigDecTest : NumberTestBase() {
     }
 
     @Test
+    fun accuracy() {
+        assertEquals(0, RealBigDec("100").accuracy)
+        assertEquals(1, RealBigDec("3.0").accuracy)
+        assertEquals(2, RealBigDec("3.14").accuracy)
+        assertEquals(9, RealBigDec("0.000000001").accuracy)
+    }
+
+    @Test
     fun isZero() {
         assertTrue(RealBigDec("0.0").isZero)
         assertTrue(RealBigDec("0").isZero)
@@ -52,7 +61,15 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun precision_evaluate() {
-        assertEquals(RealBigDec("111.000000001"), RealBigDec("111.0000000011").evaluate(12))
+        var x = RealBigDec("111.0000000011").evaluate(12) as RealBigDec
+        assertEquals(RealBigDec("111.000000001"), x)
+        assertEquals(12, x.precision)
+        assertEquals(9, x.accuracy)
+
+        x = RealBigDec("0.141567").evaluate(5) as RealBigDec
+        assertEquals(RealBigDec("0.14157"), x)
+        assertEquals(5, x.precision)
+        assertEquals(5, x.accuracy)
     }
 
     @Test
@@ -129,7 +146,7 @@ class RealBigDecTest : NumberTestBase() {
     @Test
     fun pow_negativeBase() {
         // Expected for now...
-        assertFailsWith<ArithmeticException> { power("-3.14", "3.14") }
+        assertFailsWith<OperationException> { power("-3.14", "3.14") }
     }
 
     private fun power(a: String, b: String): NumberExpr {
