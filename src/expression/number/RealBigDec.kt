@@ -29,11 +29,14 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr() {
     override fun unaryMinus(): RealBigDec = RealBigDec(value.negate())
 
     override fun compareTo(other: NumberExpr): Int {
-        if (other is RealBigDec) {
+        if (other is RealBigDec)
             return value.compareTo(other.value)
-        }
 
-        return evaluate(MachinePrecision).compareTo(other.evaluate(MachinePrecision))
+        if (other is RealDouble)
+            return value.toDouble().compareTo(other.value)
+
+        val real = other.evaluate(precision) as RealBigDec
+        return value.compareTo(real.value)
     }
 
     override fun plus(other: NumberExpr): NumberExpr {

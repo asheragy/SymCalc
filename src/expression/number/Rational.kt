@@ -112,6 +112,9 @@ class Rational constructor(n: Integer, d: Integer = Integer.ONE) : NumberExpr(n,
         if (other is Complex)
             return Complex(this).compareTo(other)
 
+        if (other.precision in MachinePrecision until InfinitePrecision)
+            return evaluate(other.precision).compareTo(other)
+
         return evaluate(MachinePrecision).compareTo(other)
     }
 

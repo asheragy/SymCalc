@@ -30,7 +30,6 @@ class E : ConstExpr() {
         var e: BigDecimal = BigDecimal.ONE.setScale(n+1)
         var next: BigDecimal = BigDecimal.ONE.setScale(n+1)
 
-        // TODO_LP see if taylor series does this faster RealBigDec(1).exp()
         var i = 2
         while (next.compareTo(BigDecimal.ZERO) != 0) {
             e += next
