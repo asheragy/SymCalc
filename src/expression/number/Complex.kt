@@ -30,7 +30,8 @@ class Complex(r: NumberExpr, i: NumberExpr) : NumberExpr(r, i) {
 
     fun conjugate(): Complex = Complex(real, img.unaryMinus())
 
-    override fun toString(): String = real.toString() + (if(img.isNegative) "" else "+") + img.toString() + "i"
+    //override fun toString(): String = real.toString() + (if(img.isNegative) "" else "+") + img.toString() + "i"
+    override fun toString(): String = "Complex[$real, $img]"
     override fun unaryMinus(): Complex = Complex(real.unaryMinus(), img.unaryMinus())
 
     override fun evaluate(): NumberExpr {

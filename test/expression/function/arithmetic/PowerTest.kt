@@ -180,9 +180,7 @@ class PowerTest {
         assertEquals(RealDouble(2.23606797749979), Power(RealDouble(5.0), Rational(1,2)).eval())
         assertEquals(RealDouble(2040886.0816112224), Power(RealDouble(1.2345), Rational(12345,179)).eval())
         assertEquals(RealDouble(4.89983252377579E-7), Power(RealDouble(1.2345), Rational(-12345,179)).eval())
-
-        // TODO_LP This invovles the Nth root so technically there are N answers and only 1 real, mathematica seems to give complex answer most of the time not sure what to do here yet
-        //assertEquals(RealNum.create(1.0), Power(RealNum.create(-1.2345), Rational(3,2)).eval())
+        assertEquals(RealDouble(1.3716289453146575), Power(RealDouble(1.2345), Rational(3,2)).eval())
 
         assertEquals(RealBigDec("2"), Power(RealBigDec("4.0"), Rational.HALF).eval())
         assertEquals(RealBigDec("1.00006170"), Power(RealBigDec("1.0001234"), Rational(1,2)).eval()) // square root
@@ -205,6 +203,25 @@ class PowerTest {
         // BigDec/BigDec
         assertEquals(RealBigDec("36.455"), Power(RealBigDec("3.1415"), RealBigDec("3.1415")).eval())
         assertEquals(RealBigDec("0.027431"), Power(RealBigDec("3.1415"), RealBigDec("-3.1415")).eval())
+    }
+
+    @Test
+    fun negative_toRoot() {
+        assertEquals(Complex(0, 2), Power(Integer(-4), Rational(1,2)).eval())
+        assertEquals(Integer(-2), Power(Integer(-8), Rational(1,3)).eval())
+        // Integer/real is converted to real/real
+
+        // TODO negative rational, may just fall into other cases
+
+        // Real
+        assertEquals(Complex(1.224646799147353E-16,1.9999999999999998), Power(RealDouble(-4.0), RealDouble(0.5)).eval())
+        assertEquals(Complex(1.0, 1.7320508075688767), Power(RealDouble(-8.0), RealDouble(1/3.0)).eval())
+        assertEquals(Complex(-2.5196414962461827E-16, -1.3716289453146575), Power(RealDouble(-1.2345), RealDouble(1.5)).eval())
+
+        // TODO Bigdec
+        // TODO_LP This invovles the Nth root so technically there are N answers and only 1 real, mathematica seems to give complex answer most of the time not sure what to do here yet
+        //assertEquals(RealNum.create(1.0), Power(RealNum.create(-1.2345), Rational(3,2)).eval())
+
     }
 
     @Test

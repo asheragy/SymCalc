@@ -6,12 +6,12 @@ import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
+import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.*
-import org.nevec.rjm.BigDecimalMath
 import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.pow
@@ -176,7 +176,13 @@ private fun RealDouble.power(other: NumberExpr): NumberExpr {
     when (other) {
         is Integer,
         is Rational -> return this.power(other.evaluate(precision))
-        is RealDouble -> return RealDouble(value.pow(other.value))
+        is RealDouble -> {
+            val pow = value.pow(other.value)
+            if (pow.isNaN() && value < 0)
+                return Exp(Times(other, Plus(Log(this.unaryMinus()), Times(I(), Pi())))).eval() as NumberExpr
+
+            return RealDouble(pow)
+        }
         is RealBigDec -> return RealDouble(value.pow(other.toDouble()))
         is Complex -> return Power(this, other).eval() as NumberExpr
         else -> throw NotImplementedError()

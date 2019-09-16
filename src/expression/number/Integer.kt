@@ -1,7 +1,9 @@
 package org.cerion.symcalc.expression.number
 
+import expression.constant.I
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.integer.Factor
@@ -148,6 +150,14 @@ class Integer(override val value: BigInteger) : NumberExpr() {
     fun pow(b: Rational): Expr {
         if (this.isOne)
             return this
+
+        if (this.isNegative) {
+            if (b.denominator.isOdd)
+                return Minus(Times(Power(unaryMinus(), b))).eval()
+
+            return Times(Power(unaryMinus(), b), I()).eval()
+
+        }
 
         // Performance: Use faster method for square root
         /* One other method for any value but may need additional checks
