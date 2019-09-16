@@ -197,7 +197,12 @@ private fun RealBigDec.power(other: NumberExpr): NumberExpr {
         }
         is Rational -> return this.power(other.evaluate(precision))
         is RealDouble -> return RealDouble(toDouble().pow(other.value))
-        is RealBigDec -> return this.pow(other)
+        is RealBigDec -> {
+            if (this.isNegative)
+                return Exp(Times(other, Plus(Log(this.unaryMinus()), Times(I(), Pi())))).eval() as NumberExpr
+
+            return this.pow(other)
+        }
         is Complex -> throw UnsupportedOperationException()
         else -> throw NotImplementedError()
     }

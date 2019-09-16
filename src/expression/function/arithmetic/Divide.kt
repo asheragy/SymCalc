@@ -14,8 +14,8 @@ class Divide(vararg e: Expr) : FunctionExpr(Function.DIVIDE, *e) {
         val a = get(0)
         val b = get(1)
 
-        // Transform x / y^-z = x * y^z
-        if (b is Power && b[1] is NumberExpr && b[1].asNumber().isNegative) {
+        // Transform x / y^z = x * y^-z
+        if (b is Power && b[1] is NumberExpr) {
             return Times(a, Power(b[0], b[1].asNumber().unaryMinus())).eval()
         }
 

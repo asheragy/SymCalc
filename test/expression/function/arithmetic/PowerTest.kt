@@ -134,7 +134,7 @@ class PowerTest {
 
     @Test
     fun rationalToRational() {
-        assertEquals(Divide(Integer.ONE, Power(Integer.TWO,Rational.HALF)), Power(Rational(1,2), Rational(1,2)).eval())
+        assertEquals(Power(Integer.TWO, Rational.HALF.unaryMinus()), Power(Rational(1,2), Rational(1,2)).eval())
         assertEquals(Rational(4,9), Power(Rational(8,27), Rational(2,3)).eval())
         assertEquals(Integer(2), Power(Rational(1,4), Rational(-1,2)).eval())
         assertEquals(Rational.HALF, Power(Rational(1,4), Rational(1,2)).eval())
@@ -209,19 +209,20 @@ class PowerTest {
     fun negative_toRoot() {
         assertEquals(Complex(0, 2), Power(Integer(-4), Rational(1,2)).eval())
         assertEquals(Integer(-2), Power(Integer(-8), Rational(1,3)).eval())
-        // Integer/real is converted to real/real
 
-        // TODO negative rational, may just fall into other cases
+        // Rational
+        assertEquals(Times(Complex(0, 1), Power(Integer.TWO, Rational(-1,2))), Power(Rational.HALF.unaryMinus(), Rational.HALF).eval())
+        assertEquals(Times(Integer.NEGATIVE_ONE, Power(Integer.TWO, Rational(-1,3))), Power(Rational.HALF.unaryMinus(), Rational.THIRD).eval())
 
         // Real
         assertEquals(Complex(1.224646799147353E-16,1.9999999999999998), Power(RealDouble(-4.0), RealDouble(0.5)).eval())
         assertEquals(Complex(1.0, 1.7320508075688767), Power(RealDouble(-8.0), RealDouble(1/3.0)).eval())
         assertEquals(Complex(-2.5196414962461827E-16, -1.3716289453146575), Power(RealDouble(-1.2345), RealDouble(1.5)).eval())
 
-        // TODO Bigdec
-        // TODO_LP This invovles the Nth root so technically there are N answers and only 1 real, mathematica seems to give complex answer most of the time not sure what to do here yet
-        //assertEquals(RealNum.create(1.0), Power(RealNum.create(-1.2345), Rational(3,2)).eval())
-
+        // TODO_LP look more into 1st and 3rd real number, should be zero
+        assertEquals(Complex("-0.0000073464", "2.0000"), Power(RealBigDec("-4.0000"), Rational.HALF).eval())
+        assertEquals(Complex("1.0000", "1.7321"), Power(RealBigDec("-8.0000"), Rational.THIRD).eval())
+        assertEquals(Complex("0.0008383", "-1.372"), Power(RealBigDec("-1.2345"), Rational(3,2)).eval())
     }
 
     @Test
