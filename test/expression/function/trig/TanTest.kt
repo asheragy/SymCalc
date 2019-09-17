@@ -89,6 +89,11 @@ class TanTest {
     }
 
     @Test
+    fun debug() {
+        assertEquals(RealBigDec("1.5574"), Tan(RealBigDec("1.0000")).eval())
+    }
+
+    @Test
     fun bigDecimal() {
         // TODO_LP Implement on own there are some issues with precision such as too many digits
         assertEquals(RealBigDec("-3.3804"), Tan(RealBigDec("5.00001")).eval())

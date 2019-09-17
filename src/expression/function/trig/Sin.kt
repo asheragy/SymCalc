@@ -58,7 +58,6 @@ class Sin(vararg e: Expr) : TrigBase(Function.SIN, *e), StandardTrigFunction {
         val mc = MathContext(x.precision+5, RoundingMode.HALF_UP)
 
         // Normalize to range of 0 to 2pi
-        // TODO move to base class maybe and do before passing here
         val x2pi =
                 if (x.value.toDouble() >= 0 && x.value.toDouble() < (2*Math.PI))
                     x
