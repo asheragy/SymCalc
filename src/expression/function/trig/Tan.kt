@@ -5,9 +5,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.ComplexInfinity
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.Function
-import org.cerion.symcalc.expression.function.arithmetic.Minus
-import org.cerion.symcalc.expression.function.arithmetic.Power
-import org.cerion.symcalc.expression.function.arithmetic.Times
+import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.integer.Bernoulli
 import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.Integer
@@ -57,17 +55,22 @@ class Tan(vararg e: Expr) : TrigBase(Function.TAN, *e), StandardTrigFunction {
 
         // TODO may need to be Pi/2
         // Normalize to range of 0 to Pi
-        val xmodpi =
-                if (x.value.toDouble() >= 0 && x.value.toDouble() < (Math.PI))
+        var xmodpi =
+                if (x.value.toDouble() >= 0 && x.value.toDouble() < (Math.PI / 2))
                     x
                 else
-                    Mod(x, Times(Integer(2), Pi())).eval() as RealBigDec
+                    Mod(x, Divide(Pi(), Integer(2))).eval() as RealBigDec
+
+        val xmodpiCheck = Mod(x, Pi()).eval() as RealBigDec
+        val negate = xmodpiCheck.value > xmodpi.value
+        if (negate)
+            xmodpi = Subtract(Divide(Pi(), Integer(2)), xmodpi).eval() as RealBigDec
 
         var result = xmodpi.value
         var factorial = BigDecimal(2.0)
 
         // Taylor series x - x^3/3! + x^5/5! ...
-        for(n in 2..10) {
+        for(n in 2..200) {
             val n2 = n * 2
             val bernoulli = Bernoulli(Integer(n2)).eval(x.precision + 5) as RealBigDec
             val neg4pow = BigDecimal(-4.0).pow(n, mc)
@@ -83,14 +86,19 @@ class Tan(vararg e: Expr) : TrigBase(Function.TAN, *e), StandardTrigFunction {
 
             val t = result.add(term, mc)
 
-            if (t == result)
-                return RealBigDec(result.round(MathContext(x.precision, RoundingMode.HALF_UP)))
+            if (t == result) {
+                val ret = RealBigDec(result.round(MathContext(x.precision, RoundingMode.HALF_UP)))
+                if (negate)
+                    return ret.unaryMinus()
+
+                return ret
+            }
 
             result = t
         }
 
-        return RealBigDec(result.round(MathContext(x.precision, RoundingMode.HALF_UP)))
-        //throw IterationLimitExceeded()
+        //return RealBigDec(result.round(MathContext(x.precision, RoundingMode.HALF_UP)))
+        throw IterationLimitExceeded()
     }
 
     companion object {

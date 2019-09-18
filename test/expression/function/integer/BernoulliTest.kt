@@ -28,4 +28,10 @@ class BernoulliTest {
         assertEquals(Rational(-174611, 330), Bernoulli(Integer(20)).eval())
     }
 
+    @Test
+    fun debug() {
+        //assertEquals(Integer.ZERO, Bernoulli(Integer(3)).eval())
+        assertEquals(Rational(-174611, 330), Bernoulli(Integer(20)).eval())
+    }
+
 }

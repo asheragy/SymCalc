@@ -11,22 +11,24 @@ import org.cerion.symcalc.expression.number.Rational
 class Bernoulli(vararg e: Expr) : FunctionExpr(Function.BERNOULLI, *e) {
 
     override fun evaluate(): Expr {
-        val result: Expr
-        var N = get(0) as Integer
+        val N = get(0) as Integer
+        return bernoulli(N.intValue())
+    }
 
-        when {
-            N.isZero -> result = Integer.ONE
-            N.isOne -> result = Rational(-1,2)
+    private fun bernoulli(n: Int): NumberExpr {
+        when(n) {
+            0 -> return Integer.ONE
+            1 -> return Rational(-1,2)
             else -> {
                 var res: NumberExpr = Integer.ZERO
-                val n = N.intValue()
 
-
+                val values = mutableListOf<NumberExpr>()
                 for (i in 0 until n) {
                     val bin = Binomial(Integer(n + 1), Integer(i))
                     val t = bin.eval() as Integer
 
-                    val bern = Bernoulli(Integer(i))
+                    val bern = bernoulliRecursive(i, values)
+                    values.add(bern)
                     var b = bern.eval().asNumber()
 
                     b = t * b
@@ -34,14 +36,37 @@ class Bernoulli(vararg e: Expr) : FunctionExpr(Function.BERNOULLI, *e) {
                 }
 
                 res = -res
-                N+= Integer.ONE
-                res/= N
+                res/= Integer(n + 1)
 
-                result = res
+                return res
             }
         }
+    }
 
-        return result
+    private fun bernoulliRecursive(n: Int, previous: List<NumberExpr>): NumberExpr {
+        when(n) {
+            0 -> return Integer.ONE
+            1 -> return Rational(-1,2)
+            else -> {
+                var res: NumberExpr = Integer.ZERO
+
+                for (i in 0 until n) {
+                    val bin = Binomial(Integer(n + 1), Integer(i))
+                    val t = bin.eval() as Integer
+
+                    val bern = previous[i]
+                    var b = bern.eval().asNumber()
+
+                    b = t * b
+                    res+= b
+                }
+
+                res = -res
+                res/= Integer(n + 1)
+
+                return res
+            }
+        }
     }
 
     override fun validate() {
