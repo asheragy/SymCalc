@@ -28,7 +28,7 @@ class Dot(vararg e: Expr) : FunctionExpr(*e) {
             val subItems = mutableListOf<Expr>()
 
             for (j in 0 until a.size) {
-                val sum = Plus(*ax.args.mapIndexed { index, expr -> Times(expr,b[index][j]) }.toTypedArray())
+                val sum = Plus(*ax.args.mapIndexed { index, expr -> Times(expr,b[index].asList()[j]) }.toTypedArray())
                 subItems.add(sum.eval())
             }
 

@@ -8,7 +8,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 class Select(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
-        val list = this[0].asList().eval()
+        val list = this[0].asList().eval() as ListExpr // TODO eval unnecessary?
         val result = mutableListOf<Expr>()
 
         for (i in 0 until list.size) {

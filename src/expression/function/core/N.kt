@@ -22,12 +22,11 @@ class N(vararg e: Expr) : FunctionExpr(*e) {
         if (e is NumberExpr)
             return e.evaluate(precision)
 
-        val newArgs = mutableListOf<Expr>()
-        for (i in 0 until e.args.size) {
-            newArgs.add(e.args[i].eval(precision))
-        }
-
         if(e is FunctionExpr) {
+            val newArgs = mutableListOf<Expr>()
+            for (i in 0 until e.args.size) {
+                newArgs.add(e.args[i].eval(precision))
+            }
             return FunctionFactory.createInstance(e.name, *newArgs.toTypedArray()).eval()
         }
 

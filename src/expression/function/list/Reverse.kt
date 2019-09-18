@@ -8,7 +8,7 @@ class Reverse(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         if (get(0) is ListExpr) {
-            val list = get(0)
+            val list = get(0) as ListExpr
             val result = mutableListOf<Expr>()
 
             for (i in list.size downTo 1)

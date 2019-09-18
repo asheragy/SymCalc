@@ -15,7 +15,7 @@ class Times(vararg e: Expr) : FunctionExpr(*e) {
 
         // Transform 2*(a+b) to 2a + 2b
         if (size == 2 && args[1] is Plus) {
-            val newArgs = args[1].args.map { Times(args[0], it) }
+            val newArgs = (args[1] as Plus).args.map { Times(args[0], it) }
             val e = Plus(*newArgs.toTypedArray()).eval()
             if (e !is Plus) // If Plus eval is not any better don't use this value
                 return e

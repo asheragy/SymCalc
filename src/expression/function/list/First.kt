@@ -7,11 +7,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 class First(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
-        if (get(0) is ListExpr) {
-            return get(0)[0]
-        }
-
-        return this
+        return get(0).asList()[0]
     }
 
     override fun validate() {

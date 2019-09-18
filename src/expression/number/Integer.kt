@@ -180,7 +180,7 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         val factors = Tally(t).eval().asList()
 
         // All roots factored out, apply power / reduce to proper fraction
-        if (factors.size == 1 && factors[0][1] == ONE) {
+        if (factors.size == 1 && factors[0].asList()[1] == ONE) {
             if (b > ONE) {
                 val whole = Integer(b.numerator.intValue() / b.denominator.intValue())
 
@@ -191,13 +191,13 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         }
 
         // No factors means nothing to reduce
-        if (factors.args.all { (it[1] as Integer).isOne })
+        if (factors.args.all { (it.asList()[1] as Integer).isOne })
             return Power(a, b)
 
         val items = mutableListOf<Expr>()
         for (factor in factors.args) {
-            val n = factor[0] as Integer
-            val x = factor[1] as Integer
+            val n = factor.asList()[0] as Integer
+            val x = factor.asList()[1] as Integer
 
             items.add(Power(n, b * x))
         }

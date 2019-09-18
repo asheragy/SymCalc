@@ -18,7 +18,7 @@ class Tally(vararg e: Expr) : FunctionExpr(*e) {
 
             var found = false
             for (j in 0 until result.size) {
-                var keyval = result[j]
+                var keyval = result[j] as ListExpr
                 val (key, value) = Pair(keyval[0], keyval[1].asInteger())
 
                 if (e.equals(key)) {

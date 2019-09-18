@@ -37,7 +37,7 @@ class Plus(vararg e: Expr) : FunctionExpr(*e) {
             // If element is also contained in Times(), remove it and increment by 1  (2*Pi) + Pi = 3*Pi
             val timesArg = list.filter { it is Times && it.size == 2 && it[0] is NumberExpr && it[1] !is NumberExpr }
             for (i in 0 until timesArg.size) {
-                val times = timesArg[i]
+                val times = timesArg[i] as Times
                 while (list.contains(times[1])) {
                     val t = Times(Plus(times[0], Integer.ONE), times[1]).eval()
                     list.remove(times)
