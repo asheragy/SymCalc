@@ -7,14 +7,17 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.calculus.D
 import org.cerion.symcalc.expression.function.core.*
+import org.cerion.symcalc.expression.function.core.Set
 import org.cerion.symcalc.expression.function.integer.*
 import org.cerion.symcalc.expression.function.list.*
-import org.cerion.symcalc.expression.function.logical.*
-import org.cerion.symcalc.expression.function.plots.*
+import org.cerion.symcalc.expression.function.list.Map
+import org.cerion.symcalc.expression.function.logical.Greater
+import org.cerion.symcalc.expression.function.plots.Plot
 import org.cerion.symcalc.expression.function.procedural.If
 import org.cerion.symcalc.expression.function.statistics.*
-import org.cerion.symcalc.expression.function.trig.*
-import java.lang.RuntimeException
+import org.cerion.symcalc.expression.function.trig.Cos
+import org.cerion.symcalc.expression.function.trig.Sin
+import org.cerion.symcalc.expression.function.trig.Tan
 
 object FunctionFactory {
 

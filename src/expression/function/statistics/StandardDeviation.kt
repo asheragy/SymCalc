@@ -1,11 +1,10 @@
 package org.cerion.symcalc.expression.function.statistics
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Sqrt
 
-class StandardDeviation(vararg e: Expr) : FunctionExpr(Function.STANDARD_DEVIATION, *e) {
+class StandardDeviation(vararg e: Expr) : FunctionExpr(*e) {
 
     // FEAT Has more advanced usages, matrix/dist parameters
 

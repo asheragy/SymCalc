@@ -3,7 +3,6 @@ package org.cerion.symcalc.expression
 import org.cerion.symcalc.expression.number.NumberExpr
 
 class ListExpr(vararg e: Expr) : Expr(*e) {
-    override val value: Any? get() = null
     override val type: ExprType get() = ExprType.LIST
 
     constructor() : this(*emptyArray<Expr>())

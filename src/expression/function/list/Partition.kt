@@ -2,13 +2,12 @@ package org.cerion.symcalc.expression.function.list
 
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberType
 
-class Partition(vararg e: Expr) : FunctionExpr(Function.PARTITION, *e) {
+class Partition(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
 

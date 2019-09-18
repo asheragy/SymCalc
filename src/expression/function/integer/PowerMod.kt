@@ -2,11 +2,10 @@ package org.cerion.symcalc.expression.function.integer
 
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberType
 
-class PowerMod(vararg e: Expr) : FunctionExpr(Function.POWERMOD, *e) {
+class PowerMod(vararg e: Expr) : FunctionExpr(*e) {
 
     public override fun evaluate(): Expr {
         val a = get(0).asInteger()

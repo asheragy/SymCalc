@@ -3,10 +3,9 @@ package org.cerion.symcalc.expression.function.list
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 
-class MatrixQ(vararg e: Expr) : FunctionExpr(Function.MATRIXQ, *e) {
+class MatrixQ(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         if (get(0) !is ListExpr)

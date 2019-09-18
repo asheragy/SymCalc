@@ -3,7 +3,6 @@ package org.cerion.symcalc.expression.function.trig
 import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
@@ -16,7 +15,7 @@ import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.sin
 
-class Sin(vararg e: Expr) : TrigBase(Function.SIN, *e), StandardTrigFunction {
+class Sin(vararg e: Expr) : TrigBase(*e), StandardTrigFunction {
 
     companion object {
         val sqrt3Over2 = Times(Rational(1,2), Power(Integer(3), Rational(1,2)))

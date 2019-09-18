@@ -7,7 +7,6 @@ import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
@@ -16,7 +15,7 @@ import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.pow
 
-class Power(vararg e: Expr) : FunctionExpr(Function.POWER, *e) {
+class Power(vararg e: Expr) : FunctionExpr(*e) {
 
     public override fun evaluate(): Expr {
         val a = get(0)

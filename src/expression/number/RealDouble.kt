@@ -1,6 +1,8 @@
 package org.cerion.symcalc.expression.number
 
-class RealDouble(override val value: Double = 0.0) : NumberExpr() {
+import org.cerion.symcalc.expression.AtomExpr
+
+class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
 
     override val numType: NumberType get() = NumberType.REAL_DOUBLE
     override val isZero: Boolean get() = value == 0.0

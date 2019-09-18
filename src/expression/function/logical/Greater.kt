@@ -1,12 +1,13 @@
 package org.cerion.symcalc.expression.function.logical
 
-import org.cerion.symcalc.expression.*
-import org.cerion.symcalc.expression.function.Function
+import org.cerion.symcalc.expression.BoolExpr
+import org.cerion.symcalc.expression.ErrorExpr
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Complex
 import org.cerion.symcalc.expression.number.NumberExpr
 
-class Greater(vararg e: Expr) : FunctionExpr(Function.GREATER, *e) {
+class Greater(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         /*

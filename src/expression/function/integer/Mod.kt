@@ -1,7 +1,6 @@
 package org.cerion.symcalc.expression.function.integer
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Plus
@@ -10,7 +9,7 @@ import org.cerion.symcalc.expression.number.*
 import kotlin.math.floor
 import kotlin.math.min
 
-class Mod(vararg e: Expr) : FunctionExpr(Function.MOD, *e) {
+class Mod(vararg e: Expr) : FunctionExpr(*e) {
 
     // FEAT can work with non-integers
 

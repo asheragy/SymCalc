@@ -2,6 +2,7 @@ package org.cerion.symcalc.expression.number
 
 import expression.constant.I
 import org.cerion.symcalc.exception.OperationException
+import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
@@ -14,7 +15,7 @@ import java.math.BigInteger
 import java.math.MathContext
 import java.math.RoundingMode
 
-class Integer(override val value: BigInteger) : NumberExpr() {
+class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     companion object {
         @JvmField val ZERO = Integer(0)
         @JvmField val ONE = Integer(1)

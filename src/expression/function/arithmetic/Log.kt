@@ -3,13 +3,12 @@ package org.cerion.symcalc.expression.function.arithmetic
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.*
 import org.nevec.rjm.BigDecimalMath
 import kotlin.math.ln
 
-class Log(vararg e: Expr) : FunctionExpr(Function.LOG, *e) {
+class Log(vararg e: Expr) : FunctionExpr(*e) {
 
     override val properties: Int
         get() = Properties.LISTABLE.value

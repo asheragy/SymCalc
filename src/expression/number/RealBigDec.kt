@@ -2,6 +2,7 @@ package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.exception.OperationException
+import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.expression.function.core.N
 import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
@@ -9,7 +10,7 @@ import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.min
 
-class RealBigDec(override val value: BigDecimal) : NumberExpr() {
+class RealBigDec(override val value: BigDecimal) : NumberExpr(), AtomExpr {
 
     companion object {
         val ZERO = RealBigDec(BigDecimal("0.0"))

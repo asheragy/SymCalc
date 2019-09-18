@@ -4,8 +4,10 @@ import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.ComplexInfinity
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.Function
-import org.cerion.symcalc.expression.function.arithmetic.*
+import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.expression.function.arithmetic.Minus
+import org.cerion.symcalc.expression.function.arithmetic.Power
+import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.integer.Bernoulli
 import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.Integer
@@ -16,7 +18,7 @@ import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.tan
 
-class Tan(vararg e: Expr) : TrigBase(Function.TAN, *e), StandardTrigFunction {
+class Tan(vararg e: Expr) : TrigBase(*e), StandardTrigFunction {
 
     override fun evaluateAsDouble(d: Double): Double = tan(d)
 

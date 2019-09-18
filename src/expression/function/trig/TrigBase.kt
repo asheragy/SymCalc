@@ -3,7 +3,6 @@ package org.cerion.symcalc.expression.function.trig
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.Integer
@@ -15,7 +14,7 @@ interface StandardTrigFunction {
     fun evaluatePiFactoredOut(e: Expr): Expr
 }
 
-abstract class TrigBase protected constructor(t: Function, vararg e: Expr) : FunctionExpr(t, *e) {
+abstract class TrigBase protected constructor(vararg e: Expr) : FunctionExpr(*e) {
 
     override val properties: Int
         get() = Properties.LISTABLE.value

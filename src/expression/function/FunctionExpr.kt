@@ -6,8 +6,10 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 
-abstract class FunctionExpr protected constructor(final override val value: Function, vararg e: Expr) : Expr(*e) {
-    val name: String = value.toString()
+abstract class FunctionExpr protected constructor(vararg e: Expr) : Expr(*e) {
+
+    // TODO this is only needed to make copy, should be an easier way
+    val name: String = this.javaClass.simpleName
 
     open val properties: Int get() = Properties.NONE.value
 
@@ -37,7 +39,7 @@ abstract class FunctionExpr protected constructor(final override val value: Func
         if (e !is FunctionExpr)
             return false
 
-        if (e.value != value)
+        if (this::class != e::class)
             return false
 
         if (e.size != size)

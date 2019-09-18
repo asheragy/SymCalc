@@ -3,7 +3,6 @@ package org.cerion.symcalc.expression.function.trig
 import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
@@ -11,13 +10,12 @@ import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
-import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.cos
 
-class Cos(vararg e: Expr) : TrigBase(Function.COS, *e), StandardTrigFunction {
+class Cos(vararg e: Expr) : TrigBase(*e), StandardTrigFunction {
 
     override fun evaluateAsDouble(d: Double): Double = cos(d)
 

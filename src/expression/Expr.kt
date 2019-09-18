@@ -10,9 +10,11 @@ import org.cerion.symcalc.expression.number.RealDouble
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 
-abstract class Expr(vararg e: Expr) {
-
+interface AtomExpr {
     abstract val value: Any?
+}
+
+abstract class Expr(vararg e: Expr) {
 
     var env = Environment()
         private set
@@ -181,7 +183,10 @@ abstract class Expr(vararg e: Expr) {
     fun toList(size: Int): ListExpr = ConstantArray(this, Integer(size)).eval().asList()
 
     override fun hashCode(): Int {
-        var result = value?.hashCode() ?: 0
+        var result = 0
+        if (this is AtomExpr)
+            result = value?.hashCode() ?: 0
+
         result = 31 * result + (args.hashCode())
         result = 31 * result + type.hashCode()
         return result

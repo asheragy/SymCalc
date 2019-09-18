@@ -2,13 +2,12 @@ package org.cerion.symcalc.expression.function.core
 
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.FunctionFactory
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealBigDec
 
-class N(vararg e: Expr) : FunctionExpr(Function.N, *e) {
+class N(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val e = args[0]

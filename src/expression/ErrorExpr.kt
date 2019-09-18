@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression
 
-class ErrorExpr(override val value: String) : Expr() {
+class ErrorExpr(override val value: String) : Expr(), AtomExpr {
 
     override val type: ExprType
         get() = ExprType.ERROR

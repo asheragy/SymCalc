@@ -2,9 +2,6 @@ package org.cerion.symcalc.expression
 
 open class GraphicsExpr : Expr() {
 
-    override val value: Any?
-        get() = null
-
     override val type: ExprType
         get() = ExprType.GRAPHICS
 

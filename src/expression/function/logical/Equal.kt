@@ -2,11 +2,10 @@ package expression.function.logical
 
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberExpr
 
-class Equal(vararg e: Expr) : FunctionExpr(Function.EQUAL, *e) {
+class Equal(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         if (size == 1)

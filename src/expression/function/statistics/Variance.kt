@@ -1,13 +1,15 @@
 package org.cerion.symcalc.expression.function.statistics
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.Function
-import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.function.arithmetic.*
+import org.cerion.symcalc.expression.function.FunctionExpr
+import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.expression.function.arithmetic.Plus
+import org.cerion.symcalc.expression.function.arithmetic.Power
+import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.number.Integer
 
-class Variance(vararg e: Expr) : FunctionExpr(Function.VARIANCE, *e) {
+class Variance(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val list = get(0) as ListExpr

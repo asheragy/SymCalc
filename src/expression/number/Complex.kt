@@ -11,8 +11,6 @@ import kotlin.math.min
 
 class Complex(r: NumberExpr, i: NumberExpr) : NumberExpr(r, i) {
 
-    override val value: Any? get() = null
-
     val real: NumberExpr get() = get(0) as NumberExpr
     val img: NumberExpr get() = get(1) as NumberExpr
 

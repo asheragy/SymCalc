@@ -1,13 +1,12 @@
 package org.cerion.symcalc.expression.function.integer
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 
-class Fibonacci(vararg e: Expr) : FunctionExpr(Function.FIBONACCI, *e) {
+class Fibonacci(vararg e: Expr) : FunctionExpr(*e) {
 
     // FEAT zero/negatives and non-integer
 

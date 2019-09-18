@@ -2,11 +2,10 @@ package expression.function.list
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.NumberType
 
-class ConstantArray(vararg e: Expr) : FunctionExpr(Function.CONSTANT_ARRAY, *e) {
+class ConstantArray(vararg e: Expr) : FunctionExpr(*e) {
 
     // FEAT 2nd parameter can be N-dimensional
 

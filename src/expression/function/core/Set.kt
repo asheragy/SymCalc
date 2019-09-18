@@ -2,10 +2,9 @@ package org.cerion.symcalc.expression.function.core
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 
-class Set(vararg e: Expr) : FunctionExpr(Function.SET, *e) {
+class Set(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val v = get(0) as VarExpr

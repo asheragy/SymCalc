@@ -2,13 +2,11 @@ package org.cerion.symcalc.expression.function.statistics
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
+import java.util.*
 
-import java.util.Random
-
-class RandomInteger(vararg e: Expr) : FunctionExpr(Function.RANDOM_INTEGER, *e) {
+class RandomInteger(vararg e: Expr) : FunctionExpr(*e) {
 
     constructor(max: Int) : this(Integer(max))
 

@@ -2,12 +2,11 @@ package org.cerion.symcalc.expression.function.integer
 
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.Function
 import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.number.NumberType
 import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.NumberType
 
-class GCD(vararg e: Expr) : FunctionExpr(Function.GCD, *e) {
+class GCD(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val a = get(0) as Integer
