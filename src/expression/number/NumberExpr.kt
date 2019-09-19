@@ -28,31 +28,30 @@ interface INumberExpr {
     fun compareTo(other: NumberExpr): Int
     fun evaluate(): NumberExpr = this as NumberExpr
 
-    operator fun plus(other: NumberExpr): NumberExpr
-    operator fun times(other: NumberExpr): NumberExpr
-    operator fun div(other: NumberExpr): NumberExpr
-    operator fun unaryMinus(): NumberExpr
+}
+
+@Suppress("CovariantEquals")
+abstract class NumberExpr : ExprBase(), Comparable<NumberExpr>, INumberExpr {
+
+    abstract operator fun plus(other: NumberExpr): NumberExpr
+    abstract operator fun times(other: NumberExpr): NumberExpr
+    abstract operator fun div(other: NumberExpr): NumberExpr
+    abstract operator fun unaryMinus(): NumberExpr
 
     operator fun minus(other: NumberExpr): NumberExpr {
         return this + other.unaryMinus()
     }
 
     fun square(): NumberExpr {
-        return this * (this as NumberExpr)
+        return this * this
     }
 
-}
-
-@Suppress("CovariantEquals")
-abstract class NumberExpr : ExprBase(), Comparable<NumberExpr>, INumberExpr {
-
-    override fun equals(e: Expr): Boolean = e is NumberExpr && this.equals(e)
-    fun equals(other: NumberExpr): Boolean {
-        if (this::class != other::class)
+    override fun equals(e: Expr): Boolean {
+        if (this::class != e::class)
             return false
 
         return try {
-            compareTo(other) == 0
+            compareTo(e as NumberExpr) == 0
         }
         // Any comparison to complex number with non-zero imaginary is invalid, except equals (always false)
         catch (e: UnsupportedOperationException) {
