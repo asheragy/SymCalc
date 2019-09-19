@@ -13,20 +13,33 @@ enum class NumberType {
     COMPLEX
 }
 
-@Suppress("CovariantEquals")
-abstract class NumberExpr(vararg e: Expr) : Expr(*e), Comparable<NumberExpr> {
+interface INumberExpr {
+    val isZero: Boolean
+    val isOne: Boolean
+    val numType: NumberType
+    val isNegative: Boolean
 
-    override val type: ExprType get() = ExprType.NUMBER
+    fun evaluate(precision: Int): NumberExpr
 
-    abstract override val precision: Int
-    abstract val isZero: Boolean
-    abstract val isOne: Boolean
-    abstract val numType: NumberType
-    abstract val isNegative: Boolean
+    val precision: Int
+    override fun toString(): String
 
-    abstract fun evaluate(precision: Int): NumberExpr
-    abstract override fun toString(): String
-    abstract override fun compareTo(other: NumberExpr): Int
+    fun compareTo(other: NumberExpr): Int
+    fun equals(e: Expr): Boolean = e is NumberExpr && this.equals(e)
+    fun evaluate(): NumberExpr = this as NumberExpr
+
+    operator fun plus(other: NumberExpr): NumberExpr
+    operator fun times(other: NumberExpr): NumberExpr
+    operator fun div(other: NumberExpr): NumberExpr
+    operator fun unaryMinus(): NumberExpr
+
+    operator fun minus(other: NumberExpr): NumberExpr {
+        return this + other.unaryMinus()
+    }
+
+    fun square(): NumberExpr {
+        return this * (this as NumberExpr)
+    }
 
     fun equals(other: NumberExpr): Boolean {
         if (this::class != other::class)
@@ -40,24 +53,10 @@ abstract class NumberExpr(vararg e: Expr) : Expr(*e), Comparable<NumberExpr> {
             false
         }
     }
+}
 
-    override fun equals(e: Expr): Boolean = e is NumberExpr && this.equals(e)
-
-    override fun treeForm(i: Int) = indent(i, "Number $this")
-    public override fun evaluate(): NumberExpr = this
-
-    abstract operator fun plus(other: NumberExpr): NumberExpr
-    abstract operator fun times(other: NumberExpr): NumberExpr
-    abstract operator fun div(other: NumberExpr): NumberExpr
-    abstract operator fun unaryMinus(): NumberExpr
-
-    operator fun minus(other: NumberExpr): NumberExpr {
-        return this + other.unaryMinus()
-    }
-
-    fun square(): NumberExpr {
-        return this * this
-    }
+@Suppress("CovariantEquals")
+abstract class NumberExpr(vararg e: Expr) : Expr(*e), Comparable<NumberExpr>, INumberExpr {
 
     companion object {
         @JvmStatic fun parse(s: String): NumberExpr {

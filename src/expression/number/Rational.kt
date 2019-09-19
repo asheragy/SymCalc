@@ -4,6 +4,7 @@ import java.math.RoundingMode
 
 class Rational constructor(n: Integer, d: Integer = Integer.ONE) : NumberExpr(n, d) {
 
+    override val type: ExprType get() = ExprType.NUMBER
     override val isZero: Boolean get() = numerator.isZero
     override val isOne: Boolean get() = numerator.equals(denominator)
     override val numType: NumberType get() = NumberType.RATIONAL

@@ -18,6 +18,7 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr(), AtomExpr {
 
     constructor(value: String) : this(BigDecimal(value))
 
+    override val type: ExprType get() = ExprType.NUMBER
     override val numType: NumberType get() = NumberType.REAL_BIGDEC
     override val isZero: Boolean get() = value.compareTo(BigDecimal.ZERO) == 0
     override val isOne: Boolean get() = value == BigDecimal.ONE

@@ -14,6 +14,7 @@ class Complex(r: NumberExpr, i: NumberExpr) : NumberExpr(r, i) {
     val real: NumberExpr get() = get(0) as NumberExpr
     val img: NumberExpr get() = get(1) as NumberExpr
 
+    override val type: ExprType get() = ExprType.NUMBER
     override val isZero: Boolean get() = real.isZero && img.isZero
     override val isOne: Boolean get() = real.isOne && img.isZero
     override val numType: NumberType get() = NumberType.COMPLEX

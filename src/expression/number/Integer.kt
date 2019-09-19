@@ -25,6 +25,7 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         val MIN_INT = Integer(Int.MIN_VALUE)
     }
 
+    override val type: ExprType get() = ExprType.NUMBER
     override val isZero: Boolean get() = value == BigInteger.ZERO
     override val isOne: Boolean get() = value == BigInteger.ONE
     override val numType: NumberType get() = NumberType.INTEGER

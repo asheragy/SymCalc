@@ -4,6 +4,7 @@ import org.cerion.symcalc.expression.AtomExpr
 
 class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
 
+    override val type: ExprType get() = ExprType.NUMBER
     override val numType: NumberType get() = NumberType.REAL_DOUBLE
     override val isZero: Boolean get() = value == 0.0
     override val isOne: Boolean get() = value == 1.0

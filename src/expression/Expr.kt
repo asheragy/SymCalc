@@ -53,7 +53,9 @@ abstract class Expr(vararg e: Expr) {
     }
 
     abstract override fun toString(): String
-    abstract fun treeForm(i: Int)
+
+    // TODO remove this from sub classes and just implement here
+    open fun treeForm(i: Int) = indent(i, "$this")
     abstract fun equals(e: Expr): Boolean
     protected abstract fun evaluate(): Expr
 
