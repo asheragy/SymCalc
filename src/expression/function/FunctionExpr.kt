@@ -27,12 +27,6 @@ abstract class FunctionExpr protected constructor(vararg e: Expr) : MultiExpr(*e
         return name + args.toString()
     }
 
-    override fun treeForm(i: Int) {
-        indent(i, "$name[]")
-        for (j in 0 until size)
-            get(j).treeForm(i + 1)
-    }
-
     @Throws(ValidationException::class)
     abstract fun validate()
 

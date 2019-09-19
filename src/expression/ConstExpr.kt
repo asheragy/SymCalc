@@ -8,7 +8,6 @@ abstract class ConstExpr : Expr() {
     override val type: ExprType get() = ExprType.CONST
     override val precision: Int get() = InfinitePrecision
 
-    override fun treeForm(i: Int) = indent(i, "Constant: " + toString())
     override fun equals(e: Expr): Boolean = javaClass == e.javaClass
 
     abstract fun evaluate(precision: Int): Expr

@@ -5,7 +5,6 @@ class ErrorExpr(override val value: String) : Expr(), AtomExpr {
     override val type: ExprType
         get() = ExprType.ERROR
 
-    override fun treeForm(i: Int) = indent(i, "Error $this")
     override fun evaluate(): Expr = this
     override fun toString(): String = "Error($value)"
 

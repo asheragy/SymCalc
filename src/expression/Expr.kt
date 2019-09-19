@@ -11,7 +11,7 @@ import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 
 interface AtomExpr {
-    abstract val value: Any?
+    val value: Any?
 }
 
 abstract class MultiExpr(vararg e: Expr) : Expr() {
@@ -57,8 +57,6 @@ abstract class Expr {
 
     abstract override fun toString(): String
 
-    // TODO remove this from sub classes and just implement here
-    open fun treeForm(i: Int) = indent(i, "$this")
     abstract fun equals(e: Expr): Boolean
     protected abstract fun evaluate(): Expr
 
@@ -136,8 +134,14 @@ abstract class Expr {
         return N(this, Integer(precision)).eval()
     }
 
-    fun print() {
-        treeForm(0)
+    fun print(i: Int = 0) {
+        if (this is MultiExpr) {
+            indent(i, "${this.javaClass.simpleName}: $size")
+            for (j in 0 until size)
+                get(j).print(i + 1)
+        }
+        else
+            indent(i, "$this")
     }
 
     enum class ExprType {

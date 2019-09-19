@@ -6,13 +6,10 @@ import org.cerion.symcalc.expression.number.Integer
 
 class PlotGraphics(private val function: UserFunction, private val min: Integer, private val max: Integer) : GraphicsExpr() {
 
-    override fun treeForm(i: Int) {
-
+    fun debug() {
         for (x in min.intValue()..max.intValue()) {
             val e = function.eval(Integer(x))
             println(x.toString() + "\t" + e)
         }
-
-
     }
 }

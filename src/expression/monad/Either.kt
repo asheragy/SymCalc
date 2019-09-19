@@ -11,10 +11,6 @@ sealed class Either<out A : Expr, out B: Expr>(override val value: Expr) : Expr(
     override val type: ExprType
         get() = value.type
 
-    override fun treeForm(i: Int) {
-        value.treeForm(i)
-    }
-
     override fun toString(): String = value.toString()
     override fun equals(e: Expr): Boolean = value.equals(e)
     override fun evaluate(): Expr = value.eval()

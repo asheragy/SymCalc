@@ -18,6 +18,5 @@ class BoolExpr(override val value: Boolean) : Expr(), AtomExpr {
     }
 
     override fun toString(): String = if (value) "True" else "False"
-    override fun treeForm(i: Int) = indent(i, "BoolExpr = " + toString())
     override fun evaluate(): Expr = this
 }

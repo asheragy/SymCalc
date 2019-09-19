@@ -9,7 +9,6 @@ class SymbolExpr(override val value: String) : Expr(), AtomExpr {
     override val type: ExprType get() = ExprType.SYMBOL
 
     override fun toString(): String = "Symbol $value"
-    override fun treeForm(i: Int) = indent(i, "Symbol = $name")
     override fun equals(e: Expr): Boolean = e is SymbolExpr && value == e.value
     val name: String = value
 
