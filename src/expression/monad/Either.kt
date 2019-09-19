@@ -2,8 +2,9 @@ package org.cerion.symcalc.expression.monad
 
 import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.ExprBase
 
-sealed class Either<out A : Expr, out B: Expr>(override val value: Expr) : Expr(), AtomExpr {
+sealed class Either<out A : Expr, out B: Expr>(override val value: Expr) : ExprBase(), AtomExpr {
 
     abstract val isRight: Boolean
     abstract val isLeft: Boolean

@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression
 
-class VarExpr(override val value: String) : Expr(), AtomExpr {
+class VarExpr(override val value: String) : ExprBase(), AtomExpr {
 
     override val type: ExprType
         get() = ExprType.VARIABLE

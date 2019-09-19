@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.ExprBase
 import java.lang.Exception
 import java.lang.UnsupportedOperationException
 import java.math.BigDecimal
@@ -43,7 +44,7 @@ interface INumberExpr {
 }
 
 @Suppress("CovariantEquals")
-abstract class NumberExpr : Expr(), Comparable<NumberExpr>, INumberExpr {
+abstract class NumberExpr : ExprBase(), Comparable<NumberExpr>, INumberExpr {
 
     override fun equals(e: Expr): Boolean = e is NumberExpr && this.equals(e)
     fun equals(other: NumberExpr): Boolean {

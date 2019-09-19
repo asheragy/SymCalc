@@ -14,22 +14,24 @@ interface AtomExpr {
     val value: Any?
 }
 
-abstract class MultiExpr(vararg e: Expr) : Expr() {
+abstract class MultiExpr(vararg e: Expr) : ExprBase() {
     val args: List<Expr> = listOf(*e)
 
     fun getList(index: Int): ListExpr = get(index) as ListExpr
     fun getInteger(index: Int): Integer = get(index) as Integer
 }
 
-abstract class Expr {
-
-    var env = Environment()
-        private set
-
+abstract class ExprBase : Expr() {
+    // TODO_LP need to handle this completely differently, global has issues with tests and duplicate values
+    override var env = Environment()
     protected fun getEnvVar(name: String): Expr? = env.getVar(name)
     protected fun setEnvVar(name: String, e: Expr) = env.setVar(name, e)
+}
+
+abstract class Expr {
 
     abstract val type: ExprType
+    abstract var env: Environment
 
     open val precision get() = InfinitePrecision
 

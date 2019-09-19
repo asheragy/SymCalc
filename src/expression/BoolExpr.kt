@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression
 
-class BoolExpr(override val value: Boolean) : Expr(), AtomExpr {
+class BoolExpr(override val value: Boolean) : ExprBase(), AtomExpr {
 
     override val type: ExprType
         get() = ExprType.BOOL
