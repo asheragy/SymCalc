@@ -14,13 +14,17 @@ interface AtomExpr {
     abstract val value: Any?
 }
 
-abstract class Expr(vararg e: Expr) {
+abstract class MultiExpr(vararg e: Expr) : Expr() {
+    val args: List<Expr> = listOf(*e)
+
+    fun getList(index: Int): ListExpr = get(index) as ListExpr
+    fun getInteger(index: Int): Integer = get(index) as Integer
+}
+
+abstract class Expr {
 
     var env = Environment()
         private set
-
-    val args: List<Expr> = listOf(*e)
-    val size = args.size
 
     protected fun getEnvVar(name: String): Expr? = env.getVar(name)
     protected fun setEnvVar(name: String, e: Expr) = env.setVar(name, e)
@@ -32,11 +36,6 @@ abstract class Expr(vararg e: Expr) {
     val isInteger: Boolean get() = this is Integer
     val isList: Boolean get() = type == ExprType.LIST
     val isError: Boolean get() = type == ExprType.ERROR
-
-    operator fun get(index: Int): Expr = args[index]
-
-    fun getList(index: Int): ListExpr = get(index) as ListExpr
-    fun getInteger(index: Int): Integer = get(index) as Integer
 
     // Casting
     fun asList(): ListExpr = this as ListExpr
@@ -51,6 +50,10 @@ abstract class Expr(vararg e: Expr) {
 
         return false
     }
+
+    // TODO_LP remove, only used for tests but need to fix casting to work
+    val size get() = if (this is MultiExpr) args.size else 0
+    operator fun get(index: Int): Expr = if( this is MultiExpr) args[index] else throw IndexOutOfBoundsException()
 
     abstract override fun toString(): String
 
@@ -68,8 +71,10 @@ abstract class Expr(vararg e: Expr) {
         //https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
         // Set environment for every parameter to the current one before its evaluated
-        for (i in 0 until size) {
-            args[i].env = env
+        if (this is MultiExpr) {
+            for (i in 0 until size) {
+                args[i].env = env
+            }
         }
 
         if (this !is FunctionExpr)
@@ -94,19 +99,19 @@ abstract class Expr(vararg e: Expr) {
             val same = newArgs.filter { it.javaClass == javaClass  }
             if (same.isNotEmpty()) {
                 newArgs.removeIf { it.javaClass == javaClass }
-                same.forEach { newArgs.addAll(it.args) }
+                same.forEach { newArgs.addAll((it as FunctionExpr).args) }
             }
         }
 
         // Listable property
         if (hasProperty(FunctionExpr.Properties.LISTABLE) && newArgs.any { it is ListExpr }) {
             if (size == 1) {
-                val listArgs = newArgs[0].args.map { FunctionExpr.createFunction(name, it) }
+                val listArgs = newArgs[0].asList().args.map { FunctionExpr.createFunction(name, it) }
                 return ListExpr(*listArgs.toTypedArray()).eval()
             }
             else if (size == 2 && newArgs[0] is ListExpr || newArgs[1] is ListExpr) {
-                val list1 = if(newArgs[0] is ListExpr) newArgs[0] as ListExpr else newArgs[0].toList(newArgs[1].size)
-                val list2 = if(newArgs[1] is ListExpr) newArgs[1] as ListExpr else newArgs[1].toList(newArgs[0].size)
+                val list1 = if(newArgs[0] is ListExpr) newArgs[0] as ListExpr else newArgs[0].toList(newArgs[1].asList().size)
+                val list2 = if(newArgs[1] is ListExpr) newArgs[1] as ListExpr else newArgs[1].toList(newArgs[0].asList().size)
 
                 if (list1.size != list2.size)
                     return ErrorExpr("lists of unequal lengths cannot be combined")
@@ -189,7 +194,8 @@ abstract class Expr(vararg e: Expr) {
         if (this is AtomExpr)
             result = value?.hashCode() ?: 0
 
-        result = 31 * result + (args.hashCode())
+        if (this is MultiExpr)
+            result = 31 * result + (args.hashCode())
         result = 31 * result + type.hashCode()
         return result
     }

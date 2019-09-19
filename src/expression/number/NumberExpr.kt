@@ -25,7 +25,6 @@ interface INumberExpr {
     override fun toString(): String
 
     fun compareTo(other: NumberExpr): Int
-    fun equals(e: Expr): Boolean = e is NumberExpr && this.equals(e)
     fun evaluate(): NumberExpr = this as NumberExpr
 
     operator fun plus(other: NumberExpr): NumberExpr
@@ -41,6 +40,12 @@ interface INumberExpr {
         return this * (this as NumberExpr)
     }
 
+}
+
+@Suppress("CovariantEquals")
+abstract class NumberExpr : Expr(), Comparable<NumberExpr>, INumberExpr {
+
+    override fun equals(e: Expr): Boolean = e is NumberExpr && this.equals(e)
     fun equals(other: NumberExpr): Boolean {
         if (this::class != other::class)
             return false
@@ -53,10 +58,6 @@ interface INumberExpr {
             false
         }
     }
-}
-
-@Suppress("CovariantEquals")
-abstract class NumberExpr(vararg e: Expr) : Expr(*e), Comparable<NumberExpr>, INumberExpr {
 
     companion object {
         @JvmStatic fun parse(s: String): NumberExpr {

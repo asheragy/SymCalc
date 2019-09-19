@@ -9,10 +9,10 @@ import org.cerion.symcalc.expression.function.arithmetic.Times
 import kotlin.math.abs
 import kotlin.math.min
 
-class Complex(r: NumberExpr, i: NumberExpr) : NumberExpr(r, i) {
+class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
 
-    val real: NumberExpr get() = get(0) as NumberExpr
-    val img: NumberExpr get() = get(1) as NumberExpr
+    //val real: NumberExpr get() = get(0) as NumberExpr
+    //val img: NumberExpr get() = get(1) as NumberExpr
 
     override val type: ExprType get() = ExprType.NUMBER
     override val isZero: Boolean get() = real.isZero && img.isZero

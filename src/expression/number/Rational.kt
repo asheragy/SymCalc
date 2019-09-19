@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression.number
 
 import java.math.RoundingMode
 
-class Rational constructor(n: Integer, d: Integer = Integer.ONE) : NumberExpr(n, d) {
+class Rational constructor(val numerator: Integer, val denominator: Integer = Integer.ONE) : NumberExpr() {
 
     override val type: ExprType get() = ExprType.NUMBER
     override val isZero: Boolean get() = numerator.isZero
@@ -10,9 +10,6 @@ class Rational constructor(n: Integer, d: Integer = Integer.ONE) : NumberExpr(n,
     override val numType: NumberType get() = NumberType.RATIONAL
     override val isNegative: Boolean get() = numerator.isNegative
     override val precision: Int get() = InfinitePrecision
-
-    val numerator: Integer get() = args[0] as Integer
-    val denominator: Integer get() = args[1] as Integer
 
     constructor(n: Int, d: Int) : this(Integer(n.toLong()), Integer(d.toLong()))
 

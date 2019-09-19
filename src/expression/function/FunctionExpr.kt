@@ -3,10 +3,11 @@ package org.cerion.symcalc.expression.function
 import expression.SymbolExpr
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.MultiExpr
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 
-abstract class FunctionExpr protected constructor(vararg e: Expr) : Expr(*e) {
+abstract class FunctionExpr protected constructor(vararg e: Expr) : MultiExpr(*e) {
 
     // TODO this is only needed to make copy, should be an easier way
     val name: String = this.javaClass.simpleName
