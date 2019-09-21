@@ -32,6 +32,11 @@ class RealBigDecTest : NumberTestBase() {
 
         // If stored precision is higher it should round down to set precision
         assertEquals("3.142`4", RealBigDec(BigDecimal("3.1415"), 4).toString())
+
+        // If stored precision is higher it should round down to set precision
+        assertEquals("2.00`3", RealBigDec(BigDecimal("2"), 3).toString())
+        assertEquals("12345.0`6", RealBigDec(BigDecimal("12345"), 6).toString())
+        assertEquals("0.0220000`6", RealBigDec(BigDecimal("0.022"), 6).toString())
     }
 
     @Test

@@ -43,26 +43,21 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
 
     fun toDouble(): Double = value.toDouble()
 
-    override fun toString(): String {
-        if (precision < value.precision()) {
-            val t = value.round(MathContext(precision, RoundingMode.HALF_UP))
-            return "$t`$precision"
-        }
+    private fun getRepresentedValue(): BigDecimal {
+        if (precision < value.precision())
+            return value.round(MathContext(precision, RoundingMode.HALF_UP))
+        else if (precision > value.precision())
+            return value.setScale(precision - (value.precision() - value.scale()), RoundingMode.HALF_UP)
 
-        return "$value`$precision"
+        return value
     }
 
-    override fun unaryMinus(): RealBigDec = RealBigDec(value.negate())
+    override fun toString(): String = "${getRepresentedValue()}`$precision"
+    override fun unaryMinus(): RealBigDec = RealBigDec(value.negate(), precision)
 
     override fun compareTo(other: NumberExpr): Int {
-        if (other is RealBigDec) {
-            val min = min(precision, other.precision)
-            val mc = MathContext(min, RoundingMode.HALF_UP)
-            val n1 = if(value.precision() > min) value.round(mc) else value
-            val n2 = if(other.value.precision() > min) other.value.round(mc) else other.value
-
-            return n1.compareTo(n2)
-        }
+        if (other is RealBigDec)
+            return getRepresentedValue().compareTo(other.getRepresentedValue())
 
         if (other is RealDouble)
             return value.toDouble().compareTo(other.value)
@@ -143,6 +138,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     }
 
     fun pow(other: RealBigDec): NumberExpr {
+        // TODO verify integer power does not get to this function via both NumberExpr power and Power() function
         if (isNegative)
             throw OperationException("lhs cannot be negative")
 
@@ -150,14 +146,14 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
             return ZERO
 
         val p = min(precision, other.precision)
-        val mc = MathContext(p + 2, RoundingMode.HALF_UP)
+        val mc = MathContext(getStoredPrecision(p), RoundingMode.HALF_UP)
+        // TODO this is still not correct because of the accuracy thing
         val x = value.setScale(accuracy + 2).round(mc) // Add 2 extra digits so scale/precision is correct
 
         val logx = BigDecimalMath.log(x)
         val ylogx = other.value.multiply(logx, mc)
-        val result = RealBigDec(ylogx).exp()
 
-        return result.evaluate(p) // scale back down precision
+        return RealBigDec(ylogx, p).exp()
     }
 
     override fun evaluate(precision: Int): NumberExpr {
@@ -176,7 +172,8 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     }
 
     fun exp(): RealBigDec {
-        val mc = MathContext(precision + 2, RoundingMode.HALF_UP)
+        val storedPrecision = getStoredPrecision(precision)
+        val mc = MathContext(storedPrecision, RoundingMode.HALF_UP)
 
         if (isNegative) {
             val denominator = this.unaryMinus().exp()
@@ -195,7 +192,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
             term = result.add(term, mc)
 
             if (result == term)
-                return RealBigDec(result.round(MathContext(precision, RoundingMode.HALF_UP)))
+                return RealBigDec(result, precision)
 
             result = term
         }

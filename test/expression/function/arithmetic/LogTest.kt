@@ -52,8 +52,8 @@ class LogTest {
 
     @Test
     fun bigDecimal() {
-        assertEquals(RealBigDec("0.7"), Log(RealBigDec("2.0")).eval())
-        assertEquals(RealBigDec("0.693148"),   Log(RealBigDec("2.000001")).eval())
+        assertEquals(RealBigDec("0.69"), Log(RealBigDec("2.0")).eval())
+        assertEquals(RealBigDec("0.6931477"),  Log(RealBigDec("2.000001")).eval())
         assertEquals(RealBigDec("2.3025852"),  Log(RealBigDec("10.000001")).eval())
         assertEquals(RealBigDec("4.60517020"), Log(RealBigDec("100.000001")).eval())
     }

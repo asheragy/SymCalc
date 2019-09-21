@@ -44,7 +44,6 @@ internal class ModTest {
         assertEquals(RealDouble(3.008851424871448), Mod(RealDouble(25.0), Pi()).eval())
         assertEquals(RealBigDec("3.01"), Mod(RealBigDec("25.0"), Pi()).eval())
         assertEquals(RealBigDec("6.15"), Mod(RealBigDec("25.0"), Times(Integer(2), Pi())).eval())
-        // TODO this should be 0.15481
-        assertEquals(RealBigDec("0.1548"), Mod(RealBigDec("6.4380"), Times(Integer(2), Pi())).eval())
+        assertEquals(RealBigDec("0.15481"), Mod(RealBigDec("6.4380"), Times(Integer(2), Pi())).eval())
     }
 }
