@@ -16,13 +16,17 @@ class RandomInteger(vararg e: Expr) : FunctionExpr(*e) {
 
         if (size == 0) { //Default no parameters is random 0 or 1
             return Integer(getRandomInteger(0, 1))
-        } else if (get(0).isInteger) {
-            val N = (get(0) as Integer).intValue()
-            return Integer(getRandomInteger(0, N))
-        } else if (get(0) is ListExpr) {
-            val min = getList(0).getInteger(0).intValue()
-            val max = getList(0).getInteger(1).intValue()
-            return Integer(getRandomInteger(min, max))
+        }
+        else {
+            val p0 = get(0)
+            if (p0 is Integer) {
+                val N = p0.intValue()
+                return Integer(getRandomInteger(0, N))
+            } else if (p0 is ListExpr) {
+                val min = p0.getInteger(0).intValue()
+                val max = p0.getInteger(1).intValue()
+                return Integer(getRandomInteger(min, max))
+            }
         }
 
         /* Other cases

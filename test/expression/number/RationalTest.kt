@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
@@ -73,7 +72,7 @@ class RationalTest : NumberTestBase() {
         assertEquals(Integer.ONE, (Rational(2, 4).eval() as Rational).numerator)
 
         // Except with Hold
-        assertEquals(Integer.TWO, (Hold(Rational(2, 4)).eval()[0] as Rational).numerator)
+        assertEquals(Hold(Rational(2, 4)), Hold(Rational(2, 4)).eval())
     }
 
     @Test

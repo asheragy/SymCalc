@@ -13,7 +13,7 @@ class Dot(vararg e: Expr) : FunctionExpr(*e) {
     override fun evaluate(): Expr {
         val a = getList(0)
         val b = getList(1)
-        return if (VectorQ(a).eval().asBool() === BoolExpr.TRUE) evalVector(a, b) else evalMatrix(a, b)
+        return if (VectorQ(a).eval() === BoolExpr.TRUE) evalVector(a, b) else evalMatrix(a, b)
     }
 
     private fun evalVector(a: ListExpr, b: ListExpr): Expr {

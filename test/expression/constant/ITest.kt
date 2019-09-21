@@ -16,8 +16,7 @@ class ITest {
 
     @Test
     fun hold() {
-        val hold = Hold(I()).eval()
-        assertEquals(I(), hold[0])
+        assertEquals(Hold(I()), Hold(I()).eval())
     }
 
     @Test

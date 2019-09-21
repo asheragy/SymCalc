@@ -78,7 +78,7 @@ class Table(vararg e: Expr) : FunctionExpr(*e) {
             throw ValidationException("list parameters must not be empty")
 
         if (list.size == 1)
-            if (!list[0].isInteger)
+            if (list[0] !is Integer)
                 throw ValidationException("list parameter at position 0 must be an integer")
 
         if (list.size > 4)
@@ -89,11 +89,11 @@ class Table(vararg e: Expr) : FunctionExpr(*e) {
             if (list[0] !is VarExpr)
                 throw ValidationException("first list parameter must be variable")
 
-            if (list.size >= 2 && !list[1].isInteger && list[1] !is ListExpr)
+            if (list.size >= 2 && list[1] !is Integer && list[1] !is ListExpr)
                 throw ValidationException("first list parameter at position 1 must be integer OR value list")
-            if (list.size >= 3 && !list[2].isInteger)
+            if (list.size >= 3 && list[2] !is Integer)
                 throw ValidationException("first list parameter at position 2 must be integer")
-            if (list.size == 4 && !list[3].isInteger)
+            if (list.size == 4 && list[3] !is Integer)
                 throw ValidationException("first list parameter at position 3 must be integer")
         }
     }

@@ -9,7 +9,6 @@ import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class PlusTest {
 
@@ -33,8 +32,7 @@ class PlusTest {
         val outer = Plus(VarExpr("z"), inner)
 
         val e = outer.eval()
-        assertTrue(e.isFunction("plus"))
-        assertEquals(3, e.size.toLong())
+        assertEquals(Plus(VarExpr("x"), VarExpr("y"), VarExpr("z")), e)
     }
 
     @Test

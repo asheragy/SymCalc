@@ -59,7 +59,7 @@ class SinTest {
         // Test cycles with increments of Pi / 3
         val values = ListExpr(Integer.ZERO, sqrt3Over2, sqrt3Over2)
         val negativeValues = Minus(values).eval()
-        val expected = Join(values, negativeValues).eval()
+        val expected = Join(values, negativeValues).eval() as ListExpr
 
         val step = Times(Pi(), Rational(1,3))
         for(i in -15 until 15) {
@@ -74,7 +74,7 @@ class SinTest {
         // Test cycles with increments of Pi / 4
         val values = ListExpr(Integer.ZERO, oneOverSqrt2, Integer.ONE, oneOverSqrt2)
         val negativeValues = Minus(values).eval()
-        val expected = Join(values, negativeValues).eval()
+        val expected = Join(values, negativeValues).eval() as ListExpr
 
         val step = Times(Pi(), Rational(1,4))
         for(i in -20 until 20) {
@@ -90,7 +90,7 @@ class SinTest {
         // Test cycles with increments of Pi / 6
         val values = ListExpr(Integer.ZERO, Rational(1,2), sqrt3Over2, Integer.ONE, sqrt3Over2, Rational(1,2))
         val negativeValues = Minus(values).eval()
-        val expected = Join(values, negativeValues).eval()
+        val expected = Join(values, negativeValues).eval() as ListExpr
 
         val step = Times(Pi(), Rational(1,6))
         for(i in -30 until 30) {

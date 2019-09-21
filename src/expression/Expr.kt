@@ -5,7 +5,6 @@ import org.cerion.symcalc.Environment
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 
@@ -17,6 +16,9 @@ abstract class MultiExpr(vararg e: Expr) : Expr() {
     val args: List<Expr> = listOf(*e)
     fun getList(index: Int): ListExpr = get(index) as ListExpr
     fun getInteger(index: Int): Integer = get(index) as Integer
+
+    val size get() = args.size
+    operator fun get(index: Int): Expr = args[index]
 }
 
 abstract class Expr {
@@ -37,7 +39,6 @@ abstract class Expr {
     fun asList(): ListExpr = this as ListExpr
     fun asInteger(): Integer = this as Integer
     fun asBool(): BoolExpr = this as BoolExpr
-    fun asNumber(): NumberExpr = this as NumberExpr
 
     final override fun equals(other: Any?): Boolean {
         if (other is Expr) {
@@ -46,10 +47,6 @@ abstract class Expr {
 
         return false
     }
-
-    // TODO_LP remove, only used for tests but need to fix casting to work
-    val size get() = if (this is MultiExpr) args.size else 0
-    operator fun get(index: Int): Expr = if( this is MultiExpr) args[index] else throw IndexOutOfBoundsException()
 
     abstract override fun toString(): String
     abstract fun equals(e: Expr): Boolean

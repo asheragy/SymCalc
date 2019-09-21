@@ -129,7 +129,7 @@ class TableTest {
         val params = ListExpr(Integer(20))
         var e: Expr = Table(r, params)
 
-        e = e.eval()
+        e = e.eval() as ListExpr
         assertEquals(20, e.size.toLong())
         assertTrue(e[0].isInteger)
         var sum = Integer.ZERO

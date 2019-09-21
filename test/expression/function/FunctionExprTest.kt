@@ -1,7 +1,6 @@
 package org.cerion.symcalc.expression.function
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.ExprTest
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
@@ -14,7 +13,6 @@ import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
-import kotlin.test.assertTrue
 
 class FunctionExprTest {
 
@@ -49,10 +47,7 @@ class FunctionExprTest {
         val inner = Times(x, y)
         val outer = Times(VarExpr("z"), inner)
 
-        val e = outer.eval()
-        assertTrue(e.isFunction("times"))
-        assertEquals(3, e.size.toLong())
-
+        assertEquals(Times(x, y, VarExpr("z")), outer.eval())
         assertEquals(Times(Integer(4), x, y), Times(Times(Integer.TWO, x), Times(Integer.TWO, y)).eval())
     }
 

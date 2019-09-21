@@ -24,7 +24,8 @@ class PowerTest {
 
         for(num in nums) {
             for (zero in zeros) {
-                assertTrue(Power(num, zero).eval().asNumber().isOne, "Power($num,$zero)")
+                val e = Power(num, zero).eval() as NumberExpr
+                assertTrue(e.isOne, "Power($num,$zero)")
             }
         }
     }

@@ -1,8 +1,6 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec

@@ -28,7 +28,7 @@ class Bernoulli(vararg e: Expr) : FunctionExpr(*e) {
 
                     val bern = bernoulliRecursive(i, values)
                     values.add(bern)
-                    var b = bern.eval().asNumber()
+                    var b = bern.eval() as NumberExpr
 
                     b = t * b
                     res+= b
@@ -54,7 +54,7 @@ class Bernoulli(vararg e: Expr) : FunctionExpr(*e) {
                     val t = bin.eval() as Integer
 
                     val bern = previous[i]
-                    var b = bern.eval().asNumber()
+                    var b = bern.eval() as NumberExpr
 
                     b = t * b
                     res+= b

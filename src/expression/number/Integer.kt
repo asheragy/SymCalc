@@ -71,11 +71,11 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     override fun unaryMinus(): Integer = Integer(value.negate())
 
     override fun plus(other: NumberExpr): NumberExpr {
-        return if (other.isInteger) plus(other.asInteger()) else other.plus(this)
+        return if (other is Integer) plus(other) else other.plus(this)
     }
 
     override fun times(other: NumberExpr): NumberExpr {
-        return if (other.isInteger) times(other.asInteger()) else other.times(this)
+        return if (other is Integer) times(other) else other.times(this)
     }
 
     override fun div(other: NumberExpr): NumberExpr {
@@ -132,12 +132,13 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     operator fun rem(N: Integer): Integer = Integer(value.mod(N.value))
 
     override fun compareTo(other: NumberExpr): Int {
-        return when (other.numType) {
-            NumberType.INTEGER -> value.compareTo(other.asInteger().value)
-            NumberType.RATIONAL -> this.compareTo(other.evaluate(MachinePrecision))
-            NumberType.REAL_DOUBLE,
-            NumberType.REAL_BIGDEC -> evaluate(other.precision).compareTo(other)
-            NumberType.COMPLEX -> Complex(this).compareTo(other)
+        return when (other) {
+            is Integer -> value.compareTo(other.value)
+            is Rational -> this.compareTo(other.evaluate(MachinePrecision))
+            is RealDouble,
+            is RealBigDec -> evaluate(other.precision).compareTo(other)
+            is Complex -> Complex(this).compareTo(other)
+            else -> throw NotImplementedError()
         }
     }
 

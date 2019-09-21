@@ -48,7 +48,7 @@ class TanTest {
     fun basicPiCycles_over3() {
         // Test cycles with increments of Pi / 3
         val values = ListExpr(Integer.ZERO, sqrt3, Minus(sqrt3))
-        val expected = Join(values, values).eval()
+        val expected = Join(values, values).eval() as ListExpr
 
         val step = Times(Pi(), Rational(1,3))
         for(i in -15 until 15) {
@@ -62,7 +62,7 @@ class TanTest {
     fun basicPiCycles_over4() {
         // Test cycles with increments of Pi / 4
         val values = ListExpr(Integer.ZERO, Integer.ONE, ComplexInfinity(), Integer.NEGATIVE_ONE)
-        val expected = Join(values, values).eval()
+        val expected = Join(values, values).eval() as ListExpr
 
         val step = Times(Pi(), Rational(1,4))
         for(i in -20 until 20) {
@@ -77,7 +77,7 @@ class TanTest {
     fun basicPiCycles_over6() {
         // Test cycles with increments of Pi / 6
         val values = ListExpr(Integer.ZERO, oneOverSqrt3, sqrt3, ComplexInfinity(), Minus(sqrt3), Minus(oneOverSqrt3))
-        val expected = Join(values, values).eval()
+        val expected = Join(values, values).eval() as ListExpr
 
         val step = Times(Pi(), Rational(1,6))
         for(i in -30 until 30) {
