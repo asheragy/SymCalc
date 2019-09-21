@@ -20,23 +20,23 @@ class E : ConstExpr() {
             if (precision == MachinePrecision)
                 return RealDouble(Math.E)
 
-            return RealBigDec( getEToDigits(precision) )
+            return RealBigDec( getEToDigits(RealBigDec.getStoredPrecision(precision)), precision)
         }
         else
             return this
     }
 
     private fun getEToDigits(n: Int): BigDecimal {
-        var e: BigDecimal = BigDecimal.ONE.setScale(n+1)
-        var next: BigDecimal = BigDecimal.ONE.setScale(n+1)
+        var e: BigDecimal = BigDecimal.ONE.setScale(n)
+        var next: BigDecimal = BigDecimal.ONE.setScale(n)
 
         var i = 2
         while (next.compareTo(BigDecimal.ZERO) != 0) {
             e += next
-            next = next.divide(BigDecimal(i).setScale(n+1), RoundingMode.HALF_UP)
+            next = next.divide(BigDecimal(i).setScale(n), RoundingMode.HALF_UP)
             i++
         }
 
-        return e.setScale(n-1, RoundingMode.HALF_UP)
+        return e
     }
 }

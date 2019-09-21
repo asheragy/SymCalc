@@ -54,7 +54,7 @@ class Sin(vararg e: Expr) : TrigBase(*e), StandardTrigFunction {
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): RealBigDec {
-        val mc = MathContext(x.precision+5, RoundingMode.HALF_UP)
+        val mc = MathContext(RealBigDec.getStoredPrecision(x.precision), RoundingMode.HALF_UP)
 
         // Normalize to range of 0 to 2pi
         val x2pi =
@@ -81,7 +81,7 @@ class Sin(vararg e: Expr) : TrigBase(*e), StandardTrigFunction {
                         result.subtract(e, mc)
 
             if (t == result)
-                return RealBigDec(result.round(MathContext(x.precision, RoundingMode.HALF_UP)))
+                return RealBigDec(result, x.precision)
 
             result = t
         }

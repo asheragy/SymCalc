@@ -29,8 +29,10 @@ class Log(vararg e: Expr) : FunctionExpr(*e) {
             if (n is RealDouble)
                 return RealDouble(ln(n.value))
             if (n is RealBigDec) {
-                val log = BigDecimalMath.log(n.value)
-                return RealBigDec(log)
+                val storedPrecision = RealBigDec.getStoredPrecision(n.precision)
+                val t = n.value.setScale(storedPrecision)
+                val log = BigDecimalMath.log(t)
+                return RealBigDec(log, n.precision)
             }
         }
 

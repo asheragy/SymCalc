@@ -10,7 +10,7 @@ import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.min
 
-class RealBigDec(override val value: BigDecimal, override val precision: Int = value.precision()) : NumberExpr(), AtomExpr {
+class RealBigDec(override val value: BigDecimal, override val precision: Int) : NumberExpr(), AtomExpr {
 
     companion object {
         val ZERO = RealBigDec(BigDecimal("0.0"))
@@ -29,6 +29,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int = v
         }
     }
 
+    constructor(value: BigDecimal) : this(value, value.precision())
     constructor(value: String) : this(BigDecimal(value))
 
     override val type: ExprType get() = ExprType.NUMBER

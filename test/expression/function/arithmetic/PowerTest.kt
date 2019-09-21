@@ -223,7 +223,7 @@ class PowerTest {
         // TODO_LP look more into 1st and 3rd real number, should be zero
         assertEquals(Complex("-0.0000073464", "2.0000"), Power(RealBigDec("-4.0000"), Rational.HALF).eval())
         assertEquals(Complex("1.0000", "1.7321"), Power(RealBigDec("-8.0000"), Rational.THIRD).eval())
-        assertEquals(Complex("0.0008383", "-1.372"), Power(RealBigDec("-1.2345"), Rational(3,2)).eval())
+        assertEquals(Complex("0.000015115", "-1.3716"), Power(RealBigDec("-1.2345"), Rational(3,2)).eval())
     }
 
     @Test
@@ -245,11 +245,11 @@ class PowerTest {
     fun realBigDecToComplex() {
         val piBigDec = RealBigDec("3.1416")
         val bigDec = RealBigDec("5.0001")
-        assertEquals(Complex(RealBigDec("24.702"), RealBigDec("3.8547")), Power(bigDec, Complex(2,4)).eval())
-        assertEquals(Complex(RealBigDec("1.5503"), RealBigDec("1.6115")), Power(bigDec, Complex(Rational.HALF,Rational.HALF)).eval())
-        assertEquals(Complex(24.701991088784933, 3.855079473838341), Power(bigDec, Complex(2.0,4.0)).eval())
-        // TODO_LP not quite right, probably related to various rounding of intermediate values
-        assertEquals(Complex(RealBigDec("52.951"), RealBigDec("-147.80")), Power(bigDec, Complex(piBigDec,piBigDec)).eval())
+        assertEquals(Complex(RealBigDec("24.703"), RealBigDec("3.8509")), Power(bigDec, Complex(2,4)).eval())
+        assertEquals(Complex(RealBigDec("1.5503"), RealBigDec("1.6114")), Power(bigDec, Complex(Rational.HALF,Rational.HALF)).eval())
+        assertEquals(Complex(24.70263974545859, 3.8509208127549734), Power(bigDec, Complex(2.0,4.0)).eval())
+        // TODO_LP almost right, first digit in mathematica is 52.9334
+        assertEquals(Complex(RealBigDec("52.936"), RealBigDec("-147.81")), Power(bigDec, Complex(piBigDec,piBigDec)).eval())
     }
 
     @Test
