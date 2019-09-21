@@ -20,7 +20,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract val numType: NumberType
     abstract val isNegative: Boolean
 
-    abstract fun evaluate(precision: Int): NumberExpr
+    abstract fun toPrecision(precision: Int): NumberExpr
     abstract override val precision: Int
     abstract override fun toString(): String
 

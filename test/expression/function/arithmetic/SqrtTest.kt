@@ -30,9 +30,8 @@ class SqrtTest {
 
     @Test
     fun large() {
-        val big = Rational(1,3).evaluate(50) as RealBigDec
-        // TODO validate this test has correct output and switch to use Sqrt() function after fixing issue with == Rational.HALF
-        assertEquals(RealBigDec("0.57735026918962576450914878050195745564760175127012"), RealBigDec(BigDecimalMath.sqrt(big.value)))
+        val big = Rational(1,3).toPrecision(50)
+        assertEquals(RealBigDec("0.57735026918962576450914878050195745564760175127013"), Sqrt(big).eval())
     }
 
     @Test

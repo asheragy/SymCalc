@@ -42,7 +42,7 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
 
     override fun toString(): String = value.toString()
 
-    override fun evaluate(precision: Int): NumberExpr {
+    override fun toPrecision(precision: Int): NumberExpr {
         return when (precision) {
             InfinitePrecision -> this
             MachinePrecision -> RealDouble(value.toDouble())
@@ -107,7 +107,7 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
             }
 
             NumberType.REAL_DOUBLE,
-            NumberType.REAL_BIGDEC -> return evaluate(other.precision) / other
+            NumberType.REAL_BIGDEC -> return toPrecision(other.precision) / other
             NumberType.COMPLEX -> return Complex(this) / other
 
         }
@@ -134,9 +134,9 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     override fun compareTo(other: NumberExpr): Int {
         return when (other) {
             is Integer -> value.compareTo(other.value)
-            is Rational -> this.compareTo(other.evaluate(MachinePrecision))
+            is Rational -> this.compareTo(other.toPrecision(MachinePrecision))
             is RealDouble,
-            is RealBigDec -> evaluate(other.precision).compareTo(other)
+            is RealBigDec -> toPrecision(other.precision).compareTo(other)
             is Complex -> Complex(this).compareTo(other)
             else -> throw NotImplementedError()
         }

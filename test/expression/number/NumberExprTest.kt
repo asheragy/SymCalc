@@ -18,7 +18,7 @@ class NumberExprTest : NumberTestBase() {
 
     @Test
     fun compareToPrecision() {
-        val bigHalf = Rational.HALF.evaluate(500)
+        val bigHalf = Rational.HALF.toPrecision(500)
         assertEquals(0, bigHalf.compareTo(Rational.HALF))
         assertEquals(0, Rational.HALF.compareTo(bigHalf))
 

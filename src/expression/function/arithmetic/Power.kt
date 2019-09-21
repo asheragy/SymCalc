@@ -84,7 +84,7 @@ class Power(vararg e: Expr) : FunctionExpr(*e) {
 
         var a = z
         if (N.precision < z.precision)
-            a = z.evaluate(N.precision) as Complex
+            a = z.toPrecision(N.precision) as Complex
 
         if (a.precision == InfinitePrecision)
             return this
@@ -140,11 +140,11 @@ private fun Integer.power(other: NumberExpr): NumberExpr {
         NumberType.INTEGER -> this.pow(other as Integer)
         NumberType.RATIONAL -> throw UnsupportedOperationException()
         NumberType.REAL_DOUBLE -> {
-            val real = this.evaluate(other.precision) as RealDouble
+            val real = this.toPrecision(other.precision) as RealDouble
             real.power(other)
         }
         NumberType.REAL_BIGDEC -> {
-            val real = this.evaluate(other.precision) as RealBigDec
+            val real = this.toPrecision(other.precision) as RealBigDec
             real.power(other)
         }
         NumberType.COMPLEX -> throw UnsupportedOperationException()
@@ -159,11 +159,11 @@ private fun Rational.power(other: NumberExpr): NumberExpr {
             return Divide(top, bottom).eval() as NumberExpr
         }
         NumberType.REAL_DOUBLE -> {
-            val real = this.evaluate(other.precision) as RealDouble
+            val real = this.toPrecision(other.precision) as RealDouble
             return real.power(other)
         }
         NumberType.REAL_BIGDEC -> {
-            val real = this.evaluate(other.precision) as RealBigDec
+            val real = this.toPrecision(other.precision) as RealBigDec
             return real.power(other)
         }
         NumberType.RATIONAL -> throw UnsupportedOperationException()
@@ -174,7 +174,7 @@ private fun Rational.power(other: NumberExpr): NumberExpr {
 private fun RealDouble.power(other: NumberExpr): NumberExpr {
     when (other) {
         is Integer,
-        is Rational -> return this.power(other.evaluate(precision))
+        is Rational -> return this.power(other.toPrecision(precision))
         is RealDouble -> {
             val pow = value.pow(other.value)
             if (pow.isNaN() && value < 0)
@@ -194,7 +194,7 @@ private fun RealBigDec.power(other: NumberExpr): NumberExpr {
             val number = value.pow(other.intValue(), MathContext(precision, RoundingMode.HALF_UP))
             return RealBigDec(number)
         }
-        is Rational -> return this.power(other.evaluate(precision))
+        is Rational -> return this.power(other.toPrecision(precision))
         is RealDouble -> return RealDouble(toDouble().pow(other.value))
         is RealBigDec -> {
             if (this.isNegative)

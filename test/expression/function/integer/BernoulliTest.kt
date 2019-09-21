@@ -24,14 +24,6 @@ class BernoulliTest {
         assertEquals(Integer.ZERO, Bernoulli(Integer(3)).eval())
         assertEquals(Rational(-1, 30), Bernoulli(Integer(4)).eval())
 
-        // TODO fix speed on this
         assertEquals(Rational(-174611, 330), Bernoulli(Integer(20)).eval())
     }
-
-    @Test
-    fun debug() {
-        //assertEquals(Integer.ZERO, Bernoulli(Integer(3)).eval())
-        assertEquals(Rational(-174611, 330), Bernoulli(Integer(20)).eval())
-    }
-
 }

@@ -4,6 +4,7 @@ import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
+import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Test
@@ -84,12 +85,12 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun precision_evaluate() {
-        var x = RealBigDec("111.0000000011").evaluate(12) as RealBigDec
+        var x = RealBigDec("111.0000000011").toPrecision(12) as RealBigDec
         assertEquals(RealBigDec("111.000000001"), x)
         assertEquals(12, x.precision)
         assertEquals(9, x.accuracy)
 
-        x = RealBigDec("0.141567").evaluate(5) as RealBigDec
+        x = RealBigDec("0.141567").toPrecision(5) as RealBigDec
         assertEquals(RealBigDec("0.14157"), x)
         assertEquals(5, x.precision)
         assertEquals(5, x.accuracy)
@@ -117,6 +118,7 @@ class RealBigDecTest : NumberTestBase() {
 
         // Different internal precision
         assertEquals(RealBigDec("0.67"), RealBigDec("0.3333333333", 2) + RealBigDec("0.3333333333", 10))
+        assertEquals(RealBigDec("0.67"), Plus(N(Rational(1,3),Integer(2)), N(Rational(1,3),Integer(10))).eval())
     }
 
     @Test
@@ -166,6 +168,12 @@ class RealBigDecTest : NumberTestBase() {
         assertEquals(RealBigDec("36.458"), power("3.14159265358979323846264338328", "3.1415"))
 
         assertEquals(RealBigDec("13.2696645139"), power("3.00000000000","2.35340583128859694839201928385968473749596868726265"))
+    }
+
+    @Test
+    fun powStoredPrecision() {
+        val p1 = RealBigDec("1.23").pow(RealBigDec("1.23"))
+        assertEquals(20, p1.value.precision())
     }
 
     @Test

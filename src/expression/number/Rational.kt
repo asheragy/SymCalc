@@ -34,15 +34,16 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
         return if (d.isOne) n else Rational(n, d)
     }
     
-    override fun evaluate(precision: Int): NumberExpr {
+    override fun toPrecision(precision: Int): NumberExpr {
         return when (precision) {
             InfinitePrecision -> this
             MachinePrecision -> RealDouble(numerator.value.toDouble() / denominator.value.toDouble())
             else -> {
-                val a = numerator.toBigDecimal()
-                val b = denominator.toBigDecimal()
-                val t = a.divide(b, precision, RoundingMode.HALF_UP)
-                RealBigDec(t)
+                //val a = numerator.toBigDecimal()
+                //val b = denominator.toBigDecimal()
+                //val t = a.divide(b, precision, RoundingMode.HALF_UP)
+                //RealBigDec(t)
+                return RealBigDec(numerator.toBigDecimal(), precision) / RealBigDec(denominator.toBigDecimal(), precision)
             }
         }
     }
@@ -88,9 +89,9 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
             return Complex(this).compareTo(other)
 
         if (other.precision in MachinePrecision until InfinitePrecision)
-            return evaluate(other.precision).compareTo(other)
+            return toPrecision(other.precision).compareTo(other)
 
-        return evaluate(MachinePrecision).compareTo(other)
+        return toPrecision(MachinePrecision).compareTo(other)
     }
 
     companion object {

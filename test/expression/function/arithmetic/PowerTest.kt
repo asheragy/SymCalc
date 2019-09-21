@@ -192,6 +192,12 @@ class PowerTest {
     }
 
     @Test
+    fun realToRational_storedPrecision() {
+        val pow = Power(RealBigDec("2.000001"), Rational(1,3)).eval() as RealBigDec
+        assertEquals(BigDecimal("1.2599212598816798161"), pow.value)
+    }
+
+    @Test
     fun realToReal() {
         // Double/Double
         assertEquals(RealDouble(55.90169943749474), Power(RealDouble(5.0), RealDouble(2.5)).eval())
@@ -222,7 +228,7 @@ class PowerTest {
 
         // TODO_LP look more into 1st and 3rd real number, should be zero
         assertEquals(Complex("-2.1384E-19", "2.0000"), Power(RealBigDec("-4.0000"), Rational.HALF).eval())
-        assertEquals(Complex("1.0000", "1.7320"), Power(RealBigDec("-8.0000"), Rational.THIRD).eval()) // TODO should be 1.7321
+        assertEquals(Complex("1.0000", "1.7321"), Power(RealBigDec("-8.0000"), Rational.THIRD).eval())
         assertEquals(Complex("-5.3242E-19", "-1.3716"), Power(RealBigDec("-1.2345"), Rational(3,2)).eval())
     }
 
@@ -261,9 +267,7 @@ class PowerTest {
         // Can evaluate
         assertEquals(Complex(1.7989074399478673,1.1117859405028423), Power(Complex(RealDouble(2.0), Integer(4)), Rational.HALF).eval())
         assertEquals(Complex(0.07690324994251796,-0.18717392051825588), Power(Complex(RealDouble(2.0), Integer(4)), Rational(-16,15)).eval())
-
-        // TODO actual 1.5366206 + 0.5943189
-        assertEquals(Complex("1.536620", "0.5943191"), Power(Complex(RealBigDec("2.000001"), Integer(4)), Rational.THIRD).eval())
+        assertEquals(Complex("1.536621", "0.5943189"), Power(Complex(RealBigDec("2.000001"), Integer(4)), Rational.THIRD).eval())
     }
 
     @Test
@@ -272,8 +276,7 @@ class PowerTest {
         assertEquals(Complex(0.03287406851910734, -0.1549926705899962), Power(Complex(2,4), RealDouble(-1.23)).eval())
 
         assertEquals(Complex(1.309544770737814, 6.174162506105573), Power(Complex(RealDouble(2.0), Integer(4)), RealBigDec("1.23")).eval())
-        // TODO_LP this one is not quite right but probably related to so many truncations of intermediate values, larger initial precision seems to work better
-        assertEquals(Complex("1.29", "6.18"), Power(Complex(2,4), RealBigDec("1.23")).eval())
+        assertEquals(Complex("1.31", "6.17"), Power(Complex(2,4), RealBigDec("1.23")).eval())
     }
 
     @Test

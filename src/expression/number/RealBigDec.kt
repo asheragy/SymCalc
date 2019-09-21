@@ -44,10 +44,23 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     fun toDouble(): Double = value.toDouble()
 
     private fun getRepresentedValue(): BigDecimal {
+        return forcePrecision(precision)
+        /*
         if (precision < value.precision())
             return value.round(MathContext(precision, RoundingMode.HALF_UP))
         else if (precision > value.precision())
             return value.setScale(precision - (value.precision() - value.scale()), RoundingMode.HALF_UP)
+
+        return value
+
+         */
+    }
+
+    fun forcePrecision(newPrecision: Int): BigDecimal {
+        if (newPrecision < value.precision())
+            return value.round(MathContext(newPrecision, RoundingMode.HALF_UP))
+        else if (newPrecision > value.precision())
+            return value.setScale(newPrecision - (value.precision() - value.scale()), RoundingMode.HALF_UP)
 
         return value
     }
@@ -62,7 +75,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         if (other is RealDouble)
             return value.toDouble().compareTo(other.value)
 
-        val real = other.evaluate(precision) as RealBigDec
+        val real = other.toPrecision(precision) as RealBigDec
         return value.compareTo(real.value)
     }
 
@@ -126,10 +139,13 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
             is Rational -> return (this * other.denominator) / other.numerator
             is RealDouble -> return RealDouble(toDouble() / other.value)
             is RealBigDec -> {
-                val mc = MathContext(precision, RoundingMode.HALF_UP)
-                val result = RealBigDec( this.value.divide(other.value, mc))
+                val newPrecision = min(precision, other.precision)
 
-                return evaluatePrecision(result, this, other)
+                val mc = MathContext(getStoredPrecision(newPrecision), RoundingMode.HALF_UP)
+                val result = RealBigDec( this.value.divide(other.value, mc), newPrecision)
+
+                return result
+                //return evaluatePrecision(result, this, other)
             }
 
             is Complex -> return Complex(this) / other
@@ -137,8 +153,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         }
     }
 
-    fun pow(other: RealBigDec): NumberExpr {
-        // TODO verify integer power does not get to this function via both NumberExpr power and Power() function
+    fun pow(other: RealBigDec): RealBigDec {
         if (isNegative)
             throw OperationException("lhs cannot be negative")
 
@@ -147,8 +162,10 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
 
         val p = min(precision, other.precision)
         val mc = MathContext(getStoredPrecision(p), RoundingMode.HALF_UP)
-        // TODO this is still not correct because of the accuracy thing
-        val x = value.setScale(accuracy + 2).round(mc) // Add 2 extra digits so scale/precision is correct
+
+        var x = value
+        if (x.precision() < mc.precision)
+            x = value.setScale(mc.precision - value.precision() + value.scale()).round(mc) // Add 2 extra digits so scale/precision is correct
 
         val logx = BigDecimalMath.log(x)
         val ylogx = other.value.multiply(logx, mc)
@@ -156,7 +173,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         return RealBigDec(ylogx, p).exp()
     }
 
-    override fun evaluate(precision: Int): NumberExpr {
+    override fun toPrecision(precision: Int): NumberExpr {
         if (precision == MachinePrecision)
             return RealDouble(toDouble())
         else if (precision < this.precision) {
@@ -177,7 +194,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
 
         if (isNegative) {
             val denominator = this.unaryMinus().exp()
-            return (Integer.ONE.evaluate(precision) / denominator) as RealBigDec
+            return (Integer.ONE.toPrecision(precision) / denominator) as RealBigDec
         }
 
         // Maclaurin series 1 + x + x^2/2! + x^3/3! + ...

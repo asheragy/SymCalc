@@ -230,14 +230,14 @@ class IntegerTest {
     }
 
     @Test
-    fun evalPrecision() {
-        assertEquals(Integer(5), Integer(5).evaluate(Expr.InfinitePrecision))
-        assertEquals(RealDouble(5.0), Integer(5).evaluate(Expr.MachinePrecision))
+    fun toPrecision() {
+        assertEquals(Integer(5), Integer(5).toPrecision(Expr.InfinitePrecision))
+        assertEquals(RealDouble(5.0), Integer(5).toPrecision(Expr.MachinePrecision))
 
-        assertEquals("5.0000`5", Integer(5).evaluate(5).toString())
-        assertEquals("25.000`5", Integer(25).evaluate(5).toString())
-        assertEquals("1.23E+4`3", Integer(12321).evaluate(3).toString())
-        assertEquals("1.2346E+8`5", Integer(123456789).evaluate(5).toString())
+        assertEquals("5.0000`5", Integer(5).toPrecision(5).toString())
+        assertEquals("25.000`5", Integer(25).toPrecision(5).toString())
+        assertEquals("1.23E+4`3", Integer(12321).toPrecision(3).toString())
+        assertEquals("1.2346E+8`5", Integer(123456789).toPrecision(5).toString())
     }
 
     private fun verify(e: NumberExpr, expected: Long) {

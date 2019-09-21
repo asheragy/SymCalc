@@ -20,7 +20,7 @@ class N(vararg e: Expr) : FunctionExpr(*e) {
         if (e is ConstExpr)
             return e.evaluate(precision)
         if (e is NumberExpr)
-            return e.evaluate(precision)
+            return e.toPrecision(precision)
 
         if(e is FunctionExpr) {
             val newArgs = mutableListOf<Expr>()

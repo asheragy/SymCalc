@@ -13,14 +13,14 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
 
     override fun toString(): String = "" + value
 
-    override fun evaluate(precision: Int): NumberExpr {
+    override fun toPrecision(precision: Int): NumberExpr {
         return this // Cannot upgrade precision so do nothing
     }
 
     override fun compareTo(other: NumberExpr): Int {
         return when(other) {
             is Integer,
-            is Rational -> this.compareTo(other.evaluate(MachinePrecision))
+            is Rational -> this.compareTo(other.toPrecision(MachinePrecision))
             is RealDouble -> value.compareTo(other.value)
             is RealBigDec -> value.compareTo(other.toDouble())
             is Complex -> Complex(this).compareTo(other)
@@ -33,7 +33,7 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
     override fun plus(other: NumberExpr): NumberExpr {
         return when (other) {
             is Integer,
-            is Rational -> this + other.evaluate(MachinePrecision)
+            is Rational -> this + other.toPrecision(MachinePrecision)
             is RealDouble -> RealDouble(value + other.value)
             is RealBigDec -> RealDouble(value + other.toDouble())
             is Complex -> Complex(this) + other
@@ -44,7 +44,7 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
     override fun times(other: NumberExpr): NumberExpr {
         return when (other) {
             is Integer,
-            is Rational -> this * other.evaluate(MachinePrecision)
+            is Rational -> this * other.toPrecision(MachinePrecision)
             is RealDouble -> RealDouble(value * other.value)
             is RealBigDec -> RealDouble(value * other.toDouble())
             is Complex -> Complex(this) * other
@@ -55,7 +55,7 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
     override fun div(other: NumberExpr): NumberExpr {
         return when (other) {
             is Integer,
-            is Rational -> this / other.evaluate(MachinePrecision)
+            is Rational -> this / other.toPrecision(MachinePrecision)
             is RealDouble -> RealDouble(value / other.value)
             is RealBigDec -> RealDouble(value / other.toDouble())
             is Complex -> Complex(this) / other

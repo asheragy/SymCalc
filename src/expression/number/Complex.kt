@@ -41,8 +41,8 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
         return this
     }
 
-    override fun evaluate(precision: Int): NumberExpr {
-        return Complex(real.evaluate(precision), img.evaluate(precision))
+    override fun toPrecision(precision: Int): NumberExpr {
+        return Complex(real.toPrecision(precision), img.toPrecision(precision))
     }
 
     override fun plus(other: NumberExpr): NumberExpr {

@@ -20,8 +20,8 @@ class Mod(vararg e: Expr) : FunctionExpr(*e) {
         // TODO need better way of doing this
         if (b is NumberExpr && a.precision != b.precision) {
             val min = min(a.precision, b.precision)
-            a = a.evaluate(min)
-            b = b.evaluate(min)
+            a = a.toPrecision(min)
+            b = b.toPrecision(min)
         }
 
         if (a is Integer && b is Integer)
