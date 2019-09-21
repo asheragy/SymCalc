@@ -10,10 +10,23 @@ import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.min
 
-class RealBigDec(override val value: BigDecimal) : NumberExpr(), AtomExpr {
+class RealBigDec(override val value: BigDecimal, override val precision: Int = value.precision()) : NumberExpr(), AtomExpr {
 
     companion object {
         val ZERO = RealBigDec(BigDecimal("0.0"))
+        private const val PrecisionMin = 20
+        private const val PrecisionStep = 10
+
+        fun getStoredPrecision(desired: Int): Int {
+            if(desired < PrecisionMin - PrecisionStep)
+                return PrecisionMin
+
+            var result = PrecisionMin
+            while (desired > result - PrecisionStep)
+                result += PrecisionStep
+
+            return result
+        }
     }
 
     constructor(value: String) : this(BigDecimal(value))
@@ -23,16 +36,30 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr(), AtomExpr {
     override val isZero: Boolean get() = value.compareTo(BigDecimal.ZERO) == 0
     override val isOne: Boolean get() = value == BigDecimal.ONE
     override val isNegative: Boolean get() = value.signum() == -1
-    override val precision: Int get() = value.precision()
     val accuracy: Int get() = value.scale()
 
     fun toDouble(): Double = value.toDouble()
-    override fun toString(): String = "$value`$precision"
+
+    override fun toString(): String {
+        if (precision < value.precision()) {
+            val t = value.round(MathContext(precision, RoundingMode.HALF_UP))
+            return "$t`$precision"
+        }
+
+        return "$value`$precision"
+    }
+
     override fun unaryMinus(): RealBigDec = RealBigDec(value.negate())
 
     override fun compareTo(other: NumberExpr): Int {
-        if (other is RealBigDec)
-            return value.compareTo(other.value)
+        if (other is RealBigDec) {
+            val min = min(precision, other.precision)
+            val mc = MathContext(min, RoundingMode.HALF_UP)
+            val n1 = if(value.precision() > min) value.round(mc) else value
+            val n2 = if(other.value.precision() > min) other.value.round(mc) else other.value
+
+            return n1.compareTo(n2)
+        }
 
         if (other is RealDouble)
             return value.toDouble().compareTo(other.value)

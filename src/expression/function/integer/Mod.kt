@@ -39,7 +39,7 @@ class Mod(vararg e: Expr) : FunctionExpr(*e) {
             var c = a.value.rem(b.value)
             if (c.signum() < 0)
                 c+= b.value
-            return RealBigDec(c)
+            return RealBigDec(c, a.precision)
         }
 
         if (a is Integer || a is Rational) {

@@ -17,6 +17,24 @@ import kotlin.test.assertTrue
 class RealBigDecTest : NumberTestBase() {
 
     @Test
+    fun storedPrecision() {
+        assertEquals(20, RealBigDec.getStoredPrecision(0))
+        assertEquals(20, RealBigDec.getStoredPrecision(10))
+        assertEquals(30, RealBigDec.getStoredPrecision(11))
+        assertEquals(30, RealBigDec.getStoredPrecision(20))
+        assertEquals(40, RealBigDec.getStoredPrecision(21))
+    }
+
+    @Test
+    fun toStringPrecision() {
+        assertEquals("3.14`3", RealBigDec("3.14").toString())
+        assertEquals("3.1415`5", RealBigDec("3.1415").toString())
+
+        // If stored precision is higher it should round down to set precision
+        assertEquals("3.142`4", RealBigDec(BigDecimal("3.1415"), 4).toString())
+    }
+
+    @Test
     fun identity() {
         val n = RealBigDec("3.141592653589793238462643383279")
 

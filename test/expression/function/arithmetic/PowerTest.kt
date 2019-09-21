@@ -77,7 +77,7 @@ class PowerTest {
         assertEquals(Power(Pi(), Integer(3)), Power(Pi(), Integer(3)).eval())
         assertEquals(Power(Pi(), Rational(2,3)), Power(Pi(), Rational(2,3)).eval())
         assertEquals(RealDouble(31.006276680299816), Power(Pi(), RealDouble(3.0)).eval())
-        assertEquals(RealBigDec("36.459"), Power(Pi(), RealBigDec("3.1415")).eval())
+        assertEquals(RealBigDec("36.458"), Power(Pi(), RealBigDec("3.1415")).eval())
         assertEquals(Power(Pi(), Complex(3,3)), Power(Pi(), Complex(3,3)).eval())
     }
 
@@ -172,7 +172,7 @@ class PowerTest {
         // BigDecimal
         assertEquals(RealBigDec("1.0002468"), Power(RealBigDec("1.0001234"), Integer.TWO).eval())
         assertEquals(RealBigDec("93648.04760"), Power(RealBigDec("3.141592654"), Integer(10)).eval())
-        assertEquals(RealBigDec("8769956796.0826994768"), Power(N(Pi(),Integer(20)), Integer(20)).eval())
+        assertEquals(RealBigDec("8769956796.0826994747"), Power(N(Pi(),Integer(20)), Integer(20)).eval())
         assertEquals(RealBigDec("3.40282366920938463463374607431768211E+38"), Power(RealBigDec("2.00000000000000000000000000000000000"), Integer(128)).eval())
     }
 

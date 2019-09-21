@@ -22,7 +22,7 @@ class Pi : ConstExpr() {
             if (precision == MachinePrecision)
                 return RealDouble(Math.PI)
 
-            return RealBigDec( getPiToDigits(precision) )
+            return RealBigDec( getPiToDigits(precision), precision )
         }
         else
             return this
@@ -32,7 +32,7 @@ class Pi : ConstExpr() {
         // https://en.wikipedia.org/wiki/Chudnovsky_algorithm
         // 426880*Sqrt(10005)/Pi = Sum (6k!)(545140134k+13591409) / (3k)!(k!)^3(-262537412640768000)^k
 
-        val mc = MathContext(precision + 10, RoundingMode.HALF_UP)
+        val mc = MathContext(RealBigDec.getStoredPrecision(precision), RoundingMode.HALF_UP)
         val bd54 = BigDecimal(545140134)
         val bd13 = BigDecimal(13591409)
         val bd26 = BigDecimal("-262537412640768000")
@@ -57,7 +57,7 @@ class Pi : ConstExpr() {
                 var c = BigDecimalMath.sqrt(BigDecimal("10005"), mc)
                 c = c.multiply(BigDecimal("426880"))
 
-                return c.divide(sum, MathContext(precision, RoundingMode.HALF_UP))
+                return c.divide(sum, mc)
             }
 
             sum = t
