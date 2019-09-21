@@ -97,7 +97,7 @@ class RealBigDecTest : NumberTestBase() {
 
         // PrecisionA + PrecisionB = Precision of lowest
         assertEquals(RealBigDec("0.66"), a + b)
-        assertEquals(RealBigDec("0.00"), a - b)
+        assertEquals(RealBigDec("-0.0033"), a - b)
         assertEquals(RealBigDec("0.11"), a * b)
         assertEquals(RealBigDec("0.99"), a / b)
 
@@ -109,6 +109,9 @@ class RealBigDecTest : NumberTestBase() {
     fun add() {
         assertEquals(RealBigDec("0.0000000001"), RealBigDec("0.0000000001") + RealBigDec("0.0000000000"))
         assertEquals(RealBigDec("0.3607293"), RealBigDec("0.0000000") + RealBigDec("0.3607293"))
+
+        // Different internal precision
+        assertEquals(RealBigDec("0.67"), RealBigDec("0.3333333333", 2) + RealBigDec("0.3333333333", 10))
     }
 
     @Test
@@ -118,6 +121,21 @@ class RealBigDecTest : NumberTestBase() {
         assertEquals(RealDouble(0.0037427219999999995), RealBigDec("0.0001234") * RealDouble(30.33))
         assertEquals(RealBigDec("0.003743"), RealBigDec("0.0001234") * RealBigDec("30.33"))
         assertEquals(Complex(RealBigDec("0.0002468"),RealBigDec("0.0003702")), RealBigDec("0.0001234") * Complex(2,3))
+
+        // Different internal precision
+        assertEquals(RealBigDec("0.89"), RealBigDec("0.67") * RealBigDec("1.333333333"))
+    }
+
+    @Test
+    fun multiplyStoredPrecision() {
+        val bd1 = RealBigDec("0.33") * RealBigDec("0.33")
+        assertEquals(4, bd1.value.precision())
+
+        val bd2 = RealBigDec("0.333333333") * RealBigDec("0.333333333")
+        assertEquals(18, bd2.value.precision())
+
+        val bd3 = RealBigDec("0.333333333333333333333333333333", 9) * RealBigDec("0.3333")
+        assertEquals(20, bd3.value.precision())
     }
 
     @Test

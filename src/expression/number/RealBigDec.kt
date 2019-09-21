@@ -8,6 +8,7 @@ import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
+import kotlin.math.max
 import kotlin.math.min
 
 class RealBigDec(override val value: BigDecimal, override val precision: Int) : NumberExpr(), AtomExpr {
@@ -31,6 +32,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
 
     constructor(value: BigDecimal) : this(value, value.precision())
     constructor(value: String) : this(BigDecimal(value))
+    constructor(value: String, precision: Int) : this(BigDecimal(value), precision)
 
     override val type: ExprType get() = ExprType.NUMBER
     override val numType: NumberType get() = NumberType.REAL_BIGDEC
@@ -73,7 +75,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         when (other) {
             is Integer -> {
                 val bigDec = other.toBigDecimal()
-                return RealBigDec( this.value.plus(bigDec))
+                return RealBigDec( this.value.plus(bigDec), precision)
             }
             is Rational -> {
                 val n = N(other, Integer(precision)).eval()
@@ -89,10 +91,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
                     return this
 
                 val min = min(this.precision, other.precision)
-                val a = this.evaluate(min) as RealBigDec
-                val b = other.evaluate(min) as RealBigDec
-
-                return RealBigDec( a.value.plus(b.value))
+                return RealBigDec(value.add(other.value), min)
             }
             is Complex -> {
                 return other + this
@@ -101,18 +100,22 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         }
     }
 
+    operator fun times(other: RealBigDec): RealBigDec {
+        // Limit precision to whatever the maxed stored value would be
+        val expectedPrecision = value.precision() + other.value.precision()
+        val maxPrecision = getStoredPrecision(max(precision, other.precision))
+        val mc = MathContext(min(expectedPrecision, maxPrecision), RoundingMode.HALF_UP)
+
+        val bd = this.value.multiply(other.value, mc)
+        return RealBigDec(bd, min(precision, other.precision))
+    }
+
     override fun times(other: NumberExpr): NumberExpr {
         return when(other) {
-            is Integer -> RealBigDec(value.times(other.value.toBigDecimal()))
+            is Integer -> RealBigDec(value.times(other.value.toBigDecimal()), precision)
             is Rational -> (this * other.numerator) / other.denominator
             is RealDouble -> other * this
-            is RealBigDec -> {
-                // Both are BigDecimal
-                val bd = this.value.times(other.value)
-                val result = RealBigDec(bd)
-                evaluatePrecision(result, this, other)
-            }
-
+            is RealBigDec -> return this * other
             is Complex -> Complex(this * other.real, this * other.img)
             else -> throw NotImplementedError()
         }
