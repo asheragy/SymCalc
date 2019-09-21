@@ -20,7 +20,7 @@ sealed class Either<out A : Expr, out B: Expr> : Expr() {
 
     override fun toString(): String = value.toString()
     override fun equals(e: Expr): Boolean = value.equals(e)
-    override fun evaluate(): Expr = value.eval()
+    override fun eval(): Expr = value.eval()
 
     data class Left<out A : Expr>(val a: A) : Either<A, Nothing>() {
         override val isRight: Boolean get() = false

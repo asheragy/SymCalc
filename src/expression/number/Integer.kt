@@ -143,10 +143,10 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
 
     fun pow(other: Integer): NumberExpr {
         val intVal = other.asInteger().value.toInt()
-        if (intVal < 0)
-            return Rational(ONE, Integer(value.pow(-intVal))).eval() as NumberExpr
+        return if (intVal < 0)
+            Rational(ONE, Integer(value.pow(-intVal))).eval()
         else
-            return Integer(value.pow(intVal))
+            Integer(value.pow(intVal))
     }
 
     fun pow(b: Rational): Expr {

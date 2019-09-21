@@ -33,6 +33,8 @@ abstract class FunctionExpr protected constructor(vararg e: Expr) : MultiExpr(*e
     @Throws(ValidationException::class)
     abstract fun validate()
 
+    protected abstract fun evaluate(): Expr
+
     final override fun eval(): Expr {
         //https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
         //https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
@@ -42,7 +44,7 @@ abstract class FunctionExpr protected constructor(vararg e: Expr) : MultiExpr(*e
             args[i].env = env
         }
 
-        val newArgs = args.map { if (hasProperty(FunctionExpr.Properties.HOLD)) it else it.eval() }.toMutableList()
+        val newArgs = args.map { if (hasProperty(Properties.HOLD)) it else it.eval() }.toMutableList()
 
         // Evaluate precision on sibling elements, numbers already handled but its possible that could be done here as well, need to try that
         if (size > 0) {
@@ -57,7 +59,7 @@ abstract class FunctionExpr protected constructor(vararg e: Expr) : MultiExpr(*e
         }
 
         // Associative function, if the same function is a parameter move its parameters to the top level
-        if (hasProperty(FunctionExpr.Properties.Flat)) {
+        if (hasProperty(Properties.Flat)) {
             val same = newArgs.filter { it.javaClass == javaClass  }
             if (same.isNotEmpty()) {
                 newArgs.removeIf { it.javaClass == javaClass }
@@ -66,9 +68,9 @@ abstract class FunctionExpr protected constructor(vararg e: Expr) : MultiExpr(*e
         }
 
         // Listable property
-        if (hasProperty(FunctionExpr.Properties.LISTABLE) && newArgs.any { it is ListExpr }) {
+        if (hasProperty(Properties.LISTABLE) && newArgs.any { it is ListExpr }) {
             if (size == 1) {
-                val listArgs = newArgs[0].asList().args.map { FunctionExpr.createFunction(name, it) }
+                val listArgs = newArgs[0].asList().args.map { createFunction(name, it) }
                 return ListExpr(*listArgs.toTypedArray()).eval()
             }
             else if (size == 2 && newArgs[0] is ListExpr || newArgs[1] is ListExpr) {
@@ -78,19 +80,20 @@ abstract class FunctionExpr protected constructor(vararg e: Expr) : MultiExpr(*e
                 if (list1.size != list2.size)
                     return ErrorExpr("lists of unequal lengths cannot be combined")
 
-                val listArgs = list1.args.mapIndexed { index, expr -> FunctionExpr.createFunction(name, expr, list2[index]) }
+                val listArgs = list1.args.mapIndexed { index, expr -> createFunction(name, expr, list2[index]) }
                 return ListExpr(*listArgs.toTypedArray()).eval()
             }
         }
 
-        val function = FunctionExpr.createFunction(name, *newArgs.toTypedArray())
-        try {
-            (function as Expr).env = env
+        val function = createFunction(name, *newArgs.toTypedArray())
+        function.env = env
+
+        return try {
             function.validate()
-            return function.evaluate()
+            function.evaluate()
         }
         catch (e: Exception) {
-            return ErrorExpr(e.message!!)
+            ErrorExpr(e.message!!)
         }
     }
 
@@ -163,7 +166,7 @@ abstract class FunctionExpr protected constructor(vararg e: Expr) : MultiExpr(*e
         throw ValidationException(error)
     }
 
-    fun hasProperty(attr: Properties): Boolean {
+    private fun hasProperty(attr: Properties): Boolean {
         val attrs = properties
         return attr.value and attrs != 0
     }

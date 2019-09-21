@@ -24,8 +24,6 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract override val precision: Int
     abstract override fun toString(): String
 
-    override fun evaluate(): Expr = this
-
     abstract operator fun plus(other: NumberExpr): NumberExpr
     abstract operator fun times(other: NumberExpr): NumberExpr
     abstract operator fun div(other: NumberExpr): NumberExpr
@@ -56,17 +54,14 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
         @JvmStatic fun parse(s: String): NumberExpr {
             if (s.indexOf('i') > -1) {
                 val num = s.substring(0, s.length - 1)
-
-                if (num.isEmpty())
-                //If passed just "i" its complex number 1
-                    return Complex(Integer.ZERO, Integer.ONE)
+                return if (num.isEmpty())
+                    Complex.I //If passed just "i" its complex number 1
                 else
-                    return Complex(Integer.ZERO, parse(num))
+                    Complex(Integer.ZERO, parse(num))
             }
 
             return if (s.indexOf('.') > 0) {
                 val value = java.lang.Double.parseDouble(s)
-
                 if (value.toString().length < s.length)
                     return RealBigDec(BigDecimal(s))
 

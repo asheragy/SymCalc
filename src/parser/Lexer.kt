@@ -33,7 +33,7 @@ class Lexer(exprStr: String) {
 
                 else -> {
                     if (Character.isDigit(c) || c == '.') {
-                        tokval = Character.toString(c)
+                        tokval = c.toString()
 
                         while (hasInput() && (Character.isDigit(exprStr[pos + 1]) || exprStr[pos + 1] == '.' || exprStr[pos + 1] == 'i')) {
                             pos++
@@ -42,7 +42,7 @@ class Lexer(exprStr: String) {
                         return Parser.NUMBER
                     }
                     if (Character.isLetter(c)) {
-                        tokval = Character.toString(c)
+                        tokval = c.toString()
                         while (hasInput() && Character.isLetter(exprStr[pos + 1])) {
                             pos++
                             tokval += exprStr[pos]

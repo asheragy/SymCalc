@@ -74,18 +74,18 @@ class RealBigDec(override val value: BigDecimal) : NumberExpr(), AtomExpr {
     }
 
     override fun times(other: NumberExpr): NumberExpr {
-        when(other) {
-            is Integer -> return RealBigDec(value.times(other.value.toBigDecimal()))
-            is Rational -> return (this * other.numerator) / other.denominator
-            is RealDouble -> return other * this
+        return when(other) {
+            is Integer -> RealBigDec(value.times(other.value.toBigDecimal()))
+            is Rational -> (this * other.numerator) / other.denominator
+            is RealDouble -> other * this
             is RealBigDec -> {
                 // Both are BigDecimal
                 val bd = this.value.times(other.value)
                 val result = RealBigDec(bd)
-                return evaluatePrecision(result, this, other)
+                evaluatePrecision(result, this, other)
             }
 
-            is Complex -> return Complex(this * other.real, this * other.img)
+            is Complex -> Complex(this * other.real, this * other.img)
             else -> throw NotImplementedError()
         }
     }

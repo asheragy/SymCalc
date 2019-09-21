@@ -10,9 +10,10 @@ import kotlin.math.abs
 import kotlin.math.min
 
 class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
-
-    //val real: NumberExpr get() = get(0) as NumberExpr
-    //val img: NumberExpr get() = get(1) as NumberExpr
+    companion object {
+        @JvmField val ZERO = Complex(Integer.ZERO, Integer.ZERO)
+        @JvmField val I = Complex(0, 1)
+    }
 
     override val type: ExprType get() = ExprType.NUMBER
     override val isZero: Boolean get() = real.isZero && img.isZero
@@ -33,7 +34,7 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
     override fun toString(): String = "Complex[$real, $img]"
     override fun unaryMinus(): Complex = Complex(real.unaryMinus(), img.unaryMinus())
 
-    override fun evaluate(): NumberExpr {
+    override fun eval(): NumberExpr {
         if(img.isZero)
             return real
 
@@ -47,10 +48,10 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
     override fun plus(other: NumberExpr): NumberExpr {
         if (other.numType === NumberType.COMPLEX) {
             other as Complex
-            return Complex(real + other.real, img + other.img).evaluate()
+            return Complex(real + other.real, img + other.img).eval()
         }
 
-        return Complex(real + other, img).evaluate()
+        return Complex(real + other, img).eval()
     }
 
     override fun times(other: NumberExpr): NumberExpr {
@@ -75,7 +76,7 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
             }
         }
 
-        return Complex(resultR, resultI).evaluate()
+        return Complex(resultR, resultI).eval()
     }
 
     override fun div(other: NumberExpr): NumberExpr {
@@ -92,15 +93,8 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
 
                 val bottom = other * conj // This should not be a complex number
 
-                if (top.real.isInteger && bottom.isInteger)
-                    resultR = Rational(top.real.asInteger(), bottom.asInteger()).eval() as NumberExpr
-                else
-                    resultR = top.real / bottom
-
-                if (top.img.isInteger && bottom.isInteger)
-                    resultI = Rational(top.img.asInteger(), bottom.asInteger())
-                else
-                    resultI = top.img / bottom
+                resultR = top.real / bottom
+                resultI = top.img / bottom
             }
             else -> {
                 resultR = real / other
@@ -108,7 +102,7 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
             }
         }
 
-        return Complex(resultR, resultI).evaluate()
+        return Complex(resultR, resultI).eval()
     }
 
     fun pow(n: Int): NumberExpr {
@@ -161,10 +155,5 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
         }
 
         throw UnsupportedOperationException("Unable to compare complex")
-    }
-
-    companion object {
-        @JvmField val ZERO = Complex(Integer.ZERO, Integer.ZERO)
-        @JvmField val I = Complex(0, 1)
     }
 }

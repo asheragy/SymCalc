@@ -54,10 +54,7 @@ abstract class Expr {
     abstract override fun toString(): String
     abstract fun equals(e: Expr): Boolean
 
-    // TODO if things can overide eval then maybe evaluate() is not not needed here
-    protected abstract fun evaluate(): Expr
-
-    open fun eval(): Expr = evaluate()
+    open fun eval(): Expr = this
 
     fun eval(precision: Int): Expr {
         return N(this, Integer(precision)).eval()
@@ -92,7 +89,7 @@ abstract class Expr {
         ERROR
     }
 
-    protected fun indent(i: Int, s: String) {
+    private fun indent(i: Int, s: String) {
         for (ii in 0 until 2 * i)
             print(" ")
         println(s)

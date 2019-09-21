@@ -26,5 +26,5 @@ class ListExpr(vararg e: Expr) : MultiExpr(*e) {
     }
 
     override fun toString(): String = "{" + args.joinToString(", ") + "}"
-    override fun evaluate(): ListExpr = ListExpr(*args.map { it.eval() }.toTypedArray())
+    override fun eval(): ListExpr = ListExpr(*args.map { it.eval() }.toTypedArray())
 }

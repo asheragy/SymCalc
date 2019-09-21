@@ -7,7 +7,7 @@ class VarExpr(override val value: String) : Expr(), AtomExpr {
 
     override fun toString(): String = value
 
-    override fun evaluate(): Expr {
+    override fun eval(): Expr {
         var result = getEnvVar(value)
         if (result == null)
             result = this

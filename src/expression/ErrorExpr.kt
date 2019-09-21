@@ -5,7 +5,6 @@ class ErrorExpr(override val value: String) : Expr(), AtomExpr {
     override val type: ExprType
         get() = ExprType.ERROR
 
-    override fun evaluate(): Expr = this
     override fun toString(): String = "Error($value)"
 
     // There should never be a reason to compare errors so just say they are never equal

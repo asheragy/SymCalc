@@ -7,5 +7,4 @@ open class GraphicsExpr : Expr() {
 
     override fun toString(): String = "Graphics"
     override fun equals(e: Expr): Boolean = false
-    override fun evaluate(): Expr = this
 }

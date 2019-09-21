@@ -18,5 +18,4 @@ class BoolExpr(override val value: Boolean) : Expr(), AtomExpr {
     }
 
     override fun toString(): String = if (value) "True" else "False"
-    override fun evaluate(): Expr = this
 }

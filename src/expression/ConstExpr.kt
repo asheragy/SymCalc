@@ -10,6 +10,9 @@ abstract class ConstExpr : Expr() {
 
     override fun equals(e: Expr): Boolean = javaClass == e.javaClass
 
+    final override fun eval(): Expr = evaluate()
+
+    abstract fun evaluate(): Expr
     abstract fun evaluate(precision: Int): Expr
     abstract override fun toString(): String
 

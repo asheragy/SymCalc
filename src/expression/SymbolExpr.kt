@@ -12,7 +12,7 @@ class SymbolExpr(override val value: String) : Expr(), AtomExpr {
     override fun equals(e: Expr): Boolean = e is SymbolExpr && value == e.value
     val name: String = value
 
-    override fun evaluate(): Expr {
+    override fun eval(): Expr {
         return FunctionFactory.createInstance(name)
     }
 }
