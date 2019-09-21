@@ -1,21 +1,13 @@
 package org.cerion.symcalc.expression.function.trig
 
-import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.ComplexInfinity
-import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
-import org.cerion.symcalc.expression.function.arithmetic.Subtract
-import org.cerion.symcalc.expression.function.integer.Bernoulli
-import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
-import java.math.BigDecimal
-import java.math.MathContext
-import java.math.RoundingMode
 import kotlin.math.tan
 
 class Tan(vararg e: Expr) : TrigBase(*e), StandardTrigFunction {
@@ -53,9 +45,13 @@ class Tan(vararg e: Expr) : TrigBase(*e), StandardTrigFunction {
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): RealBigDec {
+        return Divide(Sin(x), Cos(x)).eval() as RealBigDec
+    }
+
+    /* Mostly working taylor series method, because of slow convergence and recursive bernoulli the sin/cos method seems to be much better
+    override fun evaluateAsBigDecimal(x: RealBigDec): RealBigDec {
         val mc = MathContext(x.precision+5, RoundingMode.HALF_UP)
 
-        // TODO may need to be Pi/2
         // Normalize to range of 0 to Pi
         var xmodpi =
                 if (x.value.toDouble() >= 0 && x.value.toDouble() < (Math.PI / 2))
@@ -99,9 +95,9 @@ class Tan(vararg e: Expr) : TrigBase(*e), StandardTrigFunction {
             result = t
         }
 
-        //return RealBigDec(result.round(MathContext(x.precision, RoundingMode.HALF_UP)))
         throw IterationLimitExceeded()
     }
+     */
 
     companion object {
         val sqrt3 = Power(Integer(3), Rational(1,2))
