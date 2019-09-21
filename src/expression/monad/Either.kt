@@ -1,9 +1,8 @@
 package org.cerion.symcalc.expression.monad
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.ExprBase
 
-sealed class Either<out A : Expr, out B: Expr> : ExprBase() {
+sealed class Either<out A : Expr, out B: Expr> : Expr() {
 
     private val value: Expr
     get() {

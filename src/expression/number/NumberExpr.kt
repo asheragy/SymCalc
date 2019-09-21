@@ -1,7 +1,6 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.ExprBase
 import java.lang.Exception
 import java.lang.UnsupportedOperationException
 import java.math.BigDecimal
@@ -14,24 +13,18 @@ enum class NumberType {
     COMPLEX
 }
 
-interface INumberExpr {
-    val isZero: Boolean
-    val isOne: Boolean
-    val numType: NumberType
-    val isNegative: Boolean
-
-    fun evaluate(precision: Int): NumberExpr
-
-    val precision: Int
-    override fun toString(): String
-
-    fun compareTo(other: NumberExpr): Int
-    fun evaluate(): NumberExpr = this as NumberExpr
-
-}
-
 @Suppress("CovariantEquals")
-abstract class NumberExpr : ExprBase(), Comparable<NumberExpr>, INumberExpr {
+abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
+    abstract val isZero: Boolean
+    abstract val isOne: Boolean
+    abstract val numType: NumberType
+    abstract val isNegative: Boolean
+
+    abstract fun evaluate(precision: Int): NumberExpr
+    abstract override val precision: Int
+    abstract override fun toString(): String
+
+    override fun evaluate(): Expr = this
 
     abstract operator fun plus(other: NumberExpr): NumberExpr
     abstract operator fun times(other: NumberExpr): NumberExpr

@@ -144,7 +144,7 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     fun pow(other: Integer): NumberExpr {
         val intVal = other.asInteger().value.toInt()
         if (intVal < 0)
-            return Rational(ONE, Integer(value.pow(-intVal))).evaluate()
+            return Rational(ONE, Integer(value.pow(-intVal))).eval() as NumberExpr
         else
             return Integer(value.pow(intVal))
     }

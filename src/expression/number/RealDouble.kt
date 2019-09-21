@@ -18,12 +18,12 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
     }
 
     override fun compareTo(other: NumberExpr): Int {
-        when(other) {
+        return when(other) {
             is Integer,
-            is Rational -> return this.compareTo(other.evaluate(MachinePrecision))
-            is RealDouble -> return value.compareTo(other.value)
-            is RealBigDec -> return value.compareTo(other.toDouble())
-            is Complex -> return Complex(this).compareTo(other)
+            is Rational -> this.compareTo(other.evaluate(MachinePrecision))
+            is RealDouble -> value.compareTo(other.value)
+            is RealBigDec -> value.compareTo(other.toDouble())
+            is Complex -> Complex(this).compareTo(other)
             else -> throw NotImplementedError()
         }
     }
@@ -31,34 +31,34 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
     override fun unaryMinus(): RealDouble = RealDouble(0 - value)
 
     override fun plus(other: NumberExpr): NumberExpr {
-        when (other) {
+        return when (other) {
             is Integer,
-            is Rational -> return this + other.evaluate(MachinePrecision)
-            is RealDouble -> return RealDouble(value + other.value)
-            is RealBigDec -> return RealDouble(value + other.toDouble())
-            is Complex -> return Complex(this) + other
+            is Rational -> this + other.evaluate(MachinePrecision)
+            is RealDouble -> RealDouble(value + other.value)
+            is RealBigDec -> RealDouble(value + other.toDouble())
+            is Complex -> Complex(this) + other
             else -> throw NotImplementedError()
         }
     }
 
     override fun times(other: NumberExpr): NumberExpr {
-        when (other) {
+        return when (other) {
             is Integer,
-            is Rational -> return this * other.evaluate(MachinePrecision)
-            is RealDouble -> return RealDouble(value * other.value)
-            is RealBigDec -> return RealDouble(value * other.toDouble())
-            is Complex -> return Complex(this) * other
+            is Rational -> this * other.evaluate(MachinePrecision)
+            is RealDouble -> RealDouble(value * other.value)
+            is RealBigDec -> RealDouble(value * other.toDouble())
+            is Complex -> Complex(this) * other
             else -> throw NotImplementedError()
         }
     }
 
     override fun div(other: NumberExpr): NumberExpr {
-        when (other) {
+        return when (other) {
             is Integer,
-            is Rational -> return this / other.evaluate(MachinePrecision)
-            is RealDouble -> return RealDouble(value / other.value)
-            is RealBigDec -> return RealDouble(value / other.toDouble())
-            is Complex -> return Complex(this) / other
+            is Rational -> this / other.evaluate(MachinePrecision)
+            is RealDouble -> RealDouble(value / other.value)
+            is RealBigDec -> RealDouble(value / other.toDouble())
+            is Complex -> Complex(this) / other
             else -> throw NotImplementedError()
         }
     }

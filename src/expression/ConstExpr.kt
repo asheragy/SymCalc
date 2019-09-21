@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.constant.*
 
 import java.util.Hashtable
 
-abstract class ConstExpr : ExprBase() {
+abstract class ConstExpr : Expr() {
     override val type: ExprType get() = ExprType.CONST
     override val precision: Int get() = InfinitePrecision
 

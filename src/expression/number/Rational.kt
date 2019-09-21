@@ -54,18 +54,16 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
 
     override fun plus(other: NumberExpr): NumberExpr {
         val result: Rational
-        when (other.numType) {
-            NumberType.INTEGER -> {
-                val norm = other.asInteger() * denominator
+        when (other) {
+            is Integer -> {
+                val norm = other * denominator
                 return Rational(numerator.plus(norm), denominator)
             }
+            is Rational -> {
+                val n1 = other.numerator * denominator
+                val n2 = numerator * other.denominator
 
-            NumberType.RATIONAL -> {
-                val div = other as Rational
-                val n1 = div.numerator * denominator
-                val n2 = numerator * div.denominator
-
-                result = Rational(n1 + n2, denominator * div.denominator)
+                result = Rational(n1 + n2, denominator * other.denominator)
                 return result.evaluate()
             }
             else -> return other + this
@@ -73,35 +71,18 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
     }
 
     override fun times(other: NumberExpr): NumberExpr {
-        val result: Rational
-
-        when (other.numType) {
-            NumberType.INTEGER -> {
-                result = Rational(numerator * other.asInteger(), denominator)
-                return result.evaluate()
-            }
-            NumberType.RATIONAL -> {
-                val t = other as Rational
-                result = Rational(numerator * t.numerator, denominator * t.denominator)
-                return result.evaluate()
-            }
-            else -> return other * this
+        return when (other) {
+            is Integer -> Rational(numerator * other.asInteger(), denominator).eval() as NumberExpr // TODO same as others if NumberExpr overrides eval this cast can go?
+            is Rational -> Rational(numerator * other.numerator, denominator * other.denominator).eval() as NumberExpr
+            else -> other * this
         }
     }
 
     override fun div(other: NumberExpr): NumberExpr {
-        val result: Rational
-        when (other.numType) {
-            NumberType.INTEGER -> {
-                result = Rational(numerator, denominator * other.asInteger())
-                return result.evaluate()
-            }
-            NumberType.RATIONAL -> {
-                val t = other as Rational
-                result = Rational(numerator * t.denominator, denominator * t.numerator)
-                return result.evaluate()
-            }
-            else -> return (Integer.ONE / other) * this
+        return when (other) {
+            is Integer -> Rational(numerator, denominator * other).eval() as NumberExpr
+            is Rational -> Rational(numerator * other.denominator, denominator * other.numerator).eval() as NumberExpr
+            else -> (Integer.ONE / other) * this
         }
     }
 

@@ -2,10 +2,9 @@ package expression
 
 import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.ExprBase
 import org.cerion.symcalc.expression.function.FunctionFactory
 
-class SymbolExpr(override val value: String) : ExprBase(), AtomExpr {
+class SymbolExpr(override val value: String) : Expr(), AtomExpr {
 
     override val type: ExprType get() = ExprType.SYMBOL
 

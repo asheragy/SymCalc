@@ -93,7 +93,7 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
                 val bottom = other * conj // This should not be a complex number
 
                 if (top.real.isInteger && bottom.isInteger)
-                    resultR = Rational(top.real.asInteger(), bottom.asInteger()).evaluate()
+                    resultR = Rational(top.real.asInteger(), bottom.asInteger()).eval() as NumberExpr
                 else
                     resultR = top.real / bottom
 
