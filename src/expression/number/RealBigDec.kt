@@ -45,15 +45,6 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
 
     private fun getRepresentedValue(): BigDecimal {
         return forcePrecision(precision)
-        /*
-        if (precision < value.precision())
-            return value.round(MathContext(precision, RoundingMode.HALF_UP))
-        else if (precision > value.precision())
-            return value.setScale(precision - (value.precision() - value.scale()), RoundingMode.HALF_UP)
-
-        return value
-
-         */
     }
 
     fun forcePrecision(newPrecision: Int): BigDecimal {
@@ -129,26 +120,19 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         }
     }
 
+    operator fun div(other: RealBigDec): RealBigDec {
+        val newPrecision = min(precision, other.precision)
+        val mc = MathContext(getStoredPrecision(newPrecision), RoundingMode.HALF_UP)
+        return RealBigDec( this.value.divide(other.value, mc), newPrecision)
+    }
+
     override fun div(other: NumberExpr): NumberExpr {
-        when (other) {
-            is Integer -> {
-                val n = BigDecimal(other.value)
-                return RealBigDec(value.divide(n, MathContext(precision, RoundingMode.HALF_UP)))
-            }
-
-            is Rational -> return (this * other.denominator) / other.numerator
-            is RealDouble -> return RealDouble(toDouble() / other.value)
-            is RealBigDec -> {
-                val newPrecision = min(precision, other.precision)
-
-                val mc = MathContext(getStoredPrecision(newPrecision), RoundingMode.HALF_UP)
-                val result = RealBigDec( this.value.divide(other.value, mc), newPrecision)
-
-                return result
-                //return evaluatePrecision(result, this, other)
-            }
-
-            is Complex -> return Complex(this) / other
+        return when (other) {
+            is Integer -> RealBigDec(value.divide(BigDecimal(other.value), MathContext(getStoredPrecision(precision), RoundingMode.HALF_UP)), precision)
+            is Rational -> (this * other.denominator) / other.numerator
+            is RealDouble -> RealDouble(toDouble() / other.value)
+            is RealBigDec -> this / other
+            is Complex -> Complex(this) / other
             else -> throw NotImplementedError()
         }
     }
@@ -215,17 +199,5 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         }
 
         throw IterationLimitExceeded()
-    }
-
-    private fun evaluatePrecision(result: RealBigDec, a: RealBigDec, b: RealBigDec): RealBigDec {
-        val min = min(a.value.precision(), b.value.precision())
-        if (min == 0 && a.isZero || b.isZero)
-            return result
-
-        var ret = RealBigDec(result.value.round(MathContext(min, RoundingMode.HALF_UP)))
-        if (result.precision < min)
-            ret = RealBigDec(result.value.setScale(min-1, RoundingMode.HALF_UP))
-
-        return ret
     }
 }

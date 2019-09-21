@@ -4,7 +4,6 @@ import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Test
@@ -156,7 +155,13 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun dividePrecision() {
-        assertEquals("2.00`3", (RealBigDec("4.00") / RealBigDec("2.00")).toString())
+        val n1 = (RealBigDec("4.00") / RealBigDec("2.00"))
+        assertEquals("2.00`3", n1.toString())
+        assertEquals(1, n1.value.precision())
+
+        val n2 = (RealBigDec("2.00") / RealBigDec("3.01"))
+        assertEquals("0.664`3", n2.toString())
+        assertEquals(20, n2.value.precision())
     }
 
     @Test

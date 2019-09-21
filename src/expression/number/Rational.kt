@@ -1,7 +1,5 @@
 package org.cerion.symcalc.expression.number
 
-import java.math.RoundingMode
-
 class Rational constructor(val numerator: Integer, val denominator: Integer = Integer.ONE) : NumberExpr() {
 
     override val type: ExprType get() = ExprType.NUMBER

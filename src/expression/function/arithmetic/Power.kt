@@ -191,8 +191,8 @@ private fun RealDouble.power(other: NumberExpr): NumberExpr {
 private fun RealBigDec.power(other: NumberExpr): NumberExpr {
     when (other) {
         is Integer -> {
-            val number = value.pow(other.intValue(), MathContext(precision, RoundingMode.HALF_UP))
-            return RealBigDec(number)
+            val number = value.pow(other.intValue(), MathContext(RealBigDec.getStoredPrecision(precision), RoundingMode.HALF_UP))
+            return RealBigDec(number, precision)
         }
         is Rational -> return this.power(other.toPrecision(precision))
         is RealDouble -> return RealDouble(toDouble().pow(other.value))
