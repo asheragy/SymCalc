@@ -22,7 +22,7 @@ class Tally(vararg e: Expr) : FunctionExpr(*e) {
                 val (key, value) = Pair(keyval[0], keyval[1].asInteger())
 
                 if (e.equals(key)) {
-                    val v2 = Plus(value, Integer.ONE).eval().asInteger()
+                    val v2 = value + Integer.ONE
                     keyval = ListExpr(e, v2)
                     result[j] = keyval
                     found = true

@@ -2,7 +2,6 @@ package expression.number
 
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
@@ -108,7 +107,7 @@ class RealBigDecTest : NumberTestBase() {
         assertEquals(RealBigDec("0.99"), a / b)
 
         // using N()
-        assertEquals(RealBigDec("5.8599"), Plus(N(E(), Integer(10)), N(Pi(), Integer(5))).eval())
+        assertEquals(RealBigDec("5.8599"), N(E(), Integer(10)) + N(Pi(), Integer(5)))
     }
 
     @Test
@@ -118,7 +117,7 @@ class RealBigDecTest : NumberTestBase() {
 
         // Different internal precision
         assertEquals(RealBigDec("0.67"), RealBigDec("0.3333333333", 2) + RealBigDec("0.3333333333", 10))
-        assertEquals(RealBigDec("0.67"), Plus(N(Rational(1,3),Integer(2)), N(Rational(1,3),Integer(10))).eval())
+        assertEquals(RealBigDec("0.67"), N(Rational(1,3),Integer(2)) + N(Rational(1,3),Integer(10)))
     }
 
     @Test

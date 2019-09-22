@@ -57,7 +57,7 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
         return when (other) {
             is Integer -> {
                 val norm = other * denominator
-                Rational(numerator.plus(norm), denominator)
+                Rational(numerator.plus(norm), denominator).eval()
             }
             is Rational -> {
                 val n1 = other.numerator * denominator

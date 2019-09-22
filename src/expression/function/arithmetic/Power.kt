@@ -83,8 +83,7 @@ class Power(vararg e: Expr) : FunctionExpr(*e) {
         val sin = Sin(clog)
         val pow = Power(a, b)
 
-        val result = Times(pow, Plus(cos, Times(I(), sin)))
-        val e = result.eval()
+        val e = Times(pow, cos + Times(I(), sin)).eval()
 
         // If not evaluated fully return the original expression
         if (e is NumberExpr)

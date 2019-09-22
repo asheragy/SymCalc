@@ -1,8 +1,6 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.function.arithmetic.Divide
-import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.core.Hold
 import org.cerion.symcalc.expression.function.core.N
 import org.junit.jupiter.api.Test
@@ -99,26 +97,26 @@ class RationalTest : NumberTestBase() {
     fun addition() {
         //Integer
         assertAdd(Integer(1), Rational(1, 2), Rational(1, 2))
-        assertEquals(Integer(1), Plus(Rational(1, 2), Rational(2, 4)).eval())
-        assertEquals(Integer(0), Plus(Rational(-1, 2), Rational(2, 4)).eval())
-        assertEquals(Integer.TWO, Plus(Rational(1, 1), Integer.ONE).eval())
+        assertEquals(Integer(1), Rational(1, 2) + Rational(2, 4))
+        assertEquals(Integer(0), Rational(-1, 2) + Rational(2, 4))
+        assertEquals(Integer.TWO, Rational(1, 1) + Integer.ONE)
 
         //Rational
-        assertEquals(Rational(3, 2), Plus(Rational(1, 1), Rational(1, 2)).eval())
-        assertEquals(Rational(1, 2), Plus(Rational(-1, 2), Integer.ONE).eval())
+        assertEquals(Rational(3, 2), Rational(1, 1) + Rational(1, 2))
+        assertEquals(Rational(1, 2), Rational(-1, 2) + Integer.ONE)
     }
 
     @Test
     fun subtract() {
         //Integer
-        assertEquals(Integer.ZERO, Subtract(Rational(1, 2), Rational(1, 2)).eval())
-        assertEquals(Integer.ZERO, Subtract(Rational(1, 2), Rational(2, 4)).eval())
-        assertEquals(Integer.TWO, Subtract(Rational(5, 2), Rational(1, 2)).eval())
-        assertEquals(Integer(-5), Subtract(Rational(1, 2), Rational(11, 2)).eval())
+        assertEquals(Integer.ZERO, Rational(1, 2) - Rational(1, 2))
+        assertEquals(Integer.ZERO, Rational(1, 2) - Rational(2, 4))
+        assertEquals(Integer.TWO, Rational(5, 2) - Rational(1, 2))
+        assertEquals(Integer(-5), Rational(1, 2) - Rational(11, 2))
 
         //Rational
-        assertEquals(Rational(1, 2), Subtract(Rational(1, 1), Rational(1, 2)).eval())
-        assertEquals(Rational(-1, 2), Subtract(Rational(1, 2), Integer.ONE).eval())
+        assertEquals(Rational(1, 2), Rational(1, 1) - Rational(1, 2))
+        assertEquals(Rational(-1, 2), Rational(1, 2) - Integer.ONE)
     }
 
     @Test

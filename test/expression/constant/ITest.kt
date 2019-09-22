@@ -26,7 +26,7 @@ class ITest {
 
     @Test
     fun arithmetic() {
-        assertEquals(Complex(2, 1), Plus(Integer(2), I()).eval())
+        assertEquals(Complex(2, 1), Integer(2) + I())
         assertEquals(Complex(0, 5), Times(Integer(5), I()).eval())
     }
 }

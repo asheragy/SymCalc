@@ -155,16 +155,16 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
         if (N.precision < z.precision)
             a = z.toPrecision(N.precision) as Complex
 
-        val theta = ArcTan(Divide(a.img, a.real)).eval()
-        val r = Sqrt(Plus(a.real.square(), a.img.square())).eval()
-        val rN = Power(r, N).eval()
-        val cos = Cos(Times(theta, N)).eval()
-        val sin = Sin(Times(theta, N)).eval()
+        val theta = ArcTan(a.img / a.real)
+        val r = Sqrt(a.real.square() + a.img.square())
+        val rN = Power(r, N)
+        val cos = Cos(Times(theta, N))
+        val sin = Sin(Times(theta, N))
 
         val real = Times(rN, cos)
         val img = Times(rN, sin)
 
-        return Plus(real, Times(img,I())).eval() as NumberExpr
+        return (real + Times(img,I())) as NumberExpr
     }
 
     override fun compareTo(other: NumberExpr): Int {

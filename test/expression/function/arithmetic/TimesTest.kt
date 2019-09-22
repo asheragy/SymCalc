@@ -76,8 +76,8 @@ class TimesTest {
         val y = RealBigDec("0.93267057")
         val z=  RealBigDec("0.3607293")
         // x * (y + iz)
-        assertEquals(Complex("1.5366205", "0.5943192"), Times(x, Plus(y, Times(I(), z))).eval())
-        assertEquals(Complex("1.5366205", "0.5943192"), Plus(Times(x, y), Times(I(), x, z)).eval())
+        assertEquals(Complex("1.5366205", "0.5943192"), Times(x, y + Times(I(), z)).eval())
+        assertEquals(Complex("1.5366205", "0.5943192"), Times(x, y) + Times(I(), x, z))
     }
 
     @Test

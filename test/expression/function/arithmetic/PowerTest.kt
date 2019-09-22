@@ -57,7 +57,7 @@ class PowerTest {
         assertEquals(Integer(-1), Power(E(), Times(I(), Pi())).eval())
 
         // Variations
-        assertEquals(Times(Integer(-1),Power(E(), Integer(5))), Power(E(), Plus(Integer(5), Times(I(), Pi()))).eval())
+        assertEquals(Times(Integer(-1),Power(E(), Integer(5))), Power(E(), Integer(5) + Times(I(), Pi())).eval())
         assertEquals(Integer.ONE, Power(E(), Times(Integer.TWO, I(), Pi())).eval())
         assertEquals(Complex(0,1), Power(E(), Times(I(), Divide(Pi(), Integer.TWO))).eval())
         assertEquals(Complex(0,-1), Power(E(), Times(I(), Times(Pi(), Rational(3,2)))).eval())

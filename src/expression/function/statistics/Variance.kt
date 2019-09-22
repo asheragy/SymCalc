@@ -6,7 +6,6 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Power
-import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.number.Integer
 
 class Variance(vararg e: Expr) : FunctionExpr(*e) {
@@ -16,7 +15,7 @@ class Variance(vararg e: Expr) : FunctionExpr(*e) {
         val mean = Mean(list).eval()
 
         // Sum of (a - b)^2
-        val sum = Plus(*list.args.map { Power(Subtract(it, mean), Integer.TWO).eval() }.toTypedArray())
+        val sum = Plus(*list.args.map { Power(it - mean, Integer.TWO).eval() }.toTypedArray())
 
         val result = Divide(sum, Integer(list.size - 1))
         return result.eval()

@@ -10,8 +10,8 @@ internal class ComplexInfinityTest {
 
     @Test
     fun arithmetic() {
-        assertEquals(ComplexInfinity(), Plus(Integer(5), ComplexInfinity()).eval())
-        assertEquals(ComplexInfinity(), Subtract(Integer(5), ComplexInfinity()).eval())
+        assertEquals(ComplexInfinity(), Integer(5) + ComplexInfinity())
+        assertEquals(ComplexInfinity(), Integer(5) - ComplexInfinity())
         assertEquals(ComplexInfinity(), Times(Integer(5), ComplexInfinity()).eval())
         assertEquals(ComplexInfinity(), Divide(ComplexInfinity(), Integer(5)).eval())
     }

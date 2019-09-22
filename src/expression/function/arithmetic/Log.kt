@@ -22,7 +22,7 @@ class Log(vararg e: Expr) : FunctionExpr(*e) {
 
         if (n is NumberExpr) {
             if (n.isNegative)
-                return Plus(PI_I, Log(n.unaryMinus())).eval()
+                return PI_I + Log(n.unaryMinus())
 
             if (n is Rational && n < Integer.ONE)
                 return Times(Integer.NEGATIVE_ONE, Log(n.reciprocal()))

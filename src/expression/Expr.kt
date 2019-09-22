@@ -3,6 +3,8 @@ package org.cerion.symcalc.expression
 import expression.function.list.ConstantArray
 import org.cerion.symcalc.Environment
 import org.cerion.symcalc.expression.function.FunctionExpr
+import org.cerion.symcalc.expression.function.arithmetic.Plus
+import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.parser.Lexer
@@ -115,6 +117,9 @@ abstract class Expr {
 
     // Extensions for convenience
     fun toList(size: Int): ListExpr = ConstantArray(this, Integer(size)).eval().asList()
+
+    operator fun plus(other: Expr): Expr = Plus(this, other).eval()
+    operator fun minus(other: Expr): Expr = Subtract(this, other).eval()
 
     override fun hashCode(): Int {
         var result = 0

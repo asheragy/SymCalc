@@ -54,11 +54,11 @@ class PlusTest {
 
     @Test
     fun multipleTerms_Times() {
-        assertEquals(Times(Pi(), Integer.TWO), Plus(Pi(), Pi()).eval())
+        assertEquals(Times(Pi(), Integer.TWO), Pi() + Pi())
     }
 
     @Test
     fun nestedTimes() {
-        assertEquals(Times(Integer(3), Pi()), Plus(Times(Integer(2), Pi()), Pi()).eval())
+        assertEquals(Times(Integer(3), Pi()), Times(Integer(2), Pi()) + Pi())
     }
 }

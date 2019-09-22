@@ -3,11 +3,13 @@ package org.cerion.symcalc.expression.function.calculus
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.function.trig.*
-import org.cerion.symcalc.expression.number.*
+import org.cerion.symcalc.expression.function.trig.Cos
+import org.cerion.symcalc.expression.function.trig.Sin
+import org.cerion.symcalc.expression.number.Complex
+import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -34,12 +36,10 @@ class DTest {
     @Test
     fun basic() {
         // D(1 + x) = 1
-        assertEquals(Integer.ONE,
-                D(Plus(VarExpr("x"), VarExpr("y"), Integer(5)), VarExpr("x")).eval())
+        assertEquals(Integer.ONE, D(VarExpr("x") + VarExpr("y") + Integer(5), VarExpr("x")).eval())
 
         // D(x - 5) = 1
-        assertEquals(Integer.ONE,
-                D(Subtract(VarExpr("x"), Integer(5)), VarExpr("x")).eval())
+        assertEquals(Integer.ONE, D(VarExpr("x") - Integer(5), VarExpr("x")).eval())
     }
 
     @Test

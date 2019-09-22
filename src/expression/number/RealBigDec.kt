@@ -7,7 +7,6 @@ import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Exp
 import org.cerion.symcalc.expression.function.arithmetic.Log
-import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
 import org.nevec.rjm.BigDecimalMath
@@ -174,7 +173,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
             is RealDouble -> return RealDouble(toDouble().pow(other.value))
             is RealBigDec -> {
                 if (this.isNegative)
-                    return Exp(Times(other, Plus(Log(this.unaryMinus()), Times(I(), Pi())))).eval() as NumberExpr
+                    return Exp(Times(other, Log(this.unaryMinus()) + Times(I(), Pi()))).eval() as NumberExpr
 
                 return this.pow(other)
             }

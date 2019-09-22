@@ -59,8 +59,8 @@ class FunctionExprTest {
 
     @Test
     fun listable_differentSizes() {
-        assertEquals(Expr.ExprType.ERROR, Plus(ListExpr(1,2,3), ListExpr(4,5)).eval().type)
-        assertEquals(Expr.ExprType.ERROR, Subtract(ListExpr(1,2), ListExpr(4,5,6)).eval().type)
+        assertEquals(Expr.ExprType.ERROR, (ListExpr(1,2,3) + ListExpr(4,5)).type)
+        assertEquals(Expr.ExprType.ERROR, (ListExpr(1,2) - ListExpr(4,5,6)).type)
     }
 
 }
