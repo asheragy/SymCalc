@@ -1,6 +1,10 @@
 package org.cerion.symcalc.expression.number
 
+import expression.constant.I
 import org.cerion.symcalc.expression.AtomExpr
+import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.expression.function.arithmetic.*
+import kotlin.math.pow
 
 class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
 
@@ -59,6 +63,23 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
             is RealDouble -> RealDouble(value / other.value)
             is RealBigDec -> RealDouble(value / other.toDouble())
             is Complex -> Complex(this) / other
+            else -> throw NotImplementedError()
+        }
+    }
+
+    override fun pow(other: NumberExpr): NumberExpr {
+        when (other) {
+            is Integer,
+            is Rational -> return this.pow(other.toPrecision(precision))
+            is RealDouble -> {
+                val pow = value.pow(other.value)
+                if (pow.isNaN() && value < 0)
+                    return Exp(Times(other, Plus(Log(this.unaryMinus()), Times(I(), Pi())))).eval() as NumberExpr
+
+                return RealDouble(pow)
+            }
+            is RealBigDec -> return RealDouble(value.pow(other.toDouble()))
+            is Complex -> return Power(this, other).eval() as NumberExpr
             else -> throw NotImplementedError()
         }
     }

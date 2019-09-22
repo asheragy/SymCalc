@@ -27,8 +27,8 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract operator fun plus(other: NumberExpr): NumberExpr
     abstract operator fun times(other: NumberExpr): NumberExpr
     abstract operator fun div(other: NumberExpr): NumberExpr
-    // TODO add pow but only return numberExpr, implementation can throw exceptions for some cases
     abstract operator fun unaryMinus(): NumberExpr
+    abstract infix fun pow(other: NumberExpr): NumberExpr
 
     operator fun minus(other: NumberExpr): NumberExpr {
         return this + other.unaryMinus()

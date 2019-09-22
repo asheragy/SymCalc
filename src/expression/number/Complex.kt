@@ -4,8 +4,9 @@ import expression.constant.I
 import expression.function.trig.ArcTan
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
-import org.cerion.symcalc.expression.function.arithmetic.Power
-import org.cerion.symcalc.expression.function.arithmetic.Times
+import org.cerion.symcalc.expression.function.arithmetic.*
+import org.cerion.symcalc.expression.function.trig.Cos
+import org.cerion.symcalc.expression.function.trig.Sin
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -138,6 +139,28 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
             return result
 
         return Power(this, z)
+    }
+
+    override fun pow(other: NumberExpr): NumberExpr {
+        if (other is Complex)
+            throw UnsupportedOperationException()
+
+        val z = this
+        var a = this
+        val N = other
+        if (N.precision < z.precision)
+            a = z.toPrecision(N.precision) as Complex
+
+        val theta = ArcTan(Divide(a.img, a.real)).eval()
+        val r = Sqrt(Plus(a.real.square(), a.img.square())).eval()
+        val rN = Power(r, N).eval()
+        val cos = Cos(Times(theta, N)).eval()
+        val sin = Sin(Times(theta, N)).eval()
+
+        val real = Times(rN, cos)
+        val img = Times(rN, sin)
+
+        return Plus(real, Times(img,I())).eval() as NumberExpr
     }
 
     override fun compareTo(other: NumberExpr): Int {

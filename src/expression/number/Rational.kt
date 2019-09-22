@@ -1,5 +1,7 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.expression.function.arithmetic.Divide
+
 class Rational constructor(val numerator: Integer, val denominator: Integer = Integer.ONE) : NumberExpr() {
 
     override val type: ExprType get() = ExprType.NUMBER
@@ -79,6 +81,19 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
             is Integer -> Rational(numerator, denominator * other).eval()
             is Rational -> Rational(numerator * other.denominator, denominator * other.numerator).eval()
             else -> (Integer.ONE / other) * this
+        }
+    }
+
+    override fun pow(other: NumberExpr): NumberExpr {
+        return when (other) {
+            is Integer -> {
+                val top = numerator.pow(other) // These could be rational on negative integer
+                val bottom = denominator.pow(other)
+                Divide(top, bottom).eval() as NumberExpr
+            }
+            is RealDouble -> this.toPrecision(other.precision).pow(other)
+            is RealBigDec -> this.toPrecision(other.precision).pow(other)
+            else -> throw UnsupportedOperationException()
         }
     }
 

@@ -113,35 +113,6 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         }
     }
 
-    //IntegerNum Specific Functions
-    fun gcd(N: Integer): Integer = Integer(value.gcd(N.value))
-
-    fun powerMod(b: Integer, m: Integer): Integer {
-        //Assuming all integers at this point since MathFunc needs to check that
-        val num = value
-        val exp = b.value
-        val mod = m.value
-
-        return Integer(num.modPow(exp, mod))
-    }
-
-    fun primeQ(): Boolean = value.isProbablePrime(5)
-
-    operator fun inc(): Integer = Integer(value.inc())
-    operator fun dec(): Integer = Integer(value.minus(BigInteger.ONE))
-    operator fun rem(N: Integer): Integer = Integer(value.mod(N.value))
-
-    override fun compareTo(other: NumberExpr): Int {
-        return when (other) {
-            is Integer -> value.compareTo(other.value)
-            is Rational -> this.compareTo(other.toPrecision(MachinePrecision))
-            is RealDouble,
-            is RealBigDec -> toPrecision(other.precision).compareTo(other)
-            is Complex -> Complex(this).compareTo(other)
-            else -> throw NotImplementedError()
-        }
-    }
-
     fun pow(other: Integer): NumberExpr {
         val intVal = other.asInteger().value.toInt()
         return if (intVal < 0)
@@ -150,7 +121,7 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
             Integer(value.pow(intVal))
     }
 
-    fun pow(b: Rational): Expr {
+    infix fun pow(b: Rational): Expr {
         if (this.isOne)
             return this
 
@@ -205,5 +176,43 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         }
 
         return Times(*items.toTypedArray()).eval()
+    }
+
+    override fun pow(other: NumberExpr): NumberExpr {
+        return when (other) {
+            is Integer -> this.pow(other)
+            is RealDouble,
+            is RealBigDec -> this.toPrecision(other.precision).pow(other)
+            else -> throw UnsupportedOperationException()
+        }
+    }
+
+    //IntegerNum Specific Functions
+    fun gcd(N: Integer): Integer = Integer(value.gcd(N.value))
+
+    fun powerMod(b: Integer, m: Integer): Integer {
+        //Assuming all integers at this point since MathFunc needs to check that
+        val num = value
+        val exp = b.value
+        val mod = m.value
+
+        return Integer(num.modPow(exp, mod))
+    }
+
+    fun primeQ(): Boolean = value.isProbablePrime(5)
+
+    operator fun inc(): Integer = Integer(value.inc())
+    operator fun dec(): Integer = Integer(value.minus(BigInteger.ONE))
+    operator fun rem(N: Integer): Integer = Integer(value.mod(N.value))
+
+    override fun compareTo(other: NumberExpr): Int {
+        return when (other) {
+            is Integer -> value.compareTo(other.value)
+            is Rational -> this.compareTo(other.toPrecision(MachinePrecision))
+            is RealDouble,
+            is RealBigDec -> toPrecision(other.precision).compareTo(other)
+            is Complex -> Complex(this).compareTo(other)
+            else -> throw NotImplementedError()
+        }
     }
 }

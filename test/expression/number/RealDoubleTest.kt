@@ -1,5 +1,6 @@
 package expression.number
 
+import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -71,5 +72,32 @@ class RealDoubleTest : NumberTestBase() {
         assertEquals(RealDouble(2.0), RealDouble(5.0) / RealDouble(2.5))
         assertEquals(RealDouble(0.5), RealDouble(5.0) / RealBigDec(BigDecimal.TEN))
         assertEquals(Complex(RealDouble(5.0), RealDouble(-10.0)), RealDouble(50.0) / Complex(2,4))
+    }
+
+    @Test
+    fun pow() {
+        // Integer
+        assertEquals(RealDouble(625.0), RealDouble(5.0) pow Integer(4))
+
+        // Rational
+        assertEquals(RealDouble(2.23606797749979), RealDouble(5.0) pow Rational(1,2))
+        assertEquals(RealDouble(2040886.0816112224), RealDouble(1.2345) pow Rational(12345,179))
+        assertEquals(RealDouble(4.89983252377579E-7), RealDouble(1.2345) pow Rational(-12345,179))
+        assertEquals(RealDouble(1.3716289453146575), RealDouble(1.2345) pow Rational(3,2))
+
+        // Double
+        assertEquals(RealDouble(55.90169943749474), RealDouble(5.0) pow RealDouble(2.5))
+
+        // BigDec
+        assertEquals(RealDouble(36.33783888017471), RealDouble(3.14) pow RealBigDec("3.14"))
+        assertEquals(RealDouble(125.0), RealDouble(5.0) pow RealBigDec("3.0"))
+    }
+
+    @Test
+    fun pow_negativeRoot() {
+        assertEquals(Complex(1.224646799147353E-16,1.9999999999999998), RealDouble(-4.0) pow RealDouble(0.5))
+        assertEquals(Complex(1.0, 1.7320508075688767), RealDouble(-8.0) pow RealDouble(1/3.0))
+        assertEquals(Complex(-2.5196414962461827E-16, -1.3716289453146575), RealDouble(-1.2345) pow RealDouble(1.5))
+
     }
 }

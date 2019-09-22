@@ -4,6 +4,7 @@ import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
+import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Test
@@ -165,14 +166,49 @@ class RealBigDecTest : NumberTestBase() {
     }
 
     @Test
+    fun pow_toInteger() {
+        assertEquals(RealBigDec("1.0002468"), RealBigDec("1.0001234") pow Integer.TWO)
+        assertEquals(RealBigDec("93648.04760"), RealBigDec("3.141592654") pow Integer(10))
+        assertEquals(RealBigDec("8769956796.0826994748"), (N(Pi(),Integer(20)).eval() as NumberExpr) pow Integer(20))
+        assertEquals(RealBigDec("3.40282366920938463463374607431768211E+38"), RealBigDec("2.00000000000000000000000000000000000") pow Integer(128))
+    }
+
+    @Test
+    fun pow_toRational() {
+        assertEquals(RealBigDec("2"), RealBigDec("4.0") pow Rational.HALF)
+        assertEquals(RealBigDec("1.00006170"), RealBigDec("1.0001234") pow Rational(1,2))
+
+        assertEquals(RealBigDec("1.587"), RealBigDec("4.000") pow Rational(1,3))
+        assertEquals(RealBigDec("0.001171"), RealBigDec("0.0001234") pow Rational(3,4))
+        assertEquals(RealBigDec("854.1"), RealBigDec("0.0001234") pow Rational(-3,4))
+    }
+
+    @Test
     fun pow() {
         assertEquals(RealBigDec("36.3"), power("3.14", "3.14"))
         assertEquals(RealBigDec("36.455"), power("3.1415", "3.1415"))
         assertEquals(RealBigDec("36.4621596072079117709908260227"), power("3.14159265358979323846264338328", "3.14159265358979323846264338328"))
         assertEquals(RealBigDec("36.459"), power("3.1415", "3.14159265358979323846264338328"))
         assertEquals(RealBigDec("36.458"), power("3.14159265358979323846264338328", "3.1415"))
-
         assertEquals(RealBigDec("13.2696645139"), power("3.00000000000","2.35340583128859694839201928385968473749596868726265"))
+        assertEquals(RealBigDec("0.027431"), power("3.1415", "-3.1415"))
+
+        // Double
+        assertEquals(RealDouble(36.33783888017471), Power(RealBigDec("3.14"), RealDouble(3.14)).eval())
+    }
+
+    @Test
+    fun pow_negativeExp() {
+        assertEquals(RealBigDec("0.0275"), power("3.14", "-3.14"))
+        assertEquals(RealBigDec("0.027431"), power("3.1415", "-3.1415"))
+    }
+
+    @Test
+    fun pow_negativeRoot() {
+        // TODO_LP look more into 1st and 3rd real number, should be zero
+        assertEquals(Complex("-2.1384E-19", "2.0000"), Power(RealBigDec("-4.0000"), Rational.HALF).eval())
+        assertEquals(Complex("1.0000", "1.7321"), Power(RealBigDec("-8.0000"), Rational.THIRD).eval())
+        assertEquals(Complex("-5.3242E-19", "-1.3716"), Power(RealBigDec("-1.2345"), Rational(3,2)).eval())
     }
 
     @Test
@@ -191,19 +227,7 @@ class RealBigDecTest : NumberTestBase() {
         )
     }
 
-    @Test
-    fun pow_negativeExp() {
-        assertEquals(RealBigDec("0.0275"), power("3.14", "-3.14"))
-        assertEquals(RealBigDec("0.027431"), power("3.1415", "-3.1415"))
-    }
-
-    @Test
-    fun pow_negativeBase() {
-        // Expected for now...
-        assertFailsWith<OperationException> { power("-3.14", "3.14") }
-    }
-
     private fun power(a: String, b: String): NumberExpr {
-        return RealBigDec(a).pow(RealBigDec(b))
+        return RealBigDec(a) pow RealBigDec(b)
     }
 }

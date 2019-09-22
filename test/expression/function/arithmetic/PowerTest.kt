@@ -85,30 +85,30 @@ class PowerTest {
     fun numberExpr_pow() {
         // More tests in corresponding NumberExpr class, only 1 basic here per type to verify Power() calls it
 
-        // Int to Int
+        // Int
         assertEquals(Integer(9), Power(Integer(3), Integer.TWO).eval())
-
-        // Int to Rational
         assertEquals(Integer(7), Power(Integer(16807), Rational(1,5)).eval())
+        assertEquals(RealDouble(15.588457268119896), Power(Integer(3), RealDouble(2.5)).eval())
+
+        // Rational
+        assertEquals(Rational(1,8), Power(Rational.HALF, Integer(3)).eval())
+        assertEquals(RealDouble(0.1088188204120155), Power(Rational.HALF, RealDouble(3.2)).eval())
+
+        // Double
+        assertEquals(RealDouble(625.0), Power(RealDouble(5.0), Integer(4)).eval())
+        assertEquals(RealDouble(2.23606797749979), Power(RealDouble(5.0), Rational(1,2)).eval())
+        assertEquals(RealDouble(55.90169943749474), Power(RealDouble(5.0), RealDouble(2.5)).eval())
+        assertEquals(RealDouble(125.0), Power(RealDouble(5.0), RealBigDec("3.0")).eval())
+
+        // BigDec
+        assertEquals(RealBigDec("1.0002468"), Power(RealBigDec("1.0001234"), Integer.TWO).eval())
+        assertEquals(RealBigDec("2"), Power(RealBigDec("4.0"), Rational.HALF).eval())
+        assertEquals(RealDouble(36.33783888017471), Power(RealBigDec("3.14"), RealDouble(3.14)).eval())
+        assertEquals(RealBigDec("13.26967"), Power(RealBigDec("3.000001"), RealBigDec("2.35340583128859694839201928385968473749596868726265")).eval())
 
         // Complex to Int
         assertEquals(Complex(Rational(2823, 16), Rational(6121, 32)), Power(Complex(Integer(3), Rational.HALF), Integer(5)).eval())
         assertEquals(Complex(0.0, 64.36342999999998), Power(Complex(Integer(0), RealDouble(2.3)), Integer(5)).eval())
-
-        // BigDec to BigDec
-        assertEquals(RealBigDec("13.26967"), Power(RealBigDec("3.000001"), RealBigDec("2.35340583128859694839201928385968473749596868726265")).eval())
-    }
-
-    @Test
-    fun integerToReal() {
-        assertEquals(RealDouble(15.588457268119896), Power(Integer(3), RealDouble(2.5)).eval())
-        assertEquals(RealDouble(0.001520667150293348), Power(Integer(223), RealDouble(-1.2)).eval())
-        assertEquals(RealDouble(5888.436553555892), Power(Integer("100000000000000000000000000000"), RealDouble(0.13)).eval())
-        assertEquals(RealDouble(1.1437436793461719E257), Power(Integer(123), RealDouble(123.0)).eval())
-        assertEquals(RealDouble(31.489135652454948), Power(Integer(3), RealDouble(3.14)).eval())
-
-        // Big Decimal
-        assertEquals(RealBigDec("31.544280700197543962"), Power(Integer(3), RealBigDec("3.1415926535897932385")).eval())
     }
 
     @Test
@@ -125,15 +125,6 @@ class PowerTest {
     }
 
     @Test
-    fun rationalToInteger() {
-        assertEquals(Rational(1,8), Power(Rational.HALF, Integer(3)).eval())
-        assertEquals(Rational(1048576, 9765625), Power(Rational(4,5), Integer(10)).eval())
-        assertEquals(Rational(9765625, 1048576), Power(Rational(4,5), Integer(-10)).eval())
-        assertEquals(Rational(Integer.ONE, Integer("4294967296")), Power(Rational(1,2), Integer(32)).eval())
-        assertEquals(Rational(Integer.ONE, Integer("340282366920938463463374607431768211456")), Power(Rational(1,2), Integer(128)).eval())
-    }
-
-    @Test
     fun rationalToRational() {
         assertEquals(Power(Integer.TWO, Rational.HALF.unaryMinus()), Power(Rational(1,2), Rational(1,2)).eval())
         assertEquals(Rational(4,9), Power(Rational(8,27), Rational(2,3)).eval())
@@ -141,16 +132,6 @@ class PowerTest {
         assertEquals(Rational.HALF, Power(Rational(1,4), Rational(1,2)).eval())
 
         assertEquals(Power(Integer.TWO, Rational.HALF), Power(Rational.HALF, Rational.HALF.unaryMinus()).eval())
-    }
-
-    @Test
-    fun rationalToReal() {
-        assertEquals(RealDouble(0.1088188204120155), Power(Rational.HALF, RealDouble(3.2)).eval())
-        assertEquals(RealDouble(9.18958683997628), Power(Rational.HALF, RealDouble(-3.2)).eval())
-
-        assertEquals(RealBigDec("0.11332"), Power(Rational.HALF, RealBigDec("3.1415")).eval())
-        assertEquals(RealBigDec("0.1133147323"), Power(Rational.HALF, RealBigDec("3.141592654")).eval())
-        assertEquals(RealBigDec("8.82497783"), Power(Rational.HALF, RealBigDec("-3.141592654")).eval())
     }
 
     @Test
@@ -166,70 +147,20 @@ class PowerTest {
     }
 
     @Test
-    fun realToInteger() {
-        assertEquals(RealDouble(625.0), Power(RealDouble(5.0), Integer(4)).eval())
-
-        // BigDecimal
-        assertEquals(RealBigDec("1.0002468"), Power(RealBigDec("1.0001234"), Integer.TWO).eval())
-        assertEquals(RealBigDec("93648.04760"), Power(RealBigDec("3.141592654"), Integer(10)).eval())
-        assertEquals(RealBigDec("8769956796.0826994748"), Power(N(Pi(),Integer(20)), Integer(20)).eval())
-        assertEquals(RealBigDec("3.40282366920938463463374607431768211E+38"), Power(RealBigDec("2.00000000000000000000000000000000000"), Integer(128)).eval())
-    }
-
-    @Test
-    fun realToRational() {
-        assertEquals(RealDouble(2.23606797749979), Power(RealDouble(5.0), Rational(1,2)).eval())
-        assertEquals(RealDouble(2040886.0816112224), Power(RealDouble(1.2345), Rational(12345,179)).eval())
-        assertEquals(RealDouble(4.89983252377579E-7), Power(RealDouble(1.2345), Rational(-12345,179)).eval())
-        assertEquals(RealDouble(1.3716289453146575), Power(RealDouble(1.2345), Rational(3,2)).eval())
-
-        assertEquals(RealBigDec("2"), Power(RealBigDec("4.0"), Rational.HALF).eval())
-        assertEquals(RealBigDec("1.00006170"), Power(RealBigDec("1.0001234"), Rational(1,2)).eval()) // square root
-
-        assertEquals(RealBigDec("1.587"), Power(RealBigDec("4.000"), Rational(1,3)).eval())
-        assertEquals(RealBigDec("0.001171"), Power(RealBigDec("0.0001234"), Rational(3,4)).eval())
-        assertEquals(RealBigDec("854.1"), Power(RealBigDec("0.0001234"), Rational(-3,4)).eval())
-    }
-
-    @Test
     fun realToRational_storedPrecision() {
         val pow = Power(RealBigDec("2.000001"), Rational(1,3)).eval() as RealBigDec
         assertEquals(BigDecimal("1.2599212598816798161"), pow.value)
     }
 
     @Test
-    fun realToReal() {
-        // Double/Double
-        assertEquals(RealDouble(55.90169943749474), Power(RealDouble(5.0), RealDouble(2.5)).eval())
-        assertEquals(RealDouble(125.0), Power(RealDouble(5.0), RealBigDec("3.0")).eval())
-
-        // Double/BigDecimal
-        assertEquals(RealDouble(36.33783888017471), Power(RealBigDec("3.14"), RealDouble(3.14)).eval())
-        assertEquals(RealDouble(36.33783888017471), Power(RealDouble(3.14), RealBigDec("3.14")).eval())
-
-        // BigDec/BigDec
-        assertEquals(RealBigDec("36.455"), Power(RealBigDec("3.1415"), RealBigDec("3.1415")).eval())
-        assertEquals(RealBigDec("0.027431"), Power(RealBigDec("3.1415"), RealBigDec("-3.1415")).eval())
-    }
-
-    @Test
     fun negative_toRoot() {
+        // Integer
         assertEquals(Complex(0, 2), Power(Integer(-4), Rational(1,2)).eval())
         assertEquals(Integer(-2), Power(Integer(-8), Rational(1,3)).eval())
 
         // Rational
         assertEquals(Times(Complex(0, 1), Power(Integer.TWO, Rational(-1,2))), Power(Rational.HALF.unaryMinus(), Rational.HALF).eval())
         assertEquals(Times(Integer.NEGATIVE_ONE, Power(Integer.TWO, Rational(-1,3))), Power(Rational.HALF.unaryMinus(), Rational.THIRD).eval())
-
-        // Real
-        assertEquals(Complex(1.224646799147353E-16,1.9999999999999998), Power(RealDouble(-4.0), RealDouble(0.5)).eval())
-        assertEquals(Complex(1.0, 1.7320508075688767), Power(RealDouble(-8.0), RealDouble(1/3.0)).eval())
-        assertEquals(Complex(-2.5196414962461827E-16, -1.3716289453146575), Power(RealDouble(-1.2345), RealDouble(1.5)).eval())
-
-        // TODO_LP look more into 1st and 3rd real number, should be zero
-        assertEquals(Complex("-2.1384E-19", "2.0000"), Power(RealBigDec("-4.0000"), Rational.HALF).eval())
-        assertEquals(Complex("1.0000", "1.7321"), Power(RealBigDec("-8.0000"), Rational.THIRD).eval())
-        assertEquals(Complex("-5.3242E-19", "-1.3716"), Power(RealBigDec("-1.2345"), Rational(3,2)).eval())
     }
 
     @Test

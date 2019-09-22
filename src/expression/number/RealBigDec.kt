@@ -1,8 +1,14 @@
 package org.cerion.symcalc.expression.number
 
+import expression.constant.I
 import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.AtomExpr
+import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.expression.function.arithmetic.Exp
+import org.cerion.symcalc.expression.function.arithmetic.Log
+import org.cerion.symcalc.expression.function.arithmetic.Plus
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
 import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
@@ -10,6 +16,7 @@ import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.pow
 
 class RealBigDec(override val value: BigDecimal, override val precision: Int) : NumberExpr(), AtomExpr {
 
@@ -155,6 +162,24 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         val ylogx = other.value.multiply(logx, mc)
 
         return RealBigDec(ylogx, p).exp()
+    }
+
+    override fun pow(other: NumberExpr): NumberExpr {
+        when (other) {
+            is Integer -> {
+                val number = value.pow(other.intValue(), MathContext(getStoredPrecision(precision), RoundingMode.HALF_UP))
+                return RealBigDec(number, precision)
+            }
+            is Rational -> return this.pow(other.toPrecision(precision))
+            is RealDouble -> return RealDouble(toDouble().pow(other.value))
+            is RealBigDec -> {
+                if (this.isNegative)
+                    return Exp(Times(other, Plus(Log(this.unaryMinus()), Times(I(), Pi())))).eval() as NumberExpr
+
+                return this.pow(other)
+            }
+            else -> throw UnsupportedOperationException()
+        }
     }
 
     override fun toPrecision(precision: Int): NumberExpr {

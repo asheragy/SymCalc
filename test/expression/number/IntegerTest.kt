@@ -222,6 +222,18 @@ class IntegerTest {
     }
 
     @Test
+    fun pow_toReal() {
+        assertEquals(RealDouble(15.588457268119896), Integer(3) pow RealDouble(2.5))
+        assertEquals(RealDouble(0.001520667150293348), Integer(223) pow RealDouble(-1.2))
+        assertEquals(RealDouble(5888.436553555892), Integer("100000000000000000000000000000") pow RealDouble(0.13))
+        assertEquals(RealDouble(1.1437436793461719E257), Integer(123) pow RealDouble(123.0))
+        assertEquals(RealDouble(31.489135652454948), Integer(3) pow RealDouble(3.14))
+
+        // Big Decimal
+        assertEquals(RealBigDec("31.544280700197543962"), Integer(3) pow RealBigDec("3.1415926535897932385"))
+    }
+
+    @Test
     fun intValue() {
         assertEquals(Int.MAX_VALUE, Integer("2147483647").intValue())
         assertEquals(Int.MIN_VALUE, Integer("-2147483648").intValue())

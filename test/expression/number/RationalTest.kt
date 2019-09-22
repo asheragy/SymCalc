@@ -128,4 +128,23 @@ class RationalTest : NumberTestBase() {
         // Real
         assertEquals(RealDouble(3.9808917197452227), Divide(Rational(25, 2), RealDouble(3.14)).eval())
     }
+
+    @Test
+    fun pow_toInteger() {
+        assertEquals(Rational(1,8), Rational.HALF pow Integer(3))
+        assertEquals(Rational(1048576, 9765625), Rational(4,5) pow Integer(10))
+        assertEquals(Rational(9765625, 1048576), Rational(4,5) pow Integer(-10))
+        assertEquals(Rational(Integer.ONE, Integer("4294967296")), Rational(1,2) pow Integer(32))
+        assertEquals(Rational(Integer.ONE, Integer("340282366920938463463374607431768211456")), Rational(1,2) pow Integer(128))
+    }
+
+    @Test
+    fun pow_toReal() {
+        assertEquals(RealDouble(0.1088188204120155), Rational.HALF pow RealDouble(3.2))
+        assertEquals(RealDouble(9.18958683997628), Rational.HALF pow RealDouble(-3.2))
+
+        assertEquals(RealBigDec("0.11332"), Rational.HALF pow RealBigDec("3.1415"))
+        assertEquals(RealBigDec("0.1133147323"), Rational.HALF pow RealBigDec("3.141592654"))
+        assertEquals(RealBigDec("8.82497783"), Rational.HALF pow RealBigDec("-3.141592654"))
+    }
 }
