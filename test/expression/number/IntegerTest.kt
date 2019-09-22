@@ -194,6 +194,12 @@ class IntegerTest {
     }
 
     @Test
+    fun powtoRational_negativeRoot() {
+        assertEquals(Complex(0, 2), Integer(-4) pow Rational(1,2))
+        assertEquals(Integer(-2), Integer(-8) pow Rational(1,3))
+    }
+
+    @Test
     fun powToRational_improperFraction() {
         assertEquals(Times(Integer(32), Power(Integer(2), Rational.HALF)), Integer(2).pow(Rational(11, 2)))
         assertEquals(Times(Integer(3125), Power(Integer(5), Rational(3, 4))), Integer(5).pow(Rational(23, 4)))
@@ -248,8 +254,8 @@ class IntegerTest {
 
         assertEquals("5.0000`5", Integer(5).toPrecision(5).toString())
         assertEquals("25.000`5", Integer(25).toPrecision(5).toString())
-        assertEquals("1.23E+4`3", Integer(12321).toPrecision(3).toString())
-        assertEquals("1.2346E+8`5", Integer(123456789).toPrecision(5).toString())
+        assertEquals("12300`3", Integer(12321).toPrecision(3).toString())
+        assertEquals("123460000`5", Integer(123456789).toPrecision(5).toString())
     }
 
     private fun verify(e: NumberExpr, expected: Long) {

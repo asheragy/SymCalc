@@ -1,6 +1,5 @@
 package expression.number
 
-import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
@@ -11,9 +10,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import java.math.BigDecimal
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
-
 
 class RealBigDecTest : NumberTestBase() {
 
@@ -38,6 +35,9 @@ class RealBigDecTest : NumberTestBase() {
         assertEquals("2.00`3", RealBigDec(BigDecimal("2"), 3).toString())
         assertEquals("12345.0`6", RealBigDec(BigDecimal("12345"), 6).toString())
         assertEquals("0.0220000`6", RealBigDec(BigDecimal("0.022"), 6).toString())
+
+        // Small numbers are not displayed in scientific notation
+        assertEquals("0.000000000000000000000000000001`1", RealBigDec("0.000000000000000000000000000001").toString())
     }
 
     @Test
@@ -181,6 +181,12 @@ class RealBigDecTest : NumberTestBase() {
         assertEquals(RealBigDec("1.587"), RealBigDec("4.000") pow Rational(1,3))
         assertEquals(RealBigDec("0.001171"), RealBigDec("0.0001234") pow Rational(3,4))
         assertEquals(RealBigDec("854.1"), RealBigDec("0.0001234") pow Rational(-3,4))
+    }
+
+    @Test
+    fun pow_toRational_storedPrecision() {
+        val pow = (RealBigDec("2.000001") pow Rational(1,3)) as RealBigDec
+        assertEquals(BigDecimal("1.2599212598816798161"), pow.value)
     }
 
     @Test

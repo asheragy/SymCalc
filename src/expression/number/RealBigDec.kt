@@ -63,7 +63,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         return value
     }
 
-    override fun toString(): String = "${getRepresentedValue()}`$precision"
+    override fun toString(): String = "${getRepresentedValue().toPlainString()}`$precision"
     override fun unaryMinus(): RealBigDec = RealBigDec(value.negate(), precision)
 
     override fun compareTo(other: NumberExpr): Int {

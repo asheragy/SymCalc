@@ -109,6 +109,11 @@ class PowerTest {
         // Complex to Int
         assertEquals(Complex(Rational(2823, 16), Rational(6121, 32)), Power(Complex(Integer(3), Rational.HALF), Integer(5)).eval())
         assertEquals(Complex(0.0, 64.36342999999998), Power(Complex(Integer(0), RealDouble(2.3)), Integer(5)).eval())
+
+        // Complex with any real number
+        assertEquals(Complex(0.07690324994251796,-0.18717392051825588), Power(Complex(RealDouble(2.0), Integer(4)), Rational(-16,15)).eval())
+        assertEquals(Complex(0.03287406851910734, -0.1549926705899962), Power(Complex(2,4), RealDouble(-1.23)).eval())
+        assertEquals(Complex("1.31", "6.17"), Power(Complex(2,4), RealBigDec("1.23")).eval())
     }
 
     @Test
@@ -130,8 +135,11 @@ class PowerTest {
         assertEquals(Rational(4,9), Power(Rational(8,27), Rational(2,3)).eval())
         assertEquals(Integer(2), Power(Rational(1,4), Rational(-1,2)).eval())
         assertEquals(Rational.HALF, Power(Rational(1,4), Rational(1,2)).eval())
-
         assertEquals(Power(Integer.TWO, Rational.HALF), Power(Rational.HALF, Rational.HALF.unaryMinus()).eval())
+
+        // Negative
+        assertEquals(Times(Complex(0, 1), Power(Integer.TWO, Rational(-1,2))), Power(Rational.HALF.unaryMinus(), Rational.HALF).eval())
+        assertEquals(Times(Integer.NEGATIVE_ONE, Power(Integer.TWO, Rational(-1,3))), Power(Rational.HALF.unaryMinus(), Rational.THIRD).eval())
     }
 
     @Test
@@ -144,23 +152,6 @@ class PowerTest {
 
         // Cannot eval
         assertEquals(Power(Rational.HALF, Complex(4,2)), Power(Rational.HALF, Complex(4,2)).eval())
-    }
-
-    @Test
-    fun realToRational_storedPrecision() {
-        val pow = Power(RealBigDec("2.000001"), Rational(1,3)).eval() as RealBigDec
-        assertEquals(BigDecimal("1.2599212598816798161"), pow.value)
-    }
-
-    @Test
-    fun negative_toRoot() {
-        // Integer
-        assertEquals(Complex(0, 2), Power(Integer(-4), Rational(1,2)).eval())
-        assertEquals(Integer(-2), Power(Integer(-8), Rational(1,3)).eval())
-
-        // Rational
-        assertEquals(Times(Complex(0, 1), Power(Integer.TWO, Rational(-1,2))), Power(Rational.HALF.unaryMinus(), Rational.HALF).eval())
-        assertEquals(Times(Integer.NEGATIVE_ONE, Power(Integer.TWO, Rational(-1,3))), Power(Rational.HALF.unaryMinus(), Rational.THIRD).eval())
     }
 
     @Test
@@ -194,20 +185,6 @@ class PowerTest {
         assertEquals(Power(Complex(2,4), Rational.HALF), Power(Complex(2,4), Rational.HALF).eval())
         assertEquals(Power(Complex(2,4), Rational(16,3)), Power(Complex(2,4), Rational(16,3)).eval())
         assertEquals(Power(Complex(Rational(3,2),Rational.HALF), Rational.HALF), Power(Complex(Rational(3,2),Rational.HALF), Rational.HALF).eval())
-
-        // Can evaluate
-        assertEquals(Complex(1.7989074399478673,1.1117859405028423), Power(Complex(RealDouble(2.0), Integer(4)), Rational.HALF).eval())
-        assertEquals(Complex(0.07690324994251796,-0.18717392051825588), Power(Complex(RealDouble(2.0), Integer(4)), Rational(-16,15)).eval())
-        assertEquals(Complex("1.536621", "0.5943189"), Power(Complex(RealBigDec("2.000001"), Integer(4)), Rational.THIRD).eval())
-    }
-
-    @Test
-    fun complexToReal() {
-        assertEquals(Complex(1.309544770737814, 6.174162506105573), Power(Complex(2.0,4.0), RealDouble(1.23)).eval())
-        assertEquals(Complex(0.03287406851910734, -0.1549926705899962), Power(Complex(2,4), RealDouble(-1.23)).eval())
-
-        assertEquals(Complex(1.309544770737814, 6.174162506105573), Power(Complex(RealDouble(2.0), Integer(4)), RealBigDec("1.23")).eval())
-        assertEquals(Complex("1.31", "6.17"), Power(Complex(2,4), RealBigDec("1.23")).eval())
     }
 
     @Test

@@ -101,31 +101,37 @@ class ComplexTest {
     }
 
     @Test
-    fun pow() {
+    fun pow_toInteger() {
         assertEquals(Complex(0, -177147), Complex(0,3).pow(11))
         assertEquals(Integer(4096), Complex(1,1).pow(24))
         assertEquals(Rational(1, 4096), Complex(1,1).pow(-24))
         assertEquals(Complex(4096, 4096), Complex(1,1).pow(25))
         assertEquals(Complex(103595049,-51872200), Complex(5,-4).pow(10))
 
-        /* From before refactoring to iterative, probably unnecessary to have too many tests since number types are unimportant now
-        assertEquals(IntegerNum(10000), Power(ComplexNum(0,10), IntegerNum(4)).eval())
-        assertEquals(ComplexNum(0, 100000), Power(ComplexNum(0,10), IntegerNum(5)).eval())
-        assertEquals(IntegerNum(-1000000), Power(ComplexNum(0,10), IntegerNum(6)).eval())
-        assertEquals(ComplexNum(0, -10000000), Power(ComplexNum(0,10), IntegerNum(7)).eval())
+        // Rational
+        assertEquals(Complex(Integer.ZERO, Rational(243,32)), Complex(Rational.ZERO,Rational(3,2)) pow Integer(5))
+        assertEquals(Complex(Integer.ZERO, Rational(-32,243)), Complex(Rational.ZERO,Rational(3,2)) pow Integer(-5))
 
-        assertEquals(Rational(1,10000), Power(ComplexNum(0,10), IntegerNum(-4)).eval())
-        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(-1,100000)), Power(ComplexNum(0,10), IntegerNum(-5)).eval())
-        assertEquals(Rational(-1,1000000), Power(ComplexNum(0,10), IntegerNum(-6)).eval())
-        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(1,10000000)), Power(ComplexNum(0,10), IntegerNum(-7)).eval())
+        // Double
+        assertEquals(Complex(0.0, 3125.0), Complex(0.0,5.0) pow Integer(5))
+        assertEquals(Complex(0.0, -0.00032), Complex(0.0,5.0) pow Integer(-5))
+    }
 
-        // Non integer imaginary part
-        assertEquals(ComplexNum(IntegerNum.ZERO, RealNum.create(3125.0)), Power(ComplexNum(0.0,5.0), IntegerNum(5)).eval())
-        assertEquals(ComplexNum(IntegerNum.ZERO, RealNum.create(-0.00032)), Power(ComplexNum(0.0,5.0), IntegerNum(-5)).eval())
+    @Test
+    fun pow_toRational() {
+        assertEquals(Complex(1.7989074399478673,1.1117859405028423), Complex(RealDouble(2.0), Integer(4)) pow Rational.HALF)
+        assertEquals(Complex(0.07690324994251796,-0.18717392051825588), Complex(RealDouble(2.0), Integer(4)) pow Rational(-16,15))
+        assertEquals(Complex("1.536621", "0.5943189"), Complex(RealBigDec("2.000001"),Integer(4)) pow Rational.THIRD)
+    }
 
-        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(243,32)), Power(ComplexNum(Rational.ZERO,Rational(3,2)), IntegerNum(5)).eval())
-        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(-32,243)), Power(ComplexNum(Rational.ZERO,Rational(3,2)), IntegerNum(-5)).eval())
-        assertEquals(ComplexNum(IntegerNum.ZERO, Rational(1,10000000)), Power(ComplexNum(0,10), IntegerNum(-7)).eval())
-         */
+    @Test
+    fun pow_toReal() {
+        // Double
+        assertEquals(Complex(1.309544770737814, 6.174162506105573), Complex(2.0,4.0) pow RealDouble(1.23))
+        assertEquals(Complex(0.03287406851910734, -0.1549926705899962), Complex(2,4) pow RealDouble(-1.23))
+
+        // BigDec
+        assertEquals(Complex(1.309544770737814, 6.174162506105573), Complex(RealDouble(2.0), Integer(4)) pow RealBigDec("1.23"))
+        assertEquals(Complex("1.31", "6.17"), Complex(2,4) pow RealBigDec("1.23"))
     }
 }

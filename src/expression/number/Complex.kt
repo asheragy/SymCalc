@@ -124,6 +124,10 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
         return result
     }
 
+    infix fun pow(n: Integer): NumberExpr {
+        return this.pow(n.intValue())
+    }
+
     fun pow(z: Complex): Expr {
         // http://mathworld.wolfram.com/ComplexExponentiation.html
         val a = real
