@@ -83,33 +83,26 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         if (other.isZero)
             throw ArithmeticException("divide by zero")
 
-        when (other.numType) {
-            NumberType.INTEGER -> {
-                val n = other as Integer
-                val gcd = this.gcd(n)
+        when (other) {
+            is Integer -> {
+                val gcd = this.gcd(other)
 
                 if (gcd.isOne) {
-                    return Rational(this, n)
+                    return Rational(this, other)
                 }
 
                 //Divide both by GCD
                 val a = Integer(value.divide(gcd.value))
-                val b = Integer(n.value.divide(gcd.value))
+                val b = Integer(other.value.divide(gcd.value))
 
                 if (b.isOne)
                     return a
 
                 return Rational(a, b)
             }
-            NumberType.RATIONAL -> {
-                other as Rational
-                return Times(this, Rational(other.denominator, other.numerator)).eval() as NumberExpr
-            }
-
-            NumberType.REAL_DOUBLE,
-            NumberType.REAL_BIGDEC -> return toPrecision(other.precision) / other
-            NumberType.COMPLEX -> return Complex(this) / other
-
+            is Rational -> return this * Rational(other.denominator, other.numerator)
+            is Complex -> return Complex(this) / other
+            else -> return toPrecision(other.precision) / other
         }
     }
 
@@ -127,10 +120,9 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
 
         if (this.isNegative) {
             if (b.denominator.isOdd)
-                return Minus(Times(Power(unaryMinus(), b))).eval()
+                return Minus(Times(Power(this.unaryMinus(), b))).eval()
 
-            return Times(Power(unaryMinus(), b), I()).eval()
-
+            return Power(unaryMinus(), b) * I()
         }
 
         // Performance: Use faster method for square root
@@ -157,7 +149,7 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
             if (b > ONE) {
                 val whole = Integer(b.numerator.intValue() / b.denominator.intValue())
 
-                return Times(Power(a, whole), Power(a, b - whole)).eval()
+                return Power(a, whole) * Power(a, b - whole)
             }
 
             return Power(a, b)

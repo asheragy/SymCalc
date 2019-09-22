@@ -39,7 +39,7 @@ class Plus(vararg e: Expr) : FunctionExpr(*e) {
             for (i in 0 until timesArg.size) {
                 val times = timesArg[i] as Times
                 while (list.contains(times[1])) {
-                    val t = Times(times[0] + Integer.ONE, times[1]).eval()
+                    val t = (times[0] + Integer.ONE) * times[1]
                     list.remove(times)
                     list.remove(times[1])
                     list.add(t)

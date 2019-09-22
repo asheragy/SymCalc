@@ -82,13 +82,17 @@ class TimesTest {
 
     @Test
     fun transform_powerSameBase() {
-        assertEquals(Integer.TWO, Times(Power(Integer.TWO, Rational.HALF), Power(Integer.TWO, Rational.HALF)).eval())
-        assertEquals(Power(Integer(5), Rational(6,7)), Times(Power(Integer(5), Rational(1, 7)), Power(Integer(5), Rational(2,3)), Power(Integer(5), Rational(1,21))).eval())
+        assertEquals(Integer.TWO,
+                Power(Integer.TWO, Rational.HALF) * Power(Integer.TWO, Rational.HALF))
+        assertEquals(Power(Integer(5), Rational(6,7)),
+                Times(Power(Integer(5), Rational(1, 7)), Power(Integer(5), Rational(2,3)), Power(Integer(5), Rational(1,21))).eval())
     }
 
     @Test
     fun transform_powerSameExponent() {
-        assertEquals(Power(Integer(6), Rational.HALF), Times(Power(Integer.TWO, Rational.HALF), Power(Integer(3), Rational.HALF)).eval())
-        assertEquals(Power(Integer(30), Rational.THIRD), Times(Power(Integer(2), Rational.THIRD), Power(Integer(3), Rational.THIRD), Power(Integer(5), Rational.THIRD)).eval())
+        assertEquals(Power(Integer(6), Rational.HALF),
+                Power(Integer.TWO, Rational.HALF) * Power(Integer(3), Rational.HALF))
+        assertEquals(Power(Integer(30), Rational.THIRD),
+                Times(Power(Integer(2), Rational.THIRD), Power(Integer(3), Rational.THIRD), Power(Integer(5), Rational.THIRD)).eval())
     }
 }

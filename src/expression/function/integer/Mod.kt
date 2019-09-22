@@ -3,7 +3,6 @@ package org.cerion.symcalc.expression.function.integer
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
-import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.*
 import kotlin.math.floor
 import kotlin.math.min
@@ -47,7 +46,7 @@ class Mod(vararg e: Expr) : FunctionExpr(*e) {
             val whole = Divide(a, bn).eval()
             if (whole is RealDouble) {
                 val floor = Integer(floor(whole.value).toInt()) // TODO add floor function
-                return a + Times(floor.unaryMinus(), b)
+                return a + (floor.unaryMinus() * b)
             }
         }
 

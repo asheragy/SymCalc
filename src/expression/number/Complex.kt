@@ -138,7 +138,7 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
         val exp1 = Power(a2b2, z / Integer.TWO)
         val exp2 = Power(E(), Times(I(), z, theta))
 
-        val result = Times(exp1, exp2).eval()
+        val result = exp1 * exp2
         if (result is NumberExpr)
             return result
 

@@ -65,7 +65,7 @@ class Cos(vararg e: Expr) : TrigBase(*e), StandardTrigFunction {
                 if (x.value.toDouble() >= 0 && x.value.toDouble() < (2*Math.PI))
                     x
                 else
-                    Mod(x, Times(Integer(2), Pi())).eval() as RealBigDec
+                    Mod(x, Integer(2) * Pi()).eval() as RealBigDec
 
         var result = BigDecimal(1.0)
         var factorial = BigDecimal(1.0)

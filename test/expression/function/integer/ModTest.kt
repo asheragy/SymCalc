@@ -30,13 +30,18 @@ internal class ModTest {
 
     @Test
     fun pi() {
-        assertEquals(Plus(Integer(25), Times(Integer(-7), Pi())), Mod(Integer(25), Pi()).eval())
-        assertEquals(Plus(Integer(25), Times(Integer(-6), Pi())), Mod(Integer(25), Times(Integer(2), Pi())).eval())
+        assertEquals(Plus(Integer(25), Times(Integer(-7), Pi())),
+                Mod(Integer(25), Pi()).eval())
+        assertEquals(Plus(Integer(25), Times(Integer(-6), Pi())),
+                Mod(Integer(25), Times(Integer(2), Pi())).eval())
 
-        assertEquals(Plus(Integer(-25), Times(Integer(8), Pi())), Mod(Integer(-25), Pi()).eval())
-        assertEquals(Plus(Integer(-25), Times(Integer(9), Pi())), Mod(Integer(-25), Times(Integer(3), Pi())).eval())
+        assertEquals(Plus(Integer(-25), Times(Integer(8), Pi())),
+                Mod(Integer(-25), Pi()).eval())
+        assertEquals(Plus(Integer(-25), Times(Integer(9), Pi())),
+                Mod(Integer(-25), Times(Integer(3), Pi())).eval())
 
-        assertEquals(Plus(Rational(25, 2), Times(Integer(-3), Pi())), Mod(Rational(25, 2), Pi()).eval())
+        assertEquals(Plus(Rational(25, 2), Times(Integer(-3), Pi())),
+                Mod(Rational(25, 2), Pi()).eval())
     }
 
     @Test

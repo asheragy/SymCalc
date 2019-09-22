@@ -61,7 +61,7 @@ class Sin(vararg e: Expr) : TrigBase(*e), StandardTrigFunction {
                 if (x.value.toDouble() >= 0 && x.value.toDouble() < (2*Math.PI))
                     x
                 else
-                    Mod(x, Times(Integer(2), Pi())).eval() as RealBigDec
+                    Mod(x, Integer(2) * Pi()).eval() as RealBigDec
 
         var result = x2pi.value
         var factorial = BigDecimal(1.0)

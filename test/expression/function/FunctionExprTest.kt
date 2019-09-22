@@ -48,7 +48,7 @@ class FunctionExprTest {
         val outer = Times(VarExpr("z"), inner)
 
         assertEquals(Times(x, y, VarExpr("z")), outer.eval())
-        assertEquals(Times(Integer(4), x, y), Times(Times(Integer.TWO, x), Times(Integer.TWO, y)).eval())
+        assertEquals(Times(Integer(4), x, y), Times(Integer.TWO, x) * Times(Integer.TWO, y))
     }
 
     @Test

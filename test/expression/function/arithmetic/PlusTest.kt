@@ -59,6 +59,6 @@ class PlusTest {
 
     @Test
     fun nestedTimes() {
-        assertEquals(Times(Integer(3), Pi()), Times(Integer(2), Pi()) + Pi())
+        assertEquals(Times(Integer(3), Pi()), (Integer(2) * Pi()) + Pi())
     }
 }

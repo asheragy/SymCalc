@@ -21,7 +21,7 @@ class Power(vararg e: Expr) : FunctionExpr(*e) {
 
         // Power to power is just multiplied exponents
         if (a is Power) {
-            return Power(a[0], Times(a[1], b)).eval()
+            return a[0] * Times(a[1], b)
         }
 
         if (a is NumberExpr && a.isOne)
@@ -83,7 +83,7 @@ class Power(vararg e: Expr) : FunctionExpr(*e) {
         val sin = Sin(clog)
         val pow = Power(a, b)
 
-        val e = Times(pow, cos + Times(I(), sin)).eval()
+        val e = pow * (cos + Times(I(), sin))
 
         // If not evaluated fully return the original expression
         if (e is NumberExpr)

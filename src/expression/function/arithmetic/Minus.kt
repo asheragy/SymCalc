@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.number.Integer
 
 class Minus(vararg e: Expr) : FunctionExpr(*e) {
     override fun evaluate(): Expr {
-        return Times(Integer.NEGATIVE_ONE, get(0)).eval()
+        return Integer.NEGATIVE_ONE * get(0)
     }
 
     override fun validate() {

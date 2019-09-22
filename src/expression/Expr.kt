@@ -5,6 +5,7 @@ import org.cerion.symcalc.Environment
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Subtract
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.parser.Lexer
@@ -120,6 +121,7 @@ abstract class Expr {
 
     operator fun plus(other: Expr): Expr = Plus(this, other).eval()
     operator fun minus(other: Expr): Expr = Subtract(this, other).eval()
+    operator fun times(other: Expr): Expr = Times(this, other).eval()
 
     override fun hashCode(): Int {
         var result = 0
