@@ -1,7 +1,7 @@
 package expression.number
 
-import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.number.*
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import kotlin.test.assertEquals
@@ -99,5 +99,11 @@ class RealDoubleTest : NumberTestBase() {
         assertEquals(Complex(1.0, 1.7320508075688767), RealDouble(-8.0) pow RealDouble(1/3.0))
         assertEquals(Complex(-2.5196414962461827E-16, -1.3716289453146575), RealDouble(-1.2345) pow RealDouble(1.5))
 
+    }
+
+    @Test
+    fun floor() {
+        Assertions.assertEquals(Integer(5), RealDouble(5.00000000001).floor())
+        Assertions.assertEquals(Integer(-4), RealDouble(-3.4).floor())
     }
 }

@@ -1,6 +1,7 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.function.numeric.Floor
 import java.lang.Exception
 import java.lang.UnsupportedOperationException
 import java.math.BigDecimal
@@ -29,6 +30,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract operator fun div(other: NumberExpr): NumberExpr
     abstract operator fun unaryMinus(): NumberExpr
     abstract infix fun pow(other: NumberExpr): NumberExpr
+    abstract fun floor(): NumberExpr
 
     operator fun minus(other: NumberExpr): NumberExpr {
         return this + other.unaryMinus()

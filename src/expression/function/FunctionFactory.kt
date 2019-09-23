@@ -12,6 +12,7 @@ import org.cerion.symcalc.expression.function.integer.*
 import org.cerion.symcalc.expression.function.list.*
 import org.cerion.symcalc.expression.function.list.Map
 import org.cerion.symcalc.expression.function.logical.Greater
+import org.cerion.symcalc.expression.function.numeric.Floor
 import org.cerion.symcalc.expression.function.plots.Plot
 import org.cerion.symcalc.expression.function.procedural.If
 import org.cerion.symcalc.expression.function.statistics.*
@@ -71,7 +72,7 @@ object FunctionFactory {
             Function.TALLY -> return Tally(*e)
             Function.MAP -> return Map(*e)
 
-            //IntegerNum
+            //Integer
             Function.FACTORIAL -> return Factorial(*e)
             Function.MOD -> return Mod(*e)
             Function.POWERMOD -> return PowerMod(*e)
@@ -85,6 +86,9 @@ object FunctionFactory {
             Function.INTEGER_DIGITS -> return IntegerDigits(*e)
             Function.EVENQ -> return EvenQ(*e)
             Function.ODDQ -> return OddQ(*e)
+
+            // Numeric
+            Function.FLOOR -> return Floor(*e)
 
             // Calculus
             Function.D -> return D(*e)

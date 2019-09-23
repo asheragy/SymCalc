@@ -83,4 +83,8 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
             else -> throw NotImplementedError()
         }
     }
+
+    override fun floor(): Integer {
+        return Integer(kotlin.math.floor(value).toInt())
+    }
 }

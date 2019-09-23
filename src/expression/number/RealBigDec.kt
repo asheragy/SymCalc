@@ -48,6 +48,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     val accuracy: Int get() = value.scale()
 
     fun toDouble(): Double = value.toDouble()
+    override fun floor(): Integer = Integer(value.toBigInteger())
 
     private fun getRepresentedValue(): BigDecimal {
         return forcePrecision(precision)
@@ -163,7 +164,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         return RealBigDec(ylogx, p).exp()
     }
 
-    override fun pow(other: NumberExpr): NumberExpr {
+    override infix fun pow(other: NumberExpr): NumberExpr {
         when (other) {
             is Integer -> {
                 val number = value.pow(other.intValue(), MathContext(getStoredPrecision(precision), RoundingMode.HALF_UP))

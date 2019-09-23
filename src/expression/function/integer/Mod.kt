@@ -4,7 +4,6 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.number.*
-import kotlin.math.floor
 import kotlin.math.min
 
 class Mod(vararg e: Expr) : FunctionExpr(*e) {
@@ -44,10 +43,8 @@ class Mod(vararg e: Expr) : FunctionExpr(*e) {
             // Numerical eval to get closest integer value as multiplier for unknown value B
             val bn = b.eval(MachinePrecision)
             val whole = Divide(a, bn).eval()
-            if (whole is RealDouble) {
-                val floor = Integer(floor(whole.value).toInt()) // TODO add floor function
-                return a + (floor.unaryMinus() * b)
-            }
+            if (whole is RealDouble)
+                return a + (whole.floor().unaryMinus() * b)
         }
 
         return this

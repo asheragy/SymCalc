@@ -4,7 +4,9 @@ import expression.constant.I
 import expression.function.trig.ArcTan
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
-import org.cerion.symcalc.expression.function.arithmetic.*
+import org.cerion.symcalc.expression.function.arithmetic.Power
+import org.cerion.symcalc.expression.function.arithmetic.Sqrt
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin
 import kotlin.math.abs
@@ -183,4 +185,6 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
 
         throw UnsupportedOperationException("Unable to compare complex")
     }
+
+    override fun floor(): NumberExpr = Complex(real.floor(), img.floor()).eval()
 }

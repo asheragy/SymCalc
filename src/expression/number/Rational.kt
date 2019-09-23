@@ -4,6 +4,13 @@ import org.cerion.symcalc.expression.function.arithmetic.Divide
 
 class Rational constructor(val numerator: Integer, val denominator: Integer = Integer.ONE) : NumberExpr() {
 
+    companion object {
+        val ZERO = Rational(Integer.ZERO, Integer.ONE)
+        val ONE = Rational(Integer.ONE, Integer.ONE)
+        val HALF = Rational(Integer.ONE, Integer.TWO)
+        val THIRD = Rational(Integer.ONE, Integer(3))
+    }
+
     override val type: ExprType get() = ExprType.NUMBER
     override val isZero: Boolean get() = numerator.isZero
     override val isOne: Boolean get() = numerator.equals(denominator)
@@ -107,10 +114,5 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
         return toPrecision(MachinePrecision).compareTo(other)
     }
 
-    companion object {
-        val ZERO = Rational(Integer.ZERO, Integer.ONE)
-        val ONE = Rational(Integer.ONE, Integer.ONE)
-        val HALF = Rational(Integer.ONE, Integer.TWO)
-        val THIRD = Rational(Integer.ONE, Integer(3))
-    }
+    override fun floor(): NumberExpr = toPrecision(MachinePrecision).floor()
 }

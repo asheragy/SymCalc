@@ -3,6 +3,7 @@ package org.cerion.symcalc.expression.number
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.core.Hold
 import org.cerion.symcalc.expression.function.core.N
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -144,5 +145,12 @@ class RationalTest : NumberTestBase() {
         assertEquals(RealBigDec("0.11332"), Rational.HALF pow RealBigDec("3.1415"))
         assertEquals(RealBigDec("0.1133147323"), Rational.HALF pow RealBigDec("3.141592654"))
         assertEquals(RealBigDec("8.82497783"), Rational.HALF pow RealBigDec("-3.141592654"))
+    }
+
+    @Test
+    fun floor() {
+        Assertions.assertEquals(Integer(0), Rational(1, 2).floor())
+        Assertions.assertEquals(Integer(1), Rational(3, 2).floor())
+        Assertions.assertEquals(Integer(-1), Rational(-1, 2).floor())
     }
 }

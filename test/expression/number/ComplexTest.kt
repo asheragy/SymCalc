@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number
 
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -133,5 +134,11 @@ class ComplexTest {
         // BigDec
         assertEquals(Complex(1.309544770737814, 6.174162506105573), Complex(RealDouble(2.0), Integer(4)) pow RealBigDec("1.23"))
         assertEquals(Complex("1.31", "6.17"), Complex(2,4) pow RealBigDec("1.23"))
+    }
+
+    @Test
+    fun floor() {
+        Assertions.assertEquals(Complex(2, 2), Complex(RealBigDec("2.34"), Rational(5, 2)).floor())
+        Assertions.assertEquals(Integer(2), Complex(RealBigDec("2.34"), Rational(1, 2)).floor())
     }
 }

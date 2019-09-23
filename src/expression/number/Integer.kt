@@ -207,4 +207,6 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
             else -> throw NotImplementedError()
         }
     }
+
+    override fun floor(): NumberExpr = this
 }
