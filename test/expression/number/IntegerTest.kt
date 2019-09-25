@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.arithmetic.Power
@@ -178,10 +179,10 @@ class IntegerTest {
 
     @Test
     fun pow() {
-        assertEquals(Integer.ONE, Integer.ONE.pow(Integer(-2)))
-        assertEquals(Integer(-243), Integer(-3).pow(Integer(5)))
-        assertEquals(Integer("910043815000214977332758527534256632492715260325658624"), Integer(12).pow(Integer(50)))
-        assertEquals(Rational(Integer.ONE, Integer(243)), Integer(3).pow(Integer(-5)))
+        Integer.ONE pow Integer(-2) `should equal` 1
+        Integer(-3) pow Integer(5) `should equal` -243
+        Integer(12) pow Integer(50) `should equal` Integer("910043815000214977332758527534256632492715260325658624")
+        Integer(3) pow Integer(-5) `should equal` Rational(1, 243)
     }
 
     @Test

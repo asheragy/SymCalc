@@ -1,5 +1,6 @@
 package expression.number
 
+import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Power
@@ -195,23 +196,16 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun pow() {
-        assertEquals(RealBigDec("36.3"),
-                "3.14" pow "3.14")
-        assertEquals(RealBigDec("36.455"),
-                "3.1415" pow "3.1415")
-        assertEquals(RealBigDec("36.4621596072079117709908260227"),
-                "3.14159265358979323846264338328" pow "3.14159265358979323846264338328")
-        assertEquals(RealBigDec("36.459"),
-                "3.1415" pow "3.14159265358979323846264338328")
-        assertEquals(RealBigDec("36.458"),
-                "3.14159265358979323846264338328" pow "3.1415")
-        assertEquals(RealBigDec("13.2696645139"),
-                "3.00000000000" pow "2.35340583128859694839201928385968473749596868726265")
-        assertEquals(RealBigDec("0.027431"),
-                "3.1415" pow "-3.1415")
+        "3.14" pow "3.14" `should equal` "36.3"
+        "3.1415" pow "3.1415" `should equal` "36.455"
+        "3.1415" pow "-3.1415" `should equal` "0.027431"
+        "3.1415" pow "3.14159265358979323846264338328" `should equal` "36.459"
+        "3.14159265358979323846264338328" pow "3.1415" `should equal` "36.458"
+        "3.00000000000" pow "2.35340583128859694839201928385968473749596868726265" `should equal` "13.2696645139"
+        "3.14159265358979323846264338328" pow "3.14159265358979323846264338328" `should equal` "36.4621596072079117709908260227"
 
         // Double
-        assertEquals(RealDouble(36.33783888017471), Power(RealBigDec("3.14"), RealDouble(3.14)).eval())
+        RealBigDec("3.14") pow RealDouble(3.14) `should equal` 36.33783888017471
     }
 
     @Test

@@ -1,5 +1,6 @@
 package expression.number
 
+import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -77,20 +78,20 @@ class RealDoubleTest : NumberTestBase() {
     @Test
     fun pow() {
         // Integer
-        assertEquals(RealDouble(625.0), RealDouble(5.0) pow Integer(4))
+        RealDouble(5.0) pow Integer(4) `should equal` 625.0
 
         // Rational
-        assertEquals(RealDouble(2.23606797749979), RealDouble(5.0) pow Rational(1,2))
-        assertEquals(RealDouble(2040886.0816112224), RealDouble(1.2345) pow Rational(12345,179))
-        assertEquals(RealDouble(4.89983252377579E-7), RealDouble(1.2345) pow Rational(-12345,179))
-        assertEquals(RealDouble(1.3716289453146575), RealDouble(1.2345) pow Rational(3,2))
+        RealDouble(5.0) pow Rational(1,2) `should equal` 2.23606797749979
+        RealDouble(1.2345) pow Rational(12345,179) `should equal` 2040886.0816112224
+        RealDouble(1.2345) pow Rational(-12345,179) `should equal` 4.89983252377579E-7
+        RealDouble(1.2345) pow Rational(3,2) `should equal` 1.3716289453146575
 
         // Double
-        assertEquals(RealDouble(55.90169943749474), RealDouble(5.0) pow RealDouble(2.5))
+        RealDouble(5.0) pow RealDouble(2.5) `should equal` 55.90169943749474
 
         // BigDec
-        assertEquals(RealDouble(36.33783888017471), RealDouble(3.14) pow RealBigDec("3.14"))
-        assertEquals(RealDouble(125.0), RealDouble(5.0) pow RealBigDec("3.0"))
+        RealDouble(3.14) pow RealBigDec("3.14") `should equal` 36.33783888017471
+        RealDouble(5.0) pow RealBigDec("3.0") `should equal` 125.0
     }
 
     @Test

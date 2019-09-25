@@ -2,10 +2,10 @@ package expression.function.arithmetic
 
 import expression.constant.I
 import expression.function.logical.Equal
+import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Divide
-import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
@@ -86,34 +86,34 @@ class PowerTest {
         // More tests in corresponding NumberExpr class, only 1 basic here per type to verify Power() calls it
 
         // Int
-        assertEquals(Integer(9), Power(Integer(3), Integer.TWO).eval())
-        assertEquals(Integer(7), Power(Integer(16807), Rational(1,5)).eval())
-        assertEquals(RealDouble(15.588457268119896), Power(Integer(3), RealDouble(2.5)).eval())
+        Power(Integer(3), Integer.TWO).eval() `should equal` 9
+        Power(Integer(16807), Rational(1,5)).eval() `should equal` 7
+        Power(Integer(3), RealDouble(2.5)).eval() `should equal` 15.588457268119896
 
         // Rational
-        assertEquals(Rational(1,8), Power(Rational.HALF, Integer(3)).eval())
-        assertEquals(RealDouble(0.1088188204120155), Power(Rational.HALF, RealDouble(3.2)).eval())
+        Power(Rational.HALF, Integer(3)).eval() `should equal` Rational(1,8)
+        Power(Rational.HALF, RealDouble(3.2)).eval() `should equal` RealDouble(0.1088188204120155)
 
         // Double
-        assertEquals(RealDouble(625.0), Power(RealDouble(5.0), Integer(4)).eval())
-        assertEquals(RealDouble(2.23606797749979), Power(RealDouble(5.0), Rational(1,2)).eval())
-        assertEquals(RealDouble(55.90169943749474), Power(RealDouble(5.0), RealDouble(2.5)).eval())
-        assertEquals(RealDouble(125.0), Power(RealDouble(5.0), RealBigDec("3.0")).eval())
+        Power(RealDouble(5.0), Integer(4)).eval() `should equal` 625.0
+        Power(RealDouble(5.0), Rational(1,2)).eval() `should equal` 2.23606797749979
+        Power(RealDouble(5.0), RealDouble(2.5)).eval() `should equal` 55.90169943749474
+        Power(RealDouble(5.0), RealBigDec("3.0")).eval() `should equal` 125.0
 
         // BigDec
-        assertEquals(RealBigDec("1.0002468"), Power(RealBigDec("1.0001234"), Integer.TWO).eval())
-        assertEquals(RealBigDec("2"), Power(RealBigDec("4.0"), Rational.HALF).eval())
-        assertEquals(RealDouble(36.33783888017471), Power(RealBigDec("3.14"), RealDouble(3.14)).eval())
-        assertEquals(RealBigDec("13.26967"), Power(RealBigDec("3.000001"), RealBigDec("2.35340583128859694839201928385968473749596868726265")).eval())
+        Power(RealBigDec("1.0001234"), Integer.TWO).eval() `should equal` "1.0002468"
+        Power(RealBigDec("4.0"), Rational.HALF).eval() `should equal` "2"
+        Power(RealBigDec("3.14"), RealDouble(3.14)).eval() `should equal` 36.33783888017471
+        Power(RealBigDec("3.000001"), RealBigDec("2.35340583128859694839201928385968473749596868726265")).eval() `should equal` "13.26967"
 
         // Complex to Int
-        assertEquals(Complex(Rational(2823, 16), Rational(6121, 32)), Power(Complex(Integer(3), Rational.HALF), Integer(5)).eval())
-        assertEquals(Complex(0.0, 64.36342999999998), Power(Complex(Integer(0), RealDouble(2.3)), Integer(5)).eval())
+        Power(Complex(Integer(3), Rational.HALF), Integer(5)).eval() `should equal` Complex(Rational(2823, 16), Rational(6121, 32))
+        Power(Complex(Integer(0), RealDouble(2.3)), Integer(5)).eval() `should equal` Complex(0.0, 64.36342999999998)
 
         // Complex with any real number
-        assertEquals(Complex(0.07690324994251796,-0.18717392051825588), Power(Complex(RealDouble(2.0), Integer(4)), Rational(-16,15)).eval())
-        assertEquals(Complex(0.03287406851910734, -0.1549926705899962), Power(Complex(2,4), RealDouble(-1.23)).eval())
-        assertEquals(Complex("1.31", "6.17"), Power(Complex(2,4), RealBigDec("1.23")).eval())
+        Power(Complex(RealDouble(2.0), Integer(4)), Rational(-16,15)).eval() `should equal` Complex(0.07690324994251796,-0.18717392051825588)
+        Power(Complex(2,4), RealDouble(-1.23)).eval() `should equal` Complex(0.03287406851910734, -0.1549926705899962)
+        Power(Complex(2,4), RealBigDec("1.23")).eval() `should equal` Complex("1.31", "6.17")
     }
 
     @Test
