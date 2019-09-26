@@ -3,6 +3,7 @@ package expression.function.arithmetic
 import expression.constant.I
 import expression.function.logical.Equal
 import org.cerion.symcalc.`should equal`
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Divide
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+
+infix fun Expr.pow(other: Expr) = Power(this, other).eval()
 
 class PowerTest {
 
@@ -45,7 +48,7 @@ class PowerTest {
 
     @Test
     fun ePiI_approx() {
-        val approx = Complex(RealDouble(-1.0), RealDouble(1.2246467991473532E-16))
+        val approx = Complex(-1.0, 1.2246467991473532E-16)
         assertEquals(approx, Power(N(E()), Times(N(Pi()), I())).eval())
         assertEquals(approx, Power(N(E()), Times(Pi(), I())).eval())
         assertEquals(approx, Power(E(), Times(N(Pi()), I())).eval())
@@ -53,14 +56,14 @@ class PowerTest {
 
     @Test
     fun ePiI() {
-        assertEquals(Integer(-1), Power(E(), Times(Pi(), I())).eval())
-        assertEquals(Integer(-1), Power(E(), Times(I(), Pi())).eval())
+        E() pow Pi() * I() `should equal` -1
+        E() pow I() * Pi() `should equal` -1
 
         // Variations
-        assertEquals(Times(Integer(-1),Power(E(), Integer(5))), Power(E(), Integer(5) + Times(I(), Pi())).eval())
-        assertEquals(Integer.ONE, Power(E(), Times(Integer.TWO, I(), Pi())).eval())
-        assertEquals(Complex(0,1), Power(E(), Times(I(), Divide(Pi(), Integer.TWO))).eval())
-        assertEquals(Complex(0,-1), Power(E(), Times(I(), Times(Pi(), Rational(3,2)))).eval())
+        E() pow Integer(5) + Times(I(), Pi()) `should equal` Times(-1, Power(E(), 5))
+        E() pow Times(2, I(), Pi()) `should equal` 1
+        E() pow Times(I(), Divide(Pi(), 2)) `should equal` Complex(0,1)
+        E() pow Times(I(), Times(Pi(), Rational(3,2))) `should equal` Complex(0,-1)
     }
 
     @Test
@@ -86,34 +89,34 @@ class PowerTest {
         // More tests in corresponding NumberExpr class, only 1 basic here per type to verify Power() calls it
 
         // Int
-        Power(Integer(3), Integer.TWO).eval() `should equal` 9
-        Power(Integer(16807), Rational(1,5)).eval() `should equal` 7
-        Power(Integer(3), RealDouble(2.5)).eval() `should equal` 15.588457268119896
+        Power(3, 2).eval() `should equal` 9
+        Power(16807, Rational(1,5)).eval() `should equal` 7
+        Power(3, 2.5).eval() `should equal` 15.588457268119896
 
         // Rational
-        Power(Rational.HALF, Integer(3)).eval() `should equal` Rational(1,8)
-        Power(Rational.HALF, RealDouble(3.2)).eval() `should equal` RealDouble(0.1088188204120155)
+        Power(Rational.HALF, 3).eval() `should equal` Rational(1,8)
+        Power(Rational.HALF, 3.2).eval() `should equal` 0.1088188204120155
 
         // Double
-        Power(RealDouble(5.0), Integer(4)).eval() `should equal` 625.0
-        Power(RealDouble(5.0), Rational(1,2)).eval() `should equal` 2.23606797749979
-        Power(RealDouble(5.0), RealDouble(2.5)).eval() `should equal` 55.90169943749474
-        Power(RealDouble(5.0), RealBigDec("3.0")).eval() `should equal` 125.0
+        Power(5.0, 4).eval() `should equal` 625.0
+        Power(5.0, Rational(1,2)).eval() `should equal` 2.23606797749979
+        Power(5.0, 2.5).eval() `should equal` 55.90169943749474
+        Power(5.0, "3.0").eval() `should equal` 125.0
 
         // BigDec
-        Power(RealBigDec("1.0001234"), Integer.TWO).eval() `should equal` "1.0002468"
-        Power(RealBigDec("4.0"), Rational.HALF).eval() `should equal` "2"
-        Power(RealBigDec("3.14"), RealDouble(3.14)).eval() `should equal` 36.33783888017471
-        Power(RealBigDec("3.000001"), RealBigDec("2.35340583128859694839201928385968473749596868726265")).eval() `should equal` "13.26967"
+        Power("1.0001234", 2).eval() `should equal` "1.0002468"
+        Power("4.0", Rational.HALF).eval() `should equal` "2"
+        Power("3.14", 3.14).eval() `should equal` 36.33783888017471
+        Power("3.000001", "2.35340583128859694839201928385968473749596868726265").eval() `should equal` "13.26967"
 
         // Complex to Int
-        Power(Complex(Integer(3), Rational.HALF), Integer(5)).eval() `should equal` Complex(Rational(2823, 16), Rational(6121, 32))
-        Power(Complex(Integer(0), RealDouble(2.3)), Integer(5)).eval() `should equal` Complex(0.0, 64.36342999999998)
+        Power(Complex(3, Rational.HALF), 5).eval() `should equal` Complex(Rational(2823, 16), Rational(6121, 32))
+        Power(Complex(0, 2.3), 5).eval() `should equal` Complex(0.0, 64.36342999999998)
 
         // Complex with any real number
-        Power(Complex(RealDouble(2.0), Integer(4)), Rational(-16,15)).eval() `should equal` Complex(0.07690324994251796,-0.18717392051825588)
-        Power(Complex(2,4), RealDouble(-1.23)).eval() `should equal` Complex(0.03287406851910734, -0.1549926705899962)
-        Power(Complex(2,4), RealBigDec("1.23")).eval() `should equal` Complex("1.31", "6.17")
+        Power(Complex(2.0, 4), Rational(-16,15)).eval() `should equal` Complex(0.07690324994251796,-0.18717392051825588)
+        Power(Complex(2,4), -1.23).eval() `should equal` Complex(0.03287406851910734, -0.1549926705899962)
+        Power(Complex(2,4), "1.23").eval() `should equal` Complex("1.31", "6.17")
     }
 
     @Test
@@ -124,9 +127,9 @@ class PowerTest {
         // Cannot fully evaluate
         assertEquals(Power(Integer(2), Complex(2,3)), Power(Integer(2), Complex(2,3)).eval())
 
-        assertEquals(Complex(RealDouble(-0.48699441796578125), RealDouble(0.8734050817748715)), N(Power(Integer(2), Complex(0,3))).eval())
-        assertEquals(Complex(RealDouble(-1.947977671863125), RealDouble(3.493620327099486)), N(Power(Integer(2), Complex(2,3))).eval())
-        assertEquals(Complex(RealDouble(-1.947977671863125), RealDouble(3.493620327099486)), Power(Integer(2), Complex(RealDouble(2.0), RealDouble(3.0))).eval())
+        assertEquals(Complex(-0.48699441796578125, 0.8734050817748715), N(Power(Integer(2), Complex(0,3))).eval())
+        assertEquals(Complex(-1.947977671863125, 3.493620327099486), N(Power(Integer(2), Complex(2,3))).eval())
+        assertEquals(Complex(-1.947977671863125, 3.493620327099486), Power(Integer(2), Complex(2.0, 3.0)).eval())
     }
 
     @Test
@@ -173,10 +176,10 @@ class PowerTest {
     fun realBigDecToComplex() {
         val piBigDec = RealBigDec("3.1416")
         val bigDec = RealBigDec("5.0001")
-        assertEquals(Complex(RealBigDec("24.703"), RealBigDec("3.8509")), Power(bigDec, Complex(2,4)).eval())
-        assertEquals(Complex(RealBigDec("1.5503"), RealBigDec("1.6114")), Power(bigDec, Complex(Rational.HALF,Rational.HALF)).eval())
+        assertEquals(Complex("24.703", "3.8509"), Power(bigDec, Complex(2,4)).eval())
+        assertEquals(Complex("1.5503", "1.6114"), Power(bigDec, Complex(Rational.HALF,Rational.HALF)).eval())
         assertEquals(Complex(24.70263974545859, 3.8509208127549734), Power(bigDec, Complex(2.0,4.0)).eval())
-        assertEquals(Complex(RealBigDec("52.933"), RealBigDec("-147.81")), Power(bigDec, Complex(piBigDec,piBigDec)).eval())
+        assertEquals(Complex("52.933", "-147.81"), Power(bigDec, Complex(piBigDec,piBigDec)).eval())
     }
 
     @Test

@@ -8,7 +8,7 @@ import org.cerion.symcalc.expression.number.*
 import org.nevec.rjm.BigDecimalMath
 import kotlin.math.ln
 
-class Log(vararg e: Expr) : FunctionExpr(*e) {
+class Log(vararg e: Any) : FunctionExpr(*e) {
 
     override val properties: Int
         get() = Properties.LISTABLE.value

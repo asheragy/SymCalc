@@ -47,8 +47,8 @@ class ComplexTest {
     @Test
     fun addition() {
         assertEquals(Complex(6,1), Complex(1,1) + Integer(5))
-        assertEquals(Complex(Rational(3,2),Integer.ONE), Complex(1,1) + Rational.HALF)
-        assertEquals(Complex(RealDouble(6.0),Integer.ONE), Complex(1,1) + RealDouble(5.0))
+        assertEquals(Complex(Rational(3,2), 1), Complex(1,1) + Rational.HALF)
+        assertEquals(Complex(6.0, 1), Complex(1,1) + RealDouble(5.0))
         assertEquals(Complex(2,2), Complex(1,1) + Complex(1,1))
     }
 
@@ -67,7 +67,7 @@ class ComplexTest {
 
         assertEquals(Complex(9, 21), Complex(3,7) / Rational(1,3))
 
-        assertEquals(Complex(RealDouble(1.3636363636363635), RealDouble(3.1818181818181817)), Complex(3,7) / RealDouble(2.2))
+        assertEquals(Complex(1.3636363636363635, 3.1818181818181817), Complex(3,7) / RealDouble(2.2))
     }
 
     @Test
@@ -77,7 +77,7 @@ class ComplexTest {
         assertEquals(Complex(Rational(6,25), Rational(17, 25)), Complex(3,2) / Complex(4,-3))
 
         // Divide: real
-        assertEquals(Complex(RealDouble(0.4461538461538462), RealDouble(-0.03076923076923077)), Complex(RealDouble(2.0), Integer(3)) / Complex(4,7))
+        assertEquals(Complex(0.4461538461538462, -0.03076923076923077), Complex(2.0, 3) / Complex(4,7))
     }
 
     @Test
@@ -110,8 +110,8 @@ class ComplexTest {
         assertEquals(Complex(103595049,-51872200), Complex(5,-4).pow(10))
 
         // Rational
-        assertEquals(Complex(Integer.ZERO, Rational(243,32)), Complex(Rational.ZERO,Rational(3,2)) pow Integer(5))
-        assertEquals(Complex(Integer.ZERO, Rational(-32,243)), Complex(Rational.ZERO,Rational(3,2)) pow Integer(-5))
+        assertEquals(Complex(0, Rational(243,32)), Complex(Rational.ZERO, Rational(3,2)) pow Integer(5))
+        assertEquals(Complex(0, Rational(-32,243)), Complex(Rational.ZERO, Rational(3,2)) pow Integer(-5))
 
         // Double
         assertEquals(Complex(0.0, 3125.0), Complex(0.0,5.0) pow Integer(5))
@@ -120,8 +120,8 @@ class ComplexTest {
 
     @Test
     fun pow_toRational() {
-        assertEquals(Complex(1.7989074399478673,1.1117859405028423), Complex(RealDouble(2.0), Integer(4)) pow Rational.HALF)
-        assertEquals(Complex(0.07690324994251796,-0.18717392051825588), Complex(RealDouble(2.0), Integer(4)) pow Rational(-16,15))
+        assertEquals(Complex(1.7989074399478673,1.1117859405028423), Complex(2.0, 4) pow Rational.HALF)
+        assertEquals(Complex(0.07690324994251796,-0.18717392051825588), Complex(2.0, 4) pow Rational(-16,15))
         assertEquals(Complex("1.536621", "0.5943189"), Complex(RealBigDec("2.000001"),Integer(4)) pow Rational.THIRD)
     }
 
@@ -132,7 +132,7 @@ class ComplexTest {
         assertEquals(Complex(0.03287406851910734, -0.1549926705899962), Complex(2,4) pow RealDouble(-1.23))
 
         // BigDec
-        assertEquals(Complex(1.309544770737814, 6.174162506105573), Complex(RealDouble(2.0), Integer(4)) pow RealBigDec("1.23"))
+        assertEquals(Complex(1.309544770737814, 6.174162506105573), Complex(2.0, 4) pow RealBigDec("1.23"))
         assertEquals(Complex("1.31", "6.17"), Complex(2,4) pow RealBigDec("1.23"))
     }
 

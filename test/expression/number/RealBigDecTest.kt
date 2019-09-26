@@ -132,7 +132,7 @@ class RealBigDecTest : NumberTestBase() {
         assertEquals(RealBigDec("0.0001851"), RealBigDec("0.0001234") * Rational(3,2))
         assertEquals(RealDouble(0.0037427219999999995), RealBigDec("0.0001234") * RealDouble(30.33))
         assertEquals(RealBigDec("0.003743"), RealBigDec("0.0001234") * RealBigDec("30.33"))
-        assertEquals(Complex(RealBigDec("0.0002468"),RealBigDec("0.0003702")), RealBigDec("0.0001234") * Complex(2,3))
+        assertEquals(Complex("0.0002468", "0.0003702"), RealBigDec("0.0001234") * Complex(2,3))
 
         // Different internal precision
         assertEquals(RealBigDec("0.89"), RealBigDec("0.67") * RealBigDec("1.333333333"))
@@ -156,7 +156,7 @@ class RealBigDecTest : NumberTestBase() {
         assertEquals(RealBigDec("0.00008227"), RealBigDec("0.0001234") / Rational(3,2))
         assertEquals(RealDouble(0.03297472469502143), RealBigDec("1.0001234") / RealDouble(30.33))
         assertEquals(RealBigDec("0.03297"), RealBigDec("1.0001234") / RealBigDec("30.33"))
-        assertEquals(Complex(RealBigDec("0.00001898"),RealBigDec("-0.00002848")), RealBigDec("0.0001234") / Complex(2,3))
+        assertEquals(Complex("0.00001898", "-0.00002848"), RealBigDec("0.0001234") / Complex(2,3))
     }
 
     @Test

@@ -49,17 +49,17 @@ class DotTest {
     fun matrix() {
         val e = Dot(
                 ListExpr(
-                        ListExpr(Integer(1), Integer(2), Integer(3)),
-                        ListExpr(Integer(4), Integer(5), Integer(6))),
+                        ListExpr(1, 2, 3),
+                        ListExpr(4, 5, 6)),
                 ListExpr(
-                        ListExpr(Integer(7), Integer(8)),
-                        ListExpr(Integer(9), Integer(10)),
-                        ListExpr(Integer(11), Integer(12))
+                        ListExpr(7, 8),
+                        ListExpr(9, 10),
+                        ListExpr(11, 12)
                 ))
 
         val expected = ListExpr(
-                ListExpr(Integer(58), Integer(64)),
-                ListExpr(Integer(139), Integer(154))
+                ListExpr(58, 64),
+                ListExpr(139, 154)
         )
 
         assertEquals(expected, e.eval())

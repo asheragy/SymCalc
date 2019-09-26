@@ -11,7 +11,7 @@ class Total(vararg e: Expr) : FunctionExpr(*e) {
 
         if (get(0) is ListExpr) {
             val e = get(0) as ListExpr
-            return Plus(*e.args.toTypedArray()).eval()
+            return Plus(*e.args).eval()
         }
 
         return this

@@ -1,5 +1,6 @@
 package expression.function.arithmetic
 
+import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
@@ -12,9 +13,9 @@ class LogTest {
 
     @Test
     fun basic() {
-        assertEquals(RealDouble(0.6931471805599453), Log(RealDouble(2.0)).eval())
-        assertEquals(RealDouble(-9.210340371976182), Log(RealDouble(0.0001)).eval())
-        assertEquals(ListExpr(RealDouble(0.6931471805599453), RealDouble(-9.210340371976182)), Log(ListExpr(RealDouble(2.0), RealDouble(0.0001))).eval())
+        Log(2.0).eval() `should equal` 0.6931471805599453
+        Log(0.0001).eval() `should equal` -9.210340371976182
+        Log(ListExpr(2.0, 0.0001)).eval() `should equal` ListExpr(0.6931471805599453, -9.210340371976182)
     }
 
     @Test
@@ -39,9 +40,9 @@ class LogTest {
         assertEquals(Plus(Times(Complex.I, Pi()), Log(Rational(4,3))), Log(Rational(-4, 3)).eval())
         assertEquals(Plus(Times(Complex.I, Pi()), Times(Integer(-1), Log(Integer(3)))), Log(Rational(-1, 3)).eval())
 
-        assertEquals(Complex(RealDouble(-1.3862943611198906), RealDouble(3.141592653589793)), Log(RealDouble(-0.25)).eval())
-        assertEquals(Complex(RealDouble(2.322387720290225), RealDouble(3.141592653589793)), Log(RealDouble(-10.2)).eval())
-        assertEquals(Complex(RealBigDec("1.63383"), RealBigDec("3.14159")), Log(RealBigDec("-5.12345")).eval())
+        assertEquals(Complex(-1.3862943611198906, 3.141592653589793), Log(RealDouble(-0.25)).eval())
+        assertEquals(Complex(2.322387720290225, 3.141592653589793), Log(RealDouble(-10.2)).eval())
+        assertEquals(Complex("1.63383", "3.14159"), Log(RealBigDec("-5.12345")).eval())
     }
 
     @Test

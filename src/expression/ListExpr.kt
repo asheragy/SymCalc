@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.expression.number.NumberExpr
 
-class ListExpr(vararg e: Expr) : MultiExpr(*e) {
+class ListExpr(vararg e: Any) : MultiExpr(convertArgs(*e)) {
     override val type: ExprType get() = ExprType.LIST
 
     constructor() : this(*emptyArray<Expr>())

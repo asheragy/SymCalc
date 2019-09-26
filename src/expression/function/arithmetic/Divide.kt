@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.Rational
 
-class Divide(vararg e: Expr) : FunctionExpr(*e) {
+class Divide(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val a = get(0)

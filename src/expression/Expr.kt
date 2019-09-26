@@ -8,6 +8,8 @@ import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.expression.number.RealDouble
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 
@@ -15,13 +17,34 @@ interface AtomExpr {
     val value: Any?
 }
 
-abstract class MultiExpr(vararg e: Expr) : Expr() {
-    val args: List<Expr> = listOf(*e)
+abstract class MultiExpr(val args: Array<out Expr>) : Expr() {
+
     fun getList(index: Int): ListExpr = get(index) as ListExpr
     fun getInteger(index: Int): Integer = get(index) as Integer
 
     val size get() = args.size
     operator fun get(index: Int): Expr = args[index]
+
+    companion object {
+        fun convertArgs(vararg e: Any): Array<Expr> {
+            return e.map {
+                when (it) {
+                    is Expr -> it
+                    is Int -> Integer(it)
+                    is Double -> RealDouble(it)
+                    is String -> {
+                        when {
+                            it[0].isLetter() -> VarExpr(it)
+                            it.contains('.') -> RealBigDec(it)
+                            it.any { a -> a.isDigit() } -> Integer(it) as Expr
+                            else -> throw IllegalArgumentException("unrecognized string $it")
+                        }
+                    }
+                    else -> throw IllegalArgumentException("class ${it.javaClass.simpleName}")
+                }
+            }.toTypedArray()
+        }
+    }
 }
 
 abstract class Expr {

@@ -1,7 +1,9 @@
 package org.cerion.symcalc.expression
 
+import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -18,7 +20,6 @@ class ListExprTest {
 
     @Test
     fun equals() {
-
         val l1 = ListExpr(VarExpr("x"), Integer(5), BoolExpr.FALSE)
         val l2 = ListExpr(VarExpr("x"), Integer(6), BoolExpr.FALSE)
         val l3 = ListExpr(VarExpr("x"), Integer(5), BoolExpr.FALSE)
@@ -34,7 +35,12 @@ class ListExprTest {
         assertTrue(a.equals(b))
 
         a = ListExpr(ListExpr(VarExpr("5"), Integer(2)), ListExpr(VarExpr("a"), Integer(1)), ListExpr(VarExpr("2"), Integer(1)))
-        b = ListExpr(ListExpr(VarExpr("5"), Integer(2)), ListExpr(VarExpr("a"), Integer(1)), ListExpr(VarExpr("2"), Integer(1)))
+        b = ListExpr(ListExpr(VarExpr("5"), 2), ListExpr(VarExpr("a"), Integer(1)), ListExpr(VarExpr("2"), Integer(1)))
         assertTrue(a.equals(b))
+    }
+
+    @Test
+    fun nonExprParameters() {
+        ListExpr(5, 1.23, "x", "12345", "3.14") `should equal` ListExpr(Integer(5), RealDouble(1.23), VarExpr("x"), Integer("12345"), RealBigDec("3.14"))
     }
 }

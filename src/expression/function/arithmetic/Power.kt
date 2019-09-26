@@ -13,7 +13,7 @@ import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.Rational
 
-class Power(vararg e: Expr) : FunctionExpr(*e) {
+class Power(vararg e: Any) : FunctionExpr(*e) {
 
     public override fun evaluate(): Expr {
         val a = get(0)

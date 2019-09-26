@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 
-class Times(vararg e: Expr) : FunctionExpr(*e) {
+class Times(vararg e: Any) : FunctionExpr(*e) {
 
     override val properties: Int
         get() = Properties.Flat.value or Properties.NumericFunction.value or Properties.Orderless.value

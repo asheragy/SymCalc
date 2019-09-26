@@ -35,8 +35,8 @@ class RealDoubleTest : NumberTestBase() {
         assertEquals(-1, RealDouble(5.12344).compareTo(RealDouble(5.12345)))
         assertEquals(1, RealDouble(5.12346).compareTo(RealDouble(5.12345)))
 
-        assertEquals(0, RealDouble(0.0001).compareTo(Complex(RealDouble((0.0001)), IntegerTest.zero)))
-        assertFailsWith<UnsupportedOperationException> { RealDouble(5.0).compareTo(Complex(IntegerTest.zero, IntegerTest.one)) }
+        assertEquals(0, RealDouble(0.0001).compareTo(Complex(0.0001, 0)))
+        assertFailsWith<UnsupportedOperationException> { RealDouble(5.0).compareTo(Complex(0, 1)) }
     }
 
     @Test
@@ -54,7 +54,7 @@ class RealDoubleTest : NumberTestBase() {
         assertEquals(RealDouble(4.5), RealDouble(5.0) - Rational(1,2))
         assertEquals(RealDouble(0.5), RealDouble(5.0) - RealDouble(4.5))
         assertEquals(RealDouble(-5.0), RealDouble(5.0) - RealBigDec(BigDecimal.TEN))
-        assertEquals(Complex(RealDouble(-5.0), Integer(4)), RealDouble(5.0) - Complex(10,-4))
+        assertEquals(Complex(-5.0, 4), RealDouble(5.0) - Complex(10,-4))
     }
 
     @Test
@@ -63,7 +63,7 @@ class RealDoubleTest : NumberTestBase() {
         assertEquals(RealDouble(2.5), RealDouble(5.0) * Rational(1,2))
         assertEquals(RealDouble(22.5), RealDouble(5.0) * RealDouble(4.5))
         assertEquals(RealDouble(50.0), RealDouble(5.0) * RealBigDec(BigDecimal.TEN))
-        assertEquals(Complex(RealDouble(50.0), RealDouble(-20.0)), RealDouble(5.0) * Complex(10,-4))
+        assertEquals(Complex(50.0, -20.0), RealDouble(5.0) * Complex(10,-4))
     }
 
     @Test
@@ -72,7 +72,7 @@ class RealDoubleTest : NumberTestBase() {
         assertEquals(RealDouble(10.0), RealDouble(5.0) / Rational(1,2))
         assertEquals(RealDouble(2.0), RealDouble(5.0) / RealDouble(2.5))
         assertEquals(RealDouble(0.5), RealDouble(5.0) / RealBigDec(BigDecimal.TEN))
-        assertEquals(Complex(RealDouble(5.0), RealDouble(-10.0)), RealDouble(50.0) / Complex(2,4))
+        assertEquals(Complex(5.0, -10.0), RealDouble(50.0) / Complex(2,4))
     }
 
     @Test

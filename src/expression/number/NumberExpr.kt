@@ -29,7 +29,9 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract operator fun times(other: NumberExpr): NumberExpr
     abstract operator fun div(other: NumberExpr): NumberExpr
     abstract operator fun unaryMinus(): NumberExpr
+
     abstract infix fun pow(other: NumberExpr): NumberExpr
+
     abstract fun floor(): NumberExpr
 
     operator fun minus(other: NumberExpr): NumberExpr {

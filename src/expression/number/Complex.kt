@@ -14,7 +14,7 @@ import kotlin.math.min
 
 class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
     companion object {
-        @JvmField val ZERO = Complex(Integer.ZERO, Integer.ZERO)
+        @JvmField val ZERO = Complex(0, 0)
         @JvmField val I = Complex(0, 1)
     }
 
@@ -27,8 +27,11 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
     override val isNegative: Boolean
         get() = throw UnsupportedOperationException()
 
+    // TODO make Any constructor and just convert with function
     constructor(r: NumberExpr) : this(r, Integer.ZERO)
     constructor(r: Number, i: Number) : this(create(r), create(i))
+    constructor(r: NumberExpr, i: Number) : this(r, create(i))
+    constructor(r: Number, i: NumberExpr) : this(create(r), i)
     constructor(r: String, i: String): this(RealBigDec(r), RealBigDec(i))
 
     fun conjugate(): Complex = Complex(real, img.unaryMinus())

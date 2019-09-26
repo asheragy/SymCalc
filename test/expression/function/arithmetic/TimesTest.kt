@@ -24,7 +24,7 @@ class TimesTest {
                 { assertEquals(Integer.ZERO, Times(Rational(1,3), Integer.ZERO).eval()) },
                 { assertEquals(Integer.ZERO, Times(RealDouble(3.14), Integer.ZERO).eval()) },
                 { assertEquals(Integer.ZERO, Times(RealBigDec("3.14"), Integer.ZERO).eval()) },
-                { assertEquals(Integer.ZERO, Times(Complex(RealDouble(2.0), Rational.HALF), Integer.ZERO).eval()) },
+                { assertEquals(Integer.ZERO, Times(Complex(2.0, Rational.HALF), Integer.ZERO).eval()) },
                 { assertEquals(Integer.ZERO, Times(Pi(), Integer.ZERO).eval()) }
         )
     }
@@ -36,7 +36,7 @@ class TimesTest {
                 { assertEquals(RealDouble(), Times(Rational(1,3), RealDouble()).eval()) },
                 { assertEquals(RealDouble(), Times(RealDouble(3.14), RealDouble()).eval()) },
                 { assertEquals(RealDouble(), Times(RealBigDec("3.14"), RealDouble()).eval()) },
-                { assertEquals(RealDouble(), Times(Complex(RealDouble(2.0), Rational.HALF), RealDouble()).eval()) },
+                { assertEquals(RealDouble(), Times(Complex(2.0, Rational.HALF), RealDouble()).eval()) },
                 { assertEquals(RealDouble(), Times(Pi(), RealDouble()).eval()) }
         )
     }
