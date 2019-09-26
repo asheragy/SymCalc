@@ -55,8 +55,8 @@ class ComplexTest {
     @Test
     fun subtraction() {
         assertEquals(Complex(-4,1), Complex(1,1) - Integer(5))
-        assertEquals(Complex(Rational(1,2),Integer.ONE), Complex(1,1) - Rational.HALF)
-        assertEquals(Complex(RealDouble(-4.0),Integer.ONE), Complex(1,1) - RealDouble(5.0))
+        assertEquals(Complex(Rational(1,2), 1), Complex(1,1) - Rational.HALF)
+        assertEquals(Complex(-4.0, 1), Complex(1,1) - RealDouble(5.0))
         assertEquals(Integer.ZERO, Complex(1,1) - Complex(1,1))
     }
 
@@ -84,7 +84,7 @@ class ComplexTest {
     fun reducesToNonComplex() {
         assertEquals(NumberType.INTEGER, (Complex(2,0) + Integer(3)).numType)
         assertEquals(NumberType.INTEGER , (Complex(2,10) + Complex(3, -10)).numType)
-        assertEquals(NumberType.REAL_DOUBLE , (Complex(2,10) - Complex(RealDouble(3.0), RealDouble(10.0))).numType)
+        assertEquals(NumberType.REAL_DOUBLE , (Complex(2,10) - Complex(3.0, 10.0)).numType)
         assertEquals(NumberType.INTEGER, (Complex(1,1) * Complex(1, -1)).numType)
         assertEquals(NumberType.RATIONAL, (Complex(1,0) / Complex(2, 0)).numType)
     }
@@ -122,7 +122,7 @@ class ComplexTest {
     fun pow_toRational() {
         assertEquals(Complex(1.7989074399478673,1.1117859405028423), Complex(2.0, 4) pow Rational.HALF)
         assertEquals(Complex(0.07690324994251796,-0.18717392051825588), Complex(2.0, 4) pow Rational(-16,15))
-        assertEquals(Complex("1.536621", "0.5943189"), Complex(RealBigDec("2.000001"),Integer(4)) pow Rational.THIRD)
+        assertEquals(Complex("1.536621", "0.5943189"), Complex("2.000001", 4) pow Rational.THIRD)
     }
 
     @Test
@@ -138,7 +138,7 @@ class ComplexTest {
 
     @Test
     fun floor() {
-        Assertions.assertEquals(Complex(2, 2), Complex(RealBigDec("2.34"), Rational(5, 2)).floor())
-        Assertions.assertEquals(Integer(2), Complex(RealBigDec("2.34"), Rational(1, 2)).floor())
+        Assertions.assertEquals(Complex(2, 2), Complex("2.34", Rational(5, 2)).floor())
+        Assertions.assertEquals(Integer(2), Complex("2.34", Rational(1, 2)).floor())
     }
 }

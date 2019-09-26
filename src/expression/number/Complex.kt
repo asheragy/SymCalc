@@ -12,11 +12,22 @@ import org.cerion.symcalc.expression.function.trig.Sin
 import kotlin.math.abs
 import kotlin.math.min
 
-class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
+class Complex(val real: NumberExpr, val img: NumberExpr = Integer.ZERO) : NumberExpr() {
     companion object {
         @JvmField val ZERO = Complex(0, 0)
         @JvmField val I = Complex(0, 1)
+
+        private fun convertArg(n: Any): NumberExpr {
+            return when(n) {
+                is NumberExpr -> n
+                is Number -> create(n)
+                is String -> RealBigDec(n)
+                else -> throw IllegalArgumentException("cannot convert $n to Number")
+            }
+        }
     }
+
+    constructor(r: Any, i: Any): this(convertArg(r), convertArg(i))
 
     override val type: ExprType get() = ExprType.NUMBER
     override val isZero: Boolean get() = real.isZero && img.isZero
@@ -26,13 +37,6 @@ class Complex(val real: NumberExpr, val img: NumberExpr) : NumberExpr() {
 
     override val isNegative: Boolean
         get() = throw UnsupportedOperationException()
-
-    // TODO make Any constructor and just convert with function
-    constructor(r: NumberExpr) : this(r, Integer.ZERO)
-    constructor(r: Number, i: Number) : this(create(r), create(i))
-    constructor(r: NumberExpr, i: Number) : this(r, create(i))
-    constructor(r: Number, i: NumberExpr) : this(create(r), i)
-    constructor(r: String, i: String): this(RealBigDec(r), RealBigDec(i))
 
     fun conjugate(): Complex = Complex(real, img.unaryMinus())
 

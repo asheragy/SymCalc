@@ -159,7 +159,7 @@ class IntegerTest {
         assertEquals(-1, Integer(5).compareTo(RealDouble(5.00000001)))
         assertEquals(1, Integer(5).compareTo(RealDouble(4.999999999)))
 
-        assertEquals(0, Integer.TWO.compareTo(Complex(Integer.TWO, zero)))
+        assertEquals(0, Integer.TWO.compareTo(Complex(2, 0)))
     }
 
     @Test
@@ -174,7 +174,7 @@ class IntegerTest {
 
     @Test
     fun compareTo_complex() {
-        assertFailsWith<UnsupportedOperationException> { one.compareTo(Complex(zero, one)) }
+        assertFailsWith<UnsupportedOperationException> { one.compareTo(Complex(0, 1)) }
     }
 
     @Test

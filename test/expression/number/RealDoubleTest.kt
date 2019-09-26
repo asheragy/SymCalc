@@ -45,7 +45,7 @@ class RealDoubleTest : NumberTestBase() {
         assertEquals(RealDouble(5.5), RealDouble(5.0) + Rational(1,2))
         assertEquals(RealDouble(9.9), RealDouble(5.0) + RealDouble(4.9))
         assertEquals(RealDouble(15.0), RealDouble(5.0) + RealBigDec(BigDecimal.TEN))
-        assertEquals(Complex(RealDouble(10.0), Integer(4)), RealDouble(5.0) + Complex(5,4))
+        assertEquals(Complex(10.0, 4), RealDouble(5.0) + Complex(5,4))
     }
 
     @Test
