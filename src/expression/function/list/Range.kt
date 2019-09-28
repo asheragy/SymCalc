@@ -38,6 +38,6 @@ class Range(vararg e: Expr) : FunctionExpr(*e) {
         else if (size > 2)
             validateParameterType(1, ExprType.NUMBER)
 
-        validateParameterRage(1, 3)
+        validateParameterRange(1, 3)
     }
 }

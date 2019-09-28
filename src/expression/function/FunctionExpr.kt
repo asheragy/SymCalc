@@ -27,11 +27,13 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         get() = ExprType.FUNCTION
 
     override fun toString(): String {
-        return name + args.toString()
+        return name + args.toList().toString()
     }
 
     @Throws(ValidationException::class)
-    abstract fun validate()
+    open fun validate() {
+        validateParameterRange(1, Int.MAX_VALUE) // By default all functions take at least 1 parameter
+    }
 
     protected abstract fun evaluate(): Expr
 
@@ -158,7 +160,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
     }
 
     @Throws(ValidationException::class)
-    protected fun validateParameterRage(min: Int, max: Int) {
+    protected fun validateParameterRange(min: Int, max: Int) {
         if (size in min..max)
             return
 

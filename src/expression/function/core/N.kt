@@ -34,6 +34,6 @@ class N(vararg e: Expr) : FunctionExpr(*e) {
     }
 
     override fun validate() {
-        validateParameterRage(1, 2)
+        validateParameterRange(1, 2)
     }
 }

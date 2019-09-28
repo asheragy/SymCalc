@@ -2,7 +2,6 @@ package org.cerion.symcalc.expression.function.arithmetic
 
 import expression.constant.I
 import org.cerion.symcalc.exception.OperationException
-import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.function.FunctionExpr
@@ -16,6 +15,12 @@ import org.cerion.symcalc.expression.number.Rational
 class Power(vararg e: Any) : FunctionExpr(*e) {
 
     public override fun evaluate(): Expr {
+        if (size == 1)
+            return get(0)
+
+        if (size > 2)
+            return Power(get(0), Power(*args.sliceArray(1 until size))).eval()
+
         val a = get(0)
         val b = get(1)
 
@@ -93,11 +98,6 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
     }
 
     override fun toString(): String {
-        return if (size == 2) get(0).toString() + "^" + get(1) else super.toString()
-    }
-
-    @Throws(ValidationException::class)
-    override fun validate() {
-        validateParameterCount(2)
+        return args.toList().joinToString ("^")
     }
 }

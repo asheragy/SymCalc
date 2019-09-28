@@ -21,6 +21,26 @@ infix fun Expr.pow(other: Expr) = Power(this, other).eval()
 class PowerTest {
 
     @Test
+    fun toStringTest() {
+        Power("x").toString() `should equal` "x"
+        Power("x", "y").toString() `should equal` "x^y"
+        Power(2, 3).toString() `should equal` "2^3"
+        Power(2, 3, 4).toString() `should equal` "2^3^4"
+    }
+
+    @Test
+    fun singleParameter() {
+        Power("x").eval() `should equal` "x"
+        Power(2).eval() `should equal` 2
+    }
+
+    @Test
+    fun multiParameter() {
+        Power("x", "y", "z").eval() `should equal` Power("x", Power("y", "z"))
+        Power(2, 3, 2).eval() `should equal` 512
+    }
+
+    @Test
     fun toPowerZero() {
         val zeros = arrayOf(Integer.ZERO, Rational.ZERO, RealDouble(0.0), RealBigDec(BigDecimal.ZERO), Complex(0,0))
         val nums = arrayOf(Integer(5), Rational(2,3), RealDouble(3.14), RealBigDec(BigDecimal.TEN), Complex(7,9))
@@ -105,7 +125,7 @@ class PowerTest {
 
         // BigDec
         Power("1.0001234", 2).eval() `should equal` "1.0002468"
-        Power("4.0", Rational.HALF).eval() `should equal` "2"
+        Power("4.0", Rational.HALF).eval() `should equal` "2.0"
         Power("3.14", 3.14).eval() `should equal` 36.33783888017471
         Power("3.000001", "2.35340583128859694839201928385968473749596868726265").eval() `should equal` "13.26967"
 
