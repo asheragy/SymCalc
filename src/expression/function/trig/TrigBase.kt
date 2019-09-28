@@ -14,7 +14,7 @@ interface StandardTrigFunction {
     fun evaluatePiFactoredOut(e: Expr): Expr
 }
 
-abstract class TrigBase protected constructor(vararg e: Expr) : FunctionExpr(*e) {
+abstract class TrigBase protected constructor(e: Expr) : FunctionExpr(e) {
 
     override val properties: Int
         get() = Properties.LISTABLE.value
@@ -46,10 +46,5 @@ abstract class TrigBase protected constructor(vararg e: Expr) : FunctionExpr(*e)
         }
 
         return evaluate(e)
-    }
-
-    @Throws(ValidationException::class)
-    override fun validate() {
-        validateParameterCount(1)
     }
 }

@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.function.list
 
+import expression.SymbolExpr
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
@@ -12,8 +13,8 @@ class Select(vararg e: Expr) : FunctionExpr(*e) {
         val result = mutableListOf<Expr>()
 
         for (i in 0 until list.size) {
-            val f = (args[1] as FunctionExpr)
-            val e = createFunction(f.name, list[i]).eval()
+            val f = (args[1] as SymbolExpr)
+            val e = createFunction(f.value, list[i]).eval()
 
             if (e.equals(BoolExpr.TRUE)) {
                 result.add(list[i])
@@ -25,6 +26,6 @@ class Select(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun validate() {
         validateParameterType(0, ExprType.LIST)
-        validateParameterType(1, ExprType.FUNCTION)
+        validateParameterType(1, ExprType.SYMBOL)
     }
 }

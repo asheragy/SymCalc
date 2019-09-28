@@ -24,8 +24,13 @@ object FunctionFactory {
 
     fun createInstance(name: String, vararg e: Expr): FunctionExpr {
         val function = stringToFunctionType(name)
-        if (function != null)
-            return createInstance(function, *e)
+        if (function != null) {
+            val result = createInstance(function, *e)
+
+            require(result.size == e.size) { "expected ${result.size} parameters, actual ${e.size}" }
+
+            return result
+        }
 
         throw RuntimeException("Function not found")
     }
@@ -49,10 +54,10 @@ object FunctionFactory {
             Function.SQRT -> return Sqrt(*e)
 
             // Trig
-            Function.SIN -> return Sin(*e)
-            Function.COS -> return Cos(*e)
-            Function.TAN -> return Tan(*e)
-            Function.ARCTAN -> return ArcTan(*e)
+            Function.SIN -> return Sin(e[0])
+            Function.COS -> return Cos(e[0])
+            Function.TAN -> return Tan(e[0])
+            Function.ARCTAN -> return ArcTan(e[0])
 
             //List
             Function.TOTAL -> return Total(*e)

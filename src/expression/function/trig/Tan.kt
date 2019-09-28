@@ -10,7 +10,7 @@ import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
 import kotlin.math.tan
 
-class Tan(vararg e: Expr) : TrigBase(*e), StandardTrigFunction {
+class Tan(e: Expr) : TrigBase(e), StandardTrigFunction {
 
     override fun evaluateAsDouble(d: Double): Double = tan(d)
 

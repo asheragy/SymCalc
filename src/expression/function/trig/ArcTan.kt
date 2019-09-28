@@ -8,7 +8,7 @@ import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.nevec.rjm.BigDecimalMath
 
-class ArcTan(vararg e: Expr) : TrigBase(*e) {
+class ArcTan(e: Expr) : TrigBase(e) {
 
     // FEAT added minimum to get complex power working
 

@@ -12,6 +12,7 @@ import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotEquals
 
 class FunctionExprTest {
@@ -61,6 +62,12 @@ class FunctionExprTest {
     fun listable_differentSizes() {
         assertEquals(Expr.ExprType.ERROR, (ListExpr(1,2,3) + ListExpr(4,5)).type)
         assertEquals(Expr.ExprType.ERROR, (ListExpr(1,2) - ListExpr(4,5,6)).type)
+    }
+
+    @Test
+    fun createInvalidParameterCount() {
+        assertFailsWith<ArrayIndexOutOfBoundsException> { FunctionExpr.createFunction("sin").eval() }
+        assertFailsWith<IllegalArgumentException> { FunctionExpr.createFunction("sin", Integer(2), Integer(3)).eval() }
     }
 
 }

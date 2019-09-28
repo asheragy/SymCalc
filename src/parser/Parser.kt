@@ -27,7 +27,7 @@ class Parser(private val lex: Lexer) {
             if (token != 0.toChar())
                 throw ParseException("Unexpected input $token")
         }
-        catch(ex: ParseException) {
+        catch(ex: Exception) {
             this.e = ErrorExpr(ex.toString())
         }
     }

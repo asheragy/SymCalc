@@ -71,4 +71,9 @@ class ParserTest {
         assertTrue(e is Plus)
         assertEquals(Complex(2,5), e.eval())
     }
+
+    @Test
+    fun invalidParametercount() {
+        assertTrue(Expr.parse("Sin(1,2)").isError)
+    }
 }
