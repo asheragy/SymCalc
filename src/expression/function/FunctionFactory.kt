@@ -46,7 +46,7 @@ object FunctionFactory {
             Function.PLUS -> return Plus(*e)
             Function.SUBTRACT -> return Subtract(*e)
             Function.TIMES -> return Times(*e)
-            Function.DIVIDE -> return Divide(*e)
+            Function.DIVIDE -> return Divide(e[0], e[1])
             Function.POWER -> return Power(*e)
             Function.MINUS -> return Minus(*e)
             Function.LOG -> return Log(*e)

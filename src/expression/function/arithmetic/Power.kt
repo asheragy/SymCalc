@@ -25,9 +25,8 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
         val b = get(1)
 
         // Power to power is just multiplied exponents
-        if (a is Power) {
-            return a[0] * Times(a[1], b)
-        }
+        if (a is Power)
+            return Power(a[0], a[1] * b).eval()
 
         if (a is NumberExpr && a.isOne)
             return a

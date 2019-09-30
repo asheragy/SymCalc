@@ -5,44 +5,30 @@ import org.cerion.symcalc.expression.constant.ComplexInfinity
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.Rational
 
-class Divide(vararg e: Any) : FunctionExpr(*e) {
+class Divide(x: Any, y: Any) : FunctionExpr(x, y) {
 
     override fun evaluate(): Expr {
-        val a = get(0)
-        val b = get(1)
+        val x = get(0)
+        val y = get(1)
 
-        // Transform x / y^z = x * y^-z
-        if (b is Power && b[1] is NumberExpr) {
-            val z = b[1] as NumberExpr
-            return a * Power(b[0], z.unaryMinus())
-        }
-
-        if (b is NumberExpr) {
-            if (b.isZero)
+        if (y is NumberExpr) {
+            if (y.isZero)
                 return ComplexInfinity()
 
-            if (b.isOne) //Identity
-                return a
+            if (y.isOne) //Identity
+                return x
 
-            // Factor out rational number if it can't be evaluated
-            if (b is Integer && a !is NumberExpr)
-                return Rational(Integer.ONE, b) * a
+            if (x is NumberExpr)
+                return x / y
         }
 
-        if (a is NumberExpr && b is NumberExpr)
-            return a / b
-
-        if (b is ComplexInfinity)
+        if (y is ComplexInfinity)
             return Integer.ZERO
 
-        return this
+        // Reduce remaining division to multiplication
+        return x * Power(y, -1)
     }
 
     override fun toString(): String = if (size == 2) get(0).toString() + " / " + get(1) else super.toString()
-
-    override fun validate() {
-        validateParameterCount(2)
-    }
 }

@@ -218,4 +218,9 @@ class PowerTest {
         // Cannot eval
         assertEquals(Power(Complex(1, 1), Complex(1,1)), Power(Complex(1, 1), Complex(1,1)).eval())
     }
+
+    @Test
+    fun powToPow() {
+        Power(Power(2, Rational.HALF), -1).eval() `should equal` Power(2, Rational(-1, 2))
+    }
 }
