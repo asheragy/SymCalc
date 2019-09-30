@@ -1,7 +1,9 @@
 package expression
 
 import org.cerion.symcalc.expression.AtomExpr
+import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.function.FunctionExpr
 
 class SymbolExpr(override val value: String) : Expr(), AtomExpr {
 
@@ -11,7 +13,9 @@ class SymbolExpr(override val value: String) : Expr(), AtomExpr {
     override fun equals(e: Expr): Boolean = e is SymbolExpr && value == e.value
 
     override fun eval(): Expr {
-        // TODO should validate function exists
-        return this
+        if(FunctionExpr.isValidFunction(value))
+            return this
+
+        return ErrorExpr("Invalid function name '$value'")
     }
 }
