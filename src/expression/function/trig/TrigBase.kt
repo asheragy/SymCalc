@@ -14,7 +14,7 @@ interface StandardTrigFunction {
     fun evaluatePiFactoredOut(e: Expr): Expr
 }
 
-abstract class TrigBase protected constructor(e: Expr) : FunctionExpr(e) {
+abstract class TrigBase protected constructor(e: Any) : FunctionExpr(e) {
 
     override val properties: Int
         get() = Properties.LISTABLE.value

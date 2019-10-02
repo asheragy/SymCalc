@@ -7,18 +7,14 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.calculus.D
 import org.cerion.symcalc.expression.function.core.*
-import org.cerion.symcalc.expression.function.core.Set
 import org.cerion.symcalc.expression.function.integer.*
 import org.cerion.symcalc.expression.function.list.*
-import org.cerion.symcalc.expression.function.list.Map
 import org.cerion.symcalc.expression.function.logical.Greater
 import org.cerion.symcalc.expression.function.numeric.Floor
 import org.cerion.symcalc.expression.function.plots.Plot
 import org.cerion.symcalc.expression.function.procedural.If
 import org.cerion.symcalc.expression.function.statistics.*
-import org.cerion.symcalc.expression.function.trig.Cos
-import org.cerion.symcalc.expression.function.trig.Sin
-import org.cerion.symcalc.expression.function.trig.Tan
+import org.cerion.symcalc.expression.function.trig.*
 
 object FunctionFactory {
 
@@ -58,6 +54,7 @@ object FunctionFactory {
             Function.COS -> return Cos(e[0])
             Function.TAN -> return Tan(e[0])
             Function.ARCTAN -> return ArcTan(e[0])
+            Function.COT -> return Cot(e[0])
 
             //List
             Function.TOTAL -> return Total(*e)

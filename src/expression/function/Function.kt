@@ -25,6 +25,7 @@ enum class Function constructor(val value: String) {
     COS("Cos"),
     TAN("Tan"),
     ARCTAN("ArcTan"),
+    COT("Cot"),
 
     //List Functions
     TOTAL("Total"),

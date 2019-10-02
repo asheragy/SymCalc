@@ -41,6 +41,8 @@ class SinTest {
         assertEquals(Sin(Times(Integer(3), Power(Integer.TWO, Rational.HALF))), Sin(Times(Integer(3), Power(Integer.TWO, Rational.HALF))).eval())
     }
 
+    // TODO refactor some of this to base class that takes step an expected values
+
     @Test
     fun basicPiCycles_over2() {
         // Test cycles with increments of Pi / 2
