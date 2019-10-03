@@ -1,9 +1,6 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.numeric.Floor
-import java.lang.Exception
-import java.lang.UnsupportedOperationException
 import java.math.BigDecimal
 
 enum class NumberType {

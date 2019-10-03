@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression
 
+import org.cerion.symcalc.expression.function.list.Join
 import org.cerion.symcalc.expression.number.NumberExpr
 
 class ListExpr(vararg e: Any) : MultiExpr(convertArgs(*e)) {
@@ -27,4 +28,7 @@ class ListExpr(vararg e: Any) : MultiExpr(convertArgs(*e)) {
 
     override fun toString(): String = "{" + args.joinToString(", ") + "}"
     override fun eval(): ListExpr = ListExpr(*args.map { it.eval() }.toTypedArray())
+
+    // Helper functions
+    fun join(vararg list: ListExpr): ListExpr = Join(this, *list).eval() as ListExpr
 }

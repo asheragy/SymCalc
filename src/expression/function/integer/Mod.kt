@@ -14,7 +14,7 @@ class Mod(vararg e: Expr) : FunctionExpr(*e) {
         var a = get(0) as NumberExpr
         var b = get(1)
 
-        // TODO need better way of doing this
+        // TODO_LP need better way of doing this
         if (b is NumberExpr && a.precision != b.precision) {
             val min = min(a.precision, b.precision)
             a = a.toPrecision(min)

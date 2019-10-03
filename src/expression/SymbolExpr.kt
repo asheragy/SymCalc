@@ -18,4 +18,8 @@ class SymbolExpr(override val value: String) : Expr(), AtomExpr {
 
         return ErrorExpr("Invalid function name '$value'")
     }
+
+    fun eval(vararg e: Expr): Expr {
+        return FunctionExpr.createFunction(value, *e).eval()
+    }
 }

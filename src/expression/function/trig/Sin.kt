@@ -15,7 +15,7 @@ import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.sin
 
-class Sin(e: Expr) : TrigBase(e), StandardTrigFunction {
+class Sin(e: Any) : TrigBase(e), StandardTrigFunction {
 
     companion object {
         val sqrt3Over2 = Times(Rational(1,2), Power(Integer(3), Rational(1,2)))

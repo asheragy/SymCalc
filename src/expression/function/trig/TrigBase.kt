@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression.function.trig
 
-import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.FunctionExpr

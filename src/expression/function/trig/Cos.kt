@@ -15,7 +15,7 @@ import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.cos
 
-class Cos(e: Expr) : TrigBase(e), StandardTrigFunction {
+class Cos(e: Any) : TrigBase(e), StandardTrigFunction {
 
     override fun evaluateAsDouble(d: Double): Double = cos(d)
 

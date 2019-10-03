@@ -1,10 +1,13 @@
 package org.cerion.symcalc.expression.function.trig
 
+import expression.SymbolExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.*
+import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.expression.function.arithmetic.Minus
+import org.cerion.symcalc.expression.function.arithmetic.Power
+import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
-import org.cerion.symcalc.expression.function.list.Join
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
@@ -41,66 +44,33 @@ class SinTest {
         assertEquals(Sin(Times(Integer(3), Power(Integer.TWO, Rational.HALF))), Sin(Times(Integer(3), Power(Integer.TWO, Rational.HALF))).eval())
     }
 
-    // TODO refactor some of this to base class that takes step an expected values
-
     @Test
     fun basicPiCycles_over2() {
-        // Test cycles with increments of Pi / 2
-        val expected = ListExpr(Integer.ZERO, Integer.ONE, Integer.ZERO, Integer.NEGATIVE_ONE)
-
-        val step = Times(Pi(), Rational(1,2))
-        for(i in -10 until 10) {
-            val sin = Sin(Times(Integer(i), step))
-            val pos = (((i % 4) + 4) % 4) // mod but handles negative values
-            assertEquals(expected[pos], sin.eval())
-        }
+        assertTrigExprRange(ListExpr(0, 1, 0, -1), SymbolExpr("sin"))
     }
 
     @Test
     fun basicPiCycles_over3() {
-        // Test cycles with increments of Pi / 3
-        val values = ListExpr(Integer.ZERO, sqrt3Over2, sqrt3Over2)
-        val negativeValues = Minus(values).eval()
-        val expected = Join(values, negativeValues).eval() as ListExpr
+        val values = ListExpr(0, sqrt3Over2, sqrt3Over2)
+        val negativeValues = Minus(values).eval() as ListExpr
 
-        val step = Times(Pi(), Rational(1,3))
-        for(i in -15 until 15) {
-            val sin = Sin(Times(Integer(i), step))
-            val pos = (((i % 6) + 6) % 6) // mod but handles negative values
-            assertEquals(expected[pos], sin.eval())
-        }
+        assertTrigExprRange(values.join(negativeValues), SymbolExpr("sin"))
     }
 
     @Test
     fun basicPiCycles_over4() {
-        // Test cycles with increments of Pi / 4
-        val values = ListExpr(Integer.ZERO, oneOverSqrt2, Integer.ONE, oneOverSqrt2)
-        val negativeValues = Minus(values).eval()
-        val expected = Join(values, negativeValues).eval() as ListExpr
+        val values = ListExpr(0, oneOverSqrt2, 1, oneOverSqrt2)
+        val negativeValues = Minus(values).eval() as ListExpr
 
-        val step = Times(Pi(), Rational(1,4))
-        for(i in -20 until 20) {
-            val x = Times(Integer(i), step).eval()
-            val sin = Sin(x)
-            val pos = (((i % 8) + 8) % 8) // mod but handles negative values
-            assertEquals(expected[pos], sin.eval(), "$x")
-        }
+        assertTrigExprRange(values.join(negativeValues), SymbolExpr("sin"))
     }
 
     @Test
     fun basicPiCycles_over6() {
-        // Test cycles with increments of Pi / 6
-        val values = ListExpr(Integer.ZERO, Rational(1,2), sqrt3Over2, Integer.ONE, sqrt3Over2, Rational(1,2))
-        val negativeValues = Minus(values).eval()
-        val expected = Join(values, negativeValues).eval() as ListExpr
+        val values = ListExpr(0, Rational(1,2), sqrt3Over2, 1, sqrt3Over2, Rational(1,2))
+        val negativeValues = Minus(values).eval() as ListExpr
 
-        val step = Times(Pi(), Rational(1,6))
-        for(i in -30 until 30) {
-            val x = Times(Integer(i), step).eval()
-            val sin = Sin(x)
-            val pos = (((i % 12) + 12) % 12) // mod but handles negative values
-            assertEquals(expected[pos], sin.eval(), "$x")
-        }
+        assertTrigExprRange(values.join(negativeValues), SymbolExpr("sin"))
     }
 
     @Test

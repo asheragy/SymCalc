@@ -12,7 +12,7 @@ import org.cerion.symcalc.expression.number.NumberType
 
 abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
 {
-    // TODO this is only needed to make copy, should be an easier way
+    // TODO_LP this is only needed to make copy, should be an easier way
     val name: String = this.javaClass.simpleName
 
     open val properties: Int get() = Properties.NONE.value
@@ -34,6 +34,12 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
     open fun validate() {
         validateParameterRange(1, Int.MAX_VALUE) // By default all functions take at least 1 parameter
     }
+
+    /* Might be useful sometime
+    operator fun invoke(vararg e: Expr): Expr {
+        return createFunction(name, *e).eval()
+    }
+     */
 
     protected abstract fun evaluate(): Expr
 

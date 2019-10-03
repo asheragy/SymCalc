@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.function.trig
 
+import expression.SymbolExpr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.ComplexInfinity
 import org.cerion.symcalc.expression.constant.Pi
@@ -33,59 +34,32 @@ class TanTest {
 
     @Test
     fun basicPiCycles_over2() {
-        // Test cycles with increments of Pi / 2
-        val expected = ListExpr(Integer.ZERO, ComplexInfinity(), Integer.ZERO, ComplexInfinity())
-
-        val step = Times(Pi(), Rational(1,2))
-        for(i in -10 until 10) {
-            val tan = Tan(Times(Integer(i), step))
-            val pos = (((i % 4) + 4) % 4) // mod but handles negative values
-            assertEquals(expected[pos], tan.eval())
-        }
+        val expected = ListExpr(0, ComplexInfinity(), 0, ComplexInfinity())
+        assertTrigExprRange(expected, SymbolExpr("tan"))
     }
 
     @Test
     fun basicPiCycles_over3() {
-        // Test cycles with increments of Pi / 3
-        val values = ListExpr(Integer.ZERO, sqrt3, Minus(sqrt3))
-        val expected = Join(values, values).eval() as ListExpr
+        val values = ListExpr(0, sqrt3, Minus(sqrt3))
+        val expected = values.join(values)
 
-        val step = Times(Pi(), Rational(1,3))
-        for(i in -15 until 15) {
-            val tan = Tan(Times(Integer(i), step))
-            val pos = (((i % 6) + 6) % 6) // mod but handles negative values
-            assertEquals(expected[pos], tan.eval())
-        }
+        assertTrigExprRange(expected, SymbolExpr("tan"))
     }
 
     @Test
     fun basicPiCycles_over4() {
-        // Test cycles with increments of Pi / 4
-        val values = ListExpr(Integer.ZERO, Integer.ONE, ComplexInfinity(), Integer.NEGATIVE_ONE)
-        val expected = Join(values, values).eval() as ListExpr
+        val values = ListExpr(0, 1, ComplexInfinity(), -1)
+        val expected = values.join(values)
 
-        val step = Times(Pi(), Rational(1,4))
-        for(i in -20 until 20) {
-            val x = Times(Integer(i), step).eval()
-            val tan = Tan(x)
-            val pos = (((i % 8) + 8) % 8) // mod but handles negative values
-            assertEquals(expected[pos], tan.eval(), "$x")
-        }
+        assertTrigExprRange(expected, SymbolExpr("tan"))
     }
 
     @Test
     fun basicPiCycles_over6() {
-        // Test cycles with increments of Pi / 6
-        val values = ListExpr(Integer.ZERO, oneOverSqrt3, sqrt3, ComplexInfinity(), Minus(sqrt3), Minus(oneOverSqrt3))
-        val expected = Join(values, values).eval() as ListExpr
+        val values = ListExpr(0, oneOverSqrt3, sqrt3, ComplexInfinity(), Minus(sqrt3), Minus(oneOverSqrt3))
+        val expected = values.join(values)
 
-        val step = Times(Pi(), Rational(1,6))
-        for(i in -30 until 30) {
-            val x = Times(Integer(i), step).eval()
-            val tan = Tan(x)
-            val pos = (((i % 12) + 12) % 12) // mod but handles negative values
-            assertEquals(expected[pos], tan.eval(), "$x")
-        }
+        assertTrigExprRange(expected, SymbolExpr("tan"))
     }
 
     @Test
