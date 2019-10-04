@@ -4,6 +4,7 @@ import expression.constant.I
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.arithmetic.Times
@@ -196,6 +197,19 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     operator fun inc(): Integer = Integer(value.inc())
     operator fun dec(): Integer = Integer(value.minus(BigInteger.ONE))
     operator fun rem(N: Integer): Integer = Integer(value.mod(N.value))
+
+    override fun rem(other: NumberExpr): NumberExpr {
+        return when (other) {
+            is Integer -> this % other
+            else -> {
+                // TODO add tests
+                // Numerical eval to get closest integer value as multiplier for unknown value other
+                val bn = other.toPrecision(MachinePrecision)
+                val whole = this / bn
+                this + (whole.floor().unaryMinus() * other)
+            }
+        }
+    }
 
     override fun compareTo(other: NumberExpr): Int {
         return when (other) {

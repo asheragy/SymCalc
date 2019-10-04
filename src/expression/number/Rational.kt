@@ -104,6 +104,10 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
         }
     }
 
+    override fun rem(other: NumberExpr): NumberExpr {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun compareTo(other: NumberExpr): Int {
         if (other is Complex)
             return Complex(this).compareTo(other)

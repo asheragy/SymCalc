@@ -35,6 +35,8 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
         return this + other.unaryMinus()
     }
 
+    abstract operator fun rem(other: NumberExpr): NumberExpr
+
     fun square(): NumberExpr {
         return this * this
     }

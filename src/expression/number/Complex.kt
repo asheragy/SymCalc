@@ -176,6 +176,10 @@ class Complex(val real: NumberExpr, val img: NumberExpr = Integer.ZERO) : Number
         return (real + Times(img,I())) as NumberExpr
     }
 
+    override fun rem(other: NumberExpr): NumberExpr {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun compareTo(other: NumberExpr): Int {
         if(other is Complex) {
             if (img.isZero && other.img.isZero)

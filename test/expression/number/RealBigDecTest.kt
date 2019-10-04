@@ -5,6 +5,7 @@ import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.core.N
+import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -241,5 +242,11 @@ class RealBigDecTest : NumberTestBase() {
     @Test
     fun floor() {
         Assertions.assertEquals(Integer("50000000000000000000000000000000"), RealBigDec("50000000000000000000000000000000.1").floor())
+    }
+
+    @Test
+    fun mod() {
+        assertEquals(RealBigDec("5.650"), Mod(Integer(25), RealBigDec("6.45")).eval())
+        assertEquals(RealBigDec("0.80"), Mod(Integer(-25), RealBigDec("6.45")).eval())
     }
 }

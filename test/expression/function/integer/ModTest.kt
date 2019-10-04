@@ -1,54 +1,39 @@
 package expression.function.integer
 
+import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.integer.Mod
-import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealBigDec
-import org.cerion.symcalc.expression.number.RealDouble
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 internal class ModTest {
 
     @Test
     fun basic() {
-        assertEquals(Integer(3), Mod(Integer(27), Integer(6)).eval())
-        assertEquals(Integer(5), Mod(Integer(-25), Integer(6)).eval())
-    }
+        // NumberExpr class handles most everything here
+        Mod(27, 6).eval() `should equal` 3
+        Mod(-25, 6).eval() `should equal` 5
 
-    @Test
-    fun real() {
-        assertEquals(RealDouble(5.6499999999999995), Mod(Integer(25), RealDouble(6.45)).eval())
-        assertEquals(RealDouble(0.8000000000000007), Mod(Integer(-25), RealDouble(6.45)).eval())
-
-        assertEquals(RealBigDec("5.650"), Mod(Integer(25), RealBigDec("6.45")).eval())
-        assertEquals(RealBigDec("0.80"), Mod(Integer(-25), RealBigDec("6.45")).eval())
+        Mod(25, 6.45).eval() `should equal` 5.649999999999999
+        Mod(25, "6.45").eval() `should equal` "5.650"
     }
 
     @Test
     fun pi() {
-        assertEquals(Plus(Integer(25), Times(Integer(-7), Pi())),
-                Mod(Integer(25), Pi()).eval())
-        assertEquals(Plus(Integer(25), Times(Integer(-6), Pi())),
-                Mod(Integer(25), Times(Integer(2), Pi())).eval())
-
-        assertEquals(Plus(Integer(-25), Times(Integer(8), Pi())),
-                Mod(Integer(-25), Pi()).eval())
-        assertEquals(Plus(Integer(-25), Times(Integer(9), Pi())),
-                Mod(Integer(-25), Times(Integer(3), Pi())).eval())
-
-        assertEquals(Plus(Rational(25, 2), Times(Integer(-3), Pi())),
-                Mod(Rational(25, 2), Pi()).eval())
+        Mod(25, Pi()).eval() `should equal` Plus(25, Times(-7, Pi()))
+        Mod(25, Times(2, Pi())).eval() `should equal` Plus(25, Times(-6, Pi()))
+        Mod(-25, Pi()).eval() `should equal` Plus(-25, Times(8, Pi()))
+        Mod(-25, Times(3, Pi())).eval() `should equal` Plus(-25, Times(9, Pi()))
+        Mod(Rational(25, 2), Pi()).eval() `should equal` Plus(Rational(25, 2), Times(-3, Pi()))
     }
 
     @Test
     fun pi_precision() {
-        assertEquals(RealDouble(3.008851424871448), Mod(RealDouble(25.0), Pi()).eval())
-        assertEquals(RealBigDec("3.01"), Mod(RealBigDec("25.0"), Pi()).eval())
-        assertEquals(RealBigDec("6.15"), Mod(RealBigDec("25.0"), Times(Integer(2), Pi())).eval())
-        assertEquals(RealBigDec("0.15481"), Mod(RealBigDec("6.4380"), Times(Integer(2), Pi())).eval())
+        Mod(25.0, Pi()).eval() `should equal` 3.008851424871448
+        Mod("25.0", Pi()).eval() `should equal` "3.01"
+        Mod("25.0", Times(2, Pi())).eval() `should equal` "6.15"
+        Mod("6.4380", Times(2, Pi())).eval() `should equal` "0.15481"
     }
 }

@@ -182,6 +182,18 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         }
     }
 
+    override fun rem(other: NumberExpr): NumberExpr {
+        when (other) {
+            is RealBigDec -> {
+                var c = value.rem(other.value)
+                if (c.signum() < 0)
+                    c+= other.value
+                return RealBigDec(c, precision)
+            }
+            else -> TODO("not implemented")
+        }
+    }
+
     override fun toPrecision(precision: Int): NumberExpr {
         if (precision == MachinePrecision)
             return RealDouble(toDouble())

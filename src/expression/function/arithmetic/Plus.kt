@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import java.util.*
 
-class Plus(vararg e: Expr) : FunctionExpr(*e) {
+class Plus(vararg e: Any) : FunctionExpr(*e) {
 
     override val properties: Int
         get() = Properties.Flat.value or Properties.NumericFunction.value or Properties.Orderless.value or Properties.LISTABLE.value

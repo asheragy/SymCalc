@@ -107,4 +107,13 @@ class RealDoubleTest : NumberTestBase() {
         Assertions.assertEquals(Integer(5), RealDouble(5.00000000001).floor())
         Assertions.assertEquals(Integer(-4), RealDouble(-3.4).floor())
     }
+
+    @Test
+    fun mod() {
+        RealDouble(5.0) % Integer(3) `should equal` 2.0
+        RealDouble(1.5) % Rational(10,3) `should equal` 1.5
+        RealDouble(2.6) % RealDouble(2.5) `should equal` 0.10000000000000009
+        RealDouble(-2.6) % RealDouble(2.5) `should equal` 2.4
+        RealDouble(-2.6) % RealBigDec("2.5") `should equal` 2.4
+    }
 }
