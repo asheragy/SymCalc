@@ -108,15 +108,22 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun quotient(other: NumberExpr): NumberExpr {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun compareTo(other: NumberExpr): Int {
         if (other is Complex)
             return Complex(this).compareTo(other)
 
+        // TODO may be case where this does not work
         if (other.precision in MachinePrecision until InfinitePrecision)
             return toPrecision(other.precision).compareTo(other)
 
         return toPrecision(MachinePrecision).compareTo(other)
     }
 
+    // TODO check for larger numbers if this works
     override fun floor(): NumberExpr = toPrecision(MachinePrecision).floor()
+    override fun round(): NumberExpr = toPrecision(MachinePrecision).round()
 }

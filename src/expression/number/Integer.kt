@@ -211,6 +211,10 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         }
     }
 
+    override fun quotient(other: NumberExpr): NumberExpr {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun compareTo(other: NumberExpr): Int {
         return when (other) {
             is Integer -> value.compareTo(other.value)
@@ -222,5 +226,6 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         }
     }
 
-    override fun floor(): NumberExpr = this
+    override fun floor(): Integer = this
+    override fun round(): NumberExpr = this
 }

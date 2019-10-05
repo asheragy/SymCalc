@@ -30,12 +30,14 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract infix fun pow(other: NumberExpr): NumberExpr
 
     abstract fun floor(): NumberExpr
+    abstract fun round(): NumberExpr
 
     operator fun minus(other: NumberExpr): NumberExpr {
         return this + other.unaryMinus()
     }
 
     abstract operator fun rem(other: NumberExpr): NumberExpr
+    abstract fun quotient(other: NumberExpr): NumberExpr
 
     fun square(): NumberExpr {
         return this * this

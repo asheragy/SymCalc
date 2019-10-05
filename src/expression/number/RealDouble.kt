@@ -5,6 +5,7 @@ import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.*
 import kotlin.math.pow
+import kotlin.math.roundToInt
 
 class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
 
@@ -85,6 +86,12 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
     }
 
     override fun rem(other: NumberExpr): NumberExpr {
+        if (other is Complex) {
+            // TODO see if this case works for non-complex
+            val quotient = this.quotient(other)
+            return this - (other * quotient)
+        }
+
         val b = other.toPrecision(MachinePrecision) as RealDouble
 
         var c = value.rem(b.value)
@@ -94,7 +101,16 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
         return RealDouble(c)
     }
 
-    override fun floor(): Integer {
-        return Integer(kotlin.math.floor(value).toInt())
+    override fun quotient(other: NumberExpr): NumberExpr {
+        when (other) {
+            is Complex -> {
+                val div = this / other
+                return div.round()
+            }
+            else -> TODO("not implemented")
+        }
     }
+
+    override fun round(): Integer = Integer(value.roundToInt())
+    override fun floor(): Integer = Integer(kotlin.math.floor(value).toInt())
 }

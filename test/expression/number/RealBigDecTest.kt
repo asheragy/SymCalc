@@ -241,7 +241,14 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun floor() {
-        Assertions.assertEquals(Integer("50000000000000000000000000000000"), RealBigDec("50000000000000000000000000000000.1").floor())
+        RealBigDec("50000000000000000000000000000000.1").floor() `should equal` Integer("50000000000000000000000000000000")
+        RealBigDec("50000000000000000000000000000000.9").floor() `should equal` Integer("50000000000000000000000000000000")
+    }
+
+    @Test
+    fun round() {
+        RealBigDec("50000000000000000000000000000000.4").round() `should equal` Integer("50000000000000000000000000000000")
+        RealBigDec("50000000000000000000000000000000.6").round() `should equal` Integer("50000000000000000000000000000001")
     }
 
     @Test

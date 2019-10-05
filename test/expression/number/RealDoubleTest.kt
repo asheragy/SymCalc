@@ -116,4 +116,10 @@ class RealDoubleTest : NumberTestBase() {
         RealDouble(-2.6) % RealDouble(2.5) `should equal` 2.4
         RealDouble(-2.6) % RealBigDec("2.5") `should equal` 2.4
     }
+
+    @Test
+    fun modComplex() {
+        RealDouble(3000.0) % Complex(37, 226) `should equal` Complex(-12.0, 29)
+        RealDouble(-3000.0) % Complex(37, -226) `should equal` Complex(12.0, 29)
+    }
 }
