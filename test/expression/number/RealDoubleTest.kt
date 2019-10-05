@@ -122,4 +122,22 @@ class RealDoubleTest : NumberTestBase() {
         RealDouble(3000.0) % Complex(37, 226) `should equal` Complex(-12.0, 29)
         RealDouble(-3000.0) % Complex(37, -226) `should equal` Complex(12.0, 29)
     }
+
+    @Test
+    fun quotient() {
+        RealDouble(5.2).quotient(Integer(2)) `should equal` 2
+        RealDouble(-5.2).quotient(Integer(2)) `should equal` -3
+
+        RealDouble(5.2).quotient(Rational(1, 2)) `should equal` 10
+        RealDouble(-5.2).quotient(Rational(1, 2)) `should equal` -11
+
+        RealDouble(5.2).quotient(RealDouble(0.5)) `should equal` 10
+        RealDouble(-5.2).quotient(RealDouble(0.5)) `should equal` -11
+
+        RealDouble(5.2).quotient(RealBigDec("0.5")) `should equal` 10
+        RealDouble(-5.2).quotient(RealBigDec("0.5")) `should equal` -11
+
+        RealDouble(5.2).quotient(Complex(2,4)) `should equal` Complex(1, -1)
+        RealDouble(-50.2).quotient(Complex(5,4)) `should equal` Complex(-6, 5)
+    }
 }

@@ -230,14 +230,14 @@ class IntegerTest {
 
     @Test
     fun pow_toReal() {
-        assertEquals(RealDouble(15.588457268119896), Integer(3) pow RealDouble(2.5))
-        assertEquals(RealDouble(0.001520667150293348), Integer(223) pow RealDouble(-1.2))
-        assertEquals(RealDouble(5888.436553555892), Integer("100000000000000000000000000000") pow RealDouble(0.13))
-        assertEquals(RealDouble(1.1437436793461719E257), Integer(123) pow RealDouble(123.0))
-        assertEquals(RealDouble(31.489135652454948), Integer(3) pow RealDouble(3.14))
+        Integer(3) pow RealDouble(2.5) `should equal` 15.588457268119896
+        Integer(223) pow RealDouble(-1.2) `should equal` 0.001520667150293348
+        Integer("100000000000000000000000000000") pow RealDouble(0.13) `should equal` 5888.436553555892
+        Integer(123) pow RealDouble(123.0) `should equal` 1.1437436793461719E257
+        Integer(3) pow RealDouble(3.14) `should equal` 31.489135652454948
 
         // Big Decimal
-        assertEquals(RealBigDec("31.544280700197543962"), Integer(3) pow RealBigDec("3.1415926535897932385"))
+        Integer(3) pow RealBigDec("3.1415926535897932385") `should equal` "31.544280700197543962"
     }
 
     @Test
@@ -257,6 +257,24 @@ class IntegerTest {
         assertEquals("25.000`5", Integer(25).toPrecision(5).toString())
         assertEquals("12300`3", Integer(12321).toPrecision(3).toString())
         assertEquals("123460000`5", Integer(123456789).toPrecision(5).toString())
+    }
+
+    @Test
+    fun quotient() {
+        Integer(6).quotient(Integer(5)) `should equal` 1
+        Integer(4).quotient(Integer(5)) `should equal` 0
+
+        Integer(7).quotient(Rational(2, 7)) `should equal` 24
+        Integer(-7).quotient(Rational(2, 7)) `should equal` -25
+
+        Integer(7).quotient(RealDouble(0.33)) `should equal` 21
+        Integer(-7).quotient(RealDouble(0.33)) `should equal` -22
+
+        Integer(7).quotient(RealBigDec("0.33")) `should equal` 21
+        Integer(-7).quotient(RealBigDec("0.33")) `should equal` -22
+
+        Integer(70).quotient(Complex(2,4)) `should equal` Complex(7, -14)
+        Integer(-70).quotient(Complex(5,2)) `should equal` Complex(-12, 5)
     }
 
     private fun verify(e: NumberExpr, expected: Long) {

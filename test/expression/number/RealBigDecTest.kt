@@ -241,6 +241,7 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun floor() {
+        RealBigDec("-21.12").floor() `should equal` Integer("-22")
         RealBigDec("50000000000000000000000000000000.1").floor() `should equal` Integer("50000000000000000000000000000000")
         RealBigDec("50000000000000000000000000000000.9").floor() `should equal` Integer("50000000000000000000000000000000")
     }
@@ -255,5 +256,23 @@ class RealBigDecTest : NumberTestBase() {
     fun mod() {
         assertEquals(RealBigDec("5.650"), Mod(Integer(25), RealBigDec("6.45")).eval())
         assertEquals(RealBigDec("0.80"), Mod(Integer(-25), RealBigDec("6.45")).eval())
+    }
+
+    @Test
+    fun quotient() {
+        RealBigDec("5.2").quotient(Integer(2)) `should equal` 2
+        RealBigDec("-5.2").quotient(Integer(2)) `should equal` -3
+
+        RealBigDec("5.2").quotient(Rational(1, 2)) `should equal` 10
+        RealBigDec("-5.2").quotient(Rational(1, 2)) `should equal` -11
+
+        RealBigDec("5.2").quotient(RealDouble(0.5)) `should equal` 10
+        RealBigDec("-5.2").quotient(RealDouble(0.5)) `should equal` -11
+
+        RealBigDec("5.2").quotient(RealBigDec("0.5")) `should equal` 10
+        RealBigDec("-5.2").quotient(RealBigDec("0.5")) `should equal` -11
+
+        RealBigDec("5.2").quotient(Complex(2,4)) `should equal` Complex(1, -1)
+        RealBigDec("-50.2").quotient(Complex(5,4)) `should equal` Complex(-6, 5)
     }
 }

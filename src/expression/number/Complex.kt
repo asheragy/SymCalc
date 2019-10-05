@@ -181,7 +181,7 @@ class Complex(val real: NumberExpr, val img: NumberExpr = Integer.ZERO) : Number
     }
 
     override fun quotient(other: NumberExpr): NumberExpr {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return (this / other).round()
     }
 
     override fun compareTo(other: NumberExpr): Int {

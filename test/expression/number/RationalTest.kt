@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.core.Hold
 import org.cerion.symcalc.expression.function.core.N
@@ -152,5 +153,23 @@ class RationalTest : NumberTestBase() {
         Assertions.assertEquals(Integer(0), Rational(1, 2).floor())
         Assertions.assertEquals(Integer(1), Rational(3, 2).floor())
         Assertions.assertEquals(Integer(-1), Rational(-1, 2).floor())
+    }
+
+    @Test
+    fun quotient() {
+        Rational(27, 2).quotient(Integer(3)) `should equal` 4
+        Rational(-27, 2).quotient(Integer(3)) `should equal` -5
+
+        Rational(27, 2).quotient(Rational(2, 3)) `should equal` 20
+        Rational(-27, 2).quotient(Rational(2, 3)) `should equal` -21
+
+        Rational(27, 2).quotient(RealDouble(0.33)) `should equal` 40
+        Rational(-27, 2).quotient(RealDouble(0.33)) `should equal` -41
+
+        Rational(27, 2).quotient(RealBigDec("0.33")) `should equal` 40
+        Rational(-27, 2).quotient(RealBigDec("0.33")) `should equal` -41
+
+        Rational(21, 2).quotient(Complex(3,2)) `should equal` Complex(2, -2)
+        Rational(-100, 2).quotient(Complex(2,3)) `should equal` Complex(-8, 12)
     }
 }

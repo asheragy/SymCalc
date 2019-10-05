@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.`should equal`
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -140,5 +141,19 @@ class ComplexTest {
     fun floor() {
         Assertions.assertEquals(Complex(2, 2), Complex("2.34", Rational(5, 2)).floor())
         Assertions.assertEquals(Integer(2), Complex("2.34", Rational(1, 2)).floor())
+    }
+
+    @Test
+    fun quotient() {
+        Complex(8, 7).quotient(Integer(3)) `should equal` Complex(3, 2)
+        Complex(8, 8).quotient(Integer(3)) `should equal` Complex(3, 3)
+        Complex(7, 3).quotient(Integer(2)) `should equal` Complex(4, 2)
+        //Complex(7, 5).quotient(Integer(2)) `should equal` Complex(4, 2) // TODO_LP some ambiguity here 0.5 could round up or down
+
+        Complex(7, 5).quotient(Rational(1, 2)) `should equal` Complex(14, 10)
+        Complex(7, 5).quotient(RealDouble(0.33)) `should equal` Complex(21, 15)
+        Complex(7, 5).quotient(RealBigDec("0.33")) `should equal` Complex(21, 15)
+
+        Complex(7, 5).quotient(Complex(1, 2)) `should equal` Complex(3, -2)
     }
 }

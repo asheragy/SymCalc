@@ -48,7 +48,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     val accuracy: Int get() = value.scale()
 
     fun toDouble(): Double = value.toDouble()
-    override fun floor(): Integer = Integer(value.toBigInteger())
+    override fun floor(): Integer = Integer(value.setScale(0, RoundingMode.FLOOR).toBigInteger())
     override fun round(): Integer = Integer(value.setScale(0, RoundingMode.HALF_UP).toBigInteger())
 
     private fun getRepresentedValue(): BigDecimal {
@@ -196,7 +196,10 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     }
 
     override fun quotient(other: NumberExpr): NumberExpr {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return when (other) {
+            is Complex -> (this / other).round()
+            else -> (this / other).floor()
+        }
     }
 
     override fun toPrecision(precision: Int): NumberExpr {

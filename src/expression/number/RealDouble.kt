@@ -102,12 +102,9 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
     }
 
     override fun quotient(other: NumberExpr): NumberExpr {
-        when (other) {
-            is Complex -> {
-                val div = this / other
-                return div.round()
-            }
-            else -> TODO("not implemented")
+        return when (other) {
+            is Complex -> (this / other).round()
+            else -> (this / other).floor()
         }
     }
 
