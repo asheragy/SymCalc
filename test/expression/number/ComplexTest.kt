@@ -156,4 +156,18 @@ class ComplexTest {
 
         Complex(7, 5).quotient(Complex(1, 2)) `should equal` Complex(3, -2)
     }
+
+    @Test
+    fun mod() {
+        Complex(8, 7) % Integer(3) `should equal` Complex(-1, 1)
+        Complex(8, 8) % Integer(3) `should equal` Complex(-1, -1)
+        Complex(7, 3) % Integer(2) `should equal` Complex(-1,-1)
+        //Complex(7, 5).quotient(Integer(2)) `should equal` Complex(4, 2) // same as quotient
+
+        Complex(7, 5) % Rational(1, 2) `should equal` 0
+        Complex(7, 5) % RealDouble(0.33) `should equal` Complex(0.0699999999999994, 0.04999999999999982)
+        Complex(7, 5) % RealBigDec("0.33") `should equal` Complex("0.07", "0.05")
+
+        Complex(7, 5) % Complex(3, 2) `should equal` Complex(1, 1)
+    }
 }

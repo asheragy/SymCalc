@@ -5,9 +5,7 @@ import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.core.N
-import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.*
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import java.math.BigDecimal
@@ -119,12 +117,12 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun add() {
-        assertEquals(RealBigDec("0.0000000001"), RealBigDec("0.0000000001") + RealBigDec("0.0000000000"))
-        assertEquals(RealBigDec("0.3607293"), RealBigDec("0.0000000") + RealBigDec("0.3607293"))
+        RealBigDec("0.0000000001") + RealBigDec("0.0000000000") `should equal` "0.0000000001"
+        RealBigDec("0.0000000") + RealBigDec("0.3607293") `should equal` "0.3607293"
 
         // Different internal precision
-        assertEquals(RealBigDec("0.67"), RealBigDec("0.3333333333", 2) + RealBigDec("0.3333333333", 10))
-        assertEquals(RealBigDec("0.67"), N(Rational(1,3),Integer(2)) + N(Rational(1,3),Integer(10)))
+        RealBigDec("0.3333333333", 2) + RealBigDec("0.3333333333", 10) `should equal` "0.67"
+        N(Rational(1,3), 2) + N(Rational(1,3), 10) `should equal` "0.67"
     }
 
     @Test
@@ -254,8 +252,20 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun mod() {
-        assertEquals(RealBigDec("5.650"), Mod(Integer(25), RealBigDec("6.45")).eval())
-        assertEquals(RealBigDec("0.80"), Mod(Integer(-25), RealBigDec("6.45")).eval())
+        RealBigDec("5.2") % Integer(2) `should equal` "1.2"
+        RealBigDec("-5.2") % Integer(2) `should equal` "0.8"
+
+        RealBigDec("5.2") % Rational(1, 2) `should equal` "0.2"
+        RealBigDec("-5.2") % Rational(1, 2) `should equal` "0.3"
+
+        RealBigDec("5.2") % RealDouble(0.5) `should equal` 0.20000000000000018
+        RealBigDec("-5.2") % RealDouble(0.5) `should equal` 0.2999999999999998
+
+        RealBigDec("5.2") % RealBigDec("0.5") `should equal` "0.2"
+        RealBigDec("-5.2") % RealBigDec("0.5") `should equal` "0.3"
+
+        RealBigDec("5.2") % Complex(2,4) `should equal` Complex("-0.8", -2)
+        RealBigDec("-50.2") % Complex(5,4) `should equal` Complex("-0.2", -1)
     }
 
     @Test

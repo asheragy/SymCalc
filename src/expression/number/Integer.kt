@@ -197,22 +197,18 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     operator fun dec(): Integer = Integer(value.minus(BigInteger.ONE))
     operator fun rem(N: Integer): Integer = Integer(value.mod(N.value))
 
-    override fun rem(other: NumberExpr): NumberExpr {
-        return when (other) {
-            is Integer -> this % other
-            else -> {
-                // TODO add tests
-                // Numerical eval to get closest integer value as multiplier for unknown value other
-                val bn = other.toPrecision(MachinePrecision)
-                val whole = this / bn
-                this + (whole.floor().unaryMinus() * other)
-            }
-        }
-    }
-
     override fun quotient(other: NumberExpr): NumberExpr {
         return when (other) {
-            is Integer -> Integer(value.div(other.value))
+            is Integer -> {
+                var div = value.divide(other.value)
+                if (div.signum() < 0) {
+                    val test = div * other.value
+                    if (test > value)
+                        div -= BigInteger.ONE
+                }
+
+                return Integer(div)
+            }
             is Complex -> (this / other).round()
             else -> (this / other).floor()
         }

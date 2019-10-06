@@ -85,22 +85,6 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
         }
     }
 
-    override fun rem(other: NumberExpr): NumberExpr {
-        if (other is Complex) {
-            // TODO see if this case works for non-complex
-            val quotient = this.quotient(other)
-            return this - (other * quotient)
-        }
-
-        val b = other.toPrecision(MachinePrecision) as RealDouble
-
-        var c = value.rem(b.value)
-        if (c < 0)
-            c+= b.value
-
-        return RealDouble(c)
-    }
-
     override fun quotient(other: NumberExpr): NumberExpr {
         return when (other) {
             is Complex -> (this / other).round()

@@ -23,25 +23,18 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract override fun toString(): String
 
     abstract operator fun plus(other: NumberExpr): NumberExpr
+    operator fun minus(other: NumberExpr): NumberExpr = this + other.unaryMinus()
     abstract operator fun times(other: NumberExpr): NumberExpr
     abstract operator fun div(other: NumberExpr): NumberExpr
     abstract operator fun unaryMinus(): NumberExpr
 
+    fun square(): NumberExpr = this * this
     abstract infix fun pow(other: NumberExpr): NumberExpr
 
     abstract fun floor(): NumberExpr
     abstract fun round(): NumberExpr
-
-    operator fun minus(other: NumberExpr): NumberExpr {
-        return this + other.unaryMinus()
-    }
-
-    abstract operator fun rem(other: NumberExpr): NumberExpr
     abstract fun quotient(other: NumberExpr): NumberExpr
-
-    fun square(): NumberExpr {
-        return this * this
-    }
+    operator fun rem(other: NumberExpr): NumberExpr = this - (other * this.quotient(other))
 
     override fun equals(e: Expr): Boolean {
         if (this::class != e::class)

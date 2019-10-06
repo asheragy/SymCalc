@@ -7,15 +7,6 @@ import kotlin.test.assertNotEquals
 
 class RealTest : NumberTestBase() {
 
-    private val RealDouble = RealDouble(1.12345)
-    private val RealBigDec = RealBigDec("1.1234567890987654321")
-
-    @Test
-    fun addition() {
-        assertAdd(RealDouble(2.2469067890987655), RealDouble, RealBigDec)
-        assertAdd(RealBigDec("2.2469135781975308642"), RealBigDec, RealBigDec)
-    }
-
     @Test
     fun precision() {
         // N[Double, x] = RealDouble (no change to value)

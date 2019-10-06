@@ -98,7 +98,7 @@ class RationalTest : NumberTestBase() {
     @Test
     fun addition() {
         //Integer
-        assertAdd(Integer(1), Rational(1, 2), Rational(1, 2))
+        Rational(1, 2) + Rational(1, 2) `should equal` 1
         assertEquals(Integer(1), Rational(1, 2) + Rational(2, 4))
         assertEquals(Integer(0), Rational(-1, 2) + Rational(2, 4))
         assertEquals(Integer.TWO, Rational(1, 1) + Integer.ONE)
@@ -171,5 +171,24 @@ class RationalTest : NumberTestBase() {
 
         Rational(21, 2).quotient(Complex(3,2)) `should equal` Complex(2, -2)
         Rational(-100, 2).quotient(Complex(2,3)) `should equal` Complex(-8, 12)
+    }
+
+    @Test
+    fun mod() {
+        Rational(50, 3) % Integer(7) `should equal` Rational(8,3)
+        Rational(-50, 3) % Integer(7)  `should equal` Rational(13,3)
+        Rational(50, 3) % Integer(-7) `should equal` Rational(-13,3)
+        Rational(-50, 3) % Integer(-7)  `should equal` Rational(-8,3)
+
+        Rational(50, 3) % Rational(1,2) `should equal` Rational(1,6)
+        Rational(-50, 3) % Rational(1,2)  `should equal` Rational(1,3)
+
+        Rational(50, 3) % RealDouble(1.33) `should equal` 0.706666666666667
+        Rational(-50, 3) % RealDouble(1.33) `should equal` 0.6233333333333313
+
+        Rational(50, 3) % RealBigDec("1.34") `should equal` "0.587"
+        Rational(-50, 3) % RealBigDec("1.33") `should equal` "0.623"
+
+        Rational(50, 3) % Complex(2, 4) `should equal` Complex(Rational(2,3), -2)
     }
 }

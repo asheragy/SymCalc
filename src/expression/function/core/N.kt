@@ -7,7 +7,7 @@ import org.cerion.symcalc.expression.function.FunctionFactory
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealBigDec
 
-class N(vararg e: Expr) : FunctionExpr(*e) {
+class N(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val e = args[0]

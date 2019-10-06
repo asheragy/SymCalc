@@ -202,8 +202,8 @@ class IntegerTest {
 
     @Test
     fun powToRational_improperFraction() {
-        assertEquals(Times(Integer(32), Power(Integer(2), Rational.HALF)), Integer(2).pow(Rational(11, 2)))
-        assertEquals(Times(Integer(3125), Power(Integer(5), Rational(3, 4))), Integer(5).pow(Rational(23, 4)))
+        Integer(2) pow Rational(11, 2) `should equal` Times(32, Power(2, Rational.HALF))
+        Integer(5) pow Rational(23, 4) `should equal` Times(3125, Power(5, Rational(3, 4)))
     }
 
     @Test
@@ -263,6 +263,7 @@ class IntegerTest {
     fun quotient() {
         Integer(6).quotient(Integer(5)) `should equal` 1
         Integer(4).quotient(Integer(5)) `should equal` 0
+        Integer(-25).quotient(Integer(6)) `should equal` -5
 
         Integer(7).quotient(Rational(2, 7)) `should equal` 24
         Integer(-7).quotient(Rational(2, 7)) `should equal` -25
@@ -275,6 +276,23 @@ class IntegerTest {
 
         Integer(70).quotient(Complex(2,4)) `should equal` Complex(7, -14)
         Integer(-70).quotient(Complex(5,2)) `should equal` Complex(-12, 5)
+    }
+
+    @Test
+    fun mod() {
+        Integer(7) % Integer(3) `should equal` 1
+        Integer(-7) % Integer(3)  `should equal` 2
+
+        Integer(7) % Rational(2, 3) `should equal` Rational(1, 3)
+        Integer(-7) % Rational(5, 3) `should equal` Rational(4, 3)
+
+        Integer(7) % RealDouble(1.33) `should equal` 0.34999999999999964
+        Integer(-7) % RealDouble(1.33) `should equal` 0.9800000000000004
+
+        Integer(7) % RealBigDec("1.33") `should equal` "0.350"
+        Integer(-7) % RealBigDec("1.33") `should equal` "0.980"
+
+        Integer(7) % Complex(2, 0.37) `should equal` Complex(0.6299999999999999, 0.8900000000000001)
     }
 
     private fun verify(e: NumberExpr, expected: Long) {
