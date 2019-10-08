@@ -53,6 +53,8 @@ object FunctionFactory {
             Function.SIN -> return Sin(e[0])
             Function.COS -> return Cos(e[0])
             Function.TAN -> return Tan(e[0])
+            Function.ARCSIN -> return ArcSin(e[0])
+            Function.ARCCOS -> return ArcCos(e[0])
             Function.ARCTAN -> return ArcTan(e[0])
             Function.COT -> return Cot(e[0])
 

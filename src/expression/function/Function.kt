@@ -24,6 +24,8 @@ enum class Function constructor(val value: String) {
     SIN("Sin"),
     COS("Cos"),
     TAN("Tan"),
+    ARCSIN("ArcSin"),
+    ARCCOS("ArcCos"),
     ARCTAN("ArcTan"),
     COT("Cot"),
 
