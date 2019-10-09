@@ -2,7 +2,13 @@ package org.cerion.symcalc.expression.function.trig
 
 import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.expression.function.arithmetic.Minus
+import org.cerion.symcalc.expression.function.arithmetic.Sqrt
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.expression.number.RealDouble
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -16,7 +22,16 @@ class ArcSin(e: Any) : TrigBase(e) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun evaluateAsBigDecimal(x: RealBigDec): RealBigDec {
+    override fun evaluateAsBigDecimal(x: RealBigDec): Expr {
+        if (x.isZero)
+            return x
+        if (x.isNegative)
+            return Minus(ArcSin(x.unaryMinus())).eval()
+        if (x > RealDouble(0.7))
+            return Divide(Pi(), 2) - ArcSin(Sqrt(Integer(1) - x.square()))
+
+        // TODO benchmark against BigDecimal math before removing
+        // TODO clean this up a bit and see if BigInteger can be used for some values
         val mc = MathContext(RealBigDec.getStoredPrecision(x.precision), RoundingMode.HALF_UP)
 
         var result = x.value
@@ -47,7 +62,6 @@ class ArcSin(e: Any) : TrigBase(e) {
 
             val t = result.add(e, mc)
             if (t == result) {
-                //println("iteration = $n")
                 return RealBigDec(result, x.precision)
             }
 

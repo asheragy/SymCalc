@@ -20,7 +20,7 @@ abstract class TrigBase protected constructor(e: Any) : FunctionExpr(e) {
 
     protected abstract fun evaluateAsDouble(d: Double): Double
     protected abstract fun evaluate(e: Expr): Expr
-    protected abstract fun evaluateAsBigDecimal(x: RealBigDec): RealBigDec
+    protected abstract fun evaluateAsBigDecimal(x: RealBigDec): Expr
 
     public override fun evaluate(): Expr {
         val e = get(0)

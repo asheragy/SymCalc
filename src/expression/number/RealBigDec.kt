@@ -150,7 +150,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
             throw OperationException("lhs cannot be negative")
 
         if (isZero)
-            return ZERO
+            return this
 
         val p = min(precision, other.precision)
         val mc = MathContext(getStoredPrecision(p), RoundingMode.HALF_UP)
