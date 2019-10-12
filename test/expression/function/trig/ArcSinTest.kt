@@ -1,10 +1,27 @@
 package expression.function.trig
 
 import org.cerion.symcalc.`should equal`
+import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.trig.ArcSin
+import org.cerion.symcalc.expression.number.Rational
 import org.junit.jupiter.api.Test
 
 internal class ArcSinTest {
+
+    @Test
+    fun asInteger() {
+        ArcSin(1).eval() `should equal` Rational(1,2) * Pi()
+        ArcSin(0).eval() `should equal` 0
+        ArcSin(-1).eval() `should equal` Rational(-1,2) * Pi()
+    }
+
+    @Test
+    fun asDouble() {
+        ArcSin(1.0).eval() `should equal` 1.5707963267948966
+        ArcSin(0.0).eval() `should equal` 0.0
+        ArcSin(-1.0).eval() `should equal` -1.5707963267948966
+        ArcSin(5.0).eval() `should equal` Double.NaN
+    }
 
     @Test
     fun bigDecBasic() {
