@@ -26,4 +26,37 @@ class ArcTan(e: Expr) : TrigBase(e) {
 
         return this
     }
+
+    /* This works but not when x > 10 or so plus not quite as fast as library version
+
+    private fun custom(x: RealBigDec): Expr {
+        val mc = MathContext(RealBigDec.getStoredPrecision(x.precision), RoundingMode.HALF_UP)
+
+        var result = x.value.multiply(x.value, mc).plus(BigDecimal.ONE)
+        result = x.value.divide(result, mc)
+
+        var yOverX = result
+        val y = result.multiply(x.value, mc) // x^2 / (1 + x^2)
+        var factEven = BigDecimal(1.0)
+        var factOdd = BigDecimal(1.0)
+
+        for(i in 1 until 1000) {
+            val n = i * 2
+            factEven = factEven.multiply(BigDecimal(n))
+            factOdd = factOdd.multiply(BigDecimal(n+1))
+
+            yOverX = yOverX.multiply(y, mc)
+            var e = factEven.divide(factOdd, mc)
+            e = e.multiply(yOverX, mc)
+
+            val t = result.add(e, mc)
+            if (t == result)
+                return RealBigDec(result, x.precision)
+
+            result = t
+        }
+
+        return RealBigDec(result, x.precision)
+    }
+     */
 }
