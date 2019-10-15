@@ -1,20 +1,27 @@
 package expression.function.trig
 
 import org.cerion.symcalc.`should equal`
+import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.trig.ArcCos
+import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.junit.jupiter.api.Test
 
 internal class ArcCosTest {
 
     @Test
-    fun basic() {
-
+    fun asInteger() {
+        ArcCos(1).eval() `should equal` 0
+        ArcCos(0).eval() `should equal` Rational(1,2) * Pi()
+        ArcCos(-1).eval() `should equal` Pi()
     }
 
     @Test
     fun evalDouble() {
-
+        ArcCos(1.0).eval() `should equal` 0.0
+        ArcCos(0.0).eval() `should equal` 1.5707963267948966
+        ArcCos(-1.0).eval() `should equal` 3.141592653589793
+        ArcCos(5.0).eval() `should equal` Double.NaN
     }
 
     @Test

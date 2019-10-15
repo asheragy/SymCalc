@@ -3,18 +3,36 @@ package org.cerion.symcalc.expression.function.trig
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.expression.function.arithmetic.Sqrt
+import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.expression.number.RealDouble
+import kotlin.math.acos
 
 class ArcCos(e: Any) : TrigBase(e) {
-    override fun evaluateAsDouble(d: Double): Double {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
+    // FEAT Complex and more trig tables
+
+    override fun evaluateAsDouble(d: Double): Double = acos(d)
 
     override fun evaluate(e: Expr): Expr {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        when (e) {
+            is Integer -> {
+                when (e) {
+                    Integer.ONE -> return Integer.ZERO
+                    Integer.NEGATIVE_ONE -> return Pi()
+                    Integer.ZERO -> return Divide(Pi(), 2).eval()
+                }
+            }
+        }
+
+        return this
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): Expr {
+        if (x > RealDouble(0.7)) // bypasses the need for calculating Pi/2
+            return ArcSin(Sqrt(Integer(1) - x.square())).eval()
+
         return Divide(Pi(), 2) - ArcSin(x)
     }
 }
