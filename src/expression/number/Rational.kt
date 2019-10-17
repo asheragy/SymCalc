@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.function.arithmetic.Divide
 
-class Rational constructor(val numerator: Integer, val denominator: Integer = Integer.ONE) : NumberExpr() {
+class Rational private constructor(val numerator: Integer, val denominator: Integer = Integer.ONE, val reduced: Boolean = false) : NumberExpr() {
 
     companion object {
         val ZERO = Rational(Integer.ZERO, Integer.ONE)
@@ -18,6 +18,7 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
     override val isNegative: Boolean get() = numerator.isNegative
     override val precision: Int get() = InfinitePrecision
 
+    constructor(n: Integer, d: Integer = Integer.ONE) : this(n, d, false)
     constructor(n: Int, d: Int) : this(Integer(n.toLong()), Integer(d.toLong()))
 
     override fun eval(): NumberExpr {
@@ -38,7 +39,7 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
         }
 
         //Integer since denominator is one
-        return if (d.isOne) n else Rational(n, d)
+        return if (d.isOne) n else Rational(n, d, true)
     }
     
     override fun toPrecision(precision: Int): NumberExpr {
@@ -112,10 +113,36 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
     }
 
     override fun compareTo(other: NumberExpr): Int {
+        if (!reduced)
+            return eval().compareTo(other)
+
+        if (other is Rational) {
+            if (!other.reduced)
+                return compareTo(other.eval())
+
+            if (numerator == other.numerator && denominator == other.denominator)
+                return 0
+
+            val dr1 = numerator.value.divideAndRemainder(denominator.value)
+            val dr2 = other.numerator.value.divideAndRemainder(other.denominator.value)
+
+            // First compare quotients
+            return when (val x1 = dr1[0].compareTo(dr2[0])) {
+                0 -> {
+                    // Then remainders
+                    when (val x2 = dr1[1].compareTo(dr2[1])) {
+                        // If same quotient/remainder then largest is whatever has smaller denominator
+                        0 -> other.denominator.compareTo(denominator)
+                        else -> x2
+                    }
+                }
+                else -> x1
+            }
+        }
+
         if (other is Complex)
             return Complex(this).compareTo(other)
 
-        // TODO may be case where this does not work
         if (other.precision in MachinePrecision until InfinitePrecision)
             return toPrecision(other.precision).compareTo(other)
 

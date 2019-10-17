@@ -39,6 +39,14 @@ class RationalTest : NumberTestBase() {
     }
 
     @Test
+    fun compareTo_large() {
+        val r1 = Rational(Integer("3049854309810938218409328432094809324320941"), Integer(3))
+        val r2 = Rational(Integer("3049854309810938218409328432094809324320942"), Integer(3))
+        assertEquals(-1, r1.compareTo(r2))
+        assertEquals(1, r2.compareTo(r1))
+    }
+
+    @Test
     fun compareTo_complex() {
         assertFailsWith<UnsupportedOperationException> { Rational(1,2).compareTo(Complex(0, 1)) }
     }
