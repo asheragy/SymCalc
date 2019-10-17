@@ -150,9 +150,22 @@ class RationalTest : NumberTestBase() {
 
     @Test
     fun floor() {
-        Assertions.assertEquals(Integer(0), Rational(1, 2).floor())
-        Assertions.assertEquals(Integer(1), Rational(3, 2).floor())
-        Assertions.assertEquals(Integer(-1), Rational(-1, 2).floor())
+        Rational(1, 2).floor() `should equal` 0
+        Rational(3, 2).floor() `should equal` 1
+        Rational(-1, 2).floor() `should equal` -1
+        Rational(-3, 2).floor() `should equal` -2
+
+        Rational(Integer(3), Integer("23409283409328093843209482820928093210981092809180900000000000000000000")).floor() `should equal` 0
+        Rational(Integer("23409283409328093843209482820928093210981092809180900000000000000000000"), Integer(3)).floor() `should equal` Integer("7803094469776031281069827606976031070327030936393633333333333333333333")
+    }
+
+    @Test
+    fun round() {
+        Rational(Integer("3049854309810938218409328432094809324320942"), Integer(3)).round() `should equal` Integer("1016618103270312739469776144031603108106981")
+        Rational(Integer("-3049854309810938218409328432094809324320942"), Integer(3)).round() `should equal` Integer("-1016618103270312739469776144031603108106981")
+
+        Rational(Integer("3049854309810938218409328432094809324320941"), Integer(3)).round() `should equal` Integer("1016618103270312739469776144031603108106980")
+        Rational(Integer("-3049854309810938218409328432094809324320941"), Integer(3)).round() `should equal` Integer("-1016618103270312739469776144031603108106980")
     }
 
     @Test

@@ -122,7 +122,30 @@ class Rational constructor(val numerator: Integer, val denominator: Integer = In
         return toPrecision(MachinePrecision).compareTo(other)
     }
 
-    // TODO check for larger numbers if this works
-    override fun floor(): NumberExpr = toPrecision(MachinePrecision).floor()
-    override fun round(): NumberExpr = toPrecision(MachinePrecision).round()
+    override fun floor(): NumberExpr {
+        val dr = numerator.value.divideAndRemainder(denominator.value)
+        val n = dr[0]
+        val d = dr[1]
+
+        if (d.signum() < 0)
+            return Integer(n) - Integer.ONE
+
+        return Integer(n)
+    }
+
+    override fun round(): NumberExpr {
+        val dr = numerator.value.divideAndRemainder(denominator.value)
+        val n = dr[0]
+        val d = dr[1]
+
+        val remainder = d.abs().toDouble() / denominator.value.toDouble()
+        if (remainder >= 0.5) {
+            return if (isNegative)
+                Integer(n) - Integer.ONE
+            else
+                Integer(n) + Integer.ONE
+        }
+
+        return Integer(n)
+    }
 }

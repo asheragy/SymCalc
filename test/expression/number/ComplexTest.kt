@@ -148,7 +148,7 @@ class ComplexTest {
         Complex(8, 7).quotient(Integer(3)) `should equal` Complex(3, 2)
         Complex(8, 8).quotient(Integer(3)) `should equal` Complex(3, 3)
         Complex(7, 3).quotient(Integer(2)) `should equal` Complex(4, 2)
-        //Complex(7, 5).quotient(Integer(2)) `should equal` Complex(4, 2) // TODO_LP some ambiguity here 0.5 could round up or down
+        Complex(7, 5).quotient(Integer(2)) `should equal` Complex(4, 3)
 
         Complex(7, 5).quotient(Rational(1, 2)) `should equal` Complex(14, 10)
         Complex(7, 5).quotient(RealDouble(0.33)) `should equal` Complex(21, 15)
@@ -162,7 +162,7 @@ class ComplexTest {
         Complex(8, 7) % Integer(3) `should equal` Complex(-1, 1)
         Complex(8, 8) % Integer(3) `should equal` Complex(-1, -1)
         Complex(7, 3) % Integer(2) `should equal` Complex(-1,-1)
-        //Complex(7, 5).quotient(Integer(2)) `should equal` Complex(4, 2) // same as quotient
+        //Complex(7, 5) % Integer(2) `should equal` Complex(-1, 1) TODO_LP related to https://en.wikipedia.org/wiki/Rounding#Round_half_to_even or at least round() needs fixed too
 
         Complex(7, 5) % Rational(1, 2) `should equal` 0
         Complex(7, 5) % RealDouble(0.33) `should equal` Complex(0.0699999999999994, 0.04999999999999982)
