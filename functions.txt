@@ -1,219 +1,64 @@
 Head: Complex Integer Real Rational Symbol String
 
-Basic: Divide DivideBy Plus Power Sqrt Subtract SubtractFrom Times TimesBy Log Log10 Log2 Exp AddTo Decrement
-Trig: Sin Cos Tan Csc Sec Cot ArcCos ArcCot ArcCsc ArcSec ArcSin ArcTan Sinc Gudermannian
-Calculus: D Dt Integrate Derivative DifferentialRoot DifferentialRootReduce DiscreteConvolve
+Basic: Divide DivideBy Plus Power Sqrt Subtract SubtractFrom Times TimesBy Log Log10 Log2 Exp AddTo Decrement Increment
+Trig: Sin Cos Tan Csc Sec Cot ArcCos ArcCot ArcCsc ArcSec ArcSin ArcTan Sinc Gudermannian Haversine InverseGudermannian InverseHaversine
+Calculus: D Dt Integrate Derivative DifferentialRoot DifferentialRootReduce DiscreteConvolve InverseLaplaceTransform InverseZTransform
 Logic: And Or Not Nand Nor Xor Implies Equivalent Equal Unequal BooleanConvert BooleanCountingFunction BooleanFunction BooleanMaxterms BooleanMinimize BooleanMinterms BooleanTable BooleanVariables Conjunction Disjunction Except Exists Greater GreaterEqual GreaterEqualLess GreaterFullEqual GreaterGreater GreaterLess GreaterSlantEqual GreaterTilde
+Complex: Im
 
 List:
 ArrayFlatten Flatten FlattenAt Partition Join Sequence Sort SortBy Reverse RotateLeft RotateRight Transpose
 ArrayPad Riffle PadLeft PadRight Intersection Complement Split SplitBy Gather GatherBy Union Tally DeleteDuplicates Tuples Subsets Permutations RandomSample AppendTo
-Accumulate ConstantArray Apply ArrayQ ArrayDepth Array Band BinCounts Commonest ComposeList Count Differences Entropy FoldList
+Accumulate ConstantArray Apply ArrayQ ArrayDepth Array Band BinCounts Commonest ComposeList Count Differences Entropy FoldList Inner
 
-Matrix: CholeskyDecomposition ConjugateTranspose Cross CrossMatrix DesignMatrix Det Diagonal DiagonalMatrix DiamondMatrix Dimensions Dot Eigensystem Eigenvalues Eigenvectors GaussianMatrix
+Matrix: CholeskyDecomposition ConjugateTranspose Cross CrossMatrix DesignMatrix Det Diagonal DiagonalMatrix DiamondMatrix Dimensions Dot Eigensystem Eigenvalues Eigenvectors GaussianMatrix HankelMatrix HermiteDecomposition HermitianMatrixQ HessenbergDecomposition HilbertMatrix IdentityMatrix Inverse
 
-Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN ArithmeticGeometricMean EllipticE EllipticExp EllipticExpPrime EllipticF EllipticK EllipticLog EllipticNomeQ EllipticPi EllipticTheta EllipticThetaPrime
+Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN ArithmeticGeometricMean EllipticE EllipticExp EllipticExpPrime EllipticF EllipticK EllipticLog EllipticNomeQ EllipticPi EllipticTheta EllipticThetaPrime InverseEllipticNomeQ InverseWeierstrassP
 Spheroidal: SpheroidalPS SpheroidalPSPrime SpheroidalQS SpheroidalQSPrime SpheroidalS1 SpheroidalS1Prime SpheroidalS2 SpheroidalS2Prime SpheroidalRadialFactor SpheroidalEigenvalue SpheroidalJoiningFactor
 Hyperbolic: Sinh Cosh Tanh Csch Sech Coth ArcSinh ArcCosh ArcTanh ArcCsch ArcSech ArcCoth
 Fourier:  Fourier FourierCoefficient FourierCosCoefficient FourierCosSeries FourierCosTransform FourierDCT FourierDST FourierParameters FourierSequenceTransform FourierSeries FourierSinCoefficient FourierSinSeries FourierSinTransform FourierTransform FourierTrigSeries InverseFourier InverseFourierCosTransform InverseFourierSequenceTransform InverseFourierSinTransform InverseFourierTransform
-Geometric: AffineTransform AppellF1
+Geometric: AffineTransform AppellF1 Hypergeometric0F1 Hypergeometric0F1Regularized Hypergeometric1F1 Hypergeometric1F1Regularized Hypergeometric2F1 Hypergeometric2F1Regularized HypergeometricPFQ HypergeometricPFQRegularized HypergeometricU
 Curve/Splines: BernsteinBasis BezierFunction SplineClosed SplineDegree SplineKnots SplineWeights BSplineFunction BSplineBasis InterpolatingFunction InterpolatingPolynomial Interpolation InterpolationOrder InterpolationPoints InterpolationPrecision
-Special: Beta BetaRegularized Gamma GammaRegularized ChebyshevT ChebyshevU CoshIntegral CosIntegral Pochhammer LogGamma MathieuC MathieuCharacteristicA MathieuCharacteristicB MathieuCharacteristicExponent MathieuCPrime MathieuS MathieuSPrime RiemannSiegelTheta DawsonF Erf Erfc Erfi ExpIntegralE ExpIntegralEi FresnelC FresnelS GegenbauerC
 Bessel-Related: AiryAi AiryAiPrime AiryAiZero AiryBi AiryBiPrime AiryBiZero BesselI BesselJ BesselJZero BesselK BesselY BesselYZero SphericalBesselJ SphericalBesselY SphericalHankelH1 SphericalHankelH2 HankelH1 HankelH2 KelvinBei KelvinBer KelvinKei KelvinKer StruveH StruveL AngerJ WeberE
+Generalized: HeavisideLambda HeavisidePi HeavisideTheta
+
+Special Functions:
+Beta BetaRegularized Gamma GammaRegularized ChebyshevT ChebyshevU CoshIntegral CosIntegral Pochhammer LogGamma MathieuC MathieuCharacteristicA MathieuCharacteristicB MathieuCharacteristicExponent MathieuCPrime MathieuS MathieuSPrime
+RiemannSiegelTheta DawsonF Erf Erfc Erfi ExpIntegralE ExpIntegralEi FresnelC FresnelS GegenbauerC HermiteH HurwitzLerchPhi HurwitzZeta InverseBetaRegularized
+InverseErf InverseErfc InverseFunction InverseFunctions InverseGammaRegularized
 
 Constants: I Pi E Degree GoldenRatio EulerGamma StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber ComplexInfinity DirectedInfinity Infinity Indeterminate
-Recurrence: Fibonacci LucasL BernoulliB NorlundB EulerE StirlingS1 StirlingS2 HarmonicNumber PolyGamma Zeta LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB
-Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Arg Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator BaseForm ChineseRemainder Conjugate DigitCount DigitQ DivisorSigma DivisorSum ExactNumberQ FromDigits
+Recurrence: Fibonacci LucasL BernoulliB NorlundB EulerE StirlingS1 StirlingS2 HarmonicNumber PolyGamma Zeta LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB Hyperfactorial
+Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Arg Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator BaseForm ChineseRemainder Conjugate DigitCount DigitQ DivisorSigma DivisorSum ExactNumberQ FromDigits InexactNumberQ IntegerExponent IntegerLength IntegerQ
 Integer: Mod PowerMod Quotient QuotientRemainder GCD LCM Divisible EvenQ OddQ FactorInteger Divisors IntegerPartitions IntegerDigits FrobeniusNumber FrobeniusSolve ClebschGordan CarmichaelLambda
 Bitwise: BitAnd BitClear BitGet BitLength BitNot BitOr BitSet BitShiftLeft BitShiftRight BitXor
 
 Statistics:
-Other:         BinLists CDF CentralMoment ContraharmonicMean Correlation Covariance DiceDissimilarity DistanceFunction ExpectedValue ExponentialMovingAverage FindClusters Fit FittedModel FunctionInterpolation GeneralizedLinearModelFit GeometricMean
-Distance:      EuclideanDistance CanberraDistance DamerauLevenshteinDistance BrayCurtisDistance CorrelationDistance CosineDistance
-Distributions: ExponentialDistribution CauchyDistribution ChiDistribution ChiSquareDistribution BernoulliDistribution BetaBinomialDistribution BetaDistribution BetaNegativeBinomialDistribution BinomialDistribution HypergeometricDistribution NegativeBinomialDistribution GeometricDistribution PoissonDistribution DiscreteUniformDistribution ZipfDistribution LogSeriesDistribution ExtremeValueDistribution FRatioDistribution GammaDistribution GumbelDistribution HalfNormalDistribution
+Other:         BinLists CDF CentralMoment ContraharmonicMean Correlation Covariance DiceDissimilarity DistanceFunction ExpectedValue ExponentialMovingAverage FindClusters Fit FittedModel FunctionInterpolation GeneralizedLinearModelFit GeometricMean HarmonicMean InterquartileRange
+Distance:      EuclideanDistance CanberraDistance DamerauLevenshteinDistance BrayCurtisDistance CorrelationDistance CosineDistance HammingDistance
+Distributions: ExponentialDistribution CauchyDistribution ChiDistribution ChiSquareDistribution BernoulliDistribution BetaBinomialDistribution BetaDistribution BetaNegativeBinomialDistribution BinomialDistribution HypergeometricDistribution NegativeBinomialDistribution GeometricDistribution PoissonDistribution DiscreteUniformDistribution
+               ZipfDistribution LogSeriesDistribution ExtremeValueDistribution FRatioDistribution GammaDistribution GumbelDistribution HalfNormalDistribution InverseCDF InverseChiSquareDistribution InverseGammaDistribution InverseGaussianDistribution
 
 Fractions: Apart Together Cancel Numerator Denominator PolynomialQuotient PolynomialRemainder Residue PadeApproximant ExpandAll ExpandDenominator ExpandNumerator
 Timing: AbsoluteTime AbsoluteTiming
 Primes: Prime PrimeNu PrimeOmega PrimePi PrimePowerQ Primes PrimeZetaP NextPrime RandomPrime ZetaZero RiemannR RiemannSiegelZ CoprimeQ PrimeQ LiouvilleLambda MangoldtLambda
 Expressions: Part Length First Last Most Rest Take Drop Extract ReplacePart Append Prepend Insert Delete DeleteCases Position Cases Map MapAll MapAt Heads Sow Reap CompoundExpression Depth Distribute Evaluate
 Transforms: Collect ComplexExpand Convolve Expand ExpToTrig FullSimplify FunctionExpand
-Core: Accuracy AccuracyGoal Precision PrecisionGoal WorkingPrecision Hold HoldAll HoldAllComplete HoldComplete HoldFirst HoldForm HoldPattern HoldRest AtomQ Attributes ByteCount Defer
+Core: Accuracy AccuracyGoal Precision PrecisionGoal WorkingPrecision Hold HoldAll HoldAllComplete HoldComplete HoldFirst HoldForm HoldPattern HoldRest AtomQ Attributes ByteCount Defer Head Identity Information
 Attributes: Constant Flat
 
 AlgebraicTheory: AlgebraicIntegerQ AlgebraicNumber AlgebraicNumberDenominator AlgebraicNumberNorm AlgebraicNumberPolynomial AlgebraicNumberTrace AlgebraicUnitQ
-Polynomial: ApartSquareFree Coefficient CoefficientArrays CoefficientList CoefficientRules CountRoots Cyclotomic CylindricalDecomposition Decompose Discriminant Eliminate Exponent Factor FactorList FactorSquareFree FactorSquareFreeList FactorTerms FactorTermsList FromCoefficientRules GenericCylindricalDecomposition GroebnerBasis
+Polynomial: ApartSquareFree Coefficient CoefficientArrays CoefficientList CoefficientRules CountRoots Cyclotomic CylindricalDecomposition Decompose Discriminant Eliminate Exponent Factor FactorList FactorSquareFree FactorSquareFreeList FactorTerms FactorTermsList FromCoefficientRules GenericCylindricalDecomposition GroebnerBasis HornerForm IrreduciblePolynomialQ
 Optimization: ArgMax ArgMin NMaximize NMaxValue NMinimize NMinValue FindMaximum FindMaxValue FindMinimum FindMinValue FindFit Maximize Minimize MaxValue MinValue NArgMax NArgMin FindArgMax FindArgMin FindShortestTour
 UnknownCategory: BarnesG DedekindEta DiracComb DiracDelta DMSList DSolve FindInstance FindRoot ForAll FreeQ FromContinuedFraction FullDefinition
 Programming: Break Continue Goto Do For While NestWhile Nest If Switch Return Throw Catch Block Composition FixedPoint FixedPointList Fold Function
 Discrete: Casoratian DifferenceRoot DifferenceRootReduce CellularAutomaton ContinuedFraction ContinuedFractionK Convergents DifferenceDelta DiscreteDelta DiscreteRatio DiscreteShift ExponentialGeneratingFunction FindGeneratingFunction FindLinearRecurrence FindSequenceFunction FiniteAbelianGroupCount FiniteGroupCount FiniteGroupData GeneratingFunction
-Theory: DirichletCharacter DirichletConvolve DirichletL DirichletTransform EulerPhi ExtendedGCD
+Theory: DirichletCharacter DirichletConvolve DirichletL DirichletTransform EulerPhi ExtendedGCD IsolatingInterval
+DataManipulation: Hash
+Misc: Interval IntervalIntersection IntervalMemberQ IntervalUnion InverseSeries
 
 
 
-
-HammingDistance
-HankelMatrix
-HarmonicMean
-HarmonicMeanFilter
-Hash
-HashTable
-Haversine
-Head
-HeadCompose
-HeavisideLambda
-HeavisidePi
-HeavisideTheta
-HeldPart
-HelpBrowserLookup
-HelpBrowserNotebook
-HelpBrowserSettings
-HermiteDecomposition
-HermiteH
-HermitianMatrixQ
-HessenbergDecomposition
-Hessian
-HexadecimalCharacter
-HiddenSurface
-HilbertMatrix
-Histogram
-Histogram3D
-HitMissTransform
-HomeDirectory
-HomePage
-Horizontal
-HorizontalForm
-HorizontalScrollPosition
-HornerForm
-HTMLSave
-Hue
-HumpDownHump
-HumpEqual
-HurwitzLerchPhi
-HurwitzZeta
-Hyperfactorial
-Hypergeometric0F1
-Hypergeometric0F1Regularized
-Hypergeometric1F1
-Hypergeometric1F1Regularized
-Hypergeometric2F1
-Hypergeometric2F1Regularized
-HypergeometricPFQ
-HypergeometricPFQRegularized
-HypergeometricU
-Hyperlink
-HyperlinkCreationSettings
-Hyphenation
-HyphenationOptions
-Identity
-IdentityMatrix
-IgnoreCase
-Im
-Import
-ImportAutoReplacements
-ImportString
-In
-IncludeConstantBasis
-IncludeFileExtension
-IncludeSingularTerm
-Increment
-Indent
-IndentingNewlineSpacings
-IndentMaxFraction
-IndexCreationOptions
-IndexTag
-Inequality
-InexactNumberQ
-InexactNumbers
-Infix
-Information
-Inherited
-InheritScope
-Initialization
-InitializationCell
-InitializationCellEvaluation
-InitializationCellWarning
-InlineCounterAssignments
-InlineCounterIncrements
-InlineRules
-Inner
-Input
-InputAliases
-InputAutoFormat
-InputAutoReplacements
-InputField
-InputFieldBox
-InputFieldBoxOptions
-InputForm
-InputGrouping
-InputNamePacket
-InputNotebook
-InputPacket
-InputSettings
-InputStream
-InputString
-InputStringPacket
-InputToBoxFormPacket
-InsertionPointObject
-Inset
-Inset3DBox
-InsetBox
-InsetBoxOptions
-Install
-InstallService
-InString
-IntegerExponent
-IntegerLength
-IntegerQ
-Integers
-IntegerString
-Integral
-Interactive
-InterestRate
-Interlaced
-Interleaving
-Interpretation
-InterpretationBox
-InterpretationBoxOptions
-InterpretationFunction
-InterpretTemplate
-InterquartileRange
-Interrupt
-InterruptSettings
-Interval
-IntervalIntersection
-IntervalMemberQ
-IntervalUnion
-Inverse
-InverseBetaRegularized
-InverseCDF
-InverseChiSquareDistribution
-InverseEllipticNomeQ
-InverseErf
-InverseErfc
-InverseFunction
-InverseFunctions
-InverseGammaDistribution
-InverseGammaRegularized
-InverseGaussianDistribution
-InverseGudermannian
-InverseHaversine
-InverseLaplaceTransform
-InverseSeries
-InverseWeierstrassP
-InverseZTransform
-Invisible
-InvisibleApplication
-InvisibleTimes
-IrreduciblePolynomialQ
-IsolatingInterval
-IsotopeData
-Italic
-Item
-ItemAspectRatio
-ItemBox
-ItemBoxOptions
-ItemSize
-ItemStyle
 JaccardDissimilarity
 JacobiAmplitude
 Jacobian
