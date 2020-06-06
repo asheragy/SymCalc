@@ -1,9 +1,9 @@
-Head: Complex Integer Real Rational Symbol String
+Head: Complex Integer Real Rational Symbol String List
 
-Basic: Divide DivideBy Plus Power Sqrt Subtract SubtractFrom Times TimesBy Log Log10 Log2 Exp AddTo Decrement Increment
+Basic: Divide DivideBy Plus Power Sqrt Subtract SubtractFrom Times TimesBy Log Log10 Log2 Exp AddTo Decrement Increment LogBarnesG
 Trig: Sin Cos Tan Csc Sec Cot ArcCos ArcCot ArcCsc ArcSec ArcSin ArcTan Sinc Gudermannian Haversine InverseGudermannian InverseHaversine
-Calculus: D Dt Integrate Derivative DifferentialRoot DifferentialRootReduce DiscreteConvolve InverseLaplaceTransform InverseZTransform
-Logic: And Or Not Nand Nor Xor Implies Equivalent Equal Unequal BooleanConvert BooleanCountingFunction BooleanFunction BooleanMaxterms BooleanMinimize BooleanMinterms BooleanTable BooleanVariables Conjunction Disjunction Except Exists Greater GreaterEqual GreaterEqualLess GreaterFullEqual GreaterGreater GreaterLess GreaterSlantEqual GreaterTilde
+Calculus: D Dt Integrate Derivative DifferentialRoot DifferentialRootReduce DiscreteConvolve InverseLaplaceTransform InverseZTransform LaplaceTransform Limit LinearRecurrence
+Logic: And Or Not Nand Nor Xor Implies Equivalent Equal Unequal BooleanConvert BooleanCountingFunction BooleanFunction BooleanMaxterms BooleanMinimize BooleanMinterms BooleanTable BooleanVariables Conjunction Disjunction Except Exists Greater GreaterEqual GreaterEqualLess GreaterFullEqual GreaterGreater GreaterLess GreaterSlantEqual GreaterTilde Less LessEqual LessEqualGreater LessFullEqual LessGreater LessLess LessSlantEqual LessTilde
 Complex: Im
 
 List:
@@ -11,9 +11,9 @@ ArrayFlatten Flatten FlattenAt Partition Join Sequence Sort SortBy Reverse Rotat
 ArrayPad Riffle PadLeft PadRight Intersection Complement Split SplitBy Gather GatherBy Union Tally DeleteDuplicates Tuples Subsets Permutations RandomSample AppendTo
 Accumulate ConstantArray Apply ArrayQ ArrayDepth Array Band BinCounts Commonest ComposeList Count Differences Entropy FoldList Inner
 
-Matrix: CholeskyDecomposition ConjugateTranspose Cross CrossMatrix DesignMatrix Det Diagonal DiagonalMatrix DiamondMatrix Dimensions Dot Eigensystem Eigenvalues Eigenvectors GaussianMatrix HankelMatrix HermiteDecomposition HermitianMatrixQ HessenbergDecomposition HilbertMatrix IdentityMatrix Inverse
+Matrix: CholeskyDecomposition ConjugateTranspose Cross CrossMatrix DesignMatrix Det Diagonal DiagonalMatrix DiamondMatrix Dimensions Dot Eigensystem Eigenvalues Eigenvectors GaussianMatrix HankelMatrix HermiteDecomposition HermitianMatrixQ HessenbergDecomposition HilbertMatrix IdentityMatrix Inverse JordanDecomposition KroneckerProduct LeastSquares LeviCivitaTensor LinearFractionalTransform LinearProgramming LinearSolve LinearSolveFunction LowerTriangularize LUDecomposition
 
-Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN ArithmeticGeometricMean EllipticE EllipticExp EllipticExpPrime EllipticF EllipticK EllipticLog EllipticNomeQ EllipticPi EllipticTheta EllipticThetaPrime InverseEllipticNomeQ InverseWeierstrassP
+Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN ArithmeticGeometricMean EllipticE EllipticExp EllipticExpPrime EllipticF EllipticK EllipticLog EllipticNomeQ EllipticPi EllipticTheta EllipticThetaPrime InverseEllipticNomeQ InverseWeierstrassP JacobiAmplitude JacobiZeta
 Spheroidal: SpheroidalPS SpheroidalPSPrime SpheroidalQS SpheroidalQSPrime SpheroidalS1 SpheroidalS1Prime SpheroidalS2 SpheroidalS2Prime SpheroidalRadialFactor SpheroidalEigenvalue SpheroidalJoiningFactor
 Hyperbolic: Sinh Cosh Tanh Csch Sech Coth ArcSinh ArcCosh ArcTanh ArcCsch ArcSech ArcCoth
 Fourier:  Fourier FourierCoefficient FourierCosCoefficient FourierCosSeries FourierCosTransform FourierDCT FourierDST FourierParameters FourierSequenceTransform FourierSeries FourierSinCoefficient FourierSinSeries FourierSinTransform FourierTransform FourierTrigSeries InverseFourier InverseFourierCosTransform InverseFourierSequenceTransform InverseFourierSinTransform InverseFourierTransform
@@ -25,7 +25,7 @@ Generalized: HeavisideLambda HeavisidePi HeavisideTheta
 Special Functions:
 Beta BetaRegularized Gamma GammaRegularized ChebyshevT ChebyshevU CoshIntegral CosIntegral Pochhammer LogGamma MathieuC MathieuCharacteristicA MathieuCharacteristicB MathieuCharacteristicExponent MathieuCPrime MathieuS MathieuSPrime
 RiemannSiegelTheta DawsonF Erf Erfc Erfi ExpIntegralE ExpIntegralEi FresnelC FresnelS GegenbauerC HermiteH HurwitzLerchPhi HurwitzZeta InverseBetaRegularized
-InverseErf InverseErfc InverseFunction InverseFunctions InverseGammaRegularized
+InverseErf InverseErfc InverseFunction InverseFunctions InverseGammaRegularized JacobiP KleinInvariantJ LaguerreL LegendreP LegendreQ LogIntegral
 
 Constants: I Pi E Degree GoldenRatio EulerGamma StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber ComplexInfinity DirectedInfinity Infinity Indeterminate
 Recurrence: Fibonacci LucasL BernoulliB NorlundB EulerE StirlingS1 StirlingS2 HarmonicNumber PolyGamma Zeta LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB Hyperfactorial
@@ -34,172 +34,31 @@ Integer: Mod PowerMod Quotient QuotientRemainder GCD LCM Divisible EvenQ OddQ Fa
 Bitwise: BitAnd BitClear BitGet BitLength BitNot BitOr BitSet BitShiftLeft BitShiftRight BitXor
 
 Statistics:
-Other:         BinLists CDF CentralMoment ContraharmonicMean Correlation Covariance DiceDissimilarity DistanceFunction ExpectedValue ExponentialMovingAverage FindClusters Fit FittedModel FunctionInterpolation GeneralizedLinearModelFit GeometricMean HarmonicMean InterquartileRange
+Other:         BinLists CDF CentralMoment ContraharmonicMean Correlation Covariance DiceDissimilarity DistanceFunction ExpectedValue ExponentialMovingAverage FindClusters Fit FittedModel FunctionInterpolation GeneralizedLinearModelFit GeometricMean HarmonicMean InterquartileRange JaccardDissimilarity Kurtosis LinearModelFit LinearOffsetFunction ListConvolve ListCorrelate ListInterpolation LogitModelFit
 Distance:      EuclideanDistance CanberraDistance DamerauLevenshteinDistance BrayCurtisDistance CorrelationDistance CosineDistance HammingDistance
 Distributions: ExponentialDistribution CauchyDistribution ChiDistribution ChiSquareDistribution BernoulliDistribution BetaBinomialDistribution BetaDistribution BetaNegativeBinomialDistribution BinomialDistribution HypergeometricDistribution NegativeBinomialDistribution GeometricDistribution PoissonDistribution DiscreteUniformDistribution
-               ZipfDistribution LogSeriesDistribution ExtremeValueDistribution FRatioDistribution GammaDistribution GumbelDistribution HalfNormalDistribution InverseCDF InverseChiSquareDistribution InverseGammaDistribution InverseGaussianDistribution
+               ZipfDistribution LogSeriesDistribution ExtremeValueDistribution FRatioDistribution GammaDistribution GumbelDistribution HalfNormalDistribution InverseCDF InverseChiSquareDistribution InverseGammaDistribution InverseGaussianDistribution LaplaceDistribution LevyDistribution LogisticDistribution LogNormalDistribution
+               MaxwellDistribution NoncentralChiSquareDistribution NoncentralFRatioDistribution NoncentralStudentTDistribution NormalDistribution ParetoDistribution RayleighDistribution StudentTDistribution TriangularDistribution UniformDistribution WeibullDistribution
 
 Fractions: Apart Together Cancel Numerator Denominator PolynomialQuotient PolynomialRemainder Residue PadeApproximant ExpandAll ExpandDenominator ExpandNumerator
 Timing: AbsoluteTime AbsoluteTiming
 Primes: Prime PrimeNu PrimeOmega PrimePi PrimePowerQ Primes PrimeZetaP NextPrime RandomPrime ZetaZero RiemannR RiemannSiegelZ CoprimeQ PrimeQ LiouvilleLambda MangoldtLambda
-Expressions: Part Length First Last Most Rest Take Drop Extract ReplacePart Append Prepend Insert Delete DeleteCases Position Cases Map MapAll MapAt Heads Sow Reap CompoundExpression Depth Distribute Evaluate
+Expressions: Part Length First Last Most Rest Take Drop Extract ReplacePart Append Prepend Insert Delete DeleteCases Position Cases Map MapAll MapAt Heads Sow Reap CompoundExpression Depth Distribute Evaluate LeafCount Level ListQ
 Transforms: Collect ComplexExpand Convolve Expand ExpToTrig FullSimplify FunctionExpand
 Core: Accuracy AccuracyGoal Precision PrecisionGoal WorkingPrecision Hold HoldAll HoldAllComplete HoldComplete HoldFirst HoldForm HoldPattern HoldRest AtomQ Attributes ByteCount Defer Head Identity Information
-Attributes: Constant Flat
+Attributes: Constant Flat Listable Locked Orderless OneIdentity SequenceHold NumericFunction NHoldAll NHoldFirst NHoldRest Stub Temporary Protect Protected ReadProtected Unprotect
 
 AlgebraicTheory: AlgebraicIntegerQ AlgebraicNumber AlgebraicNumberDenominator AlgebraicNumberNorm AlgebraicNumberPolynomial AlgebraicNumberTrace AlgebraicUnitQ
 Polynomial: ApartSquareFree Coefficient CoefficientArrays CoefficientList CoefficientRules CountRoots Cyclotomic CylindricalDecomposition Decompose Discriminant Eliminate Exponent Factor FactorList FactorSquareFree FactorSquareFreeList FactorTerms FactorTermsList FromCoefficientRules GenericCylindricalDecomposition GroebnerBasis HornerForm IrreduciblePolynomialQ
 Optimization: ArgMax ArgMin NMaximize NMaxValue NMinimize NMinValue FindMaximum FindMaxValue FindMinimum FindMinValue FindFit Maximize Minimize MaxValue MinValue NArgMax NArgMin FindArgMax FindArgMin FindShortestTour
 UnknownCategory: BarnesG DedekindEta DiracComb DiracDelta DMSList DSolve FindInstance FindRoot ForAll FreeQ FromContinuedFraction FullDefinition
-Programming: Break Continue Goto Do For While NestWhile Nest If Switch Return Throw Catch Block Composition FixedPoint FixedPointList Fold Function
+Programming: Break Continue Goto Do For While NestWhile Nest If Switch Return Throw Catch Block Composition FixedPoint FixedPointList Fold Function LengthWhile
 Discrete: Casoratian DifferenceRoot DifferenceRootReduce CellularAutomaton ContinuedFraction ContinuedFractionK Convergents DifferenceDelta DiscreteDelta DiscreteRatio DiscreteShift ExponentialGeneratingFunction FindGeneratingFunction FindLinearRecurrence FindSequenceFunction FiniteAbelianGroupCount FiniteGroupCount FiniteGroupData GeneratingFunction
-Theory: DirichletCharacter DirichletConvolve DirichletL DirichletTransform EulerPhi ExtendedGCD IsolatingInterval
+Theory: DirichletCharacter DirichletConvolve DirichletL DirichletTransform EulerPhi ExtendedGCD IsolatingInterval JacobiSymbol KroneckerSymbol
 DataManipulation: Hash
 Misc: Interval IntervalIntersection IntervalMemberQ IntervalUnion InverseSeries
 
 
-
-JaccardDissimilarity
-JacobiAmplitude
-Jacobian
-JacobiP
-JacobiSymbol
-JacobiZeta
-Joined
-JoinForm
-JordanDecomposition
-K
-KernelObject
-Kernels
-KleinInvariantJ
-KnotData
-KroneckerDelta
-KroneckerProduct
-KroneckerSymbol
-Kurtosis
-Label
-Labeled
-LabeledSlider
-LabelingFunction
-LabelStyle
-LaguerreL
-LambertW
-Language
-LanguageCategory
-LaplaceDistribution
-LaplaceTransform
-LaplacianFilter
-LaplacianGaussianFilter
-Large
-Larger
-Latitude
-LatitudeLongitude
-LatticeData
-LatticeReduce
-LeafCount
-LeastSquares
-LegendreP
-LegendreQ
-LegendreType
-LengthWhile
-Less
-LessEqual
-LessEqualGreater
-LessFullEqual
-LessGreater
-LessLess
-LessSlantEqual
-LessTilde
-LetterCharacter
-LetterQ
-Level
-LeviCivitaTensor
-LevyDistribution
-Lexicographic
-LicenseID
-Lighting
-LightingAngle
-LightSources
-Limit
-LimitsPositioning
-LimitsPositioningTokens
-Line
-Line3DBox
-LinearFilter
-LinearFractionalTransform
-LinearModelFit
-LinearOffsetFunction
-LinearProgramming
-LinearRecurrence
-LinearSolve
-LinearSolveFunction
-List
-Listable
-ListAnimate
-ListContourPlot
-ListContourPlot3D
-ListConvolve
-ListCorrelate
-ListCurvePathPlot
-ListDensityPlot
-Listen
-ListInterpolation
-ListLineIntegralConvolutionPlot
-ListLinePlot
-ListLogLinearPlot
-ListLogLogPlot
-ListLogPlot
-ListPlay
-ListPlot
-ListPlot3D
-ListPointPlot3D
-ListPolarPlot
-ListQ
-ListStreamDensityPlot
-ListStreamPlot
-ListSurfacePlot3D
-ListVectorDensityPlot
-ListVectorPlot
-ListVectorPlot3D
-Literal
-LiteralSearch
-LocalizeVariables
-Locator
-LocatorAutoCreate
-LocatorBox
-LocatorBoxOptions
-LocatorCentering
-LocatorPane
-LocatorPaneBox
-LocatorPaneBoxOptions
-LocatorRegion
-Locked
-LogBarnesG
-LogicalExpand
-LogIntegral
-LogisticDistribution
-LogitModelFit
-LogLinearPlot
-LogLogPlot
-LogNormalDistribution
-LogPlot
-LongEqual
-Longest
-LongestCommonSequence
-LongestCommonSubsequence
-LongestMatch
-LongForm
-Longitude
-LongLeftArrow
-LongLeftRightArrow
-LongRightArrow
-Loopback
-LowerCaseQ
-LowerLeftArrow
-LowerRightArrow
-LowerTriangularize
-LUBackSubstitution
-LUDecomposition
 MachineID
 MachineName
 MachineNumberQ
@@ -244,7 +103,6 @@ MaxRecursion
 MaxStepFraction
 MaxSteps
 MaxStepSize
-MaxwellDistribution
 Mean
 MeanDeviation
 MeanFilter
@@ -337,16 +195,10 @@ NevilleThetaD
 NevilleThetaN
 NevilleThetaS
 Next
-NHoldAll
-NHoldFirst
-NHoldRest
 NIntegrate
 NominalInterestRate
 NominalVariables
 NonAssociative
-NoncentralChiSquareDistribution
-NoncentralFRatioDistribution
-NoncentralStudentTDistribution
 NonCommutativeMultiply
 NonConstants
 None
@@ -355,7 +207,6 @@ NonNegative
 NonPositive
 Norm
 Normal
-NormalDistribution
 NormalGrouping
 Normalize
 NormalsFunction
@@ -421,7 +272,6 @@ NSumTerms
 Null
 NumberForm
 NumberQ
-NumericFunction
 NumericQ
 NValues
 O
@@ -429,7 +279,6 @@ Off
 Offset
 OLEData
 On
-OneIdentity
 Opacity
 Open
 OpenAppend
@@ -457,7 +306,6 @@ OptionValueBoxOptions
 Order
 OrderedQ
 Ordering
-Orderless
 Orthogonalize
 Out
 Outer
@@ -529,7 +377,6 @@ ParentConnect
 ParentDirectory
 ParentForm
 Parenthesize
-ParetoDistribution
 PartialD
 ParticleData
 PartitionsP
@@ -659,8 +506,6 @@ Prolog
 PromptForm
 Proportion
 Proportional
-Protect
-Protected
 ProteinData
 PseudoInverse
 Put
@@ -712,11 +557,9 @@ Raw
 RawBoxes
 RawData
 RawMedium
-RayleighDistribution
 Re
 Read
 ReadList
-ReadProtected
 RealBlockDiagonalForm
 RealDigits
 RealExponent
@@ -852,13 +695,11 @@ SectorOrigin
 SectorSpacing
 SeedRandom
 Select
-
 SemialgebraicComponentInstances
 SendFontInformationToKernel
 SendMail
 SequenceAlignment
 SequenceForm
-SequenceHold
 SequenceLimit
 Series
 SeriesCoefficient
@@ -1041,8 +882,6 @@ StripBoxes
 StripOnInput
 StripWrapperBoxes
 StructuredSelection
-Stub
-StudentTDistribution
 Subfactorial
 SubMinus
 SubPlus
@@ -1124,11 +963,9 @@ TargetFunctions
 TautologyQ
 TemplateBox
 TemplateBoxOptions
-Temporary
 TemporaryVariable
 TensorQ
 TensorRank
-
 Therefore
 Thick
 Thickness
@@ -1192,7 +1029,6 @@ TransparentColor
 TreeForm
 TreePlot
 TriangleWave
-TriangularDistribution
 Trig
 TrigExpand
 TrigFactor
@@ -1212,12 +1048,10 @@ TubeBSplineCurveBoxOptions
 TuringMachine
 Underflow
 Unevaluated
-UniformDistribution
 Uninstall
 UnionPlus
 Unique
 UnitVector
-Unprotect
 UnsameQ
 UnsavedVariables
 Unset
@@ -1271,12 +1105,10 @@ VectorStyle
 Vee
 Verbatim
 VerifyConvergence
-
 WaitAll
 WaitNext
 WaitUntil
 Wedge
-WeibullDistribution
 WeierstrassHalfPeriods
 WeierstrassInvariants
 WeierstrassP
