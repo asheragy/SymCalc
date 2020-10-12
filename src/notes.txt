@@ -15,3 +15,6 @@ Maybe important features
 Non-Important Features
 - Integer to string, full number spelled out
 - Help info ?functionName
+
+- Kotlin yield operator, possibly represent infinite lists and do operations on them
+https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/-sequence-scope/yield.html
