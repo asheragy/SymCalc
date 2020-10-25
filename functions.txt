@@ -2,17 +2,17 @@ Head: Complex Integer Real Rational Symbol String List Null
 
 Basic: Divide DivideBy Plus Power Sqrt Subtract SubtractFrom Times TimesBy Log Log10 Log2 Exp AddTo Decrement Increment LogBarnesG Minus PlusMinus PreDecrement PreIncrement
 Trig: Sin Cos Tan Csc Sec Cot ArcCos ArcCot ArcCsc ArcSec ArcSin ArcTan Sinc Gudermannian Haversine InverseGudermannian InverseHaversine
-Calculus: D Dt Integrate Derivative DifferentialRoot DifferentialRootReduce DiscreteConvolve InverseLaplaceTransform InverseZTransform LaplaceTransform Limit LinearRecurrence NIntegrate Product
+Calculus: D Dt Integrate Derivative DifferentialRoot DifferentialRootReduce DiscreteConvolve InverseLaplaceTransform InverseZTransform LaplaceTransform Limit LinearRecurrence NIntegrate Product RecurrenceTable
 Logic: And Or Not Nand Nor Xor Implies Equivalent Equal Unequal BooleanConvert BooleanCountingFunction BooleanFunction BooleanMaxterms BooleanMinimize BooleanMinterms BooleanTable BooleanVariables Conjunction Disjunction Except Exists Greater GreaterEqual GreaterEqualLess GreaterFullEqual GreaterGreater GreaterLess GreaterSlantEqual GreaterTilde Less LessEqual LessEqualGreater LessFullEqual LessGreater LessLess LessSlantEqual LessTilde Majority Negative Order
-Complex: Im Normalize
+Complex: Im Normalize Re
 
 List:
 ArrayFlatten Flatten FlattenAt Partition Join Sequence Sort SortBy Reverse RotateLeft RotateRight Transpose
 ArrayPad Riffle PadLeft PadRight Intersection Complement Split SplitBy Gather GatherBy Union Tally DeleteDuplicates Tuples Subsets Permutations RandomSample AppendTo
-Accumulate ConstantArray Apply ArrayQ ArrayDepth Array Band BinCounts Commonest ComposeList Count Differences Entropy FoldList Inner MapIndexed MemberQ OrderedQ Ordering Outer Pick PrependTo
+Accumulate ConstantArray Apply ArrayQ ArrayDepth Array Band BinCounts Commonest ComposeList Count Differences Entropy FoldList Inner MapIndexed MemberQ OrderedQ Ordering Outer Pick PrependTo Range Ratios
 
 Matrix: CholeskyDecomposition ConjugateTranspose Cross CrossMatrix DesignMatrix Det Diagonal DiagonalMatrix DiamondMatrix Dimensions Dot Eigensystem Eigenvalues Eigenvectors GaussianMatrix HankelMatrix HermiteDecomposition HermitianMatrixQ HessenbergDecomposition HilbertMatrix IdentityMatrix Inverse JordanDecomposition KroneckerProduct LeastSquares LeviCivitaTensor LinearFractionalTransform LinearProgramming LinearSolve LinearSolveFunction LowerTriangularize LUDecomposition MatrixExp MatrixForm MatrixPower MatrixQ MatrixRank Minors Norm Normal
-        Orthogonalize PauliMatrix PositiveDefiniteMatrixQ Projection PseudoInverse QRDecomposition
+        Orthogonalize PauliMatrix PositiveDefiniteMatrixQ Projection PseudoInverse QRDecomposition ReflectionMatrix ReflectionTransform RowReduce
 
 Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN ArithmeticGeometricMean EllipticE EllipticExp EllipticExpPrime EllipticF EllipticK EllipticLog EllipticNomeQ EllipticPi EllipticTheta EllipticThetaPrime InverseEllipticNomeQ InverseWeierstrassP JacobiAmplitude JacobiZeta
 Spheroidal: SpheroidalPS SpheroidalPSPrime SpheroidalQS SpheroidalQSPrime SpheroidalS1 SpheroidalS1Prime SpheroidalS2 SpheroidalS2Prime SpheroidalRadialFactor SpheroidalEigenvalue SpheroidalJoiningFactor
@@ -26,17 +26,17 @@ Generalized: HeavisideLambda HeavisidePi HeavisideTheta
 Special Functions:
 Beta BetaRegularized Gamma GammaRegularized ChebyshevT ChebyshevU CoshIntegral CosIntegral Pochhammer LogGamma MathieuC MathieuCharacteristicA MathieuCharacteristicB MathieuCharacteristicExponent MathieuCPrime MathieuS MathieuSPrime
 RiemannSiegelTheta DawsonF Erf Erfc Erfi ExpIntegralE ExpIntegralEi FresnelC FresnelS GegenbauerC HermiteH HurwitzLerchPhi HurwitzZeta InverseBetaRegularized
-InverseErf InverseErfc InverseFunction InverseFunctions InverseGammaRegularized JacobiP KleinInvariantJ LaguerreL LegendreP LegendreQ LogIntegral MeijerG ModularLambda NevilleThetaC NevilleThetaD NevilleThetaN NevilleThetaS ParabolicCylinderD ProductLog QBinomial QFactorial QGamma QHypergeometricPFQ QPochhammer QPolyGamma
+InverseErf InverseErfc InverseFunction InverseFunctions InverseGammaRegularized JacobiP KleinInvariantJ LaguerreL LegendreP LegendreQ LogIntegral MeijerG ModularLambda NevilleThetaC NevilleThetaD NevilleThetaN NevilleThetaS ParabolicCylinderD ProductLog QBinomial QFactorial QGamma QHypergeometricPFQ QPochhammer QPolyGamma RamanujanTau RamanujanTauL RamanujanTauTheta RamanujanTauZ
 
 Constants: I Pi E Degree GoldenRatio EulerGamma StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber ComplexInfinity DirectedInfinity Infinity Indeterminate Overflow
 Recurrence: Fibonacci LucasL BernoulliB NorlundB EulerE StirlingS1 StirlingS2 HarmonicNumber PolyGamma Zeta LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB Hyperfactorial Multinomial
-Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Arg Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator BaseForm ChineseRemainder Conjugate DigitCount DigitQ DivisorSigma DivisorSum ExactNumberQ FromDigits InexactNumberQ IntegerExponent IntegerLength IntegerQ NProduct NSum NumberQ NumericQ Positive PossibleZeroQ
-Integer: Mod PowerMod Quotient QuotientRemainder GCD LCM Divisible EvenQ OddQ FactorInteger Divisors IntegerPartitions IntegerDigits FrobeniusNumber FrobeniusSolve ClebschGordan CarmichaelLambda PartitionsP
+Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Arg Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator BaseForm ChineseRemainder Conjugate DigitCount DigitQ DivisorSigma DivisorSum ExactNumberQ FromDigits InexactNumberQ IntegerExponent IntegerLength IntegerQ NProduct NSum NumberQ NumericQ Positive PossibleZeroQ RealDigits RealExponent
+Integer: Mod PowerMod Quotient QuotientRemainder GCD LCM Divisible EvenQ OddQ FactorInteger Divisors IntegerPartitions IntegerDigits FrobeniusNumber FrobeniusSolve ClebschGordan CarmichaelLambda PartitionsP Rationalize
 Bitwise: BitAnd BitClear BitGet BitLength BitNot BitOr BitSet BitShiftLeft BitShiftRight BitXor
 
 Statistics:
 Other:         BinLists CDF CentralMoment ContraharmonicMean Correlation Covariance DiceDissimilarity DistanceFunction ExpectedValue ExponentialMovingAverage FindClusters Fit FittedModel FunctionInterpolation GeneralizedLinearModelFit GeometricMean HarmonicMean InterquartileRange JaccardDissimilarity Kurtosis LinearModelFit LinearOffsetFunction ListConvolve ListCorrelate ListInterpolation LogitModelFit MatchingDissimilarity Mean MeanDeviation Median MedianDeviation MovingAverage MovingMedian Nearest NearestFunction NeedlemanWunschSimilarity
-               NominalVariables ProbitModelFit Quantile QuartileDeviation Quartiles QuartileSkewness
+               NominalVariables ProbitModelFit Quantile QuartileDeviation Quartiles QuartileSkewness Random RandomChoice RandomComplex RandomInteger RandomReal RogersTanimotoDissimilarity RootMeanSquare RussellRaoDissimilarity
 Distance:      EuclideanDistance CanberraDistance DamerauLevenshteinDistance BrayCurtisDistance CorrelationDistance CosineDistance HammingDistance ManhattanDistance
 Distributions: ExponentialDistribution CauchyDistribution ChiDistribution ChiSquareDistribution BernoulliDistribution BetaBinomialDistribution BetaDistribution BetaNegativeBinomialDistribution BinomialDistribution HypergeometricDistribution NegativeBinomialDistribution GeometricDistribution PoissonDistribution DiscreteUniformDistribution
                ZipfDistribution LogSeriesDistribution ExtremeValueDistribution FRatioDistribution GammaDistribution GumbelDistribution HalfNormalDistribution InverseCDF InverseChiSquareDistribution InverseGammaDistribution InverseGaussianDistribution LaplaceDistribution LevyDistribution LogisticDistribution LogNormalDistribution
@@ -46,154 +46,25 @@ Fractions: Apart Together Cancel Numerator Denominator PolynomialQuotient Polyno
 Timing: AbsoluteTime AbsoluteTiming
 Primes: Prime PrimeNu PrimeOmega PrimePi PrimePowerQ Primes PrimeZetaP NextPrime RandomPrime ZetaZero RiemannR RiemannSiegelZ CoprimeQ PrimeQ LiouvilleLambda MangoldtLambda
 Expressions: Part Length First Last Most Rest Take Drop Extract ReplacePart Append Prepend Insert Delete DeleteCases Position Cases Map MapAll MapAt Heads Sow Reap CompoundExpression Depth Distribute Evaluate LeafCount Level ListQ
-Transforms: Collect ComplexExpand Convolve Expand ExpToTrig FullSimplify FunctionExpand
-Core: Accuracy AccuracyGoal Precision PrecisionGoal WorkingPrecision Hold HoldAll HoldAllComplete HoldComplete HoldFirst HoldForm HoldPattern HoldRest AtomQ Attributes ByteCount Defer Head Identity Information MachineNumberQ MachinePrecision MantissaExponent Message N NumberForm Print
+Transforms: Collect ComplexExpand Convolve Expand ExpToTrig FullSimplify FunctionExpand Reduce Refine RSolve
+Core: Accuracy AccuracyGoal Precision PrecisionGoal WorkingPrecision Hold HoldAll HoldAllComplete HoldComplete HoldFirst HoldForm HoldPattern HoldRest AtomQ Attributes ByteCount Defer Head Identity Information MachineNumberQ MachinePrecision MantissaExponent Message N NumberForm Print ReleaseHold Remove
 Options: MaxIterations MaxRecursion MaxStepFraction MaxSteps MaxStepSize MinRecursion MinSize
 Attributes: Constant Flat Listable Locked Orderless OneIdentity SequenceHold NumericFunction NHoldAll NHoldFirst NHoldRest Stub Temporary Protect Protected ReadProtected Unprotect
 
 AlgebraicTheory: AlgebraicIntegerQ AlgebraicNumber AlgebraicNumberDenominator AlgebraicNumberNorm AlgebraicNumberPolynomial AlgebraicNumberTrace AlgebraicUnitQ PiecewiseExpand QuadraticIrrationalQ
-Polynomial: ApartSquareFree Coefficient CoefficientArrays CoefficientList CoefficientRules CountRoots Cyclotomic CylindricalDecomposition Decompose Discriminant Eliminate Exponent Factor FactorList FactorSquareFree FactorSquareFreeList FactorTerms FactorTermsList FromCoefficientRules GenericCylindricalDecomposition GroebnerBasis HornerForm IrreduciblePolynomialQ MinimalPolynomial MonomialList NRoots NSolve PolynomialExtendedGCD PolynomialGCD PolynomialLCM PolynomialMod PolynomialQ PolynomialQuotientRemainder PolynomialReduce
+Polynomial: ApartSquareFree Coefficient CoefficientArrays CoefficientList CoefficientRules CountRoots Cyclotomic CylindricalDecomposition Decompose Discriminant Eliminate Exponent Factor FactorList FactorSquareFree FactorSquareFreeList FactorTerms FactorTermsList FromCoefficientRules GenericCylindricalDecomposition GroebnerBasis HornerForm IrreduciblePolynomialQ MinimalPolynomial MonomialList NRoots NSolve PolynomialExtendedGCD PolynomialGCD PolynomialLCM PolynomialMod PolynomialQ PolynomialQuotientRemainder PolynomialReduce Resultant Root RootIntervals Roots RootSum
 Optimization: ArgMax ArgMin NMaximize NMaxValue NMinimize NMinValue FindMaximum FindMaxValue FindMinimum FindMinValue FindFit Maximize Minimize MaxValue MinValue NArgMax NArgMin FindArgMax FindArgMin FindShortestTour
 UnknownCategory: BarnesG DedekindEta DiracComb DiracDelta DMSList DSolve FindInstance FindRoot ForAll FreeQ FromContinuedFraction FullDefinition PowerExpand
 Programming: Break Continue Goto Do For While NestWhile Nest If Switch Return Throw Catch Block Composition FixedPoint FixedPointList Fold Function LengthWhile NestList NestWhileList NonNegative NonPositive
 Discrete: Casoratian DifferenceRoot DifferenceRootReduce CellularAutomaton ContinuedFraction ContinuedFractionK Convergents DifferenceDelta DiscreteDelta DiscreteRatio DiscreteShift ExponentialGeneratingFunction FindGeneratingFunction FindLinearRecurrence FindSequenceFunction FiniteAbelianGroupCount FiniteGroupCount FiniteGroupData GeneratingFunction
-Theory: DirichletCharacter DirichletConvolve DirichletL DirichletTransform EulerPhi ExtendedGCD IsolatingInterval JacobiSymbol KroneckerSymbol MoebiusMu MultiplicativeOrder PartitionsQ PowerModList PowersRepresentations PrimitiveRoot
+Theory: DirichletCharacter DirichletConvolve DirichletL DirichletTransform EulerPhi ExtendedGCD IsolatingInterval JacobiSymbol KroneckerSymbol MoebiusMu MultiplicativeOrder PartitionsQ PowerModList PowersRepresentations PrimitiveRoot RootApproximant RootOfUnityQ RootReduce
 DataManipulation: Hash
 Misc: Interval IntervalIntersection IntervalMemberQ IntervalUnion InverseSeries MathMLForm Names NDSolve
 
 
 
-RadicalBox
-RadicalBoxOptions
-RadioButton
-RadioButtonBar
-RadioButtonBox
-RadioButtonBoxOptions
-RamanujanTau
-RamanujanTauL
-RamanujanTauTheta
-RamanujanTauZ
-Random
-RandomChoice
-RandomComplex
-RandomInteger
-RandomReal
-RandomSeed
-Range
-RangeSpecification
-Raster
-RasterArray
-RasterBox
-RasterBoxOptions
-Rasterize
-RasterSize
-RationalFunctions
-Rationalize
-Rationals
-Ratios
-Raw
-RawBoxes
-RawData
-RawMedium
-Re
-Read
-ReadList
-RealBlockDiagonalForm
-RealDigits
-RealExponent
-Reals
-Record
-RecordLists
-RecordSeparators
-Rectangle
-RectangleBox
-RectangleChart
-RectangleChart3D
-RecurrenceTable
-RecurringDigitsForm
-Reduce
-Refine
-ReflectionMatrix
-ReflectionTransform
-Refresh
-RefreshRate
-RegionFunction
-RegionPlot
-RegionPlot3D
-RegularExpression
-Regularization
-RegularPayment
-Reinstall
-Release
-ReleaseHold
-ReliefPlot
-Remove
-Removed
-RenameDirectory
-RenameFile
-RenderAll
-RenderingOptions
-Repeated
-RepeatedNull
-RepeatedString
-Replace
-ReplaceAll
-ReplaceHeldPart
-ReplaceList
-ReplaceRepeated
-RescalingTransform
-ResetDirectory
-ResetMenusPacket
-Resolve
-Resultant
-ResumePacket
-ReturnExpressionPacket
-ReturnInputFormPacket
-ReturnPacket
-ReturnTextPacket
-ReverseElement
-ReverseEquilibrium
-ReverseUpEquilibrium
-RevolutionAxis
-RevolutionPlot3D
-RGBColor
-RogersTanimotoDissimilarity
-Root
-RootApproximant
-RootIntervals
-RootMeanSquare
-RootOfUnityQ
-RootReduce
-Roots
-RootSum
-Rotate
-RotateLabel
-RotationAction
-RotationBox
-RotationBoxOptions
-RotationMatrix
-RotationTransform
-RoundImplies
-RoundingRadius
-Row
-RowAlignments
-RowBackgrounds
-RowBox
-RowHeights
-RowLines
-RowMinHeight
-RowReduce
-RowsEqual
-RowSpacings
-RSolve
-Rule
-RuleCondition
-RuleDelayed
-RuleForm
-RulerUnits
-Run
-RunThrough
-RussellRaoDissimilarity
+
+
 SameQ
 SameTest
 SampleDepth
