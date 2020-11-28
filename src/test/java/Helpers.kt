@@ -8,6 +8,17 @@ import org.cerion.symcalc.expression.number.RealDouble
 import kotlin.UnsupportedOperationException
 import kotlin.test.assertEquals
 
+/*
+infix fun Expr.`should equal`(expected: Expr) {
+    val eval = this.eval()
+    //assertEquals(expected, this)
+    val msg = """$this
+                    Expected: $expected
+                      Actual: $eval""".trimMargin()
+    assertTrue(msg) { eval == expected }
+}
+ */
+
 infix fun Expr.`should equal`(expected: Expr) {
     assertEquals(expected, this)
 }
