@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.20'
+}
+
+group 'org.cerion'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:1.4.20"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:5.5.2"
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "src/main/kotlin"
+            srcDir "anc/src/java"
+        }
+    }
+    test {
+        java {
+            srcDir "src/test/java"
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
