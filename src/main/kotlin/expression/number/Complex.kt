@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression.number
 
-import expression.constant.I
-import expression.function.trig.ArcTan
+import org.cerion.symcalc.expression.constant.I
+import org.cerion.symcalc.expression.function.trig.ArcTan
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.function.arithmetic.Power

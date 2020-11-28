@@ -1,16 +1,13 @@
 package org.cerion.symcalc.expression.function.trig
 
-import expression.SymbolExpr
 import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.expression.SymbolExpr
 import org.cerion.symcalc.expression.constant.ComplexInfinity
-import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Minus
 import org.cerion.symcalc.expression.function.arithmetic.Power
-import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
-import org.cerion.symcalc.expression.function.list.Join
 import org.cerion.symcalc.expression.number.*
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 

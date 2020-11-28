@@ -1,15 +1,13 @@
-package expression.function.arithmetic
+package org.cerion.symcalc.expression.function.arithmetic
 
 import org.cerion.symcalc.expression.constant.E
-import org.cerion.symcalc.expression.function.arithmetic.Exp
-import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertAll
+import kotlin.test.Test
 
 internal class ExpTest {
 

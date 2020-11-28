@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.integer.IntegerDigits
 import org.cerion.symcalc.expression.number.Integer
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 internal class IntegerDigitsTest {
 

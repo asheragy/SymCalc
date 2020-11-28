@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.function.core.Hold
 import org.cerion.symcalc.expression.function.core.N
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotEquals

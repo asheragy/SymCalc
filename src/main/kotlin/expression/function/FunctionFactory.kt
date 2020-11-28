@@ -1,8 +1,8 @@
 package org.cerion.symcalc.expression.function
 
-import expression.function.list.ConstantArray
-import expression.function.logical.Equal
-import expression.function.trig.ArcTan
+import org.cerion.symcalc.expression.function.list.ConstantArray
+import org.cerion.symcalc.expression.function.logical.Equal
+import org.cerion.symcalc.expression.function.trig.ArcTan
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.calculus.D

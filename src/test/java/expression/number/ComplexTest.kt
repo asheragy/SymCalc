@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.`should equal`
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 

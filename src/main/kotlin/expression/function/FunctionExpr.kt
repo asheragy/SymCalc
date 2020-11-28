@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression.function
 
-import expression.SymbolExpr
+import org.cerion.symcalc.expression.SymbolExpr
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.expression.Expr

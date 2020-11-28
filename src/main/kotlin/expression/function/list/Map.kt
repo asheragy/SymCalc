@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression.function.list
 
-import expression.SymbolExpr
+import org.cerion.symcalc.expression.SymbolExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.FunctionExpr

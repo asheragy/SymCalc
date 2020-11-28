@@ -1,9 +1,8 @@
-package expression.constant
+package org.cerion.symcalc.expression.constant
 
-import org.cerion.symcalc.expression.constant.ComplexInfinity
-import org.cerion.symcalc.expression.function.arithmetic.*
+import org.cerion.symcalc.expression.function.arithmetic.Divide
 import org.cerion.symcalc.expression.number.Integer
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 
 internal class ComplexInfinityTest {

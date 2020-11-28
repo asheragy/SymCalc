@@ -3,7 +3,7 @@ package expression.number
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import java.math.BigDecimal
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith

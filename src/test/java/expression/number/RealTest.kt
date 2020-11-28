@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.function.core.N
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 

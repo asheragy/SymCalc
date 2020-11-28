@@ -10,7 +10,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealDouble
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotEquals

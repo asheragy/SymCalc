@@ -1,9 +1,9 @@
 package org.cerion.symcalc.expression.function.arithmetic
 
-import expression.constant.I
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
+import org.cerion.symcalc.expression.constant.I
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.trig.Cos
 import org.cerion.symcalc.expression.function.trig.Sin

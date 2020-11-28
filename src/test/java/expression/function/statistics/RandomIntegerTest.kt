@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression.function.statistics
 
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.Integer
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 

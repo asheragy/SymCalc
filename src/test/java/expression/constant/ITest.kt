@@ -1,10 +1,9 @@
-package expression.constant
+package org.cerion.symcalc.expression.constant
 
-import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.function.core.Hold
 import org.cerion.symcalc.expression.number.Complex
 import org.cerion.symcalc.expression.number.Integer
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ITest {

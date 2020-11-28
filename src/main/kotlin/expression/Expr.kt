@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression
 
-import expression.function.list.ConstantArray
+import org.cerion.symcalc.expression.function.list.ConstantArray
 import org.cerion.symcalc.Environment
 import org.cerion.symcalc.expression.function.FunctionExpr
 import org.cerion.symcalc.expression.function.arithmetic.Plus

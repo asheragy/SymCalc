@@ -1,18 +1,15 @@
-package expression.function.arithmetic
+package org.cerion.symcalc.expression.function.arithmetic
 
-import expression.constant.I
-import expression.function.logical.Equal
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
+import org.cerion.symcalc.expression.constant.I
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.Divide
-import org.cerion.symcalc.expression.function.arithmetic.Power
-import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
+import org.cerion.symcalc.expression.function.logical.Equal
 import org.cerion.symcalc.expression.number.*
-import org.junit.jupiter.api.Test
 import java.math.BigDecimal
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 

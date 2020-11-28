@@ -4,7 +4,7 @@ import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.trig.ArcSin
 import org.cerion.symcalc.expression.number.Rational
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 internal class ArcSinTest {
 

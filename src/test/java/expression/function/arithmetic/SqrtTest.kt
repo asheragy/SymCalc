@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 

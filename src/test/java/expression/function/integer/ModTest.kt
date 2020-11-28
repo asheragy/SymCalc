@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.Rational
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 internal class ModTest {
 

@@ -1,6 +1,6 @@
 package expression.function.trig
 
-import expression.SymbolExpr
+import org.cerion.symcalc.expression.SymbolExpr
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.ComplexInfinity
@@ -11,7 +11,7 @@ import org.cerion.symcalc.expression.function.trig.Cot
 import org.cerion.symcalc.expression.function.trig.assertTrigExprRange
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 internal class CotTest {
 

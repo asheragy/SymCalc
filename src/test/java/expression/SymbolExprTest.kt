@@ -1,8 +1,7 @@
-package expression
+package org.cerion.symcalc.expression
 
-import org.cerion.symcalc.expression.ErrorExpr
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.assertTrue
+import kotlin.test.Test
 
 internal class SymbolExprTest {
 

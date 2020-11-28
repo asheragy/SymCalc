@@ -1,14 +1,13 @@
 package expression.function.list
 
-import expression.SymbolExpr
 import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.expression.SymbolExpr
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.list.Map
-import org.cerion.symcalc.expression.function.trig.Sin
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MapTest {

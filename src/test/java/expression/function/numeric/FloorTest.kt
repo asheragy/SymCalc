@@ -3,7 +3,7 @@ package expression.function.numeric
 import org.cerion.symcalc.expression.function.numeric.Floor
 import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 internal class FloorTest {
 

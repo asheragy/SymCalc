@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Sqrt
 import org.cerion.symcalc.expression.function.statistics.StandardDeviation
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealDouble
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class StandardDeviationTest {

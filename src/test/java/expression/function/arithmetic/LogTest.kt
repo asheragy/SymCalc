@@ -1,12 +1,11 @@
-package expression.function.arithmetic
+package org.cerion.symcalc.expression.function.arithmetic
 
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.*
 import org.cerion.symcalc.expression.number.*
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class LogTest {
