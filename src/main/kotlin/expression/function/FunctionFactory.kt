@@ -57,6 +57,9 @@ object FunctionFactory {
             Function.ARCCOS -> return ArcCos(e[0])
             Function.ARCTAN -> return ArcTan(e[0])
             Function.COT -> return Cot(e[0])
+            Function.SINH -> return Sinh(e[0])
+            Function.COSH -> return Cosh(e[0])
+            Function.TANH -> return Tanh(e[0])
 
             //List
             Function.TOTAL -> return Total(*e)

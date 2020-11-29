@@ -773,68 +773,45 @@ public class BigDecimalMath
         */
         static public BigDecimal sinh(final BigDecimal x)
         {
-                if ( x.compareTo(BigDecimal.ZERO) < 0)
-                        return sinh(x.negate()).negate() ;
-                else if ( x.compareTo(BigDecimal.ZERO) == 0 )
-                        return BigDecimal.ZERO ;
-                else
+                BigDecimal xhighpr = scalePrec(x,2) ;
+                /* Simple Taylor expansion, sum_{i=0..infinity} x^(2i+1)/(2i+1)! */
+                BigDecimal resul = xhighpr ;
+
+                /* x^i */
+                BigDecimal xpowi = xhighpr ;
+
+                /* 2i+1 factorial */
+                BigInteger ifac = BigInteger.ONE ;
+
+                /* The error in the result is set by the error in x itself.
+                */
+                double xUlpDbl = x.ulp().doubleValue() ;
+
+                /* The error in the result is set by the error in x itself.
+                * We need at most k terms to squeeze x^(2k+1)/(2k+1)! below this value.
+                * x^(2k+1) < x.ulp; (2k+1)*log10(x) < -x.precision; 2k*log10(x)< -x.precision;
+                * 2k*(-log10(x)) > x.precision; 2k*log10(1/x) > x.precision
+                */
+                int k = (int)(x.precision()/Math.log10(1.0/xhighpr.doubleValue()))/2 ;
+                MathContext mcTay = new MathContext( err2prec(x.doubleValue(),xUlpDbl/k) ) ;
+                for(int i=1 ; ; i++)
                 {
-                        if ( x.doubleValue() > 2.4 )
-                        {
-                                /* Move closer to zero with sinh(2x)= 2*sinh(x)*cosh(x).
-                                */
-                                BigDecimal two = new BigDecimal(2) ;
-                                BigDecimal xhalf = x.divide(two) ;
-                                BigDecimal resul =  sinh(xhalf).multiply(cosh(xhalf)).multiply(two) ;
-                                /* The error in the result is set by the error in x itself.
-                                * The first derivative of sinh(x) is cosh(x), so the absolute error
-                                * in the result is cosh(x)*errx, and the relative error is coth(x)*errx = errx/tanh(x)
-                                */ 
-                                double eps =  Math.tanh(x.doubleValue()) ;
-                                MathContext mc = new MathContext( err2prec(0.5*x.ulp().doubleValue()/eps) ) ;
-                                return resul.round(mc) ;
-                        }
-                        else
-                        {
-                                BigDecimal xhighpr = scalePrec(x,2) ;
-                                /* Simple Taylor expansion, sum_{i=0..infinity} x^(2i+1)/(2i+1)! */
-                                BigDecimal resul = xhighpr ;
-
-                                /* x^i */
-                                BigDecimal xpowi = xhighpr ;
-
-                                /* 2i+1 factorial */
-                                BigInteger ifac = BigInteger.ONE ;
-
-                                /* The error in the result is set by the error in x itself.
-                                */
-                                double xUlpDbl = x.ulp().doubleValue() ;
-
-                                /* The error in the result is set by the error in x itself.
-                                * We need at most k terms to squeeze x^(2k+1)/(2k+1)! below this value.
-                                * x^(2k+1) < x.ulp; (2k+1)*log10(x) < -x.precision; 2k*log10(x)< -x.precision;
-                                * 2k*(-log10(x)) > x.precision; 2k*log10(1/x) > x.precision
-                                */
-                                int k = (int)(x.precision()/Math.log10(1.0/xhighpr.doubleValue()))/2 ;
-                                MathContext mcTay = new MathContext( err2prec(x.doubleValue(),xUlpDbl/k) ) ;
-                                for(int i=1 ; ; i++)
-                                {
-                                        /* TBD: at which precision will 2*i or 2*i+1 overflow? 
-                                        */
-                                        ifac = ifac.multiply(new BigInteger(""+(2*i) ) ) ;
-                                        ifac = ifac.multiply( new BigInteger(""+(2*i+1)) ) ;
-                                        xpowi = xpowi.multiply(xhighpr).multiply(xhighpr) ;
-                                        BigDecimal corr = xpowi.divide(new BigDecimal(ifac),mcTay) ;
-                                        resul = resul.add( corr ) ;
-                                        if ( corr.abs().doubleValue() < 0.5*xUlpDbl ) 
-                                                break ;
-                                }
-                                /* The error in the result is set by the error in x itself.
-                                */
-                                MathContext mc = new MathContext(x.precision() ) ;
-                                return resul.round(mc) ;
-                        }
+                        /* TBD: at which precision will 2*i or 2*i+1 overflow?
+                        */
+                        ifac = ifac.multiply(new BigInteger(""+(2*i) ) ) ;
+                        ifac = ifac.multiply( new BigInteger(""+(2*i+1)) ) ;
+                        xpowi = xpowi.multiply(xhighpr).multiply(xhighpr) ;
+                        BigDecimal corr = xpowi.divide(new BigDecimal(ifac),mcTay) ;
+                        resul = resul.add( corr ) ;
+                        if ( corr.abs().doubleValue() < 0.5*xUlpDbl )
+                                break ;
                 }
+                /* The error in the result is set by the error in x itself.
+                */
+                MathContext mc = new MathContext(x.precision() ) ;
+                return resul.round(mc) ;
+
+
         } /* BigDecimalMath.sinh */
 
         /** The hyperbolic tangent.
