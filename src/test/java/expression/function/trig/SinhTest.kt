@@ -34,7 +34,7 @@ internal class SinhTest {
     @Test
     fun bigDecimal() {
         assertAll(
-                (RealBigDec("0.00")) `==` RealBigDec("0.0"),
+                Sinh(RealBigDec("0.00")) `==` RealBigDec("0.0"),
                 Sinh(RealBigDec("1.000000000")) `==` RealBigDec("1.175201194"),
                 Sinh(RealBigDec("2.1555")) `==` RealBigDec("4.2582"),
                 Sinh(RealBigDec("3.1415")) `==` RealBigDec("11.548"),
