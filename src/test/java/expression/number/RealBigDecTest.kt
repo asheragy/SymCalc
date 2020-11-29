@@ -1,14 +1,13 @@
-package expression.number
+package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Power
 import org.cerion.symcalc.expression.function.core.N
-import org.cerion.symcalc.expression.number.*
-import kotlin.test.Test
 import org.junit.jupiter.api.assertAll
 import java.math.BigDecimal
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 

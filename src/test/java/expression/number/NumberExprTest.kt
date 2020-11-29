@@ -1,6 +1,5 @@
-package expression.number
+package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.number.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals

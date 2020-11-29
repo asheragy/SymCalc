@@ -1,8 +1,7 @@
-package expression.function.statistics
+package org.cerion.symcalc.expression.function.statistics
 
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.function.arithmetic.Sqrt
-import org.cerion.symcalc.expression.function.statistics.StandardDeviation
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealDouble
 import kotlin.test.Test

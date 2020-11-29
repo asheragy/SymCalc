@@ -8,16 +8,18 @@ import org.cerion.symcalc.expression.number.RealDouble
 import kotlin.UnsupportedOperationException
 import kotlin.test.assertEquals
 
-/*
-infix fun Expr.`should equal`(expected: Expr) {
-    val eval = this.eval()
-    //assertEquals(expected, this)
-    val msg = """$this
-                    Expected: $expected
-                      Actual: $eval""".trimMargin()
-    assertTrue(msg) { eval == expected }
+
+fun assertAll(vararg exprs: () -> Unit) {
+    org.junit.jupiter.api.assertAll(exprs.map {
+        it
+    })
 }
- */
+
+infix fun Expr.`==`(expected: Expr): () -> Unit = {
+    val actual = this.eval()
+    val msg = "<$this>\n${" ".repeat(20)}"
+    assertEquals(expected, actual, msg)
+}
 
 infix fun Expr.`should equal`(expected: Expr) {
     assertEquals(expected, this)

@@ -1,8 +1,8 @@
-package expression.function.numeric
+package org.cerion.symcalc.expression.function.numeric
 
-import org.cerion.symcalc.expression.function.numeric.Floor
-import org.cerion.symcalc.expression.number.*
-import org.junit.jupiter.api.Assertions.*
+import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.RealDouble
+import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 
 internal class FloorTest {

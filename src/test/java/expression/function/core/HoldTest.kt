@@ -1,9 +1,8 @@
-package expression.function.core
+package org.cerion.symcalc.expression.function.core
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.core.Hold
 import org.cerion.symcalc.expression.number.Integer
 import kotlin.test.Test
 import kotlin.test.assertEquals

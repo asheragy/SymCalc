@@ -1,10 +1,9 @@
-package expression.function.integer
+package org.cerion.symcalc.expression.function.integer
 
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.constant.Pi
 import org.cerion.symcalc.expression.function.arithmetic.Plus
 import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.function.integer.Mod
 import org.cerion.symcalc.expression.number.Rational
 import kotlin.test.Test
 

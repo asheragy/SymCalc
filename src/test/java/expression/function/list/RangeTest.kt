@@ -1,7 +1,6 @@
-package expression.function.list
+package org.cerion.symcalc.expression.function.list
 
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.function.list.Range
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealDouble
 import kotlin.test.Test

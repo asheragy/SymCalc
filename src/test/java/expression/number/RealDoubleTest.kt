@@ -1,10 +1,9 @@
-package expression.number
+package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.`should equal`
-import org.cerion.symcalc.expression.number.*
 import org.junit.jupiter.api.Assertions
-import kotlin.test.Test
 import java.math.BigDecimal
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 

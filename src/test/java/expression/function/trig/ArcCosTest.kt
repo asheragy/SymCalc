@@ -1,8 +1,7 @@
-package expression.function.trig
+package org.cerion.symcalc.expression.function.trig
 
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.trig.ArcCos
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
 import kotlin.test.Test

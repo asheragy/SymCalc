@@ -1,8 +1,7 @@
-package expression.function.list
+package org.cerion.symcalc.expression.function.list
 
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.function.list.Reverse
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 
 internal class ReverseTest {
