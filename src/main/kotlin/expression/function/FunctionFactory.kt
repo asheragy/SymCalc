@@ -60,6 +60,9 @@ object FunctionFactory {
             Function.SINH -> return Sinh(e[0])
             Function.COSH -> return Cosh(e[0])
             Function.TANH -> return Tanh(e[0])
+            Function.ARCSINH -> return ArcSinh(e[0])
+            Function.ARCCOSH -> return ArcCosh(e[0])
+            Function.ARCTANH -> return ArcTanh(e[0])
 
             //List
             Function.TOTAL -> return Total(*e)

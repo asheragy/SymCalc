@@ -43,7 +43,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     override val type: ExprType get() = ExprType.NUMBER
     override val numType: NumberType get() = NumberType.REAL_BIGDEC
     override val isZero: Boolean get() = value.compareTo(BigDecimal.ZERO) == 0
-    override val isOne: Boolean get() = value == BigDecimal.ONE
+    override val isOne: Boolean get() = value.compareTo(BigDecimal.ONE) == 0
     override val isNegative: Boolean get() = value.signum() == -1
     val accuracy: Int get() = value.scale()
 

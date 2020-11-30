@@ -672,62 +672,6 @@ public class BigDecimalMath
                 }
         } /* BigDecimalMath.powRound */
 
-        /** The inverse hyperbolic sine.
-        * @param x The argument.
-        * @return The arcsinh(x) .
-        * @author Richard J. Mathar
-        * @since 2009-08-20
-        */
-        static public BigDecimal asinh(final BigDecimal x)
-        {
-                if ( x.compareTo(BigDecimal.ZERO) == 0 )
-                        return BigDecimal.ZERO ;
-                else
-                {
-                        BigDecimal xhighpr = scalePrec(x,2) ;
-
-                        /* arcsinh(x) = log(x+hypot(1,x)) 
-                        */
-                        BigDecimal logx = log(hypot(1,xhighpr).add(xhighpr)) ;
-
-                        /* The absolute error in arcsinh x is err(x)/sqrt(1+x^2)
-                        */
-                        double xDbl = x.doubleValue() ;
-                        double eps = 0.5*x.ulp().doubleValue()/Math.hypot(1.,xDbl ) ;
-                        MathContext mc = new MathContext( err2prec(logx.doubleValue(),eps) ) ;
-                        return logx.round(mc) ;
-                }
-        } /* BigDecimalMath.asinh */
-
-        /** The inverse hyperbolic cosine.
-        * @param x The argument.
-        * @return The arccosh(x) .
-        * @author Richard J. Mathar
-        * @since 2009-08-20
-        */
-        static public BigDecimal acosh(final BigDecimal x)
-        {
-                if ( x.compareTo(BigDecimal.ONE) < 0 )
-                        throw new ArithmeticException("Out of range argument cosh "+x.toString() ) ;
-                else if ( x.compareTo(BigDecimal.ONE) == 0 )
-                        return BigDecimal.ZERO ;
-                else
-                {
-                        BigDecimal xhighpr = scalePrec(x,2) ;
-
-                        /* arccosh(x) = log(x+sqrt(x^2-1)) 
-                        */
-                        BigDecimal logx = log( sqrt(xhighpr.pow(2).subtract(BigDecimal.ONE) ) .add(xhighpr)) ;
-
-                        /* The absolute error in arcsinh x is err(x)/sqrt(x^2-1)
-                        */
-                        double xDbl = x.doubleValue() ;
-                        double eps = 0.5*x.ulp().doubleValue()/Math.sqrt(xDbl*xDbl-1.) ;
-                        MathContext mc = new MathContext( err2prec(logx.doubleValue(),eps) ) ;
-                        return logx.round(mc) ;
-                }
-        } /* BigDecimalMath.acosh */
-
         /** The Gamma function.
         * @param x The argument.
         * @return Gamma(x).

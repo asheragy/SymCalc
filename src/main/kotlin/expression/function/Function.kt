@@ -31,6 +31,9 @@ enum class Function constructor(val value: String) {
     SINH("Sinh"),
     COSH("Cosh"),
     TANH("Tanh"),
+    ARCSINH("ArcSinh"),
+    ARCCOSH("ArcCosh"),
+    ARCTANH("ArcTanh"),
 
     //List Functions
     TOTAL("Total"),

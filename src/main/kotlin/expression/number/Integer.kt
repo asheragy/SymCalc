@@ -228,3 +228,7 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     override fun floor(): Integer = this
     override fun round(): NumberExpr = this
 }
+
+// TODO add more operators like this and replace use cases with them
+operator fun Int.plus(other: NumberExpr): NumberExpr = Integer(this) + other
+operator fun Int.minus(other: NumberExpr): NumberExpr = Integer(this) - other

@@ -9,6 +9,7 @@ import org.cerion.symcalc.expression.function.arithmetic.Subtract
 import org.cerion.symcalc.expression.function.arithmetic.Times
 import org.cerion.symcalc.expression.function.core.N
 import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
 import org.cerion.symcalc.parser.Lexer
@@ -144,7 +145,9 @@ abstract class Expr {
     fun toList(size: Int): ListExpr = ConstantArray(this, Integer(size)).eval().asList()
 
     operator fun plus(other: Expr): Expr = Plus(this, other).eval()
+    operator fun plus(other: Int): Expr = Plus(this, Integer(other)).eval()
     operator fun minus(other: Expr): Expr = Subtract(this, other).eval()
+    operator fun minus(other: Int): Expr = Subtract(this, Integer(other)).eval()
     operator fun times(other: Expr): Expr = Times(this, other).eval()
     operator fun div(other: Expr): Expr = Divide(this, other).eval()
 
