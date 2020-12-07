@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression
 
-import org.cerion.symcalc.expression.function.FunctionExpr
+import org.cerion.symcalc.function.FunctionExpr
 
 class SymbolExpr(override val value: String) : Expr(), AtomExpr {
 

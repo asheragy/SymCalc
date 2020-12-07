@@ -3,8 +3,8 @@ package org.cerion.symcalc.expression.number
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.function.arithmetic.Power
-import org.cerion.symcalc.expression.function.arithmetic.Times
+import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Times
 import kotlin.test.Test
 import java.math.BigInteger
 import kotlin.test.assertEquals

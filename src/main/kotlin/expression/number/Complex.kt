@@ -1,14 +1,14 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.expression.constant.I
-import org.cerion.symcalc.expression.function.trig.ArcTan
+import org.cerion.symcalc.function.trig.ArcTan
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.constant.E
-import org.cerion.symcalc.expression.function.arithmetic.Power
-import org.cerion.symcalc.expression.function.arithmetic.Sqrt
-import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.function.trig.Cos
-import org.cerion.symcalc.expression.function.trig.Sin
+import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Sqrt
+import org.cerion.symcalc.function.arithmetic.Times
+import org.cerion.symcalc.function.trig.Cos
+import org.cerion.symcalc.function.trig.Sin
 import kotlin.math.abs
 import kotlin.math.min
 

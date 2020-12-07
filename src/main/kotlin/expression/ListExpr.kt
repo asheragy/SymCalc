@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression
 
-import org.cerion.symcalc.expression.function.list.Join
+import org.cerion.symcalc.function.list.Join
 import org.cerion.symcalc.expression.number.NumberExpr
 
 class ListExpr(vararg e: Any) : MultiExpr(convertArgs(*e)) {

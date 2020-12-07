@@ -1,9 +1,9 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.`should equal`
-import org.cerion.symcalc.expression.function.arithmetic.Divide
-import org.cerion.symcalc.expression.function.core.Hold
-import org.cerion.symcalc.expression.function.core.N
+import org.cerion.symcalc.function.arithmetic.Divide
+import org.cerion.symcalc.function.core.Hold
+import org.cerion.symcalc.function.core.N
 import org.junit.jupiter.api.Assertions
 import kotlin.test.Test
 import kotlin.test.assertEquals

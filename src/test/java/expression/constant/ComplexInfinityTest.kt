@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression.constant
 
-import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.expression.number.Integer
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test

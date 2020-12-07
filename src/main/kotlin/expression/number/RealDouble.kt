@@ -3,7 +3,7 @@ package org.cerion.symcalc.expression.number
 import org.cerion.symcalc.expression.constant.I
 import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.*
+import org.cerion.symcalc.function.arithmetic.*
 import kotlin.math.pow
 import kotlin.math.roundToInt
 

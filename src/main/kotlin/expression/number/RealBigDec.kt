@@ -5,10 +5,10 @@ import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.Exp
-import org.cerion.symcalc.expression.function.arithmetic.Log
-import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.function.core.N
+import org.cerion.symcalc.function.arithmetic.Exp
+import org.cerion.symcalc.function.arithmetic.Log
+import org.cerion.symcalc.function.arithmetic.Times
+import org.cerion.symcalc.function.core.N
 import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
 import java.math.MathContext

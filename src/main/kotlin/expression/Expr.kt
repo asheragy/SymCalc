@@ -1,13 +1,13 @@
 package org.cerion.symcalc.expression
 
-import org.cerion.symcalc.expression.function.list.ConstantArray
+import org.cerion.symcalc.function.list.ConstantArray
 import org.cerion.symcalc.Environment
-import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.function.arithmetic.Divide
-import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.arithmetic.Subtract
-import org.cerion.symcalc.expression.function.arithmetic.Times
-import org.cerion.symcalc.expression.function.core.N
+import org.cerion.symcalc.function.FunctionExpr
+import org.cerion.symcalc.function.arithmetic.Divide
+import org.cerion.symcalc.function.arithmetic.Plus
+import org.cerion.symcalc.function.arithmetic.Subtract
+import org.cerion.symcalc.function.arithmetic.Times
+import org.cerion.symcalc.function.core.N
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.RealBigDec

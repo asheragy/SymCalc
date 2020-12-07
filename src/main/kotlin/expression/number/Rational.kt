@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.function.arithmetic.Divide
+import org.cerion.symcalc.function.arithmetic.Divide
 
 class Rational private constructor(val numerator: Integer, val denominator: Integer = Integer.ONE, val reduced: Boolean = false) : NumberExpr() {
 

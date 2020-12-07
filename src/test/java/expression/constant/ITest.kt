@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression.constant
 
-import org.cerion.symcalc.expression.function.core.Hold
+import org.cerion.symcalc.function.core.Hold
 import org.cerion.symcalc.expression.number.Complex
 import org.cerion.symcalc.expression.number.Integer
 import kotlin.test.Test

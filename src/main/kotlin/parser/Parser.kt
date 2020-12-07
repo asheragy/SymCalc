@@ -1,12 +1,12 @@
 package org.cerion.symcalc.parser
 
 import org.cerion.symcalc.expression.*
-import org.cerion.symcalc.expression.function.FunctionExpr
-import org.cerion.symcalc.expression.function.arithmetic.Divide
-import org.cerion.symcalc.expression.function.arithmetic.Plus
-import org.cerion.symcalc.expression.function.arithmetic.Power
-import org.cerion.symcalc.expression.function.arithmetic.Subtract
-import org.cerion.symcalc.expression.function.arithmetic.Times
+import org.cerion.symcalc.function.FunctionExpr
+import org.cerion.symcalc.function.arithmetic.Divide
+import org.cerion.symcalc.function.arithmetic.Plus
+import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Subtract
+import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 

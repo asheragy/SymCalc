@@ -4,7 +4,7 @@ import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.constant.E
 import org.cerion.symcalc.expression.constant.I
 import org.cerion.symcalc.expression.constant.Pi
-import org.cerion.symcalc.expression.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Power
 import org.junit.jupiter.api.assertAll
 import kotlin.test.Test
 

@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression.constant
 
-import org.cerion.symcalc.expression.function.core.N
+import org.cerion.symcalc.function.core.N
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble
