@@ -92,6 +92,11 @@ enum class Function constructor(val value: String) {
     // Procedural
     IF("If"),
 
+    // Special
+    GAMMA("Gamma"),
+    POLYGAMMA("PolyGamma"),
+    ZETA("Zeta"),
+    POCHHAMMER("Pochhammer"),
 
     END_OF_LIST("**eol");
 

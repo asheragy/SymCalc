@@ -1,8 +1,9 @@
 package org.nevec.rjm ;
 
-import java.security.* ;
-import java.util.* ;
-import java.math.* ;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
+import java.security.ProviderException;
 
 
 /** BigDecimal special functions.
@@ -273,36 +274,6 @@ public class BigDecimalMath
                 }
                 return s.round(new MathContext( err2prec(eps)) ) ;
         } /* BigDecimalMath.root */
-
-        /** The hypotenuse.
-        * @param n the first argument.
-        * @param x the second argument.
-        * @return the square root of the sum of the squares of the two arguments, sqrt(n^2+x^2).
-        * @since 2009-08-05
-        * @author Richard J. Mathar
-        */
-        static public BigDecimal hypot(final int n, final BigDecimal x)
-        {
-                /* compute n^2+x^2 in infinite precision
-                */
-                BigDecimal z = (new BigDecimal(n)).pow(2).add(x.pow(2)) ;
-
-                /* Truncate to the precision set by x. Absolute error = in z (square of the result) is |2*x*xerr|,
-                * where the error is 1/2 of the ulp. Two intermediate protection digits.
-                * zerr is a signed value, but used only in conjunction with err2prec(), so this feature does not harm. 
-                */
-                double zerr = x.doubleValue()*x.ulp().doubleValue() ;
-                MathContext mc = new MathContext(  2+err2prec(z.doubleValue(),zerr) ) ;
-
-                /* Pull square root */
-                z = sqrt(z.round(mc)) ;
-
-                /* Final rounding. Absolute error in the square root is x*xerr/z, where zerr holds 2*x*xerr.
-                */
-                mc = new MathContext(  err2prec(z.doubleValue(),0.5*zerr/z.doubleValue() ) ) ;
-                return z.round(mc) ;
-        } /* BigDecimalMath.hypot */
-
 
         /** A suggestion for the maximum numter of terms in the Taylor expansion of the exponential.
         */
@@ -1235,25 +1206,6 @@ public class BigDecimalMath
                 }
                 return res.round(mc) ;
         } /* broadhurstBBP */
-
-        /** Convert the finite representation of a floating point value to
-        * its fraction.
-        * @param x The number to be translated.
-        * @return The rational number with the same decimal expansion as x.
-        * @since 2012-03-09
-        * @author Richard J. Mathar
-        */
-        public static Rational toRational(BigDecimal x)
-        {
-                /* represent the floating point number by the exact rational
-                * variant of the current truncated representation
-                */
-                int s = x.scale() ;
-                if ( s > 0)
-                        return new Rational( x.unscaledValue(), BigInteger.TEN.pow(s) ) ;
-                else
-                        return new Rational( x.unscaledValue().multiply(BigInteger.TEN.pow(-s)), BigInteger.ONE) ;
-        } /* toRational */
 
         /** Add a BigDecimal and a BigInteger.
         * @param x The left summand

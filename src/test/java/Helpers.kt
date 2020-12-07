@@ -15,10 +15,14 @@ fun assertAll(vararg exprs: () -> Unit) {
     })
 }
 
-infix fun Expr.`==`(expected: Expr): () -> Unit = {
-    val actual = this.eval()
-    val msg = "<$this>\n${" ".repeat(20)}"
-    assertEquals(expected, actual, msg)
+
+infix fun Expr.`==`(expected: String) = evalEquals(RealBigDec(expected), this)
+infix fun Expr.`==`(expected: Expr) = evalEquals(expected, this)
+
+private fun evalEquals(expected: Expr, actual: Expr): () -> Unit = {
+    val eval = actual.eval()
+    val msg = "<$eval>\n${" ".repeat(20)}"
+    assertEquals(expected, eval, msg)
 }
 
 infix fun Expr.`should equal`(expected: Expr) {

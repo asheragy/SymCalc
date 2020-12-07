@@ -13,6 +13,7 @@ import org.cerion.symcalc.function.logical.Greater
 import org.cerion.symcalc.function.numeric.Floor
 import org.cerion.symcalc.function.plots.Plot
 import org.cerion.symcalc.function.procedural.If
+import org.cerion.symcalc.function.special.*
 import org.cerion.symcalc.function.statistics.*
 import org.cerion.symcalc.function.trig.*
 
@@ -122,6 +123,12 @@ object FunctionFactory {
             Function.IDENTITY_MATRIX -> return IdentityMatrix(*e)
 
             Function.IF -> return If(*e)
+
+            // Special
+            Function.GAMMA -> return Gamma(*e)
+            Function.POCHHAMMER -> return Pochhammer(*e)
+            Function.POLYGAMMA -> return PolyGamma(*e)
+            Function.ZETA -> return Zeta(*e)
 
             Function.END_OF_LIST -> throw IllegalArgumentException()
         }
