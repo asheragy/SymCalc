@@ -17,6 +17,7 @@ fun assertAll(vararg exprs: () -> Unit) {
 
 
 infix fun Expr.`==`(expected: String) = evalEquals(RealBigDec(expected), this)
+infix fun Expr.`==`(expected: Double) = evalEquals(RealDouble(expected), this)
 infix fun Expr.`==`(expected: Expr) = evalEquals(expected, this)
 
 private fun evalEquals(expected: Expr, actual: Expr): () -> Unit = {

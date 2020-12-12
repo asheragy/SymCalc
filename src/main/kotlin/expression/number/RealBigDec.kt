@@ -156,6 +156,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         val mc = MathContext(getStoredPrecision(p), RoundingMode.HALF_UP)
 
         var x = value
+        // TODO should be adding more than 2 digits and it should be handled elsewhere
         if (x.precision() < mc.precision)
             x = value.setScale(mc.precision - value.precision() + value.scale()).round(mc) // Add 2 extra digits so scale/precision is correct
 
@@ -190,6 +191,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         }
     }
 
+    // TODO in most all cases we want to store a higher precision than is actually used, so reconsider what this does
     override fun toPrecision(precision: Int): NumberExpr {
         if (precision == MachinePrecision)
             return RealDouble(toDouble())

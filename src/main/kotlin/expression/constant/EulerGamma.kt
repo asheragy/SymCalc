@@ -11,19 +11,18 @@ import kotlin.math.max
 
 class EulerGamma : ConstExpr() {
     override fun toString() = "EulerGamma"
-
     override fun evaluateMachinePrecision() = RealDouble(0.5772156649015329)
 
     override fun evaluateFixedPrecision(precision: Int): Expr {
         if (precision <= EULER_GAMMA_1000.length - 2)
             return RealBigDec(EULER_GAMMA_1000).toPrecision(precision)
 
-        return evaluateCompute(precision)
+        return evalCompute(precision)
     }
 
     // Using formula f[n] =
     //  (2 n - 1)/(2 n) - Log[n] + Sum[1/k (1 + BernoulliB[k]/n^k), {k, 2, n}]
-    internal fun evaluateCompute(precision: Int): Expr {
+    internal fun evalCompute(precision: Int): Expr {
         var sum: Expr = Integer(0)
         val n = Integer(max(2,precision))
         var npowk = n

@@ -4,7 +4,8 @@ import org.cerion.symcalc.expression.constant.*
 
 import java.util.Hashtable
 
-abstract class ConstExpr : Expr() {
+abstract class ConstExpr() : Expr() {
+    abstract override fun toString(): String
     override val type: ExprType get() = ExprType.CONST
     override val precision: Int get() = InfinitePrecision
 
@@ -23,8 +24,6 @@ abstract class ConstExpr : Expr() {
             else -> evaluateFixedPrecision(precision)
         }
     }
-
-    abstract override fun toString(): String
 
     private enum class Name {
         PI,

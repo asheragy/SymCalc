@@ -1,9 +1,9 @@
 package org.cerion.symcalc.expression.constant
 
-import org.cerion.symcalc.function.core.N
-import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.`==`
+import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.expression.number.RealBigDec
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.function.core.N
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -11,62 +11,66 @@ class PiTest {
 
     @Test
     fun basic() {
-        assertEquals(Pi(), Pi().eval())
-        assertEquals(RealDouble(3.141592653589793), N(Pi()).eval())
-
-        assertEquals(RealBigDec("3.0"), N(Pi(), Integer(1)).eval())
-        assertEquals(RealBigDec("3.14"), N(Pi(), Integer(3)).eval())
-        assertEquals(RealBigDec("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170680"), N(Pi(), Integer(100)).eval())
+        assertAll(
+                Pi() `==` Pi(),
+                N(Pi()) `==` 3.141592653589793)
     }
 
     @Test
-    fun rounding() {
-        // The last digit rounded up from full pi value
-        assertEquals(RealBigDec("3.142"), N(Pi(), Integer(4)).eval())
-        assertEquals(RealBigDec("3.1416"), N(Pi(), Integer(5)).eval())
-        assertEquals(RealBigDec("3.14159265359"), N(Pi(), Integer(12)).eval())
-        assertEquals(RealBigDec("3.1415926535897932385"), N(Pi(), Integer(20)).eval())
-
-        // Not rounded
-        assertEquals(RealBigDec("3.1"), N(Pi(), Integer(2)).eval())
-        assertEquals(RealBigDec("3.141592653589793238"), N(Pi(), Integer(19)).eval())
+    fun realBigDec() {
+        assertAll(
+                Pi().eval(1) `==` "3.0",
+                Pi().eval(3) `==` "3.14",
+                Pi().eval(100) `==` "3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170680")
     }
 
     @Test
-    fun first50digits() {
+    fun compute_first50digits() {
         val pi50 = "3.1415926535897932384626433832795028841971693993751"
 
         for(i in 2..50) {
             val expected = pi50.substring(0, i + 1)
-            val actual = N(Pi(), Integer(i+2)).eval() // Generate 2 extra digits or rounding will be off in some positions
+            val actual = Pi().evalCompute(i+2) // Add 2 extra digits to compensate for string not being rounded
             assertEquals(expected, actual.toString().substring(0, i + 1))
         }
     }
 
     @Test
+    fun rounding() {
+        // The last digit rounded up from full pi value
+        assertAll(
+                Pi().eval(4) `==` "3.142",
+                Pi().eval(5) `==` "3.1416",
+                Pi().eval(12) `==` "3.14159265359",
+                Pi().eval(20) `==` "3.1415926535897932385")
+
+        // Not rounded
+        assertAll(
+                Pi().eval(2) `==` "3.1",
+                Pi().eval(19) `==` "3.141592653589793238")
+    }
+
+    @Test
     fun digitsTest() {
         // Check Nth digit for accuracy
-        val checkDigit : (Int, Int) -> Unit = { pos, n ->
-            val test = N(Pi(), Integer(pos+5)).eval() as RealBigDec
-            val digit = test.value.toString().substring(pos+1,pos+2)
-            assertEquals(n.toString(), digit, "expected $n at position $pos")
+        val checkDigit : (Int, Int) -> Unit = { precision, n ->
+            val eval = Pi().eval(precision) as RealBigDec
+            val digit = eval.toString().substringBefore('`').last().toString()
+            assertEquals(n.toString(), digit, "expected $n at position $precision")
         }
 
-        checkDigit(100, 9)
-        checkDigit(200, 6)
+        checkDigit(100, 8)
+        checkDigit(200, 0)
+        checkDigit(500, 1)
 
-        // Keep tests under 50ms
-        //checkDigit(500, 2)
+        // These are computed and start to get slow
         //checkDigit(1000, 9)
-
-        //checkDigit(5000, 1)
+        //checkDigit(5000, 2)
         //checkDigit(10000, 8) // ~5 seconds
         //checkDigit(20000, 8) // ~20 seconds
         //checkDigit(30000, 8) // ~1 minute
-        //checkDigit(40000, 1)
-        //checkDigit(100000, 6)
-        //checkDigit(1000000, 1)
-        //checkDigit(10000000, 7)
-        //checkDigit(12345678, 2) // slow even in mathematica
+        //checkDigit(40000, 5)
+        //checkDigit(100000, 5)
+        //checkDigit(1000000, 5)
     }
 }

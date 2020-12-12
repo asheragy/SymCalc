@@ -24,7 +24,7 @@ internal class EulerGammaTest {
     fun smallValues_computed() {
         val input = smallValues
                 .take(3) // TODO remove this and still complete <100ms
-                .map { EulerGamma().evaluateCompute(it.first) `==` it.second }.toTypedArray()
+                .map { EulerGamma().evalCompute(it.first) `==` it.second }.toTypedArray()
         assertAll(*input)
     }
 
