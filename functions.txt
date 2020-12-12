@@ -30,7 +30,7 @@ Special Functions:
    InverseErf InverseErfc InverseFunction InverseFunctions InverseGammaRegularized JacobiP KleinInvariantJ LaguerreL LegendreP LegendreQ LogIntegral MeijerG ModularLambda NevilleThetaC NevilleThetaD NevilleThetaN NevilleThetaS ParabolicCylinderD ProductLog QBinomial QFactorial QGamma QHypergeometricPFQ QPochhammer QPolyGamma RamanujanTau RamanujanTauL RamanujanTauTheta RamanujanTauZ SiegelTheta
    SinhIntegral SinIntegral SphericalHarmonicY WeierstrassHalfPeriods WeierstrassInvariants WeierstrassP WeierstrassPPrime WeierstrassSigma WeierstrassZeta WhittakerM WhittakerW ZernikeR
 
-Constants: I Pi E Degree GoldenRatio EulerGamma StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber ComplexInfinity DirectedInfinity Infinity Indeterminate Overflow Underflow
+Constants: Degree GoldenRatio StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber DirectedInfinity Overflow Underflow
 Recurrence: Fibonacci LucasL BernoulliB NorlundB EulerE StirlingS1 StirlingS2 HarmonicNumber LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB Hyperfactorial Multinomial
 Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Arg Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator BaseForm ChineseRemainder Conjugate DigitCount DigitQ DivisorSigma DivisorSum ExactNumberQ FromDigits InexactNumberQ IntegerExponent IntegerLength IntegerQ NProduct NSum NumberQ NumericQ Positive PossibleZeroQ RealDigits RealExponent
 Integer: Mod PowerMod Quotient QuotientRemainder GCD LCM Divisible EvenQ OddQ FactorInteger Divisors IntegerPartitions IntegerDigits FrobeniusNumber FrobeniusSolve ClebschGordan CarmichaelLambda PartitionsP Rationalize Subfactorial

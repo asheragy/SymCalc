@@ -30,21 +30,12 @@ class E : ConstExpr() {
 
     override fun toString(): String = "E"
 
-    override fun evaluate(): Expr {
-        return evaluate(InfinitePrecision)
-    }
+    override fun evaluateMachinePrecision() = RealDouble(Math.E)
 
-    override fun evaluate(precision: Int): Expr {
-        if (precision < InfinitePrecision) {
-            if (precision == MachinePrecision)
-                return RealDouble(Math.E)
-
-            // TODO add this when precision < predefined value
-            //return RealBigDec(E_1000_DIGITS.substring(0, precision + 10)).toPrecision(precision)
-            return RealBigDec(getEToDigits(RealBigDec.getStoredPrecision(precision)), precision)
-        }
-        else
-            return this
+    override fun evaluateFixedPrecision(precision: Int): Expr {
+        // TODO add this when precision < predefined value
+        //return RealBigDec(E_1000_DIGITS.substring(0, precision + 10)).toPrecision(precision)
+        return RealBigDec(getEToDigits(RealBigDec.getStoredPrecision(precision)), precision)
     }
 
     private fun getEToDigits(n: Int): BigDecimal {

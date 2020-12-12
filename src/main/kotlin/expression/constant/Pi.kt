@@ -13,19 +13,10 @@ import java.math.RoundingMode
 class Pi : ConstExpr() {
     override fun toString(): String = "Pi"
 
-    override fun evaluate(): Expr {
-        return evaluate(InfinitePrecision)
-    }
+    override fun evaluateMachinePrecision() = RealDouble(Math.PI)
 
-    override fun evaluate(precision: Int): Expr {
-        if (precision < InfinitePrecision) {
-            if (precision == MachinePrecision)
-                return RealDouble(Math.PI)
-
-            return RealBigDec( getPiToDigits(precision), precision )
-        }
-        else
-            return this
+    override fun evaluateFixedPrecision(precision: Int): Expr {
+        return RealBigDec( getPiToDigits(precision), precision )
     }
 
     private fun getPiToDigits(precision: Int): BigDecimal {

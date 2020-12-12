@@ -10,10 +10,20 @@ abstract class ConstExpr : Expr() {
 
     override fun equals(e: Expr): Boolean = javaClass == e.javaClass
 
-    final override fun eval(): Expr = evaluate()
+    final override fun eval(): Expr = evaluateInfinitePrecision()
 
-    abstract fun evaluate(): Expr
-    abstract fun evaluate(precision: Int): Expr
+    open fun evaluateInfinitePrecision(): Expr = this
+    open fun evaluateMachinePrecision(): Expr = this
+    open fun evaluateFixedPrecision(precision: Int): Expr = this
+
+    fun evaluate(precision: Int): Expr {
+        return when(precision) {
+            MachinePrecision -> evaluateMachinePrecision()
+            InfinitePrecision -> evaluateInfinitePrecision()
+            else -> evaluateFixedPrecision(precision)
+        }
+    }
+
     abstract override fun toString(): String
 
     private enum class Name {
