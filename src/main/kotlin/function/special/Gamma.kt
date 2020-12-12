@@ -2,7 +2,7 @@ package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.constant.E
+import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.function.FunctionExpr

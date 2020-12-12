@@ -1,7 +1,7 @@
 package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.constant.ComplexInfinity
+import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr

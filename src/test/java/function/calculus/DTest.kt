@@ -2,7 +2,7 @@ package org.cerion.symcalc.function.calculus
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.trig.Cos
 import org.cerion.symcalc.function.trig.Sin

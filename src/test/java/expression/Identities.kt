@@ -1,9 +1,9 @@
 package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.`should equal`
-import org.cerion.symcalc.expression.constant.E
-import org.cerion.symcalc.expression.constant.I
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.E
+import org.cerion.symcalc.constant.I
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Power
 import org.junit.jupiter.api.assertAll
 import kotlin.test.Test

@@ -1,4 +1,4 @@
-package org.cerion.symcalc.expression.constant
+package org.cerion.symcalc.constant
 
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr

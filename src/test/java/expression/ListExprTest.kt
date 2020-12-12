@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.`should equal`
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.expression.number.RealDouble

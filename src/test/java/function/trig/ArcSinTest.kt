@@ -1,7 +1,7 @@
 package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.`should equal`
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.number.Rational
 import kotlin.test.Test
 

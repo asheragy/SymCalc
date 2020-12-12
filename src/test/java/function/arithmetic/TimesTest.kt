@@ -1,8 +1,8 @@
 package org.cerion.symcalc.function.arithmetic
 
-import org.cerion.symcalc.expression.constant.I
+import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.trig.Sin
 import org.cerion.symcalc.expression.number.*
 import kotlin.test.Test

@@ -1,9 +1,9 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.constant.I
+import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.function.trig.ArcTan
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.constant.E
+import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Sqrt
 import org.cerion.symcalc.function.arithmetic.Times
@@ -173,7 +173,7 @@ class Complex(val real: NumberExpr, val img: NumberExpr = Integer.ZERO) : Number
         val real = Times(rN, cos)
         val img = Times(rN, sin)
 
-        return (real + Times(img,I())) as NumberExpr
+        return (real + Times(img, I())) as NumberExpr
     }
 
     override fun compareTo(other: NumberExpr): Int {

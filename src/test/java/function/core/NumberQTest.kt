@@ -2,7 +2,7 @@ package org.cerion.symcalc.function.core
 
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.number.*
 import kotlin.test.Test
 import kotlin.test.assertEquals

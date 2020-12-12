@@ -1,8 +1,8 @@
-package org.cerion.symcalc.expression.constant
+package org.cerion.symcalc.constant
 
-import org.cerion.symcalc.function.core.Hold
 import org.cerion.symcalc.expression.number.Complex
 import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.function.core.Hold
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

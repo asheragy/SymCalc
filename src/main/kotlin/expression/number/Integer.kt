@@ -1,6 +1,6 @@
 package org.cerion.symcalc.expression.number
 
-import org.cerion.symcalc.expression.constant.I
+import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.expression.Expr

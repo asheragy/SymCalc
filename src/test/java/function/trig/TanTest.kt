@@ -2,7 +2,7 @@ package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.SymbolExpr
-import org.cerion.symcalc.expression.constant.ComplexInfinity
+import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.core.N

@@ -2,7 +2,7 @@ package org.cerion.symcalc.function.list
 
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.SymbolExpr
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational

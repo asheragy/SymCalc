@@ -2,7 +2,7 @@ package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.expression.SymbolExpr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Power

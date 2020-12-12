@@ -2,9 +2,9 @@ package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.constant.ComplexInfinity
-import org.cerion.symcalc.expression.constant.Indeterminate
-import org.cerion.symcalc.expression.constant.Infinity
+import org.cerion.symcalc.constant.ComplexInfinity
+import org.cerion.symcalc.constant.Indeterminate
+import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Minus

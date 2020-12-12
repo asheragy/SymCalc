@@ -1,7 +1,7 @@
 package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.expression.number.Integer

@@ -2,9 +2,9 @@ package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.constant.E
-import org.cerion.symcalc.expression.constant.I
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.E
+import org.cerion.symcalc.constant.I
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.core.N
 import org.cerion.symcalc.function.logical.Equal
 import org.cerion.symcalc.expression.number.*

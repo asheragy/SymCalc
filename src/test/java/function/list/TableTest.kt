@@ -3,7 +3,7 @@ package org.cerion.symcalc.function.list
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Plus
 import org.cerion.symcalc.function.statistics.RandomInteger
 import org.cerion.symcalc.function.trig.Sin

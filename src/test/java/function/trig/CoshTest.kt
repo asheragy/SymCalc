@@ -2,10 +2,10 @@ package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.assertAll
-import org.cerion.symcalc.expression.constant.ComplexInfinity
-import org.cerion.symcalc.expression.constant.Indeterminate
-import org.cerion.symcalc.expression.constant.Infinity
-import org.cerion.symcalc.expression.constant.Pi
+import org.cerion.symcalc.constant.ComplexInfinity
+import org.cerion.symcalc.constant.Indeterminate
+import org.cerion.symcalc.constant.Infinity
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.expression.number.Complex
 import org.cerion.symcalc.expression.number.Integer

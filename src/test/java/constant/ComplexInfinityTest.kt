@@ -1,7 +1,7 @@
-package org.cerion.symcalc.expression.constant
+package org.cerion.symcalc.constant
 
-import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.function.arithmetic.Divide
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 
