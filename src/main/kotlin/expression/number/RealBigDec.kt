@@ -48,6 +48,8 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     val accuracy: Int get() = value.scale()
 
     fun toDouble(): Double = value.toDouble()
+    fun isWholeNumber() = this.toDouble() == kotlin.math.round(this.toDouble())
+    fun toInteger() = Integer(value.toBigInteger())
     override fun floor(): Integer = Integer(value.setScale(0, RoundingMode.FLOOR).toBigInteger())
     override fun round(): Integer = Integer(value.setScale(0, RoundingMode.HALF_UP).toBigInteger())
 

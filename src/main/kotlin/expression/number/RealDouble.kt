@@ -1,9 +1,12 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.constant.I
-import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.constant.Pi
-import org.cerion.symcalc.function.arithmetic.*
+import org.cerion.symcalc.expression.AtomExpr
+import org.cerion.symcalc.function.arithmetic.Exp
+import org.cerion.symcalc.function.arithmetic.Log
+import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Times
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -94,4 +97,6 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
 
     override fun round(): Integer = Integer(value.roundToInt())
     override fun floor(): Integer = Integer(kotlin.math.floor(value).toInt())
+
+    fun isWholeNumber() = this.value == kotlin.math.round(this.value)
 }
