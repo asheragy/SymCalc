@@ -1,17 +1,20 @@
 package org.cerion.symcalc.function.integer
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.NumberType
 import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.function.FunctionExpr
 
 class Bernoulli(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
-        val N = get(0) as Integer
-        return bernoulli(N.intValue())
+        val e = get(0)
+        if (e is Integer)
+            return bernoulli(e.intValue())
+
+        return this
     }
 
     private fun bernoulli(n: Int): NumberExpr {
@@ -47,6 +50,9 @@ class Bernoulli(vararg e: Expr) : FunctionExpr(*e) {
             0 -> return Integer.ONE
             1 -> return Rational(-1,2)
             else -> {
+                if (n % 2 == 1)
+                    return Integer.ZERO
+
                 var res: NumberExpr = Integer.ZERO
 
                 for (i in 0 until n) {

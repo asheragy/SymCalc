@@ -49,6 +49,9 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
                     if (n.isNegative && n.isEven)
                         return RealBigDec.ZERO
 
+                    if (n.isEven)
+                        return Zeta(n).eval(e.precision)
+
                     return RealBigDec(BigDecimalMath.zeta(n.intValue(), MathContext(e.value.precision())), e.precision)
                 }
 
@@ -62,6 +65,7 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
     private fun calculateInfiniteSum(s: RealBigDec): RealBigDec {
         var sum: Expr = Integer.ONE
 
+        // TODO this converges too slow
         for(n in 2 until 100) {
             val term = Integer.ONE / Power(Integer(n), s)
             sum += term
