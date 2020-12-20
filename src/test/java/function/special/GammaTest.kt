@@ -11,11 +11,19 @@ import org.junit.jupiter.api.Assertions.assertAll
 internal class GammaTest {
 
     @Test
+    fun realBigDecTemp() {
+        assertAll(
+                Gamma(RealBigDec("0.1111111111")) `==` "8.522688140"
+        )
+    }
+
+    @Test
     fun realBigDec() {
         assertAll(
                 Gamma(RealBigDec("0.1111111111")) `==` "8.522688140",
                 Gamma(RealBigDec("1.222222222")) `==` "0.9125732371",
                 Gamma(RealBigDec("2.222222222")) `==` "1.115367290",
+                Gamma(RealBigDec("5.555555555")) `==` "57.26133666",
                 Gamma(RealBigDec("6.54321")) `==` "311.123",
                 Gamma(RealBigDec("-3.222222222")) `==` "0.6119578328"
         )
