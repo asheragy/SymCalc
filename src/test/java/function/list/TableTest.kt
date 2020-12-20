@@ -1,15 +1,15 @@
 package org.cerion.symcalc.function.list
 
+import org.cerion.symcalc.`==`
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.function.arithmetic.Plus
 import org.cerion.symcalc.function.statistics.RandomInteger
 import org.cerion.symcalc.function.trig.Sin
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealDouble
+import org.junit.jupiter.api.assertAll
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -22,105 +22,69 @@ class TableTest {
         assertEquals(Expr.ExprType.ERROR, Table().eval().type)
 
         // 1 parameter
-        assertEquals(Expr.ExprType.ERROR, Table(Integer(2)).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(2).eval().type)
 
         // 3 parameters
-        assertEquals(Expr.ExprType.ERROR, Table(Integer(2), ListExpr(Integer(1)), Integer(3)).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(2, ListExpr(1), 3).eval().type)
 
         // 2nd parameter is a list
-        assertEquals(Expr.ExprType.ERROR, Table(Integer(2), Integer(3)).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(2, 3).eval().type)
     }
 
     @Test
     fun validate_list() {
         // List must not be empty
-        assertEquals(Expr.ExprType.ERROR, Table(Integer(2), ListExpr()).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(2, ListExpr()).eval().type)
 
         // If copies, first list parameter must be integer
-        assertEquals(Expr.ExprType.ERROR, Table(Integer(2), ListExpr(Rational(2, 3))).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(2, ListExpr(Rational(2, 3))).eval().type)
 
         // If 2+ parameters first must be a variable
-        assertEquals(Expr.ExprType.ERROR, Table(Integer(2), ListExpr(Integer(2), Integer(3))).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(2, ListExpr(2, 3)).eval().type)
 
         // if 2,3,4 parameters others must be integer
-        assertEquals(Expr.ExprType.ERROR, Table(Integer(2), ListExpr(VarExpr("a"), Rational(1, 2))).eval().type)
-        assertEquals(Expr.ExprType.ERROR, Table(Integer(2), ListExpr(VarExpr("a"), Integer(5), Pi())).eval().type)
-        assertEquals(Expr.ExprType.ERROR, Table(Integer(2), ListExpr(VarExpr("a"), Integer(5), Integer(6), RealDouble(2.34))).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(2, ListExpr("a", Rational(1, 2))).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(2, ListExpr("a", 5, Pi())).eval().type)
+        assertEquals(Expr.ExprType.ERROR, Table(2, ListExpr("a", 5, 6, 2.34)).eval().type)
     }
 
     @Test
     fun copies() {
-        // Table(3, 4) = {3,3,3,3}
-        assertEquals(ListExpr(Integer(3), Integer(3), Integer(3), Integer(3)),
-                Table(Integer(3),
-                        ListExpr(Integer(4)))
-                        .eval())
-
-        // Table(Sin(x), 3) = {Sin(x), Sin(x), Sin(x)}
-        assertEquals(ListExpr(Sin(VarExpr("x")), Sin(VarExpr("x")), Sin(VarExpr("x"))),
-                Table(Sin(VarExpr("x")),
-                        ListExpr(Integer(3)))
-                        .eval())
-
-        // Table(2 + 5, 2) = {7,7}
-        assertEquals(ListExpr(Integer(7), Integer(7)),
-                Table(Plus(Integer(2), Integer(5)),
-                        ListExpr(Integer(2)))
-                        .eval())
+        assertAll(
+                Table(3, listOf(4)) `==` ListExpr(3, 3, 3, 3),
+                Table(Sin("x"), listOf(3)) `==` ListExpr(Sin("x"), Sin("x"), Sin("x")),
+                Table(Plus(2, 5), listOf(2)) `==` ListExpr(7, 7))
     }
 
     @Test
     fun range_oneToMax() {
-        // Table(3, a, 5) = {3,3,3,3,3}
-        assertEquals(ListExpr(Integer(3), Integer(3), Integer(3), Integer(3), Integer(3)),
-                Table(Integer(3),
-                        ListExpr(VarExpr("a"), Integer(5)))
-                        .eval())
-
-        // Table(x, a, 5) = {x,x,x,x,x}
-        assertEquals(ListExpr(VarExpr("x"), VarExpr("x"), VarExpr("x"), VarExpr("x"), VarExpr("x")),
-                Table(VarExpr("x"),
-                        ListExpr(VarExpr("a"), Integer(5)))
-                        .eval())
-
-        // Table(a, a, 5) = {1,2,3,4,5}
-        assertEquals(ListExpr(Integer(1), Integer(2), Integer(3), Integer(4), Integer(5)),
-                Table(VarExpr("a"),
-                        ListExpr(VarExpr("a"), Integer(5)))
-                        .eval())
+        assertAll(
+                Table(3, listOf("a", 5)) `==` ListExpr(3,3,3,3,3),
+                Table("x", listOf("a", 5)) `==` ListExpr("x", "x", "x", "x", "x"),
+                Table("a", listOf("a", 5)) `==` ListExpr(1, 2, 3, 4, 5))
     }
 
     @Test
     fun range_minToMax() {
         // Table(3, a, 5, 7) = {3,3,3}
-        assertEquals(ListExpr(Integer(3), Integer(3), Integer(3)),
-                Table(Integer(3),
-                        ListExpr(VarExpr("a"), Integer(5), Integer(7)))
-                        .eval())
+        assertEquals(ListExpr(3, 3, 3), Table(3, ListExpr("a", 5, 7)).eval())
 
         // Table(a, a, 5, 7) = {5,6,7}
-        assertEquals(ListExpr(Integer(5), Integer(6), Integer(7)),
-                Table(VarExpr("a"),
-                        ListExpr(VarExpr("a"), Integer(5), Integer(7)))
-                        .eval())
+        assertEquals(ListExpr(5, 6, 7), Table("a", ListExpr("a", 5, 7)).eval())
     }
 
     @Test
     fun range_minToMax_step() {
         // Table(a, a, 2, 10, 3) = {2,5,8}
-        assertEquals(ListExpr(Integer(2), Integer(5), Integer(8)),
-                Table(VarExpr("a"),
-                        ListExpr(VarExpr("a"), Integer(2), Integer(10), Integer(3)))
-                        .eval())
+        assertEquals(ListExpr(2, 5, 8), Table("a", ListExpr("a", 2, 10, 3)).eval())
     }
 
     @Test
     fun range_values() {
         // Table(a, a, {3,6,1}} = {3,6,1}
-        val values = ListExpr(Integer(3), Integer(6), Integer(1))
+        val values = ListExpr(3, 6, 1)
 
-        assertEquals(values,
-                Table(VarExpr("a"), ListExpr(VarExpr("a"), values)).eval())
+        assertEquals(values, Table("a", ListExpr("a", values)).eval())
     }
 
     @Test

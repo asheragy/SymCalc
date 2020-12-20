@@ -42,6 +42,7 @@ abstract class MultiExpr(val args: Array<out Expr>) : Expr() {
                             else -> throw IllegalArgumentException("unrecognized string $it")
                         }
                     }
+                    is List<*> -> ListExpr(*it.toTypedArray() as Array<Any>)
                     else -> throw IllegalArgumentException("class ${it.javaClass.simpleName}")
                 }
             }.toTypedArray()

@@ -8,7 +8,7 @@ import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
 
-class Table(vararg e: Expr) : FunctionExpr(*e) {
+class Table(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val expr = get(0)
@@ -31,18 +31,8 @@ class Table(vararg e: Expr) : FunctionExpr(*e) {
         return ErrorExpr("Table() unexpected case")
     }
 
-    private fun evaluate(expr: Expr, x: VarExpr?, iMin: Integer, iMax: Integer, iStep: Integer): Expr {
-        val min = iMin.intValue()
-        val max = iMax.intValue()
-        val step = iStep.intValue()
-
-        val values = mutableListOf<Expr>()
-        var i = min
-        while (i <= max) {
-            values.add(Integer(i.toLong()))
-            i += step
-        }
-
+    private fun evaluate(expr: Expr, x: VarExpr?, min: Integer, max: Integer, step: Integer): Expr {
+        val values = (min.intValue() .. max.intValue() step step.intValue()).map { Integer(it) }
         return evaluate(expr, x, ListExpr(values))
     }
 

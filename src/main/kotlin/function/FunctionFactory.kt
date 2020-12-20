@@ -5,7 +5,7 @@ import org.cerion.symcalc.function.logical.Equal
 import org.cerion.symcalc.function.trig.ArcTan
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.*
-import org.cerion.symcalc.function.calculus.D
+import org.cerion.symcalc.function.calculus.*
 import org.cerion.symcalc.function.core.*
 import org.cerion.symcalc.function.integer.*
 import org.cerion.symcalc.function.list.*
@@ -103,6 +103,7 @@ object FunctionFactory {
 
             // Calculus
             Function.D -> return D(*e)
+            Function.SUM -> return Sum(*e)
 
             //Logical
             Function.GREATER -> return Greater(*e)

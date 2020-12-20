@@ -75,6 +75,7 @@ enum class Function constructor(val value: String) {
 
     // Calculus
     D("D"),
+    SUM("Sum"),
 
     //Logical
     EQUAL("Equal"),
