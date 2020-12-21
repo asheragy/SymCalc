@@ -6,7 +6,7 @@ import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberType
 
-class Binomial(vararg e: Expr) : FunctionExpr(*e) {
+class Binomial(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val n = get(0) as Integer

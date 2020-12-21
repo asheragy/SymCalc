@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.function.FunctionExpr
 
-class Pochhammer(vararg e: Expr) : FunctionExpr(*e) {
+class Pochhammer(vararg e: Any) : FunctionExpr(*e) {
     override fun evaluate(): Expr {
         val x = get(0)
         val n = get(1)

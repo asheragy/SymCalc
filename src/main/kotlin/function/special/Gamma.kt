@@ -1,15 +1,15 @@
 package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.constant.E
-import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.NumberExpr
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
 import org.cerion.symcalc.function.FunctionExpr
+import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.integer.Binomial
 
 class Gamma(vararg e: Expr) : FunctionExpr(*e) {
 
@@ -29,14 +29,9 @@ class Gamma(vararg e: Expr) : FunctionExpr(*e) {
                 val poch = RealBigDec(BigDecimalMath.pochhammer(bigDec, n))
                 return Gamma(xsmall) * poch
             }
-
              */
 
-            //val t = evalIntegrationByParts(z)
-            //return t
-
-            val t = approximate(z)
-            return t
+            return approximate(z)
 
             //val t = z.forcePrecision(RealBigDec.getStoredPrecision(z.precision))
             //return RealBigDec(BigDecimalMath.Gamma(t), z.precision)
@@ -45,7 +40,51 @@ class Gamma(vararg e: Expr) : FunctionExpr(*e) {
         return this
     }
 
-    // Lanczos approximation
+    private fun approximate(input: RealBigDec): RealBigDec {
+        val z = (input - Integer.ONE) as RealBigDec
+        val sigma = Integer(5) // TODO how to set this based on input
+
+        val term = Power(z + sigma + Rational.HALF, z + Rational.HALF)
+        val exp = Exp(-(z + Rational.HALF))
+
+        var sum: Expr = Integer.ZERO
+        for(k in 0 until sigma.intValue() + 2) {
+            val gk = g(k, sigma)
+            val hk = H(k, z)
+            sum += gk * hk
+        }
+
+        val t = term * exp * sum
+
+        return t as RealBigDec
+    }
+
+    private fun g(k: Int, sigma: Integer): Expr {
+        val ek = if (k == 0) 1 else 2
+        val term = Integer(ek) * Power(-1, k)
+        var sum: Expr = Integer.ZERO
+
+        for (r in 0..k) {
+            val sign = if (r % 2 == 0) Integer(1) else Integer(-1)
+            val rhalf = Rational.HALF + r
+            // TODO add function to get binomial table with all values from 0 to k
+            // TODO pochhammer is faster to calculate inline here
+            val poch = Pochhammer(k, r)
+            val power = Power(Divide(E(), sigma + rhalf), rhalf) // TODO compute these on 0..max k
+            val expr = sign * Binomial(k, r) * poch * power
+            sum += expr
+        }
+
+        return term * sum
+    }
+
+    private fun H(k: Int, z: RealBigDec): Expr {
+        val sign = if (k % 2 == 0) Integer(1) else Integer(-1)
+        return sign * Pochhammer(-z, k) / Pochhammer(z + 1, k)
+    }
+
+    /*
+    // Lanczos approximation wikipedia version (not as good as math world version)
     private fun approximate(input: RealBigDec): RealBigDec {
         val z = (input - Integer.ONE) as RealBigDec
         val g = Integer(5) // TODO how to set this based on input
@@ -133,12 +172,14 @@ class Gamma(vararg e: Expr) : FunctionExpr(*e) {
         //println("$n $m $result")
         return result
     }
+     */
 
+    /* Not bad but difficult finding value for x
     private fun evalIntegrationByParts(z: RealBigDec): Expr {
         // Integration by parts formula by splitting on [0,x] and [x,infinity]
         // The 2nd part is small enough to ignore for large enough x
-        // TODO calculate a better x default to use here
-        val x = Integer(25)
+        // calculate a better x default to use here
+        val x = Integer(21)
         val xe = Power(x, z) * Power(E(), x.unaryMinus()) // x^z * e^-x
         var term = Integer(1) / z // term at N=0
         var sum = term
@@ -157,4 +198,5 @@ class Gamma(vararg e: Expr) : FunctionExpr(*e) {
 
         throw IterationLimitExceeded()
     }
+     */
 }
