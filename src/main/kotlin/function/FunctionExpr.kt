@@ -44,6 +44,8 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
     protected abstract fun evaluate(): Expr
 
     final override fun eval(): Expr {
+        val start = System.currentTimeMillis()
+
         //https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
         //https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
@@ -98,7 +100,13 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
 
         return try {
             function.validate()
-            function.evaluate()
+            val result = function.evaluate()
+            val end = System.currentTimeMillis()
+            val diff = end - start
+            //if (diff > 5)
+            //    println("$diff $this")
+
+            return result
         }
         catch (e: Exception) {
             ErrorExpr(e.message!!)

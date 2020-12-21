@@ -88,6 +88,9 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
                 val gcd = this.gcd(other)
 
                 if (gcd.isOne) {
+                    if (other.isOne)
+                        return this
+
                     return Rational(this, other)
                 }
 

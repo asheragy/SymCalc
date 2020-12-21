@@ -2,6 +2,7 @@ package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.number.Integer
 import org.cerion.symcalc.expression.number.Rational
 import org.cerion.symcalc.expression.number.RealBigDec
@@ -40,47 +41,51 @@ class Gamma(vararg e: Expr) : FunctionExpr(*e) {
         return this
     }
 
-    private fun approximate(input: RealBigDec): RealBigDec {
+    // Lanczos approximation (wolfram mathworld version)
+    private fun approximate(input: RealBigDec): Expr {
         val z = (input - Integer.ONE) as RealBigDec
-        val sigma = Integer(5) // TODO how to set this based on input
+        val sigma = Integer(input.precision / 2)
 
+        val e = E().eval(input.precision)
         val term = Power(z + sigma + Rational.HALF, z + Rational.HALF)
         val exp = Exp(-(z + Rational.HALF))
+        val N = sigma.intValue() + 2
 
-        var sum: Expr = Integer.ZERO
-        for(k in 0 until sigma.intValue() + 2) {
-            val gk = g(k, sigma)
-            val hk = H(k, z)
+        // These are calculated multiple times with the same value
+        val powerValues = (0 until N).map {
+            // TODO check performance on RealBigDec ^ Rational its the bottleneck on this entire function
+            val rhalf = (Rational.HALF + it).eval(input.precision)
+            Power(e / (sigma + rhalf), rhalf).eval()
+        }
+
+        var sum: Expr = g(0, powerValues)
+        var hk: Expr = Integer.ONE // (-1)^k * Pochhammer(-z, k) / Pochhammer(z + 1, k)
+        for(k in 1 until N) {
+            val gk = g(k, powerValues)
+            hk *= Integer(-1) * (Integer(k) - 1 - z) / (z + k)
+
             sum += gk * hk
         }
 
-        val t = term * exp * sum
-
-        return t as RealBigDec
+        return term * exp * sum
     }
 
-    private fun g(k: Int, sigma: Integer): Expr {
+    private fun g(k: Int, powerValues: List<Expr>): Expr {
         val ek = if (k == 0) 1 else 2
         val term = Integer(ek) * Power(-1, k)
-        var sum: Expr = Integer.ZERO
+        var sum: Expr = powerValues[0]
 
-        for (r in 0..k) {
+        val binomial = Binomial(k).eval() as ListExpr
+        var pochhammer = Integer.ONE
+
+        for (r in 1..k) {
             val sign = if (r % 2 == 0) Integer(1) else Integer(-1)
-            val rhalf = Rational.HALF + r
-            // TODO add function to get binomial table with all values from 0 to k
-            // TODO pochhammer is faster to calculate inline here
-            val poch = Pochhammer(k, r)
-            val power = Power(Divide(E(), sigma + rhalf), rhalf) // TODO compute these on 0..max k
-            val expr = sign * Binomial(k, r) * poch * power
-            sum += expr
+            pochhammer *= Integer(k + r - 1)
+
+            sum += sign * binomial[r] * pochhammer * powerValues[r]
         }
 
         return term * sum
-    }
-
-    private fun H(k: Int, z: RealBigDec): Expr {
-        val sign = if (k % 2 == 0) Integer(1) else Integer(-1)
-        return sign * Pochhammer(-z, k) / Pochhammer(z + 1, k)
     }
 
     /*
