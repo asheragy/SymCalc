@@ -9,6 +9,7 @@ import kotlin.math.abs
 import kotlin.math.ln
 import kotlin.math.max
 
+
 fun BigDecimal.log(): BigDecimal {
     val mc = MathContext(precision(), RoundingMode.HALF_UP)
 
@@ -21,6 +22,29 @@ fun BigDecimal.log(): BigDecimal {
         return  root.log().multiply(BigDecimal(n), mc)
     }
 
+    // Modified taylor series
+    val xminus1 = this.subtract(BigDecimal.ONE)
+    val xplus1 = this.add(BigDecimal.ONE)
+    val xminus_over_xplus = xminus1.divide(xplus1, mc)
+    val pow = xminus_over_xplus.multiply(xminus_over_xplus, mc)
+    val c = xminus_over_xplus.multiply(BigDecimal(2), mc)
+
+    var powTerm = BigDecimal.ONE
+    var sum = BigDecimal.ONE
+
+    for (k in 1 until 100) {
+        powTerm = powTerm.multiply(pow, mc)
+        val kterm = BigDecimal.ONE.divide(BigDecimal(2 * k + 1), mc)
+
+        val curr = powTerm.multiply(kterm, mc)
+        val t = sum.add(curr, mc)
+        if (sum == t)
+            return t.multiply(c, mc)
+
+        sum = t
+    }
+
+    /* Standard taylor series which is a bit slower
     val x = this.subtract(BigDecimal(1))
     var sum = x
     var xpow = x
@@ -39,6 +63,7 @@ fun BigDecimal.log(): BigDecimal {
 
         sum = t
     }
+     */
 
     throw IterationLimitExceeded()
 }
