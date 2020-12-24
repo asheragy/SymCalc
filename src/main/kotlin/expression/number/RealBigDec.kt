@@ -1,15 +1,13 @@
 package org.cerion.symcalc.expression.number
 
 import org.cerion.symcalc.constant.I
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.AtomExpr
-import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Exp
-import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.core.N
-import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -24,6 +22,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         private const val PrecisionMin = 20
         private const val PrecisionStep = 10
 
+        // TODO remove pattern of calling this followed by setScale on external usages of BigDecimal
         fun getStoredPrecision(desired: Int): Int {
             if(desired < PrecisionMin - PrecisionStep)
                 return PrecisionMin
@@ -35,6 +34,10 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
             return result
         }
     }
+
+    // TODO check implications of only storing the scaled value vs getting it on demand
+    val valueScaled: BigDecimal
+        get() = value.setScale(getStoredPrecision(precision))
 
     constructor(value: BigDecimal) : this(value, value.precision())
     constructor(value: String) : this(BigDecimal(value))
@@ -162,8 +165,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         if (x.precision() < mc.precision)
             x = value.setScale(mc.precision - value.precision() + value.scale()).round(mc) // Add 2 extra digits so scale/precision is correct
 
-        val logx = BigDecimalMath.log(x)
-        val ylogx = other.value.multiply(logx, mc)
+        val ylogx = other.value.multiply(x.log(), mc)
 
         return RealBigDec(ylogx, p).exp()
     }
@@ -178,7 +180,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
             is RealDouble -> return RealDouble(toDouble().pow(other.value))
             is RealBigDec -> {
                 if (this.isNegative)
-                    return Exp(Times(other, Log(this.unaryMinus()) + Times(I(), Pi()))).eval() as NumberExpr
+                    return Exp(Times(other, this.unaryMinus().log() + Times(I(), Pi()))).eval() as NumberExpr
 
                 return this.pow(other)
             }
@@ -236,5 +238,10 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         }
 
         throw IterationLimitExceeded()
+    }
+
+    fun log(): RealBigDec {
+        val x = forcePrecision(getStoredPrecision(precision))
+        return RealBigDec(x.log(), precision)
     }
 }

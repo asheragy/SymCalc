@@ -1,6 +1,8 @@
 package org.cerion.symcalc.function.arithmetic
 
+import org.cerion.symcalc.`==`
 import org.cerion.symcalc.`should equal`
+import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
@@ -52,10 +54,25 @@ class LogTest {
 
     @Test
     fun bigDecimal() {
-        assertEquals(RealBigDec("0.69"), Log(RealBigDec("2.0")).eval())
-        assertEquals(RealBigDec("0.6931477"),  Log(RealBigDec("2.000001")).eval())
-        assertEquals(RealBigDec("2.3025852"),  Log(RealBigDec("10.000001")).eval())
-        assertEquals(RealBigDec("4.60517020"), Log(RealBigDec("100.000001")).eval())
+        assertAll(
+                Log("2.0") `==` "0.69",
+                Log("2.000001") `==` "0.6931477",
+                Log("10.000001") `==` "2.3025852",
+                Log("100.000001") `==` "4.60517020")
+    }
+
+    //@Test
+    fun temp() {
+        val x100 = Rational(11,10).eval(100)
+        val x250 = Rational(11,10).eval(250)
+        Log(x100).eval() `should equal` RealBigDec("0.09531017980432486004395212328076509222060536530864419918523980816300101423588423283905750291303649307")
+        Log(x250).eval() `should equal` RealBigDec("0.09531017980432486004395212328076509222060536530864419918523980816300101423588423283905750291303649307274794184585174988884604369351298063868901502170232637556873469835512041574566077311170504814066115849672190926276831999726668041246291711632113962014")
+
+        for(i in 0 until 700)
+            Log(x100).eval()
+
+        for(i in 0 until 120)
+            Log(x250).eval()
     }
 
     @Test

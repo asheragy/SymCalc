@@ -1,13 +1,13 @@
 package org.cerion.symcalc.function.arithmetic
 
-import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
-import org.cerion.symcalc.function.FunctionExpr
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.number.*
-import org.nevec.rjm.BigDecimalMath
+import org.cerion.symcalc.function.FunctionExpr
 import kotlin.math.ln
 
+// TODO replace more calls to this to use RealBigDec.log whenever possible
 class Log(vararg e: Any) : FunctionExpr(*e) {
 
     override val properties: Int
@@ -28,12 +28,8 @@ class Log(vararg e: Any) : FunctionExpr(*e) {
                 return Times(Integer.NEGATIVE_ONE, Log(n.reciprocal()))
             if (n is RealDouble)
                 return RealDouble(ln(n.value))
-            if (n is RealBigDec) {
-                val storedPrecision = RealBigDec.getStoredPrecision(n.precision)
-                val t = n.value.setScale(storedPrecision)
-                val log = BigDecimalMath.log(t)
-                return RealBigDec(log, n.precision)
-            }
+            if (n is RealBigDec)
+                return n.log()
         }
 
         if (n is E)

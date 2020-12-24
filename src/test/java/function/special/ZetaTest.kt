@@ -85,7 +85,7 @@ internal class ZetaTest {
     fun realBigDec() {
         assertAll(
                 Zeta(RealBigDec("3.14")) `==` "1.18",
-                //Zeta(RealBigDec("5.555555555")) `==` "1.024170497"
+                Zeta(RealBigDec("5.555555555")) `==` "1.024170497"
         )
     }
 }
