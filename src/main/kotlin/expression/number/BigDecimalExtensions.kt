@@ -54,7 +54,7 @@ private fun logTaylorSeriesV2(x: BigDecimal, mc: MathContext): BigDecimal {
     var powTerm = BigDecimal.ONE
     var sum = BigDecimal.ONE
 
-    for (k in 1 until 1000) {
+    for (k in 1 until 10000) {
         powTerm = powTerm.multiply(pow, mc)
         val kterm = BigDecimal.ONE.divide(BigDecimal(2 * k + 1), mc)
 

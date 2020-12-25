@@ -69,6 +69,8 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         return value
     }
 
+    fun increasePrecision(newPrecision: Int): RealBigDec = RealBigDec(this.forcePrecision(newPrecision))
+
     override fun toString(): String = "${getRepresentedValue().toPlainString()}`$precision"
     override fun unaryMinus(): RealBigDec = RealBigDec(value.negate(), precision)
 

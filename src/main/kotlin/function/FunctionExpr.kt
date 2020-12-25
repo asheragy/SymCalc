@@ -103,7 +103,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
             val result = function.evaluate()
             val end = System.currentTimeMillis()
             val diff = end - start
-            //if (diff > 5)
+            //if (diff > 16)
             //    println("$diff $this")
 
             return result

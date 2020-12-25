@@ -28,6 +28,28 @@ sourceSets {
             srcDir "src/test/java"
         }
     }
+
+    longTest {
+        java {
+            srcDir "/src/longTest/java"
+        }
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    longTestImplementation.extendsFrom testImplementation
+    longTestRuntimeOnly.extendsFrom runtimeOnly
+}
+
+
+task longTest(type: Test) {
+    description = 'Runs Long running tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.longTest.output.classesDirs
+    classpath = sourceSets.longTest.runtimeClasspath
 }
 
 sourceCompatibility = 1.8
