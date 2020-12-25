@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression.number
 
+import org.cerion.symcalc.`==`
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
@@ -215,9 +216,10 @@ class RealBigDecTest : NumberTestBase() {
     @Test
     fun pow_negativeRoot() {
         // TODO_LP look more into 1st and 3rd real number, should be zero
-        assertEquals(Complex("-2.1384E-19", "2.0000"), Power(RealBigDec("-4.0000"), Rational.HALF).eval())
-        assertEquals(Complex("1.0000", "1.7321"), Power(RealBigDec("-8.0000"), Rational.THIRD).eval())
-        assertEquals(Complex("-5.3242E-19", "-1.3716"), Power(RealBigDec("-1.2345"), Rational(3,2)).eval())
+        assertAll(
+                Power("-4.0000", Rational.HALF) `==` Complex("7.9346E-20", "2.0000"),
+                Power("-8.0000", Rational.THIRD) `==` Complex("1.0000", "1.7321"),
+                Power("-1.2345", Rational(3,2)) `==` Complex("-2.5853E-19", "-1.3716"))
     }
 
     @Test
@@ -229,11 +231,10 @@ class RealBigDecTest : NumberTestBase() {
     @Test
     fun exp() {
         assertAll(
-                { assertEquals(RealBigDec("1.0"), RealBigDec("0.0").exp()) },
-                { assertEquals(RealBigDec("23.139"), RealBigDec("3.1415").exp()) },
-                { assertEquals(RealBigDec("23.140692632779269005729086367948547380266106242600"), (Pi().eval(50) as RealBigDec).exp()) },
-                { assertEquals(RealBigDec("0.00001671469609"), RealBigDec("-10.99922222").exp()) }
-        )
+                RealBigDec("0.0").exp() `==` "1.0",
+                RealBigDec("3.1415").exp() `==` "23.139",
+                (Pi().eval(50) as RealBigDec).exp() `==` "23.140692632779269005729086367948547380266106242600",
+                RealBigDec("-10.99922222").exp() `==` "0.00001671469609")
     }
 
     @Test
