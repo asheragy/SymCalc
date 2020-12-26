@@ -1,21 +1,21 @@
 package org.cerion.symcalc
 
 import org.cerion.symcalc.number.RealBigDec
-import org.cerion.symcalc.number.log
 import org.junit.Test
+
+private const val MIN_PRECISION = 100
 
 class Arithmetic {
 
-
     @Test
     fun `log large close to 1`() {
-        val x = RealBigDec("1.1").forcePrecision(4000)
+        val x = RealBigDec("1.1").increasePrecision(4000)
         x.log()
     }
 
     @Test
     fun `log large close to 1 multiple`() {
-        val x = RealBigDec("1.1").forcePrecision(100)
+        val x = RealBigDec("1.1").increasePrecision(MIN_PRECISION)
         for(i in 0 until 8500)
             x.log()
     }
@@ -27,7 +27,7 @@ class Arithmetic {
 
     @Test
     fun power_multiple() {
-        val x = RealBigDec("3.14").increasePrecision(100)
+        val x = RealBigDec("3.14").increasePrecision(MIN_PRECISION)
         for(i in 0 until 2000)
             x.pow(x)
     }
@@ -50,8 +50,22 @@ class Arithmetic {
 
     @Test
     fun sqrtMultiple() {
-        val x = RealBigDec("3.0").increasePrecision(100)
+        val x = RealBigDec("3.0").increasePrecision(MIN_PRECISION)
         for(i in 0 until 200000)
             x.sqrt()
+    }
+
+    @Test
+    fun nthRoot() {
+        val x = RealBigDec("11.0").increasePrecision(MIN_PRECISION)
+        repeat(70000) {
+            x.root(7)
+        }
+    }
+
+    @Test
+    fun nthRootLarge() {
+        val x = RealBigDec("11.0").increasePrecision(65000)
+        x.root(7)
     }
 }

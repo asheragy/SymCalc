@@ -188,6 +188,12 @@ class RealBigDecTest : NumberTestBase() {
     }
 
     @Test
+    fun pow_toRational_large() {
+        // Rational is evaluated differently for large int values where power+ Nth root is not practical
+        RealBigDec("2.0").increasePrecision(50) pow Rational(Integer("34359738367"), Integer("17179869183")) `should equal` "4.0000000001613859042092866284144245566543954355456"
+    }
+
+    @Test
     fun pow_toRational_storedPrecision() {
         val pow = (RealBigDec("2.000001") pow Rational(1,3)) as RealBigDec
         assertEquals(BigDecimal("1.2599212598816798161"), pow.value)
@@ -290,5 +296,12 @@ class RealBigDecTest : NumberTestBase() {
     fun sqrt() {
         val x = Pi().eval(100) as RealBigDec
         x.sqrt() `should equal` "1.772453850905516027298167483341145182797549456122387128213807789852911284591032181374950656738544665"
+    }
+
+    @Test
+    fun nthRoot() {
+        val x = RealBigDec("11.0").increasePrecision(100)
+        x.root(3) `should equal` "2.223980090569315521165363376722157196518699128096923055699345808660400983082975974489758054481626274"
+        x.root(7) `should equal` "1.408543888428699411406584628756831160498853412347820244689226302716888429032334406113507802751386845"
     }
 }

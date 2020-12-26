@@ -1,12 +1,12 @@
 package org.cerion.symcalc.number
 
 import org.cerion.symcalc.exception.IterationLimitExceeded
-import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.abs
 import kotlin.math.ln
+import kotlin.math.pow
 
 // TODO compare performance with java 9 version (when android can use it)
 fun BigDecimal.sqrt(precision: Int): BigDecimal {
@@ -32,8 +32,39 @@ fun BigDecimal.sqrt(precision: Int): BigDecimal {
     throw IterationLimitExceeded()
 }
 
-fun BigDecimal.log(): BigDecimal {
-    val mc = MathContext(precision(), RoundingMode.HALF_UP)
+fun BigDecimal.root(n: Int, precision: Int): BigDecimal {
+    if (signum() < 0)
+        throw Exception("sqrt() on negative number")
+    if (n <= 0)
+        throw ArithmeticException("Nth root must be >= 1")
+    if (n == 1)
+        return this
+
+    // Newton method
+    val mc = MathContext(precision)
+    var xn = BigDecimal(toDouble().pow(1.0 / n))
+    val nminus1 = BigDecimal(n - 1)
+    val nbd = BigDecimal(n)
+
+    for (i in 0 until 1000) {
+        val a = xn.multiply(nminus1, mc)
+        val b = this.divide(xn.pow(n-1, mc), mc)
+        val c = a + b
+
+        val t = c.divide(nbd, mc)
+        if (t == xn)
+            return t
+
+        xn = t
+    }
+
+    throw IterationLimitExceeded()
+}
+
+fun BigDecimal.log(): BigDecimal = log(precision())
+
+fun BigDecimal.log(precision: Int): BigDecimal {
+    val mc = MathContext(precision, RoundingMode.HALF_UP)
 
     // Reduce range to [0.7,1.3]
     if (toDouble() > 1.3 && log2digits-2 > mc.precision) {
@@ -45,7 +76,7 @@ fun BigDecimal.log(): BigDecimal {
         }
 
         val a = this.divide(BigDecimal(2).pow(n, mc), mc)
-        val log2 = getlog2(precision())
+        val log2 = getlog2(precision)
         val loga = logTaylorSeriesV2(a, mc)
         val nlog2 = log2.multiply(BigDecimal(n), mc)
         return loga.add(nlog2, mc)
@@ -58,13 +89,12 @@ fun BigDecimal.log(): BigDecimal {
             // Log(x) = n * Log(x^1/n)
 
             val n = Math.max(2, (ln(toDouble()) / 0.2).toInt())
-            val root = BigDecimalMath.root(n, this)
+            val root = root(n, precision)
             return logTaylorSeriesV2(root, mc).multiply(BigDecimal(n), mc)
         }
     }
 
     return logTaylorSeriesV2(this, mc)
-
 }
 
 private fun logTaylorSeriesV2(x: BigDecimal, mc: MathContext): BigDecimal {

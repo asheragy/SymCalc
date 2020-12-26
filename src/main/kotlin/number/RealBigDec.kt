@@ -178,12 +178,20 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     override infix fun pow(other: NumberExpr): NumberExpr {
         when (other) {
             is Integer -> {
+                if (other.isOne)
+                    return this
+
                 val number = value.pow(other.intValue(), MathContext(getStoredPrecision(precision), RoundingMode.HALF_UP))
                 return RealBigDec(number, precision)
             }
             is Rational -> {
                 if (other == Rational.HALF)
                     return if (isNegative) Complex(0, unaryMinus().sqrt()) else sqrt()
+
+                // TODO negative may work here but check cases
+                // TODO optimal values here
+                if (!isNegative && !other.isNegative && other.numerator < Integer(10) && other.denominator < Integer(10))
+                    return root(other.denominator.intValue()).pow(other.numerator)
 
                 return pow(other.toPrecision(precision))
             }
@@ -221,6 +229,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         return this
     }
 
+    // TODO move to extensions
     fun exp(): RealBigDec {
         val storedPrecision = getStoredPrecision(precision)
         val mc = MathContext(storedPrecision, RoundingMode.HALF_UP)
@@ -250,10 +259,15 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         throw IterationLimitExceeded()
     }
 
-    fun log(): RealBigDec {
-        val x = forcePrecision(getStoredPrecision(precision))
-        return RealBigDec(x.log(), precision)
-    }
-
+    fun log(): RealBigDec = RealBigDec(value.log(storedPrecision), precision)
     fun sqrt(): RealBigDec = if (isZero) RealBigDec(BigDecimal.ZERO, precision) else RealBigDec(value.sqrt(storedPrecision), precision)
+
+    fun root(n: Int): RealBigDec {
+        return when {
+            isZero -> RealBigDec(BigDecimal.ZERO, precision)
+            n == 1 -> this
+            n == 2 -> sqrt()
+            else -> RealBigDec(value.root(n, storedPrecision), precision)
+        }
+    }
 }
