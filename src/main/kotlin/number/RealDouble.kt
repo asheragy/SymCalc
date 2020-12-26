@@ -74,10 +74,15 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
     override fun pow(other: NumberExpr): NumberExpr {
         when (other) {
             is Integer,
-            is Rational -> return this.pow(other.toPrecision(precision))
+            is Rational -> {
+                if (other == Rational.HALF)
+                    return sqrt()
+
+                return pow(other.toPrecision(precision))
+            }
             is RealDouble -> {
                 val pow = value.pow(other.value)
-                if (pow.isNaN() && value < 0)
+                if (pow.isNaN() && value < 0) // TODO see if this can be changed, if negative its just complex?
                     return Exp(Times(other, Log(this.unaryMinus()) +  Times(I(), Pi()))).eval() as NumberExpr
 
                 return RealDouble(pow)
@@ -99,4 +104,5 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
     override fun floor(): Integer = Integer(kotlin.math.floor(value).toInt())
 
     fun isWholeNumber() = this.value == kotlin.math.round(this.value)
+    fun sqrt() = if (isNegative) Complex(0, kotlin.math.sqrt(value)) else RealDouble(kotlin.math.sqrt(value))
 }

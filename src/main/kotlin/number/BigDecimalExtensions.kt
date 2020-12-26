@@ -14,14 +14,14 @@ fun BigDecimal.sqrt(precision: Int): BigDecimal {
         throw Exception("sqrt() on negative number")
 
     val initial = kotlin.math.sqrt(toDouble())
-    val mc = MathContext(precision())
+    val mc = MathContext(precision)
     var xn = BigDecimal(initial)
     val two = BigDecimal(2)
 
     // Babylonian method
     // TODO_LP compare with Bakhshali method
     for(i in 0 until 1000) {
-        val t = xn.add(this.divide(xn, mc)).divide(two, mc)
+        val t = xn.add(this.divide(xn, mc), mc).divide(two, mc)
 
         if (t == xn)
             return t
@@ -118,7 +118,7 @@ private fun logTaylorSeries(input: BigDecimal, mc: MathContext): BigDecimal {
 }
  */
 
-fun getlog2(precision: Int): BigDecimal {
+private fun getlog2(precision: Int): BigDecimal {
     if (log2digits-2 >= precision)
         return BigDecimal(LOG2_1000_DIGITS.substring(0, 2 + precision))
 

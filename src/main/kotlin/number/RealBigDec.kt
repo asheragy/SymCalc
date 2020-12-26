@@ -181,7 +181,12 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
                 val number = value.pow(other.intValue(), MathContext(getStoredPrecision(precision), RoundingMode.HALF_UP))
                 return RealBigDec(number, precision)
             }
-            is Rational -> return this.pow(other.toPrecision(precision))
+            is Rational -> {
+                if (other == Rational.HALF)
+                    return if (isNegative) Complex(0, unaryMinus().sqrt()) else sqrt()
+
+                return pow(other.toPrecision(precision))
+            }
             is RealDouble -> return RealDouble(toDouble().pow(other.value))
             is RealBigDec -> {
                 if (this.isNegative)
@@ -250,5 +255,5 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         return RealBigDec(x.log(), precision)
     }
 
-    fun sqrt(): RealBigDec = if (isZero) ZERO else RealBigDec(value.sqrt(storedPrecision), precision)
+    fun sqrt(): RealBigDec = if (isZero) RealBigDec(BigDecimal.ZERO, precision) else RealBigDec(value.sqrt(storedPrecision), precision)
 }

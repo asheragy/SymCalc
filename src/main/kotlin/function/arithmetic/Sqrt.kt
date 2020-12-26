@@ -5,7 +5,6 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.Rational
 
-// TODO replace some usages of this (specifically BigDecimal) with a .sqrt()
 class Sqrt(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {

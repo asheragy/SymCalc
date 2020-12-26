@@ -50,8 +50,8 @@ class Arithmetic {
 
     @Test
     fun sqrtMultiple() {
-        val x = RealBigDec("3.0").increasePrecision(1500)
-        for(i in 0 until 3000)
+        val x = RealBigDec("3.0").increasePrecision(100)
+        for(i in 0 until 200000)
             x.sqrt()
     }
 }
