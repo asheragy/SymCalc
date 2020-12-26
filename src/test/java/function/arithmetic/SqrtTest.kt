@@ -1,9 +1,9 @@
 package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
+import org.cerion.symcalc.number.RealBigDec
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

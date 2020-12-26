@@ -2,9 +2,9 @@ package org.cerion.symcalc
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.RealBigDec
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.number.RealDouble
 import kotlin.UnsupportedOperationException
 import kotlin.test.assertEquals
 

@@ -3,9 +3,9 @@ package org.cerion.symcalc.function.integer
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.NumberExpr
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.RealDouble
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

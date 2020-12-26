@@ -7,8 +7,8 @@ import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.list.Join
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
 import kotlin.test.Test
 
 internal class CotTest {

@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Plus
-import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.number.Integer
 
 class Mean(vararg e: Expr) : FunctionExpr(*e) {
 

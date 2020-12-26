@@ -2,8 +2,8 @@ package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.constant.Pi
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.Rational
+import org.cerion.symcalc.number.RealBigDec
 import kotlin.test.Test
 
 internal class ArcCosTest {

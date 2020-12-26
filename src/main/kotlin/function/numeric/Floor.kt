@@ -2,7 +2,7 @@ package org.cerion.symcalc.function.numeric
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
-import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.number.NumberExpr
 
 class Floor(vararg e: Expr) : FunctionExpr(*e) {
 

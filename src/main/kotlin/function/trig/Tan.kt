@@ -5,9 +5,9 @@ import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Power
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
+import org.cerion.symcalc.number.RealBigDec
 import kotlin.math.tan
 
 class Tan(e: Any) : TrigBase(e), StandardTrigFunction {

@@ -3,7 +3,7 @@ package org.cerion.symcalc.function.arithmetic
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.function.FunctionExpr
-import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.number.NumberExpr
 
 class Subtract(vararg e: Expr) : FunctionExpr(*e) {
 

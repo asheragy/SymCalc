@@ -2,9 +2,9 @@ package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.constant.Pi
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.RealBigDec
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.number.RealDouble
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

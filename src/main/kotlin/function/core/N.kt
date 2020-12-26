@@ -4,8 +4,8 @@ import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.FunctionFactory
-import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.NumberExpr
+import org.cerion.symcalc.number.RealBigDec
 
 class N(vararg e: Any) : FunctionExpr(*e) {
 

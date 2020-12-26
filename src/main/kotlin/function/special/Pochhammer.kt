@@ -1,8 +1,8 @@
 package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.NumberExpr
 import org.cerion.symcalc.function.FunctionExpr
 
 class Pochhammer(vararg e: Any) : FunctionExpr(*e) {

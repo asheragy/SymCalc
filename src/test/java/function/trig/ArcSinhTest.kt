@@ -1,7 +1,7 @@
 package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.`==`
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.RealBigDec
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertAll
 

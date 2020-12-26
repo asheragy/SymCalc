@@ -2,7 +2,7 @@ package org.cerion.symcalc.function.core
 
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.function.arithmetic.Plus
-import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.number.Integer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

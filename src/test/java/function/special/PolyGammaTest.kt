@@ -1,7 +1,7 @@
 package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.`==`
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.RealDouble
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertAll
 

@@ -3,8 +3,8 @@ package org.cerion.symcalc.function.trig
 import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.*
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.RealBigDec
 import kotlin.math.sinh
 
 class Sinh(e: Expr) : TrigBase(e) {

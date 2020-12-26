@@ -8,10 +8,10 @@ import org.cerion.symcalc.function.arithmetic.Plus
 import org.cerion.symcalc.function.arithmetic.Subtract
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.core.N
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.RealBigDec
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.NumberExpr
+import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.number.RealDouble
 import org.cerion.symcalc.parser.Lexer
 import org.cerion.symcalc.parser.Parser
 

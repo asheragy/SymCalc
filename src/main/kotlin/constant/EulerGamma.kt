@@ -2,9 +2,9 @@ package org.cerion.symcalc.constant
 
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.RealBigDec
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.number.RealDouble
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.integer.Bernoulli
 import kotlin.math.max

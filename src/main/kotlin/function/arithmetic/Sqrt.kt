@@ -3,7 +3,7 @@ package org.cerion.symcalc.function.arithmetic
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
-import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.number.Rational
 
 // TODO replace some usages of this (specifically BigDecimal) with a .sqrt()
 class Sqrt(vararg e: Expr) : FunctionExpr(*e) {

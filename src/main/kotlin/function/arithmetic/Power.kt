@@ -7,10 +7,10 @@ import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.trig.Cos
 import org.cerion.symcalc.function.trig.Sin
-import org.cerion.symcalc.expression.number.Complex
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.number.Complex
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.NumberExpr
+import org.cerion.symcalc.number.Rational
 
 class Power(vararg e: Any) : FunctionExpr(*e) {
 

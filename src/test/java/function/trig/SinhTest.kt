@@ -5,10 +5,10 @@ import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Minus
-import org.cerion.symcalc.expression.number.Complex
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.Complex
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
+import org.cerion.symcalc.number.RealBigDec
 import org.junit.Test
 
 

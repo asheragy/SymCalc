@@ -4,7 +4,7 @@ import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Plus
 import org.cerion.symcalc.function.arithmetic.Times
-import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.number.Rational
 import kotlin.test.Test
 
 internal class ModTest {

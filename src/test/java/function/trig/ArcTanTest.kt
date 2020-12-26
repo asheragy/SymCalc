@@ -9,8 +9,8 @@ import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Sqrt
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.RealBigDec
 import kotlin.test.Test
 
 class ArcTanTest {

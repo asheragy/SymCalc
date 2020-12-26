@@ -1,6 +1,6 @@
 package org.cerion.symcalc
 
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.function.special.Gamma
 import org.cerion.symcalc.function.special.Zeta
 import org.junit.Test

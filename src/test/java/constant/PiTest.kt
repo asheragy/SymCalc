@@ -2,7 +2,7 @@ package org.cerion.symcalc.constant
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.assertAll
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.function.core.N
 import kotlin.test.Test
 import kotlin.test.assertEquals

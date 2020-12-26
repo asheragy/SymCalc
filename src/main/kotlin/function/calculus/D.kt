@@ -10,8 +10,8 @@ import org.cerion.symcalc.function.arithmetic.Subtract
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.trig.Cos
 import org.cerion.symcalc.function.trig.Sin
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.NumberExpr
 
 class D(vararg e: Expr) : FunctionExpr(*e) {
 

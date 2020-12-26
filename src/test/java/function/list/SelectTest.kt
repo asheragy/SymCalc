@@ -2,7 +2,7 @@ package org.cerion.symcalc.function.list
 
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.function.integer.EvenQ
-import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.number.Integer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

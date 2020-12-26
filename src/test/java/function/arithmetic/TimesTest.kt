@@ -4,7 +4,7 @@ import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.trig.Sin
-import org.cerion.symcalc.expression.number.*
+import org.cerion.symcalc.number.*
 import kotlin.test.Test
 import org.junit.jupiter.api.assertAll
 import kotlin.test.assertEquals

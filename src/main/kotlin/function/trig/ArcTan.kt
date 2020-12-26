@@ -7,9 +7,9 @@ import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.*
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
+import org.cerion.symcalc.number.RealBigDec
 
 class ArcTan(e: Expr) : TrigBase(e) {
 

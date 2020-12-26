@@ -6,7 +6,7 @@ import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
-import org.cerion.symcalc.expression.number.*
+import org.cerion.symcalc.number.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

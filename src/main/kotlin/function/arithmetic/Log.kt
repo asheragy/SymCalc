@@ -3,7 +3,7 @@ package org.cerion.symcalc.function.arithmetic
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.number.*
+import org.cerion.symcalc.number.*
 import org.cerion.symcalc.function.FunctionExpr
 import kotlin.math.ln
 

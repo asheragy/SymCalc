@@ -1,4 +1,4 @@
-package org.cerion.symcalc.expression.number
+package org.cerion.symcalc.number
 
 import org.cerion.symcalc.expression.Expr
 import java.math.BigDecimal

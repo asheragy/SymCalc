@@ -2,8 +2,8 @@ package org.cerion.symcalc.constant
 
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.number.RealBigDec
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.number.RealDouble
 import java.math.BigDecimal
 import java.math.RoundingMode
 

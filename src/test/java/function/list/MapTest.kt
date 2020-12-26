@@ -4,8 +4,8 @@ import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.SymbolExpr
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Times
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

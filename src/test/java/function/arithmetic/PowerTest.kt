@@ -7,7 +7,7 @@ import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.core.N
 import org.cerion.symcalc.function.logical.Equal
-import org.cerion.symcalc.expression.number.*
+import org.cerion.symcalc.number.*
 import java.math.BigDecimal
 import kotlin.test.Test
 import kotlin.test.assertEquals

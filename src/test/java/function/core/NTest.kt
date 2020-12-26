@@ -3,10 +3,10 @@ package org.cerion.symcalc.function.core
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Plus
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealBigDec
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
+import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.number.RealDouble
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

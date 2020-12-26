@@ -6,7 +6,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.function.FunctionExpr
-import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.number.Integer
 
 class Table(vararg e: Any) : FunctionExpr(*e) {
 

@@ -1,7 +1,7 @@
 package org.cerion.symcalc
 
-import org.cerion.symcalc.expression.number.RealBigDec
-import org.cerion.symcalc.expression.number.log
+import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.number.log
 import org.junit.Test
 
 class Arithmetic {

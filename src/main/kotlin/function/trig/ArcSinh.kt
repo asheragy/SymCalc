@@ -3,8 +3,8 @@ package org.cerion.symcalc.function.trig
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Sqrt
-import org.cerion.symcalc.expression.number.RealBigDec
-import org.cerion.symcalc.expression.number.plus
+import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.number.plus
 
 class ArcSinh(e: Expr) : TrigBase(e) {
     override fun evaluateAsDouble(d: Double): Double {

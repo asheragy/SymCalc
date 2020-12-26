@@ -3,7 +3,7 @@ package org.cerion.symcalc.function.arithmetic
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.function.FunctionExpr
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.RealBigDec
 import org.nevec.rjm.BigDecimalMath
 
 class Exp(vararg e: Expr) : FunctionExpr(*e) {

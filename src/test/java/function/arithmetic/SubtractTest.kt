@@ -4,7 +4,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.Expr.ExprType
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.number.Integer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

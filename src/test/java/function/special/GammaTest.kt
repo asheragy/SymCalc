@@ -2,7 +2,7 @@ package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.Pi
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Power
 import org.junit.Test

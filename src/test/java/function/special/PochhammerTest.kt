@@ -1,9 +1,9 @@
 package org.cerion.symcalc.function.special
 
-import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.assertAll
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.RealBigDec
 import org.junit.Test
 
 internal class PochhammerTest {

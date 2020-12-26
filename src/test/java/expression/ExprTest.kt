@@ -2,7 +2,7 @@ package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.integer.Fibonacci
-import org.cerion.symcalc.expression.number.*
+import org.cerion.symcalc.number.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

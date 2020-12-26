@@ -3,8 +3,8 @@ package org.cerion.symcalc.function.integer
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.NumberType
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.NumberType
 
 class Factorial(vararg e: Expr) : FunctionExpr(*e) {
 

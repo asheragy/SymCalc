@@ -1,7 +1,7 @@
 package org.cerion.symcalc.expression
 
 import org.cerion.symcalc.function.list.Join
-import org.cerion.symcalc.expression.number.NumberExpr
+import org.cerion.symcalc.number.NumberExpr
 
 class ListExpr(vararg e: Any) : MultiExpr(convertArgs(*e)) {
     override val type: ExprType get() = ExprType.LIST

@@ -2,8 +2,8 @@ package org.cerion.symcalc.function.logical
 
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.Rational
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

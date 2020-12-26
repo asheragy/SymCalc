@@ -3,7 +3,7 @@ package org.cerion.symcalc.function.trig
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Sqrt
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.RealBigDec
 
 class ArcCosh(e: Expr) : TrigBase(e) {
     override fun evaluateAsDouble(d: Double): Double {

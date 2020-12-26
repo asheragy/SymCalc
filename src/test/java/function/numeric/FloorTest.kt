@@ -1,7 +1,7 @@
 package org.cerion.symcalc.function.numeric
 
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.RealDouble
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 

@@ -1,7 +1,7 @@
 package org.cerion.symcalc.function.integer
 
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.number.Integer
+import org.cerion.symcalc.number.Integer
 import org.junit.jupiter.api.Assertions.*
 import kotlin.test.Test
 

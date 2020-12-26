@@ -1,7 +1,7 @@
 package org.cerion.symcalc.constant
 
 import org.cerion.symcalc.expression.ConstExpr
-import org.cerion.symcalc.expression.number.Complex
+import org.cerion.symcalc.number.Complex
 
 class I : ConstExpr() {
     override fun toString(): String = "i"

@@ -3,10 +3,10 @@ package org.cerion.symcalc.function.integer
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.arithmetic.Divide
-import org.cerion.symcalc.expression.number.Integer
-import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.NumberExpr
+import org.cerion.symcalc.number.Rational
+import org.cerion.symcalc.number.RealDouble
 
 class Mod(vararg e: Any) : FunctionExpr(*e) {
 

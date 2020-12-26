@@ -1,7 +1,7 @@
 package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.RealDouble
 import org.cerion.symcalc.function.FunctionExpr
 import org.nevec.rjm.BigDecimalMath
 

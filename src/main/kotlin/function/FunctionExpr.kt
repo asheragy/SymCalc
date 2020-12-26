@@ -7,8 +7,8 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.MultiExpr
 import org.cerion.symcalc.function.core.N
-import org.cerion.symcalc.expression.number.NumberExpr
-import org.cerion.symcalc.expression.number.NumberType
+import org.cerion.symcalc.number.NumberExpr
+import org.cerion.symcalc.number.NumberType
 
 abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
 {

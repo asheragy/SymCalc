@@ -2,8 +2,8 @@ package org.cerion.symcalc.function.statistics
 
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.function.arithmetic.Sqrt
-import org.cerion.symcalc.expression.number.Rational
-import org.cerion.symcalc.expression.number.RealDouble
+import org.cerion.symcalc.number.Rational
+import org.cerion.symcalc.number.RealDouble
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

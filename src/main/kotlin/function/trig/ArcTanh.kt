@@ -1,7 +1,7 @@
 package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.number.RealBigDec
+import org.cerion.symcalc.number.RealBigDec
 
 class ArcTanh(e: Expr) : TrigBase(e) {
     override fun evaluateAsDouble(d: Double): Double {
