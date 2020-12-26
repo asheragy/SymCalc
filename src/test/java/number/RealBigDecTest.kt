@@ -285,4 +285,10 @@ class RealBigDecTest : NumberTestBase() {
         RealBigDec("5.2").quotient(Complex(2,4)) `should equal` Complex(1, -1)
         RealBigDec("-50.2").quotient(Complex(5,4)) `should equal` Complex(-6, 5)
     }
+
+    @Test
+    fun sqrt() {
+        val x = Pi().eval(100) as RealBigDec
+        x.sqrt() `should equal` "1.772453850905516027298167483341145182797549456122387128213807789852911284591032181374950656738544665"
+    }
 }

@@ -8,12 +8,35 @@ import java.math.RoundingMode
 import kotlin.math.abs
 import kotlin.math.ln
 
+// TODO compare performance with java 9 version (when android can use it)
+fun BigDecimal.sqrt(precision: Int): BigDecimal {
+    if (signum() < 0)
+        throw Exception("sqrt() on negative number")
+
+    val initial = kotlin.math.sqrt(toDouble())
+    val mc = MathContext(precision())
+    var xn = BigDecimal(initial)
+    val two = BigDecimal(2)
+
+    // Babylonian method
+    // TODO_LP compare with Bakhshali method
+    for(i in 0 until 1000) {
+        val t = xn.add(this.divide(xn, mc)).divide(two, mc)
+
+        if (t == xn)
+            return t
+
+        xn = t
+    }
+
+    throw IterationLimitExceeded()
+}
 
 fun BigDecimal.log(): BigDecimal {
     val mc = MathContext(precision(), RoundingMode.HALF_UP)
 
     // Reduce range to [0.7,1.3]
-    if (toDouble() > 1.3) {
+    if (toDouble() > 1.3 && log2digits-2 > mc.precision) {
         var n = 0
         var dvalue = toDouble()
         while (dvalue >= 1.3) {
@@ -96,11 +119,14 @@ private fun logTaylorSeries(input: BigDecimal, mc: MathContext): BigDecimal {
  */
 
 fun getlog2(precision: Int): BigDecimal {
-    if (LOG2_1000_DIGITS.length > precision)
+    if (log2digits-2 >= precision)
         return BigDecimal(LOG2_1000_DIGITS.substring(0, 2 + precision))
 
     throw ArithmeticException()
 }
+
+private val log2digits: Int
+    get() = LOG2_1000_DIGITS.length
 
 private const val LOG2_1000_DIGITS = "0.69314718055994530941723212145817656807550013436025525412068000949339" +
         "3621969694715605863326996418687542001481020570685733685520235758130557" +

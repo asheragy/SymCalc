@@ -35,6 +35,9 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         }
     }
 
+    private val storedPrecision
+        get() = getStoredPrecision(precision)
+
     // TODO check implications of only storing the scaled value vs getting it on demand
     val valueScaled: BigDecimal
         get() = value.setScale(getStoredPrecision(precision))
@@ -246,4 +249,6 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         val x = forcePrecision(getStoredPrecision(precision))
         return RealBigDec(x.log(), precision)
     }
+
+    fun sqrt(): RealBigDec = if (isZero) ZERO else RealBigDec(value.sqrt(storedPrecision), precision)
 }

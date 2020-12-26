@@ -9,7 +9,7 @@ class Arithmetic {
 
     @Test
     fun `log large close to 1`() {
-        val x = RealBigDec("1.1").forcePrecision(3500)
+        val x = RealBigDec("1.1").forcePrecision(4000)
         x.log()
     }
 
@@ -41,4 +41,17 @@ class Arithmetic {
     }
 
      */
+
+    @Test
+    fun sqrtLarge() {
+        val x = RealBigDec("3.0").increasePrecision(130000)
+        x.sqrt()
+    }
+
+    @Test
+    fun sqrtMultiple() {
+        val x = RealBigDec("3.0").increasePrecision(1500)
+        for(i in 0 until 3000)
+            x.sqrt()
+    }
 }
