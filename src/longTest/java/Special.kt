@@ -10,8 +10,8 @@ private const val MIN_PRECISION = 100
 class Special {
 
     @Test
-    fun gammaLarge() { // TODO fix for larger precision
-        val x = RealBigDec("3.14").increasePrecision(200)
+    fun gammaLarge() {
+        val x = RealBigDec("3.14").increasePrecision(500)
         Gamma(x).eval()
     }
 

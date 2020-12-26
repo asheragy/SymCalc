@@ -1,5 +1,6 @@
 package org.cerion.symcalc
 
+import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.number.RealBigDec
 import org.junit.Test
 
@@ -44,7 +45,7 @@ class Arithmetic {
 
     @Test
     fun sqrtLarge() {
-        val x = RealBigDec("3.0").increasePrecision(130000)
+        val x = RealBigDec("3.0").increasePrecision(140000)
         x.sqrt()
     }
 
@@ -67,5 +68,19 @@ class Arithmetic {
     fun nthRootLarge() {
         val x = RealBigDec("11.0").increasePrecision(65000)
         x.root(7)
+    }
+
+    @Test
+    fun exp() {
+        val x = RealBigDec("11.0").increasePrecision(MIN_PRECISION)
+        repeat(4500) {
+            x.exp()
+        }
+    }
+
+    @Test
+    fun expLarge() {
+        val x = RealBigDec("11.0").increasePrecision(3500)
+        x.exp()
     }
 }

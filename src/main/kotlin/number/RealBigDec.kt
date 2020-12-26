@@ -8,6 +8,7 @@ import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.core.N
+import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -235,6 +236,11 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
 
     // TODO move to extensions
     fun exp(): RealBigDec {
+        if (precision < 200) {
+            val t = forcePrecision(getStoredPrecision(precision))
+            return RealBigDec(BigDecimalMath.exp(t), precision)
+        }
+
         val storedPrecision = getStoredPrecision(precision)
         val mc = MathContext(storedPrecision, RoundingMode.HALF_UP)
 
@@ -248,7 +254,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         var factorial = BigDecimal.ONE
         var power = value
 
-        for(i in 2..1000) {
+        for(i in 2..10000) {
             power = power.multiply(value, mc)
             factorial = factorial.multiply(BigDecimal(i))
             var term = power.divide(factorial, mc)
