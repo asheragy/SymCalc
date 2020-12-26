@@ -3,14 +3,13 @@ package org.cerion.symcalc.function.special
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.number.Integer
-import org.cerion.symcalc.number.Rational
-import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.function.FunctionExpr
-import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.integer.Binomial
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
+import org.cerion.symcalc.number.RealBigDec
 
 class Gamma(vararg e: Expr) : FunctionExpr(*e) {
 
@@ -53,8 +52,7 @@ class Gamma(vararg e: Expr) : FunctionExpr(*e) {
 
         // These are calculated multiple times with the same value
         val powerValues = (0 until N).map {
-            // TODO check performance on RealBigDec ^ Rational its the bottleneck on this entire function
-            val rhalf = (Rational.HALF + it).eval(input.precision)
+            val rhalf = (Rational.HALF + it)
             Power(e / (sigma + rhalf), rhalf).eval()
         }
 

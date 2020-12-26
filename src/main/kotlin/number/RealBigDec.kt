@@ -190,8 +190,12 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
 
                 // TODO negative may work here but check cases
                 // TODO optimal values here
-                if (!isNegative && !other.isNegative && other.numerator < Integer(10) && other.denominator < Integer(10))
-                    return root(other.denominator.intValue()).pow(other.numerator)
+                if (!isNegative && !other.isNegative) {
+                    if (other.denominator == Integer(2))
+                        return sqrt().pow(other.numerator)
+                    if(other.numerator < Integer(10) && other.denominator < Integer(10))
+                        return root(other.denominator.intValue()).pow(other.numerator)
+                }
 
                 return pow(other.toPrecision(precision))
             }

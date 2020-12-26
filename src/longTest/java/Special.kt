@@ -5,18 +5,20 @@ import org.cerion.symcalc.function.special.Gamma
 import org.cerion.symcalc.function.special.Zeta
 import org.junit.Test
 
+private const val MIN_PRECISION = 100
+
 class Special {
 
     @Test
-    fun gammaLarge() {
-        val x = RealBigDec("3.14").increasePrecision(160)
+    fun gammaLarge() { // TODO fix for larger precision
+        val x = RealBigDec("3.14").increasePrecision(200)
         Gamma(x).eval()
     }
 
     @Test
     fun gammaMultiple() {
-        val x = RealBigDec("3.14").increasePrecision(100)
-        for(i in 0 until 5)
+        val x = RealBigDec("3.14").increasePrecision(MIN_PRECISION)
+        for(i in 0 until 30)
             Gamma(x).eval()
     }
 
@@ -28,7 +30,7 @@ class Special {
 
     @Test
     fun zetaMultiple() {
-        val x = RealBigDec("3.14").increasePrecision(100)
+        val x = RealBigDec("3.14").increasePrecision(MIN_PRECISION)
         for(i in 0 until 20)
             Zeta(x).eval()
     }
