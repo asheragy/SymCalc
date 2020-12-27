@@ -7,12 +7,12 @@ class ConstantTest {
 
     @Test
     fun piLarge() {
-        Pi().evalCompute(7000)
+        Pi().evalCompute(8200)
     }
 
     @Test
     fun piMultiple() {
-        for(i in 0 until 16000)
+        for(i in 0 until 45000)
             Pi().evalCompute(100)
     }
 }

@@ -5,10 +5,11 @@ import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.number.RealDouble
-import org.nevec.rjm.BigDecimalMath
+import org.cerion.symcalc.number.sqrt
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
+import kotlin.math.max
 
 class Pi : ConstExpr() {
     override fun toString(): String = "Pi"
@@ -36,23 +37,28 @@ class Pi : ConstExpr() {
         val bd26 = BigDecimal("-262537412640768000")
 
         // Calculate sum
-        var sum = BigDecimal(0)
-        for(k in 0..5000) {
-            val n1 = factorial(6 * k)
-            var numerator = bd54.multiply(BigDecimal(k))
-            numerator = numerator.add(bd13)
-            numerator = numerator.multiply(n1)
+        var sum = bd13
+        var n1 = BigDecimal.ONE // (6*k)!
+        var d1 = BigDecimal.ONE // (3*k)!
+        var d2 = BigDecimal.ONE // k!
+        var d3 = BigDecimal.ONE // bd26^k
+        for(k in 1..5000) {
+            n1 = factorial(6*k, n1, 6*(k-1))
+            val numerator = bd54
+                    .multiply(BigDecimal(k))
+                    .add(bd13)
+                    .multiply(n1)
 
-            val d1 = factorial(3 * k)
-            val d2 = factorial(k).pow(3)
-            val d3 = bd26.pow(k)
-            val denominator = d1.multiply(d2).multiply(d3)
+            d1 = factorial(3 * k, d1, 3 * (k-1))
+            d2 = factorial(k, d2, k-1)
+            d3 = d3.multiply(bd26, mc)
+            val denominator = d1.multiply(d2.pow(3)).multiply(d3)
 
             val next = numerator.divide(denominator, mc)
             val t = sum.add(next, mc)
             if (t == sum) {
                 // Divide this constant value by sum to get Pi
-                var c = BigDecimalMath.sqrt(BigDecimal("10005"), mc)
+                var c = BigDecimal("10005").sqrt(mc.precision)
                 c = c.multiply(BigDecimal("426880"))
 
                 return c.divide(sum, mc)
@@ -64,9 +70,9 @@ class Pi : ConstExpr() {
         throw IterationLimitExceeded()
     }
 
-    private fun factorial(k: Int): BigDecimal {
-        var bd = BigDecimal(1.0)
-        for(i in 1..k) {
+    private fun factorial(k: Int, prev: BigDecimal, kprev: Int): BigDecimal {
+        var bd = prev
+        for(i in (kprev+1)..k) {
             bd = bd.multiply(BigDecimal(i))
         }
 
