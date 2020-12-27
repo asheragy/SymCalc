@@ -35,7 +35,7 @@ enum class Function constructor(val value: String) {
     ARCCOSH("ArcCosh"),
     ARCTANH("ArcTanh"),
 
-    //List Functions
+    // List Functions
     TOTAL("Total"),
     RANGE("Range"),
     REVERSE("Reverse"),
@@ -54,8 +54,9 @@ enum class Function constructor(val value: String) {
     MAP("Map"),
     CONSTANT_ARRAY("ConstantArray"),
 
-    //IntegerNum
+    // Integer
     FACTORIAL("Factorial"),
+    FACTORIAL2("Factorial2"),
     MOD("Mod"),
     POWERMOD("PowerMod"),
     GCD("GCD"),

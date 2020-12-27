@@ -1,14 +1,45 @@
 package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.`==`
+import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Times
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertAll
 
 internal class GammaTest {
+
+    @Test
+    fun integers() {
+        assertAll(
+                Gamma(-100) `==` ComplexInfinity(),
+                Gamma(-99) `==` ComplexInfinity(),
+                Gamma(-2) `==` ComplexInfinity(),
+                Gamma(-1) `==` ComplexInfinity(),
+                Gamma(0) `==` ComplexInfinity(),
+                Gamma(1) `==` 1,
+                Gamma(2) `==` 1,
+                Gamma(10) `==` 362880)
+    }
+
+    @Test
+    fun rational() {
+        assertAll(
+                Gamma(Rational(-21, 2)) `==` Times(Rational(-2048, "13749310575"), Power(Pi(), Rational.HALF)),
+                Gamma(Rational(-3, 2)) `==` Times(Rational(4, 3), Power(Pi(), Rational.HALF)),
+                Gamma(Rational(-1, 2)) `==` Times(-2, Power(Pi(), Rational.HALF)),
+                Gamma(Rational(1, 2)) `==` Power(Pi(), Rational.HALF),
+                Gamma(Rational(3, 2)) `==` Times(Rational.HALF, Power(Pi(), Rational.HALF)),
+                Gamma(Rational(21, 2)) `==` Times(Rational(654729075, 1024), Power(Pi(), Rational.HALF)),
+                // Not computable
+                Gamma(Rational(1, 3)) `==` Gamma(Rational(1, 3)),
+                Gamma(Rational(-3, 5)) `==` Gamma(Rational(-3, 5)))
+    }
 
     @Test
     fun realBigDec() {

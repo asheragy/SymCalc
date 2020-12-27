@@ -85,6 +85,7 @@ object FunctionFactory {
 
             //Integer
             Function.FACTORIAL -> return Factorial(*e)
+            Function.FACTORIAL2 -> return Factorial2(*e)
             Function.MOD -> return Mod(*e)
             Function.POWERMOD -> return PowerMod(*e)
             Function.GCD -> return GCD(*e)

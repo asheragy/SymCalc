@@ -9,6 +9,15 @@ class Rational private constructor(val numerator: Integer, val denominator: Inte
         val ONE = Rational(Integer.ONE, Integer.ONE)
         val HALF = Rational(Integer.ONE, Integer.TWO)
         val THIRD = Rational(Integer.ONE, Integer(3))
+
+        private fun convertArg(n: Any): Integer {
+            return when(n) {
+                is Integer -> n
+                is Int -> Integer(n)
+                is String -> Integer(n)
+                else -> throw IllegalArgumentException("cannot convert $n to Integer")
+            }
+        }
     }
 
     override val type: ExprType get() = ExprType.NUMBER
@@ -18,8 +27,7 @@ class Rational private constructor(val numerator: Integer, val denominator: Inte
     override val isNegative: Boolean get() = numerator.isNegative
     override val precision: Int get() = InfinitePrecision
 
-    constructor(n: Integer, d: Integer = Integer.ONE) : this(n, d, false)
-    constructor(n: Int, d: Int) : this(Integer(n.toLong()), Integer(d.toLong()))
+    constructor(n: Any, d: Any = Integer.ONE) : this(convertArg(n), convertArg(d))
 
     override fun eval(): NumberExpr {
         //Reduce with GCD

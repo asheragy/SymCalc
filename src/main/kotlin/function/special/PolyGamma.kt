@@ -15,6 +15,4 @@ class PolyGamma(vararg e: Expr) : FunctionExpr(*e) {
 
         return this
     }
-
-
 }

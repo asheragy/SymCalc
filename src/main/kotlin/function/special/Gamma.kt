@@ -1,21 +1,43 @@
 package org.cerion.symcalc.function.special
 
+import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.E
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Sqrt
 import org.cerion.symcalc.function.integer.Binomial
+import org.cerion.symcalc.function.integer.Factorial
+import org.cerion.symcalc.function.integer.Factorial2
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
 
-class Gamma(vararg e: Expr) : FunctionExpr(*e) {
+class Gamma(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
-
         val z = get(0)
+
+        if (z is Integer) {
+            if (z.isZero || z.isNegative)
+                return ComplexInfinity()
+
+            return Factorial(z - 1).eval()
+        }
+
+        if (z is Rational && z.denominator == Integer(2)) {
+            return if (z.isNegative) {
+                val n = (z - Rational.HALF).unaryMinus()
+                Sqrt(Pi()) * Integer(-2).pow(n) / Factorial2((n * 2) - 1)
+            } else {
+                val n = z - Rational.HALF
+                Sqrt(Pi()) * Factorial2((n * 2) - 1) / Integer(2).pow(n)
+            }
+        }
+
         if (z is RealBigDec) {
             // Reduce using Gamma(x) = Gamma(x+1) / x
             if (z.isNegative)
