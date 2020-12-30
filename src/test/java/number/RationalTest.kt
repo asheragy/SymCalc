@@ -100,7 +100,7 @@ class RationalTest : NumberTestBase() {
     @Test
     fun eval_storedPrecision() {
         val real = Rational(1,3).toPrecision(5) as RealBigDec
-        assertEquals(20, real.value.precision())
+        assertEquals(19, real.value.precision())
     }
 
     @Test

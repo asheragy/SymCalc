@@ -20,28 +20,15 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
 
     companion object {
         val ZERO = RealBigDec(BigDecimal("0.0"))
-        private const val PrecisionMin = 20
-        private const val PrecisionStep = 10
 
-        // TODO remove pattern of calling this followed by setScale on external usages of BigDecimal
-        fun getStoredPrecision(desired: Int): Int {
-            if(desired < PrecisionMin - PrecisionStep)
-                return PrecisionMin
-
-            var result = PrecisionMin
-            while (desired > result - PrecisionStep)
-                result += PrecisionStep
-
-            return result
+        private const val MaxExtraPrecisionBase2_32 = 1;
+        fun getStoredPrecision(desiredPrecision: Int): Int {
+            return (((desiredPrecision * 0.10381025296523008) + 1 + MaxExtraPrecisionBase2_32).toInt() * 9.632959861247397).toInt()
         }
     }
 
     private val storedPrecision
         get() = getStoredPrecision(precision)
-
-    // TODO check implications of only storing the scaled value vs getting it on demand
-    val valueScaled: BigDecimal
-        get() = value.setScale(getStoredPrecision(precision))
 
     constructor(value: BigDecimal) : this(value, value.precision())
     constructor(value: String) : this(BigDecimal(value))
@@ -108,8 +95,9 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
                 if (other.isZero)
                     return this
 
-                val min = min(this.precision, other.precision)
-                return RealBigDec(value.add(other.value), min)
+                val desiredPrecision = min(this.precision, other.precision)
+                val result = value.add(other.value, MathContext(getStoredPrecision(desiredPrecision)))
+                return RealBigDec(result, desiredPrecision)
             }
             is Complex -> {
                 return other + this

@@ -21,11 +21,10 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun storedPrecision() {
-        assertEquals(20, RealBigDec.getStoredPrecision(0))
-        assertEquals(20, RealBigDec.getStoredPrecision(10))
-        assertEquals(30, RealBigDec.getStoredPrecision(11))
-        assertEquals(30, RealBigDec.getStoredPrecision(20))
-        assertEquals(40, RealBigDec.getStoredPrecision(21))
+        assertEquals(19, RealBigDec.getStoredPrecision(0))
+        assertEquals(28, RealBigDec.getStoredPrecision(10))
+        assertEquals(38, RealBigDec.getStoredPrecision(20))
+        assertEquals(38, RealBigDec.getStoredPrecision(21))
     }
 
     @Test
@@ -70,6 +69,19 @@ class RealBigDecTest : NumberTestBase() {
         assertEquals(2, RealBigDec("0.0000000011").precision)
         assertEquals(13, RealBigDec("111.0000000011").precision)
         assertEquals(23, RealBigDec("1.1234567899999987654321").precision)
+    }
+
+    @Test
+    fun internalStorageAddition() {
+        val a = RealBigDec("1234.")
+        val mag = fun(b: String): Int = ((a + RealBigDec(b)) as RealBigDec).value.precision()
+
+        assertEquals(8, mag("0.1234"))
+        assertEquals(10, mag("0.001234"))
+        assertEquals(11, mag("0.0001234"))
+        assertEquals(19, mag("0.0000000000001234"))
+        assertEquals(19, mag("0.00000000000001234"))
+        assertEquals(19, mag("0.0000000000000000001234"))
     }
 
     @Test
@@ -147,7 +159,7 @@ class RealBigDecTest : NumberTestBase() {
         assertEquals(18, bd2.value.precision())
 
         val bd3 = RealBigDec("0.333333333333333333333333333333", 9) * RealBigDec("0.3333")
-        assertEquals(20, bd3.value.precision())
+        assertEquals(19, bd3.value.precision())
     }
 
     @Test
@@ -167,7 +179,11 @@ class RealBigDecTest : NumberTestBase() {
 
         val n2 = (RealBigDec("2.00") / RealBigDec("3.01"))
         assertEquals("0.664`3", n2.toString())
-        assertEquals(20, n2.value.precision())
+        assertEquals(19, n2.value.precision())
+
+        val n3 = (RealBigDec("40000000000000.0") / RealBigDec("20000000000000.0"))
+        assertEquals("2.00000000000000`15", n3.toString())
+        assertEquals(1, n3.value.precision())
     }
 
     @Test
@@ -197,7 +213,7 @@ class RealBigDecTest : NumberTestBase() {
     @Test
     fun pow_toRational_storedPrecision() {
         val pow = (RealBigDec("2.000001") pow Rational(1,3)) as RealBigDec
-        assertEquals(BigDecimal("1.2599212598816798161"), pow.value)
+        assertEquals(BigDecimal("1.259921259881679816"), pow.value)
     }
 
     @Test
@@ -226,7 +242,7 @@ class RealBigDecTest : NumberTestBase() {
                 Power("-4.0000", Rational.HALF) `==` Complex(0, "2.0000"),
                 Power("-8.0000", Rational.THIRD) `==` Complex("1.0000", "1.7321"),
                 // TODO_LP real part should be zero, related to power of 3/2 being converted to precision=5
-                Power("-1.2345", Rational(3,2)) `==` Complex("-2.5853E-19", "-1.3716"))
+                Power("-1.2345", Rational(3,2)) `==` Complex("-0.79965E-18", "-1.3716"))
     }
 
     //@Test
