@@ -4,9 +4,43 @@ import org.cerion.symcalc.exception.IterationLimitExceeded
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
-import kotlin.math.abs
-import kotlin.math.ln
-import kotlin.math.pow
+import kotlin.math.*
+
+
+fun BigDecimal.exp(precision: Int): BigDecimal {
+    val mc = MathContext(precision, RoundingMode.HALF_UP)
+
+    if (signum() < 0) {
+        val denominator = this.unaryMinus().exp(precision)
+        return BigDecimal.ONE.divide(denominator, mc)
+    }
+
+    // Reduce number to <1 for faster convergence, exp(x) = exp(0.1*x)^10
+    if (this >= BigDecimal.ONE) {
+        val n = min(1000000000, ceil(log10(toDouble())).toInt())
+        val tenToN = 10.0.pow(n.toDouble()).toInt()
+        return scaleByPowerOfTen(-n).exp(precision).pow(tenToN, mc)
+    }
+
+    // Maclaurin series 1 + x + x^2/2! + x^3/3! + ...
+    var result = this.plus(BigDecimal.ONE)
+    var factorial = BigDecimal.ONE
+    var power = this
+
+    for(i in 2..10000) {
+        power = power.multiply(this, mc)
+        factorial = factorial.multiply(BigDecimal(i))
+        var term = power.divide(factorial, mc)
+        term = result.add(term, mc)
+
+        if (result == term)
+            return result
+
+        result = term
+    }
+
+    throw IterationLimitExceeded()
+}
 
 // TODO compare performance with java 9 version (when android can use it)
 fun BigDecimal.sqrt(precision: Int): BigDecimal {
@@ -107,7 +141,7 @@ private fun logTaylorSeriesV2(x: BigDecimal, mc: MathContext): BigDecimal {
     var powTerm = BigDecimal.ONE
     var sum = BigDecimal.ONE
 
-    for (k in 1 until 10000) {
+    for (k in 1 until 50000) {
         powTerm = powTerm.multiply(pow, mc)
         val kterm = BigDecimal.ONE.divide(BigDecimal(2 * k + 1), mc)
 

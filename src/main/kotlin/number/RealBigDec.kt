@@ -2,13 +2,11 @@ package org.cerion.symcalc.number
 
 import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.constant.Pi
-import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.core.N
-import org.nevec.rjm.BigDecimalMath
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -27,7 +25,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         }
     }
 
-    private val storedPrecision
+    private val maxStoredPrecision
         get() = getStoredPrecision(precision)
 
     constructor(value: BigDecimal) : this(value, value.precision())
@@ -48,19 +46,13 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     override fun round(): Integer = Integer(value.setScale(0, RoundingMode.HALF_UP).toBigInteger())
 
     private fun getRepresentedValue(): BigDecimal {
-        return forcePrecision(precision)
-    }
-
-    fun forcePrecision(newPrecision: Int): BigDecimal {
-        if (newPrecision < value.precision())
-            return value.round(MathContext(newPrecision, RoundingMode.HALF_UP))
-        else if (newPrecision > value.precision())
-            return value.setScale(newPrecision - (value.precision() - value.scale()), RoundingMode.HALF_UP)
+        if (precision < value.precision())
+            return value.round(MathContext(precision, RoundingMode.HALF_UP))
+        else if (precision > value.precision())
+            return value.setScale(precision - (value.precision() - value.scale()), RoundingMode.HALF_UP)
 
         return value
     }
-
-    fun increasePrecision(newPrecision: Int): RealBigDec = RealBigDec(this.forcePrecision(newPrecision))
 
     override fun toString(): String = "${getRepresentedValue().toPlainString()}`$precision"
     override fun unaryMinus(): RealBigDec = RealBigDec(value.negate(), precision)
@@ -222,50 +214,16 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         return this
     }
 
-    // TODO move to extensions
-    fun exp(): RealBigDec {
-        if (precision < 200) {
-            val t = forcePrecision(getStoredPrecision(precision))
-            return RealBigDec(BigDecimalMath.exp(t), precision)
-        }
-
-        val storedPrecision = getStoredPrecision(precision)
-        val mc = MathContext(storedPrecision, RoundingMode.HALF_UP)
-
-        if (isNegative) {
-            val denominator = this.unaryMinus().exp()
-            return (Integer.ONE.toPrecision(precision) / denominator) as RealBigDec
-        }
-
-        // Maclaurin series 1 + x + x^2/2! + x^3/3! + ...
-        var result = value.plus(BigDecimal.ONE)
-        var factorial = BigDecimal.ONE
-        var power = value
-
-        for(i in 2..10000) {
-            power = power.multiply(value, mc)
-            factorial = factorial.multiply(BigDecimal(i))
-            var term = power.divide(factorial, mc)
-            term = result.add(term, mc)
-
-            if (result == term)
-                return RealBigDec(result, precision)
-
-            result = term
-        }
-
-        throw IterationLimitExceeded()
-    }
-
-    fun log(): RealBigDec = RealBigDec(value.log(storedPrecision), precision)
-    fun sqrt(): RealBigDec = if (isZero) RealBigDec(BigDecimal.ZERO, precision) else RealBigDec(value.sqrt(storedPrecision), precision)
+    fun exp() = RealBigDec(value.exp(maxStoredPrecision), precision)
+    fun log() = RealBigDec(value.log(maxStoredPrecision), precision)
+    fun sqrt() = RealBigDec(if (isZero) BigDecimal.ZERO else value.sqrt(maxStoredPrecision), precision)
 
     fun root(n: Int): RealBigDec {
         return when {
             isZero -> RealBigDec(BigDecimal.ZERO, precision)
             n == 1 -> this
             n == 2 -> sqrt()
-            else -> RealBigDec(value.root(n, storedPrecision), precision)
+            else -> RealBigDec(value.root(n, maxStoredPrecision), precision)
         }
     }
 }

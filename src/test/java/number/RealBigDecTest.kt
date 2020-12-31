@@ -207,7 +207,7 @@ class RealBigDecTest : NumberTestBase() {
     @Test
     fun pow_toRational_large() {
         // Rational is evaluated differently for large int values where power+ Nth root is not practical
-        RealBigDec("2.0").increasePrecision(50) pow Rational(Integer("34359738367"), Integer("17179869183")) `should equal` "4.0000000001613859042092866284144245566543954355456"
+        RealBigDec("2.0", 50) pow Rational(Integer("34359738367"), Integer("17179869183")) `should equal` "4.0000000001613859042092866284144245566543954355456"
     }
 
     @Test
@@ -263,7 +263,7 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun expLarge() {
-        val x = RealBigDec("2.0").increasePrecision(100)
+        val x = RealBigDec("2.0", 100)
         x.exp() `should equal` "7.389056098930650227230427460575007813180315570551847324087127822522573796079057763384312485079121795"
     }
 
@@ -324,7 +324,7 @@ class RealBigDecTest : NumberTestBase() {
 
     @Test
     fun nthRoot() {
-        val x = RealBigDec("11.0").increasePrecision(100)
+        val x = RealBigDec("11.0", 100)
         x.root(3) `should equal` "2.223980090569315521165363376722157196518699128096923055699345808660400983082975974489758054481626274"
         x.root(7) `should equal` "1.408543888428699411406584628756831160498853412347820244689226302716888429032334406113507802751386845"
     }

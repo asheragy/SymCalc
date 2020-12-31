@@ -11,27 +11,27 @@ class Special {
 
     @Test
     fun gammaLarge() {
-        val x = RealBigDec("3.14").increasePrecision(500)
+        val x = RealBigDec("3.14", 500)
         Gamma(x).eval()
     }
 
     @Test
     fun gammaMultiple() {
-        val x = RealBigDec("3.14").increasePrecision(MIN_PRECISION)
+        val x = RealBigDec("3.14", MIN_PRECISION)
         for(i in 0 until 30)
             Gamma(x).eval()
     }
 
     @Test
     fun zetaLarge() {
-        val x = RealBigDec("3.14").increasePrecision(400)
+        val x = RealBigDec("3.14", 450)
         Zeta(x).eval()
     }
 
     @Test
     fun zetaMultiple() {
-        val x = RealBigDec("3.14").increasePrecision(MIN_PRECISION)
-        for(i in 0 until 20)
+        val x = RealBigDec("3.14", MIN_PRECISION)
+        for(i in 0 until 30)
             Zeta(x).eval()
     }
 }
