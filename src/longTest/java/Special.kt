@@ -1,5 +1,6 @@
 package org.cerion.symcalc
 
+import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.function.special.Gamma
 import org.cerion.symcalc.function.special.Zeta
@@ -30,8 +31,9 @@ class Special {
 
     @Test
     fun zetaMultiple() {
-        val x = RealBigDec("3.14", MIN_PRECISION)
-        for(i in 0 until 30)
-            Zeta(x).eval()
+        val x = RealBigDec("3.14", 50)
+        for(i in 0 until 1)
+            if(Zeta(x).eval() is ErrorExpr)
+                throw RuntimeException()
     }
 }

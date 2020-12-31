@@ -2,15 +2,18 @@ package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.function.FunctionExpr
+import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.integer.Bernoulli
+import org.cerion.symcalc.function.integer.Binomial
+import org.cerion.symcalc.function.integer.Factorial
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.number.RealDouble
-import org.cerion.symcalc.function.FunctionExpr
-import org.cerion.symcalc.function.arithmetic.Power
-import org.cerion.symcalc.function.integer.Bernoulli
-import org.cerion.symcalc.function.integer.Factorial
 import org.nevec.rjm.BigDecimalMath
 import java.math.MathContext
 
@@ -55,22 +58,51 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
                     return RealBigDec(BigDecimalMath.zeta(n.intValue(), MathContext(e.value.precision())), e.precision)
                 }
 
-                return calculateInfiniteSum(e)
+                return calculatePSeries(e)
+                //return calculateDirichletEta(e)
             }
         }
 
         return this
     }
 
-    private fun calculateInfiniteSum(s: RealBigDec): RealBigDec {
-        var sum: Expr = Integer.ONE
+    private fun calculateDirichletEta(s: RealBigDec): RealBigDec {
+        var sum = RealBigDec("0.5", s.precision)
+        val one = RealBigDec("1.0", s.precision)
 
-        // TODO this converges too slow
-        for(n in 2 until 100) {
-            val term = Integer.ONE / Power(Integer(n), s)
-            sum += term
+        var inv2pow = RealBigDec("0.5", s.precision)
+        for (n in 1 until 100) {
+            val binomial = Binomial(n).eval() as ListExpr
+            var innersum = one
+            for (k in 1..n) {
+                val term = (binomial[k] * Power(k+1, s.unaryMinus())) as RealBigDec
+                if (k % 2 == 0)
+                    innersum = (innersum + term) as RealBigDec
+                else
+                    innersum = (innersum - term) as RealBigDec
+            }
+
+            inv2pow /= RealBigDec("2.0", s.precision)
+            val t = sum + (inv2pow * innersum)
+            if (sum == t)
+                break
+
+            sum = t as RealBigDec
         }
 
-        return sum as RealBigDec
+        val multiplier = one / (one - Power(2, one - s))
+        return (multiplier * sum) as RealBigDec
+    }
+
+    // Converges faster for larger s
+    private fun calculatePSeries(s: RealBigDec): RealBigDec {
+        var sum = RealBigDec("1.0", s.precision)
+
+        for(n in 2..100) {
+            val term = Integer.ONE / Power(Integer(n), s)
+            sum = (sum + term) as RealBigDec
+        }
+
+        return sum
     }
 }
