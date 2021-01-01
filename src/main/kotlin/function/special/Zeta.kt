@@ -16,10 +16,8 @@ import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.number.RealDouble
-import org.nevec.rjm.BigDecimalMath
-import java.math.MathContext
 
-class Zeta(vararg e: Expr) : FunctionExpr(*e) {
+class Zeta(vararg e: Any) : FunctionExpr(*e) {
     override fun evaluate(): Expr {
         when (val e = get(0)) {
             is Integer -> {
@@ -56,19 +54,16 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
                     if (n.isEven)
                         return Zeta(n).eval(e.precision)
 
-                    when (n.intValue()) {
-                        3 -> return calcZeta3(e.precision)
-                        5 -> return calcZeta5(e.precision)
-                        7 -> return calcZeta7(e.precision)
+                    return when (n.intValue()) {
+                        3 -> calcZeta3(e.precision)
+                        5 -> calcZeta5(e.precision)
                         else -> {
-                            //if (n.intValue() % 4 == 3)
-                            //    return calcZetaMod43(n.intValue(), e.precision)
-                            //else
-                            //    return calcZetaMod41(n.intValue(), e.precision)
+                            if (n.intValue() % 4 == 3)
+                                calcZetaMod43(n.intValue(), e.precision)
+                            else
+                                calcZetaMod41(n.intValue(), e.precision)
                         }
                     }
-
-                    return RealBigDec(BigDecimalMath.zeta(n.intValue(), MathContext(e.precision)), e.precision)
                 }
 
                 return calculatePSeries(e)
@@ -128,7 +123,7 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
         var sum = c77
         val kfactorial = FactorialGenerator()
         val twokfactorial = FactorialGenerator()
-        for (k in 1 until 100) {
+        for (k in 1 until 1000) {
             val kfact10 = kfactorial.getNext(k).pow(10)
             val poly = (c205 * Integer(k*k)) + (c250 * Integer(k)) + c77
             val denom = twokfactorial.getNext(2*k + 1).pow(5)
@@ -174,6 +169,7 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
         throw IterationLimitExceeded()
     }
 
+    /* Slightly slower than generic method
     private fun calcZeta7(precision: Int): RealBigDec {
         var sum = RealBigDec("0.0", precision)
         val e2pi = ((Pi().eval(precision) * Integer(2)) as RealBigDec).exp()
@@ -195,9 +191,25 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
 
         throw IterationLimitExceeded()
     }
+     */
 
     private fun calcZetaMod43(n: Int, precision: Int): RealBigDec {
         var sum1 = RealBigDec("0.0", precision)
+        val bernoulliList = Bernoulli.list(n+2)
+        val binomialList = Binomial(n+1).eval() as ListExpr
+        for (k in 0..((n+1)/2)) {
+            val binomial = binomialList[2*k]
+            val bernoulli1 = bernoulliList[n + 1 - 2*k]
+            val bernoulli2 = bernoulliList[2*k]
+
+            val term = binomial * bernoulli1 * bernoulli2
+            if (k % 2 == 0)
+                sum1 = (sum1 - term) as RealBigDec
+            else
+                sum1 = (sum1 + term) as RealBigDec
+        }
+
+        var sum2 = RealBigDec("0.0", precision)
         val e2pi = ((Pi().eval(precision) * Integer(2)) as RealBigDec).exp()
         var e2pin = RealBigDec("1.0", precision)
 
@@ -208,40 +220,28 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
 
             e2pin *= e2pi
             val pow = Integer(k).pow(n)
-            val temp = (sum1 + (Integer(1) / (pow * (e2pin - 1)))) as RealBigDec
-            if (temp == sum1) {
-                sum1 = temp
+            val temp = (sum2 + (Integer(1) / (pow * (e2pin - 1)))) as RealBigDec
+            if (temp == sum2) {
+                sum2 = temp
                 break
             }
 
-            sum1 = temp
+            sum2 = temp
         }
 
-        var sum2 = RealBigDec("0.0", precision)
-        for (k in 0..((n+1)/2)) {
-            val binomial = Binomial(n+1, 2*k) // TODO pre-calculate this list
-            val bernoulli1 = Bernoulli(n + 1 - 2*k).eval()
-            val bernoulli2 = Bernoulli(2*k).eval()
-
-            val term = binomial * bernoulli1 * bernoulli2
-            if (k % 2 == 0)
-                sum2 = (sum2 - term) as RealBigDec
-            else
-                sum2 = (sum2 + term) as RealBigDec
-        }
-
-        val piterm = (Power(2, n-1) * Power(Pi(), n)) / Factorial(n+1)
-
-        return (piterm*sum2 - Integer(2) * sum1) as RealBigDec
+        val piterm = (Integer(2).pow(n-1) * Power(Pi().eval(precision), n)) / Factorial(n+1)
+        return (piterm*sum1 - Integer(2) * sum2) as RealBigDec
     }
 
     private fun calcZetaMod41(n: Int, precision: Int): RealBigDec {
         var sum1 = RealBigDec("0.0", precision)
+        val bernoulliList = Bernoulli.list(n+2)
+        val binomialList = Binomial(n+1).eval() as ListExpr
         for (k in 0..((n+1)/4)) {
             val a = Integer(n + 1 - 4*k)
-            val binomial = Binomial(n+1, 2*k) // TODO pre-calculate this list
-            val bernoulli1 = Bernoulli(n + 1 - 2*k).eval()
-            val bernoulli2 = Bernoulli(2*k).eval()
+            val binomial = binomialList[2*k]
+            val bernoulli1 = bernoulliList[n + 1 - 2*k]
+            val bernoulli2 = bernoulliList[2*k]
 
             val term = a * binomial * bernoulli1 * bernoulli2
             if (k % 2 == 0)
