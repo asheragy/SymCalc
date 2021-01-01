@@ -45,15 +45,13 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
             if (z.isNegative)
                 return Gamma(z + 1) / z
 
-            /*
+            /* Identity to reduce large numbers but unsure if its any better because of factorial
             if (z.toDouble() > 1.5) {
                 val n = (z.toDouble() - 0.5).toInt()
-                val xsmall = (z - n) as RealBigDec
-                val bigDec = xsmall.forcePrecision(RealBigDec.getStoredPrecision(z.precision))
-                val poch = RealBigDec(BigDecimalMath.pochhammer(bigDec, n))
-                return Gamma(xsmall) * poch
-            }
-             */
+                val zsmall = (z - n) as RealBigDec
+                val poch = Pochhammer(zsmall, n)
+                return Gamma(zsmall) * poch
+            } */
 
             return approximate(z)
         }

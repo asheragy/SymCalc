@@ -41,30 +41,6 @@ public class BigDecimalMath
 "092721079750930295532116534498720275596023648066549911988183479775356636980742"+
 "654252786255181841757467289097777279380008164706001614524919217321721477235014") ;
 
-        /** Euler-Mascheroni constant lower-case gamma.
-        * http://www.worldwideschool.org/library/books/sci/math/MiscellaneousMathematicalConstants/chap35.html
-        */
-        static BigDecimal GAMMA = new BigDecimal("0.577215664901532860606512090082402431"+
-"0421593359399235988057672348848677267776646709369470632917467495146314472498070"+
-"8248096050401448654283622417399764492353625350033374293733773767394279259525824"+
-"7094916008735203948165670853233151776611528621199501507984793745085705740029921"+
-"3547861466940296043254215190587755352673313992540129674205137541395491116851028"+
-"0798423487758720503843109399736137255306088933126760017247953783675927135157722"+
-"6102734929139407984301034177717780881549570661075010161916633401522789358679654"+
-"9725203621287922655595366962817638879272680132431010476505963703947394957638906"+
-"5729679296010090151251959509222435014093498712282479497471956469763185066761290"+
-"6381105182419744486783638086174945516989279230187739107294578155431600500218284"+
-"4096053772434203285478367015177394398700302370339518328690001558193988042707411"+
-"5422278197165230110735658339673487176504919418123000406546931429992977795693031"+
-"0050308630341856980323108369164002589297089098548682577736428825395492587362959"+
-"6133298574739302373438847070370284412920166417850248733379080562754998434590761"+
-"6431671031467107223700218107450444186647591348036690255324586254422253451813879"+
-"1243457350136129778227828814894590986384600629316947188714958752549236649352047"+
-"3243641097268276160877595088095126208404544477992299157248292516251278427659657"+
-"0832146102982146179519579590959227042089896279712553632179488737642106606070659"+
-"8256199010288075612519913751167821764361905705844078357350158005607745793421314"+
-"49885007864151716151945");
-
         /** Natural logarithm of 2.
         * http://www.worldwideschool.org/library/books/sci/math/MiscellaneousMathematicalConstants/chap58.html
         */
@@ -90,7 +66,6 @@ public class BigDecimalMath
 "667519339312890431641370681397776498176974868903887789991296503619270710889264105"+
 "230924783917373501229842420499568935992206602204654941510613");
 
-
         /** Euler's constant.
         * @param mc The required precision of the result.
         * @return 3.14159...
@@ -111,54 +86,6 @@ public class BigDecimalMath
                         return multiplyRound(S,8) ;
                 }
         } /* BigDecimalMath.pi */
-
-        /** Euler-Mascheroni constant.
-        * @param mc The required precision of the result.
-        * @return 0.577...
-        * @since 2009-08-13
-        * @author Richard J. Mathar
-        */
-        static public BigDecimal gamma(MathContext mc)
-        {
-                /* look it up if possible */
-                if ( mc.getPrecision() < GAMMA.precision() )
-                        return GAMMA.round(mc) ;
-                else
-                {
-                        double eps = prec2err(0.577, mc.getPrecision() ) ;
-
-
-                        /* Euler-Stieltjes as shown in Dilcher, Aequat Math 48 (1) (1994) 55-85
-                        */
-                        MathContext mcloc =  new MathContext(2+mc.getPrecision()) ;
-                        BigDecimal resul =  BigDecimal.ONE ;
-                        resul =  resul.add( log(2,mcloc) ) ;
-                        resul =  resul.subtract( log(3,mcloc) ) ;
-
-                        /* how many terms: zeta-1 falls as 1/2^(2n+1), so the
-                        * terms drop faster than 1/2^(4n+2). Set 1/2^(4kmax+2) < eps.
-                        * Leading term zeta(3)/(4^1*3) is 0.017. Leading zeta(3) is 1.2. Log(2) is 0.7
-                        */
-                        int kmax = (int)((Math.log(eps/0.7)-2.)/4.) ;
-                        mcloc =  new MathContext( 1+err2prec(1.2,eps/kmax) ) ;
-                        for(int n=1; ; n++)
-                        {
-                                /* zeta is close to 1. Division of zeta-1 through
-                                * 4^n*(2n+1) means divion through roughly 2^(2n+1)
-                                */
-                                BigDecimal c = zeta(2*n+1,mcloc).subtract(BigDecimal.ONE) ;
-                                BigInteger fourn = new BigInteger(""+(2*n+1)) ;
-                                fourn = fourn.shiftLeft(2*n) ;
-                                c = divideRound(c, fourn) ;
-                                resul = resul.subtract(c) ;
-                                if ( c.doubleValue() < 0.1*eps)
-                                        break;
-                        }
-                        return resul.round(mc) ;
-                }
-
-        } /* BigDecimalMath.gamma */
-
 
         /** The square root.
         * @param x the non-negative argument.
@@ -642,134 +569,6 @@ public class BigDecimalMath
                                 return BigDecimal.ONE.divide( x.pow(-n),mc) ;
                 }
         } /* BigDecimalMath.powRound */
-
-        /** The Gamma function.
-        * @param x The argument.
-        * @return Gamma(x).
-        * @since 2009-08-06
-        * @author Richard J. Mathar
-        */
-        static public BigDecimal Gamma(final BigDecimal x)
-        {
-                /* reduce to interval near 1.0 with the functional relation, Abramowitz-Stegun 6.1.33
-                */
-                if ( x.compareTo(BigDecimal.ZERO) < 0 )
-                        return divideRound(Gamma( x.add(BigDecimal.ONE) ),x) ;
-                else if ( x.doubleValue() > 1.5 )
-                {
-                        /* Gamma(x) = Gamma(xmin+n) = Gamma(xmin)*Pochhammer(xmin,n).
-                        */
-                        int n = (int) ( x.doubleValue()-0.5 );
-                        BigDecimal xmin1 = x.subtract(new BigDecimal(n)) ;
-                        return multiplyRound(Gamma(xmin1), pochhammer(xmin1,n) ) ;
-                }
-                else
-                {
-                        /* apply Abramowitz-Stegun 6.1.33
-                        */
-                        BigDecimal z = x.subtract(BigDecimal.ONE) ;
-
-                        /* add intermediately 2 digits to the partial sum accumulation
-                        */
-                        z = scalePrec(z,2) ;
-                        MathContext mcloc = new MathContext(z.precision()) ;
-
-                        /* measure of the absolute error is the relative error in the first, logarithmic term
-                        */
-                        double eps = x.ulp().doubleValue()/x.doubleValue() ;
-
-                        BigDecimal resul = log( scalePrec(x,2)).negate() ;
-
-                        if ( x.compareTo(BigDecimal.ONE) != 0 )
-                        {
-
-                                BigDecimal gammCompl = BigDecimal.ONE.subtract(gamma(mcloc) ) ;
-                                resul = resul.add( multiplyRound(z,gammCompl) ) ;
-                                for(int n=2; ;n++)
-                                {
-                                        /* multiplying z^n/n by zeta(n-1) means that the two relative errors add.
-                                        * so the requirement in the relative error of zeta(n)-1 is that this is somewhat
-                                        * smaller than the relative error in z^n/n (the absolute error of thelatter  is the
-                                        * absolute error in z) 
-                                        */
-                                        BigDecimal c = divideRound(z.pow(n,mcloc),n) ;
-                                        MathContext m = new MathContext( err2prec(n*z.ulp().doubleValue()/2./z.doubleValue()) ) ;
-                                        c = c.round(m) ;
-
-                                        /* At larger n, zeta(n)-1 is roughly 1/2^n. The product is c/2^n.
-                                        * The relative error in c is c.ulp/2/c . The error in the product should be small versus eps/10.
-                                        * Error from 1/2^n is c*err(sigma-1).
-                                        * We need a relative error of zeta-1 of the order of c.ulp/50/c. This is an absolute
-                                        * error in zeta-1 of c.ulp/50/c/2^n, and also the absolute error in zeta, because zeta is
-                                        * of the order of 1.
-                                        */
-                                        if ( eps/100./c.doubleValue() < 0.01 )
-                                                m = new MathContext( err2prec(eps/100./c.doubleValue()) ) ;
-                                        else
-                                                m = new MathContext( 2) ;
-                                        /* zeta(n) -1 */
-                                        BigDecimal zetm1 = zeta(n,m).subtract(BigDecimal.ONE) ;
-                                        c = multiplyRound(c,zetm1) ;
-
-                                        if ( n % 2 == 0 )
-                                                resul = resul.add(c) ;
-                                        else
-                                                resul = resul.subtract(c) ;
-        
-                                        /* alternating sum, so truncating as eps is reached suffices 
-                                        */
-                                        if ( Math.abs(c.doubleValue()) < eps)
-                                                break;
-                                }
-                        }
-                        
-                        /* The relative error in the result is the absolute error in the
-                        * input variable times the digamma (psi) value at that point.
-                        */
-                        double zdbl = z.doubleValue() ;
-                        eps = psi(zdbl)* x.ulp().doubleValue()/2. ;
-                        mcloc = new MathContext( err2prec(eps) ) ;
-                        return exp(resul).round(mcloc) ;
-                }
-        } /* BigDecimalMath.gamma */
-
-        /** Pochhammer's  function.
-        * @param x The main argument.
-        * @param n The non-negative index.
-        * @return (x)_n = x(x+1)(x+2)*...*(x+n-1).
-        * @since 2009-08-19
-        * @author Richard J. Mathar
-        */
-        static public BigDecimal pochhammer(final BigDecimal x, final int n)
-        {
-                /* reduce to interval near 1.0 with the functional relation, Abramowitz-Stegun 6.1.33
-                */
-                if ( n < 0 )
-                        throw new ProviderException("Not implemented: pochhammer with negative index "+n) ;
-                else if ( n == 0 )
-                        return BigDecimal.ONE ;
-                else
-                {
-                        /* internally two safety digits
-                        */
-                        BigDecimal xhighpr = scalePrec(x,2) ;
-                        BigDecimal resul = xhighpr ;
-
-                        double xUlpDbl = x.ulp().doubleValue() ;
-                        double xDbl = x.doubleValue() ;
-                        /* relative error of the result is the sum of the relative errors of the factors
-                        */
-                        double eps = 0.5*xUlpDbl/Math.abs(xDbl) ;
-                        for (int i =1 ; i < n ; i++)
-                        {
-                                eps += 0.5*xUlpDbl/Math.abs(xDbl+i) ;
-                                resul = resul.multiply( xhighpr.add(new BigDecimal(i)) ) ;
-                                final MathContext mcloc = new MathContext(4+ err2prec(eps) ) ;
-                                resul = resul.round(mcloc) ;
-                        }
-                        return resul.round(new MathContext(err2prec(eps)) )  ;
-                }
-        } /* BigDecimalMath.pochhammer */
 
         /** Riemann zeta function.
         * @param n The positive integer argument.
@@ -1279,21 +1078,6 @@ public class BigDecimalMath
                 MathContext mc = new MathContext( x.precision() ) ;
                 return x.divide(new BigDecimal(n),mc) ;
         }
-
-        /** Divide and round.
-        * @param x The numerator
-        * @param n The denominator
-        * @return the divided x/n
-        * @since 2009-07-30
-        * @author Richard J. Mathar
-        */
-        static public BigDecimal divideRound(final BigDecimal x, final BigInteger n)
-        {
-                /* The estimation of the relative error in the result is |err(x)/x| 
-                */
-                MathContext mc = new MathContext( x.precision() ) ;
-                return x.divide(new BigDecimal(n),mc) ;
-        } /* divideRound */
 
         /** Divide and round.
         * @param n The numerator
