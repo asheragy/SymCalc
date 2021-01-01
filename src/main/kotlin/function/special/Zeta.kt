@@ -5,6 +5,7 @@ import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.function.FactorialGenerator
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.integer.Bernoulli
@@ -38,7 +39,6 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
                     // Negative odd integers are -BernoulliB[1 - n]/(1 - n)
                     return Integer.NEGATIVE_ONE * Bernoulli(Integer.ONE - e) / (Integer.ONE - e)
                 }
-
             }
 
             is RealDouble -> {
@@ -55,7 +55,11 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
                     if (n.isEven)
                         return Zeta(n).eval(e.precision)
 
-                    return RealBigDec(BigDecimalMath.zeta(n.intValue(), MathContext(e.value.precision())), e.precision)
+                    when (n.intValue()) {
+                        3 -> return calcZeta3(e.precision)
+                    }
+
+                    return RealBigDec(BigDecimalMath.zeta(n.intValue(), MathContext(e.precision)), e.precision)
                 }
 
                 return calculatePSeries(e)
@@ -104,5 +108,34 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
         }
 
         return sum
+    }
+
+    // Apéry's constant
+    private fun calcZeta3(precision: Int): RealBigDec {
+        val c205 = RealBigDec("205.0", precision)
+        val c250 = RealBigDec("250.0", precision)
+        val c77 = RealBigDec("77.0", precision)
+
+        var sum = c77
+        val kfactorial = FactorialGenerator()
+        val twokfactorial = FactorialGenerator()
+        for (k in 1 until 100) {
+            val kfact10 = kfactorial.getNext(k).pow(10)
+            val poly = (c205 * Integer(k*k)) + (c250 * Integer(k)) + c77
+            val denom = twokfactorial.getNext(2*k + 1).pow(5)
+
+            val term = (kfact10 * poly / denom)
+            val t = if (k % 2 == 0)
+                (sum + term) as RealBigDec
+            else
+                (sum - term) as RealBigDec
+
+            if (sum == t)
+                return (t / Integer(64)) as RealBigDec
+
+            sum = t
+        }
+
+        throw IterationLimitExceeded()
     }
 }

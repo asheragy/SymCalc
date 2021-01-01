@@ -12,8 +12,6 @@ import org.cerion.symcalc.function.list.Tally
 import org.nevec.rjm.BigIntegerMath
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.math.MathContext
-import java.math.RoundingMode
 
 class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     companion object {
@@ -46,12 +44,7 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         return when (precision) {
             InfinitePrecision -> this
             MachinePrecision -> RealDouble(value.toDouble())
-            else -> {
-                var bd = BigDecimal(value, MathContext(precision, RoundingMode.HALF_UP))
-                if (precision > bd.precision())
-                    bd = bd.setScale(precision - bd.precision())
-                return RealBigDec(bd)
-            }
+            else -> RealBigDec(BigDecimal(value), precision)
         }
     }
 
@@ -109,12 +102,12 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         }
     }
 
-    fun pow(other: Integer): NumberExpr {
-        val intVal = other.asInteger().value.toInt()
-        return if (intVal < 0)
-            Rational(ONE, Integer(value.pow(-intVal))).eval()
+    fun pow(other: Integer) = pow(other.intValue())
+    fun pow(n: Int): NumberExpr {
+        return if (n < 0)
+            Rational(ONE, Integer(value.pow(-n))).eval()
         else
-            Integer(value.pow(intVal))
+            return Integer(value.pow(n))
     }
 
     infix fun pow(b: Rational): Expr {
