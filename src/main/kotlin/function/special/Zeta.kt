@@ -7,6 +7,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.function.FactorialGenerator
 import org.cerion.symcalc.function.FunctionExpr
+import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.integer.Bernoulli
 import org.cerion.symcalc.function.integer.Binomial
@@ -57,6 +58,7 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
 
                     when (n.intValue()) {
                         3 -> return calcZeta3(e.precision)
+                        5 -> return calcZeta5(e.precision)
                     }
 
                     return RealBigDec(BigDecimalMath.zeta(n.intValue(), MathContext(e.precision)), e.precision)
@@ -134,6 +136,32 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
                 return (t / Integer(64)) as RealBigDec
 
             sum = t
+        }
+
+        throw IterationLimitExceeded()
+    }
+
+    private fun calcZeta5(precision: Int): RealBigDec {
+        var sum1 = RealBigDec("0.0", precision)
+        var sum2 = RealBigDec("0.0", precision)
+        val e2pi = ((Pi().eval(precision) * Integer(2)) as RealBigDec).exp()
+        var e2pin = RealBigDec("1.0", precision)
+        for (n in 1 until 1000) {
+            e2pin *= e2pi
+            val pow = Integer(n).pow(5)
+
+            sum1 = (sum1 + (Integer(1) / (pow * (e2pin - 1)))) as RealBigDec
+            val t = (sum2 + (Integer(1) / (pow * (e2pin + 1)))) as RealBigDec
+
+            if (t == sum2) {
+                val pi5 = Divide(Power(Pi(), 5), 294).eval(precision)
+                val t1 = Rational(72,35) * sum1
+                val t2 = Rational(2, 35) * t
+
+                return (pi5 - t1 - t2) as RealBigDec
+            }
+
+            sum2 = t
         }
 
         throw IterationLimitExceeded()

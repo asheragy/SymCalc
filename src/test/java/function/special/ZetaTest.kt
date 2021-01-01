@@ -1,6 +1,7 @@
 package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.`==`
+import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Power
@@ -66,9 +67,17 @@ internal class ZetaTest {
     fun realBigDec_oddInteger() {
         assertAll(
                 Zeta(Integer(3).toPrecision(100)) `==` "1.202056903159594285399738161511449990764986292340498881792271555341838205786313090186455873609335258",
+                Zeta(Integer(5).toPrecision(100)) `==` "1.036927755143369926331365486457034168057080919501912811974192677903803589786281484560043106557133336",
                 Zeta(Integer(7).toPrecision(10)) `==` "1.008349277",
                 Zeta(Integer(21).toPrecision(10)) `==` "1.000000477"
         )
+    }
+
+    @Test
+    fun temp() {
+        repeat(150) {
+            //Zeta(Integer(5).toPrecision(100)).eval() `should equal` "1.036927755143369926331365486457034168057080919501912811974192677903803589786281484560043106557133336"
+        }
     }
 
     @Test
