@@ -3,6 +3,7 @@ package org.cerion.symcalc.function.special
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.function.FunctionExpr
@@ -15,6 +16,7 @@ import org.cerion.symcalc.function.integer.Factorial2
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
+import kotlin.math.max
 
 class Gamma(vararg e: Any) : FunctionExpr(*e) {
 
@@ -54,9 +56,6 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
              */
 
             return approximate(z)
-
-            //val t = z.forcePrecision(RealBigDec.getStoredPrecision(z.precision))
-            //return RealBigDec(BigDecimalMath.Gamma(t), z.precision)
         }
 
         return this
@@ -64,10 +63,18 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
 
     // Lanczos approximation (wolfram mathworld version)
     private fun approximate(input: RealBigDec): Expr {
-        val z = (input - Integer.ONE) as RealBigDec
-        val sigma = Integer(input.precision / 2)
+        if (input.precision > 400) // Slow and unsure on accuracy much beyond this range
+            throw IterationLimitExceeded()
 
-        val e = E().eval(input.precision)
+        // For accuracy more precision needs to be calculated from start
+        // TODO_LP see if there is anything in computations that can make this unnecessary or reduced
+        val extraPrecision = 2 + ((max(0, input.precision - 30)) / 3)
+        val start = RealBigDec(input.value, input.precision + extraPrecision)
+
+        val z = (start - Integer.ONE) as RealBigDec
+        val sigma = Integer(z.precision / 2)
+
+        val e = E().eval(z.precision)
         val term = Power(z + sigma + Rational.HALF, z + Rational.HALF)
         val exp = Exp(-(z + Rational.HALF))
         val N = sigma.intValue() + 2
@@ -87,7 +94,8 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
             sum += gk * hk
         }
 
-        return term * exp * sum
+        val result = (term * exp * sum) as RealBigDec
+        return RealBigDec(result.value, input.precision)
     }
 
     private fun g(k: Int, powerValues: List<Expr>): Expr {

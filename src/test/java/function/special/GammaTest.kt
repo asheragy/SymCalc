@@ -3,12 +3,10 @@ package org.cerion.symcalc.function.special
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Pi
-import org.cerion.symcalc.number.RealBigDec
-import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
-import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
+import org.cerion.symcalc.number.RealBigDec
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertAll
 
@@ -54,20 +52,16 @@ internal class GammaTest {
     }
 
     @Test
-    fun realBigDec_larger() {
+    fun realBigDec_highPrecision() {
+        val precision = 20
         assertAll(
-                Gamma(Pi().eval(50)) `==` "2.2880377953400324179595889090602339228896881533562"
-        )
-    }
-
-    // TODO should be slightly faster + working on high precision
-
-    //@Test
-    fun highPrecision() {
-        assertAll(
-                Gamma(Pi().eval(100)) `==` "2.288037795340032417959588909060233922889688153356222441199380745470471006608504282500725304467928475",
-                Gamma(Power(Pi(),Integer(2)).eval(100)) `==` "270792.2054495102160290246741198906841378682168817929885534109780010824127805549219880866939727858013",
-                Gamma(Divide(Integer(1), Integer(1000)).eval(100)) `==` "999.4237724845954661149822012996440004652176101456122324695421716913960238118284038452483877721898402"
+                Gamma(RealBigDec("0.001", precision)) `==` RealBigDec("999.4237724845954661149822012996440004652176101456122324695421716913960238118284038452483877721898402", precision),
+                Gamma(RealBigDec("0.999", precision)) `==` RealBigDec("1.000578205629358647990097615322270747269724531183709711048239559333598723240011856171670771215582027", precision),
+                Gamma(RealBigDec("1.500", precision)) `==` RealBigDec("0.8862269254527580136490837416705725913987747280611935641069038949264556422955160906874753283692723327", precision),
+                Gamma(RealBigDec("1.999", precision)) `==` RealBigDec("0.9995776274237292893421075177069484765224548066525260013371913197742651245167718443154991004443664454", precision),
+                Gamma(Pi().eval(precision))           `==` RealBigDec("2.2880377953400324179595889090602339228896881533562224411993807454704710066085042825007253044679284748", precision),
+                Gamma(RealBigDec("5.555", precision)) `==` RealBigDec("57.20975946055917813812606162394679559071496013293777144148922868004267627177579107765898895127159773", precision),
+                Gamma(RealBigDec("100.1", precision)) `==` RealBigDec("1478454494651513679874739643700584598156163305312630712228634114648770721338127073225051892034559658000000000000000000000000000000000000000000000000000000000", precision)
         )
     }
 }

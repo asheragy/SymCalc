@@ -16,7 +16,7 @@ fun BigDecimal.exp(precision: Int): BigDecimal {
     }
 
     // Reduce number to <1 for faster convergence, exp(x) = exp(0.1*x)^10
-    if (this >= BigDecimal.ONE) {
+    if (this > BigDecimal.ONE) {
         val n = min(1000000000, ceil(log10(toDouble())).toInt())
         val tenToN = 10.0.pow(n.toDouble()).toInt()
         return scaleByPowerOfTen(-n).exp(precision).pow(tenToN, mc)

@@ -6,6 +6,7 @@ import org.cerion.symcalc.function.special.Gamma
 import org.cerion.symcalc.function.special.Zeta
 import org.cerion.symcalc.number.Integer
 import org.junit.Test
+import kotlin.test.assertEquals
 
 private const val MIN_PRECISION = 100
 
@@ -13,14 +14,22 @@ class Special {
 
     @Test
     fun gammaLarge() {
-        val x = RealBigDec("3.14", 500)
+        val x = RealBigDec("3.14", 340)
         run(Gamma(x))
     }
 
     @Test
     fun gammaMultiple() {
         val x = RealBigDec("3.14", MIN_PRECISION)
-        run(30, Gamma(x))
+        run(35, Gamma(x))
+    }
+
+    @Test
+    fun `gamma precision step`() {
+        val expected = RealBigDec("0.88622692545275801364908374167057259139877472806119356410690389492645564229551609068747532836927233270811341181214128533311807643286221130126254685480139353423101884932655256142496258651447541311446604768963398140008731950767573986025835009509261700929272348724745632015696088776295310820270966625045319920380686673873757671683399489468292591820439772558258086938002953369671589566640492742312409245102732742609780662578082373375752136938052805399806355360503018602224183618264830685404716174941583421")
+        for(i in 1..100) {
+            assertEquals(RealBigDec(expected.value, i), Gamma(RealBigDec("1.5", i)).eval())
+        }
     }
 
     @Test
