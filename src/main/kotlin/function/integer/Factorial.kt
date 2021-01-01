@@ -6,7 +6,7 @@ import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberType
 
-class Factorial(vararg e: Expr) : FunctionExpr(*e) {
+class Factorial(vararg e: Any) : FunctionExpr(*e) {
 
     // FEAT can work with non-integer values but needs Gamma function first
 

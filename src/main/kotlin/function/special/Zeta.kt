@@ -59,6 +59,13 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
                     when (n.intValue()) {
                         3 -> return calcZeta3(e.precision)
                         5 -> return calcZeta5(e.precision)
+                        7 -> return calcZeta7(e.precision)
+                        else -> {
+                            //if (n.intValue() % 4 == 3)
+                            //    return calcZetaMod43(n.intValue(), e.precision)
+                            //else
+                            //    return calcZetaMod41(n.intValue(), e.precision)
+                        }
                     }
 
                     return RealBigDec(BigDecimalMath.zeta(n.intValue(), MathContext(e.precision)), e.precision)
@@ -165,5 +172,112 @@ class Zeta(vararg e: Expr) : FunctionExpr(*e) {
         }
 
         throw IterationLimitExceeded()
+    }
+
+    private fun calcZeta7(precision: Int): RealBigDec {
+        var sum = RealBigDec("0.0", precision)
+        val e2pi = ((Pi().eval(precision) * Integer(2)) as RealBigDec).exp()
+        var e2pin = RealBigDec("1.0", precision)
+        for (n in 1 until 1000) {
+            e2pin *= e2pi
+            val pow = Integer(n).pow(7)
+            val temp = (sum + (Integer(1) / (pow * (e2pin - 1)))) as RealBigDec
+
+            if (temp == sum) {
+                val pi7 = Rational(19, 56700) * Power(Pi(),7)
+                val t1 = Integer(2) * temp
+
+                return (pi7 - t1) as RealBigDec
+            }
+
+            sum = temp
+        }
+
+        throw IterationLimitExceeded()
+    }
+
+    private fun calcZetaMod43(n: Int, precision: Int): RealBigDec {
+        var sum1 = RealBigDec("0.0", precision)
+        val e2pi = ((Pi().eval(precision) * Integer(2)) as RealBigDec).exp()
+        var e2pin = RealBigDec("1.0", precision)
+
+        val maxLoop = 1000
+        for (k in 1..maxLoop) {
+            if (k == maxLoop)
+                throw IterationLimitExceeded()
+
+            e2pin *= e2pi
+            val pow = Integer(k).pow(n)
+            val temp = (sum1 + (Integer(1) / (pow * (e2pin - 1)))) as RealBigDec
+            if (temp == sum1) {
+                sum1 = temp
+                break
+            }
+
+            sum1 = temp
+        }
+
+        var sum2 = RealBigDec("0.0", precision)
+        for (k in 0..((n+1)/2)) {
+            val binomial = Binomial(n+1, 2*k) // TODO pre-calculate this list
+            val bernoulli1 = Bernoulli(n + 1 - 2*k).eval()
+            val bernoulli2 = Bernoulli(2*k).eval()
+
+            val term = binomial * bernoulli1 * bernoulli2
+            if (k % 2 == 0)
+                sum2 = (sum2 - term) as RealBigDec
+            else
+                sum2 = (sum2 + term) as RealBigDec
+        }
+
+        val piterm = (Power(2, n-1) * Power(Pi(), n)) / Factorial(n+1)
+
+        return (piterm*sum2 - Integer(2) * sum1) as RealBigDec
+    }
+
+    private fun calcZetaMod41(n: Int, precision: Int): RealBigDec {
+        var sum1 = RealBigDec("0.0", precision)
+        for (k in 0..((n+1)/4)) {
+            val a = Integer(n + 1 - 4*k)
+            val binomial = Binomial(n+1, 2*k) // TODO pre-calculate this list
+            val bernoulli1 = Bernoulli(n + 1 - 2*k).eval()
+            val bernoulli2 = Bernoulli(2*k).eval()
+
+            val term = a * binomial * bernoulli1 * bernoulli2
+            if (k % 2 == 0)
+                sum1 = (sum1 + term) as RealBigDec
+            else
+                sum1 = (sum1 - term) as RealBigDec
+        }
+
+        val e2pi = ((Pi().eval(precision) * Integer(2)) as RealBigDec).exp()
+        val pi4 = Pi().eval(precision) * Integer(4)
+        var e2pik = RealBigDec("1.0", precision)
+        var sum2 = RealBigDec("0.0", precision)
+
+        val maxLoop = 1000
+        for (k in 1..maxLoop) {
+            if (k == maxLoop)
+                throw IterationLimitExceeded()
+
+            e2pik *= e2pi
+
+            val numer = e2pik * (Integer(1) + (pi4 * k)/(Integer(n-1))) - 1
+
+            val pow = Integer(k).pow(n)
+            val denom = pow * Power((e2pik - 1), 2)
+
+            val temp = (sum2 + numer / denom) as RealBigDec
+            if (temp == sum2) {
+                sum2 = temp
+                break
+            }
+
+            sum2 = temp
+        }
+
+        val piterm = (Power(Pi() * 2, n) / (Factorial(n+1) * (Integer(n) - 1))).eval(precision)
+
+        return (piterm * sum1 - Integer(2) * sum2) as RealBigDec
     }
 }

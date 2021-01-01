@@ -8,7 +8,7 @@ import org.cerion.symcalc.number.NumberType
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.function.FunctionExpr
 
-class Bernoulli(vararg e: Expr) : FunctionExpr(*e) {
+class Bernoulli(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val e = get(0)
