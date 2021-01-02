@@ -4,7 +4,6 @@ import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.RealDouble
-import org.nevec.rjm.BigDecimalMath
 import kotlin.math.abs
 import kotlin.math.tan
 
@@ -21,9 +20,6 @@ class PolyGamma(vararg e: Expr) : FunctionExpr(*e) {
 
         return this
     }
-
-
-    private val psi0 = 1.4616321449683622 // PolyGamma(psi0) == 0
 
     private fun evalDouble(x: Double): Double {
         // Reduce to value near 1
@@ -73,7 +69,7 @@ class PolyGamma(vararg e: Expr) : FunctionExpr(*e) {
         val xmin1 = x - 1
         var result = 0.0
         for (k in 26 downTo 1) {
-            result -= BigDecimalMath.zeta1(2 * k + 1)
+            result -= zetaOddN[k - 1] - 1 // Decimal part of zeta[n]
             result *= xmin1 * xmin1
         }
 
@@ -81,3 +77,9 @@ class PolyGamma(vararg e: Expr) : FunctionExpr(*e) {
         return (result + c + 0.5 / xmin1) - 1.0 / (1 - xmin1 * xmin1) - Math.PI / (2.0 * tan(Math.PI * xmin1))
     }
 }
+
+private const val psi0 = 1.4616321449683622 // PolyGamma(psi0) == 0
+private val zetaOddN = listOf(1.2020569031595942, 1.03692775514337, 1.008349277381923, 1.0020083928260821, 1.0004941886041194,
+        1.0001227133475785, 1.000030588236307, 1.0000076371976379, 1.0000019082127165, 1.0000004769329869, 1.000000119219926, 1.0000000298035034,
+        1.0000000074507118, 1.0000000018626598, 1.0000000004656628, 1.0000000001164155, 1.0000000000291038, 1.000000000007276, 1.000000000001819,
+        1.0000000000004547, 1.0000000000001137, 1.0000000000000284, 1.000000000000007, 1.0000000000000018, 1.0000000000000004, 1.0000000000000002)
