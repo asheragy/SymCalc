@@ -98,6 +98,7 @@ object FunctionFactory {
             Function.INTEGER_DIGITS -> return IntegerDigits(*e)
             Function.EVENQ -> return EvenQ(*e)
             Function.ODDQ -> return OddQ(*e)
+            Function.EULERPHI -> return EulerPhi(*e)
 
             // Numeric
             Function.FLOOR -> return Floor(*e)

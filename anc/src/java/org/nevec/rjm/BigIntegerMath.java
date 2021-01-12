@@ -142,7 +142,7 @@ public class BigIntegerMath
         * @since 2012-03-04 Adapted to new Ifactor representation.
         * @author Richard J. Mathar
         */
-        public BigInteger eulerPhi(final int n)
+        public static BigInteger eulerPhi(final int n)
         {
                 return eulerPhi(BigInteger.valueOf((long)n) ) ;
         } /* eulerPhi */
@@ -155,7 +155,7 @@ public class BigIntegerMath
         * @since 2012-03-04 Adapted to new Ifactor representation.
         * @author Richard J. Mathar
         */
-        public BigInteger eulerPhi(final BigInteger n)
+        public static BigInteger eulerPhi(final BigInteger n)
         {
                 if ( n.compareTo(BigInteger.ZERO) <= 0 )
                         throw new ArithmeticException("negative argument "+n+ " of EulerPhi") ;
