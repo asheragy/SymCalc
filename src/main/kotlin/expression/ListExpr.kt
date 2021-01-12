@@ -31,4 +31,9 @@ class ListExpr(vararg e: Any) : MultiExpr(convertArgs(*e)) {
 
     // Helper functions
     fun join(vararg list: ListExpr): ListExpr = Join(this, *list).eval() as ListExpr
+
+    fun map(transform: (Expr) -> Expr): ListExpr {
+        val t = args.mapTo(ArrayList(size), transform)
+        return ListExpr(t)
+    }
 }

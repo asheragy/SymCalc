@@ -23,7 +23,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract override fun toString(): String
 
     abstract operator fun plus(other: NumberExpr): NumberExpr
-    operator fun minus(other: NumberExpr): NumberExpr = this + other.unaryMinus()
+    open operator fun minus(other: NumberExpr): NumberExpr = this + other.unaryMinus()
     abstract operator fun times(other: NumberExpr): NumberExpr
     abstract operator fun div(other: NumberExpr): NumberExpr
     abstract operator fun unaryMinus(): NumberExpr

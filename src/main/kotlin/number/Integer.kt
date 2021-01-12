@@ -60,6 +60,7 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
 
     operator fun plus(N: Integer): Integer = Integer(value.add(N.value))
     operator fun minus(n: Integer): Integer = Integer(value.subtract(n.value))
+    override fun minus(n: Int): Integer = Integer(value.subtract(BigInteger.valueOf(n.toLong())))
     operator fun times(n: Integer): Integer = Integer(value.multiply(n.value))
     override fun unaryMinus(): Integer = Integer(value.negate())
 

@@ -134,43 +134,6 @@ public class BigIntegerMath
                 return (new Ifactor(n.abs())).sigma().n ;
         }
 
-        /** Compute phi(n), the Euler totient function.
-        * @param n The positive argument of the function.
-        * @return phi(n)
-        * <a href="http://oeis.org/A000010">A000010</a> in the OEIS.
-        * @since 2008-10-14
-        * @since 2012-03-04 Adapted to new Ifactor representation.
-        * @author Richard J. Mathar
-        */
-        public static BigInteger eulerPhi(final int n)
-        {
-                return eulerPhi(BigInteger.valueOf((long)n) ) ;
-        } /* eulerPhi */
-
-        /** Compute phi(n), the Euler totient function.
-        * @param n The positive argument of the function.
-        * @return phi(n)
-        * <a href="http://oeis.org/A000010">A000010</a> in the OEIS.
-        * @since 2008-10-14
-        * @since 2012-03-04 Adapted to new Ifactor representation.
-        * @author Richard J. Mathar
-        */
-        public static BigInteger eulerPhi(final BigInteger n)
-        {
-                if ( n.compareTo(BigInteger.ZERO) <= 0 )
-                        throw new ArithmeticException("negative argument "+n+ " of EulerPhi") ;
-                final Ifactor prFact = new Ifactor(n) ;
-                BigInteger phi = n ;
-                if ( n.compareTo(BigInteger.ONE) > 0 )
-                        for(int i=0 ; i < prFact.primeexp.size() ; i += 2)
-                        {
-                                BigInteger p = new BigInteger(prFact.primeexp.elementAt(i).toString()) ;
-                                BigInteger p_1 = p.subtract(BigInteger.ONE) ;
-                                phi = phi.multiply(p_1).divide(p) ;
-                        }
-                return phi ;
-        } /* eulerPhi */
-
         /** Evaluate floor(sqrt(n)).
         * @param n The non-negative argument.
         * @return The integer square root. The square root rounded down.
@@ -538,24 +501,6 @@ public class BigIntegerMath
         {
                 BigInteger g = a.gcd(b) ;
                 return a.multiply(b).abs().divide(g) ;
-        }
-
-
-        /** Evaluate the value of an integer polynomial at some integer argument.
-        * @param c Represents the coefficients c[0]+c[1]*x+c[2]*x^2+.. of the polynomial
-        * @param x The abscissa point of the evaluation
-        * @return The polynomial value.
-        * @since 2010-08-27
-        * @author Richard J. Mathar
-        */
-        static public BigInteger valueOf(final Vector<BigInteger>c, final BigInteger x)
-        {
-                if (c.size() == 0)
-                        return BigInteger.ZERO ;
-                BigInteger res = c.lastElement() ;
-                for(int i= c.size()-2 ; i >=0 ; i--)
-                        res = res.multiply(x).add( c.elementAt(i) ) ;
-                return res ;
         }
 
         /** The central factorial number t(n,k) number at the indices provided.
