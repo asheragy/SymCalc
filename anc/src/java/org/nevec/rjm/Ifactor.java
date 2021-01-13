@@ -466,52 +466,6 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
                 }
         } /* Ifactor.root */
 
-
-        /** The set of positive divisors.
-        * @return the vector of divisors of the absolute value, sorted.
-        * @since 2010-08-27
-        * @author Richard J. Mathar
-        */
-        public Vector<BigInteger> divisors()
-        {
-                /* Recursive approach: the divisors of p1^e1*p2^e2*..*py^ey*pz^ez are
-                * the divisors that don't contain  the factor pz, and the
-                * divisors that contain any power of pz between 1 and up to ez multiplied
-                * by 1 or by a product that contains the factors p1..py.
-                */
-                Vector<BigInteger> d=new Vector<BigInteger>() ;
-                if ( n.compareTo(BigInteger.ZERO) == 0 )
-                        return d ;
-                d.add(BigInteger.ONE) ;
-                if ( n.compareTo(BigInteger.ONE) > 0 )
-                {
-                        /* Computes sigmaIncopml(p1^e*p2^e2...*py^ey) */
-                        Ifactor dp = dropPrime() ;
-
-                        /* get ez */
-                        final int ez = primeexp.lastElement().intValue() ;
-
-                        Vector<BigInteger> partd = dp.divisors() ;
-
-                        /* obtain pz by lookup in the prime list */
-                        final BigInteger pz = new BigInteger( primeexp.elementAt(primeexp.size()-2).toString()) ;
-
-                        /* the output contains all products of the form partd[]*pz^ez, ez>0,
-                        * and with the exception of the 1, all these are appended.
-                        */
-                        for(int i =1 ; i < partd.size() ; i++)
-                                d.add( partd.elementAt(i) ) ;
-                        for(int e =1 ; e <= ez ; e++)
-                        {
-                                final BigInteger pzez = pz.pow(e) ;
-                                for(int i =0 ; i < partd.size() ; i++)
-                                        d.add( partd.elementAt(i).multiply(pzez) ) ;
-                        }
-                }
-                Collections.sort(d) ;
-                return d ;
-        } /* Ifactor.divisors */
-
         /** Sum of the divisors of the number.
         * @return the sum of all divisors of the number, 1+....+n.
         * @author Richard J. Mathar
@@ -561,40 +515,6 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
                         return resul ; 
                 }
         } /* Ifactor.sigma */
-
-        /** Divide through the highest possible power of the highest prime.
-        * If the current number is the prime factor product p1^e1 * p2*e2* p3^e3*...*py^ey * pz^ez,
-        * the value returned has the final factor pz^ez eliminated, which gives
-        * p1^e1 * p2*e2* p3^e3*...*py^ey.
-        * @return the new integer obtained by removing the highest prime power.
-        *   If this here represents 0 or 1, it is returned without change.
-        * @since 2006-08-20
-        * @author Richard J. Mathar
-        */
-        public Ifactor dropPrime()
-        {
-                /* the cases n==1 or n ==0
-                */
-                if ( n.compareTo(BigInteger.ONE) <= 0 )
-                        return this ;
-
-                /* The cases n>1
-                * Start empty. Copy all but the last factor over to the result
-                * the vector with the new prime factor powers, which contain the
-                * old prime factor powers up to but not including the last one.
-                */
-                Ifactor pows=new Ifactor(0) ;
-                pows.n = BigInteger.ONE ;
-                for(int i = 0 ; i < primeexp.size()-2 ; i += 2)
-                {
-                        pows.primeexp.add( primeexp.elementAt(i)) ;
-                        pows.primeexp.add( primeexp.elementAt(i+1)) ;
-                        BigInteger p = new BigInteger( primeexp.elementAt(i).toString() ) ;
-                        int ex = primeexp.elementAt(i+1).intValue() ;
-                        pows.n = pows.n.multiply( p.pow(ex) ) ;
-                }
-                return pows ;
-        } /* Ifactor.dropPrime */
 
         /** Test whether this is a square of an integer (perfect square).
         * @return true if this is an integer squared (including 0), else false

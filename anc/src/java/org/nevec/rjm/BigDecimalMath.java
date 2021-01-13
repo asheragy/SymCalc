@@ -72,39 +72,6 @@ public class BigDecimalMath
                 return x.add(new BigDecimal(y)) ;
         } /* add */
 
-
-        /** Add and round according to the larger of the two ulp's.
-        * @param x The left summand
-        * @param y The right summand
-        * @return The sum x+y.
-        * @since 2009-07-30
-        * @author Richard J. Mathar
-        */
-        static public BigDecimal addRound(final BigDecimal x, final BigDecimal y)
-        {
-                BigDecimal resul = x.add(y) ;
-                /* The estimation of the absolute error in the result is |err(y)|+|err(x)| 
-                */
-                double errR = Math.abs( y.ulp().doubleValue()/2. ) + Math.abs( x.ulp().doubleValue()/2. ) ;
-                MathContext mc = new MathContext( err2prec(resul.doubleValue(),errR) ) ;
-                return resul.round(mc) ;
-        } /* addRound */
-
-        /** Divide and round.
-        * @param n The numerator
-        * @param x The denominator
-        * @return the divided n/x
-        * @since 2009-08-05
-        * @author Richard J. Mathar
-        */
-        static public BigDecimal divideRound(final BigInteger n, final BigDecimal x)
-        {
-                /* The estimation of the relative error in the result is |err(x)/x| 
-                */
-                MathContext mc = new MathContext( x.precision() ) ;
-                return new BigDecimal(n).divide(x,mc) ;
-        } /* divideRound */
-
         /** Append decimal zeros to the value. This returns a value which appears to have
         * a higher precision than the input.
         * @param x The input value
@@ -132,54 +99,5 @@ public class BigDecimalMath
                 else
                         return x ;
         } /* BigDecimalMath.scalePrec */
-
-        /** Convert an absolute error to a precision.
-        * @param x The value of the variable
-        * @param xerr The absolute error in the variable
-        * @return The number of valid digits in x.
-        *    The value is rounded down, and on the pessimistic side for that reason.
-        * @since 2009-06-25
-        * @author Richard J. Mathar
-        */
-        static public int err2prec(BigDecimal x, BigDecimal xerr)
-        {
-                return err2prec( xerr.divide(x,MathContext.DECIMAL64).doubleValue() );
-        }
-
-        /** Convert an absolute error to a precision.
-        * @param x The value of the variable
-        *    The value returned depends only on the absolute value, not on the sign.
-        * @param xerr The absolute error in the variable
-        *    The value returned depends only on the absolute value, not on the sign.
-        * @return The number of valid digits in x.
-        *    Derived from the representation x+- xerr, as if the error was represented
-        *    in a "half width" (half of the error bar) form.
-        *    The value is rounded down, and on the pessimistic side for that reason.
-        * @since 2009-05-30
-        * @author Richard J. Mathar
-        */
-        static public int err2prec(double x, double xerr)
-        {
-                /* Example: an error of xerr=+-0.5 at x=100 represents 100+-0.5 with
-                * a precision = 3 (digits).
-                */
-                return 1+(int)(Math.log10(Math.abs(0.5*x/xerr) ) );
-        }
-
-        /** Convert a relative error to a precision.
-        * @param xerr The relative error in the variable.
-        *    The value returned depends only on the absolute value, not on the sign.
-        * @return The number of valid digits in x.
-        *    The value is rounded down, and on the pessimistic side for that reason.
-        * @since 2009-08-05
-        * @author Richard J. Mathar
-        */
-        static public int err2prec(double xerr)
-        {
-                /* Example: an error of xerr=+-0.5 a precision of 1 (digit), an error of
-                * +-0.05 a precision of 2 (digits)
-                */
-                return 1+(int)(Math.log10(Math.abs(0.5/xerr) ) );
-        }
 
 } /* BigDecimalMath */

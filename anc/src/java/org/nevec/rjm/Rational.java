@@ -622,24 +622,6 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return BigDecimalMath.scalePrec(n.divide(d,mc),mc) ;
         } /* Rational.BigDecimalValue */
 
-        /** Return a string in floating point format.
-        * @param digits The precision (number of digits)
-        * @return The human-readable version in base 10.
-        * @since 2008-10-25
-        * @author Richard J. Mathar
-        */
-        public String toFString(int digits)
-        {
-                if ( b.compareTo(BigInteger.ONE) != 0)
-                {
-                        MathContext mc = new MathContext(digits,RoundingMode.DOWN) ;
-                        BigDecimal f = (new BigDecimal(a)).divide(new BigDecimal(b),mc) ;
-                        return( f.toString() ) ;
-                }
-                else
-                        return a.toString() ;
-        } /* Rational.toFString */
-
         /** Compares the value of this with another constant.
         * @param val The other constant to compare with
         * @return The arithmetic maximum of this and val.
@@ -727,39 +709,6 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return ( a.compareTo(MAX_INT) <= 0 && a.compareTo(MIN_INT) >= 0 ) ;
         } /* Rational.isInteger */
 
-
-        /** Conversion to an integer value, if this can be done exactly.
-        * @since 2011-02-13
-        * @author Richard J. Mathar
-        */
-        int intValue()
-        {
-                if ( ! isInteger() )
-                        throw new NumberFormatException("cannot convert "+toString()+" to integer.") ;
-                return a.intValue() ;
-        }
-
-        /** Conversion to a BigInteger value, if this can be done exactly.
-        * @since 2012-03-02
-        * @author Richard J. Mathar
-        */
-        BigInteger BigIntegerValue()
-        {
-                if ( ! isBigInteger() )
-                        throw new NumberFormatException("cannot convert "+toString()+" to BigInteger.") ;
-                return a ;
-        }
-
-        /** True if the value is a fraction of two integers in the range of the standard integer.
-        * @since 2010-05-26
-        * @author Richard J. Mathar
-        */
-        public boolean isIntegerFrac()
-        {
-                return ( a.compareTo(MAX_INT) <= 0 && a.compareTo(MIN_INT) >= 0 
-                        && b.compareTo(MAX_INT) <= 0 && b.compareTo(MIN_INT) >= 0 ) ;
-        } /* Rational.isIntegerFrac */
-
         /** The sign: 1 if the number is larger than zero, 0 if it equals zero, -1 if it is smaller than zero.
         * @return the signum of the value.
         * @since 2010-05-26
@@ -769,43 +718,6 @@ public class Rational implements Cloneable, Comparable<Rational>
         {
                 return ( b.signum() * a.signum() ) ;
         } /* Rational.signum */
-
-        /** Terminating continued fractions.
-        * @return The list of a0, a1, a2,... in this =a0+1/(a1+1/(a2+1/(a3+...)))).
-        *  If this here is zero, the list is empty.
-        * @since 2012-03-09
-        * @author Richard J. Mathar
-        */
-        public Vector<BigInteger> cfrac()
-        {
-                if ( signum() < 0 )
-                        throw new NumberFormatException("Unsupported cfrac for negative "+this) ;
-                Vector<BigInteger> cf = new Vector<BigInteger>() ;
-                if ( signum() != 0)
-                {
-                        BigInteger[] nRem = a.divideAndRemainder(b) ;
-                        cf.add( nRem[0]) ;
-                        /* recursive call : this = nRem[0]+nRem[1]/b = nRem[0] + 1/(b/nRem[1])
-                        */
-                        if ( nRem[1].signum() != 0 )
-                                cf.addAll( (new Rational(b,nRem[1])).cfrac() ) ;
-                }
-                return cf ;
-        } /* Rational.cfrac */
-
-        /** Common lcm of the denominators of a set of rational values.
-        * @param vals The list/set of the rational values.
-        * @return LCM(denom of first, denom of second, ..,denom of last)
-        * @since 2012-03-02
-        * @author Richard J. Mathar
-        */
-        static public BigInteger lcmDenom(final Rational[] vals)
-        {
-                BigInteger l = BigInteger.ONE ;
-                for(int v= 0 ; v < vals.length ; v++)
-                        l = BigIntegerMath.lcm(l,vals[v].b) ;
-                return l ;
-        } /* Rational.lcmDenom */
 
         /** The Harmonic number at the index specified.
         * @param n the index, non-negative.

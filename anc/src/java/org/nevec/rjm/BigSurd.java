@@ -291,16 +291,6 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                 return (pref.signum() >= 0) ? Math.sqrt(res) : -Math.sqrt(res) ;
         } /* BigSurd.doubleValue */
 
-        /** Return a float value representation.
-        * @return The value with single precision.
-        * @since 2011-02-12
-        * @author Richard J. Mathar
-        */
-        public float floatValue()
-        {
-                return (float)(doubleValue()) ;
-        } /* BigSurd.floatValue */
-
         /** True if the value is integer.
         * Equivalent to the indication whether a conversion to an integer
         * can be exact.
@@ -419,31 +409,6 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                         disc = disc.divide(d) ;
                 }
         } /* BigSurd.normalizeG */
-
-        /** Return the approximate floating point representation.
-        * @param mc Description of the accuracy needed.
-        * @return A representation with digits valid as described by mc
-        * @since 2012-02-15
-        * @author Richard J. Mathar
-        */
-        public BigDecimal BigDecimalValue(MathContext mc)
-        {
-                /* the relative error of the result equals the relative error of the
-                * prefactor plus half of the relative error of the discriminant.
-                * So adding 3 digits temporarily is sufficient.
-                */
-                final MathContext locmc = new MathContext(mc.getPrecision()+3,mc.getRoundingMode()) ;
-                /* first the square root of the discriminant
-                */
-                BigDecimal sqrdis = BigDecimalMath.sqrt(disc.BigDecimalValue(locmc),locmc ) ;
-                /* Then multiply by the prefactor. If sqrdis is a terminating decimal fraction,
-                * we prevent early truncation of the result by truncating later.
-                */
-                BigDecimal res = sqrdis.multiply(pref.BigDecimalValue(mc)) ;
-                return BigDecimalMath.scalePrec(res,mc) ;
-        } /* BigDecimalValue */
-
-
 
 } /* BigSurd */
 

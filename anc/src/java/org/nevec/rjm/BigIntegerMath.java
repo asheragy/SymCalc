@@ -12,84 +12,6 @@ import java.math.* ;
 */
 public class BigIntegerMath
 {
-
-
-        /** Evaluate binomial(n,k).
-        * @param n The upper index 
-        * @param k The lower index
-        * @return The binomial coefficient
-        * @author Richard J. Mathar
-        */
-        static public BigInteger binomial(final int n, final int k)
-        {
-                if ( k == 0 ) 
-                        return BigInteger.ONE ;
-                BigInteger bin = BigInteger.valueOf((long)n) ;
-                BigInteger n2 = bin ;
-                for(BigInteger i= BigInteger.valueOf((long)(k-1)) ; i.compareTo(BigInteger.ONE) >= 0 ; i = i.subtract(BigInteger.ONE) )
-                        bin = bin.multiply(n2.subtract(i)) ;
-                for(BigInteger i= BigInteger.valueOf((long)k) ; i.compareTo(BigInteger.ONE) == 1 ; i = i.subtract(BigInteger.ONE) )
-                        bin = bin.divide(i) ;
-                return ( bin) ;
-        } /* binomial */
-
-        /** Evaluate binomial(n,k).
-        * @param n The upper index 
-        * @param k The lower index
-        * @return The binomial coefficient
-        * @since 2008-10-15
-        * @author Richard J. Mathar
-        */
-        static public BigInteger binomial(final BigInteger n, final BigInteger k)
-        {
-                /* binomial(n,0) =1 
-                */
-                if ( k.compareTo(BigInteger.ZERO) == 0 ) 
-                        return(BigInteger.ONE) ;
-
-                BigInteger bin = n;
-
-                /* the following version first calculates n(n-1)(n-2)..(n-k+1)
-                * in the first loop, and divides this product through k(k-1)(k-2)....2
-                * in the second loop. This is rather slow and replaced by a faster version
-                * below
-                * BigInteger n2 = bin ;
-                * BigInteger i= k.subtract(BigInteger.ONE) ;
-                * for( ; i.compareTo(BigInteger.ONE) >= 0 ; i = i.subtract(BigInteger.ONE) )
-                *       bin = bin.multiply(n2.subtract(i)) ;
-                * i= BigInteger.valueOf(k) ;
-                * for( ; i.compareTo(BigInteger.ONE) == 1 ; i = i.subtract(BigInteger.ONE) )
-                *       bin = bin.divide(i) ;
-                */
-
-                /* calculate n then n(n-1)/2 then n(n-1)(n-2)(2*3) etc up to n(n-1)..(n-k+1)/(2*3*..k)
-                * This is roughly the best way to keep the individual intermediate products small
-                * and in the integer domain. First replace C(n,k) by C(n,n-k) if n-k<k.
-                */
-                BigInteger truek = k ;
-                if ( n.subtract(k).compareTo(k) < 0 )
-                        truek = n.subtract(k) ;
-
-                /* Calculate C(num,truek) where num=n and truek is the smaller of n-k and k.
-                * Have already initialized bin=n=C(n,1) above. Start definining the factorial
-                * in the denominator, named fden
-                */
-                BigInteger i = BigInteger.valueOf(2L) ;
-                BigInteger num = n ;
-                /* a for-loop   (i=2;i<= truek;i++)
-                */
-                for( ; i.compareTo(truek) <= 0 ; i = i.add(BigInteger.ONE) )
-                {
-                        /* num = n-i+1 after this operation
-                        */
-                        num = num.subtract(BigInteger.ONE) ;
-                        /* multiply by (n-i+1)/i
-                        */
-                        bin = (bin.multiply(num)).divide(i) ;
-                }
-                return ( bin) ;
-        } /* binomial */
-
         /** Evaluate sigma_k(n).
         * @param n the main argument which defines the divisors
         * @param k the lower index, which defines the power
@@ -110,17 +32,6 @@ public class BigIntegerMath
         static public BigInteger sigma(int n)
         {
                 return (new Ifactor(Math.abs(n))).sigma().n ;
-        }
-
-        /** Compute the list of positive divisors.
-        * @param n The integer of which the divisors are to be found.
-        * @return The sorted list of positive divisors.
-        * @since 2010-08-27
-        * @author Richard J. Mathar
-        */
-        static public Vector<BigInteger> divisors(final BigInteger n)
-        {
-                return (new Ifactor(n.abs())).divisors() ;
         }
 
         /** Evaluate sigma(n).
@@ -309,96 +220,6 @@ public class BigIntegerMath
                         }
                 }
                 return M ;
-        }
-
-        /** Replace column of a matrix with a column vector.
-        * @param A The matrix.
-        * @param c The column index of the column to be substituted (0-based).
-        * @param v The column vector to be inserted.
-        * With the current implementation, it must be at least as long as the row count, and 
-        *  its elements that exceed that count are ignored.
-        * @return The modified matrix. This is not a deep copy but contains references to the original.
-        * @since 2010-08-27
-        * @author Richard J. Mathar
-        */
-        static private BigInteger[][] colSubs(final BigInteger[][] A, final int c, final BigInteger[] v) throws ArithmeticException
-        {
-                /* original row count */
-                final int rL = A.length ;
-                if ( rL == 0 )
-                        throw new ArithmeticException("zero row count in matrix") ;
-                /* original column count */
-                final int cL = A[0].length ;
-                if ( cL == 0 )
-                        throw new ArithmeticException("zero column count in matrix") ;
-                if ( c < 0  || c >= cL)
-                        throw new ArithmeticException("column number "+c + " out of range 0.." + (cL-1)) ;
-                BigInteger M[][] = new BigInteger[rL][cL] ;
-                for (int row = 0 ; row < rL ; row++)
-                {
-                        for(int col = 0 ; col < cL ;col++)
-                        {
-                                /* currently, v may just be longer than the row count, and surplus
-                                * elements will be ignored. Shorter v lead to an exception.
-                                */
-                                if ( col != c )
-                                        M[row][col] = A[row][col] ;
-                                else
-                                        M[row][col] = v[row] ;
-                        }
-                }
-                return M ;
-        }
-
-        /** Determinant of an integer square matrix.
-        * @param A The square matrix.
-        *  If column and row dimensions are unequal, an ArithmeticException is thrown.
-        * @return The determinant.
-        * @since 2010-08-27
-        * @author Richard J. Mathar
-        */
-        static public BigInteger det(final BigInteger[][] A) throws ArithmeticException
-        {
-                BigInteger d = BigInteger.ZERO ;
-                /* row size */
-                final int rL = A.length ;
-                if ( rL == 0 )
-                        throw new ArithmeticException("zero row count in matrix") ;
-                /* column size */
-                final int cL = A[0].length ;
-                if ( cL != rL )
-                        throw new ArithmeticException("Non-square matrix dim "+rL + " by " + cL) ;
-
-                /* Compute the low-order cases directly.
-                */
-                if ( rL == 1 )
-                        return A[0][0] ;
-
-                else if ( rL == 2)
-                {
-                        d = A[0][0].multiply(A[1][1]) ;
-                        return d.subtract( A[0][1].multiply(A[1][0])) ;
-                }
-                else
-                {
-                        /* Work arbitrarily along the first column of the matrix */
-                        for (int r = 0  ; r < rL  ; r++)
-                        {
-                                /* Do not consider minors that do no contribute anyway
-                                */
-                                if ( A[r][0].compareTo(BigInteger.ZERO) != 0 )
-                                {
-                                        final BigInteger M[][] = minor(A,r,0) ;
-                                        final BigInteger m = A[r][0].multiply( det(M)) ;
-                                        /* recursive call */
-                                        if ( r % 2 == 0)
-                                                d = d.add(m) ;
-                                        else
-                                                d = d.subtract(m) ;
-                                }
-                        }
-                }
-                return d;
         }
 
         /** Solve a linear system of equations.

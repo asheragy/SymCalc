@@ -65,45 +65,6 @@ public class BigComplex
                 im= new BigDecimal(y) ;
         }
 
-        /** Multiply with another BigComplex
-        * @param oth The BigComplex which is a factor in the product
-        * @param mc Defining precision and rounding mode
-        * @return This multiplied by oth
-        * @since 2010-07-19 implemented with 3 multiplications and 5 additions/subtractions
-        */
-        BigComplex multiply(final BigComplex oth, MathContext mc)
-        {
-                final BigDecimal a = re.add(im).multiply(oth.re) ;
-                final BigDecimal b = oth.re.add(oth.im).multiply(im) ;
-                final BigDecimal c = oth.im.subtract(oth.re).multiply(re) ;
-                final BigDecimal x = a.subtract(b,mc) ;
-                final BigDecimal y = a.add(c,mc) ;
-                return new BigComplex(x,y) ;
-        }
-
-        /** Add a BigDecimal
-        * @param oth the value to be added to the real part.
-        * @return this added to oth
-        * @author Richard J. Mathar
-        */
-        BigComplex add(final BigDecimal oth)
-        {
-                final BigDecimal x = re.add(oth) ;
-                return new BigComplex(x,im) ;
-        }
-
-        /** Subtract another BigComplex
-        * @param oth the value to be subtracted from this.
-        * @return this minus oth
-        * @author Richard J. Mathar
-        */
-        BigComplex subtract(final BigComplex oth)
-        {
-                final BigDecimal x = re.subtract(oth.re) ;
-                final BigDecimal y = im.subtract(oth.im) ;
-                return new BigComplex(x,y) ;
-        }
-
         /** Complex-conjugation
         * @return the complex conjugate of this.
         * @author Richard J. Mathar
@@ -172,18 +133,6 @@ public class BigComplex
                 final BigDecimal hyp = norm() ;
                 /* 1/(x+iy)= (x-iy)/(x^2+y^2 */
                 return new BigComplex( re.divide(hyp,mc), im.divide(hyp,mc).negate() ) ;
-        }
-
-        /** Divide through another BigComplex number.
-        * @param oth The divisors of the division.
-        * @param mc The mathematical context (precision) to be used for rounding.
-        * @return this/oth
-        * @author Richard J. Mathar
-        */
-        BigComplex divide(BigComplex oth, MathContext mc)
-        {
-                /* lazy implementation: (x+iy)/(a+ib)= (x+iy)* 1/(a+ib) */
-                return multiply(oth.inverse(mc),mc) ;
         }
 
         /** Human-readable Fortran-type display
