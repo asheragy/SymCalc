@@ -31,7 +31,7 @@ Special Functions:
    SinhIntegral SinIntegral SphericalHarmonicY WeierstrassHalfPeriods WeierstrassInvariants WeierstrassP WeierstrassPPrime WeierstrassSigma WeierstrassZeta WhittakerM WhittakerW ZernikeR
 
 Constants: Degree GoldenRatio StieltjesGamma Catalan Glaisher Khinchin ChampernowneNumber DirectedInfinity Overflow Underflow
-Recurrence: Fibonacci LucasL BernoulliB NorlundB EulerE StirlingS1 StirlingS2 HarmonicNumber LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB Hyperfactorial Multinomial
+Recurrence: Fibonacci LucasL BernoulliB NorlundB StirlingS1 StirlingS2 HarmonicNumber LerchPhi PolyLog Factorial Factorial2 FactorialPower Binomial CatalanNumber BellB Hyperfactorial Multinomial
 Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Arg Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator BaseForm ChineseRemainder Conjugate DigitCount DigitQ DivisorSigma DivisorSum ExactNumberQ FromDigits InexactNumberQ IntegerExponent IntegerLength IntegerQ NProduct NSum NumberQ NumericQ Positive PossibleZeroQ RealDigits RealExponent
 Integer: Mod PowerMod Quotient QuotientRemainder GCD LCM Divisible EvenQ OddQ FactorInteger Divisors IntegerPartitions IntegerDigits FrobeniusNumber FrobeniusSolve ClebschGordan CarmichaelLambda PartitionsP Rationalize Subfactorial
 Bitwise: BitAnd BitClear BitGet BitLength BitNot BitOr BitSet BitShiftLeft BitShiftRight BitXor

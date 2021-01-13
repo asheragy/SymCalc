@@ -71,6 +71,7 @@ enum class Function constructor(val value: String) {
     EVENQ("EvenQ"),
     ODDQ("OddQ"),
     EULERPHI("EulerPhi"),
+    EULERE("EulerE"),
 
     // Numeric
     FLOOR("Floor"),

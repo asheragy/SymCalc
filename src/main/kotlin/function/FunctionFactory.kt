@@ -99,6 +99,7 @@ object FunctionFactory {
             Function.EVENQ -> return EvenQ(*e)
             Function.ODDQ -> return OddQ(*e)
             Function.EULERPHI -> return EulerPhi(*e)
+            Function.EULERE -> return EulerE(*e)
 
             // Numeric
             Function.FLOOR -> return Floor(*e)
