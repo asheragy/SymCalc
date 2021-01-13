@@ -1,17 +1,14 @@
 package org.cerion.symcalc.function.integer
 
-import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.function.FunctionExpr
-import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberExpr
 
 class EulerE(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
-
         val n = get(0)
         if (n is Integer) {
             if (n.isOdd)
@@ -28,29 +25,32 @@ class EulerE(vararg e: Any) : FunctionExpr(*e) {
 
     // Double sum method of calculating E_2n
     private fun iteratedSum(n: Int): Integer {
-        var sum: Expr = Integer.ZERO
+        var sum = Integer.ZERO
 
         for(k in 1..(2*n + 1) step 2) {
-
-            var innerSum: Expr = Integer.ZERO
+            var innerSum: NumberExpr = Integer.ZERO
             val binomial = Binomial(k).eval() as ListExpr
             for(j in 0..k) {
-                var numer: NumberExpr = if(j % 2 == 0) Integer.ONE else Integer.NEGATIVE_ONE
+                var numer = binomial[j] as NumberExpr
                 numer *= Integer(k - 2*j).pow(2*n + 1)
                 numer /= Integer.TWO.pow(k)
-                numer /= Power(I(), k).eval() as NumberExpr
                 numer /= Integer(k)
 
-                innerSum += binomial[j] * numer
+                // This and step 2 removes need for complex numbers in sum
+                if (k % 4 == 3)
+                    numer *= Integer.NEGATIVE_ONE
+
+                if (j % 2 == 0)
+                    innerSum += numer
+                else
+                    innerSum -= numer
             }
 
-            //println("$k $innerSum")
-
-            sum += innerSum
+            sum += innerSum as Integer
             if (k % 2 == 0)
                 sum += innerSum
         }
 
-        return (I() * sum) as Integer
+        return sum
     }
 }
