@@ -462,25 +462,6 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return bin ;
         } /* Rational.binomial */
 
-        /** Hankel's symbol (n,k)
-        * @param n the first parameter.
-        * @param k the second parameter, greater or equal to 0.
-        * @return Gamma(n+k+1/2)/k!/GAMMA(n-k+1/2)
-        * @since 2010-07-18
-        * @author Richard J. Mathar
-        */
-        public static Rational hankelSymb(Rational n, int k)
-        {
-                if ( k == 0 ) 
-                        return Rational.ONE ;
-                else if ( k < 0)
-                        throw new ArithmeticException("Negative parameter "+k) ;
-                Rational nkhalf = n.subtract(k).add(Rational.HALF) ;
-                nkhalf = nkhalf.Pochhammer(2*k) ;
-                Factorial f = new Factorial() ;
-                return nkhalf.divide(f.at(k)) ;
-        } /* Rational.binomial */
-
         /** Get the numerator.
         * @return The numerator of the reduced fraction.
         * @author Richard J. Mathar

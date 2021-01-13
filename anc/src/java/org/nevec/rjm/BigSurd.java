@@ -99,24 +99,6 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                 return cl ;
         } /* BigSurd.clone */
 
-        /** Add two surds of compatible discriminant.
-        * @param val The value to be added to this.
-        * @return The sum of this and val
-        * @author Richard J. Mathar
-        */
-        public BigSurdVec add(final BigSurd val)
-        {
-                /* zero plus somethings yields something
-                */
-                if ( signum() == 0 )
-                        return new BigSurdVec(val) ;
-                else if (val.signum() == 0  )
-                        return new BigSurdVec(this) ;
-                else
-                        /* let the ctor of BigSurdVec to the work */
-                        return new BigSurdVec(this,val) ;
-        } /* add */
-
         /** Multiply by another square root.
         * @param val a second number of this type.
         * @return the product of this with the val.
