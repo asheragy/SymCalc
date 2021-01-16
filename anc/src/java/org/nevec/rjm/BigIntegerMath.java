@@ -12,39 +12,6 @@ import java.math.* ;
 */
 public class BigIntegerMath
 {
-        /** Evaluate sigma_k(n).
-        * @param n the main argument which defines the divisors
-        * @param k the lower index, which defines the power
-        * @return The sum of the k-th powers of the positive divisors
-        * @author Richard J. Mathar
-        */
-        static public BigInteger sigmak(final BigInteger n, final int k)
-        {
-                return (new Ifactor(n.abs())).sigma(k).n ;
-        } /* sigmak */
-
-        /** Evaluate sigma(n).
-        * @param n the argument for which divisors will be searched.
-        * @return the sigma function. Sum of the positive divisors of the argument.
-        * @since 2006-08-14
-        * @author Richard J. Mathar
-        */
-        static public BigInteger sigma(int n)
-        {
-                return (new Ifactor(Math.abs(n))).sigma().n ;
-        }
-
-        /** Evaluate sigma(n).
-        * @param n the argument for which divisors will be searched.
-        * @return the sigma function. Sum of the divisors of the argument.
-        * @since 2006-08-14
-        * @author Richard J. Mathar
-        */
-        static public BigInteger sigma(final BigInteger n)
-        {
-                return (new Ifactor(n.abs())).sigma().n ;
-        }
-
         /** Evaluate floor(sqrt(n)).
         * @param n The non-negative argument.
         *  Arguments less than zero throw an ArithmeticException.

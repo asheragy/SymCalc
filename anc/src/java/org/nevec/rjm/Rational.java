@@ -523,34 +523,6 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return adivb.doubleValue() ;
         } /* Rational.doubleValue */
 
-        /** Compares the value of this with another constant.
-        * @param val The other constant to compare with
-        * @return The arithmetic maximum of this and val.
-        * @since 2008-10-19
-        * @author Richard J. Mathar
-        */
-        public Rational max(final Rational val)
-        {
-                if ( compareTo(val) > 0 )
-                        return this;
-                else
-                        return val;
-        } /* Rational.max */
-
-        /** Compares the value of this with another constant.
-        * @param val The other constant to compare with
-        * @return The arithmetic minimum of this and val.
-        * @since 2008-10-19
-        * @author Richard J. Mathar
-        */
-        public Rational min(final Rational val)
-        {
-                if ( compareTo(val) < 0 )
-                        return this;
-                else
-                        return val;
-        } /* Rational.min */
-
         /** True if the value is integer.
         * Equivalent to the indication whether a conversion to an integer
         * can be exact.
