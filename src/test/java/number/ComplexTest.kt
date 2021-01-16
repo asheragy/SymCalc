@@ -1,6 +1,8 @@
 package org.cerion.symcalc.number
 
 import org.cerion.symcalc.`should equal`
+import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Times
 import org.junit.jupiter.api.Assertions
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -170,4 +172,20 @@ class ComplexTest {
 
         Complex(7, 5) % Complex(3, 2) `should equal` Complex(1, 1)
     }
+
+    @Test
+    fun abs() {
+        Complex(2, 4).abs() `should equal` Times(2, Power(5, Rational.HALF))
+    }
+
+    /* Unsure how to calculate this yet
+    @Test
+    fun sqrt() {
+        assertAll(
+                Sqrt(Complex(4,4)) `==` Times(2, Power(Complex(1, 1), Rational.HALF)),
+                Sqrt(Complex(4,4.0)) `==` Complex(2.1973682269356196, 0.9101797211244547),
+                Sqrt(Complex(4, Rational(3, 4))) `==` Times(Rational.HALF, Power(Complex(16, 3), Rational.HALF))
+        )
+    }
+     */
 }

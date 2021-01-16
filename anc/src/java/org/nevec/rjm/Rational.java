@@ -424,44 +424,6 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return ( subtract(val2) ) ;
         } /* Rational.subtract */
 
-        /** binomial (n choose m).
-        * @param n the numerator. Equals the size of the set to choose from.
-        * @param m the denominator. Equals the number of elements to select.
-        * @return the binomial coefficient.
-        * @since 2006-06-27
-        * @author Richard J. Mathar
-        */
-        public static Rational binomial(Rational n, BigInteger m)
-        {
-                if ( m.compareTo(BigInteger.ZERO) == 0 ) 
-                        return Rational.ONE ;
-                Rational bin = n ;
-                for(BigInteger i=new BigInteger("2") ; i.compareTo(m) != 1 ; i = i.add(BigInteger.ONE) )
-                {
-                        bin = bin.multiply(n.subtract(i.subtract(BigInteger.ONE))).divide(i) ;
-                }
-                return bin ;
-        } /* Rational.binomial */
-
-        /** binomial (n choose m).
-        * @param n the numerator. Equals the size of the set to choose from.
-        * @param m the denominator. Equals the number of elements to select.
-        * @return the binomial coefficient.
-        * @since 2009-05-19
-        * @author Richard J. Mathar
-        */
-        public static Rational binomial(Rational n, int m)
-        {
-                if ( m == 0 ) 
-                        return Rational.ONE ;
-                Rational bin = n ;
-                for( int i=2 ; i <= m ; i++ )
-                {
-                        bin = bin.multiply(n.subtract(i-1)).divide(i) ;
-                }
-                return bin ;
-        } /* Rational.binomial */
-
         /** Get the numerator.
         * @return The numerator of the reduced fraction.
         * @author Richard J. Mathar
@@ -504,37 +466,6 @@ public class Rational implements Cloneable, Comparable<Rational>
                 else
                         return a.divide(b).subtract(BigInteger.ONE) ;
         } /* Rational.floor */
-
-        /** ceil(): the nearest integer not smaller than this.
-        * @return The integer rounded towards positive infinity.
-        * @since 2010-05-26
-        * @author Richard J. Mathar
-        */
-        public BigInteger ceil()
-        {
-                /* is already integer: return the numerator
-                */
-                if ( b.compareTo(BigInteger.ONE) == 0 )
-                        return a;
-                else if ( a.compareTo(BigInteger.ZERO) > 0 )
-                        return a.divide(b).add(BigInteger.ONE) ;
-                else
-                        return a.divide(b) ;
-        } /* Rational.ceil */
-
-        /** Remove the fractional part.
-        * @return The integer rounded towards zero.
-        * @author Richard J. Mathar
-        */
-        public BigInteger trunc()
-        {
-                /* is already integer: return the numerator
-                */
-                if ( b.compareTo(BigInteger.ONE) == 0 )
-                        return a;
-                else 
-                        return a.divide(b);
-        } /* Rational.trunc */
 
         /** Compares the value of this with another constant.
         * @param val the other constant to compare with
@@ -592,36 +523,6 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return adivb.doubleValue() ;
         } /* Rational.doubleValue */
 
-        /** Return a float value representation.
-        * @return The value with single precision.
-        * @since 2009-08-06
-        * @author Richard J. Mathar
-        */
-        public float floatValue()
-        {
-                BigDecimal adivb  = (new BigDecimal(a)).divide(new BigDecimal(b), MathContext.DECIMAL128) ;
-                return adivb.floatValue() ;
-        } /* Rational.floatValue */
-
-        /** Return a representation as BigDecimal.
-        * @param mc the mathematical context which determines precision, rounding mode etc
-        * @return A representation as a BigDecimal floating point number.
-        * @since 2008-10-26
-        * @author Richard J. Mathar
-        */
-        public BigDecimal BigDecimalValue(MathContext mc)
-        {
-                /* numerator and denominator individually rephrased
-                */
-                BigDecimal n = new BigDecimal(a) ;
-                BigDecimal d = new BigDecimal(b) ;
-                /* the problem with n.divide(d,mc) is that the apparent precision might be
-                * smaller than what is set by mc if the value has a precise truncated representation.
-                * 1/4 will appear as 0.25, independent of mc
-                */
-                return BigDecimalMath.scalePrec(n.divide(d,mc),mc) ;
-        } /* Rational.BigDecimalValue */
-
         /** Compares the value of this with another constant.
         * @param val The other constant to compare with
         * @return The arithmetic maximum of this and val.
@@ -649,41 +550,6 @@ public class Rational implements Cloneable, Comparable<Rational>
                 else
                         return val;
         } /* Rational.min */
-
-        /** Compute Pochhammer's symbol (this)_n.
-        * @param n The number of product terms in the evaluation.
-        * @return Gamma(this+n)/Gamma(this) = this*(this+1)*...*(this+n-1).
-        * @since 2008-10-25
-        * @author Richard J. Mathar
-        */
-        public Rational Pochhammer(final BigInteger n)
-        {
-                if ( n.compareTo(BigInteger.ZERO) < 0 )
-                        return null;
-                else if ( n.compareTo(BigInteger.ZERO) == 0 )
-                        return Rational.ONE ;
-                else
-                {
-                        /* initialize results with the current value
-                        */
-                        Rational res = new Rational(a,b) ;
-                        BigInteger i = BigInteger.ONE ;
-                        for( ; i.compareTo(n) < 0 ; i=i.add(BigInteger.ONE) )
-                                res = res.multiply( add(i) ) ;
-                        return res;
-                }
-        } /* Rational.pochhammer */
-
-        /** Compute pochhammer's symbol (this)_n.
-        * @param n The number of product terms in the evaluation.
-        * @return Gamma(this+n)/GAMMA(this).
-        * @since 2008-11-13
-        * @author Richard J. Mathar
-        */
-        public Rational Pochhammer(int n)
-        {
-                return Pochhammer(new BigInteger(""+n)) ;
-        } /* Rational.pochhammer */
 
         /** True if the value is integer.
         * Equivalent to the indication whether a conversion to an integer

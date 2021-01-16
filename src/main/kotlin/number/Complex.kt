@@ -196,4 +196,6 @@ class Complex(val real: NumberExpr, val img: NumberExpr = Integer.ZERO) : Number
     override fun quotient(other: NumberExpr): NumberExpr = (this / other).round()
     override fun floor(): NumberExpr = Complex(real.floor(), img.floor()).eval()
     override fun round(): NumberExpr = Complex(real.round(), img.round()).eval()
+    override fun abs(): Expr = Sqrt(real.square() + img.square()).eval()
+
 }

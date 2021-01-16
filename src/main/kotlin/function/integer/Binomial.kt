@@ -10,6 +10,8 @@ import org.cerion.symcalc.number.NumberType
 class Binomial(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
+        // FEAT this can work with Rational too
+
         val n = get(0) as Integer
 
         // n! / k!(n-k)!

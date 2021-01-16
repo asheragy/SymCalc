@@ -31,7 +31,7 @@ abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
     fun square(): NumberExpr = this * this
     abstract infix fun pow(other: NumberExpr): NumberExpr
 
-    fun abs(): NumberExpr = if (isNegative) this.unaryMinus() else this
+    open fun abs(): Expr = if (isNegative) this.unaryMinus() else this
     abstract fun floor(): NumberExpr
     abstract fun round(): NumberExpr
     abstract fun quotient(other: NumberExpr): NumberExpr

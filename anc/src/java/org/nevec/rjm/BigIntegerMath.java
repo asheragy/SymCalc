@@ -177,51 +177,6 @@ public class BigIntegerMath
                 return i.core() ;
         }
 
-        /** Minor of an integer matrix.
-        * @param A The matrix.
-        * @param r The row index of the row to be removed (0-based).
-        *   An exception is thrown if this is outside the range 0 to the upper row index of A.
-        * @param c The column index of the column to be removed (0-based).
-        *   An exception is thrown if this is outside the range 0 to the upper column index of A.
-        * @return The depleted matrix. This is not a deep copy but contains references to the original.
-        * @since 2010-08-27
-        * @author Richard J. Mathar
-        */
-        static public BigInteger[][] minor(final BigInteger[][] A, final int r, final int c) throws ArithmeticException
-        {
-                /* original row count */
-                final int rL = A.length ;
-                if ( rL == 0 )
-                        throw new ArithmeticException("zero row count in matrix") ;
-                if ( r < 0  || r >= rL)
-                        throw new ArithmeticException("row number "+r + " out of range 0.." + (rL-1)) ;
-                /* original column count */
-                final int cL = A[0].length ;
-                if ( cL == 0 )
-                        throw new ArithmeticException("zero column count in matrix") ;
-                if ( c < 0  || c >= cL)
-                        throw new ArithmeticException("column number "+c + " out of range 0.." + (cL-1)) ;
-                BigInteger M[][] = new BigInteger[rL-1][cL-1] ;
-                int imrow =0 ;
-                for (int row = 0 ; row < rL ; row++)
-                {
-                        if ( row != r)
-                        {
-                                int imcol = 0 ;
-                                for(int col = 0 ; col < cL ;col++)
-                                {
-                                        if ( col != c )
-                                        {
-                                                M[imrow][imcol] = A[row][col] ;
-                                                imcol ++ ;
-                                        }
-                                }
-                                imrow++ ;
-                        }
-                }
-                return M ;
-        }
-
         /** Solve a linear system of equations.
         * @param A The square matrix.
         *  If it is not of full rank, an ArithmeticException is thrown.
@@ -309,19 +264,6 @@ public class BigIntegerMath
                         }
 
                         return x ;
-        }
-
-        /** The lowest common multiple
-        * @param a The first argument
-        * @param b The second argument
-        * @return lcm(|a|,|b|)
-        * @since 2010-08-27
-        * @author Richard J. Mathar
-        */
-        static public BigInteger lcm(final BigInteger a, final BigInteger b)
-        {
-                BigInteger g = a.gcd(b) ;
-                return a.multiply(b).abs().divide(g) ;
         }
 
 } /* BigIntegerMath */
