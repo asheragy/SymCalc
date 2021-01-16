@@ -100,19 +100,5 @@ public class BigIntegerMath
                 }
         } /* iroot */
 
-        /** Evaluate core(n).
-        * Returns the smallest positive integer m such that n/m is a perfect square.
-        * @param n The non-negative argument.
-        * @return The square-free part of n.
-        * @since 2011-02-12
-        * @author Richard J. Mathar
-        */
-        static public BigInteger core(final BigInteger n)
-        {
-                if ( n.compareTo(BigInteger.ZERO) < 0 )
-                        throw new ArithmeticException("Negative argument "+ n) ;
-                final Ifactor i = new Ifactor(n) ;
-                return i.core() ;
-        }
 
 } /* BigIntegerMath */
