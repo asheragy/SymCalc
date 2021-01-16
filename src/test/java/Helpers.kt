@@ -1,6 +1,7 @@
 package org.cerion.symcalc
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealBigDec
@@ -20,6 +21,7 @@ infix fun Expr.`==`(expected: String) = evalEquals(RealBigDec(expected), this)
 infix fun Expr.`==`(expected: Double) = evalEquals(RealDouble(expected), this)
 infix fun Expr.`==`(expected: Int) = evalEquals(Integer(expected), this)
 infix fun Expr.`==`(expected: Expr) = evalEquals(expected, this)
+infix fun Expr.`==`(expected: List<Any>) = evalEquals(ListExpr(*expected.toTypedArray()), this)
 
 private fun evalEquals(expected: Expr, actual: Expr): () -> Unit = {
     val eval = actual.eval()

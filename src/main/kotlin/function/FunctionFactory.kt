@@ -100,6 +100,8 @@ object FunctionFactory {
             Function.ODDQ -> return OddQ(*e)
             Function.EULERPHI -> return EulerPhi(*e)
             Function.EULERE -> return EulerE(*e)
+            Function.DIVISORS -> return Divisors(*e)
+            Function.DIVISORSIGMA -> return DivisorSigma(*e)
 
             // Numeric
             Function.FLOOR -> return Floor(*e)

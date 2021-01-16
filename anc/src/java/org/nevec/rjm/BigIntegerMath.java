@@ -47,35 +47,6 @@ public class BigIntegerMath
 
         /** Evaluate floor(sqrt(n)).
         * @param n The non-negative argument.
-        * @return The integer square root. The square root rounded down.
-        * @since 2010-08-27
-        * @author Richard J. Mathar
-        */
-        static public int isqrt(final int n)
-        {
-                if ( n < 0 )
-                        throw new ArithmeticException("Negative argument "+ n) ;
-                final double resul= Math.sqrt((double)n) ;
-                return (int)Math.round(resul) ;
-        } /* isqrt */
-
-        /** Evaluate floor(sqrt(n)).
-        * @param n The non-negative argument.
-        *  Arguments less than zero throw an ArithmeticException.
-        * @return The integer square root, the square root rounded down.
-        * @since 2010-08-27
-        * @author Richard J. Mathar
-        */
-        static public long isqrt(final long n)
-        {
-                if ( n < 0 )
-                        throw new ArithmeticException("Negative argument "+ n) ;
-                final double resul= Math.sqrt((double)n) ;
-                return Math.round(resul) ;
-        } /* isqrt */
-
-        /** Evaluate floor(sqrt(n)).
-        * @param n The non-negative argument.
         *  Arguments less than zero throw an ArithmeticException.
         * @return The integer square root, the square root rounded down.
         * @since 2011-02-12
@@ -175,95 +146,6 @@ public class BigIntegerMath
                         throw new ArithmeticException("Negative argument "+ n) ;
                 final Ifactor i = new Ifactor(n) ;
                 return i.core() ;
-        }
-
-        /** Solve a linear system of equations.
-        * @param A The square matrix.
-        *  If it is not of full rank, an ArithmeticException is thrown.
-        * @param rhs The right hand side. The length of this vector must match the matrix size;
-        *  else an ArithmeticException is thrown.
-        * @return The vector of x in A*x=rhs.
-        * @since 2010-08-28
-        * @author Richard J. Mathar
-        */
-        static public Rational[] solve(final BigInteger[][]A, final BigInteger[] rhs) throws ArithmeticException
-        {
-
-                final int rL = A.length ;
-                if ( rL == 0 )
-                        throw new ArithmeticException("zero row count in matrix") ;
-
-                /* column size */
-                final int cL = A[0].length ;
-                if ( cL != rL )
-                        throw new ArithmeticException("Non-square matrix dim "+rL + " by " + cL) ;
-                if ( rhs.length != rL )
-                        throw new ArithmeticException("Right hand side dim "+ rhs.length + " unequal matrix dim " + rL) ;
-
-                        /* Gauss elimination 
-                        */
-                        Rational x[] = new Rational[rL] ;
-
-                        /* copy of r.h.s ito a mutable Rationalright hand side
-                        */
-                        for(int c = 0 ; c < cL ; c++)
-                                x[c] = new Rational(rhs[c]) ;
-
-                        /* Create zeros downwards column c  by linear combination of row c and row r.
-                        */
-                        for(int c = 0 ; c < cL-1 ; c++)
-                        {
-                                /* zero on the diagonal? swap with a non-zero row, searched with index r */
-                                if ( A[c][c].compareTo(BigInteger.ZERO) == 0)
-                                {
-                                        boolean swpd = false ;
-                                        for(int r=c+1; r< rL ; r++)
-                                        {
-                                                if ( A[r][c].compareTo(BigInteger.ZERO) != 0)
-                                                {
-                                                        for(int cpr =c ; cpr < cL; cpr++)
-                                                        {
-                                                                BigInteger tmp = A[c][cpr] ;
-                                                                A[c][cpr] = A[r][cpr] ;
-                                                                A[r][cpr] = tmp ;
-                                                        }
-                                                        Rational tmp = x[c] ;
-                                                        x[c] = x[r] ;
-                                                        x[r] = tmp ;
-                                                        swpd = true ;
-                                                        break;
-                                                }
-                                        }
-                                        /* not swapped with a non-zero row: determinant zero and no solution
-                                        */
-                                        if ( ! swpd)
-                                                throw new ArithmeticException("Zero determinant of main matrix") ;
-                                }
-                                /* create zero at A[c+1..cL-1][c] */
-                                for( int r=c+1; r < rL ; r++)
-                                {
-                                        /* skip the cpr=c which actually sets the zero: this element is not visited again
-                                        */
-                                        for(int cpr = c+1; cpr < cL; cpr++)
-                                        {
-                                                BigInteger tmp = A[c][c].multiply(A[r][cpr]) .subtract ( A[c][cpr].multiply(A[r][c])) ;
-                                                A[r][cpr] = tmp ;
-                                        }
-                                        Rational tmp = x[r].multiply(A[c][c]) .subtract ( x[c].multiply(A[r][c])) ;
-                                        x[r] = tmp ;
-                                }
-                        }
-                        if ( A[cL-1][cL-1].compareTo(BigInteger.ZERO) == 0)
-                                throw new ArithmeticException("Zero determinant of main matrix") ;
-                        /* backward elimination */
-                        for( int r = cL-1 ; r >= 0 ; r--)
-                        {
-                                x[r] = x[r].divide(A[r][r]) ;
-                                for(int rpr = r-1 ; rpr >=0 ; rpr--)
-                                        x[rpr] = x[rpr].subtract( x[r].multiply(A[rpr][r]) ) ;
-                        }
-
-                        return x ;
         }
 
 } /* BigIntegerMath */
