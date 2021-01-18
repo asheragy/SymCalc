@@ -32,6 +32,7 @@ abstract class MultiExpr(val args: Array<out Expr>) : Expr() {
             return e.map {
                 when (it) {
                     is Expr -> it
+                    is Long -> Integer(it)
                     is Int -> Integer(it)
                     is Double -> RealDouble(it)
                     is String -> {

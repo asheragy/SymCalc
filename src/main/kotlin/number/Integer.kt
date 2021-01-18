@@ -9,7 +9,6 @@ import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.integer.Factor
 import org.cerion.symcalc.function.list.Tally
-import org.nevec.rjm.BigIntegerMath
 import java.math.BigDecimal
 import java.math.BigInteger
 
@@ -187,8 +186,6 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
 
         return Integer(num.modPow(exp, mod))
     }
-
-    fun primeQ(): Boolean = value.isProbablePrime(5)
 
     operator fun inc(): Integer = Integer(value.inc())
     operator fun dec(): Integer = Integer(value.minus(BigInteger.ONE))

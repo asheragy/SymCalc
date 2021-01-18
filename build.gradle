@@ -20,7 +20,6 @@ sourceSets {
     main {
         java {
             srcDir "src/main/kotlin"
-            srcDir "anc/src/java"
         }
     }
     test {
