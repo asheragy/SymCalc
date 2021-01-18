@@ -1,4 +1,4 @@
-package org.cerion.symcalc.number
+package org.cerion.symcalc.number.primitive
 
 import org.cerion.symcalc.exception.IterationLimitExceeded
 import java.math.BigDecimal
@@ -101,7 +101,7 @@ fun BigDecimal.log(precision: Int): BigDecimal {
     val mc = MathContext(precision, RoundingMode.HALF_UP)
 
     // Reduce range to [0.7,1.3]
-    if (toDouble() > 1.3 && log2digits-2 > mc.precision) {
+    if (toDouble() > 1.3 && log2digits -2 > mc.precision) {
         var n = 0
         var dvalue = toDouble()
         while (dvalue >= 1.3) {
@@ -183,7 +183,7 @@ private fun logTaylorSeries(input: BigDecimal, mc: MathContext): BigDecimal {
  */
 
 private fun getlog2(precision: Int): BigDecimal {
-    if (log2digits-2 >= precision)
+    if (log2digits -2 >= precision)
         return BigDecimal(LOG2_1000_DIGITS.substring(0, 2 + precision))
 
     throw ArithmeticException()

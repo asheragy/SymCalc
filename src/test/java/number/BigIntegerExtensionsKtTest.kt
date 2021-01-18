@@ -1,7 +1,7 @@
 package number
 
-import org.cerion.symcalc.number.nthRootAndRemainder
-import org.cerion.symcalc.number.sqrtRemainder
+import org.cerion.symcalc.number.primitive.nthRootAndRemainder
+import org.cerion.symcalc.number.primitive.sqrtRemainder
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.*
 import java.math.BigInteger

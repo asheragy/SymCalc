@@ -5,11 +5,10 @@ import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.number.RealDouble
-import org.cerion.symcalc.number.sqrt
+import org.cerion.symcalc.number.primitive.sqrt
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
-import kotlin.math.max
 
 class Pi : ConstExpr() {
     override fun toString(): String = "Pi"

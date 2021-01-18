@@ -9,8 +9,11 @@ import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.integer.Factor
 import org.cerion.symcalc.function.list.Tally
+import org.cerion.symcalc.number.primitive.sqrtRemainder
+import org.cerion.symcalc.number.primitive.toBigInteger
 import java.math.BigDecimal
 import java.math.BigInteger
+
 
 class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     companion object {
@@ -43,7 +46,7 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         return when (precision) {
             InfinitePrecision -> this
             MachinePrecision -> RealDouble(value.toDouble())
-            else -> RealBigDec(BigDecimal(value), precision)
+            else -> RealBigDec(BigDecimal(value.toBigInteger()), precision)
         }
     }
 
@@ -54,12 +57,12 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         return value.toInt()
     }
 
-    fun toBigInteger(): BigInteger = value
-    fun toBigDecimal(): BigDecimal = BigDecimal(value)
+    fun toBigInteger(): BigInteger = value.toBigInteger()
+    fun toBigDecimal(): BigDecimal = BigDecimal(value.toBigInteger())
 
     operator fun plus(N: Integer): Integer = Integer(value.add(N.value))
     operator fun minus(n: Integer): Integer = Integer(value.subtract(n.value))
-    override fun minus(n: Int): Integer = Integer(value.subtract(BigInteger.valueOf(n.toLong())))
+    override fun minus(other: Int): Integer = Integer(value.subtract(BigInteger.valueOf(other.toLong())))
     operator fun times(n: Integer): Integer = Integer(value.multiply(n.value))
     override fun unaryMinus(): Integer = Integer(value.negate())
 
@@ -187,8 +190,8 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         return Integer(num.modPow(exp, mod))
     }
 
-    operator fun inc(): Integer = Integer(value.inc())
-    operator fun dec(): Integer = Integer(value.minus(BigInteger.ONE))
+    operator fun inc(): Integer = Integer(value.add(BigInteger.ONE))
+    operator fun dec(): Integer = Integer(value.subtract(BigInteger.ONE))
     operator fun rem(N: Integer): Integer = Integer(value.mod(N.value))
 
     override fun quotient(other: NumberExpr): NumberExpr {
@@ -196,9 +199,9 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
             is Integer -> {
                 var div = value.divide(other.value)
                 if (div.signum() < 0) {
-                    val test = div * other.value
+                    val test = div.multiply(other.value)
                     if (test > value)
-                        div -= BigInteger.ONE
+                        div = div.subtract(BigInteger.ONE)
                 }
 
                 return Integer(div)

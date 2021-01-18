@@ -7,6 +7,10 @@ import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.core.N
+import org.cerion.symcalc.number.primitive.exp
+import org.cerion.symcalc.number.primitive.log
+import org.cerion.symcalc.number.primitive.root
+import org.cerion.symcalc.number.primitive.sqrt
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
