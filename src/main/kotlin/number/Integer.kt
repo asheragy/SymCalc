@@ -130,11 +130,11 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         */
         val a = this
 
+        // TODO nth root versions of this exist too, check and test on larger value
         if (b == Rational.HALF) {
-            // BigInteger.sqrtAndRemainder() needs Java 9 to work in Android
-            val sqrt = BigIntegerMath.isqrt(a.value)
-            if (sqrt * sqrt == a.value)
-                return Integer(sqrt)
+            val sqrt = a.value.sqrtRemainder()
+            if (sqrt.second == BigInteger.ZERO)
+                return Integer(sqrt.first)
         }
 
         // factor out any numbers that are the Nth root of the denominator
