@@ -131,7 +131,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
 
     override fun div(other: NumberExpr): NumberExpr {
         return when (other) {
-            is Integer -> RealBigDec(value.divide(BigDecimal(other.value), MathContext(getStoredPrecision(precision), RoundingMode.HALF_UP)), precision)
+            is Integer -> RealBigDec(value.divide(other.value.toBigDecimal(), MathContext(getStoredPrecision(precision), RoundingMode.HALF_UP)), precision)
             is Rational -> (this * other.denominator) / other.numerator
             is RealDouble -> RealDouble(toDouble() / other.value)
             is RealBigDec -> this / other

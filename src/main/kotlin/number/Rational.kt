@@ -135,10 +135,10 @@ class Rational private constructor(val numerator: Integer, val denominator: Inte
             val dr2 = other.numerator.value.divideAndRemainder(other.denominator.value)
 
             // First compare quotients
-            return when (val x1 = dr1[0].compareTo(dr2[0])) {
+            return when (val x1 = dr1.first.compareTo(dr2.first)) {
                 0 -> {
                     // Then remainders
-                    when (val x2 = dr1[1].compareTo(dr2[1])) {
+                    when (val x2 = dr1.second.compareTo(dr2.second)) {
                         // If same quotient/remainder then largest is whatever has smaller denominator
                         0 -> other.denominator.compareTo(denominator)
                         else -> x2
@@ -159,8 +159,8 @@ class Rational private constructor(val numerator: Integer, val denominator: Inte
 
     override fun floor(): NumberExpr {
         val dr = numerator.value.divideAndRemainder(denominator.value)
-        val n = dr[0]
-        val d = dr[1]
+        val n = dr.first
+        val d = dr.second
 
         if (d.signum() < 0)
             return Integer(n) - Integer.ONE
@@ -170,8 +170,8 @@ class Rational private constructor(val numerator: Integer, val denominator: Inte
 
     override fun round(): NumberExpr {
         val dr = numerator.value.divideAndRemainder(denominator.value)
-        val n = dr[0]
-        val d = dr[1]
+        val n = dr.first
+        val d = dr.second
 
         val remainder = d.abs().toDouble() / denominator.value.toDouble()
         if (remainder >= 0.5) {
