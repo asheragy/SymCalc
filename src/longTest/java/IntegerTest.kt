@@ -2,6 +2,7 @@ package org.cerion.symcalc
 
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.primitive.BigInt
+import org.cerion.symcalc.number.primitive.toBigInt
 import org.junit.Test
 import java.math.BigInteger
 import kotlin.test.assertEquals
@@ -43,6 +44,37 @@ class IntegerTest {
         val str = x.toString()
         assertEquals('1', str.first())
         assertEquals('0', str.last())
+    }
+
+    @Test
+    fun subtraction() {
+        val a1 = BigInteger("123456789098764321".repeat(550)) // Result is about 1000 int32 digits
+        val subtract1 = a1 / BigInteger("293840932483209")
+
+        var a = a1.toBigInt()
+        val subtract = subtract1.toBigInt()
+
+        repeat(10000000) {
+            a -= subtract
+        }
+
+        val str = a.toString()
+        assertEquals('1', str.first())
+        assertEquals('1', str.last())
+    }
+
+    @Test
+    fun subtractionJava() {
+        var a = BigInteger("123456789098764321".repeat(550)) // Result is about 1000 int32 digits
+        val subtract = a / BigInteger("293840932483209")
+
+        repeat(10000000) {
+            a -= subtract
+        }
+
+        val str = a.toString()
+        assertEquals('1', str.first())
+        assertEquals('1', str.last())
     }
 
     @Test

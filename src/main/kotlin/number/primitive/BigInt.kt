@@ -8,6 +8,8 @@ const val LONG_MASK = 0xffffffffL
 
 class BigInt(private val arr: IntArray) : IBigInt {
 
+    private val sign = 0
+
     constructor(n: String) : this(parse(n))
 
     override fun toString(): String = toBigInteger().toString()
@@ -20,20 +22,30 @@ class BigInt(private val arr: IntArray) : IBigInt {
         return constructor.call(1, copy)
     }
 
+    // Operators
+    operator fun plus(other: BigInt): BigInt = this.add(other)
+    operator fun minus(other: BigInt): BigInt = this.subtract(other)
+
     override fun add(other: IBigInt): IBigInt = add(other as BigInt)
 
     fun add(other: BigInt) = BigInt(add(this.arr, other.arr))
+
+    fun subtract(other: BigInt): BigInt {
+        // TODO check signs and which one is larger
+
+        return BigInt(subtract(arr, other.arr))
+    }
 
     companion object {
         private fun parse(n: String): IntArray {
             val big = BigInteger(n)
             return big.getMag()
         }
+
+        fun of(vararg n: Int): BigInt = BigInt(n.reversedArray()) // Testing use only
     }
 
-    override fun equals(other: Any?): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun equals(other: Any?) = other is BigInt && sign == other.sign && arr.contentEquals(other.arr)
 
     override fun abs(): IBigInt {
         TODO("Not yet implemented")
@@ -113,9 +125,11 @@ private fun BigInteger.getMag(): IntArray {
         it.isAccessible = true
         val value = it.get(this) as IntArray
         value.reverse()
-        return@let value;
+        return@let value
     }
 }
+
+fun BigInteger.toBigInt(): BigInt = BigInt(this.toString())
 
 private fun add(x: IntArray, y: IntArray): IntArray {
     val a = if (x.size >= y.size) x else y
@@ -149,6 +163,45 @@ private fun add(x: IntArray, y: IntArray): IntArray {
     // If no more carry just add the remaining digits
     while(index < a.size)
         arr[index] = a[index++]
+
+    return arr
+}
+
+private fun subtract(x: IntArray, y: IntArray): IntArray {
+    // Input is always expected to have x as the largest array and adjust result sign accordingly
+    val arr = IntArray(x.size) // TODO is there a benefit in copying starting array? need to performance test first
+    var index = 0
+    var diff = 0L
+
+    while(index < y.size) {
+        diff = (x[index].toLong() and LONG_MASK) - (y[index].toLong() and LONG_MASK) + (diff shr 32)
+        arr[index++] = diff.toInt()
+    }
+
+    var borrow = (diff shr 32) != 0L
+    while(index < x.size && borrow) {
+        diff = (x[index].toLong() and LONG_MASK) - 1
+        borrow = diff shr 32 != 0L
+        arr[index++] = diff.toInt()
+    }
+
+    while(index < x.size)
+        arr[index] = x[index++]
+
+    return removeLeadingZeros(arr)
+}
+
+private fun removeLeadingZeros(arr: IntArray): IntArray {
+    var digits = 0
+    for(i in arr.size -1 downTo 0) {
+        if (arr[i] == 0)
+            digits++
+        else
+            break
+    }
+
+    if (digits > 0) // TODO, this drops elements from end of array is there a way to do that without copy?
+        return arr.copyOf(arr.size - digits)
 
     return arr
 }
