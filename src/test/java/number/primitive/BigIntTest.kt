@@ -2,6 +2,8 @@ package org.cerion.symcalc.number.primitive
 
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 
 internal class BigIntTest {
@@ -30,10 +32,48 @@ internal class BigIntTest {
 
         // Result shrinks in size
         assertEquals(BigInt.of(1), BigInt.of(1,1,1,2) - BigInt.of(1,1,1,1))
+
+        // Negative
+        assertEquals(BigInt.of(2,2).negate(), BigInt.of(1,1) - BigInt.of(3,3))
     }
 
     @Test
-    fun additionSubtractionSigned() {
+    fun additionSigned() {
+        assertEquals(BigInt("10000000000"), BigInt("21111111111") + BigInt("-11111111111"))
+        assertEquals(BigInt("-20000000000"), BigInt("21111111111") + BigInt("-41111111111"))
 
+        assertEquals(BigInt("-10000000000"), BigInt("-21111111111") + BigInt("11111111111"))
+        assertEquals(BigInt("30000000000"), BigInt("-21111111111") + BigInt("51111111111"))
+
+        assertEquals(BigInt("-72222222222"), BigInt("-21111111111") + BigInt("-51111111111"))
+    }
+
+    @Test
+    fun subtractionSigned() {
+        // One negative (internal addition)
+        assertEquals(BigInt("32222222222"), BigInt("21111111111") - BigInt("-11111111111"))
+        assertEquals(BigInt("-32222222222"), BigInt("-21111111111") - BigInt("11111111111"))
+
+        // Both negative
+        assertEquals(BigInt("-10000000000"), BigInt("-21111111111") - BigInt("-11111111111"))
+        assertEquals(BigInt("30000000000"), BigInt("-21111111111") - BigInt("-51111111111"))
+    }
+
+    @Test
+    fun compare() {
+        assertTrue(BigInt.of(1,2) > BigInt.of(9))
+        assertTrue(BigInt.of(9) < BigInt.of(1,0))
+
+        // Negative is opposite
+        assertTrue(BigInt.of(1,2).negate() < BigInt.of(9))
+        assertTrue(BigInt.of(9) > BigInt.of(1,0).negate())
+
+        // Equal
+        assertEquals(BigInt.of(1,1), BigInt.of(1,1))
+
+        // Not Equal
+        assertNotEquals(BigInt.of(1,1), BigInt.of(1,1).negate())
+        assertNotEquals(BigInt.of(1,1), BigInt.of(1,1,1))
+        assertNotEquals(BigInt.of(1,1), BigInt.of(1,0))
     }
 }

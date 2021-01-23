@@ -6,11 +6,9 @@ import kotlin.reflect.jvm.isAccessible
 
 const val LONG_MASK = 0xffffffffL
 
-class BigInt(private val arr: IntArray) : IBigInt {
+class BigInt(private val arr: IntArray, private val sign: Int = 1) : IBigInt {
 
-    private val sign = 0
-
-    constructor(n: String) : this(parse(n))
+    constructor(n: String) : this(parse(n), if(n[0] == '-') -1 else 1)
 
     override fun toString(): String = toBigInteger().toString()
     override fun toBigInteger(): BigInteger {
@@ -19,24 +17,50 @@ class BigInt(private val arr: IntArray) : IBigInt {
 
         val copy = arr.copyOf()
         copy.reverse()
-        return constructor.call(1, copy)
+        return constructor.call(sign, copy)
     }
 
     // Operators
     operator fun plus(other: BigInt): BigInt = this.add(other)
     operator fun minus(other: BigInt): BigInt = this.subtract(other)
+    operator fun minus(other: IBigInt): BigInt = this.subtract(other as BigInt)
 
     override fun add(other: IBigInt): IBigInt = add(other as BigInt)
 
-    fun add(other: BigInt) = BigInt(add(this.arr, other.arr))
+    fun add(other: BigInt): BigInt {
+        return when (other.sign) {
+            -1 -> this.subtract(other.negate() as BigInt) // TODO fix
+            1 -> {
+                if (sign == -1)
+                    return other - this.negate()
+
+                BigInt(add(this.arr, other.arr))
+            }
+            else -> this
+        }
+    }
 
     fun subtract(other: BigInt): BigInt {
-        // TODO check signs and which one is larger
+        if (sign == 1 && other.sign == -1)
+            return BigInt(add(arr, other.arr))
+        else if (sign == -1 && other.sign == 1)
+            return BigInt(add(arr, other.arr), -1)
+        else if (sign == 0)
+            return other.negate() as BigInt
+        else if (other.sign == 0)
+            return this
 
-        return BigInt(subtract(arr, other.arr))
+        // Sign is equal but need to subtract
+        return when (compare(arr, other.arr)) {
+            -1 -> return BigInt(subtract(other.arr, arr), -1 * sign)
+            1 -> return BigInt(subtract(arr, other.arr), sign)
+            else -> ZERO
+        }
     }
 
     companion object {
+        val ZERO = BigInt(IntArray(0), 0)
+
         private fun parse(n: String): IntArray {
             val big = BigInteger(n)
             return big.getMag()
@@ -72,7 +96,10 @@ class BigInt(private val arr: IntArray) : IBigInt {
     }
 
     override fun negate(): IBigInt {
-        TODO("Not yet implemented")
+        if (sign == 0)
+            return this
+
+        return BigInt(arr, -1 * sign)
     }
 
     override fun subtract(other: IBigInt): IBigInt {
@@ -116,7 +143,16 @@ class BigInt(private val arr: IntArray) : IBigInt {
     }
 
     override fun compareTo(other: IBigInt): Int {
-        TODO("Not yet implemented")
+        other as BigInt
+
+        if (sign != other.sign)
+            return sign.compareTo(other.sign)
+
+        return when(sign) {
+            -1 -> compare(other.arr, arr)
+            1 -> compare(arr, other.arr)
+            else -> 0
+        }
     }
 }
 
@@ -130,6 +166,19 @@ private fun BigInteger.getMag(): IntArray {
 }
 
 fun BigInteger.toBigInt(): BigInt = BigInt(this.toString())
+
+private fun compare(x: IntArray, y: IntArray): Int {
+    val size = x.size.compareTo(y.size)
+    if (size != 0)
+        return size
+
+    // Start at most significant digit
+    for (i in x.size - 1 downTo 0)
+        if (x[i].compareTo(y[i]) != 0)
+            return x[i].compareTo(y[i])
+
+    return 0
+}
 
 private fun add(x: IntArray, y: IntArray): IntArray {
     val a = if (x.size >= y.size) x else y
