@@ -2,6 +2,7 @@ package org.cerion.symcalc.number.primitive
 
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
@@ -75,5 +76,23 @@ internal class BigIntTest {
         assertNotEquals(BigInt.of(1,1), BigInt.of(1,1).negate())
         assertNotEquals(BigInt.of(1,1), BigInt.of(1,1,1))
         assertNotEquals(BigInt.of(1,1), BigInt.of(1,0))
+    }
+
+    @Test
+    fun abs() {
+        assertEquals(BigInt("11"), BigInt("11").abs())
+        assertEquals(BigInt("11"), BigInt("-11").abs())
+        assertEquals(BigInt("0"), BigInt("0").abs())
+    }
+
+    @Test
+    fun testBit() {
+        assertFalse(BigInt("123456789022").testBit(0))
+        assertFalse(BigInt("-2").testBit(0))
+        assertFalse(BigInt("0").testBit(0))
+
+        assertTrue(BigInt("12345678901").testBit(0))
+        assertTrue(BigInt("1").testBit(0))
+        assertTrue(BigInt("-1").testBit(0))
     }
 }
