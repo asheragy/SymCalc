@@ -1,10 +1,8 @@
 package org.cerion.symcalc.number.primitive
 
 import org.junit.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotEquals
-import kotlin.test.assertTrue
+import java.lang.ArithmeticException
+import kotlin.test.*
 
 
 internal class BigIntTest {
@@ -94,5 +92,26 @@ internal class BigIntTest {
         assertTrue(BigInt("12345678901").testBit(0))
         assertTrue(BigInt("1").testBit(0))
         assertTrue(BigInt("-1").testBit(0))
+    }
+
+    @Test
+    fun toNumber() {
+        assertEquals(0.0, BigInt("0").toDouble())
+        assertEquals(0, BigInt("0").toInt())
+
+        assertEquals(1234567890.0, BigInt("1234567890").toDouble())
+        assertEquals(1234567890, BigInt("1234567890").toInt())
+
+        assertEquals(-1234567890.0, BigInt("-1234567890").toDouble())
+        assertEquals(-1234567890, BigInt("-1234567890").toInt())
+    }
+
+    @Test
+    fun toNumberInvalid() {
+        val invalid = listOf("3000000000", "-3000000000")
+        invalid.forEach {
+            assertFailsWith(ArithmeticException::class) { BigInt(it).toDouble() }
+            assertFailsWith(ArithmeticException::class) { BigInt(it).toInt() }
+        }
     }
 }

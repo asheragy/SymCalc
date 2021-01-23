@@ -1,5 +1,6 @@
 package org.cerion.symcalc.number.primitive
 
+import java.lang.ArithmeticException
 import java.math.BigDecimal
 import java.math.BigInteger
 import kotlin.reflect.jvm.isAccessible
@@ -105,11 +106,29 @@ class BigInt(private val arr: IntArray, private val sign: Int = 1) : IBigInt {
     }
 
     override fun toDouble(): Double {
-        TODO("Not yet implemented")
+        return when (arr.size) {
+            0 -> 0.0
+            1 -> {
+                if (arr[0] < 0)
+                    throw ArithmeticException()
+
+                arr[0].toDouble() * sign
+            }
+            else -> throw ArithmeticException()
+        }
     }
 
     override fun toInt(): Int {
-        TODO("Not yet implemented")
+        return when (arr.size) {
+            0 -> 0
+            1 -> {
+                if (arr[0] < 0)
+                    throw ArithmeticException()
+
+                arr[0] * sign
+            }
+            else -> throw ArithmeticException()
+        }
     }
 
     override fun negate() = if (sign == 0) this else BigInt(arr, -1 * sign)

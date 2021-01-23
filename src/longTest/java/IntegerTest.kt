@@ -47,6 +47,42 @@ class IntegerTest {
     }
 
     @Test
+    fun additionBigSmall() {
+        var a = BigInt("123456789098764321".repeat(550)) // Result is about 1000 int32 digits
+        val x = BigInt("1234567890")
+        repeat(10000000) {
+            a += x
+        }
+    }
+
+    @Test
+    fun additionBigSmallJava() {
+        var a = BigInteger("123456789098764321".repeat(550)) // Result is about 1000 int32 digits
+        val x = BigInteger("1234567890")
+        repeat(10000000) {
+            a += x
+        }
+    }
+
+    @Test
+    fun additionSmallSmall() {
+        val a = BigInt("1")
+        var x = BigInt("0")
+        repeat(100000000) {
+            x += a
+        }
+    }
+
+    @Test
+    fun additionSmallSmallJava() {
+        val a = BigInteger("1")
+        var x = BigInteger("0")
+        repeat(100000000) {
+            x += a
+        }
+    }
+
+    @Test
     fun subtraction() {
         val a1 = BigInteger("123456789098764321".repeat(550)) // Result is about 1000 int32 digits
         val subtract1 = a1 / BigInteger("293840932483209")
