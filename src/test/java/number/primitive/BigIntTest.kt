@@ -7,33 +7,35 @@ import kotlin.test.*
 
 internal class BigIntTest {
 
+    private fun bigInt(vararg n: Int): BigInt = BigInt(1, n.reversedArray())
+
     @Test
     fun addition() {
-        assertEquals(BigInt.of(1,0), BigInt.of(-1) + BigInt.of(1))
+        assertEquals(bigInt(1,0), bigInt(-1) + bigInt(1))
 
         // Digit carried
-        assertEquals(BigInt.of(1,0,0), BigInt.of(-1,-1) + BigInt.of(1))
-        assertEquals(BigInt.of(1,2,0), BigInt.of(1,1,-1) + BigInt.of(1))
+        assertEquals(bigInt(1,0,0), bigInt(-1,-1) + bigInt(1))
+        assertEquals(bigInt(1,2,0), bigInt(1,1,-1) + bigInt(1))
 
         // Larger second
-        assertEquals(BigInt.of(1,1,1,2), BigInt.of(1) + BigInt.of(1,1,1,1))
+        assertEquals(bigInt(1,1,1,2), bigInt(1) + bigInt(1,1,1,1))
     }
 
     @Test
     fun subtract() {
-        assertEquals(BigInt.of(2,2), BigInt.of(3,3) - BigInt.of(1,1))
+        assertEquals(bigInt(2,2), bigInt(3,3) - bigInt(1,1))
 
         // Digits borrowed
-        assertEquals(BigInt.of(4,-1), BigInt.of(5,1) - BigInt.of(2))
-        assertEquals(BigInt.of(3,-4), BigInt.of(5,1) - BigInt.of(1,5))
-        assertEquals(BigInt.of(1,-2,-1), BigInt.of(2,0,1) - BigInt.of(1,2))
-        assertEquals(BigInt.of(1,3,-4), BigInt.of(1,5,1) - BigInt.of(1,5))
+        assertEquals(bigInt(4,-1), bigInt(5,1) - bigInt(2))
+        assertEquals(bigInt(3,-4), bigInt(5,1) - bigInt(1,5))
+        assertEquals(bigInt(1,-2,-1), bigInt(2,0,1) - bigInt(1,2))
+        assertEquals(bigInt(1,3,-4), bigInt(1,5,1) - bigInt(1,5))
 
         // Result shrinks in size
-        assertEquals(BigInt.of(1), BigInt.of(1,1,1,2) - BigInt.of(1,1,1,1))
+        assertEquals(bigInt(1), bigInt(1,1,1,2) - bigInt(1,1,1,1))
 
         // Negative
-        assertEquals(BigInt.of(2,2).negate(), BigInt.of(1,1) - BigInt.of(3,3))
+        assertEquals(bigInt(2,2).negate(), bigInt(1,1) - bigInt(3,3))
     }
 
     @Test
@@ -60,20 +62,20 @@ internal class BigIntTest {
 
     @Test
     fun compare() {
-        assertTrue(BigInt.of(1,2) > BigInt.of(9))
-        assertTrue(BigInt.of(9) < BigInt.of(1,0))
+        assertTrue(bigInt(1,2) > bigInt(9))
+        assertTrue(bigInt(9) < bigInt(1,0))
 
         // Negative is opposite
-        assertTrue(BigInt.of(1,2).negate() < BigInt.of(9))
-        assertTrue(BigInt.of(9) > BigInt.of(1,0).negate())
+        assertTrue(bigInt(1,2).negate() < bigInt(9))
+        assertTrue(bigInt(9) > bigInt(1,0).negate())
 
         // Equal
-        assertEquals(BigInt.of(1,1), BigInt.of(1,1))
+        assertEquals(bigInt(1,1), bigInt(1,1))
 
         // Not Equal
-        assertNotEquals(BigInt.of(1,1), BigInt.of(1,1).negate())
-        assertNotEquals(BigInt.of(1,1), BigInt.of(1,1,1))
-        assertNotEquals(BigInt.of(1,1), BigInt.of(1,0))
+        assertNotEquals(bigInt(1,1), bigInt(1,1).negate())
+        assertNotEquals(bigInt(1,1), bigInt(1,1,1))
+        assertNotEquals(bigInt(1,1), bigInt(1,0))
     }
 
     @Test

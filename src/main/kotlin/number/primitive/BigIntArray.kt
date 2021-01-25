@@ -17,7 +17,7 @@ object BigIntArray {
 
     internal fun add(x: IntArray, y: IntArray): IntArray {
         val a = if (x.size >= y.size) x else y
-        val b = if (a === x) y else x
+        val b = if (x.size >= y.size) y else x
 
         val arr = IntArray(a.size)
         var index = 0

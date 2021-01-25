@@ -7,9 +7,10 @@ import kotlin.reflect.jvm.isAccessible
 
 const val LONG_MASK = 0xffffffffL
 
-class BigInt(private val arr: IntArray, private val sign: Int = 1) : IBigInt {
+class BigInt(private val sign: Byte, private val arr: IntArray) : IBigInt {
 
-    constructor(n: String) : this(parse(n), parseSign(n))
+    constructor(s: Int, arr: IntArray) : this (s.toByte(), arr)
+    constructor(n: String) : this(parseSign(n), parse(n))
 
     override fun toString(): String = toBigInteger().toString()
 
@@ -24,7 +25,8 @@ class BigInt(private val arr: IntArray, private val sign: Int = 1) : IBigInt {
     }
 
     init {
-        if (sign != 0) {
+        // Temp error checking
+        if (sign != ZEROSIGN) {
             if (arr.isEmpty() || (arr.size == 1 && arr[0] == 0))
                 throw IllegalArgumentException("Sign should be zero")
         }
@@ -40,15 +42,15 @@ class BigInt(private val arr: IntArray, private val sign: Int = 1) : IBigInt {
     override fun add(other: IBigInt): IBigInt = add(other as BigInt)
     fun add(other: BigInt): BigInt {
         return when {
-            sign == 0 -> other
-            other.sign == 0 -> this
-            sign == other.sign -> BigInt(BigIntArray.add(this.arr, other.arr), sign)
+            sign == ZEROSIGN -> other
+            other.sign == ZEROSIGN -> this
+            sign == other.sign -> BigInt(sign, BigIntArray.add(this.arr, other.arr))
 
             // Subtract since one side is negative
             else ->
                 when (BigIntArray.compare(arr, other.arr)) {
-                    -1 -> BigInt(BigIntArray.subtract(other.arr, arr), -1 * sign)
-                    1 -> BigInt(BigIntArray.subtract(arr, other.arr), sign)
+                    -1 -> BigInt(-1 * sign, BigIntArray.subtract(other.arr, arr))
+                    1 -> BigInt(sign, BigIntArray.subtract(arr, other.arr))
                 else -> ZERO
             }
         }
@@ -56,25 +58,28 @@ class BigInt(private val arr: IntArray, private val sign: Int = 1) : IBigInt {
 
     override fun subtract(other: IBigInt) = this.subtract(other as BigInt)
     fun subtract(other: BigInt): BigInt {
-        if (sign == 1 && other.sign == -1)
-            return BigInt(BigIntArray.add(arr, other.arr))
-        else if (sign == -1 && other.sign == 1)
-            return BigInt(BigIntArray.add(arr, other.arr), -1)
-        else if (sign == 0)
+        if (sign == POSITIVE && other.sign == NEGATIVE)
+            return BigInt(1, BigIntArray.add(arr, other.arr))
+        else if (sign == NEGATIVE && other.sign == POSITIVE)
+            return BigInt(-1, BigIntArray.add(arr, other.arr))
+        else if (sign == ZEROSIGN)
             return other.negate()
-        else if (other.sign == 0)
+        else if (other.sign == ZEROSIGN)
             return this
 
         // Sign is equal but need to subtract
         return when (BigIntArray.compare(arr, other.arr)) {
-            -1 -> return BigInt(BigIntArray.subtract(other.arr, arr), -1 * sign)
-            1 -> return BigInt(BigIntArray.subtract(arr, other.arr), sign)
+            -1 -> return BigInt(-1 * sign, BigIntArray.subtract(other.arr, arr))
+            1 -> return BigInt(sign, BigIntArray.subtract(arr, other.arr))
             else -> ZERO
         }
     }
 
     companion object {
-        val ZERO = BigInt(IntArray(0), 0)
+        val ZERO = BigInt(0, IntArray(0))
+        private val POSITIVE = (1).toByte()
+        private val NEGATIVE = (-1).toByte()
+        private val ZEROSIGN = 0.toByte()
 
         private fun parse(n: String): IntArray {
             val big = BigInteger(n)
@@ -88,18 +93,16 @@ class BigInt(private val arr: IntArray, private val sign: Int = 1) : IBigInt {
                 else -> 1
             }
         }
-
-        fun of(vararg n: Int): BigInt = BigInt(n.reversedArray()) // Testing use only
     }
 
     override fun equals(other: Any?) = other is BigInt && sign == other.sign && arr.contentEquals(other.arr)
-    override fun signum() = sign
+    override fun signum() = sign.toInt()
 
     override fun testBit(n: Int): Boolean {
         if (n != 0)
             throw Exception() // only supporting to check for odd
 
-        if (sign == 0)
+        if (sign == ZEROSIGN)
             return false
 
         return arr[0] % 2 != 0
@@ -131,8 +134,8 @@ class BigInt(private val arr: IntArray, private val sign: Int = 1) : IBigInt {
         }
     }
 
-    override fun negate() = if (sign == 0) this else BigInt(arr, -1 * sign)
-    override fun abs() = if (sign == -1) BigInt(arr, 1) else this
+    override fun negate() = if (sign == ZEROSIGN) this else BigInt(-1 * sign, arr)
+    override fun abs() = if (sign == NEGATIVE) BigInt(1, arr) else this
 
     override fun multiply(other: IBigInt): IBigInt {
         TODO("Not yet implemented")
@@ -177,8 +180,8 @@ class BigInt(private val arr: IntArray, private val sign: Int = 1) : IBigInt {
             return sign.compareTo(other.sign)
 
         return when(sign) {
-            -1 -> BigIntArray.compare(other.arr, arr)
-            1 -> BigIntArray.compare(arr, other.arr)
+            NEGATIVE -> BigIntArray.compare(other.arr, arr)
+            POSITIVE -> BigIntArray.compare(arr, other.arr)
             else -> 0
         }
     }
