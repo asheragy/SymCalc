@@ -1,8 +1,9 @@
 package org.cerion.symcalc.number.primitive
 
+@ExperimentalUnsignedTypes
 object BigIntArray {
 
-    internal fun compare(x: IntArray, y: IntArray): Int {
+    internal fun compare(x: UIntArray, y: UIntArray): Int {
         val size = x.size.compareTo(y.size)
         if (size != 0)
             return size
@@ -15,32 +16,32 @@ object BigIntArray {
         return 0
     }
 
-    internal fun add(x: IntArray, y: IntArray): IntArray {
+    internal fun add(x: UIntArray, y: UIntArray): UIntArray {
         val a = if (x.size >= y.size) x else y
         val b = if (x.size >= y.size) y else x
 
-        val arr = IntArray(a.size)
+        val arr = UIntArray(a.size)
         var index = 0
-        var sum: Long = 0
+        var sum: ULong = 0uL
 
         // Add digits while array lengths are the same
         while(index < b.size) {
-            sum = (a[index].toLong() and LONG_MASK) + (b[index].toLong() and LONG_MASK) + (sum ushr 32)
-            arr[index++] = sum.toInt()
+            sum = a[index].toULong() + b[index].toULong() + (sum shr 32)
+            arr[index++] = sum.toUInt()
         }
 
         // Add digits for larger number while digit is still carried
-        var carry = sum ushr 32 != 0L
+        var carry = sum shr 32 != 0uL
         while(index < a.size && carry) {
-            sum = (a[index].toLong() and LONG_MASK) + (sum ushr 32)
-            carry = sum ushr 32 != 0L
-            arr[index++] = sum.toInt()
+            sum = a[index].toULong() + (sum shr 32)
+            carry = sum shr 32 != 0uL
+            arr[index++] = sum.toUInt()
         }
 
         // If there is still a digit to carry add it and return
         if (carry) {
             val t = arr.copyOf(arr.size + 1)
-            t[arr.size] = 1
+            t[arr.size] = 1u
             return t
         }
 
@@ -51,22 +52,22 @@ object BigIntArray {
         return arr
     }
 
-    internal fun subtract(x: IntArray, y: IntArray): IntArray {
+    internal fun subtract(x: UIntArray, y: UIntArray): UIntArray {
         // Input is always expected to have x as the largest array and adjust result sign accordingly
-        val arr = IntArray(x.size) // TODO is there a benefit in copying starting array? need to performance test first
+        val arr = UIntArray(x.size) // TODO is there a benefit in copying starting array? need to performance test first
         var index = 0
         var diff = 0L
 
         while(index < y.size) {
-            diff = (x[index].toLong() and LONG_MASK) - (y[index].toLong() and LONG_MASK) + (diff shr 32)
-            arr[index++] = diff.toInt()
+            diff = x[index].toLong() - y[index].toLong() + (diff shr 32)
+            arr[index++] = diff.toUInt()
         }
 
-        var borrow = (diff shr 32) != 0L
+        var borrow = diff < 0
         while(index < x.size && borrow) {
-            diff = (x[index].toLong() and LONG_MASK) - 1
-            borrow = diff shr 32 != 0L
-            arr[index++] = diff.toInt()
+            diff = x[index].toLong() - 1
+            borrow = diff < 0
+            arr[index++] = diff.toUInt()
         }
 
         while(index < x.size)
@@ -75,10 +76,10 @@ object BigIntArray {
         return removeLeadingZeros(arr)
     }
 
-    private fun removeLeadingZeros(arr: IntArray): IntArray {
+    private fun removeLeadingZeros(arr: UIntArray): UIntArray {
         var digits = 0
         for(i in arr.size -1 downTo 0) {
-            if (arr[i] == 0)
+            if (arr[i] == 0u)
                 digits++
             else
                 break

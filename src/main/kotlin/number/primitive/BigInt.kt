@@ -5,11 +5,10 @@ import java.math.BigDecimal
 import java.math.BigInteger
 import kotlin.reflect.jvm.isAccessible
 
-const val LONG_MASK = 0xffffffffL
+@ExperimentalUnsignedTypes
+class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : IBigInt {
 
-class BigInt(private val sign: Byte, private val arr: IntArray) : IBigInt {
-
-    constructor(s: Int, arr: IntArray) : this (s.toByte(), arr)
+    constructor(s: Int, arr: UIntArray) : this (s.toByte(), arr)
     constructor(n: String) : this(parseSign(n), parse(n))
 
     override fun toString(): String = toBigInteger().toString()
@@ -19,18 +18,17 @@ class BigInt(private val sign: Byte, private val arr: IntArray) : IBigInt {
         val constructor = BigInteger::class.constructors.toList()[11] // Signum / int[]
         constructor.isAccessible = true
 
-        val copy = arr.copyOf()
-        copy.reverse()
+        val copy = arr.map { it.toInt() }.reversed().toIntArray()
         return constructor.call(sign, copy)
     }
 
     init {
         // Temp error checking
         if (sign != ZEROSIGN) {
-            if (arr.isEmpty() || (arr.size == 1 && arr[0] == 0))
+            if (arr.isEmpty() || (arr.size == 1 && arr[0] == 0u))
                 throw IllegalArgumentException("Sign should be zero")
         }
-        else if (arr.isNotEmpty() && arr.all { it == 0 })
+        else if (arr.isNotEmpty() && arr.all { it == 0u })
             throw IllegalArgumentException("Sign should NOT zero")
     }
 
@@ -76,14 +74,14 @@ class BigInt(private val sign: Byte, private val arr: IntArray) : IBigInt {
     }
 
     companion object {
-        val ZERO = BigInt(0, IntArray(0))
+        val ZERO = BigInt(0, UIntArray(0))
         private val POSITIVE = (1).toByte()
         private val NEGATIVE = (-1).toByte()
         private val ZEROSIGN = 0.toByte()
 
-        private fun parse(n: String): IntArray {
+        private fun parse(n: String): UIntArray {
             val big = BigInteger(n)
-            return big.getMag()
+            return big.getMag().map { it.toUInt() }.toUIntArray()
         }
 
         private fun parseSign(n: String): Int {
@@ -105,18 +103,13 @@ class BigInt(private val sign: Byte, private val arr: IntArray) : IBigInt {
         if (sign == ZEROSIGN)
             return false
 
-        return arr[0] % 2 != 0
+        return arr[0] % 2u != 0u
     }
 
     override fun toDouble(): Double {
         return when (arr.size) {
             0 -> 0.0
-            1 -> {
-                if (arr[0] < 0)
-                    throw ArithmeticException()
-
-                arr[0].toDouble() * sign
-            }
+            1 -> arr[0].toDouble() * sign
             else -> throw ArithmeticException()
         }
     }
@@ -125,10 +118,10 @@ class BigInt(private val sign: Byte, private val arr: IntArray) : IBigInt {
         return when (arr.size) {
             0 -> 0
             1 -> {
-                if (arr[0] < 0)
+                if (arr[0] > Integer.MAX_VALUE.toUInt())
                     throw ArithmeticException()
 
-                arr[0] * sign
+                arr[0].toInt() * sign
             }
             else -> throw ArithmeticException()
         }

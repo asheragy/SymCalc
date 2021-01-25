@@ -5,9 +5,10 @@ import java.lang.ArithmeticException
 import kotlin.test.*
 
 
+@ExperimentalUnsignedTypes
 internal class BigIntTest {
 
-    private fun bigInt(vararg n: Int): BigInt = BigInt(1, n.reversedArray())
+    private fun bigInt(vararg n: Int): BigInt = BigInt(1, n.map { it.toUInt() }.reversed().toUIntArray())
 
     @Test
     fun addition() {
@@ -102,6 +103,7 @@ internal class BigIntTest {
         assertEquals(0, BigInt("0").toInt())
 
         assertEquals(1234567890.0, BigInt("1234567890").toDouble())
+        assertEquals(4000000000.0, BigInt("4000000000").toDouble())
         assertEquals(1234567890, BigInt("1234567890").toInt())
 
         assertEquals(-1234567890.0, BigInt("-1234567890").toDouble())
@@ -112,8 +114,8 @@ internal class BigIntTest {
     fun toNumberInvalid() {
         val invalid = listOf("3000000000", "-3000000000")
         invalid.forEach {
-            assertFailsWith(ArithmeticException::class) { BigInt(it).toDouble() }
-            assertFailsWith(ArithmeticException::class) { BigInt(it).toInt() }
+            val n = BigInt(it)
+            assertFailsWith(ArithmeticException::class) { n.toInt() }
         }
     }
 }
