@@ -76,7 +76,7 @@ object BigIntArray {
         return removeLeadingZeros(arr)
     }
 
-    private fun removeLeadingZeros(arr: UIntArray): UIntArray {
+    fun removeLeadingZeros(arr: UIntArray): UIntArray {
         var digits = 0
         for(i in arr.size -1 downTo 0) {
             if (arr[i] == 0u)

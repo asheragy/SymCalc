@@ -11,6 +11,22 @@ internal class BigIntTest {
     private fun bigInt(vararg n: Int): BigInt = BigInt(1, n.map { it.toUInt() }.reversed().toUIntArray())
 
     @Test
+    fun parse() {
+        assertEquals("1", BigInt("1").toString())
+        assertEquals("2000000000", BigInt("2000000000").toString())
+        assertEquals("-2000000000", BigInt("-2000000000").toString())
+        assertEquals("4000000000", BigInt("4000000000").toString())
+        assertEquals("4294967295", BigInt("4294967295").toString())
+        assertEquals("4294967296", BigInt("4294967296").toString())
+        assertEquals("18446744078004518913", BigInt("18446744078004518913").toString())
+        assertEquals("36893488147419103231", BigInt("36893488147419103231").toString())
+        assertEquals("79228162514264337593543950335", BigInt("79228162514264337593543950335").toString())
+
+        // Multiple addition carries at the end
+        assertEquals("340282366920938463463374607431768211456", BigInt("340282366920938463463374607431768211456").toString())
+    }
+
+    @Test
     fun addition() {
         assertEquals(bigInt(1,0), bigInt(-1) + bigInt(1))
 

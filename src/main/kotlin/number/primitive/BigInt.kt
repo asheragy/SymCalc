@@ -5,12 +5,12 @@ import java.math.BigDecimal
 import java.math.BigInteger
 import kotlin.reflect.jvm.isAccessible
 
+
 @ExperimentalUnsignedTypes
 class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : IBigInt {
 
     constructor(s: Int, arr: UIntArray) : this (s.toByte(), arr)
     constructor(n: String) : this(parseSign(n), parse(n))
-
     override fun toString(): String = toBigInteger().toString()
 
     override fun toBigDecimal(): BigDecimal = toBigInteger().toBigDecimal()
@@ -80,8 +80,54 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
         private val ZEROSIGN = 0.toByte()
 
         private fun parse(n: String): UIntArray {
-            val big = BigInteger(n)
-            return big.getMag().map { it.toUInt() }.toUIntArray()
+            val offset = if(n[0] == '-') 1 else 0
+            val firstDigits = n.subSequence(offset, offset + if ((n.length-offset) % 9 == 0) 9 else (n.length-offset) % 9).toString()
+            val remainingDigits = n.substring(firstDigits.length + offset).chunked(9).map { Integer.parseInt(it).toUInt() }
+
+            if (firstDigits == "0")
+                return UIntArray(0)
+
+            val base = 1000000000
+            val result = mutableListOf<UInt>()
+
+            result.add(Integer.parseInt(firstDigits).toUInt())
+            for(i in remainingDigits.indices) {
+                // multiply entire result array by base
+                var product: ULong = 0uL
+                for(j in result.indices) {
+                    product = result[j] * base.toULong() + (product shr 32)
+                    result[j] = product.toUInt()
+                }
+
+                if (product shr 32 != 0uL)
+                    result.add((product shr 32).toUInt())
+
+                // Add current digit
+                product = result[0].toULong() + remainingDigits[i]
+                result[0] = product.toUInt()
+
+                // Carry as necessary
+                if (product shr 32 != 0uL) {
+                    if (result.size == 1)
+                        result.add((product shr 32).toUInt())
+                    else {
+                        var index = 1;
+                        // TODO fix to match addition better
+                        while(product shr 32 != 0uL) {
+                            if (index == result.size) {
+                                result.add(1u)
+                                break
+                            }
+                            else {
+                                product = result[index].toULong() + (product shr 32).toUInt()
+                                result[index++] = product.toUInt()
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result.toUIntArray()
         }
 
         private fun parseSign(n: String): Int {
