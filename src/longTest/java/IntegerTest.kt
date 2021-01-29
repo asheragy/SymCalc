@@ -19,6 +19,52 @@ class IntegerTest {
     }
 
     @Test
+    fun construct() {
+        var x = 0
+        var s = "123456789098764321".repeat(10000)
+        repeat(10) {
+            x += BigInt(s).signum()
+        }
+    }
+
+    @Test
+    fun constructJava() {
+        var x = 0
+        var s = "123456789098764321".repeat(10000)
+        repeat(10) {
+            x += BigInteger(s).signum()
+        }
+    }
+
+    @Test
+    fun test() {
+        for(i in 1 until 5000) {
+            val s = "1" + "0".repeat(i)
+            val i = BigInt(s)
+            //println(i).toString()
+            assertEquals(s, i.toString())
+        }
+    }
+
+    @Test
+    fun string() {
+        var x = 0
+        val s = BigInt("123456789098764321".repeat(10000))
+        repeat(1) {
+            x += s.toString().length
+        }
+    }
+
+    @Test
+    fun stringJava() {
+        var x = 0
+        val s = BigInteger("123456789098764321".repeat(2))
+        repeat(10000000) {
+            x += s.toString().length
+        }
+    }
+
+    @Test
     fun addition() {
         val a = BigInt("123456789098764321".repeat(550)) // Result is about 1000 int32 digits
         var x = BigInt("0")

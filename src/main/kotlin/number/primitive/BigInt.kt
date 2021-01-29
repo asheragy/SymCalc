@@ -1,6 +1,5 @@
 package org.cerion.symcalc.number.primitive
 
-import java.lang.ArithmeticException
 import java.math.BigDecimal
 import java.math.BigInteger
 import kotlin.reflect.jvm.isAccessible
@@ -11,7 +10,6 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
 
     constructor(s: Int, arr: UIntArray) : this (s.toByte(), arr)
     constructor(n: String) : this(parseSign(n), parse(n))
-    override fun toString(): String = toBigInteger().toString()
 
     override fun toBigDecimal(): BigDecimal = toBigInteger().toBigDecimal()
     override fun toBigInteger(): BigInteger {
@@ -95,31 +93,31 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
                 // multiply entire result array by base
                 var product: ULong = 0uL
                 for(j in result.indices) {
-                    product = result[j] * base.toULong() + (product shr 32)
+                    product = result[j] * base.toULong() + product.toShiftedUInt()
                     result[j] = product.toUInt()
                 }
 
-                if (product shr 32 != 0uL)
-                    result.add((product shr 32).toUInt())
+                if (product.toShiftedUInt() != 0u)
+                    result.add(product.toShiftedUInt())
 
                 // Add current digit
                 product = result[0].toULong() + remainingDigits[i]
                 result[0] = product.toUInt()
 
                 // Carry as necessary
-                if (product shr 32 != 0uL) {
+                if (product.toShiftedUInt() != 0u) {
                     if (result.size == 1)
-                        result.add((product shr 32).toUInt())
+                        result.add(product.toShiftedUInt())
                     else {
                         var index = 1;
                         // TODO fix to match addition better
-                        while(product shr 32 != 0uL) {
+                        while(product.toShiftedUInt() != 0u) {
                             if (index == result.size) {
                                 result.add(1u)
                                 break
                             }
                             else {
-                                product = result[index].toULong() + (product shr 32).toUInt()
+                                product = result[index].toULong() + product.toShiftedUInt()
                                 result[index++] = product.toUInt()
                             }
                         }
@@ -224,16 +222,73 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
             else -> 0
         }
     }
-}
 
-private fun BigInteger.getMag(): IntArray {
-    return javaClass.getDeclaredField("mag").let {
-        it.isAccessible = true
-        val value = it.get(this) as IntArray
-        value.reverse()
-        return@let value
+    override fun toString(): String {
+        if (sign == ZEROSIGN)
+            return "0"
+
+        val sb = StringBuilder()
+        if (sign == NEGATIVE)
+            sb.append("-")
+
+        val base = 65536
+        val maxDigit = 1000000000uL
+        val result = mutableListOf<UInt>()
+
+        result.add((arr.last() % maxDigit).toUInt())
+        if (arr.last() / maxDigit != 0uL)
+            result.add((arr.last() / maxDigit).toUInt())
+
+        for(index in arr.size - 2 downTo 0) {
+            for (i in 0..1) {
+                // Multiply entire result array by base
+                var temp: ULong = 0uL
+                for (j in result.indices) {
+                    temp = result[j] * base.toULong() + (temp / maxDigit)
+                    result[j] = (temp % maxDigit).toUInt()
+                }
+
+                // Multiplication carry
+                if (temp / maxDigit != 0uL)
+                    result.add((temp / maxDigit).toUInt())
+
+                // Add current digit
+                temp = result[0].toULong() + if (i == 1) arr[index].toUShort() else (arr[index] shr 16).toUShort()
+                result[0] = (temp % maxDigit).toUInt()
+
+                while(temp /maxDigit != 0uL) {
+                    var index = 1;
+                    if (index == result.size) {
+                        result.add(1u) // TODO see if any test case fits here, no coverage yet
+                        break
+                    }
+                    else {
+                        temp = result[index].toULong() + (temp / maxDigit)
+                        result[index++] = (temp % maxDigit).toUInt()
+                    }
+                }
+            }
+        }
+
+        sb.append(result.last())
+        for(i in result.size - 2 downTo 0) {
+            sb.append("0".repeat(9 - result[i].toString().length))
+            sb.append(result[i])
+        }
+
+        return sb.toString()
+    }
+
+    // Debug
+    fun printDigits() {
+        arr.forEach {
+            print("$it ")
+        }
+        println()
     }
 }
 
 fun BigInteger.toBigInt(): BigInt = BigInt(this.toString())
 
+// Returns larger half as UInt
+inline fun ULong.toShiftedUInt(): UInt = (this shr 32).toUInt()

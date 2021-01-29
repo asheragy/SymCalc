@@ -12,6 +12,7 @@ internal class BigIntTest {
 
     @Test
     fun parse() {
+        // Tests to and from string
         assertEquals("1", BigInt("1").toString())
         assertEquals("2000000000", BigInt("2000000000").toString())
         assertEquals("-2000000000", BigInt("-2000000000").toString())
@@ -21,6 +22,10 @@ internal class BigIntTest {
         assertEquals("18446744078004518913", BigInt("18446744078004518913").toString())
         assertEquals("36893488147419103231", BigInt("36893488147419103231").toString())
         assertEquals("79228162514264337593543950335", BigInt("79228162514264337593543950335").toString())
+        assertEquals("100000000000000000000000000000000", BigInt("100000000000000000000000000000000").toString())
+
+        // toString requires addition carry
+        assertEquals("10000000000000000000000000", BigInt("10000000000000000000000000").toString())
 
         // Multiple addition carries at the end
         assertEquals("340282366920938463463374607431768211456", BigInt("340282366920938463463374607431768211456").toString())
