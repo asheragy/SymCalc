@@ -76,7 +76,35 @@ object BigIntArray {
         return removeLeadingZeros(arr)
     }
 
-    fun removeLeadingZeros(arr: UIntArray): UIntArray {
+    internal fun multiply(x: UIntArray, y: UIntArray): UIntArray {
+        val a = if (x.size >= y.size) x else y
+        val b = if (x.size >= y.size) y else x
+        var result = UIntArray(0)
+
+        b.forEachIndexed { index, bx ->
+            val c = a.copyOf().toMutableList()
+            var t = 0uL
+
+            for(i in 0 until c.size) {
+                t = bx.toULong() * c[i] + t.toShiftedUInt()
+                c[i] = t.toUInt()
+            }
+
+            // Carry last digit
+            if(t.toShiftedUInt() != 0u)
+                c.add(t.toShiftedUInt())
+
+            repeat(index) {
+                c.add(0, 0u)
+            }
+
+            result = add(result, c.toUIntArray())
+        }
+
+        return result.toUIntArray()
+    }
+
+    private fun removeLeadingZeros(arr: UIntArray): UIntArray {
         var digits = 0
         for(i in arr.size -1 downTo 0) {
             if (arr[i] == 0u)

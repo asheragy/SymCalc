@@ -34,6 +34,8 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
     operator fun plus(other: BigInt): BigInt = this.add(other)
     operator fun minus(other: BigInt): BigInt = this.subtract(other)
     operator fun minus(other: IBigInt): BigInt = this.subtract(other as BigInt)
+    operator fun times(other: BigInt): BigInt = this.multiply(other)
+    operator fun times(other: IBigInt): BigInt = this.multiply(other as BigInt)
 
     override fun add(other: IBigInt): IBigInt = add(other as BigInt)
     fun add(other: BigInt): BigInt {
@@ -69,6 +71,14 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
             1 -> return BigInt(sign, BigIntArray.subtract(arr, other.arr))
             else -> ZERO
         }
+    }
+
+    override fun multiply(other: IBigInt) = this.multiply(other as BigInt)
+    fun multiply(other: BigInt): BigInt {
+        if (sign == ZEROSIGN || other.sign == ZEROSIGN)
+            return ZERO
+
+        return BigInt(if(sign == other.sign) 1 else -1, BigIntArray.multiply(arr, other.arr))
     }
 
     companion object {
@@ -109,7 +119,7 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
                     if (result.size == 1)
                         result.add(product.toShiftedUInt())
                     else {
-                        var index = 1;
+                        var index = 1
                         // TODO fix to match addition better
                         while(product.toShiftedUInt() != 0u) {
                             if (index == result.size) {
@@ -173,10 +183,6 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
 
     override fun negate() = if (sign == ZEROSIGN) this else BigInt(-1 * sign, arr)
     override fun abs() = if (sign == NEGATIVE) BigInt(1, arr) else this
-
-    override fun multiply(other: IBigInt): IBigInt {
-        TODO("Not yet implemented")
-    }
 
     override fun divide(other: IBigInt): IBigInt {
         TODO("Not yet implemented")

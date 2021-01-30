@@ -1,7 +1,6 @@
 package org.cerion.symcalc.number.primitive
 
 import org.junit.Test
-import java.lang.ArithmeticException
 import kotlin.test.*
 
 
@@ -80,6 +79,33 @@ internal class BigIntTest {
         // Both negative
         assertEquals(BigInt("-10000000000"), BigInt("-21111111111") - BigInt("-11111111111"))
         assertEquals(BigInt("30000000000"), BigInt("-21111111111") - BigInt("-51111111111"))
+    }
+
+    @Test
+    fun multiply() {
+        assertEquals(bigInt(1,2,3,2,1), bigInt(1,1,1) * bigInt(1,1,1))
+
+        // Digits carried
+        assertEquals(bigInt(-2,-1,-1,1), bigInt(-1,-1,-1) * bigInt(-1))
+        assertEquals(bigInt(-1,-1,-2,0,0,1), bigInt(-1,-1,-1) * bigInt(-1,-1,-1))
+    }
+
+    @Test
+    fun multiplySigned() {
+        val zero = BigInt.ZERO
+        val a = BigInt("100000000000")
+        val abig = BigInt("10000000000000000000000")
+
+        assertEquals(zero, zero * zero)
+        assertEquals(zero, zero * a)
+        assertEquals(zero, zero * a.negate())
+        assertEquals(zero, a * zero)
+        assertEquals(zero, a.negate() * zero)
+
+        assertEquals(abig, a * a)
+        assertEquals(abig.negate(), a.negate() * a)
+        assertEquals(abig.negate(), a * a.negate())
+        assertEquals(abig, a.negate() * a.negate())
     }
 
     @Test
