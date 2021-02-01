@@ -1,8 +1,5 @@
 package org.cerion.symcalc.number.primitive
 
-import java.lang.ArithmeticException
-import java.lang.RuntimeException
-
 @ExperimentalUnsignedTypes
 object BigIntArray {
 
@@ -53,6 +50,11 @@ object BigIntArray {
             arr[index] = a[index++]
 
         return arr
+    }
+
+    internal fun subtract(x: UIntArray, y: UInt): UIntArray {
+        // TODO implement this without calling the other for slight efficiency
+        return subtract(x, UIntArray(1) { y })
     }
 
     internal fun subtract(x: UIntArray, y: UIntArray): UIntArray {
@@ -110,41 +112,14 @@ object BigIntArray {
         return result.toUIntArray()
     }
 
-    /*
-    internal fun divide(n: UIntArray, d: UIntArray): UIntArray {
-        // Assumes x > y
-        val dropSize = d.size - 1
-        val n1 = n.toList().drop(dropSize).toUIntArray()
-        val q = divide(n1, d.last()) // Initial value to improve on
-        val qd = multiply(q, d)
-
-        val comp = compare(qd, n)
-        if (comp == 0) // Exact, no remainder
-            return q
-
-        val r = if(comp == -1) subtract(n,qd) else subtract(qd, n)
-
-        // If remainder is larger than divisor, add next guess to current quotient
-        if (compare(r, d) > 0) {
-            val t = divide(r, d)
-            // Is this useful?  It doesn't need to be correct only a closer estimate...
-            //println("${BigInt(1,r)} / ${BigInt(1,d)} = ${BigInt(1,t)}")
-
-            return if (comp == -1)
-                add(q, t)
-            else
-                subtract(q, t)
-        }
-
-        return q
-    }
-     */
-
     /**
      * Division with only first significant digit of divisor
      * ex: 88888/777 --> 88800/700 --> 888/7
      */
     private fun fastDivide(n: UIntArray, d: UIntArray): UIntArray {
+        if (d.size > n.size)
+            return UIntArray(0)
+
         // TODO this can be done by passing indexes to divide
         val m = d.size - 1
         val n1 = n.toList().drop(m).toUIntArray()
@@ -152,34 +127,44 @@ object BigIntArray {
     }
 
     // http://justinparrtech.com/JustinParr-Tech/an-algorithm-for-arbitrary-precision-integer-division/
-    internal fun divide(n: UIntArray, d: UIntArray): UIntArray {
+    internal fun divide(n: UIntArray, d: UIntArray): Pair<UIntArray,UIntArray?> {
         // Assumes x > y
         var q = fastDivide(n, d)
 
         while(true) {
-            val qd = multiply(q, d)
+            var qd = multiply(q, d)
 
             val comp = compare(qd, n)
             if (comp == 0) // Exact, no remainder
-                return q
+                return Pair(q,null)
 
             // This indicates if remainder is negative or not
-            val r = if (comp == 1) subtract(qd, n) else subtract(n,qd)
+            var r = if (comp == 1) subtract(qd, n) else subtract(n,qd)
             // TODO add Qn
 
-            if (compare(r,d) == 1) {
-                val ra = fastDivide(r, d)
+            val ra = fastDivide(r, d)
+            if (ra.isNotEmpty()) {
                 q = if (comp == -1)
                     add(q, ra)
                 else
                     subtract(q, ra)
             }
 
-            else if (compare(r, d) == -1) {
-                if (comp == 1)
-                    return subtract(q, UIntArray(1) { 1u} )
+            if (r < d) {
+                // Done, get latest R based on Q
+                qd = multiply(q,d)
 
-                return q
+                if (n > qd) {
+                    r = subtract(n,qd)
+                }
+                else {
+                    r = subtract(qd, n)
+                    // Remainder is negative, make it positive and remove 1 from quotient
+                    q = subtract(q, 1u)
+                    r = subtract(d, r)
+                }
+
+                return Pair(q, r)
             }
         }
     }
@@ -219,3 +204,5 @@ object BigIntArray {
         return arr
     }
 }
+
+private operator fun UIntArray.compareTo(other: UIntArray): Int = BigIntArray.compare(this, other)

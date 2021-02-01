@@ -84,10 +84,7 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
     }
 
     override fun divide(other: IBigInt) = this.divide(other as BigInt)
-    fun divide(other: BigInt): BigInt {
-
-        return BigInt(1, BigIntArray.divide(this.arr, other.arr))
-    }
+    fun divide(other: BigInt): BigInt = divideAndRemainder(other).first as BigInt
 
     fun divide(other: UInt): BigInt {
         return BigInt(1, BigIntArray.divide(this.arr,other))
@@ -95,6 +92,7 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
 
     companion object {
         val ZERO = BigInt(0, UIntArray(0))
+        val ONE = BigInt(1, UIntArray(1) { 1u })
         private val POSITIVE = (1).toByte()
         private val NEGATIVE = (-1).toByte()
         private val ZEROSIGN = 0.toByte()
@@ -221,7 +219,10 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
     }
 
     override fun divideAndRemainder(other: IBigInt): Pair<IBigInt, IBigInt> {
-        TODO("Not yet implemented")
+        //println("$this / $other")
+        other as BigInt
+        val div = BigIntArray.divide(this.arr, other.arr)
+        return Pair(BigInt(1, div.first), if (div.second != null) BigInt(1, div.second!!) else ZERO)
     }
 
     override fun compareTo(other: IBigInt): Int {

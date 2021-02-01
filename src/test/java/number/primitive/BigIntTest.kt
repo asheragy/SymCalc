@@ -119,17 +119,18 @@ internal class BigIntTest {
 
     @Test
     fun division() {
-        assertEquals(bigInt(-1), bigInt(-1,-1) / bigInt(1,1)) // Rem 0
-        assertEquals(bigInt(-1), bigInt(1, 0, 0) / bigInt(1,1)) // Rem 1
-        assertEquals(bigInt(-1,0), bigInt(-1,-1,0) / bigInt(1,1))
-        assertEquals(bigInt(-1,0), bigInt(-1,-1,-1) / bigInt(1,1))
-        assertEquals(bigInt(-1,0,-1), bigInt(-1,-1,-1,-1) / bigInt(1,1))
+        assertEquals(Pair(bigInt(-1), BigInt.ZERO), bigInt(-1,-1).divideAndRemainder(bigInt(1,1)))
+        assertEquals(Pair(bigInt(-1), BigInt.ONE), bigInt(1, 0, 0).divideAndRemainder(bigInt(1,1)))
+        assertEquals(Pair(bigInt(-1,0), BigInt.ZERO), bigInt(-1,-1,0).divideAndRemainder(bigInt(1,1)))
+        assertEquals(Pair(bigInt(-1,0), bigInt(-1)), bigInt(-1,-1,-1).divideAndRemainder(bigInt(1,1)))
+        assertEquals(Pair(bigInt(-1,0,-1), BigInt.ZERO), bigInt(-1,-1,-1,-1).divideAndRemainder(bigInt(1,1)))
 
-        assertEquals(BigInt("5384072782"), BigInt("75628712337421087763136048659") / BigInt("14046747766433220397"))
-        assertEquals(BigInt("68"), BigInt("7556555555555547") / BigInt("111111111111111"))
-        assertEquals(BigInt("9000000000000"), BigInt("999999999999999999999999999") / BigInt("111111111111111")) // rem 999999999999
+        assertEquals(Pair(BigInt("5384072782"), BigInt("12548692603041114205")), BigInt("75628712337421087763136048659").divideAndRemainder(BigInt("14046747766433220397")))
+        assertEquals(Pair(BigInt("68"), BigInt("999999999999")), BigInt("7556555555555547").divideAndRemainder(BigInt("111111111111111")))
+        assertEquals(Pair(BigInt("9000000000000"), BigInt("999999999999")), BigInt("999999999999999999999999999").divideAndRemainder(BigInt("111111111111111")))
     }
 
+    /*
     @Test
     fun divisionRandom() {
 
@@ -145,9 +146,8 @@ internal class BigIntTest {
             println(expected)
             assertEquals(expected.toString(), (a / b).toString(), "$a / $b")
         }
-
-
     }
+     */
 
     @Test
     fun compare() {
