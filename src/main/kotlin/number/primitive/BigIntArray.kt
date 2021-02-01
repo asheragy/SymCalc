@@ -1,5 +1,8 @@
 package org.cerion.symcalc.number.primitive
 
+import java.lang.ArithmeticException
+import java.lang.RuntimeException
+
 @ExperimentalUnsignedTypes
 object BigIntArray {
 
@@ -53,6 +56,9 @@ object BigIntArray {
     }
 
     internal fun subtract(x: UIntArray, y: UIntArray): UIntArray {
+        if(compare(x,y) < 0)
+            throw ArithmeticException("invalid subtraction") // TODO remove temp error checking
+
         // Input is always expected to have x as the largest array and adjust result sign accordingly
         val arr = UIntArray(x.size) // TODO is there a benefit in copying starting array? need to performance test first
         var index = 0
@@ -102,6 +108,100 @@ object BigIntArray {
         }
 
         return result.toUIntArray()
+    }
+
+    /*
+    internal fun divide(n: UIntArray, d: UIntArray): UIntArray {
+        // Assumes x > y
+        val dropSize = d.size - 1
+        val n1 = n.toList().drop(dropSize).toUIntArray()
+        val q = divide(n1, d.last()) // Initial value to improve on
+        val qd = multiply(q, d)
+
+        val comp = compare(qd, n)
+        if (comp == 0) // Exact, no remainder
+            return q
+
+        val r = if(comp == -1) subtract(n,qd) else subtract(qd, n)
+
+        // If remainder is larger than divisor, add next guess to current quotient
+        if (compare(r, d) > 0) {
+            val t = divide(r, d)
+            // Is this useful?  It doesn't need to be correct only a closer estimate...
+            //println("${BigInt(1,r)} / ${BigInt(1,d)} = ${BigInt(1,t)}")
+
+            return if (comp == -1)
+                add(q, t)
+            else
+                subtract(q, t)
+        }
+
+        return q
+    }
+     */
+
+    /**
+     * Division with only first significant digit of divisor
+     * ex: 88888/777 --> 88800/700 --> 888/7
+     */
+    private fun fastDivide(n: UIntArray, d: UIntArray): UIntArray {
+        // TODO this can be done by passing indexes to divide
+        val m = d.size - 1
+        val n1 = n.toList().drop(m).toUIntArray()
+        return divide(n1, d.last())
+    }
+
+    // http://justinparrtech.com/JustinParr-Tech/an-algorithm-for-arbitrary-precision-integer-division/
+    internal fun divide(n: UIntArray, d: UIntArray): UIntArray {
+        // Assumes x > y
+        var q = fastDivide(n, d)
+
+        while(true) {
+            val qd = multiply(q, d)
+
+            val comp = compare(qd, n)
+            if (comp == 0) // Exact, no remainder
+                return q
+
+            // This indicates if remainder is negative or not
+            val r = if (comp == 1) subtract(qd, n) else subtract(n,qd)
+            // TODO add Qn
+
+            if (compare(r,d) == 1) {
+                val ra = fastDivide(r, d)
+                q = if (comp == -1)
+                    add(q, ra)
+                else
+                    subtract(q, ra)
+            }
+
+            else if (compare(r, d) == -1) {
+                if (comp == 1)
+                    return subtract(q, UIntArray(1) { 1u} )
+
+                return q
+            }
+        }
+    }
+
+    internal fun divide(x: UIntArray, y: UInt): UIntArray {
+        // Assumes x is at least 2 digits
+        val result = mutableListOf<UInt>()
+        var index = x.size - 1
+
+        var r = if (x.last() / y == 0u)
+            (x[index--].toULong() shl 32)
+        else
+            0uL
+
+        while(index >= 0) {
+            val t = r + x[index--]
+
+            result.add((t / y).toUInt())
+            r = (t % y) shl 32
+        }
+
+        return result.toUIntArray().reversedArray()
     }
 
     private fun removeLeadingZeros(arr: UIntArray): UIntArray {

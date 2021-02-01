@@ -1,6 +1,8 @@
 package org.cerion.symcalc.number.primitive
 
 import org.junit.Test
+import java.math.BigInteger
+import java.util.*
 import kotlin.test.*
 
 
@@ -106,6 +108,45 @@ internal class BigIntTest {
         assertEquals(abig.negate(), a.negate() * a)
         assertEquals(abig.negate(), a * a.negate())
         assertEquals(abig, a.negate() * a.negate())
+    }
+
+    @Test
+    fun divisionSingleDigit() {
+        assertEquals(bigInt(1,1,1,1), bigInt(1,0,0,0,0).divide(4294967295u))
+        assertEquals(bigInt(1,1,1,1), bigInt(-1,-1,-1,-1).divide(4294967295u))
+        assertEquals(bigInt(2147483647,-1,-1,-1), bigInt(-1,-1,-1,-2).divide(2u))
+    }
+
+    @Test
+    fun division() {
+        assertEquals(bigInt(-1), bigInt(-1,-1) / bigInt(1,1)) // Rem 0
+        assertEquals(bigInt(-1), bigInt(1, 0, 0) / bigInt(1,1)) // Rem 1
+        assertEquals(bigInt(-1,0), bigInt(-1,-1,0) / bigInt(1,1))
+        assertEquals(bigInt(-1,0), bigInt(-1,-1,-1) / bigInt(1,1))
+        assertEquals(bigInt(-1,0,-1), bigInt(-1,-1,-1,-1) / bigInt(1,1))
+
+        assertEquals(BigInt("5384072782"), BigInt("75628712337421087763136048659") / BigInt("14046747766433220397"))
+        assertEquals(BigInt("68"), BigInt("7556555555555547") / BigInt("111111111111111"))
+        assertEquals(BigInt("9000000000000"), BigInt("999999999999999999999999999") / BigInt("111111111111111")) // rem 999999999999
+    }
+
+    @Test
+    fun divisionRandom() {
+
+        val rand = Random()
+        val a = BigInt(1, arrayOfNulls<Any>(3).map { rand.nextInt().toUInt() }.toUIntArray())
+        val b = BigInt(1, arrayOfNulls<Any>(2).map { rand.nextInt().toUInt() }.toUIntArray())
+
+        repeat(1000) {
+            val c = BigInteger(a.toString())
+            val d = BigInteger(b.toString())
+            val expected = c.divide(d)
+
+            println(expected)
+            assertEquals(expected.toString(), (a / b).toString(), "$a / $b")
+        }
+
+
     }
 
     @Test

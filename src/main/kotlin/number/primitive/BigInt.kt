@@ -36,6 +36,8 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
     operator fun minus(other: IBigInt): BigInt = this.subtract(other as BigInt)
     operator fun times(other: BigInt): BigInt = this.multiply(other)
     operator fun times(other: IBigInt): BigInt = this.multiply(other as BigInt)
+    operator fun div(other: BigInt): BigInt = this.divide(other)
+    operator fun div(other: IBigInt): BigInt = this.divide(other as BigInt)
 
     override fun add(other: IBigInt): IBigInt = add(other as BigInt)
     fun add(other: BigInt): BigInt {
@@ -79,6 +81,16 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
             return ZERO
 
         return BigInt(if(sign == other.sign) 1 else -1, BigIntArray.multiply(arr, other.arr))
+    }
+
+    override fun divide(other: IBigInt) = this.divide(other as BigInt)
+    fun divide(other: BigInt): BigInt {
+
+        return BigInt(1, BigIntArray.divide(this.arr, other.arr))
+    }
+
+    fun divide(other: UInt): BigInt {
+        return BigInt(1, BigIntArray.divide(this.arr,other))
     }
 
     companion object {
@@ -183,10 +195,6 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
 
     override fun negate() = if (sign == ZEROSIGN) this else BigInt(-1 * sign, arr)
     override fun abs() = if (sign == NEGATIVE) BigInt(1, arr) else this
-
-    override fun divide(other: IBigInt): IBigInt {
-        TODO("Not yet implemented")
-    }
 
     override fun pow(n: Int): IBigInt {
         TODO("Not yet implemented")
