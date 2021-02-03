@@ -203,7 +203,27 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
     }
 
     override fun gcd(n: IBigInt): IBigInt {
-        TODO("Not yet implemented")
+        n as BigInt
+
+        // A is the larger of the two numbers
+        var a: UIntArray
+        var b: UIntArray
+        when(BigIntArray.compare(arr, n.arr)) {
+            1 -> { a = arr; b = n.arr }
+            -1 -> { b = arr; a = n.arr }
+            else -> return this
+        }
+
+        var c = BigIntArray.divide(a, b)
+
+        // No remainder, GCD is B
+        while (c.second != null) {
+            a = b
+            b = c.second!!
+            c = BigIntArray.divide(a, b)
+        }
+
+        return BigInt(1, b)
     }
 
     override fun mod(m: IBigInt): IBigInt {

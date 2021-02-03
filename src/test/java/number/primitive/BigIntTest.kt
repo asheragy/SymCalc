@@ -1,8 +1,6 @@
 package org.cerion.symcalc.number.primitive
 
 import org.junit.Test
-import java.math.BigInteger
-import java.util.*
 import kotlin.test.*
 
 
@@ -205,5 +203,14 @@ internal class BigIntTest {
             val n = BigInt(it)
             assertFailsWith(ArithmeticException::class) { n.toInt() }
         }
+    }
+
+    @Test
+    fun gcd() {
+        assertEquals(BigInt("24"), BigInt("24").gcd(BigInt("24")))
+        assertEquals(BigInt("1"), BigInt("25").gcd(BigInt("24")))
+        assertEquals(BigInt("21"), BigInt("1071").gcd(BigInt("462")))
+        assertEquals(BigInt("6"), BigInt("270").gcd(BigInt("-192")))
+        assertEquals(BigInt("229"), BigInt("52139749485151463").gcd(BigInt("179883737510857067")))
     }
 }
