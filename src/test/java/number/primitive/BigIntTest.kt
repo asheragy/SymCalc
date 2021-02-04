@@ -1,6 +1,7 @@
 package org.cerion.symcalc.number.primitive
 
 import org.junit.Test
+import java.math.BigInteger
 import kotlin.test.*
 
 
@@ -167,9 +168,9 @@ internal class BigIntTest {
 
     @Test
     fun abs() {
-        assertEquals(BigInt("11"), BigInt("11").abs())
-        assertEquals(BigInt("11"), BigInt("-11").abs())
-        assertEquals(BigInt("0"), BigInt("0").abs())
+        assertEquals(BigInt(11), BigInt(11).abs())
+        assertEquals(BigInt(11), BigInt(-11).abs())
+        assertEquals(BigInt(0), BigInt(0).abs())
     }
 
     @Test
@@ -207,10 +208,58 @@ internal class BigIntTest {
 
     @Test
     fun gcd() {
-        assertEquals(BigInt("24"), BigInt("24").gcd(BigInt("24")))
-        assertEquals(BigInt("1"), BigInt("25").gcd(BigInt("24")))
-        assertEquals(BigInt("21"), BigInt("1071").gcd(BigInt("462")))
-        assertEquals(BigInt("6"), BigInt("270").gcd(BigInt("-192")))
-        assertEquals(BigInt("229"), BigInt("52139749485151463").gcd(BigInt("179883737510857067")))
+        assertEquals(BigInt(24), BigInt(24).gcd(BigInt(24)))
+        assertEquals(BigInt(1), BigInt(25).gcd(BigInt(24)))
+        assertEquals(BigInt(21), BigInt(1071).gcd(BigInt(462)))
+        assertEquals(BigInt(6), BigInt(270).gcd(BigInt(-192)))
+        assertEquals(BigInt(229), BigInt("52139749485151463").gcd(BigInt("179883737510857067")))
     }
+
+    @Test
+    fun pow() {
+        assertEquals(BigInt(1), BigInt(12345).pow(0))
+        assertEquals(BigInt(12345), BigInt(12345).pow(1))
+        assertEquals(BigInt(1), BigInt(1).pow(2147483647))
+        assertEquals(BigInt(-1), BigInt(-1).pow(2147483647))
+
+        assertEquals(BigInt(32), BigInt(2).pow(5))
+        assertEquals(BigInt(-32), BigInt(-2).pow(5))
+        assertEquals(BigInt("1267650600228229401496703205376"), BigInt(2).pow(100))
+    }
+
+    @Test
+    fun mod() {
+        assertEquals(BigInt(1), BigInt(7).mod(BigInt(3)))
+        assertEquals(BigInt(2), BigInt(-7).mod(BigInt(3)))
+    }
+
+    @Test
+    fun modPow() {
+        val a = BigInt("1234567890987654321")
+        val e = BigInt("1122334455667788990")
+        val m = BigInt("5555555555555555555")
+
+        assertEquals(BigInt("498317946897227631"), a.modPow(e, m))
+    }
+
+    @Test
+    fun sqrtAndRemainder() {
+        val sqrt = BigInt("10000000000000000000009").sqrtRemainder()
+        assertEquals(BigInt("100000000000"), sqrt.first)
+        assertEquals(BigInt("9"), sqrt.second)
+    }
+
+    /*
+    @Test
+    fun nthRootAndRemainder() {
+        var root = BigInteger("1000000000000000000009").nthRootAndRemainder(3)
+        Assertions.assertEquals(BigInteger("10000000"), root.first)
+        Assertions.assertEquals(BigInteger("9"), root.second)
+
+        root = BigInteger("16935003133160595268336552").nthRootAndRemainder(5)
+        Assertions.assertEquals(BigInteger("111111"), root.first)
+        Assertions.assertEquals(BigInteger("1"), root.second)
+
+    }
+     */
 }

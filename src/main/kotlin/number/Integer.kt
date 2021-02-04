@@ -182,15 +182,7 @@ class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
 
     //IntegerNum Specific Functions
     fun gcd(N: Integer): Integer = Integer(value.gcd(N.value))
-
-    fun powerMod(b: Integer, m: Integer): Integer {
-        //Assuming all integers at this point since MathFunc needs to check that
-        val num = value
-        val exp = b.value
-        val mod = m.value
-
-        return Integer(num.modPow(exp, mod))
-    }
+    fun powerMod(b: Integer, m: Integer): Integer = Integer(value.modPow(b.value, m.value))
 
     operator fun inc(): Integer = Integer(value.add(BigIntJava.ONE))
     operator fun dec(): Integer = Integer(value.subtract(BigIntJava.ONE))

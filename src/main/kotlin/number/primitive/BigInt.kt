@@ -2,12 +2,16 @@ package org.cerion.symcalc.number.primitive
 
 import java.math.BigDecimal
 import java.math.BigInteger
+import kotlin.math.absoluteValue
+import kotlin.math.sign
 import kotlin.reflect.jvm.isAccessible
 
 
 @ExperimentalUnsignedTypes
 class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : IBigInt {
 
+    private constructor(n: Pair<Byte, UIntArray>) : this(n.first, n.second)
+    constructor(n: Int) : this (ofInt(n))
     constructor(s: Int, arr: UIntArray) : this (s.toByte(), arr)
     constructor(n: String) : this(parseSign(n), parse(n))
 
@@ -93,9 +97,17 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
     companion object {
         val ZERO = BigInt(0, UIntArray(0))
         val ONE = BigInt(1, UIntArray(1) { 1u })
+        val NEGATIVE_ONE = BigInt(-1, UIntArray(1) { 1u })
         private val POSITIVE = (1).toByte()
         private val NEGATIVE = (-1).toByte()
         private val ZEROSIGN = 0.toByte()
+
+        private fun ofInt(n: Int): Pair<Byte, UIntArray> {
+            if (n == 0)
+                return Pair(0, UIntArray(0))
+
+            return Pair(n.sign.toByte(), UIntArray(1) { n.absoluteValue.toUInt() })
+        }
 
         private fun parse(n: String): UIntArray {
             val offset = if(n[0] == '-') 1 else 0
@@ -195,7 +207,20 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
     override fun abs() = if (sign == NEGATIVE) BigInt(1, arr) else this
 
     override fun pow(n: Int): IBigInt {
-        TODO("Not yet implemented")
+        return when(n.sign) {
+            -1 -> throw UnsupportedOperationException("exponent cannot be negative")
+            0 -> ONE
+            else -> {
+                if (n == 1 || this == ONE)
+                    return this
+
+                if (this == NEGATIVE_ONE)
+                    return if(n % 2 == 0) this.negate() else this
+
+                val resultSign = if(sign == (-1).toByte() && n % 2 == 1) -1 else 1
+                return BigInt(resultSign.toByte(), BigIntArray.pow(arr, n))
+            }
+        }
     }
 
     override fun sqrtRemainder(): Pair<IBigInt, IBigInt> {
