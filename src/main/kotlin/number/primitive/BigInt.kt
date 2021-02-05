@@ -252,11 +252,36 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
     }
 
     override fun mod(m: IBigInt): IBigInt {
-        TODO("Not yet implemented")
+        m as BigInt
+        return this.divideAndRemainder(m).second
     }
 
     override fun modPow(exponent: IBigInt, m: IBigInt): IBigInt {
-        TODO("Not yet implemented")
+        exponent as BigInt
+        m as BigInt
+
+        if (exponent == ZERO)
+            return ONE
+
+        var result = ONE
+        var square = this
+        for(i in exponent.arr.indices) {
+            // TODO if last element we can end loop before 32 times
+
+            var n = exponent.arr[i]
+            repeat(32) {
+                if (n % 2u == 1u) {
+                    val a = square * result
+                    val b = a.mod(m)
+                    result = b as BigInt
+                }
+
+                square = (square * square).mod(m) as BigInt
+                n /= 2u
+            }
+        }
+
+        return result
     }
 
     override fun isProbablePrime(certainty: Int): Boolean {
@@ -267,7 +292,21 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
         //println("$this / $other")
         other as BigInt
         val div = BigIntArray.divide(this.arr, other.arr)
-        return Pair(BigInt(1, div.first), if (div.second != null) BigInt(1, div.second!!) else ZERO)
+
+        var sign = (sign * other.sign)
+        val rem = when {
+            div.second == null -> ZERO
+            sign == -1 -> {
+                // If negative remainder is also negative so subtract it from divisor
+                BigInt(POSITIVE, BigIntArray.subtract(other.arr, div.second!!))
+            }
+            else -> BigInt(POSITIVE, div.second!!)
+        }
+
+        if (div.first.isEmpty())
+            sign = 0
+
+        return Pair(BigInt(sign, div.first), rem)
     }
 
     override fun compareTo(other: IBigInt): Int {
