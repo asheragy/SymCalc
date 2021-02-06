@@ -7,12 +7,90 @@ import kotlin.reflect.jvm.isAccessible
 
 
 @ExperimentalUnsignedTypes
-class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : IBigInt {
+class BigInt : IBigInt {
+    private val sign: Byte
+    private val arr: UIntArray
 
-    private constructor(n: Pair<Byte, UIntArray>) : this(n.first, n.second)
-    constructor(n: Int) : this (ofInt(n))
+    companion object {
+        val ZERO = BigInt(0, UIntArray(0))
+        val ONE = BigInt(1, UIntArray(1) { 1u })
+        val NEGATIVE_ONE = BigInt(-1, UIntArray(1) { 1u })
+        private const val POSITIVE = (1).toByte()
+        private const val NEGATIVE = (-1).toByte()
+        private const val ZEROSIGN = 0.toByte()
+    }
+
     constructor(s: Int, arr: UIntArray) : this (s.toByte(), arr)
-    constructor(n: String) : this(parseSign(n), parse(n))
+    constructor(sign: Byte, arr: UIntArray) {
+        this.sign = sign
+        this.arr = arr
+    }
+
+    constructor(n: Int) {
+        sign = n.sign.toByte()
+        arr = if (n == 0)
+            UIntArray(0)
+        else
+            UIntArray(1) { n.absoluteValue.toUInt() }
+    }
+
+    constructor(n: String) {
+        sign = when (n[0]) {
+            '0' -> 0
+            '-' -> -1
+            else -> 1
+        }
+
+        val offset = if(n[0] == '-') 1 else 0
+        val firstDigits = n.subSequence(offset, offset + if ((n.length-offset) % 9 == 0) 9 else (n.length-offset) % 9).toString()
+        val remainingDigits = n.substring(firstDigits.length + offset).chunked(9).map { Integer.parseInt(it).toUInt() }
+
+        if (firstDigits == "0")
+            this.arr = UIntArray(0)
+        else {
+            val base = 1000000000
+            val result = mutableListOf<UInt>()
+
+            result.add(Integer.parseInt(firstDigits).toUInt())
+            for(i in remainingDigits.indices) {
+                // multiply entire result array by base
+                var product: ULong = 0uL
+                for(j in result.indices) {
+                    product = result[j] * base.toULong() + product.toShiftedUInt()
+                    result[j] = product.toUInt()
+                }
+
+                if (product.toShiftedUInt() != 0u)
+                    result.add(product.toShiftedUInt())
+
+                // Add current digit
+                product = result[0].toULong() + remainingDigits[i]
+                result[0] = product.toUInt()
+
+                // Carry as necessary
+                if (product.toShiftedUInt() != 0u) {
+                    if (result.size == 1)
+                        result.add(product.toShiftedUInt())
+                    else {
+                        var index = 1
+                        // TODO fix to match addition better
+                        while(product.toShiftedUInt() != 0u) {
+                            if (index == result.size) {
+                                result.add(1u)
+                                break
+                            }
+                            else {
+                                product = result[index].toULong() + product.toShiftedUInt()
+                                result[index++] = product.toUInt()
+                            }
+                        }
+                    }
+                }
+            }
+
+            this.arr = result.toUIntArray()
+        }
+    }
 
     override fun toBigDecimal(): BigDecimal = toBigInteger().toBigDecimal()
     override fun toBigInteger(): BigInteger {
@@ -23,9 +101,9 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
         return constructor.call(sign, copy)
     }
 
-    init {
+    fun validate() {
         // Temp error checking
-        if (sign != ZEROSIGN) {
+        if (this.sign != ZEROSIGN) {
             if (arr.isEmpty() || (arr.size == 1 && arr[0] == 0u))
                 throw IllegalArgumentException("Sign should be zero")
         }
@@ -91,81 +169,6 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
 
     fun divide(other: UInt): BigInt {
         return BigInt(1, BigIntArray.divide(this.arr,other))
-    }
-
-    companion object {
-        val ZERO = BigInt(0, UIntArray(0))
-        val ONE = BigInt(1, UIntArray(1) { 1u })
-        val NEGATIVE_ONE = BigInt(-1, UIntArray(1) { 1u })
-        private val POSITIVE = (1).toByte()
-        private val NEGATIVE = (-1).toByte()
-        private val ZEROSIGN = 0.toByte()
-
-        private fun ofInt(n: Int): Pair<Byte, UIntArray> {
-            if (n == 0)
-                return Pair(0, UIntArray(0))
-
-            return Pair(n.sign.toByte(), UIntArray(1) { n.absoluteValue.toUInt() })
-        }
-
-        private fun parse(n: String): UIntArray {
-            val offset = if(n[0] == '-') 1 else 0
-            val firstDigits = n.subSequence(offset, offset + if ((n.length-offset) % 9 == 0) 9 else (n.length-offset) % 9).toString()
-            val remainingDigits = n.substring(firstDigits.length + offset).chunked(9).map { Integer.parseInt(it).toUInt() }
-
-            if (firstDigits == "0")
-                return UIntArray(0)
-
-            val base = 1000000000
-            val result = mutableListOf<UInt>()
-
-            result.add(Integer.parseInt(firstDigits).toUInt())
-            for(i in remainingDigits.indices) {
-                // multiply entire result array by base
-                var product: ULong = 0uL
-                for(j in result.indices) {
-                    product = result[j] * base.toULong() + product.toShiftedUInt()
-                    result[j] = product.toUInt()
-                }
-
-                if (product.toShiftedUInt() != 0u)
-                    result.add(product.toShiftedUInt())
-
-                // Add current digit
-                product = result[0].toULong() + remainingDigits[i]
-                result[0] = product.toUInt()
-
-                // Carry as necessary
-                if (product.toShiftedUInt() != 0u) {
-                    if (result.size == 1)
-                        result.add(product.toShiftedUInt())
-                    else {
-                        var index = 1
-                        // TODO fix to match addition better
-                        while(product.toShiftedUInt() != 0u) {
-                            if (index == result.size) {
-                                result.add(1u)
-                                break
-                            }
-                            else {
-                                product = result[index].toULong() + product.toShiftedUInt()
-                                result[index++] = product.toUInt()
-                            }
-                        }
-                    }
-                }
-            }
-
-            return result.toUIntArray()
-        }
-
-        private fun parseSign(n: String): Int {
-            return when (n[0]) {
-                '0' -> 0
-                '-' -> -1
-                else -> 1
-            }
-        }
     }
 
     override fun equals(other: Any?) = other is BigInt && sign == other.sign && arr.contentEquals(other.arr)
