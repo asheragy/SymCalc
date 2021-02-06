@@ -58,7 +58,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
 
         // Evaluate precision on sibling elements, numbers already handled but its possible that could be done here as well, need to try that
         if (size > 0) {
-            val minPrecision = newArgs.minBy { it.precision }!!.precision
+            val minPrecision = newArgs.minByOrNull { it.precision }!!.precision
             for (i in 0 until newArgs.size) {
                 if (newArgs[i] !is NumberExpr && minPrecision < newArgs[i].precision) {
                     val temp = newArgs[i].eval(minPrecision)

@@ -399,7 +399,7 @@ class BigInt : IBigInt {
                 result[0] = (temp % maxDigit).toUInt()
 
                 while(temp /maxDigit != 0uL) {
-                    var index = 1;
+                    var index = 1
                     if (index == result.size) {
                         result.add(1u) // TODO see if any test case fits here, no coverage yet
                         break

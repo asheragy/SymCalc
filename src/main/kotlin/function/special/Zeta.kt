@@ -84,10 +84,10 @@ class Zeta(vararg e: Any) : FunctionExpr(*e) {
             var innersum = one
             for (k in 1..n) {
                 val term = (binomial[k] * Power(k+1, s.unaryMinus())) as RealBigDec
-                if (k % 2 == 0)
-                    innersum = (innersum + term) as RealBigDec
+                innersum = if (k % 2 == 0)
+                    (innersum + term) as RealBigDec
                 else
-                    innersum = (innersum - term) as RealBigDec
+                    (innersum - term) as RealBigDec
             }
 
             inv2pow /= RealBigDec("2.0", s.precision)

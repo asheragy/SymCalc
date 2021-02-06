@@ -81,7 +81,7 @@ class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
         if (other.isZero)
             throw ArithmeticException("divide by zero")
 
-        when (other) {
+        return when (other) {
             is Integer -> {
                 val gcd = this.gcd(other)
 
@@ -103,7 +103,7 @@ class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
             }
             is Rational -> return this * Rational(other.denominator, other.numerator)
             is Complex -> return Complex(this) / other
-            else -> return toPrecision(other.precision) / other
+            is RealBigDec, is RealDouble -> return toPrecision(other.precision) / other
         }
     }
 
@@ -176,7 +176,7 @@ class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
             is Integer -> this.pow(other)
             is RealDouble,
             is RealBigDec -> this.toPrecision(other.precision).pow(other)
-            else -> throw UnsupportedOperationException()
+            is Complex, is Rational -> throw UnsupportedOperationException()
         }
     }
 
@@ -212,7 +212,6 @@ class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
             is RealDouble,
             is RealBigDec -> toPrecision(other.precision).compareTo(other)
             is Complex -> Complex(this).compareTo(other)
-            else -> throw NotImplementedError()
         }
     }
 

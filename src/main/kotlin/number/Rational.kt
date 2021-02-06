@@ -54,13 +54,7 @@ class Rational private constructor(val numerator: Integer, val denominator: Inte
         return when (precision) {
             InfinitePrecision -> this
             MachinePrecision -> RealDouble(numerator.value.toDouble() / denominator.value.toDouble())
-            else -> {
-                //val a = numerator.toBigDecimal()
-                //val b = denominator.toBigDecimal()
-                //val t = a.divide(b, precision, RoundingMode.HALF_UP)
-                //RealBigDec(t)
-                return RealBigDec(numerator.toBigDecimal(), precision) / RealBigDec(denominator.toBigDecimal(), precision)
-            }
+            else -> RealBigDec(numerator.toBigDecimal(), precision) / RealBigDec(denominator.toBigDecimal(), precision)
         }
     }
     
@@ -109,7 +103,7 @@ class Rational private constructor(val numerator: Integer, val denominator: Inte
             }
             is RealDouble -> this.toPrecision(other.precision).pow(other)
             is RealBigDec -> this.toPrecision(other.precision).pow(other)
-            else -> throw UnsupportedOperationException()
+            is Complex, is Rational -> throw UnsupportedOperationException()
         }
     }
 

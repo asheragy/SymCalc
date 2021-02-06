@@ -32,7 +32,6 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
             is RealDouble -> value.compareTo(other.value)
             is RealBigDec -> value.compareTo(other.toDouble())
             is Complex -> Complex(this).compareTo(other)
-            else -> throw NotImplementedError()
         }
     }
 
@@ -45,7 +44,6 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
             is RealDouble -> RealDouble(value + other.value)
             is RealBigDec -> RealDouble(value + other.toDouble())
             is Complex -> Complex(this) + other
-            else -> throw NotImplementedError()
         }
     }
 
@@ -56,7 +54,6 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
             is RealDouble -> RealDouble(value * other.value)
             is RealBigDec -> RealDouble(value * other.toDouble())
             is Complex -> Complex(this) * other
-            else -> throw NotImplementedError()
         }
     }
 
@@ -67,7 +64,6 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
             is RealDouble -> RealDouble(value / other.value)
             is RealBigDec -> RealDouble(value / other.toDouble())
             is Complex -> Complex(this) / other
-            else -> throw NotImplementedError()
         }
     }
 
@@ -89,7 +85,6 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
             }
             is RealBigDec -> return RealDouble(value.pow(other.toDouble()))
             is Complex -> return Power(this, other).eval() as NumberExpr
-            else -> throw NotImplementedError()
         }
     }
 

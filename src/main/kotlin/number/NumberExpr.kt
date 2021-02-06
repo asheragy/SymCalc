@@ -12,7 +12,7 @@ enum class NumberType {
 }
 
 @Suppress("CovariantEquals")
-abstract class NumberExpr : Expr(), Comparable<NumberExpr> {
+sealed class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract val isZero: Boolean
     abstract val isOne: Boolean
     abstract val numType: NumberType

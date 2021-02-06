@@ -23,7 +23,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     companion object {
         val ZERO = RealBigDec(BigDecimal("0.0"))
 
-        private const val MaxExtraPrecisionBase2_32 = 1;
+        private const val MaxExtraPrecisionBase2_32 = 1
         fun getStoredPrecision(desiredPrecision: Int): Int {
             return (((desiredPrecision * 0.10381025296523008) + 1 + MaxExtraPrecisionBase2_32).toInt() * 9.632959861247397).toInt()
         }
@@ -83,7 +83,6 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
                 return this + n as NumberExpr
             }
             is RealDouble -> return other + this
-
             is RealBigDec -> {
                 // TODO_LP issue with zero and precision, this is just a workaround until more is learned on how it
                 if (isZero)
@@ -95,10 +94,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
                 val result = value.add(other.value, MathContext(getStoredPrecision(desiredPrecision)))
                 return RealBigDec(result, desiredPrecision)
             }
-            is Complex -> {
-                return other + this
-            }
-            else -> throw NotImplementedError()
+            is Complex -> return other + this
         }
     }
 
@@ -119,7 +115,6 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
             is RealDouble -> other * this
             is RealBigDec -> return this * other
             is Complex -> Complex(this * other.real, this * other.img)
-            else -> throw NotImplementedError()
         }
     }
 
@@ -136,7 +131,6 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
             is RealDouble -> RealDouble(toDouble() / other.value)
             is RealBigDec -> this / other
             is Complex -> Complex(this) / other
-            else -> throw NotImplementedError()
         }
     }
 
@@ -191,7 +185,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
 
                 return this.pow(other)
             }
-            else -> throw UnsupportedOperationException()
+            is Complex -> throw UnsupportedOperationException()
         }
     }
 

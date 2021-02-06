@@ -47,7 +47,7 @@ fun BigDecimal.sqrt(precision: Int): BigDecimal {
     if (signum() < 0)
         throw Exception("sqrt() on negative number")
 
-    val initial = kotlin.math.sqrt(toDouble())
+    val initial = sqrt(toDouble())
     val mc = MathContext(precision)
     var xn = BigDecimal(initial)
     val two = BigDecimal(2)
