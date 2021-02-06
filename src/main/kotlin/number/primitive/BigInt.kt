@@ -2,8 +2,7 @@ package org.cerion.symcalc.number.primitive
 
 import java.math.BigDecimal
 import java.math.BigInteger
-import kotlin.math.absoluteValue
-import kotlin.math.sign
+import kotlin.math.*
 import kotlin.reflect.jvm.isAccessible
 
 
@@ -186,7 +185,15 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
         return when (arr.size) {
             0 -> 0.0
             1 -> arr[0].toDouble() * sign
-            else -> throw ArithmeticException()
+            else -> {
+                var result = arr.last().toDouble()
+                for(i in arr.size-2 downTo 0) {
+                    result *= 4294967296.0
+                    result += arr[i].toDouble()
+                }
+
+                return result
+            }
         }
     }
 
@@ -221,10 +228,6 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
                 return BigInt(resultSign.toByte(), BigIntArray.pow(arr, n))
             }
         }
-    }
-
-    override fun sqrtRemainder(): Pair<IBigInt, IBigInt> {
-        TODO("Not yet implemented")
     }
 
     override fun gcd(n: IBigInt): IBigInt {
@@ -266,8 +269,6 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
         var result = ONE
         var square = this
         for(i in exponent.arr.indices) {
-            // TODO if last element we can end loop before 32 times
-
             var n = exponent.arr[i]
             repeat(32) {
                 if (n % 2u == 1u) {
@@ -282,10 +283,6 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
         }
 
         return result
-    }
-
-    override fun isProbablePrime(certainty: Int): Boolean {
-        TODO("Not yet implemented")
     }
 
     override fun divideAndRemainder(other: IBigInt): Pair<IBigInt, IBigInt> {
@@ -307,6 +304,39 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
             sign = 0
 
         return Pair(BigInt(sign, div.first), rem)
+    }
+
+    override fun sqrtRemainder(): Pair<IBigInt, IBigInt> {
+        if (sign == NEGATIVE)
+            throw ArithmeticException()
+
+        // Newton method, get initial estimate
+        val bl = bitLength
+        var x = if (bl > 120u)
+            shiftRight(bl / 2u - 1u)
+        else
+            BigInt("" + sqrt(toDouble()).roundToLong())
+
+        val two = BigInt(2)
+        while (true) {
+            val x2 = x.pow(2)
+            var xplus2 = x.add(ONE).pow(2)
+
+            if (x2 <= this && xplus2 > this)
+                break
+
+            xplus2 = xplus2.subtract(x.shiftLeft(2u))
+            if (xplus2 <= this && x2 > this) {
+                x = x.subtract(ONE)
+                break
+            }
+
+            xplus2 = x2.subtract(this).divide(x).divide(two)
+            x = x.subtract(xplus2)
+        }
+
+        val remainder = this - (x * x)
+        return Pair(x, remainder)
     }
 
     override fun compareTo(other: IBigInt): Int {
@@ -378,16 +408,42 @@ class BigInt constructor(private val sign: Byte, private val arr: UIntArray) : I
         return sb.toString()
     }
 
-    // Debug
-    fun printDigits() {
-        arr.forEach {
-            print("$it ")
-        }
-        println()
+    override fun isProbablePrime(certainty: Int): Boolean {
+        TODO("Not yet implemented")
     }
+
+    private fun shiftLeft(n: UInt): BigInt {
+        var result = this
+
+        // TODO improve this to do real shift
+        repeat(n.toInt()) {
+            result = result * BigInt(2)
+        }
+
+        return result
+    }
+
+    // TODO Java version is returning different in sqrtAndRemainder test but this is not necessarily wrong
+    private fun shiftRight(n: UInt): BigInt {
+        val shift = (n % 32u).toInt()
+        val drop = n / 32u
+        val newArr = arr.drop(drop.toInt()).toMutableList()
+
+        for(i in newArr.indices)
+            newArr[i] = newArr[i] shr shift
+
+        // TODO drop zero values
+        return BigInt(sign, newArr.toUIntArray())
+    }
+
+    private val bitLength: UInt
+        get() {
+            return ((arr.size - 1) * 32).toUInt() + arr.last().bitLength()
+        }
 }
 
 fun BigInteger.toBigInt(): BigInt = BigInt(this.toString())
 
 // Returns larger half as UInt
 inline fun ULong.toShiftedUInt(): UInt = (this shr 32).toUInt()
+inline fun UInt.bitLength(): UInt = (ln(this.toDouble()) / ln(2.0)).toUInt() + 1u

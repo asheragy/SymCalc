@@ -1,6 +1,7 @@
 package org.cerion.symcalc.number.primitive
 
 import org.junit.Test
+import org.junit.jupiter.api.Assertions
 import java.math.BigInteger
 import kotlin.test.*
 
@@ -244,9 +245,14 @@ internal class BigIntTest {
 
     @Test
     fun sqrtAndRemainder() {
-        val sqrt = BigInt("10000000000000000000009").sqrtRemainder()
+        var sqrt = BigInt("10000000000000000000009").sqrtRemainder()
         assertEquals(BigInt("100000000000"), sqrt.first)
         assertEquals(BigInt("9"), sqrt.second)
+
+        // Initial value is not determined by converting to double
+        sqrt = BigInt("10000000000000000000000000000000000000009").sqrtRemainder()
+        Assertions.assertEquals(BigInt("100000000000000000000"), sqrt.first)
+        Assertions.assertEquals(BigInt("9"), sqrt.second)
     }
 
     /*

@@ -10,8 +10,13 @@ internal class BigIntegerExtensionsKtTest {
 
     @Test
     fun sqrtAndRemainder() {
-        val sqrt = BigInteger("10000000000000000000009").sqrtRemainder()
+        var sqrt = BigInteger("10000000000000000000009").sqrtRemainder()
         assertEquals(BigInteger("100000000000"), sqrt.first)
+        assertEquals(BigInteger("9"), sqrt.second)
+
+        // Initial value is not determined by converting to double
+        sqrt = BigInteger("10000000000000000000000000000000000000009").sqrtRemainder()
+        assertEquals(BigInteger("100000000000000000000"), sqrt.first)
         assertEquals(BigInteger("9"), sqrt.second)
     }
 
