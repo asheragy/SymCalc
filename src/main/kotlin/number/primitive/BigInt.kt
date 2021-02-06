@@ -204,6 +204,10 @@ class BigInt : IBigInt {
         return when (arr.size) {
             0 -> 0
             1 -> {
+                // Special case since unsigned negative is 1 higher than max value unsigned
+                if (sign == NEGATIVE && arr[0] == Integer.MIN_VALUE.toUInt())
+                    return Integer.MIN_VALUE
+
                 if (arr[0] > Integer.MAX_VALUE.toUInt())
                     throw ArithmeticException()
 
@@ -235,6 +239,10 @@ class BigInt : IBigInt {
 
     override fun gcd(n: IBigInt): IBigInt {
         n as BigInt
+        if (this.sign == ZEROSIGN)
+            return n
+        else if (n.sign == ZEROSIGN)
+            return this
 
         // A is the larger of the two numbers
         var a: UIntArray
@@ -242,7 +250,7 @@ class BigInt : IBigInt {
         when(BigIntArray.compare(arr, n.arr)) {
             1 -> { a = arr; b = n.arr }
             -1 -> { b = arr; a = n.arr }
-            else -> return this
+            else -> return this.abs()
         }
 
         var c = BigIntArray.divide(a, b)
@@ -259,7 +267,12 @@ class BigInt : IBigInt {
 
     override fun mod(m: IBigInt): IBigInt {
         m as BigInt
-        return this.divideAndRemainder(m).second
+        val rem = this.divideAndRemainder(m).second as BigInt
+
+        if (rem.sign == NEGATIVE)
+            return m + rem
+
+        return rem
     }
 
     override fun modPow(exponent: IBigInt, m: IBigInt): IBigInt {
@@ -296,10 +309,7 @@ class BigInt : IBigInt {
         var sign = (sign * other.sign)
         val rem = when {
             div.second == null -> ZERO
-            sign == -1 -> {
-                // If negative remainder is also negative so subtract it from divisor
-                BigInt(POSITIVE, BigIntArray.subtract(other.arr, div.second!!))
-            }
+            sign == -1 -> BigInt(NEGATIVE, div.second!!)
             else -> BigInt(POSITIVE, div.second!!)
         }
 
@@ -437,6 +447,12 @@ class BigInt : IBigInt {
 
         // TODO drop zero values
         return BigInt(sign, newArr.toUIntArray())
+    }
+
+    override fun hashCode(): Int {
+        var result = sign.toInt()
+        result = 31 * result + arr.hashCode()
+        return result
     }
 
     private val bitLength: UInt

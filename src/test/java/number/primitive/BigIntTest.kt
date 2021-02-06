@@ -128,6 +128,23 @@ internal class BigIntTest {
         assertEquals(Pair(BigInt("5384072782"), BigInt("12548692603041114205")), BigInt("75628712337421087763136048659").divideAndRemainder(BigInt("14046747766433220397")))
         assertEquals(Pair(BigInt("68"), BigInt("999999999999")), BigInt("7556555555555547").divideAndRemainder(BigInt("111111111111111")))
         assertEquals(Pair(BigInt("9000000000000"), BigInt("999999999999")), BigInt("999999999999999999999999999").divideAndRemainder(BigInt("111111111111111")))
+
+        // Negative remainder
+        assertEquals(Pair(BigInt("-24"), BigInt("-1")), BigInt("-49").divideAndRemainder(BigInt(2)))
+        assertEquals(Pair(BigInt("-12"), BigInt("-2")), BigInt(-350).divideAndRemainder(BigInt(29)))
+    }
+
+    @Test
+    fun debug() {
+        assertEquals(Pair(BigInt("-12"), BigInt("-2")), BigInt(-350).divideAndRemainder(BigInt(29)))
+    }
+
+    @Test
+    fun divisionSigned() {
+        assertEquals(BigInt(5), BigInt(25) / BigInt(5))
+        assertEquals(BigInt(-5), BigInt(-25) / BigInt(5))
+        assertEquals(BigInt(-5), BigInt(25) / BigInt(-5))
+        assertEquals(BigInt(5), BigInt(-25) / BigInt(-5))
     }
 
     /*
@@ -213,6 +230,7 @@ internal class BigIntTest {
         assertEquals(BigInt(1), BigInt(25).gcd(BigInt(24)))
         assertEquals(BigInt(21), BigInt(1071).gcd(BigInt(462)))
         assertEquals(BigInt(6), BigInt(270).gcd(BigInt(-192)))
+        assertEquals(BigInt(2), BigInt(-2).gcd(BigInt(2)))
         assertEquals(BigInt(229), BigInt("52139749485151463").gcd(BigInt("179883737510857067")))
     }
 
