@@ -1,5 +1,7 @@
 package org.cerion.symcalc
 
+import org.cerion.symcalc.function.integer.Bernoulli
+import org.cerion.symcalc.function.integer.Binomial
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.primitive.BigInt
 import org.cerion.symcalc.number.primitive.toBigInt
@@ -160,6 +162,24 @@ class IntegerTest {
     }
 
     @Test
+    fun multiply() {
+        val a = BigInt("123456789098764321".repeat(40))
+        val b = a + BigInt.ONE
+        repeat(60000) {
+            a * b
+        }
+    }
+
+    @Test
+    fun multiplyJava() {
+        val a = BigInteger("123456789098764321".repeat(40))
+        val b = a + BigInteger.ONE
+        repeat(600000) {
+            a * b
+        }
+    }
+
+    @Test
     fun basicOps() {
         val a = Integer("9".repeat(50000))
         val b = Integer("7".repeat(50000))
@@ -173,6 +193,24 @@ class IntegerTest {
             val t = x.value.divide(d.value)
 
             assertEquals("1369999999999999999999", t.toString())
+        }
+    }
+
+    @Test
+    // ~1.5s
+    fun binomial() {
+        val a = Binomial(500)
+        repeat(500) {
+            a.eval()
+        }
+    }
+
+    @Test
+    // ~1.2
+    fun bernoulli() {
+        val a = Bernoulli(100)
+        repeat(200) {
+            a.eval()
         }
     }
 }
