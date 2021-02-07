@@ -1,6 +1,7 @@
 package org.cerion.symcalc
 
 import org.cerion.math.bignum.BigInt
+import org.cerion.math.bignum.toBigInt
 import org.cerion.symcalc.function.integer.Bernoulli
 import org.cerion.symcalc.function.integer.Binomial
 import org.cerion.symcalc.number.Integer

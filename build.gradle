@@ -49,6 +49,13 @@ sourceSets {
         }
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
+
+        compileLongTestKotlin {
+            kotlinOptions {
+                languageVersion = "1.5"
+                apiVersion = "1.5"
+            }
+        }
     }
 }
 
