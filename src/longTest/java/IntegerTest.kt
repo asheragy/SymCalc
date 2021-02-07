@@ -1,13 +1,12 @@
 package org.cerion.symcalc
 
+import org.cerion.math.bignum.BigInt
 import org.cerion.symcalc.function.integer.Bernoulli
 import org.cerion.symcalc.function.integer.Binomial
 import org.cerion.symcalc.number.Integer
-import org.cerion.symcalc.number.primitive.BigInt
-import org.cerion.symcalc.number.primitive.toBigInt
-import org.junit.Test
 import java.math.BigInteger
 import kotlin.test.assertEquals
+import kotlin.test.Test
 
 class IntegerTest {
 
@@ -67,70 +66,6 @@ class IntegerTest {
     }
 
     @Test
-    fun addition() {
-        val a = BigInt("123456789098764321".repeat(550)) // Result is about 1000 int32 digits
-        var x = BigInt("0")
-
-        repeat(9000000) {
-            x = x.add(a)
-        }
-
-        val str = x.toString()
-        assertEquals('1', str.first())
-        assertEquals('0', str.last())
-    }
-
-    @Test
-    fun additionJava() {
-        val a = BigInteger("123456789098764321".repeat(550)) // Result is about 1000 int32 digits
-        var x = BigInteger.ZERO
-
-        repeat(9000000) {
-            x += a
-        }
-
-        val str = x.toString()
-        assertEquals('1', str.first())
-        assertEquals('0', str.last())
-    }
-
-    @Test
-    fun additionBigSmall() {
-        var a = BigInt("123456789098764321".repeat(550)) // Result is about 1000 int32 digits
-        val x = BigInt("1234567890")
-        repeat(10000000) {
-            a += x
-        }
-    }
-
-    @Test
-    fun additionBigSmallJava() {
-        var a = BigInteger("123456789098764321".repeat(550)) // Result is about 1000 int32 digits
-        val x = BigInteger("1234567890")
-        repeat(10000000) {
-            a += x
-        }
-    }
-
-    @Test
-    fun additionSmallSmall() {
-        val a = BigInt("1")
-        var x = BigInt("0")
-        repeat(100000000) {
-            x += a
-        }
-    }
-
-    @Test
-    fun additionSmallSmallJava() {
-        val a = BigInteger("1")
-        var x = BigInteger("0")
-        repeat(100000000) {
-            x += a
-        }
-    }
-
-    @Test
     fun subtraction() {
         val a1 = BigInteger("123456789098764321".repeat(550)) // Result is about 1000 int32 digits
         val subtract1 = a1 / BigInteger("293840932483209")
@@ -159,24 +94,6 @@ class IntegerTest {
         val str = a.toString()
         assertEquals('1', str.first())
         assertEquals('1', str.last())
-    }
-
-    @Test
-    fun multiply() {
-        val a = BigInt("123456789098764321".repeat(40))
-        val b = a + BigInt.ONE
-        repeat(60000) {
-            a * b
-        }
-    }
-
-    @Test
-    fun multiplyJava() {
-        val a = BigInteger("123456789098764321".repeat(40))
-        val b = a + BigInteger.ONE
-        repeat(600000) {
-            a * b
-        }
     }
 
     @Test
