@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+group 'org.cerion.math'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.20"
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:1.4.20"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:5.5.2"
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8

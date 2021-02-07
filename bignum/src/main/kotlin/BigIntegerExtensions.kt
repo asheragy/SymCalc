@@ -1,4 +1,4 @@
-package org.cerion.symcalc.number.primitive
+package org.cerion.math.bignum
 
 import java.math.BigInteger
 import kotlin.math.pow

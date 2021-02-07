@@ -1,8 +1,7 @@
-package org.cerion.symcalc.number.primitive
+package org.cerion.math.bignum
 
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
-import java.math.BigInteger
 import kotlin.test.*
 
 

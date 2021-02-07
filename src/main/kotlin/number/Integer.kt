@@ -1,5 +1,7 @@
 package org.cerion.symcalc.number
 
+import org.cerion.math.bignum.BigIntJava
+import org.cerion.math.bignum.IBigInt
 import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.AtomExpr
@@ -9,8 +11,6 @@ import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.integer.Factor
 import org.cerion.symcalc.function.list.Tally
-import org.cerion.symcalc.number.primitive.BigIntJava
-import org.cerion.symcalc.number.primitive.IBigInt
 import java.math.BigDecimal
 import java.math.BigInteger
 
