@@ -17,14 +17,7 @@ dependencies {
     compile project(':bignum')
 }
 
-compileKotlin {
-    kotlinOptions {
-        languageVersion = "1.5"
-        apiVersion = "1.5"
-    }
-}
-
-compileTestKotlin {
+tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinCompile) {
     kotlinOptions {
         languageVersion = "1.5"
         apiVersion = "1.5"
@@ -49,13 +42,6 @@ sourceSets {
         }
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
-
-        compileLongTestKotlin {
-            kotlinOptions {
-                languageVersion = "1.5"
-                apiVersion = "1.5"
-            }
-        }
     }
 }
 

@@ -5,13 +5,19 @@ import java.math.BigInteger
 const val multiplier = 0.1
 
 fun main() {
+    benchmark("Construct", construct(1000))
+    benchmark("tostring", string(100))
 
-    benchmark("Addition", addition())
-    benchmark("Addition Big+Small", additionBigSmall())
-    benchmark("Addition Small+Small", additionSmallSmall())
+    benchmark("Addition", addition(900000))
+    benchmark("Addition Big+Small", additionBigSmall(3000000))
+    benchmark("Addition Small+Small", additionSmallSmall(50000000))
 
-    benchmark("Multiply", multiply())
-    benchmark("Multiply Big*Small", multiplyBigSmall())
+    benchmark("Subtraction", subtraction(900000))
+
+    benchmark("Multiply", multiply(60000))
+    benchmark("Multiply Big*Small", multiplyBigSmall(5000000))
+
+    //benchmark("Basic Ops", basicOps(500))
 }
 
 private fun benchmark(name: String, result: Pair<Long, Long>) {
@@ -21,114 +27,130 @@ private fun benchmark(name: String, result: Pair<Long, Long>) {
     println("${name.padEnd(20)}\t$bigint\t$java\t$diff")
 }
 
-private fun addition(): Pair<Long, Long> {
-    val str = "123456789098764321".repeat(550) // Result is about 1000 int32 digits
-    val times = 900000.toMultiplier()
-    val a = run {
-        val a = BigInt(str)
-        var x = BigInt("0")
-        repeat(times) {
-            x = x.add(a)
-        }
-    }
+private fun construct(times: Int): Pair<Long, Long> {
+    val str ="123456789098764321".repeat(1000)
+    val r1 = run(times) { BigInt(str) }
+    val r2 = run(times) { BigInteger(str) }
+    return Pair(r1, r2)
+}
 
-    val b = run {
-        val a = BigInteger(str)
-        var x = BigInteger("0")
-        repeat(times) {
-            x = x.add(a)
-        }
-    }
+private fun string(times: Int): Pair<Long, Long> {
+    val str = "123456789098764321".repeat(1000)
+    val a = BigInt(str)
+    val r1 = run(times) { a.toString() }
+
+    val b = BigInteger(str)
+    val r2 = run(times) { b.toString() }
+    return Pair(r1, r2)
+}
+
+private fun addition(times: Int): Pair<Long, Long> {
+    val str = "123456789098764321".repeat(550) // Result is about 1000 int32 digits
+    val a1 = BigInt(str)
+    var x1 = BigInt("0")
+    val a = run(times) { x1 = x1.add(a1) }
+
+    val a2 = BigInteger(str)
+    var x2 = BigInteger("0")
+    val b = run(times) { x2 = x2.add(a2) }
 
     return Pair(a, b)
 }
 
-private fun additionBigSmall(): Pair<Long, Long> {
-
+private fun additionBigSmall(times: Int): Pair<Long, Long> {
     val str1 = "123456789098764321".repeat(550) // Result is about 1000 int32 digits
     val str2 = "1234567890"
-    val times = 3000000.toMultiplier()
-    val r1 = run {
-        var a = BigInt(str1)
-        val x = BigInt(str2)
-        repeat(times) {
-            a += x
-        }
-    }
+    var a1 = BigInt(str1)
+    val x1 = BigInt(str2)
+    val r1 = run(times) { a1 += x1 }
 
-    val r2 = run {
-        var a = BigInteger(str1)
-        val x = BigInteger(str2)
-        repeat(times) {
-            a += x
-        }
-    }
+    var a2 = BigInteger(str1)
+    val x2 = BigInteger(str2)
+    val r2 = run(times) { a2 += x2 }
 
     return Pair(r1, r2)
 }
 
-private fun additionSmallSmall(): Pair<Long, Long> {
-    val times = 50000000.toMultiplier()
-    val r1 = run {
-        val a = BigInt("1")
-        var x = BigInt("0")
-        repeat(times) {
-            x += a
-        }
-    }
+private fun additionSmallSmall(times: Int): Pair<Long, Long> {
+    val a1 = BigInt("1"); var x1 = BigInt("0")
+    val r1 = run(times) { x1 += a1 }
 
-    val r2 = run {
-        val a = BigInteger("1")
-        var x = BigInteger("0")
-        repeat(times) {
-            x += a
-        }
-    }
+    val a2 = BigInteger("1"); var x2 = BigInteger("0")
+    val r2 = run(times) { x2 += a2 }
 
     return Pair(r1, r2)
 }
 
-private fun multiply(): Pair<Long, Long> {
+
+private fun subtraction(times: Int): Pair<Long, Long> {
+    val str = "123456789098764321".repeat(550) // Result is about 1000 int32 digits
+    var a1 = BigInt(str)
+    val subtract1 = a1 / BigInt("293840932483209")
+    val a = run(times) { a1 -= subtract1  }
+
+    var a2 = BigInteger(str)
+    val subtract2 = a2 / BigInteger("293840932483209")
+    val b = run(times) { a2 -= subtract2 }
+
+    return Pair(a, b)
+}
+
+private fun multiply(times: Int): Pair<Long, Long> {
     val str = "123456789098764321".repeat(40) // Slightly under karatsuba threshold
-    val times = 60000.toMultiplier()
-    val r1 = run {
-        val a = BigInt(str)
-        val b = a + BigInt.ONE
-        repeat(times) { a * b }
-    }
+    val a1 = BigInt(str)
+    val b1 = a1 + BigInt.ONE
+    val r1 = run(times) { a1 * b1 }
 
-    val r2 = run {
-        val a = BigInteger(str)
-        val b = a + BigInteger.ONE
-        repeat(times) { a * b }
-    }
+    val a2 = BigInteger(str)
+    val b2 = a2 + BigInteger.ONE
+    val r2 = run(times) { a2 * b2 }
 
     return Pair(r1, r2)
 }
 
-private fun multiplyBigSmall(): Pair<Long, Long> {
+private fun multiplyBigSmall(times: Int): Pair<Long, Long> {
     val str = "123456789098764321".repeat(40) // Slightly under karatsuba threshold
-    val times = 5000000.toMultiplier()
-    val r1 = run {
-        val a = BigInt(str)
-        val b = BigInt(100000000)
-        repeat(times) { a * b }
+
+    val a = BigInt(str); val b = BigInt(100000000)
+    val r1 = run(times) { a * b }
+
+    val c = BigInteger(str); val d = BigInteger("100000000")
+    val r2 = run(times) { c * d }
+
+    return Pair(r1, r2)
+}
+
+private fun basicOps(times: Int): Pair<Long, Long> {
+    val a1 = BigInt("9".repeat(5000))
+    val b1 = BigInt("7".repeat(5000))
+    val c1 = BigInt("3".repeat(9999))
+    val d1 = BigInt("1".repeat(9980))
+    val r1 = run(times) {
+        var x = a1 + a1
+        x *= b1
+        x -= c1
+        x.divide(d1)
     }
 
-    val r2 = run {
-        val a = BigInteger(str)
-        val b = BigInteger("100000000")
-        repeat(times) { a * b }
+    val a2 = BigInteger("9".repeat(5000))
+    val b2 = BigInteger("7".repeat(5000))
+    val c2 = BigInteger("3".repeat(9999))
+    val d2 = BigInteger("1".repeat(9980))
+    val r2 = run(times) {
+        var x = a2 + a2
+        x *= b2
+        x -= c2
+        x.divide(d2)
     }
 
     return Pair(r1, r2)
 }
 
-private fun run(block: () -> Unit): Long {
+private fun run(times: Int, block: () -> Unit): Long {
     val start = System.currentTimeMillis()
-    block()
+    repeat((times * multiplier).toInt()) {
+        block()
+    }
     val end = System.currentTimeMillis()
     return end - start
 }
-
-private fun Int.toMultiplier() = (this * multiplier).toInt()
