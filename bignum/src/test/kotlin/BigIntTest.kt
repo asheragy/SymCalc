@@ -83,6 +83,12 @@ internal class BigIntTest {
     }
 
     @Test
+    fun multiplySingleDigit() {
+        assertEquals(bigInt(10,10,10), bigInt(1,1,1) * bigInt(10))
+        assertEquals(bigInt(9,-1,-1,-10), bigInt(-1,-1,-1) * bigInt(10))
+    }
+
+    @Test
     fun multiply() {
         assertEquals(bigInt(1,2,3,2,1), bigInt(1,1,1) * bigInt(1,1,1))
 

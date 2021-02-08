@@ -84,6 +84,20 @@ object BigIntArray {
         return removeLeadingZeros(arr)
     }
 
+    internal fun multiply(x: UIntArray, y: UInt): UIntArray {
+        val result = UIntArray(x.size + 1) // Allocate carried digit by default
+        var t = 0uL
+        var i = 0
+
+        while(i < x.size) {
+            t = (x[i].toULong() * y) + t.toShiftedUInt()
+            result[i++] = t.toUInt()
+        }
+
+        result[x.size] = t.toShiftedUInt()
+        return removeLeadingZeros(result)
+    }
+
     internal fun multiply(x: UIntArray, y: UIntArray): UIntArray {
         val a = if (x.size >= y.size) x else y
         val b = if (x.size >= y.size) y else x

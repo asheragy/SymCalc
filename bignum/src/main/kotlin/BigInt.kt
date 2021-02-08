@@ -161,7 +161,14 @@ class BigInt : IBigInt {
         if (sign == ZEROSIGN || other.sign == ZEROSIGN)
             return ZERO
 
-        return BigInt(if(sign == other.sign) 1 else -1, BigIntArray.multiply(arr, other.arr))
+        val sign = if(sign == other.sign) 1 else -1
+
+        if (arr.size == 1)
+            return BigInt(sign, BigIntArray.multiply(other.arr, arr[0]))
+        else if (other.arr.size == 1)
+            return BigInt(sign, BigIntArray.multiply(arr, other.arr[0]))
+
+        return BigInt(sign, BigIntArray.multiply(arr, other.arr))
     }
 
     override fun divide(other: IBigInt) = this.divide(other as BigInt)

@@ -2,11 +2,11 @@ package org.cerion.math.bignum
 
 import java.math.BigInteger
 
-const val multiplier = 0.1
+const val multiplier = 1.1
 
 fun main() {
-    benchmark("Construct", construct(1000))
-    benchmark("tostring", string(100))
+    benchmark("Construct", construct(200))
+    //benchmark("tostring", string(100))
 
     benchmark("Addition", addition(900000))
     benchmark("Addition Big+Small", additionBigSmall(3000000))
@@ -14,7 +14,7 @@ fun main() {
 
     benchmark("Subtraction", subtraction(900000))
 
-    benchmark("Multiply", multiply(60000))
+    //benchmark("Multiply", multiply(60000))
     benchmark("Multiply Big*Small", multiplyBigSmall(5000000))
 
     //benchmark("Basic Ops", basicOps(500))
@@ -109,7 +109,7 @@ private fun multiply(times: Int): Pair<Long, Long> {
 }
 
 private fun multiplyBigSmall(times: Int): Pair<Long, Long> {
-    val str = "123456789098764321".repeat(40) // Slightly under karatsuba threshold
+    val str = "123456789098764321".repeat(40)
 
     val a = BigInt(str); val b = BigInt(100000000)
     val r1 = run(times) { a * b }
