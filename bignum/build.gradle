@@ -12,10 +12,10 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.20"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
 
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:1.4.20"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:5.5.2"
 }
 

@@ -2,7 +2,7 @@ package org.cerion.math.bignum
 
 import java.math.BigInteger
 
-const val multiplier = 1.1
+const val multiplier = 5.1
 
 fun main() {
     benchmark("Construct", construct(200))
