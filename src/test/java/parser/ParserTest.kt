@@ -73,6 +73,24 @@ class ParserTest {
     }
 
     @Test
+    fun factorial() {
+        assertEquals(Integer(120), Expr.parse("5!").eval())
+        assertEquals(Integer(121), Expr.parse("5! + 1").eval())
+        assertEquals(Integer(124), Expr.parse("5! + 2 * 2").eval())
+
+        assertEquals(Integer(121), Expr.parse("1 + 5!").eval())
+        assertEquals(Integer(124), Expr.parse("2 * 2 + 5!").eval())
+
+        //assertEquals(Integer(729), Expr.parse("3^3!").eval())
+        assertEquals(Integer(216), Expr.parse("3!^3").eval())
+    }
+
+    @Test
+    fun debug() {
+        assertEquals(Integer(729), Expr.parse("3^3!").eval())
+    }
+
+    @Test
     fun invalidParametercount() {
         assertTrue(Expr.parse("Sin(1,2)").isError)
     }

@@ -7,6 +7,7 @@ import org.cerion.symcalc.function.arithmetic.Plus
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Subtract
 import org.cerion.symcalc.function.arithmetic.Times
+import org.cerion.symcalc.function.integer.Factorial
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberExpr
 
@@ -34,153 +35,171 @@ class Parser(private val lex: Lexer) {
 
     /*
 	  expr = factor
-	       | expr + term
-	       | expr - term
+	       | expr + expr2
+	       | expr - expr2
 
-	  term = expterm
-	       | term * expterm
-	       | term / expterm
+	 expr2 = expr3
+	       | term * expr3
+	       | term / expr3
 
-   expterm = factor
-           | expterm ^ factor
+     expr3 = factor
+           | expr ^ factor
+
+     expr4 = factor
+           | expr!
 
 	factor = integer
 	       |  x
 	       | - expr
-	       | expr!
 	       | foo(expr)
 	       | (expr)
 	*/
     private fun expr(): Expr {
-        var e = term()
+        var e = expr2()
 
         while (true) {
-            when(token) {
+            e = when(token) {
                 '+' -> {
                     getNext()
-                    e = Plus(e, term())
+                    Plus(e, expr2())
                 }
                 '-' -> {
                     getNext()
-                    e = Subtract(e, term())
+                    Subtract(e, expr2())
                 }
                 else -> return e
             }
         }
     }
 
-    private fun term(): Expr {
-        var e = expterm()
+    private fun expr2(): Expr {
+        var e = expr3()
 
         while (true) {
-            if (token == '*') {
-                getNext()
-                e = Times(e, expterm())
-            } else if (token == '/') {
-                getNext()
-                e = Divide(e, expterm())
-            } else {
-                return e
+            e = when (token) {
+                '*' -> {
+                    getNext()
+                    Times(e, expr3())
+                }
+                '/' -> {
+                    getNext()
+                    Divide(e, expr3())
+                }
+                else -> return e
             }
         }
     }
 
-    private fun expterm(): Expr {
-        var e = factor()
+    private fun expr3(): Expr {
+        var e = expr4()
 
-        while (lex.hasInput()) {
-            if (token == '^') {
-                getNext()
-                e = Power(e, factor())
-            } else {
-                return e
+        while (true) {
+            e = when(token) {
+                '^' -> {
+                    getNext()
+                    Power(e, expr4())
+                }
+                else -> return e
             }
         }
+    }
 
-        return e
+    private fun expr4(): Expr {
+        var e = factor()
+
+        while (true) {
+            e = when(token) {
+                '!' -> {
+                    getNext()
+                    Factorial(e)
+                }
+                else -> return e
+            }
+        }
     }
 
     private fun factor(): Expr {
-
-        if (token == NUMBER) {
-            getNext()
-            return NumberExpr.parse(tokval)
-        }
-        //Complex 1
-        else if (token == 'i') {
-            getNext()
-            return NumberExpr.parse("i")
-        }
-        // Variable
-        else if (token == 'v') {
-            //if(lex.hasInput())
-            getNext()
-            return VarExpr(tokval)
-        }
-        // Negate
-        else if (token == '-') {
-            getNext()
-            var next = factor()
-            //if number just negate it
-            if (next is NumberExpr)
-                next = next.unaryMinus()
-            else
-                next = Times(Integer("-1"), next)
-
-            return next
-        }
-        // Lists
-        else if (token == '{') {
-            getNext()
-            val items = mutableListOf(expr())
-
-            while (token == ',') {
+        when (token) {
+            NUMBER -> {
                 getNext()
-                items.add(expr())
+                return NumberExpr.parse(tokval)
             }
-            if (token != '}')
-                println("Edit: missing }")
-            getNext()
-            return ListExpr(items)
-        }
-        // Function
-        else if (token == FUNC) {
-            val ident = tokval
-            getNext()
-            if (token != '(')
-                println("missing ident (")
-
-            getNext()
-            val functionArgs = mutableListOf(expr())
-
-            //Add additional parameters
-            while (token == ',')
-            {
+            //Complex 1
+            'i' -> {
                 getNext()
-                functionArgs.add(expr())
+                return NumberExpr.parse("i")
             }
-
-            if (token == ')') {
+            // Variable
+            'v' -> {
                 getNext()
-                return FunctionExpr.createFunction(ident, *functionArgs.toTypedArray())
-            } else
-                throw ParseException("Function missing closing ')'")
-
-        } else if (token == CONST) {
-            getNext()
-            return ConstExpr.getConstant(tokval)
-        } else if (token == '(') {
-            getNext()
-            val e = expr()
-            if (token == ')') {
-                getNext()
-                return e
+                return VarExpr(tokval)
             }
-            else
-                throw ParseException("Missing closing ')'")
+            // Negate
+            '-' -> {
+                getNext()
+                var next = factor()
+                //if number just negate it
+                if (next is NumberExpr)
+                    next = next.unaryMinus()
+                else
+                    next = Times(Integer("-1"), next)
+
+                return next
+            }
+            // Lists
+            '{' -> {
+                getNext()
+                val items = mutableListOf(expr())
+
+                while (token == ',') {
+                    getNext()
+                    items.add(expr())
+                }
+                if (token != '}')
+                    println("Edit: missing }")
+                getNext()
+                return ListExpr(items)
+            }
+            // Function
+            FUNC -> {
+                val ident = tokval
+                getNext()
+                if (token != '(')
+                    println("missing ident (")
+
+                getNext()
+                val functionArgs = mutableListOf(expr())
+
+                //Add additional parameters
+                while (token == ',')
+                {
+                    getNext()
+                    functionArgs.add(expr())
+                }
+
+                if (token == ')') {
+                    getNext()
+                    return FunctionExpr.createFunction(ident, *functionArgs.toTypedArray())
+                } else
+                    throw ParseException("Function missing closing ')'")
+
+            }
+            CONST -> {
+                getNext()
+                return ConstExpr.getConstant(tokval)
+            }
+            '(' -> {
+                getNext()
+                val e = expr()
+                if (token == ')') {
+                    getNext()
+                    return e
+                }
+                else
+                    throw ParseException("Missing closing ')'")
+            }
+            else -> throw ParseException("Incomplete expression")
         }
-        else
-            throw ParseException("Incomplete expression")
     }
 
     private fun getNext() {
