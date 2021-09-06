@@ -32,6 +32,7 @@ object FunctionFactory {
         throw RuntimeException("Function not found")
     }
 
+    // TODO can this be done with reflection
     private fun createInstance(f: Function, vararg e: Expr): FunctionExpr {
         when (f) {
             Function.N -> return N(*e)
@@ -47,6 +48,7 @@ object FunctionFactory {
             Function.POWER -> return Power(*e)
             Function.MINUS -> return Minus(*e)
             Function.LOG -> return Log(*e)
+            Function.LOG10 -> return Log10(*e)
             Function.EXP -> return Exp(*e)
             Function.SQRT -> return Sqrt(*e)
 

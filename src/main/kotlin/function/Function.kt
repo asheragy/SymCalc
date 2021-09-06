@@ -17,6 +17,7 @@ enum class Function constructor(val value: String) {
     POWER("Power"),
     SQRT("Sqrt"),
     LOG("Log"),
+    LOG10("Log10"),
     EXP("Exp"),
     MINUS("Minus"),
 
