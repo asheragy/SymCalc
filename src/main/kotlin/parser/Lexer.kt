@@ -43,7 +43,7 @@ class Lexer(exprStr: String) {
                     }
                     if (Character.isLetter(c)) {
                         tokval = c.toString()
-                        while (hasInput() && Character.isLetter(exprStr[pos + 1])) {
+                        while (hasInput() && Character.isLetterOrDigit(exprStr[pos + 1])) {
                             pos++
                             tokval += exprStr[pos]
                         }

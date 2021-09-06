@@ -43,6 +43,13 @@ class ParserTest {
     }
 
     @Test
+    fun function() {
+        assertEquals(Integer(120), Expr.parse("Factorial(5)").eval())
+        assertEquals(RealDouble(1.6094379124341003), Expr.parse("Log(5.0)").eval())
+        assertEquals(RealDouble(0.6989700043360189), Expr.parse("Log10(5.0)").eval())
+    }
+
+    @Test
     fun list() {
         assertEquals(ListExpr(1,2,3,4,5), Expr.parse("{1,2,3,4,5}"))
         assertEquals(Plus(ListExpr(1,2,3), VarExpr("x")), Expr.parse("{1,2,3} + x"))
@@ -81,13 +88,8 @@ class ParserTest {
         assertEquals(Integer(121), Expr.parse("1 + 5!").eval())
         assertEquals(Integer(124), Expr.parse("2 * 2 + 5!").eval())
 
-        //assertEquals(Integer(729), Expr.parse("3^3!").eval())
-        assertEquals(Integer(216), Expr.parse("3!^3").eval())
-    }
-
-    @Test
-    fun debug() {
         assertEquals(Integer(729), Expr.parse("3^3!").eval())
+        assertEquals(Integer(216), Expr.parse("3!^3").eval())
     }
 
     @Test
