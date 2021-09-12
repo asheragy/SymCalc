@@ -5,17 +5,18 @@ import java.math.BigInteger
 const val multiplier = 5.1
 
 fun main() {
-    benchmark("Construct", construct(200))
+    println("${"Name".padEnd(20)}\tBigInt\tJava\tDiff")
+    //benchmark("Construct", construct(200))
     //benchmark("tostring", string(100))
 
-    benchmark("Addition", addition(900000))
-    benchmark("Addition Big+Small", additionBigSmall(3000000))
-    benchmark("Addition Small+Small", additionSmallSmall(50000000))
+    //benchmark("Addition", addition(900000))
+    //benchmark("Addition Big+Small", additionBigSmall(3000000))
+    //benchmark("Addition Small+Small", additionSmallSmall(50000000))
 
-    benchmark("Subtraction", subtraction(900000))
+    //benchmark("Subtraction", subtraction(900000))
 
-    //benchmark("Multiply", multiply(60000))
-    benchmark("Multiply Big*Small", multiplyBigSmall(5000000))
+    benchmark("Multiply", multiply(60000))
+    //benchmark("Multiply Big*Small", multiplyBigSmall(5000000))
 
     //benchmark("Basic Ops", basicOps(500))
 }

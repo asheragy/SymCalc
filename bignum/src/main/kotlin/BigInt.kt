@@ -166,7 +166,7 @@ class BigInt : IBigInt {
             when {
                 arr.size == 1 -> BigIntArray.multiply(other.arr, arr[0])
                 other.arr.size == 1 -> BigIntArray.multiply(arr, other.arr[0])
-                else -> BigIntArray.multiply(arr, other.arr)
+                else -> BigIntArray.multiply2(arr, other.arr)
             }
         )
     }

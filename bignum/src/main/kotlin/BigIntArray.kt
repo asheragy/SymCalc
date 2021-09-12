@@ -98,6 +98,7 @@ object BigIntArray {
         return removeLeadingZeros(result)
     }
 
+    @Deprecated("slow")
     internal fun multiply(x: UIntArray, y: UIntArray): UIntArray {
         val a = if (x.size >= y.size) x else y
         val b = if (x.size >= y.size) y else x
@@ -124,6 +125,41 @@ object BigIntArray {
         }
 
         return result.toUIntArray()
+    }
+
+    internal fun multiply2(x: UIntArray, y: UIntArray): UIntArray {
+        val xlen = x.size
+        val ylen = y.size
+        val z = UIntArray(xlen + ylen)
+
+        var carry = 0uL
+        var j = 0
+        while (j < ylen) {
+            val product = y[j].toULong() * x[0].toULong() + carry
+            z[j] = product.toUInt()
+            carry = product shr 32
+            j++
+        }
+
+        z[xlen] = carry.toUInt()
+
+        var i = 1
+        while (i < xlen) {
+            carry = 0uL
+            j = 0
+            var k = i
+            while (j < ylen) {
+                val product = y[j].toULong() * x[i].toULong() + z[k].toULong() + carry
+                z[k] = product.toUInt()
+                carry = product shr 32
+                j++
+                k++
+            }
+            z[xlen + i] = carry.toUInt()
+            i++
+        }
+
+        return removeLeadingZeros(z)
     }
 
     internal fun pow(x: UIntArray, n: Int): UIntArray {
