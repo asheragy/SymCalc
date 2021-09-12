@@ -130,6 +130,38 @@ object BigIntArray {
     internal fun multiply2(x: UIntArray, y: UIntArray): UIntArray {
         val xlen = x.size
         val ylen = y.size
+        val result = UIntArray(xlen + ylen)
+
+        // y * first digit of x
+        var t = 0uL
+        var j = 0
+        while (j < ylen) {
+            t = (y[j].toULong() * x[0]) + t.toShiftedUInt()
+            result[j++] = t.toUInt()
+        }
+
+        result[xlen] = t.toShiftedUInt()
+
+        // y * remaining digits of x
+        var i = 1
+        while (i < xlen) {
+            t = 0uL
+            j = 0
+            var k = i
+            while (j < ylen) {
+                t = (y[j++].toULong() * x[i]) + result[k].toULong() + t.toShiftedUInt()
+                result[k++] = t.toUInt()
+            }
+
+            result[xlen + i++] = t.toShiftedUInt()
+        }
+
+        return removeLeadingZeros(result)
+    }
+
+    internal fun multiply3(x: UIntArray, y: UIntArray): UIntArray {
+        val xlen = x.size
+        val ylen = y.size
         val z = UIntArray(xlen + ylen)
 
         var carry = 0uL

@@ -2,30 +2,35 @@ package org.cerion.math.bignum
 
 import java.math.BigInteger
 
-const val multiplier = 5.1
+const val multiplier = 1.0
 
 fun main() {
-    println("${"Name".padEnd(20)}\tBigInt\tJava\tDiff")
-    //benchmark("Construct", construct(200))
-    //benchmark("tostring", string(100))
+    println("${"Name".padEnd(20)}\tMag\t\tBigInt\tJava\tDiff")
+    ///benchmark("Construct", construct(20))
+    benchmark("tostring", string(50))
 
-    //benchmark("Addition", addition(900000))
-    //benchmark("Addition Big+Small", additionBigSmall(3000000))
-    //benchmark("Addition Small+Small", additionSmallSmall(50000000))
+    //benchmark("Addition", addition(90000))
+    //benchmark("Addition Big+Small", additionBigSmall(300000))
+    //benchmark("Addition Small+Small", additionSmallSmall(5000000))
 
-    //benchmark("Subtraction", subtraction(900000))
+    //benchmark("Subtraction", subtraction(90000))
 
-    benchmark("Multiply", multiply(60000))
-    //benchmark("Multiply Big*Small", multiplyBigSmall(5000000))
+    benchmark("Multiply Big*Small", "n", multiplyBigSmall(1200000))
+    benchmark("Multiply Big*Big", "n^2", multiply(50000))
 
     //benchmark("Basic Ops", basicOps(500))
 }
 
+@Deprecated("use other")
 private fun benchmark(name: String, result: Pair<Long, Long>) {
+    return benchmark(name, "", result)
+}
+
+private fun benchmark(name: String, mag: String, result: Pair<Long, Long>) {
     val bigint = result.first.toString().padEnd(6)
     val java = result.second.toString().padEnd(6)
     val diff = result.first.toDouble() / result.second
-    println("${name.padEnd(20)}\t$bigint\t$java\t$diff")
+    println("${name.padEnd(20)}\tO($mag)\t$bigint\t$java\t$diff")
 }
 
 private fun construct(times: Int): Pair<Long, Long> {
@@ -110,7 +115,7 @@ private fun multiply(times: Int): Pair<Long, Long> {
 }
 
 private fun multiplyBigSmall(times: Int): Pair<Long, Long> {
-    val str = "123456789098764321".repeat(40)
+    val str = "123456789098764321".repeat(50)
 
     val a = BigInt(str); val b = BigInt(100000000)
     val r1 = run(times) { a * b }
