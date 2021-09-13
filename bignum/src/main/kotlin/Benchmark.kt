@@ -2,7 +2,7 @@ package org.cerion.math.bignum
 
 import java.math.BigInteger
 
-const val multiplier = 1.0
+const val multiplier = 10.0
 
 fun main() {
     println("${"Name".padEnd(20)}\tMag\t\tBigInt\tJava\tDiff")

@@ -10,6 +10,10 @@ internal class BigIntTest {
 
     private fun bigInt(vararg n: Int): BigInt = BigInt(1, n.map { it.toUInt() }.reversed().toUIntArray())
 
+    fun debug() {
+        BigInt("100000000000000000000000000000000").toString()
+    }
+
     @Test
     fun parse() {
         // Tests to and from string

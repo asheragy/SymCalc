@@ -287,23 +287,22 @@ object BigIntArray {
     }
 
     internal fun divideAndRemainder(x: UIntArray, y: UInt): Pair<UIntArray, UInt> {
-        // Assumes x is at least 2 digits
-        val result = mutableListOf<UInt>()
         var index = x.size - 1
-
         var r = if (x.last() / y == 0u)
             (x[index--].toULong() shl 32)
         else
             0uL
 
-        while(index >= 0) {
-            val t = r + x[index--]
+        val result = UIntArray(index+1)
 
-            result.add((t / y).toUInt())
+        while(index >= 0) {
+            val t = r + x[index]
+            result[index] = (t / y).toUInt()
             r = (t % y) shl 32
+            index--
         }
 
-        return Pair(result.toUIntArray().reversedArray(), r.toShiftedUInt())
+        return Pair(removeLeadingZeros(result), r.toShiftedUInt())
     }
 
     private fun removeLeadingZeros(arr: UIntArray): UIntArray {
