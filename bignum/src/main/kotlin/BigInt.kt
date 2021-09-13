@@ -309,11 +309,18 @@ class BigInt : IBigInt {
     }
 
     override fun divideAndRemainder(other: IBigInt): Pair<IBigInt, IBigInt> {
-        //println("$this / $other")
         other as BigInt
+        var sign = (sign * other.sign)
+
+        if (other.arr.size == 1) {
+            val result = BigIntArray.divideAndRemainder(arr, other.arr[0])
+            val remainder = BigInt(sign, UIntArray(1) { result.second })
+
+            return Pair(BigInt(sign, result.first), remainder)
+        }
+
         val div = BigIntArray.divide(this.arr, other.arr)
 
-        var sign = (sign * other.sign)
         val rem = when {
             div.second == null -> ZERO
             sign == -1 -> BigInt(NEGATIVE, div.second!!)

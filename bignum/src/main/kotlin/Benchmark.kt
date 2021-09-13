@@ -2,24 +2,25 @@ package org.cerion.math.bignum
 
 import java.math.BigInteger
 
-const val multiplier = 10.0
+const val multiplier = 1.0
 
 fun main() {
     println("${"Name".padEnd(20)}\tMag\t\tBigInt\tJava\tDiff")
-    ///benchmark("Construct", construct(20))
-    benchmark("tostring", string(100))
+    benchmark("Construct", construct(20))
+    benchmark("tostring", "n^2", string(100))
 
-    //benchmark("Addition", addition(90000))
-    //benchmark("Addition Big+Small", additionBigSmall(300000))
-    //benchmark("Addition Small+Small", additionSmallSmall(5000000))
+    benchmark("Addition", addition(90000))
+    benchmark("Addition Big+Small", additionBigSmall(300000))
+    benchmark("Addition Small+Small", additionSmallSmall(5000000))
 
-    //benchmark("Subtraction", subtraction(90000))
+    benchmark("Subtraction", subtraction(90000))
 
-    //benchmark("Multiply Big*Single", "n", multiplyBigSingle(1200000))
-    //benchmark("Multiply Small", "n^2", multiplySmall(3500000))
-    //benchmark("Multiply Medium", "n^2", multiplyMedium(4000))
-    //benchmark("Multiply Big*Big", "n^2", multiplyBigBig(50000))
+    benchmark("Multiply Big*Single", "n", multiplyBigSingle(1200000))
+    benchmark("Multiply Small", "n^2", multiplySmall(3500000))
+    benchmark("Multiply Medium", "n^2", multiplyMedium(4000))
+    benchmark("Multiply Big*Big", "n^2", multiplyBigBig(50000))
 
+    benchmark("Divide Big/Single", "n", divideBigSingle(100000))
     //benchmark("Basic Ops", basicOps(500))
 }
 
@@ -155,6 +156,18 @@ private fun multiplyBigSingle(times: Int): Pair<Long, Long> {
 
     val c = BigInteger(str); val d = BigInteger("100000000")
     val r2 = run(times) { c * d }
+
+    return Pair(r1, r2)
+}
+
+private fun divideBigSingle(times: Int): Pair<Long, Long> {
+    val str = "123456789098764321".repeat(50)
+
+    val a = BigInt(str); val b = BigInt(100000000)
+    val r1 = run(times) { a / b }
+
+    val c = BigInteger(str); val d = BigInteger("100000000")
+    val r2 = run(times) { c / d }
 
     return Pair(r1, r2)
 }
