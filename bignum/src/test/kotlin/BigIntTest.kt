@@ -140,11 +140,6 @@ internal class BigIntTest {
     }
 
     @Test
-    fun debug() {
-        assertEquals(Pair(BigInt("-12"), BigInt("-2")), BigInt(-350).divideAndRemainder(BigInt(29)))
-    }
-
-    @Test
     fun divisionSigned() {
         assertEquals(BigInt(5), BigInt(25) / BigInt(5))
         assertEquals(BigInt(-5), BigInt(-25) / BigInt(5))

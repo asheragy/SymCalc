@@ -286,6 +286,26 @@ object BigIntArray {
         return result.toUIntArray().reversedArray()
     }
 
+    internal fun divideAndRemainder(x: UIntArray, y: UInt): Pair<UIntArray, UInt> {
+        // Assumes x is at least 2 digits
+        val result = mutableListOf<UInt>()
+        var index = x.size - 1
+
+        var r = if (x.last() / y == 0u)
+            (x[index--].toULong() shl 32)
+        else
+            0uL
+
+        while(index >= 0) {
+            val t = r + x[index--]
+
+            result.add((t / y).toUInt())
+            r = (t % y) shl 32
+        }
+
+        return Pair(result.toUIntArray().reversedArray(), r.toShiftedUInt())
+    }
+
     private fun removeLeadingZeros(arr: UIntArray): UIntArray {
         var digits = 0
         for(i in arr.size -1 downTo 0) {

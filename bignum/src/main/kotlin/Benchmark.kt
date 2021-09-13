@@ -2,12 +2,12 @@ package org.cerion.math.bignum
 
 import java.math.BigInteger
 
-const val multiplier = 10.0
+const val multiplier = 1.0
 
 fun main() {
     println("${"Name".padEnd(20)}\tMag\t\tBigInt\tJava\tDiff")
     ///benchmark("Construct", construct(20))
-    //benchmark("tostring", string(50))
+    benchmark("tostring", string(100))
 
     //benchmark("Addition", addition(90000))
     //benchmark("Addition Big+Small", additionBigSmall(300000))
@@ -15,10 +15,10 @@ fun main() {
 
     //benchmark("Subtraction", subtraction(90000))
 
-    benchmark("Multiply Big*Single", "n", multiplyBigSingle(1200000))
-    benchmark("Multiply Small", "n^2", multiplySmall(3500000))
-    benchmark("Multiply Medium", "n^2", multiplyMedium(4000))
-    benchmark("Multiply Big*Big", "n^2", multiplyBigBig(50000))
+    //benchmark("Multiply Big*Single", "n", multiplyBigSingle(1200000))
+    //benchmark("Multiply Small", "n^2", multiplySmall(3500000))
+    //benchmark("Multiply Medium", "n^2", multiplyMedium(4000))
+    //benchmark("Multiply Big*Big", "n^2", multiplyBigBig(50000))
 
     //benchmark("Basic Ops", basicOps(500))
 }
@@ -43,7 +43,7 @@ private fun construct(times: Int): Pair<Long, Long> {
 }
 
 private fun string(times: Int): Pair<Long, Long> {
-    val str = "123456789098764321".repeat(1000)
+    val str = "123456789098764321".repeat(500)
     val a = BigInt(str)
     val r1 = run(times) { a.toString() }
 

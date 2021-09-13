@@ -377,53 +377,24 @@ class BigInt : IBigInt {
             return "0"
 
         val sb = StringBuilder()
-        if (sign == NEGATIVE)
-            sb.append("-")
 
-        val base = 65536
-        val maxDigit = 1000000000uL
-        val result = mutableListOf<UInt>()
-
-        result.add((arr.last() % maxDigit).toUInt())
-        if (arr.last() / maxDigit != 0uL)
-            result.add((arr.last() / maxDigit).toUInt())
-
-        for(index in arr.size - 2 downTo 0) {
-            for (i in 0..1) {
-                // Multiply entire result array by base
-                var temp: ULong = 0uL
-                for (j in result.indices) {
-                    temp = result[j] * base.toULong() + (temp / maxDigit)
-                    result[j] = (temp % maxDigit).toUInt()
-                }
-
-                // Multiplication carry
-                if (temp / maxDigit != 0uL)
-                    result.add((temp / maxDigit).toUInt())
-
-                // Add current digit
-                temp = result[0].toULong() + if (i == 1) arr[index].toUShort() else (arr[index] shr 16).toUShort()
-                result[0] = (temp % maxDigit).toUInt()
-
-                while(temp /maxDigit != 0uL) {
-                    var index = 1
-                    if (index == result.size) {
-                        result.add(1u) // TODO see if any test case fits here, no coverage yet
-                        break
-                    }
-                    else {
-                        temp = result[index].toULong() + (temp / maxDigit)
-                        result[index++] = (temp % maxDigit).toUInt()
-                    }
-                }
+        if (arr.size == 1) {
+            sb.append(arr[0])
+        }
+        else {
+            var remaining = arr
+            while (remaining.size > 1) {
+                val t = BigIntArray.divideAndRemainder(remaining, 1000000000u)
+                remaining = t.first
+                sb.insert(0, "0".repeat(9 - t.second.toString().length) + t.second.toString())
             }
+
+            if (remaining[0] != 0u)
+                sb.insert(0, remaining[0])
         }
 
-        sb.append(result.last())
-        for(i in result.size - 2 downTo 0) {
-            sb.append("0".repeat(9 - result[i].toString().length))
-            sb.append(result[i])
-        }
+        if (sign == NEGATIVE)
+            sb.insert(0, "-")
 
         return sb.toString()
     }
