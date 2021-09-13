@@ -2,6 +2,7 @@ package org.cerion.math.bignum
 
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
+import java.math.BigInteger
 import kotlin.test.*
 
 
@@ -9,10 +10,6 @@ import kotlin.test.*
 internal class BigIntTest {
 
     private fun bigInt(vararg n: Int): BigInt = BigInt(1, n.map { it.toUInt() }.reversed().toUIntArray())
-
-    fun debug() {
-        BigInt("100000000000000000000000000000000").toString()
-    }
 
     @Test
     fun parse() {
@@ -98,7 +95,18 @@ internal class BigIntTest {
 
         // Digits carried
         assertEquals(bigInt(-2,-1,-1,1), bigInt(-1,-1,-1) * bigInt(-1))
+        assertEquals(bigInt(-1,-2,-1,0,1), bigInt(-1,-1,-1) * bigInt(-1, -1)) // y smaller than x
+        assertEquals(bigInt(-1,-2,-1,0,1), bigInt(-1, -1) * bigInt(-1,-1,-1)) // x smaller than y
         assertEquals(bigInt(-1,-1,-2,0,0,1), bigInt(-1,-1,-1) * bigInt(-1,-1,-1))
+    }
+
+    @Test
+    fun debug() {
+        assertEquals(bigInt(-1,-2,-1,0,1), bigInt(-1,-1,-1) * bigInt(-1, -1))
+        //assertEquals(bigInt(-1,-1,-2,0,0,1), bigInt(-1,-1,-1) * bigInt(-1,-1,-1))
+        //BigInteger("79228162514264337593543950335") * BigInteger("18446744073709551615")
+
+        //assertEquals(BigInt("1683788257242160069488429204699054093792"), BigInt("15542256233227479069") * BigInt("108336153514341295968"))
     }
 
     @Test

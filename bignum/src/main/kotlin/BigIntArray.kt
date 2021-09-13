@@ -1,5 +1,7 @@
 package org.cerion.math.bignum
 
+import java.lang.RuntimeException
+
 @ExperimentalUnsignedTypes
 object BigIntArray {
 
@@ -130,50 +132,23 @@ object BigIntArray {
     internal fun multiply2(x: UIntArray, y: UIntArray): UIntArray {
         val xlen = x.size
         val ylen = y.size
-        val result = UIntArray(xlen + ylen)
-
-        // y * first digit of x
-        var t = 0uL
-        var j = 0
-        while (j < ylen) {
-            t = (y[j].toULong() * x[0]) + t.toShiftedUInt()
-            result[j++] = t.toUInt()
-        }
-
-        result[xlen] = t.toShiftedUInt()
-
-        // y * remaining digits of x
-        var i = 1
-        while (i < xlen) {
-            t = 0uL
-            j = 0
-            var k = i
-            while (j < ylen) {
-                t = (y[j++].toULong() * x[i]) + result[k].toULong() + t.toShiftedUInt()
-                result[k++] = t.toUInt()
-            }
-
-            result[xlen + i++] = t.toShiftedUInt()
-        }
-
-        return removeLeadingZeros(result)
-    }
-
-    internal fun multiply3(x: UIntArray, y: UIntArray): UIntArray {
-        val xlen = x.size
-        val ylen = y.size
         val z = UIntArray(xlen + ylen)
 
         var carry = 0uL
         var j = 0
         while (j < ylen) {
-            val product = y[j].toULong() * x[0].toULong() + carry
-            z[j] = product.toUInt()
-            carry = product shr 32
-            j++
+            try {
+                val product = y[j].toULong() * x[0].toULong() + carry
+                z[j] = product.toUInt()
+                carry = product shr 32
+                j++
+            }
+            catch(e: Exception) {
+                println("TEST")
+            }
         }
 
-        z[xlen] = carry.toUInt()
+        z[ylen] = carry.toUInt()
 
         var i = 1
         while (i < xlen) {
@@ -187,7 +162,7 @@ object BigIntArray {
                 j++
                 k++
             }
-            z[xlen + i] = carry.toUInt()
+            z[ylen + i] = carry.toUInt()
             i++
         }
 
@@ -200,9 +175,9 @@ object BigIntArray {
         var m = n
         while(m > 0) {
             if (m % 2 == 1)
-                result = multiply(square, result)
+                result = multiply2(square, result)
 
-            square = multiply(square, square)
+            square = multiply2(square, square)
             m /= 2
         }
 
@@ -225,12 +200,14 @@ object BigIntArray {
 
     // http://justinparrtech.com/JustinParr-Tech/an-algorithm-for-arbitrary-precision-integer-division/
     internal fun divide(n: UIntArray, d: UIntArray): Pair<UIntArray,UIntArray?> {
-        // Assumes x > y
+        // Assumes n > d
+        if (compare(n, d) < 0)
+            throw RuntimeException("numerator must be greater than denominator")
+
         var q = fastDivide(n, d)
 
         while(true) {
-            var qd = multiply(q, d)
-
+            var qd = multiply2(q, d)
             val comp = compare(qd, n)
             if (comp == 0) // Exact, no remainder
                 return Pair(q,null)
@@ -249,7 +226,7 @@ object BigIntArray {
 
             if (r < d) {
                 // Done, get latest R based on Q
-                qd = multiply(q,d)
+                qd = multiply2(q,d)
 
                 if (n > qd) {
                     r = subtract(n,qd)

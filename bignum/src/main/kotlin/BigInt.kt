@@ -319,7 +319,10 @@ class BigInt : IBigInt {
             return Pair(BigInt(sign, result.first), remainder)
         }
 
-        val div = BigIntArray.divide(this.arr, other.arr)
+        val div = if (BigIntArray.compare(arr, other.arr) < 0) // x/y = 0 rem x when x<y
+            Pair(UIntArray(0), arr)
+        else
+            BigIntArray.divide(this.arr, other.arr)
 
         val rem = when {
             div.second == null -> ZERO
