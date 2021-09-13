@@ -2,12 +2,12 @@ package org.cerion.math.bignum
 
 import java.math.BigInteger
 
-const val multiplier = 1.0
+const val multiplier = 10.0
 
 fun main() {
     println("${"Name".padEnd(20)}\tMag\t\tBigInt\tJava\tDiff")
     ///benchmark("Construct", construct(20))
-    benchmark("tostring", string(50))
+    //benchmark("tostring", string(50))
 
     //benchmark("Addition", addition(90000))
     //benchmark("Addition Big+Small", additionBigSmall(300000))
@@ -15,8 +15,10 @@ fun main() {
 
     //benchmark("Subtraction", subtraction(90000))
 
-    benchmark("Multiply Big*Small", "n", multiplyBigSmall(1200000))
-    benchmark("Multiply Big*Big", "n^2", multiply(50000))
+    benchmark("Multiply Big*Single", "n", multiplyBigSingle(1200000))
+    benchmark("Multiply Small", "n^2", multiplySmall(3500000))
+    benchmark("Multiply Medium", "n^2", multiplyMedium(4000))
+    benchmark("Multiply Big*Big", "n^2", multiplyBigBig(50000))
 
     //benchmark("Basic Ops", basicOps(500))
 }
@@ -101,7 +103,20 @@ private fun subtraction(times: Int): Pair<Long, Long> {
     return Pair(a, b)
 }
 
-private fun multiply(times: Int): Pair<Long, Long> {
+private fun multiplySmall(times: Int): Pair<Long, Long> {
+    val str = "123456789098764321".repeat(2)
+    val a1 = BigInt(str)
+    val b1 = a1 + BigInt.ONE
+    val r1 = run(times) { a1 * b1 }
+
+    val a2 = BigInteger(str)
+    val b2 = a2 + BigInteger.ONE
+    val r2 = run(times) { a2 * b2 }
+
+    return Pair(r1, r2)
+}
+
+private fun multiplyBigBig(times: Int): Pair<Long, Long> {
     val str = "123456789098764321".repeat(40) // Slightly under karatsuba threshold
     val a1 = BigInt(str)
     val b1 = a1 + BigInt.ONE
@@ -114,7 +129,25 @@ private fun multiply(times: Int): Pair<Long, Long> {
     return Pair(r1, r2)
 }
 
-private fun multiplyBigSmall(times: Int): Pair<Long, Long> {
+// Multiply arrays of various sizes under basic multiplication threshold
+private fun multiplyMedium(times: Int): Pair<Long, Long> {
+    val strs = MutableList(40) {n -> "123456789098764321".repeat(n+1) }
+    val a = strs.map { BigInt(it) }
+    val r1 = run(times) {
+        for(i in 0 until strs.size - 1)
+            a[i] * a[i+1]
+    }
+
+    val b = strs.map { BigInteger(it) }
+    val r2 = run(times) {
+        for (i in 0 until strs.size - 1)
+            b[i] * b[i + 1]
+    }
+
+    return Pair(r1, r2)
+}
+
+private fun multiplyBigSingle(times: Int): Pair<Long, Long> {
     val str = "123456789098764321".repeat(50)
 
     val a = BigInt(str); val b = BigInt(100000000)
