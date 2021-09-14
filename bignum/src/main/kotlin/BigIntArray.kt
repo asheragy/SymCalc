@@ -100,36 +100,7 @@ object BigIntArray {
         return removeLeadingZeros(result)
     }
 
-    @Deprecated("slow")
     internal fun multiply(x: UIntArray, y: UIntArray): UIntArray {
-        val a = if (x.size >= y.size) x else y
-        val b = if (x.size >= y.size) y else x
-        var result = UIntArray(0)
-
-        b.forEachIndexed { index, bx ->
-            val c = a.copyOf().toMutableList()
-            var t = 0uL
-
-            for(i in 0 until c.size) {
-                t = bx.toULong() * c[i] + t.toShiftedUInt()
-                c[i] = t.toUInt()
-            }
-
-            // Carry last digit
-            if(t.toShiftedUInt() != 0u)
-                c.add(t.toShiftedUInt())
-
-            repeat(index) {
-                c.add(0, 0u)
-            }
-
-            result = add(result, c.toUIntArray())
-        }
-
-        return result.toUIntArray()
-    }
-
-    internal fun multiply2(x: UIntArray, y: UIntArray): UIntArray {
         val xlen = x.size
         val ylen = y.size
         val z = UIntArray(xlen + ylen)
@@ -175,9 +146,9 @@ object BigIntArray {
         var m = n
         while(m > 0) {
             if (m % 2 == 1)
-                result = multiply2(square, result)
+                result = multiply(square, result)
 
-            square = multiply2(square, square)
+            square = multiply(square, square)
             m /= 2
         }
 
@@ -192,10 +163,27 @@ object BigIntArray {
         if (d.size > n.size)
             return UIntArray(0)
 
-        // TODO this can be done by passing indexes to divide
-        val m = d.size - 1
-        val n1 = n.toList().drop(m).toUIntArray()
-        return divide(n1, d.last())
+        val offset = d.size - 1
+        val y = d.last()
+        // For reference this is what needs to be computed
+        //val n1 = n.toList().drop(offset).toUIntArray()
+        //return  divideAndRemainder(n1, y).first
+
+        var index = n.size - 1
+        var r = if (n.last() / y == 0u)
+            (n[index--].toULong() shl 32)
+        else
+            0uL
+
+        val result = UIntArray(index+1-offset)
+        while(index >= offset) {
+            val t = r + n[index]
+            result[index-offset] = (t / y).toUInt()
+            r = (t % y) shl 32
+            index--
+        }
+
+        return removeLeadingZeros(result)
     }
 
     // http://justinparrtech.com/JustinParr-Tech/an-algorithm-for-arbitrary-precision-integer-division/
@@ -207,7 +195,7 @@ object BigIntArray {
         var q = fastDivide(n, d)
 
         while(true) {
-            var qd = multiply2(q, d)
+            var qd = multiply(q, d)
             val comp = compare(qd, n)
             if (comp == 0) // Exact, no remainder
                 return Pair(q,null)
@@ -226,7 +214,7 @@ object BigIntArray {
 
             if (r < d) {
                 // Done, get latest R based on Q
-                qd = multiply2(q,d)
+                qd = multiply(q,d)
 
                 if (n > qd) {
                     r = subtract(n,qd)
@@ -241,26 +229,6 @@ object BigIntArray {
                 return Pair(q, r)
             }
         }
-    }
-
-    internal fun divide(x: UIntArray, y: UInt): UIntArray {
-        // Assumes x is at least 2 digits
-        val result = mutableListOf<UInt>()
-        var index = x.size - 1
-
-        var r = if (x.last() / y == 0u)
-            (x[index--].toULong() shl 32)
-        else
-            0uL
-
-        while(index >= 0) {
-            val t = r + x[index--]
-
-            result.add((t / y).toUInt())
-            r = (t % y) shl 32
-        }
-
-        return result.toUIntArray().reversedArray()
     }
 
     internal fun divideAndRemainder(x: UIntArray, y: UInt): Pair<UIntArray, UInt> {

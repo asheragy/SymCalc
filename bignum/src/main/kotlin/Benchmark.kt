@@ -2,12 +2,12 @@ package org.cerion.math.bignum
 
 import java.math.BigInteger
 
-const val multiplier = 1.0
+const val multiplier = 2.0
 
 fun main() {
     println("${"Name".padEnd(20)}\tMag\t\tBigInt\tJava\tDiff")
     benchmark("Construct", construct(20))
-    benchmark("tostring", "n^2", string(100))
+    benchmark("toString", "n^2", string(100))
 
     benchmark("Addition", "n", addition(90000))
     benchmark("Addition Big+Small", "n", additionBigSmall(300000))
@@ -27,7 +27,7 @@ fun main() {
 
 @Deprecated("use other")
 private fun benchmark(name: String, result: Pair<Long, Long>) {
-    return benchmark(name, "", result)
+    return benchmark(name, "??", result)
 }
 
 private fun benchmark(name: String, mag: String, result: Pair<Long, Long>) {

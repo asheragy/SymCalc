@@ -166,7 +166,7 @@ class BigInt : IBigInt {
             when {
                 arr.size == 1 -> BigIntArray.multiply(other.arr, arr[0])
                 other.arr.size == 1 -> BigIntArray.multiply(arr, other.arr[0])
-                else -> BigIntArray.multiply2(arr, other.arr)
+                else -> BigIntArray.multiply(arr, other.arr)
             }
         )
     }
@@ -175,7 +175,7 @@ class BigInt : IBigInt {
     fun divide(other: BigInt): BigInt = divideAndRemainder(other).first as BigInt
 
     fun divide(other: UInt): BigInt {
-        return BigInt(1, BigIntArray.divide(this.arr,other))
+        return BigInt(1, BigIntArray.divideAndRemainder(arr, other).first)
     }
 
     override fun equals(other: Any?) = other is BigInt && sign == other.sign && arr.contentEquals(other.arr)
