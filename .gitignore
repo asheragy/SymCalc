@@ -2,5 +2,6 @@
 /.gradle
 /build
 /bignum/build
+/benchmark/build
 .idea/modules.xml
 .idea/uiDesigner.xml

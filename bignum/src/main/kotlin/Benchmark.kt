@@ -1,11 +1,14 @@
 package org.cerion.math.bignum
 
+import java.lang.management.ManagementFactory
 import java.math.BigInteger
 
-const val multiplier = 2.0
+const val multiplier = 10.0
 
 fun main() {
+    var version = ManagementFactory.getRuntimeMXBean().getVmVersion();
     println("${"Name".padEnd(20)}\tMag\t\tBigInt\tJava\tDiff")
+    /*
     benchmark("Construct", construct(20))
     benchmark("toString", "n^2", string(100))
 
@@ -18,10 +21,14 @@ fun main() {
     benchmark("Multiply Big*Single", "n", multiplyBigSingle(1200000))
     benchmark("Multiply Small", "n^2", multiplySmall(3500000))
     benchmark("Multiply Medium", "n^2", multiplyMedium(4000))
-    benchmark("Multiply Big*Big", "n^2", multiplyBigBig(50000))
+
 
     benchmark("Divide Big/Single", "n", divideBigSingle(100000))
     benchmark("Divide", "n^2", divide(1000))
+     */
+
+
+    benchmark("Multiply Big*Big", "n^2", multiplyBigBig(10000))
     //benchmark("Basic Ops", basicOps(500))
 }
 

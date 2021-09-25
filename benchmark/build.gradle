@@ -1,0 +1,22 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id "me.champeau.jmh" version "0.6.6"
+}
+
+group 'org.cerion'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+}
+
+jmh {
+    warmupIterations = 2
+    iterations = 5
+    fork = 1
+    //jvmArgsPrepend = ['-XX:+UnlockDiagnosticVMOptions', '-XX:-UseMultiplyToLenIntrinsic']
+}
