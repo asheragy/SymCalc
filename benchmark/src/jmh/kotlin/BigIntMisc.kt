@@ -11,7 +11,8 @@ import java.math.BigInteger
 @State(Scope.Benchmark)
 open class BigIntMisc {
 
-    private val str ="123456789098764321".repeat(1000)
+    private val str = "123456789098764321".repeat(40) // TODO find what different algorithms are called for various sizes of this
+    //private val str ="123456789098764321".repeat(1000) // Test this when larger multiplication is closer on speed
     private val large = BigInt(str)
     private val largeJvm = BigInteger(str)
 

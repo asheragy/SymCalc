@@ -19,7 +19,9 @@ open class BigIntMultiply {
     private val b_multiplyLen = a_multiplyLen.add(BigInt.ONE)
 
     private val large = BigInt("123456789098764321").pow(565) as BigInt // About 1000 digits
+    private val large2 = large.add(BigInt.ONE)
     private val largeJvm = BigInteger("123456789098764321").pow(565)
+    private val large2Jvm = largeJvm.add(BigInteger.ONE)
     private val small = BigInt(100000000)
     private val smallJvm = BigInteger.valueOf(100000000)
 
@@ -30,6 +32,9 @@ open class BigIntMultiply {
 
     @Benchmark fun multiplyToLenJvm(bh: Blackhole) = bh.consume(a_multiplyLenJvm * b_multiplyLenJvm)
     @Benchmark fun multiplyToLen(bh: Blackhole) = bh.consume(a_multiplyLen * b_multiplyLen)
+
+    @Benchmark fun largeJvm(bh: Blackhole) = bh.consume(largeJvm * large2Jvm)
+    @Benchmark fun large(bh: Blackhole) = bh.consume(large * large2)
 
     @Benchmark fun largeSmallJvm(bh: Blackhole) = bh.consume(largeJvm * smallJvm)
     @Benchmark fun largeSmall(bh: Blackhole) = bh.consume(large * small)
