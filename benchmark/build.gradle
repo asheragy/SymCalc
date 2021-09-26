@@ -47,3 +47,11 @@ task jmhBigIntMultiply {
     }
     finalizedBy 'jmh'
 }
+
+task jmhBigIntMisc {
+    group 'jmh'
+    doFirst {
+        jmh.includes = ['BigIntMisc']
+    }
+    finalizedBy 'jmh'
+}
