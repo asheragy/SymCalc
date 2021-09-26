@@ -12,10 +12,6 @@ fun main() {
     benchmark("Construct", construct(20))
     benchmark("toString", "n^2", string(100))
 
-    benchmark("Addition", "n", addition(90000))
-    benchmark("Addition Big+Small", "n", additionBigSmall(300000))
-    benchmark("Addition Small+Small", "n", additionSmallSmall(5000000))
-
     benchmark("Subtraction", "n", subtraction(90000))
 
     benchmark("Multiply Big*Single", "n", multiplyBigSingle(1200000))
@@ -28,7 +24,6 @@ fun main() {
      */
 
 
-    benchmark("Multiply Big*Big", "n^2", multiplyBigBig(10000))
     //benchmark("Basic Ops", basicOps(500))
 }
 
@@ -61,72 +56,9 @@ private fun string(times: Int): Pair<Long, Long> {
     return Pair(r1, r2)
 }
 
-private fun addition(times: Int): Pair<Long, Long> {
-    val str = "123456789098764321".repeat(550) // Result is about 1000 int32 digits
-    val a1 = BigInt(str)
-    var x1 = BigInt("0")
-    val a = run(times) { x1 = x1.add(a1) }
-
-    val a2 = BigInteger(str)
-    var x2 = BigInteger("0")
-    val b = run(times) { x2 = x2.add(a2) }
-
-    return Pair(a, b)
-}
-
-private fun additionBigSmall(times: Int): Pair<Long, Long> {
-    val str1 = "123456789098764321".repeat(550) // Result is about 1000 int32 digits
-    val str2 = "1234567890"
-    var a1 = BigInt(str1)
-    val x1 = BigInt(str2)
-    val r1 = run(times) { a1 += x1 }
-
-    var a2 = BigInteger(str1)
-    val x2 = BigInteger(str2)
-    val r2 = run(times) { a2 += x2 }
-
-    return Pair(r1, r2)
-}
-
-private fun additionSmallSmall(times: Int): Pair<Long, Long> {
-    val a1 = BigInt("1"); var x1 = BigInt("0")
-    val r1 = run(times) { x1 += a1 }
-
-    val a2 = BigInteger("1"); var x2 = BigInteger("0")
-    val r2 = run(times) { x2 += a2 }
-
-    return Pair(r1, r2)
-}
-
-
-private fun subtraction(times: Int): Pair<Long, Long> {
-    val str = "123456789098764321".repeat(550) // Result is about 1000 int32 digits
-    var a1 = BigInt(str)
-    val subtract1 = a1 / BigInt("293840932483209")
-    val a = run(times) { a1 -= subtract1  }
-
-    var a2 = BigInteger(str)
-    val subtract2 = a2 / BigInteger("293840932483209")
-    val b = run(times) { a2 -= subtract2 }
-
-    return Pair(a, b)
-}
 
 private fun multiplySmall(times: Int): Pair<Long, Long> {
     val str = "123456789098764321".repeat(2)
-    val a1 = BigInt(str)
-    val b1 = a1 + BigInt.ONE
-    val r1 = run(times) { a1 * b1 }
-
-    val a2 = BigInteger(str)
-    val b2 = a2 + BigInteger.ONE
-    val r2 = run(times) { a2 * b2 }
-
-    return Pair(r1, r2)
-}
-
-private fun multiplyBigBig(times: Int): Pair<Long, Long> {
-    val str = "123456789098764321".repeat(40) // Slightly under karatsuba threshold
     val a1 = BigInt(str)
     val b1 = a1 + BigInt.ONE
     val r1 = run(times) { a1 * b1 }

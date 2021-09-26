@@ -1,5 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
+    id 'kotlin-kapt'
     id "me.champeau.jmh" version "0.6.6"
 }
 
@@ -12,11 +13,37 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    //implementation "org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.3.0"
+    //jmhImplementation "org.openjdk.jmh:jmh-core:1.29"
+    //jmhImplementation "org.openjdk.jmh:jmh-generator-bytecode:1.29"
+    kaptJmh "org.openjdk.jmh:jmh-generator-annprocess:1.29"
+
+    implementation project(":bignum")
 }
 
 jmh {
-    warmupIterations = 2
-    iterations = 5
+    // https://github.com/melix/jmh-gradle-plugin#configuration-options
+    warmupIterations = 1
+    warmup = '500ms'
+    iterations = 3
+    timeOnIteration = '1s'
     fork = 1
-    //jvmArgsPrepend = ['-XX:+UnlockDiagnosticVMOptions', '-XX:-UseMultiplyToLenIntrinsic']
+    threads = 4
+    jvmArgsPrepend = ['-XX:+UnlockDiagnosticVMOptions', '-XX:-UseMultiplyToLenIntrinsic']
+}
+
+task jmhBigIntAdd {
+    group 'jmh'
+    doFirst {
+        jmh.includes = ['BigIntAdd']
+    }
+    finalizedBy 'jmh'
+}
+
+task jmhBigIntMultiply {
+    group 'jmh'
+    doFirst {
+        jmh.includes = ['BigIntMultiply']
+    }
+    finalizedBy 'jmh'
 }
