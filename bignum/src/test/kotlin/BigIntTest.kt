@@ -15,6 +15,8 @@ internal class BigIntTest {
     fun parse() {
         // Tests to and from string
         assertEquals("1", BigInt("1").toString())
+        assertEquals("1", BigInt("0001").toString())
+        assertEquals("-1", BigInt("-0001").toString())
         assertEquals("2000000000", BigInt("2000000000").toString())
         assertEquals("-2000000000", BigInt("-2000000000").toString())
         assertEquals("4000000000", BigInt("4000000000").toString())

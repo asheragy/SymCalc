@@ -34,62 +34,61 @@ class BigInt : IBigInt {
             UIntArray(1) { n.absoluteValue.toUInt() }
     }
 
-    constructor(n: String) {
-        sign = when (n[0]) {
-            '0' -> 0
-            '-' -> -1
-            else -> 1
+    constructor(str: String) {
+        val n = str.trimStart('-', '0')
+        if (n.isEmpty()) {
+            this.arr = UIntArray(0)
+            this.sign = ZEROSIGN
+            return
         }
 
-        val offset = if(n[0] == '-') 1 else 0
-        val firstDigits = n.subSequence(offset, offset + if ((n.length-offset) % 9 == 0) 9 else (n.length-offset) % 9).toString()
-        val remainingDigits = n.substring(firstDigits.length + offset).chunked(9).map { Integer.parseInt(it).toUInt() }
+        sign = if(str[0] == '-') NEGATIVE else POSITIVE
 
-        if (firstDigits == "0")
-            this.arr = UIntArray(0)
-        else {
-            val base = 1000000000
-            val result = mutableListOf<UInt>()
+        val firstDigits = n.substring(0, if (n.length % 9 == 0) 9 else n.length % 9)
+        val remainingDigits = n.substring(firstDigits.length).chunked(9).map { Integer.parseInt(it).toUInt() }
 
-            result.add(Integer.parseInt(firstDigits).toUInt())
-            for(i in remainingDigits.indices) {
-                // multiply entire result array by base
-                var product: ULong = 0uL
-                for(j in result.indices) {
-                    product = result[j] * base.toULong() + product.toShiftedUInt()
-                    result[j] = product.toUInt()
-                }
+        val base = 1000000000
+        val result = mutableListOf<UInt>()
 
-                if (product.toShiftedUInt() != 0u)
+        result.add(Integer.parseInt(firstDigits).toUInt())
+        for(i in remainingDigits.indices) {
+            // multiply entire result array by base
+            var product: ULong = 0uL
+            for(j in result.indices) {
+                product = result[j] * base.toULong() + product.toShiftedUInt()
+                result[j] = product.toUInt()
+            }
+
+            if (product.toShiftedUInt() != 0u)
+                result.add(product.toShiftedUInt())
+
+            // Add current digit
+            product = result[0].toULong() + remainingDigits[i]
+            result[0] = product.toUInt()
+
+            // Carry as necessary
+            if (product.toShiftedUInt() != 0u) {
+                if (result.size == 1)
                     result.add(product.toShiftedUInt())
-
-                // Add current digit
-                product = result[0].toULong() + remainingDigits[i]
-                result[0] = product.toUInt()
-
-                // Carry as necessary
-                if (product.toShiftedUInt() != 0u) {
-                    if (result.size == 1)
-                        result.add(product.toShiftedUInt())
-                    else {
-                        var index = 1
-                        // TODO fix to match addition better
-                        while(product.toShiftedUInt() != 0u) {
-                            if (index == result.size) {
-                                result.add(1u)
-                                break
-                            }
-                            else {
-                                product = result[index].toULong() + product.toShiftedUInt()
-                                result[index++] = product.toUInt()
-                            }
+                else {
+                    var index = 1
+                    // TODO fix to match addition better
+                    while(product.toShiftedUInt() != 0u) {
+                        if (index == result.size) {
+                            result.add(1u)
+                            break
+                        }
+                        else {
+                            product = result[index].toULong() + product.toShiftedUInt()
+                            result[index++] = product.toUInt()
                         }
                     }
                 }
             }
-
-            this.arr = result.toUIntArray()
         }
+
+        this.arr = result.toUIntArray()
+
     }
 
     override fun toBigDecimal(): BigDecimal = toBigInteger().toBigDecimal()
