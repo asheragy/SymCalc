@@ -46,4 +46,22 @@ class BigDecTest {
         assertEquals(BigDec("100.000001"), b + c)
         assertEquals(BigDec("100.000001"), c + b)
     }
+
+    @Test
+    fun subtraction() {
+        val a = BigDec("10000.00")
+        val b = BigDec("100")
+        val c = BigDec("0.000001")
+
+        assertEquals(BigDec("0.00"), a - a)
+        assertEquals(BigDec("0"), b - b)
+        assertEquals(BigDec("0.000000"), c - c)
+
+        assertEquals(BigDec("9900.00"), a - b)
+        assertEquals(BigDec("-9900.00"), b - a)
+        assertEquals(BigDec("9999.999999"), a - c)
+        assertEquals(BigDec("-9999.999999"), c - a)
+        assertEquals(BigDec("99.999999"), b - c)
+        assertEquals(BigDec("-99.999999"), c - b)
+    }
 }

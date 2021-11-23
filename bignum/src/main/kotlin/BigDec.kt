@@ -1,5 +1,8 @@
 package org.cerion.math.bignum
 
+import kotlin.math.abs
+import kotlin.math.max
+
 @ExperimentalUnsignedTypes
 class BigDec {
 
@@ -46,12 +49,25 @@ class BigDec {
         if (scale > other.scale)
             return other + this
 
-        var diff = other.scale - scale
-        var pow = BigInt("10").pow(diff)
+        val diff = other.scale - scale
+        val pow = BigInt("10").pow(diff)
         val scaled = this.value * pow
-        
-
 
         return BigDec(scaled + other.value, other.scale)
+    }
+
+    operator fun minus(other: BigDec): BigDec {
+        if (scale == other.scale)
+            return BigDec(value - other.value, scale)
+
+        val diff = abs(other.scale - scale)
+        val pow = BigInt("10").pow(diff)
+
+        val subtracted = if(scale < other.scale)
+            (this.value * pow) - other.value
+        else
+            value - (other.value * pow)
+
+        return BigDec(subtracted, max(scale, other.scale))
     }
 }
