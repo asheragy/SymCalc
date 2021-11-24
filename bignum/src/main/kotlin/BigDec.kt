@@ -70,4 +70,8 @@ class BigDec {
 
         return BigDec(subtracted, max(scale, other.scale))
     }
+
+    operator fun times(other: BigDec): BigDec {
+        return BigDec(value * other.value, scale + other.scale)
+    }
 }

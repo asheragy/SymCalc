@@ -64,4 +64,23 @@ class BigDecTest {
         assertEquals(BigDec("99.999999"), b - c)
         assertEquals(BigDec("-99.999999"), c - b)
     }
+
+    @Test
+    fun multiply() {
+        val a = BigDec("10000.00")
+        val b = BigDec("100")
+        val c = BigDec("0.000001")
+
+        assertEquals(BigDec("100000000.0000"), a * a)
+        assertEquals(BigDec("10000"), b * b)
+        assertEquals(BigDec("0.000000000001"), c * c)
+
+        assertEquals(BigDec("1000000.00"), a * b)
+        assertEquals(BigDec("1000000.00"), b * a)
+        assertEquals(BigDec("0.01000000"), a * c)
+        assertEquals(BigDec("0.01000000"), c * a)
+        assertEquals(BigDec("0.000100"), b * c)
+        assertEquals(BigDec("0.000100"), c * b)
+    }
+
 }
