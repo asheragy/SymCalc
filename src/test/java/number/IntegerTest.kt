@@ -306,7 +306,7 @@ class IntegerTest {
         assertEquals(NumberType.INTEGER, e.numType, "unexpected type: " + e.numType)
 
         val n = e as Integer
-        assertEquals(expected, n.toBigInteger())
+        assertEquals(expected, n.value)
     }
 
     companion object {

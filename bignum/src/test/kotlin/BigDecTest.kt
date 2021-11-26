@@ -3,6 +3,8 @@ package org.cerion.math.bignum
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
 import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 import kotlin.test.*
 
 @ExperimentalUnsignedTypes
@@ -83,4 +85,21 @@ class BigDecTest {
         assertEquals(BigDec("0.000100"), c * b)
     }
 
+    @Test
+    fun divide() {
+        val a = BigDecimal("10000.00")
+        val b = BigDecimal("200")
+        val c = BigDecimal("0.000004")
+
+        assertEquals(BigDecimal("1.00"), a / a)
+        assertEquals(BigDecimal("1"), b / b)
+        assertEquals(BigDecimal("1.000000"), c / c)
+
+        assertEquals(BigDecimal("50.00"), a / b)
+        assertEquals(BigDecimal("0.02"), b.divide(a, MathContext(10, RoundingMode.HALF_UP)))
+        assertEquals(BigDecimal("2500000000.00"), a / c)
+        assertEquals(BigDecimal("0.0000000004"), c.divide(a, MathContext(10, RoundingMode.HALF_UP)))
+        assertEquals(BigDecimal("50000000"), b / c)
+        assertEquals(BigDecimal("0.00000002"), c.divide(b, MathContext(10, RoundingMode.HALF_UP)))
+    }
 }

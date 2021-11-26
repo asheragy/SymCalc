@@ -1,7 +1,6 @@
 package org.cerion.symcalc.number
 
-import org.cerion.math.bignum.BigIntJava
-import org.cerion.math.bignum.IBigInt
+import org.cerion.math.bignum.sqrtRemainder
 import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.AtomExpr
@@ -15,7 +14,7 @@ import java.math.BigDecimal
 import java.math.BigInteger
 
 
-class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
+class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     companion object {
         @JvmField val ZERO = Integer(0)
         @JvmField val ONE = Integer(1)
@@ -26,8 +25,8 @@ class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
     }
 
     override val type: ExprType get() = ExprType.NUMBER
-    override val isZero: Boolean get() = value == BigIntJava.ZERO
-    override val isOne: Boolean get() = value == BigIntJava.ONE
+    override val isZero: Boolean get() = value == BigInteger.ZERO
+    override val isOne: Boolean get() = value == BigInteger.ONE
     override val numType: NumberType get() = NumberType.INTEGER
     override val isNegative: Boolean get() = signum == -1
     override val precision: Int get() = InfinitePrecision
@@ -36,8 +35,6 @@ class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
     val isOdd: Boolean get() = value.testBit(0)
     val signum: Int get() = value.signum()
 
-    constructor(n: BigInteger) : this(BigIntJava(n))
-    constructor(b: IBigInt) : this(b as BigIntJava)
     constructor(s: String) : this(BigInteger(s))
     constructor(n: Long) : this(BigInteger.valueOf(n))
     constructor(n: Int) : this(BigInteger.valueOf(n.toLong()))
@@ -48,7 +45,7 @@ class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
         return when (precision) {
             InfinitePrecision -> this
             MachinePrecision -> RealDouble(value.toDouble())
-            else -> RealBigDec(BigDecimal(value.toBigInteger()), precision)
+            else -> RealBigDec(BigDecimal(value), precision)
         }
     }
 
@@ -59,12 +56,11 @@ class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
         return value.toInt()
     }
 
-    fun toBigInteger(): BigInteger = value.toBigInteger()
-    fun toBigDecimal(): BigDecimal = BigDecimal(value.toBigInteger())
+    fun toBigDecimal(): BigDecimal = BigDecimal(value)
 
     operator fun plus(N: Integer): Integer = Integer(value.add(N.value))
     operator fun minus(n: Integer): Integer = Integer(value.subtract(n.value))
-    override fun minus(other: Int): Integer = Integer(value.subtract(BigIntJava(BigInteger.valueOf(other.toLong()))))
+    override fun minus(other: Int): Integer = Integer(value.subtract(BigInteger.valueOf(other.toLong())))
     operator fun times(n: Integer): Integer = Integer(value.multiply(n.value))
     override fun unaryMinus(): Integer = Integer(value.negate())
 
@@ -184,8 +180,8 @@ class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
     fun gcd(N: Integer): Integer = Integer(value.gcd(N.value))
     fun powerMod(b: Integer, m: Integer): Integer = Integer(value.modPow(b.value, m.value))
 
-    operator fun inc(): Integer = Integer(value.add(BigIntJava.ONE))
-    operator fun dec(): Integer = Integer(value.subtract(BigIntJava.ONE))
+    operator fun inc(): Integer = Integer(value.add(BigInteger.ONE))
+    operator fun dec(): Integer = Integer(value.subtract(BigInteger.ONE))
     operator fun rem(N: Integer): Integer = Integer(value.mod(N.value))
 
     override fun quotient(other: NumberExpr): NumberExpr {
@@ -195,7 +191,7 @@ class Integer(override val value: BigIntJava) : NumberExpr(), AtomExpr {
                 if (div.signum() < 0) {
                     val test = div.multiply(other.value)
                     if (test > value)
-                        div = div.subtract(BigIntJava.ONE)
+                        div = div.subtract(BigInteger.ONE)
                 }
 
                 return Integer(div)
