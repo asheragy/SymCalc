@@ -1,14 +1,10 @@
 package org.cerion.symcalc.constant
 
-import org.cerion.symcalc.exception.IterationLimitExceeded
+import org.cerion.math.bignum.extensions.getPiToDigits
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.number.RealDouble
-import org.cerion.symcalc.number.primitive.sqrt
-import java.math.BigDecimal
-import java.math.MathContext
-import java.math.RoundingMode
 
 class Pi : ConstExpr() {
     override fun toString(): String = "Pi"
@@ -24,103 +20,8 @@ class Pi : ConstExpr() {
         return evalCompute(precision)
     }
 
-    fun evalCompute(precision: Int) = RealBigDec(getPiToDigits(precision), precision)
+    fun evalCompute(precision: Int) = RealBigDec(getPiToDigits(RealBigDec.getStoredPrecision(precision)), precision)
 
-    private fun getPiToDigits(precision: Int): BigDecimal {
-        // https://en.wikipedia.org/wiki/Chudnovsky_algorithm
-        // 426880*Sqrt(10005)/Pi = Sum (6k!)(545140134k+13591409) / (3k)!(k!)^3(-262537412640768000)^k
-
-        val mc = MathContext(RealBigDec.getStoredPrecision(precision), RoundingMode.HALF_UP)
-        val bd54 = BigDecimal(545140134)
-        val bd13 = BigDecimal(13591409)
-        val bd26 = BigDecimal("-262537412640768000")
-
-        // Calculate sum
-        var sum = bd13
-        var n1 = BigDecimal.ONE // (6*k)!
-        var d1 = BigDecimal.ONE // (3*k)!
-        var d2 = BigDecimal.ONE // k!
-        var d3 = BigDecimal.ONE // bd26^k
-        for(k in 1..5000) {
-            n1 = factorial(6*k, n1, 6*(k-1))
-            val numerator = bd54
-                    .multiply(BigDecimal(k))
-                    .add(bd13)
-                    .multiply(n1)
-
-            d1 = factorial(3 * k, d1, 3 * (k-1))
-            d2 = factorial(k, d2, k-1)
-            d3 = d3.multiply(bd26, mc)
-            val denominator = d1.multiply(d2.pow(3)).multiply(d3)
-
-            val next = numerator.divide(denominator, mc)
-            val t = sum.add(next, mc)
-            if (t == sum) {
-                // Divide this constant value by sum to get Pi
-                var c = BigDecimal("10005").sqrt(mc.precision)
-                c = c.multiply(BigDecimal("426880"))
-
-                return c.divide(sum, mc)
-            }
-
-            sum = t
-        }
-
-        throw IterationLimitExceeded()
-    }
-
-    private fun factorial(k: Int, prev: BigDecimal, kprev: Int): BigDecimal {
-        var bd = prev
-        for(i in (kprev+1)..k) {
-            bd = bd.multiply(BigDecimal(i))
-        }
-
-        return bd
-    }
-
-    /*
-    private var one: BigDecimal = BigDecimal.ZERO
-    private var two: BigDecimal = BigDecimal.ZERO
-    private var four: BigDecimal = BigDecimal.ZERO
-
-    private fun getPiToDigits2(scale: Int): BigDecimal {
-        // Initialize
-        one = BigDecimal(1.0).setScale(scale)
-        two = BigDecimal(2.0).setScale(scale)
-        four = BigDecimal(4.0).setScale(scale)
-
-        var sum = calc(0, scale)
-
-        // FEAT look into another algorithm this one is slow after 2000+ digits
-        for(i in 1..10000) {
-            val prev = sum
-            sum += calc(i, scale)
-
-            if (sum == prev) {
-                return sum.setScale(scale - 1, RoundingMode.HALF_UP)
-            }
-        }
-
-        throw RuntimeException("too many iterations required to calculate")
-    }
-
-    // 16-k [ 4/(8k+1) - 2/(8k+4) - 1/(8k+5) - 1/(8k+6) ]
-    private fun calc(i: Int, scale: Int): BigDecimal {
-        var k = BigDecimal(i).setScale(scale)
-        val k8 = k.times(BigDecimal(8.0))
-
-        var result = four / k8.plus(BigDecimal.ONE)
-        result -= two / k8.plus(BigDecimal(4.0))
-        result -= one / k8.plus(BigDecimal(5.0))
-        result -= one / k8.plus(BigDecimal(6.0))
-
-        k = BigDecimal(16).pow(i)
-        k = BigDecimal.ONE.divide(k)
-        result *= k
-
-        return result.setScale(scale, RoundingMode.HALF_UP)
-    }
-     */
 }
 
 private const val PI_DIGITS_1000 = "3.14159265358979323846264338327950288419716939937510582097494459230781" +

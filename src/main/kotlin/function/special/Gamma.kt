@@ -1,9 +1,9 @@
 package org.cerion.symcalc.function.special
 
+import org.cerion.math.bignum.IterationLimitExceeded
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
-import org.cerion.symcalc.exception.IterationLimitExceeded
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.function.FunctionExpr

@@ -52,6 +52,17 @@ class CosTest {
         assertEquals(RealBigDec("0.54030230586813971740093660744297660373231042061792"), Cos(RealBigDec("1.0000000000000000000000000000000000000000000000000")).eval())
     }
 
+    @Test
+    fun precision() {
+        val a = Cos(RealBigDec("1.22222222")).eval() as RealBigDec
+        assertEquals(9, a.precision)
+        assertEquals(19, a.value.precision())
+
+        val b = Cos(RealBigDec("1.222222222")).eval() as RealBigDec
+        assertEquals(10, b.precision)
+        assertEquals(28, b.value.precision())
+    }
+
     companion object {
         val sqrt3Over2 = Times(Rational(1,2), Power(Integer(3), Rational(1,2)))
         val oneOverSqrt2 = Power(Integer.TWO, Rational(-1,2))

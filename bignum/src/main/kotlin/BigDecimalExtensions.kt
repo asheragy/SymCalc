@@ -1,10 +1,12 @@
-package org.cerion.symcalc.number.primitive
+package org.cerion.math.bignum
 
-import org.cerion.symcalc.exception.IterationLimitExceeded
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
-import kotlin.math.*
+import kotlin.math.ceil
+import kotlin.math.ln
+import kotlin.math.log10
+import kotlin.math.pow
 
 
 fun BigDecimal.exp(precision: Int): BigDecimal {
@@ -17,7 +19,7 @@ fun BigDecimal.exp(precision: Int): BigDecimal {
 
     // Reduce number to <1 for faster convergence, exp(x) = exp(0.1*x)^10
     if (this > BigDecimal.ONE) {
-        val n = min(1000000000, ceil(log10(toDouble())).toInt())
+        val n = kotlin.math.min(1000000000, ceil(log10(toDouble())).toInt())
         val tenToN = 10.0.pow(n.toDouble()).toInt()
         return scaleByPowerOfTen(-n).exp(precision).pow(tenToN, mc)
     }
@@ -47,7 +49,7 @@ fun BigDecimal.sqrt(precision: Int): BigDecimal {
     if (signum() < 0)
         throw Exception("sqrt() on negative number")
 
-    val initial = sqrt(toDouble())
+    val initial = kotlin.math.sqrt(toDouble())
     val mc = MathContext(precision)
     var xn = BigDecimal(initial)
     val two = BigDecimal(2)
@@ -119,7 +121,7 @@ fun BigDecimal.log(precision: Int): BigDecimal {
     // TODO on really small numbers this one works better by increasing the value
     // See if there is a better option in those cases
     else {
-        if (abs(toDouble() - 1.0) > 0.3) {
+        if (kotlin.math.abs(toDouble() - 1.0) > 0.3) {
             // Log(x) = n * Log(x^1/n)
 
             val n = Math.max(2, (ln(toDouble()) / 0.2).toInt())

@@ -1,18 +1,13 @@
 package org.cerion.symcalc.function.trig
 
-import org.cerion.symcalc.exception.IterationLimitExceeded
+import org.cerion.math.bignum.extensions.cos
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
-import org.cerion.symcalc.function.integer.Mod
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
-import java.math.BigDecimal
-import java.math.MathContext
-import java.math.RoundingMode
 import kotlin.math.cos
 
 class Cos(e: Any) : TrigBase(e), StandardTrigFunction {
@@ -58,39 +53,10 @@ class Cos(e: Any) : TrigBase(e), StandardTrigFunction {
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): RealBigDec {
-        val mc = MathContext( RealBigDec.getStoredPrecision(x.precision), RoundingMode.HALF_UP)
-
-        // Normalize to range of 0 to 2pi
-        val x2pi =
-                if (x.value.toDouble() >= 0 && x.value.toDouble() < (2*Math.PI))
-                    x
-                else
-                    Mod(x, Integer(2) * Pi()).eval() as RealBigDec
-
-        var result = BigDecimal(1.0)
-        var factorial = BigDecimal(1.0)
-        val xsquared = x2pi.value.pow(2)
-        var power = BigDecimal(1.0)
-
-        // Taylor series 1 - x^2/2! + x^4/4! ...
-        for(i in 1..1000) {
-            val n = i * 2
-            power = power.multiply(xsquared, mc)                 // x^n
-            factorial = factorial.times(BigDecimal(n * (n-1)))   // n!
-            val e = power.divide(factorial, mc)
-
-            val t = if (i % 2 == 0)
-                result.add(e, mc)
-            else
-                result.subtract(e, mc)
-
-            if (t == result)
-                return RealBigDec(result, x.precision)
-
-            result = t
-        }
-
-        throw IterationLimitExceeded()
+        return RealBigDec(
+            x.value.cos(RealBigDec.getStoredPrecision(x.precision)),
+            x.precision
+        )
     }
 
     override fun evaluate(e: Expr): Expr {

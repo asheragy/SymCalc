@@ -68,6 +68,17 @@ class TanTest {
         assertEquals(RealBigDec("1.1548660069442902748685813894288494284408800565653"), Tan(RealBigDec("0.85714285714285714285714285714285714285714285714286")).eval())
     }
 
+    @Test
+    fun precision() {
+        val a = Tan(RealBigDec("1.22222222")).eval() as RealBigDec
+        assertEquals(9, a.precision)
+        assertEquals(19, a.value.precision())
+
+        val b = Tan(RealBigDec("1.222222222")).eval() as RealBigDec
+        assertEquals(10, b.precision)
+        assertEquals(28, b.value.precision())
+    }
+
     companion object {
         val sqrt3 = Power(Integer(3), Rational(1,2))
         val oneOverSqrt3 = Power(Integer(3), Rational(-1,2))

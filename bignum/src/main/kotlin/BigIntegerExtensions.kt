@@ -5,8 +5,6 @@ import kotlin.math.pow
 import kotlin.math.roundToLong
 import kotlin.math.sqrt
 
-fun BigInteger.toBigInteger() = this
-
 // Custom version of Java 9+ sqrtAndRemainder
 fun BigInteger.sqrtRemainder(): Pair<BigInteger, BigInteger> {
     if (this < BigInteger.ZERO)
