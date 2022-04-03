@@ -29,4 +29,11 @@ class BigDecTrigTest {
         assertEquals(BigDecimal("7223433068"), BigDecimal(Math.PI / 2).tan(10))
         assertEquals(BigDecimal("-5.222398128E-10"), BigDecimal(Math.PI).tan(10))
     }
+
+    // TODO sinh/cosh
+
+    @Test
+    fun tanh() {
+        assertEquals(BigDecimal("0.761594155955"), BigDecimal(1.0).tanh(12))
+    }
 }

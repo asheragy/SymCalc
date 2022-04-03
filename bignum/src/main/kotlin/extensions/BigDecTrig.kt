@@ -1,6 +1,7 @@
 package org.cerion.math.bignum.extensions
 
 import org.cerion.math.bignum.IterationLimitExceeded
+import org.cerion.math.bignum.exp
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -133,3 +134,87 @@ fun BigDecimal.tan(precision: Int): BigDecimal {
      throw IterationLimitExceeded()
  }
   */
+
+
+fun BigDecimal.sinh(precision: Int): BigDecimal {
+    if (signum() == -1)
+        return negate().sinh(precision).negate()
+    else if (signum() == 0)
+        return BigDecimal.ZERO
+
+    val mc = MathContext(precision, RoundingMode.HALF_UP)
+
+    if (toDouble() > 2.4) {
+        // Reduce using Sinh(2x)= 2*Sinh(x)*Cosh(x)
+        val xhalf = this.divide(BigDecimal(2), mc)
+        return BigDecimal(2)
+            .multiply(xhalf.sinh(precision), mc)
+            .multiply(xhalf.cosh(precision), mc)
+    }
+
+    // This works too but not as efficient
+    //return (Exp(x) - Exp(x.unaryMinus())) / Integer.TWO
+
+    // Taylor series x + x^3/3! + x^5 / 7! + ...
+    val xsquared = this.multiply(this, mc)
+    var factorial = BigDecimal.ONE
+    var xpow = this
+    var result = this
+
+    for(i in 1 until 100) {
+        factorial = factorial.multiply(BigDecimal(i * 2), mc)
+        factorial = factorial.multiply(BigDecimal(i * 2 + 1), mc)
+        xpow = xpow.multiply(xsquared, mc)
+        val term = xpow.divide(factorial, mc)
+
+        val t = result.add(term, mc)
+        if (t == result) // TODO in all other functions return t since its 1 iteration more accurate
+            return t
+
+        result = t
+    }
+
+    throw IterationLimitExceeded()
+}
+
+fun BigDecimal.cosh(precision: Int): BigDecimal {
+    if (signum() == -1)
+        return negate().cosh(precision)
+    if (signum() == 0)
+        return BigDecimal.ONE
+
+    // Possible formula to use for faster convergence on larger numbers
+    // cosh^2(x) = 1+ sinh^2(x)
+
+    // Direct compute but slower
+    // return (Exp(x) + Exp(x.unaryMinus())) / Integer.TWO
+
+    val mc = MathContext(precision, RoundingMode.HALF_UP)
+    val xsquared = this.multiply(this, mc)
+    var term = BigDecimal.ONE
+    var result = term
+
+    for(n in 1 until 100) {
+        term = term.multiply(xsquared, mc)
+        term = term.divide(BigDecimal((2 * n) * (2 * n - 1)), mc)
+
+        val t = result.add(term, mc)
+        if (t == result)
+            return t
+
+        result = t
+    }
+
+    throw IterationLimitExceeded()
+}
+
+fun BigDecimal.tanh(precision: Int): BigDecimal {
+    if (signum() == 0)
+        return BigDecimal.ZERO
+    else if (signum() == -1)
+        return negate().tanh(precision).negate()
+
+    val mc = MathContext(precision, RoundingMode.HALF_UP)
+    val exp = (this.multiply(BigDecimal(2), mc)).exp(precision)
+    return exp.subtract(BigDecimal.ONE, mc).divide(exp.add(BigDecimal.ONE, mc), mc)
+}

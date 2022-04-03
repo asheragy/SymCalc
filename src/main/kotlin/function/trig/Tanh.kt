@@ -1,12 +1,12 @@
 package org.cerion.symcalc.function.trig
 
-import org.cerion.symcalc.expression.Expr
+import org.cerion.math.bignum.extensions.tanh
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Infinity
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Log
-import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealBigDec
@@ -40,12 +40,9 @@ class Tanh(e: Expr) : TrigBase(e) {
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): Expr {
-        if (x.isZero)
-            return RealBigDec.ZERO
-        else if (x.isNegative)
-            return Minus(Tanh(x.unaryMinus())).eval()
-
-        val exp = Exp(x * Integer(2)).eval()
-        return (exp - Integer.ONE) / (exp + Integer.ONE)
+        return RealBigDec(
+            x.value.tanh(RealBigDec.getStoredPrecision(x.precision)),
+            x.precision
+        )
     }
 }
