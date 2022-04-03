@@ -70,3 +70,50 @@ fun BigInteger.nthRootAndRemainder(n: Int): Pair<BigInteger, BigInteger> {
     val remainder = this - x.pow(n)
     return Pair(x, remainder)
 }
+
+fun factorial(N: Int): BigInteger {
+    if (N < 0)
+        throw ArithmeticException("Factorial must be positive integer")
+
+    var result = BigInteger.ONE
+    var n = N.toLong()
+
+    while (n > 1) {
+        result *= BigInteger.valueOf(n)
+        n--
+    }
+
+    return result
+}
+
+fun binomial(n: Int, k: Int): BigInteger {
+    // n! / k!(n-k)!
+    val nfact = factorial(n)
+    val n2 = factorial(n - k)
+    val n3 = factorial(k)
+
+    return nfact / (n2 * n3)
+}
+
+// When k is omitted, calculate list of all values of k
+fun binomial(n: Int): List<BigInteger> {
+    val nfact = factorial(n)
+
+    val result = mutableListOf(BigInteger.ONE)
+    var k_fact = BigInteger.ONE
+    var nk_fact = nfact
+
+    for (k in 1..n / 2) {
+        k_fact *= BigInteger.valueOf(k.toLong())
+        nk_fact = (nk_fact / BigInteger.valueOf(n - k + 1L))
+
+        val t = (nfact / (k_fact * nk_fact))
+        result.add(t)
+    }
+
+    for(k in (n / 2) + 1..n) {
+        result.add(result[n - k])
+    }
+
+    return result
+}

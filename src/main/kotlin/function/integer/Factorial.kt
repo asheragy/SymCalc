@@ -1,5 +1,6 @@
 package org.cerion.symcalc.function.integer
 
+import org.cerion.math.bignum.factorial
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
@@ -11,15 +12,8 @@ class Factorial(vararg e: Any) : FunctionExpr(*e) {
     // FEAT can work with non-integer values but needs Gamma function first
 
     override fun evaluate(): Expr {
-        var result = Integer.ONE
-        var N = get(0) as Integer
-
-        while (N > Integer.ONE) {
-            result*= N
-            N--
-        }
-
-        return result
+        val n = get(0) as Integer
+        return Integer(factorial(n.intValue()))
     }
 
     @Throws(ValidationException::class)
