@@ -134,6 +134,18 @@ fun BigDecimal.log(precision: Int): BigDecimal {
     return logTaylorSeriesV2(this, mc)
 }
 
+fun BigDecimal.pow(y: BigDecimal, precision: Int): BigDecimal {
+    if (signum() < 0)
+        throw ArithmeticException("lhs cannot be negative")
+
+    if (signum() == 0)
+        return this
+
+    val mc = MathContext(precision, RoundingMode.HALF_UP)
+    val ylogx = y.multiply(this.log(precision), mc)
+    return ylogx.exp(precision)
+}
+
 private fun logTaylorSeriesV2(x: BigDecimal, mc: MathContext): BigDecimal {
     val xminus1 = x.subtract(BigDecimal.ONE)
     val xplus1 = x.add(BigDecimal.ONE)

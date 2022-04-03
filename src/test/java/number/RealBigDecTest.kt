@@ -4,7 +4,6 @@ import org.cerion.symcalc.`==`
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
-import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.core.N
 import org.junit.jupiter.api.assertAll
@@ -245,11 +244,18 @@ class RealBigDecTest : NumberTestBase() {
                 Power("-1.2345", Rational(3,2)) `==` Complex("-0.79965E-18", "-1.3716"))
     }
 
-    //@Test
-    //TODO this should work after removing dependency on BigDecimalMath
+    @Test
     fun powStoredPrecision() {
         val p1 = RealBigDec("1.23").pow(RealBigDec("1.23"))
-        assertEquals(20, p1.value.precision())
+        assertEquals(RealBigDec("1.29"), p1)
+        assertEquals(3, p1.precision)
+        assertEquals(19, p1.value.precision())
+
+        // Precision should be minimum of the 2 values
+        val p2 = RealBigDec("1.23456789999999999999").pow(RealBigDec("1.23"))
+        assertEquals(RealBigDec("1.30"), p2)
+        assertEquals(3, p2.precision)
+        assertEquals(19, p2.value.precision())
     }
 
     @Test

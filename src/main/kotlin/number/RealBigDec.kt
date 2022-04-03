@@ -1,16 +1,12 @@
 package org.cerion.symcalc.number
 
+import org.cerion.math.bignum.*
 import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.constant.Pi
-import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.AtomExpr
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.core.N
-import org.cerion.math.bignum.exp
-import org.cerion.math.bignum.log
-import org.cerion.math.bignum.root
-import org.cerion.math.bignum.sqrt
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -135,23 +131,9 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
     }
 
     fun pow(other: RealBigDec): RealBigDec {
-        if (isNegative)
-            throw OperationException("lhs cannot be negative")
-
-        if (isZero)
-            return this
-
-        val p = min(precision, other.precision)
-        val mc = MathContext(getStoredPrecision(p), RoundingMode.HALF_UP)
-
-        var x = value
-        // TODO should be adding more than 2 digits and it should be handled elsewhere
-        if (x.precision() < mc.precision)
-            x = value.setScale(mc.precision - value.precision() + value.scale()).round(mc) // Add 2 extra digits so scale/precision is correct
-
-        val ylogx = other.value.multiply(x.log(), mc)
-
-        return RealBigDec(ylogx, p).exp()
+        val precision = min(precision, other.precision)
+        val storedPrecision = getStoredPrecision(precision)
+        return RealBigDec(value.pow(other.value, storedPrecision), precision)
     }
 
     override infix fun pow(other: NumberExpr): NumberExpr {
