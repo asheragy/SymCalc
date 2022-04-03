@@ -97,6 +97,7 @@ fun BigDecimal.root(n: Int, precision: Int): BigDecimal {
     throw IterationLimitExceeded()
 }
 
+@Deprecated(message = "Stored precision may not equal desired precision", replaceWith = ReplaceWith("log(precision)"))
 fun BigDecimal.log(): BigDecimal = log(precision())
 
 fun BigDecimal.log(precision: Int): BigDecimal {

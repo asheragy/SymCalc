@@ -19,5 +19,31 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine:5.5.2"
 }
 
+sourceSets {
+    main {
+        java {
+            srcDir "src/main/kotlin"
+        }
+    }
+    test {
+        java {
+            srcDir "src/test/java"
+        }
+    }
+
+    longTest {
+        java {
+            srcDir "/src/longTest/java"
+        }
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    longTestImplementation.extendsFrom testImplementation
+    longTestRuntimeOnly.extendsFrom runtimeOnly
+}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
