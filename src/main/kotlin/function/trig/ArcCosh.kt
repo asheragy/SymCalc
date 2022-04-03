@@ -1,8 +1,7 @@
 package org.cerion.symcalc.function.trig
 
+import org.cerion.math.bignum.extensions.arccosh
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.function.arithmetic.Log
-import org.cerion.symcalc.function.arithmetic.Sqrt
 import org.cerion.symcalc.number.RealBigDec
 
 class ArcCosh(e: Expr) : TrigBase(e) {
@@ -15,14 +14,11 @@ class ArcCosh(e: Expr) : TrigBase(e) {
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): Expr {
-        if (x.isOne)
-            return RealBigDec.ZERO
-
         if (x < RealBigDec("1.0")) {
             TODO("Add complex result")
         }
 
-        return Log(x + Sqrt(x.square() - 1)).eval()
+        return RealBigDec(x.value.arccosh(x.maxStoredPrecision), x.precision)
     }
 
 }

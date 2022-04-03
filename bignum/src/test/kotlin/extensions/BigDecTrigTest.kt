@@ -36,4 +36,6 @@ class BigDecTrigTest {
     fun tanh() {
         assertEquals(BigDecimal("0.761594155955"), BigDecimal(1.0).tanh(12))
     }
+
+    // TODO all 6 arc cases
 }

@@ -1,10 +1,8 @@
 package org.cerion.symcalc.function.trig
 
+import org.cerion.math.bignum.extensions.arcsinh
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.function.arithmetic.Log
-import org.cerion.symcalc.function.arithmetic.Sqrt
 import org.cerion.symcalc.number.RealBigDec
-import org.cerion.symcalc.number.plus
 
 class ArcSinh(e: Expr) : TrigBase(e) {
     override fun evaluateAsDouble(d: Double): Double {
@@ -16,10 +14,7 @@ class ArcSinh(e: Expr) : TrigBase(e) {
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): Expr {
-        if (x.isZero)
-            return RealBigDec.ZERO
-
-        return Log(x + Sqrt(1 + x.square())).eval()
+        return RealBigDec(x.value.arcsinh(x.maxStoredPrecision), x.precision)
     }
 
 }

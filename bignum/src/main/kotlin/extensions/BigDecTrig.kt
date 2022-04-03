@@ -2,6 +2,7 @@ package org.cerion.math.bignum.extensions
 
 import org.cerion.math.bignum.IterationLimitExceeded
 import org.cerion.math.bignum.exp
+import org.cerion.math.bignum.log
 import org.cerion.math.bignum.sqrt
 import java.math.BigDecimal
 import java.math.MathContext
@@ -339,4 +340,26 @@ fun BigDecimal.arctan(precision: Int): BigDecimal {
 
         throw IterationLimitExceeded()
     }
+}
+
+fun BigDecimal.arcsinh(precision: Int): BigDecimal {
+    if (signum() == 0)
+        return BigDecimal.ZERO
+
+    val mc = MathContext(precision, RoundingMode.HALF_UP)
+    val xsquare_plus1 = this.pow(2, mc).add(BigDecimal.ONE, mc)
+    return xsquare_plus1.sqrt(precision).add(this, mc).log(precision)
+}
+
+fun BigDecimal.arccosh(precision: Int): BigDecimal {
+    if (this.compareTo(BigDecimal.ONE) == 0)
+        return BigDecimal.ZERO
+
+    if (this < BigDecimal.ONE) {
+        TODO("Add complex result or exception")
+    }
+
+    val mc = MathContext(precision, RoundingMode.HALF_UP)
+    val xsquare_minus1 = this.pow(2, mc).subtract(BigDecimal.ONE, mc)
+    return xsquare_minus1.sqrt(precision).add(this, mc).log(precision)
 }
