@@ -29,7 +29,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
         }
     }
 
-    private val maxStoredPrecision
+    val maxStoredPrecision
         get() = getStoredPrecision(precision)
 
     constructor(value: BigDecimal) : this(value, value.precision())

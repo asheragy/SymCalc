@@ -2,6 +2,7 @@ package org.cerion.math.bignum.extensions
 
 import org.cerion.math.bignum.IterationLimitExceeded
 import org.cerion.math.bignum.exp
+import org.cerion.math.bignum.sqrt
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -217,4 +218,125 @@ fun BigDecimal.tanh(precision: Int): BigDecimal {
     val mc = MathContext(precision, RoundingMode.HALF_UP)
     val exp = (this.multiply(BigDecimal(2), mc)).exp(precision)
     return exp.subtract(BigDecimal.ONE, mc).divide(exp.add(BigDecimal.ONE, mc), mc)
+}
+
+fun BigDecimal.arcsin(precision: Int): BigDecimal {
+    if (signum() == 0)
+        return this
+    if (signum() == -1)
+        return negate().arcsin(precision).negate()
+
+    val mc = MathContext(precision, RoundingMode.HALF_UP)
+
+    this.sqrt(3)
+    if (toDouble() > 0.7) {
+        // Pi/2 - ArcSin(Sqrt(1 - x^2))
+        val piOver2 = getPiToDigits(precision).divide(BigDecimal(2), mc)
+        val oneMinusX2 = BigDecimal.ONE.subtract(this.pow(2, mc), mc)
+        val sqrt1minusX2 = oneMinusX2.sqrt(mc) // TODO replace with custom version when fixed for zeros
+        return piOver2.subtract(sqrt1minusX2.arcsin(precision), mc)
+    }
+
+    var result = this
+    val xsquared = this.pow(2, mc)
+    var xpow = this
+    var numerator = BigDecimal(1.0)
+    var denominator = BigDecimal(1.0)
+
+    // Taylor series x + x^3/6 + x^5/40 ...
+    for(n in 1..1000) {
+        xpow = xpow.multiply(xsquared, mc)
+        val n2 = (n * 2) - 1
+        numerator = numerator.multiply(n2.toBigDecimal(), mc)
+
+        val d1 = (n * 2)
+        denominator = denominator.divide((d1 - 1).toBigDecimal(), mc)
+        denominator = denominator.multiply((d1 * (d1+1)).toBigDecimal(), mc)
+
+        var e = xpow.multiply(numerator, mc)
+        e = e.divide(denominator, mc)
+
+        val t = result.add(e, mc)
+        if (t == result)
+            return result
+
+        result = t
+    }
+
+    throw IterationLimitExceeded()
+}
+
+fun BigDecimal.arccos(precision: Int): BigDecimal {
+    val mc = MathContext(precision, RoundingMode.HALF_UP)
+
+    // bypasses the need for calculating Pi/2
+    if (toDouble() > 0.7) {
+        val sqrt1minusX2 = BigDecimal.ONE.subtract(this.pow(2, mc), mc).sqrt(mc) // TODO use custom sqrt after zero fixed
+        return sqrt1minusX2.arcsin(precision)
+    }
+
+    val piOver2 = getPiToDigits(precision).divide(BigDecimal(2), mc)
+    return piOver2.subtract(this.arcsin(precision), mc)
+}
+
+fun BigDecimal.arctan(precision: Int): BigDecimal {
+    if (signum() == -1)
+        return negate().arctan(precision).negate()
+    else if (signum() == 0)
+        return BigDecimal.ZERO
+
+    val mc = MathContext(precision, RoundingMode.HALF_UP)
+    val dValue = toDouble()
+    if (dValue > 0.7 && dValue < 3.0) {
+        // Speed up convergence by using identity
+        //   arctan(x) = 2*arctan( x / (1+ sqrt(1+x^2))
+        val sqrt1plusX2 = this.pow(2, mc).add(BigDecimal.ONE, mc).sqrt(precision)
+        val arctan = this.divide(BigDecimal(1).add(sqrt1plusX2, mc), mc).arctan(precision)
+        return BigDecimal(2).multiply(arctan, mc)
+    }
+    else if(dValue < 0.71 ) {
+        // TODO generic way to write taylor series since its used a lot
+        // Basic taylor series, converges fast when < 0.7
+        val xsquared = this.pow(2, mc).negate()
+        var result = this
+        var xpowi = this
+        var denominator = BigDecimal.ONE
+
+        for(i in 0 until 100) {
+            xpowi = xpowi.multiply(xsquared, mc)
+            denominator = denominator.add(BigDecimal(2), mc)
+            val term = xpowi.divide(denominator, mc)
+
+            val t = result.add(term, mc)
+            if (result == t)
+                return result
+
+            result = t
+        }
+
+        throw IterationLimitExceeded()
+    }
+    else {
+        // ArcTan(x >= 3.0) is close to Pi/2 and normal taylor series converges slower
+        var result = getPiToDigits(precision).divide(BigDecimal(2), mc)
+
+        var xpowi = BigDecimal(-1).divide(this, mc)
+        val xsquared = xpowi.negate().multiply(xpowi, mc)
+        var denominator = BigDecimal(-1)
+
+        // TODO see if this can be rewritten to match the above one closer, loop starts a bit different
+        for(i in 0 until 100) {
+            denominator = denominator.add(BigDecimal(2), mc)
+            val term = xpowi.divide(denominator, mc)
+
+            val t = result.add(term, mc)
+            if (result == t)
+                return result
+
+            result = t
+            xpowi = xpowi.multiply(xsquared, mc)
+        }
+
+        throw IterationLimitExceeded()
+    }
 }
