@@ -3,12 +3,17 @@ package org.cerion.symcalc.function.special
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.expression.ErrorExpr
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
+import org.junit.Assert
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertAll
+import kotlin.test.Ignore
+import kotlin.test.assertEquals
 
 internal class GammaTest {
 
@@ -63,5 +68,44 @@ internal class GammaTest {
                 Gamma(RealBigDec("5.555", precision)) `==` RealBigDec("57.20975946055917813812606162394679559071496013293777144148922868004267627177579107765898895127159773", precision),
                 Gamma(RealBigDec("100.1", precision)) `==` RealBigDec("1478454494651513679874739643700584598156163305312630712228634114648770721338127073225051892034559658000000000000000000000000000000000000000000000000000000000", precision)
         )
+    }
+
+    // ----------------- Performance tests that will eventually go in bignum when this is implemented there
+    @Test
+    @Ignore
+    // ~1000ms
+    fun gammaLarge() {
+        val x = RealBigDec("3.14", 430)
+        run(Gamma(x))
+    }
+
+    // ~1000ms
+    @Test
+    @Ignore
+    fun gammaMultiple() {
+        val x = RealBigDec("3.14", 100)
+        run(90, Gamma(x))
+    }
+
+    // ~700ms
+    @Test
+    @Ignore
+    fun `gamma precision step`() {
+        val expected = RealBigDec("0.88622692545275801364908374167057259139877472806119356410690389492645564229551609068747532836927233270811341181214128533311807643286221130126254685480139353423101884932655256142496258651447541311446604768963398140008731950767573986025835009509261700929272348724745632015696088776295310820270966625045319920380686673873757671683399489468292591820439772558258086938002953369671589566640492742312409245102732742609780662578082373375752136938052805399806355360503018602224183618264830685404716174941583421")
+        for(i in 1..100) {
+            assertEquals(RealBigDec(expected.value, i), Gamma(RealBigDec("1.5", i)).eval())
+        }
+    }
+
+    private fun run(times: Int, expr: Expr) {
+        repeat(times) {
+            run(expr)
+        }
+    }
+
+    private fun run(expr: Expr) {
+        val res = expr.eval()
+        if (res is ErrorExpr)
+            Assert.fail(res.toString())
     }
 }

@@ -16,37 +16,3 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine:5.5.2"
     compile project(':bignum')
 }
-
-sourceSets {
-    main {
-        java {
-            srcDir "src/main/kotlin"
-        }
-    }
-    test {
-        java {
-            srcDir "src/test/java"
-        }
-    }
-
-    longTest {
-        java {
-            srcDir "/src/longTest/java"
-        }
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
-    }
-}
-
-configurations {
-    longTestImplementation.extendsFrom testImplementation
-    longTestRuntimeOnly.extendsFrom runtimeOnly
-}
-
-task longTest(type: Test) {
-    description = 'Runs Long running tests.'
-    group = 'verification'
-
-    testClassesDirs = sourceSets.longTest.output.classesDirs
-    classpath = sourceSets.longTest.runtimeClasspath
-}

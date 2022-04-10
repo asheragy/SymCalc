@@ -1,5 +1,3 @@
-package org.cerion.symcalc
-
 import org.cerion.math.bignum.extensions.getPiToDigits
 import kotlin.test.Test
 

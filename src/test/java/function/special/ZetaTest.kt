@@ -3,14 +3,18 @@ package org.cerion.symcalc.function.special
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.expression.ErrorExpr
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.number.RealDouble
+import org.junit.Assert
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertAll
+import kotlin.test.Ignore
 
 internal class ZetaTest {
 
@@ -91,5 +95,48 @@ internal class ZetaTest {
                 Zeta(RealBigDec("3.14")) `==` "1.18",
                 Zeta(RealBigDec("5.555555555")) `==` "1.024170497"
         )
+    }
+
+    // ---------------- Performance -----------------
+    // All run in about ~1000ms
+
+    @Ignore
+    @Test
+    fun zetaLarge() {
+        val x = RealBigDec("3.14", 530)
+        run(Zeta(x))
+    }
+
+    @Ignore
+    @Test
+    fun zetaMultiple() {
+        val x = RealBigDec("3.14", 70)
+        for(i in 0 until 90)
+            if(Zeta(x).eval() is ErrorExpr) // TODO add wrapper for everything that checks result
+                throw RuntimeException()
+    }
+
+    @Ignore
+    @Test
+    fun zetaOddInteger_multiple() {
+        repeat(7) {
+            for (i in 3 until 100) {
+                run(Zeta(Integer(i).toPrecision(100)))
+            }
+        }
+    }
+
+    @Ignore
+    @Test
+    fun zetaOddInteger_Large() {
+        for (i in 3 until 100) {
+            run(Zeta(Integer(i).toPrecision(450)))
+        }
+    }
+
+    private fun run(expr: Expr) {
+        val res = expr.eval()
+        if (res is ErrorExpr)
+            Assert.fail(res.toString())
     }
 }

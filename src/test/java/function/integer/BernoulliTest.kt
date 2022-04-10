@@ -6,6 +6,7 @@ import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealDouble
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -31,5 +32,15 @@ class BernoulliTest {
                 //Bernoulli(Integer(50)) `==` Rational(Integer("495057205241079648212477525"), Integer("66")),
                 //Bernoulli(Integer(100)) `==` Rational(Integer("-94598037819122125295227433069493721872702841533066936133385696204311395415197247711"), Integer("33330"))
         )
+    }
+
+    @Test
+    @Ignore
+    // ~800ms
+    fun bernoulli() {
+        val a = Bernoulli(110)
+        repeat(250) {
+            a.eval()
+        }
     }
 }
