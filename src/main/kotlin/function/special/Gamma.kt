@@ -114,6 +114,34 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
         return term * sum
     }
 
+    // https://en.wikipedia.org/wiki/Spouge%27s_approximation
+    private fun approximate2(input: RealBigDec): RealBigDec {
+        // TODO still uses with picking a value + extra precision to use
+        val a = Integer((input.precision * 1.25).toInt())
+
+        val e = E().eval(input.precision) as RealBigDec
+        val z = (input - Integer(1)) as RealBigDec
+        val t1 = Power(z + a, z + Rational.HALF)
+        val t2 = e.pow(z.unaryMinus() - a)
+        val c0 = Sqrt(Pi() * Integer(2)).eval(input.precision) as RealBigDec
+
+        var sum: RealBigDec = c0
+        for (k in 1 until a.intValue()) {
+            val ck = ck(a.intValue(), k, e)
+            sum = (ck.div(z + Integer(k)) + sum) as RealBigDec
+        }
+
+        return (t1 * t2 * sum) as RealBigDec
+    }
+
+    private fun ck(a: Int, k: Int, e: RealBigDec): RealBigDec {
+        val t1 = Integer(-1).pow(k-1).div(Factorial(k-1))
+        val t2 = Integer(a - k).pow((Integer(k) - Rational.HALF).eval(e.precision) as RealBigDec)
+        val t3 = e.pow(Integer(a - k))
+
+        return (t1 * t2 * t3) as RealBigDec
+    }
+
     /*
     // Lanczos approximation wikipedia version (not as good as math world version)
     private fun approximate(input: RealBigDec): RealBigDec {
