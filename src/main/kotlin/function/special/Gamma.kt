@@ -61,7 +61,7 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
 
     // Lanczos approximation (wolfram mathworld version)
     private fun approximate(input: RealBigDec): Expr {
-        if (input.precision > 500) // Slow and unsure on accuracy much beyond this range
+        if (input.precision > 600) // Slow and unsure on accuracy much beyond this range
             throw IterationLimitExceeded()
 
         // For accuracy more precision needs to be calculated from start
