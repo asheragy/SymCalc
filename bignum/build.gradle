@@ -44,6 +44,3 @@ configurations {
     longTestImplementation.extendsFrom testImplementation
     longTestRuntimeOnly.extendsFrom runtimeOnly
 }
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
