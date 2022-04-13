@@ -3,5 +3,6 @@
 /build
 /bignum/build
 /benchmark/build
+/symcalc/build
 .idea/modules.xml
 .idea/uiDesigner.xml

@@ -12,7 +12,6 @@ import org.cerion.symcalc.number.RealBigDec
 import org.junit.Assert
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertAll
-import kotlin.math.exp
 import kotlin.test.Ignore
 import kotlin.test.assertEquals
 

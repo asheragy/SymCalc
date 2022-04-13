@@ -1,18 +1,11 @@
 plugins {
-    id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.6.0'
 }
-
-group 'org.cerion'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:5.5.2"
-    compile project(':bignum')
+ext {
+    junit_version = '5.8.2'
 }

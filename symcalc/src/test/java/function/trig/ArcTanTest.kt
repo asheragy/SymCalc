@@ -1,7 +1,6 @@
 package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.`==`
-import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Indeterminate

@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+group 'org.cerion'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+    compile project(':bignum')
+}
