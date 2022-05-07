@@ -138,6 +138,12 @@ abstract class Expr {
             return p.e
         }
 
+        fun parse(start: Expr, input: String): Expr {
+            val lex = Lexer(input)
+            val p = Parser(lex, start)
+            return p.e
+        }
+
         const val InfinitePrecision = Int.MAX_VALUE
         const val MachinePrecision = -1 // numbers evaluated to whatever primitive types hold
     }

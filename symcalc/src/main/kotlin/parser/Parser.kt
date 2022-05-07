@@ -13,7 +13,7 @@ import org.cerion.symcalc.number.NumberExpr
 
 class ParseException(message: String?) : Exception(message)
 
-class Parser(private val lex: Lexer) {
+class Parser(private val lex: Lexer, start: Expr? = null) {
 
     var e: Expr
 
@@ -21,7 +21,12 @@ class Parser(private val lex: Lexer) {
     private var tokval: String = ""
 
     init {
-        getNext() //start input
+        if (start != null) {
+            token = '%'
+            e = start
+        }
+        else
+            getNext() //start input
 
         try {
             this.e = expr()
@@ -53,6 +58,7 @@ class Parser(private val lex: Lexer) {
 	       | - expr
 	       | foo(expr)
 	       | (expr)
+	       | % - Value passed in for start
 	*/
     private fun expr(): Expr {
         var e = expr2()
@@ -133,6 +139,11 @@ class Parser(private val lex: Lexer) {
             'v' -> {
                 getNext()
                 return VarExpr(tokval)
+            }
+            // Initial input is passed in Expr
+            '%' -> {
+                getNext()
+                return e
             }
             // Negate
             '-' -> {

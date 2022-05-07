@@ -9,6 +9,7 @@ import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.number.Complex
 import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealDouble
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -95,5 +96,14 @@ class ParserTest {
     @Test
     fun invalidParametercount() {
         assertTrue(Expr.parse("Sin(1,2)").isError)
+    }
+
+    @Test
+    fun continuedInput() {
+        var expr = Expr.parse("1 / 3").eval()
+        assertEquals(Rational(4,3), Expr.parse(expr, "+ 1").eval())
+
+        expr = Expr.parse("4 / 3").eval()
+        assertEquals(Integer(4), Expr.parse(expr, "* 3").eval())
     }
 }
