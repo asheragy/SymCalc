@@ -8,29 +8,30 @@ import kotlin.test.*
 @ExperimentalUnsignedTypes
 internal class BigIntTest {
 
+    // TODO make BigInt2Test for these since 10 will use a different variation
     private fun fromArray(vararg n: Int): BigInt2 = BigInt2(1, n.map { it.toUInt() }.reversed().toUIntArray())
 
     @Test
-    fun parse() {
+    fun parse() = run {
         // Tests to and from string
-        assertEquals("1", BigInt2("1").toString())
-        assertEquals("1", BigInt2("0001").toString())
-        assertEquals("-1", BigInt2("-0001").toString())
-        assertEquals("2000000000", BigInt2("2000000000").toString())
-        assertEquals("-2000000000", BigInt2("-2000000000").toString())
-        assertEquals("4000000000", BigInt2("4000000000").toString())
-        assertEquals("4294967295", BigInt2("4294967295").toString())
-        assertEquals("4294967296", BigInt2("4294967296").toString())
-        assertEquals("18446744078004518913", BigInt2("18446744078004518913").toString())
-        assertEquals("36893488147419103231", BigInt2("36893488147419103231").toString())
-        assertEquals("79228162514264337593543950335", BigInt2("79228162514264337593543950335").toString())
-        assertEquals("100000000000000000000000000000000", BigInt2("100000000000000000000000000000000").toString())
+        assertEquals("1", bigInt("1").toString())
+        assertEquals("1", bigInt("0001").toString())
+        assertEquals("-1", bigInt("-0001").toString())
+        assertEquals("2000000000", bigInt("2000000000").toString())
+        assertEquals("-2000000000", bigInt("-2000000000").toString())
+        assertEquals("4000000000", bigInt("4000000000").toString())
+        assertEquals("4294967295", bigInt("4294967295").toString())
+        assertEquals("4294967296", bigInt("4294967296").toString())
+        assertEquals("18446744078004518913", bigInt("18446744078004518913").toString())
+        assertEquals("36893488147419103231", bigInt("36893488147419103231").toString())
+        assertEquals("79228162514264337593543950335", bigInt("79228162514264337593543950335").toString())
+        assertEquals("100000000000000000000000000000000", bigInt("100000000000000000000000000000000").toString())
 
         // toString requires addition carry
-        assertEquals("10000000000000000000000000", BigInt2("10000000000000000000000000").toString())
+        assertEquals("10000000000000000000000000", bigInt("10000000000000000000000000").toString())
 
         // Multiple addition carries at the end
-        assertEquals("340282366920938463463374607431768211456", BigInt2("340282366920938463463374607431768211456").toString())
+        assertEquals("340282366920938463463374607431768211456", bigInt("340282366920938463463374607431768211456").toString())
     }
 
     @Test
@@ -307,58 +308,12 @@ internal class BigIntTest {
      */
 
     private fun run(block: TestScope.() -> Unit) {
-        for(i in 0..0) {
+        for(i in 0..1) {
             TestScope(i).block()
         }
     }
 
     private class TestScope(val case: Int) {
-        fun bigInt(value: String): TestInt = if(case == 0) TestInt(BigInt2(value)) else TestInt(BigInt10())
-    }
-
-    private class TestInt(private val value: Either<BigInt2, BigInt10>) : BigInt<TestInt> {
-        constructor(two: BigInt2) : this(Either.Left(two))
-        constructor(ten: BigInt10) : this(Either.Right(ten))
-
-        fun toLeft() = (value as Either.Left).left
-        fun toRight() = (value as Either.Right).right
-
-        override fun add(other: TestInt): TestInt {
-            return when(value) {
-                is Either.Left -> TestInt(value.left.add(other.toLeft()))
-                is Either.Right -> TestInt(value.right.add(other.toRight()))
-            }
-        }
-
-        override fun toString(): String {
-            return when(value) {
-                is Either.Left -> value.left.toString()
-                is Either.Right -> value.right.toString()
-            }
-        }
-
-        override fun compareTo(other: TestInt): Int {
-            TODO("Not yet implemented")
-        }
-
-        override fun sqrtRemainder(): Pair<TestInt, TestInt> {
-            TODO("Not yet implemented")
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (other is TestInt) {
-                return when(value) {
-                    is Either.Left -> value.left == other.toLeft()
-                    is Either.Right -> value.right == other.toRight()
-                }
-            }
-
-            return false
-        }
-    }
-
-    sealed class Either<A, B> {
-        class Left<A, B>(val left: A) : Either<A, B>()
-        class Right<A, B>(val right: B) : Either<A, B>()
+        fun bigInt(value: String): TestInt = if(case == 0) TestInt(BigInt2(value)) else TestInt(BigInt10(value))
     }
 }
