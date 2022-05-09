@@ -1,12 +1,12 @@
 package org.cerion.math.bignum
 
+import org.cerion.math.bignum.integer.BigInt2
 import java.math.BigDecimal
-import java.math.BigInteger
 
 
 fun main() {
 
-    val x = BigInt("0001")
+    val x = BigInt2("0001")
 
     val a  = BigDecimal("10000000000.0")
     val a1 = BigDecimal("10000000000")

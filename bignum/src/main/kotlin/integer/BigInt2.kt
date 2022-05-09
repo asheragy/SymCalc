@@ -1,4 +1,4 @@
-package org.cerion.math.bignum
+package org.cerion.math.bignum.integer
 
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -7,14 +7,14 @@ import kotlin.reflect.jvm.isAccessible
 
 
 @ExperimentalUnsignedTypes
-class BigInt : IBigInt {
+class BigInt2 : IBigInt, BigInt<BigInt2> {
     private val sign: Byte
     private val arr: UIntArray
 
     companion object {
-        val ZERO = BigInt(0, UIntArray(0))
-        val ONE = BigInt(1, UIntArray(1) { 1u })
-        val NEGATIVE_ONE = BigInt(-1, UIntArray(1) { 1u })
+        val ZERO = BigInt2(0, UIntArray(0))
+        val ONE = BigInt2(1, UIntArray(1) { 1u })
+        val NEGATIVE_ONE = BigInt2(-1, UIntArray(1) { 1u })
         private const val POSITIVE = (1).toByte()
         private const val NEGATIVE = (-1).toByte()
         private const val ZEROSIGN = 0.toByte()
@@ -111,37 +111,35 @@ class BigInt : IBigInt {
     }
 
     // Operators
-    operator fun plus(other: BigInt): BigInt = this.add(other)
-    operator fun minus(other: BigInt): BigInt = this.subtract(other)
-    operator fun minus(other: IBigInt): BigInt = this.subtract(other as BigInt)
-    operator fun times(other: BigInt): BigInt = this.multiply(other)
-    operator fun times(other: IBigInt): BigInt = this.multiply(other as BigInt)
-    operator fun div(other: BigInt): BigInt = this.divide(other)
-    operator fun div(other: IBigInt): BigInt = this.divide(other as BigInt)
+    operator fun minus(other: BigInt2): BigInt2 = this.subtract(other)
+    operator fun minus(other: IBigInt): BigInt2 = this.subtract(other as BigInt2)
+    operator fun times(other: BigInt2): BigInt2 = this.multiply(other)
+    operator fun times(other: IBigInt): BigInt2 = this.multiply(other as BigInt2)
+    operator fun div(other: BigInt2): BigInt2 = this.divide(other)
+    operator fun div(other: IBigInt): BigInt2 = this.divide(other as BigInt2)
 
-    override fun add(other: IBigInt): IBigInt = add(other as BigInt)
-    fun add(other: BigInt): BigInt {
+    override fun add(other: BigInt2): BigInt2 {
         return when {
             sign == ZEROSIGN -> other
             other.sign == ZEROSIGN -> this
-            sign == other.sign -> BigInt(sign, BigIntArray.add(this.arr, other.arr))
+            sign == other.sign -> BigInt2(sign, BigIntArray.add(this.arr, other.arr))
 
             // Subtract since one side is negative
             else ->
                 when (BigIntArray.compare(arr, other.arr)) {
-                    -1 -> BigInt(-1 * sign, BigIntArray.subtract(other.arr, arr))
-                    1 -> BigInt(sign, BigIntArray.subtract(arr, other.arr))
+                    -1 -> BigInt2(-1 * sign, BigIntArray.subtract(other.arr, arr))
+                    1 -> BigInt2(sign, BigIntArray.subtract(arr, other.arr))
                 else -> ZERO
             }
         }
     }
 
-    override fun subtract(other: IBigInt) = this.subtract(other as BigInt)
-    fun subtract(other: BigInt): BigInt {
+    override fun subtract(other: IBigInt) = this.subtract(other as BigInt2)
+    fun subtract(other: BigInt2): BigInt2 {
         if (sign == POSITIVE && other.sign == NEGATIVE)
-            return BigInt(1, BigIntArray.add(arr, other.arr))
+            return BigInt2(1, BigIntArray.add(arr, other.arr))
         else if (sign == NEGATIVE && other.sign == POSITIVE)
-            return BigInt(-1, BigIntArray.add(arr, other.arr))
+            return BigInt2(-1, BigIntArray.add(arr, other.arr))
         else if (sign == ZEROSIGN)
             return other.negate()
         else if (other.sign == ZEROSIGN)
@@ -149,18 +147,18 @@ class BigInt : IBigInt {
 
         // Sign is equal but need to subtract
         return when (BigIntArray.compare(arr, other.arr)) {
-            -1 -> return BigInt(-1 * sign, BigIntArray.subtract(other.arr, arr))
-            1 -> return BigInt(sign, BigIntArray.subtract(arr, other.arr))
+            -1 -> return BigInt2(-1 * sign, BigIntArray.subtract(other.arr, arr))
+            1 -> return BigInt2(sign, BigIntArray.subtract(arr, other.arr))
             else -> ZERO
         }
     }
 
-    override fun multiply(other: IBigInt) = this.multiply(other as BigInt)
-    fun multiply(other: BigInt): BigInt {
+    override fun multiply(other: IBigInt) = this.multiply(other as BigInt2)
+    fun multiply(other: BigInt2): BigInt2 {
         if (sign == ZEROSIGN || other.sign == ZEROSIGN)
             return ZERO
 
-        return BigInt(
+        return BigInt2(
             if(sign == other.sign) 1 else -1,
             when {
                 arr.size == 1 -> BigIntArray.multiply(other.arr, arr[0])
@@ -170,14 +168,14 @@ class BigInt : IBigInt {
         )
     }
 
-    override fun divide(other: IBigInt) = this.divide(other as BigInt)
-    fun divide(other: BigInt): BigInt = divideAndRemainder(other).first as BigInt
+    override fun divide(other: IBigInt) = this.divide(other as BigInt2)
+    fun divide(other: BigInt2): BigInt2 = divideAndRemainder(other).first as BigInt2
 
-    fun divide(other: UInt): BigInt {
-        return BigInt(1, BigIntArray.divideAndRemainder(arr, other).first)
+    fun divide(other: UInt): BigInt2 {
+        return BigInt2(1, BigIntArray.divideAndRemainder(arr, other).first)
     }
 
-    override fun equals(other: Any?) = other is BigInt && sign == other.sign && arr.contentEquals(other.arr)
+    override fun equals(other: Any?) = other is BigInt2 && sign == other.sign && arr.contentEquals(other.arr)
     override fun signum() = sign.toInt()
 
     override fun testBit(n: Int): Boolean {
@@ -223,8 +221,8 @@ class BigInt : IBigInt {
         }
     }
 
-    override fun negate() = if (sign == ZEROSIGN) this else BigInt(-1 * sign, arr)
-    override fun abs() = if (sign == NEGATIVE) BigInt(1, arr) else this
+    override fun negate() = if (sign == ZEROSIGN) this else BigInt2(-1 * sign, arr)
+    override fun abs() = if (sign == NEGATIVE) BigInt2(1, arr) else this
 
     override fun pow(n: Int): IBigInt {
         return when(n.sign) {
@@ -238,13 +236,13 @@ class BigInt : IBigInt {
                     return if(n % 2 == 0) this.negate() else this
 
                 val resultSign = if(sign == (-1).toByte() && n % 2 == 1) -1 else 1
-                return BigInt(resultSign.toByte(), BigIntArray.pow(arr, n))
+                return BigInt2(resultSign.toByte(), BigIntArray.pow(arr, n))
             }
         }
     }
 
     override fun gcd(n: IBigInt): IBigInt {
-        n as BigInt
+        n as BigInt2
         if (this.sign == ZEROSIGN)
             return n
         else if (n.sign == ZEROSIGN)
@@ -268,12 +266,12 @@ class BigInt : IBigInt {
             c = BigIntArray.divide(a, b)
         }
 
-        return BigInt(1, b)
+        return BigInt2(1, b)
     }
 
     override fun mod(m: IBigInt): IBigInt {
-        m as BigInt
-        val rem = this.divideAndRemainder(m).second as BigInt
+        m as BigInt2
+        val rem = this.divideAndRemainder(m).second as BigInt2
 
         if (rem.sign == NEGATIVE)
             return m + rem
@@ -282,8 +280,8 @@ class BigInt : IBigInt {
     }
 
     override fun modPow(exponent: IBigInt, m: IBigInt): IBigInt {
-        exponent as BigInt
-        m as BigInt
+        exponent as BigInt2
+        m as BigInt2
 
         if (exponent == ZERO)
             return ONE
@@ -296,10 +294,10 @@ class BigInt : IBigInt {
                 if (n % 2u == 1u) {
                     val a = square * result
                     val b = a.mod(m)
-                    result = b as BigInt
+                    result = b as BigInt2
                 }
 
-                square = (square * square).mod(m) as BigInt
+                square = (square * square).mod(m) as BigInt2
                 n /= 2u
             }
         }
@@ -308,14 +306,14 @@ class BigInt : IBigInt {
     }
 
     override fun divideAndRemainder(other: IBigInt): Pair<IBigInt, IBigInt> {
-        other as BigInt
+        other as BigInt2
         var sign = (sign * other.sign)
 
         if (other.arr.size == 1) {
             val result = BigIntArray.divideAndRemainder(arr, other.arr[0])
-            val remainder = BigInt(sign, UIntArray(1) { result.second })
+            val remainder = BigInt2(sign, UIntArray(1) { result.second })
 
-            return Pair(BigInt(sign, result.first), remainder)
+            return Pair(BigInt2(sign, result.first), remainder)
         }
 
         val div = if (BigIntArray.compare(arr, other.arr) < 0) // x/y = 0 rem x when x<y
@@ -325,17 +323,17 @@ class BigInt : IBigInt {
 
         val rem = when {
             div.second == null -> ZERO
-            sign == -1 -> BigInt(NEGATIVE, div.second!!)
-            else -> BigInt(POSITIVE, div.second!!)
+            sign == -1 -> BigInt2(NEGATIVE, div.second!!)
+            else -> BigInt2(POSITIVE, div.second!!)
         }
 
         if (div.first.isEmpty())
             sign = 0
 
-        return Pair(BigInt(sign, div.first), rem)
+        return Pair(BigInt2(sign, div.first), rem)
     }
 
-    override fun sqrtRemainder(): Pair<IBigInt, IBigInt> {
+    override fun sqrtRemainder(): Pair<BigInt2, BigInt2> {
         if (sign == NEGATIVE)
             throw ArithmeticException()
 
@@ -344,12 +342,12 @@ class BigInt : IBigInt {
         var x = if (bl > 120u)
             shiftRight(bl / 2u - 1u)
         else
-            BigInt("" + sqrt(toDouble()).roundToLong())
+            BigInt2("" + sqrt(toDouble()).roundToLong())
 
-        val two = BigInt(2)
+        val two = BigInt2(2)
         while (true) {
-            val x2 = x.pow(2)
-            var xplus2 = x.add(ONE).pow(2)
+            val x2 = x.pow(2) as BigInt2
+            var xplus2 = x.add(ONE).pow(2) as BigInt2
 
             if (x2 <= this && xplus2 > this)
                 break
@@ -368,9 +366,7 @@ class BigInt : IBigInt {
         return Pair(x, remainder)
     }
 
-    override fun compareTo(other: IBigInt): Int {
-        other as BigInt
-
+    override fun compareTo(other: BigInt2): Int {
         if (sign != other.sign)
             return sign.compareTo(other.sign)
 
@@ -412,19 +408,19 @@ class BigInt : IBigInt {
         TODO("Not yet implemented")
     }
 
-    private fun shiftLeft(n: UInt): BigInt {
+    private fun shiftLeft(n: UInt): BigInt2 {
         var result = this
 
         // TODO improve this to do real shift
         repeat(n.toInt()) {
-            result = result * BigInt(2)
+            result = result * BigInt2(2)
         }
 
         return result
     }
 
     // TODO Java version is returning different in sqrtAndRemainder test but this is not necessarily wrong
-    private fun shiftRight(n: UInt): BigInt {
+    private fun shiftRight(n: UInt): BigInt2 {
         val shift = (n % 32u).toInt()
         val drop = n / 32u
         val newArr = arr.drop(drop.toInt()).toMutableList()
@@ -433,7 +429,7 @@ class BigInt : IBigInt {
             newArr[i] = newArr[i] shr shift
 
         // TODO drop zero values
-        return BigInt(sign, newArr.toUIntArray())
+        return BigInt2(sign, newArr.toUIntArray())
     }
 
     override fun hashCode(): Int {
@@ -448,7 +444,7 @@ class BigInt : IBigInt {
         }
 }
 
-fun BigInteger.toBigInt(): BigInt = BigInt(this.toString())
+fun BigInteger.toBigInt(): BigInt2 = BigInt2(this.toString())
 
 // Returns larger half as UInt
 inline fun ULong.toShiftedUInt(): UInt = (this shr 32).toUInt()

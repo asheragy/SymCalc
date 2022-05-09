@@ -1,6 +1,6 @@
 package org.cerion.math.bignum.benchmark
 
-import org.cerion.math.bignum.BigInt
+import org.cerion.math.bignum.BigInt2
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.Scope
 import org.openjdk.jmh.annotations.State
@@ -15,19 +15,19 @@ open class BigIntMultiply {
     val multiplyToLenMaxStr = "123456789098764321".repeat(40) // Slightly under karatsuba threshold uses multiplyToLen()
     private val a_multiplyLenJvm = BigInteger(multiplyToLenMaxStr)
     private val b_multiplyLenJvm = a_multiplyLenJvm.add(BigInteger.ONE)
-    private val a_multiplyLen = BigInt(multiplyToLenMaxStr)
-    private val b_multiplyLen = a_multiplyLen.add(BigInt.ONE)
+    private val a_multiplyLen = BigInt2(multiplyToLenMaxStr)
+    private val b_multiplyLen = a_multiplyLen.add(BigInt2.ONE)
 
-    private val large = BigInt("123456789098764321").pow(565) as BigInt // About 1000 digits
-    private val large2 = large.add(BigInt.ONE)
+    private val large = BigInt2("123456789098764321").pow(565) as BigInt2 // About 1000 digits
+    private val large2 = large.add(BigInt2.ONE)
     private val largeJvm = BigInteger("123456789098764321").pow(565)
     private val large2Jvm = largeJvm.add(BigInteger.ONE)
-    private val small = BigInt(100000000)
+    private val small = BigInt2(100000000)
     private val smallJvm = BigInteger.valueOf(100000000)
 
     // List of 40 sizes all under karatsuba threshold
     private val strs = MutableList(40) {n -> "123456789098764321".repeat(n+1) }
-    private val range = strs.map { BigInt(it) }
+    private val range = strs.map { BigInt2(it) }
     private val rangeJvm = strs.map { BigInteger(it) }
 
     @Benchmark fun multiplyToLenJvm(bh: Blackhole) = bh.consume(a_multiplyLenJvm * b_multiplyLenJvm)

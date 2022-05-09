@@ -1,15 +1,16 @@
 package org.cerion.math.bignum
 
+import org.cerion.math.bignum.integer.BigInt2
 import kotlin.math.abs
 import kotlin.math.max
 
 @ExperimentalUnsignedTypes
 class BigDec {
 
-    val value: BigInt
+    val value: BigInt2
     val scale: Int
 
-    constructor(value: BigInt, scale: Int) {
+    constructor(value: BigInt2, scale: Int) {
         this.value = value
         this.scale = scale
     }
@@ -21,7 +22,7 @@ class BigDec {
         else
             scale = str.length - index - 1
 
-        value = BigInt(str.replace(".", ""))
+        value = BigInt2(str.replace(".", ""))
     }
 
     override fun toString(): String {
@@ -50,7 +51,7 @@ class BigDec {
             return other + this
 
         val diff = other.scale - scale
-        val pow = BigInt("10").pow(diff)
+        val pow = BigInt2("10").pow(diff)
         val scaled = this.value * pow
 
         return BigDec(scaled + other.value, other.scale)
@@ -61,7 +62,7 @@ class BigDec {
             return BigDec(value - other.value, scale)
 
         val diff = abs(other.scale - scale)
-        val pow = BigInt("10").pow(diff)
+        val pow = BigInt2("10").pow(diff)
 
         val subtracted = if(scale < other.scale)
             (this.value * pow) - other.value

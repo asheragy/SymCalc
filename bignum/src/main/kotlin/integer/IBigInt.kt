@@ -1,9 +1,10 @@
-package org.cerion.math.bignum
+package org.cerion.math.bignum.integer
 
 import java.math.BigDecimal
 import java.math.BigInteger
 
-interface IBigInt : Comparable<IBigInt> {
+@Deprecated("unused")
+interface IBigInt {
     override fun equals(other: Any?): Boolean
     fun abs(): IBigInt
     fun signum(): Int
@@ -13,12 +14,12 @@ interface IBigInt : Comparable<IBigInt> {
     fun toBigInteger(): BigInteger // For BigDecimal constructor
     fun toBigDecimal(): BigDecimal
     fun negate(): IBigInt
-    fun add(other: IBigInt): IBigInt
+    //fun add(other: IBigInt): IBigInt
     fun subtract(other: IBigInt): IBigInt
     fun multiply(other: IBigInt): IBigInt
     fun divide(other: IBigInt): IBigInt
     fun pow(n: Int): IBigInt
-    fun sqrtRemainder(): Pair<IBigInt, IBigInt>
+    //fun sqrtRemainder(): Pair<IBigInt, IBigInt>
     fun gcd(n: IBigInt): IBigInt
     fun mod(m: IBigInt): IBigInt
     fun modPow(exponent: IBigInt, m: IBigInt): IBigInt

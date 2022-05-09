@@ -1,6 +1,9 @@
-package org.cerion.math.bignum
+package org.cerion.math.bignum.integer
 
+import org.cerion.math.bignum.integer.toShiftedUInt
 import java.lang.RuntimeException
+
+private operator fun UIntArray.compareTo(other: UIntArray): Int = BigIntArray.compare(this, other)
 
 @ExperimentalUnsignedTypes
 object BigIntArray {
@@ -265,5 +268,3 @@ object BigIntArray {
         return arr
     }
 }
-
-private operator fun UIntArray.compareTo(other: UIntArray): Int = BigIntArray.compare(this, other)
