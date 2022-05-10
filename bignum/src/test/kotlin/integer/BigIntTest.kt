@@ -65,6 +65,9 @@ internal class BigIntTest {
 
     @Test
     fun additionSigned() = run {
+        assertEquals(bigInt("10000000000"), bigInt("9999999999") + bigInt("1"))
+        assertEquals(bigInt("9999999999"), bigInt("10000000000") + bigInt("-1"))
+
         assertEquals(bigInt("10000000000"), bigInt("21111111111") + bigInt("-11111111111"))
         assertEquals(bigInt("-20000000000"), bigInt("21111111111") + bigInt("-41111111111"))
 

@@ -57,6 +57,42 @@ object BigIntArray {
         return arr
     }
 
+    internal fun add10(x: UIntArray, y: UIntArray): UIntArray {
+        val a = if (x.size >= y.size) x else y
+        val b = if (x.size >= y.size) y else x
+
+        val arr = UIntArray(a.size)
+        var index = 0
+        var sum: UInt = 0u
+
+        // Add digits while array lengths are the same
+        while(index < b.size) {
+            sum = a[index] + b[index] + (sum / 1000000000u)
+            arr[index++] = sum % 1000000000u
+        }
+
+        // Add digits for larger number while digit is still carried
+        var carry = sum >= 1000000000u
+        while(index < a.size && carry) {
+            sum = a[index] + (sum / 1000000000u)
+            carry = sum >= 1000000000u
+            arr[index++] = sum
+        }
+
+        // If there is still a digit to carry add it and return
+        if (carry) {
+            val t = arr.copyOf(arr.size + 1)
+            t[arr.size] = 1u
+            return t
+        }
+
+        // If no more carry just add the remaining digits
+        while(index < a.size)
+            arr[index] = a[index++]
+
+        return arr
+    }
+
     internal fun subtract(x: UIntArray, y: UInt): UIntArray {
         // TODO implement this without calling the other for slight efficiency
         return subtract(x, UIntArray(1) { y })
@@ -81,6 +117,33 @@ object BigIntArray {
             diff = x[index].toLong() - 1
             borrow = diff < 0
             arr[index++] = diff.toUInt()
+        }
+
+        while(index < x.size)
+            arr[index] = x[index++]
+
+        return removeLeadingZeros(arr)
+    }
+
+    internal fun subtract10(x: UIntArray, y: UIntArray): UIntArray {
+        if(compare(x,y) < 0)
+            throw ArithmeticException("invalid subtraction") // TODO remove temp error checking
+
+        // Input is always expected to have x as the largest array and adjust result sign accordingly
+        val arr = UIntArray(x.size) // TODO is there a benefit in copying starting array? need to performance test first
+        var index = 0
+        var diff = 0
+
+        while(index < y.size) {
+            diff = x[index].toInt() - y[index].toInt() + if (diff < 0) 1000000000 else 0
+            arr[index++] = diff.toUInt() + if(diff < 0) 1000000000u else 0u
+        }
+
+        var borrow = diff < 0
+        while(index < x.size && borrow) {
+            diff = x[index].toInt() - 1
+            borrow = diff < 0
+            arr[index++] = diff.toUInt() + if(diff < 0) 1000000000u else 0u
         }
 
         while(index < x.size)

@@ -5,6 +5,17 @@ class BigInt10 : BigInt<BigInt10> {
     private val sign: Byte
     private val arr: UIntArray
 
+    companion object {
+        val ZERO = BigInt10(0, UIntArray(0))
+        val ONE = BigInt10(1, UIntArray(1) { 1u })
+        val NEGATIVE_ONE = BigInt10(-1, UIntArray(1) { 1u })
+    }
+
+    constructor(s: Int, arr: UIntArray) : this (s.toByte(), arr)
+    constructor(sign: Byte, arr: UIntArray) {
+        this.sign = sign
+        this.arr = arr
+    }
     constructor(str: String) {
         val n = str.trimStart('-', '0')
         if (n.isEmpty()) {
@@ -41,8 +52,22 @@ class BigInt10 : BigInt<BigInt10> {
     }
 
     override fun add(other: BigInt10): BigInt10 {
-        TODO("Not yet implemented")
+        return when {
+            sign == BigInt.ZEROSIGN -> other
+            other.sign == BigInt.ZEROSIGN -> this
+            sign == other.sign -> BigInt10(sign, BigIntArray.add10(this.arr, other.arr))
+
+            // Subtract since one side is negative
+            else ->
+                when (BigIntArray.compare(arr, other.arr)) {
+                    -1 -> BigInt10(-1 * sign, BigIntArray.subtract10(other.arr, arr))
+                    1 -> BigInt10(sign, BigIntArray.subtract10(arr, other.arr))
+                    else -> ZERO
+            }
+        }
     }
+
+    override fun equals(other: Any?) = other is BigInt10 && sign == other.sign && arr.contentEquals(other.arr)
 
     override fun compareTo(other: BigInt10): Int {
         TODO("Not yet implemented")
