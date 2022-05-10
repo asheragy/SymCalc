@@ -1,9 +1,9 @@
 package org.cerion.math.bignum.integer
 
 @ExperimentalUnsignedTypes
-class BigInt10 : BigInt<BigInt10> {
-    private val sign: Byte
-    private val arr: UIntArray
+class BigInt10 : BigIntArrayBase<BigInt10> {
+    override val sign: Byte
+    override val arr: UIntArray
 
     companion object {
         val ZERO = BigInt10(0, UIntArray(0))
@@ -20,11 +20,11 @@ class BigInt10 : BigInt<BigInt10> {
         val n = str.trimStart('-', '0')
         if (n.isEmpty()) {
             this.arr = UIntArray(0)
-            this.sign = BigInt.ZEROSIGN
+            this.sign = ZEROSIGN
             return
         }
 
-        sign = if(str[0] == '-') BigInt.NEGATIVE else BigInt.POSITIVE
+        sign = if(str[0] == '-') NEGATIVE else POSITIVE
 
         // TODO this speed could be improved
         // declare array with exact size
@@ -33,12 +33,16 @@ class BigInt10 : BigInt<BigInt10> {
         this.arr = digits.toUIntArray()
     }
 
+    override fun subtract(other: BigInt10): BigInt10 {
+        TODO("Not yet implemented")
+    }
+
     override fun toString(): String {
-        if (sign == BigInt.ZEROSIGN)
+        if (sign == ZEROSIGN)
             return "0"
 
         val sb = StringBuilder()
-        if (sign == BigInt.NEGATIVE)
+        if (sign == NEGATIVE)
             sb.append("-")
 
         sb.append(arr[arr.size-1])
@@ -51,21 +55,7 @@ class BigInt10 : BigInt<BigInt10> {
         return sb.toString()
     }
 
-    override fun add(other: BigInt10): BigInt10 {
-        return when {
-            sign == BigInt.ZEROSIGN -> other
-            other.sign == BigInt.ZEROSIGN -> this
-            sign == other.sign -> BigInt10(sign, BigIntArray.add10(this.arr, other.arr))
-
-            // Subtract since one side is negative
-            else ->
-                when (BigIntArray.compare(arr, other.arr)) {
-                    -1 -> BigInt10(-1 * sign, BigIntArray.subtract10(other.arr, arr))
-                    1 -> BigInt10(sign, BigIntArray.subtract10(arr, other.arr))
-                    else -> ZERO
-            }
-        }
-    }
+    override fun getInstance(sign: Byte, arr: UIntArray) = BigInt10(sign, arr)
 
     override fun equals(other: Any?) = other is BigInt10 && sign == other.sign && arr.contentEquals(other.arr)
 
@@ -76,4 +66,7 @@ class BigInt10 : BigInt<BigInt10> {
     override fun sqrtRemainder(): Pair<BigInt10, BigInt10> {
         TODO("Not yet implemented")
     }
+
+    override fun add(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.add10(x, y)
+    override fun subtract(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.subtract10(x, y)
 }

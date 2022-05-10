@@ -10,6 +10,10 @@ class TestInt(private val value: BigInt<*>) : BigInt<TestInt> {
         get() = value as BigInt10
 
     override fun add(other: TestInt) = TestInt(if(is2) two.add(other.two) else ten.add(other.ten))
+    override fun subtract(other: TestInt): TestInt {
+        TODO("Not yet implemented")
+    }
+
     override fun toString() = value.toString()
 
     override fun compareTo(other: TestInt): Int {

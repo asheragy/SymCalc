@@ -7,9 +7,9 @@ import kotlin.reflect.jvm.isAccessible
 
 
 @ExperimentalUnsignedTypes
-class BigInt2 : IBigInt, BigInt<BigInt2> {
-    private val sign: Byte
-    private val arr: UIntArray
+class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
+    override val sign: Byte
+    override val arr: UIntArray
 
     companion object {
         val ZERO = BigInt2(0, UIntArray(0))
@@ -111,31 +111,14 @@ class BigInt2 : IBigInt, BigInt<BigInt2> {
     }
 
     // Operators
-    operator fun minus(other: BigInt2): BigInt2 = this.subtract(other)
-    operator fun minus(other: IBigInt): BigInt2 = this.subtract(other as BigInt2)
     operator fun times(other: BigInt2): BigInt2 = this.multiply(other)
     operator fun times(other: IBigInt): BigInt2 = this.multiply(other as BigInt2)
     operator fun div(other: BigInt2): BigInt2 = this.divide(other)
     operator fun div(other: IBigInt): BigInt2 = this.divide(other as BigInt2)
 
-    override fun add(other: BigInt2): BigInt2 {
-        return when {
-            sign == ZEROSIGN -> other
-            other.sign == ZEROSIGN -> this
-            sign == other.sign -> BigInt2(sign, BigIntArray.add(this.arr, other.arr))
+    override fun getInstance(sign: Byte, arr: UIntArray) = BigInt2(sign, arr)
 
-            // Subtract since one side is negative
-            else ->
-                when (BigIntArray.compare(arr, other.arr)) {
-                    -1 -> BigInt2(-1 * sign, BigIntArray.subtract(other.arr, arr))
-                    1 -> BigInt2(sign, BigIntArray.subtract(arr, other.arr))
-                else -> ZERO
-            }
-        }
-    }
-
-    override fun subtract(other: IBigInt) = this.subtract(other as BigInt2)
-    fun subtract(other: BigInt2): BigInt2 {
+    override fun subtract(other: BigInt2): BigInt2 {
         if (sign == POSITIVE && other.sign == NEGATIVE)
             return BigInt2(1, BigIntArray.add(arr, other.arr))
         else if (sign == NEGATIVE && other.sign == POSITIVE)
@@ -442,6 +425,9 @@ class BigInt2 : IBigInt, BigInt<BigInt2> {
         get() {
             return ((arr.size - 1) * 32).toUInt() + arr.last().bitLength()
         }
+
+    override fun add(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.add(x, y)
+    override fun subtract(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.subtract(x, y)
 }
 
 fun BigInteger.toBigInt(): BigInt2 = BigInt2(this.toString())

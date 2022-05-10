@@ -15,7 +15,7 @@ interface IBigInt {
     fun toBigDecimal(): BigDecimal
     fun negate(): IBigInt
     //fun add(other: IBigInt): IBigInt
-    fun subtract(other: IBigInt): IBigInt
+    //fun subtract(other: IBigInt): IBigInt
     fun multiply(other: IBigInt): IBigInt
     fun divide(other: IBigInt): IBigInt
     fun pow(n: Int): IBigInt
