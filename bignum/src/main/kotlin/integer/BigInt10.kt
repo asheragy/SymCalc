@@ -33,10 +33,6 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         this.arr = digits.toUIntArray()
     }
 
-    override fun subtract(other: BigInt10): BigInt10 {
-        TODO("Not yet implemented")
-    }
-
     override fun toString(): String {
         if (sign == ZEROSIGN)
             return "0"
@@ -69,4 +65,15 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
 
     override fun add(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.add10(x, y)
     override fun subtract(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.subtract10(x, y)
+    override fun multiply(x: UIntArray, y: UIntArray): UIntArray {
+        TODO("Not yet implemented")
+    }
+
+    override fun multiply(x: UIntArray, y: UInt): UIntArray {
+        TODO("Not yet implemented")
+    }
+
+    override fun pow(x: UIntArray, n: Int): UIntArray {
+        TODO("Not yet implemented")
+    }
 }

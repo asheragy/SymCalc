@@ -78,14 +78,14 @@ internal class BigIntTest {
     }
 
     @Test
-    fun subtractionSigned() {
+    fun subtractionSigned() = run {
         // One negative (internal addition)
-        assertEquals(BigInt2("32222222222"), BigInt2("21111111111") - BigInt2("-11111111111"))
-        assertEquals(BigInt2("-32222222222"), BigInt2("-21111111111") - BigInt2("11111111111"))
+        assertEquals(bigInt("32222222222"), bigInt("21111111111") - bigInt("-11111111111"))
+        assertEquals(bigInt("-32222222222"), bigInt("-21111111111") - bigInt("11111111111"))
 
         // Both negative
-        assertEquals(BigInt2("-10000000000"), BigInt2("-21111111111") - BigInt2("-11111111111"))
-        assertEquals(BigInt2("30000000000"), BigInt2("-21111111111") - BigInt2("-51111111111"))
+        assertEquals(bigInt("-10000000000"), bigInt("-21111111111") - bigInt("-11111111111"))
+        assertEquals(bigInt("30000000000"), bigInt("-21111111111") - bigInt("-51111111111"))
     }
 
     @Test

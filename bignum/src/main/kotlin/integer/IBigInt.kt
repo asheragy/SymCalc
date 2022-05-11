@@ -13,12 +13,12 @@ interface IBigInt {
     fun toInt(): Int
     fun toBigInteger(): BigInteger // For BigDecimal constructor
     fun toBigDecimal(): BigDecimal
-    fun negate(): IBigInt
+    //fun negate(): IBigInt
     //fun add(other: IBigInt): IBigInt
     //fun subtract(other: IBigInt): IBigInt
-    fun multiply(other: IBigInt): IBigInt
+    //fun multiply(other: IBigInt): IBigInt
     fun divide(other: IBigInt): IBigInt
-    fun pow(n: Int): IBigInt
+    //fun pow(n: Int): IBigInt
     //fun sqrtRemainder(): Pair<IBigInt, IBigInt>
     fun gcd(n: IBigInt): IBigInt
     fun mod(m: IBigInt): IBigInt

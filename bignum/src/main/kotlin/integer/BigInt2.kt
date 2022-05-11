@@ -111,45 +111,10 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
     }
 
     // Operators
-    operator fun times(other: BigInt2): BigInt2 = this.multiply(other)
-    operator fun times(other: IBigInt): BigInt2 = this.multiply(other as BigInt2)
     operator fun div(other: BigInt2): BigInt2 = this.divide(other)
     operator fun div(other: IBigInt): BigInt2 = this.divide(other as BigInt2)
 
     override fun getInstance(sign: Byte, arr: UIntArray) = BigInt2(sign, arr)
-
-    override fun subtract(other: BigInt2): BigInt2 {
-        if (sign == POSITIVE && other.sign == NEGATIVE)
-            return BigInt2(1, BigIntArray.add(arr, other.arr))
-        else if (sign == NEGATIVE && other.sign == POSITIVE)
-            return BigInt2(-1, BigIntArray.add(arr, other.arr))
-        else if (sign == ZEROSIGN)
-            return other.negate()
-        else if (other.sign == ZEROSIGN)
-            return this
-
-        // Sign is equal but need to subtract
-        return when (BigIntArray.compare(arr, other.arr)) {
-            -1 -> return BigInt2(-1 * sign, BigIntArray.subtract(other.arr, arr))
-            1 -> return BigInt2(sign, BigIntArray.subtract(arr, other.arr))
-            else -> ZERO
-        }
-    }
-
-    override fun multiply(other: IBigInt) = this.multiply(other as BigInt2)
-    fun multiply(other: BigInt2): BigInt2 {
-        if (sign == ZEROSIGN || other.sign == ZEROSIGN)
-            return ZERO
-
-        return BigInt2(
-            if(sign == other.sign) 1 else -1,
-            when {
-                arr.size == 1 -> BigIntArray.multiply(other.arr, arr[0])
-                other.arr.size == 1 -> BigIntArray.multiply(arr, other.arr[0])
-                else -> BigIntArray.multiply(arr, other.arr)
-            }
-        )
-    }
 
     override fun divide(other: IBigInt) = this.divide(other as BigInt2)
     fun divide(other: BigInt2): BigInt2 = divideAndRemainder(other).first as BigInt2
@@ -204,25 +169,7 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
         }
     }
 
-    override fun negate() = if (sign == ZEROSIGN) this else BigInt2(-1 * sign, arr)
     override fun abs() = if (sign == NEGATIVE) BigInt2(1, arr) else this
-
-    override fun pow(n: Int): IBigInt {
-        return when(n.sign) {
-            -1 -> throw UnsupportedOperationException("exponent cannot be negative")
-            0 -> ONE
-            else -> {
-                if (n == 1 || this == ONE)
-                    return this
-
-                if (this == NEGATIVE_ONE)
-                    return if(n % 2 == 0) this.negate() else this
-
-                val resultSign = if(sign == (-1).toByte() && n % 2 == 1) -1 else 1
-                return BigInt2(resultSign.toByte(), BigIntArray.pow(arr, n))
-            }
-        }
-    }
 
     override fun gcd(n: IBigInt): IBigInt {
         n as BigInt2
@@ -428,6 +375,9 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
 
     override fun add(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.add(x, y)
     override fun subtract(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.subtract(x, y)
+    override fun multiply(x: UIntArray, y: UIntArray) = BigIntArray.multiply(x, y)
+    override fun multiply(x: UIntArray, y: UInt) = BigIntArray.multiply(x, y)
+    override fun pow(x: UIntArray, n: Int) = BigIntArray.pow(x, n)
 }
 
 fun BigInteger.toBigInt(): BigInt2 = BigInt2(this.toString())

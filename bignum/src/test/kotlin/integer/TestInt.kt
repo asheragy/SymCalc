@@ -10,9 +10,9 @@ class TestInt(private val value: BigInt<*>) : BigInt<TestInt> {
         get() = value as BigInt10
 
     override fun add(other: TestInt) = TestInt(if(is2) two.add(other.two) else ten.add(other.ten))
-    override fun subtract(other: TestInt): TestInt {
-        TODO("Not yet implemented")
-    }
+    override fun subtract(other: TestInt) = TestInt(if(is2) two.subtract(other.two) else ten.subtract(other.ten))
+    override fun multiply(other: TestInt) = TestInt(if(is2) two.multiply(other.two) else ten.multiply(other.ten))
+    override fun pow(n: Int) = TestInt(if(is2) two.pow(n) else ten.pow(n))
 
     override fun toString() = value.toString()
 
@@ -21,6 +21,10 @@ class TestInt(private val value: BigInt<*>) : BigInt<TestInt> {
     }
 
     override fun sqrtRemainder(): Pair<TestInt, TestInt> {
+        TODO("Not yet implemented")
+    }
+
+    override fun negate(): TestInt {
         TODO("Not yet implemented")
     }
 
