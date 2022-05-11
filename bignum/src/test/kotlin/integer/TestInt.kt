@@ -16,17 +16,14 @@ class TestInt(private val value: BigInt<*>) : BigInt<TestInt> {
 
     override fun toString() = value.toString()
 
-    override fun compareTo(other: TestInt): Int {
-        TODO("Not yet implemented")
-    }
+    override fun compareTo(other: TestInt) = if(is2) two.compareTo(other.two) else ten.compareTo(other.ten)
 
     override fun sqrtRemainder(): Pair<TestInt, TestInt> {
         TODO("Not yet implemented")
     }
 
-    override fun negate(): TestInt {
-        TODO("Not yet implemented")
-    }
+    override fun negate() = TestInt(if(is2) two.negate() else ten.negate())
+    override fun abs() = TestInt(if(is2) two.abs() else ten.abs())
 
     override fun equals(other: Any?): Boolean {
         return if (other is TestInt)

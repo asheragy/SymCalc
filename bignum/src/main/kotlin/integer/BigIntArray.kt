@@ -1,8 +1,5 @@
 package org.cerion.math.bignum.integer
 
-import org.cerion.math.bignum.integer.toShiftedUInt
-import java.lang.RuntimeException
-
 private operator fun UIntArray.compareTo(other: UIntArray): Int = BigIntArray.compare(this, other)
 
 @ExperimentalUnsignedTypes
@@ -76,7 +73,7 @@ object BigIntArray {
         while(index < a.size && carry) {
             sum = a[index] + (sum / 1000000000u)
             carry = sum >= 1000000000u
-            arr[index++] = sum
+            arr[index++] = sum % 1000000000u
         }
 
         // If there is still a digit to carry add it and return
@@ -135,7 +132,7 @@ object BigIntArray {
         var diff = 0
 
         while(index < y.size) {
-            diff = x[index].toInt() - y[index].toInt() + if (diff < 0) 1000000000 else 0
+            diff = x[index].toInt() - y[index].toInt() - if(diff < 0) 1 else 0
             arr[index++] = diff.toUInt() + if(diff < 0) 1000000000u else 0u
         }
 

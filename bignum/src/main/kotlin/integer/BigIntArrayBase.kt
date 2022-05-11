@@ -80,6 +80,18 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
         }
     }
 
+    override fun compareTo(other: T): Int {
+        if (sign != other.sign)
+            return sign.compareTo(other.sign)
+
+        return when(sign) {
+            NEGATIVE -> BigIntArray.compare(other.arr, arr)
+            POSITIVE -> BigIntArray.compare(arr, other.arr)
+            else -> 0
+        }
+    }
+
+    override fun abs() = if (sign == NEGATIVE) getInstance(1, arr) else this as T
     override fun negate() = if (sign == ZEROSIGN) this as T else getInstance((-1 * sign).toByte(), arr)
 
     private fun getZero() = getInstance(ZEROSIGN, UIntArray(0))

@@ -8,6 +8,7 @@ import kotlin.test.*
 @ExperimentalUnsignedTypes
 internal class BigIntTest {
 
+    // TODO when done verify no instance of BigInt2 exist
     // TODO make BigInt2Test for these since 10 will use a different variation
     private fun fromArray(vararg n: Int): BigInt2 = BigInt2(1, n.map { it.toUInt() }.reversed().toUIntArray())
 
@@ -35,7 +36,20 @@ internal class BigIntTest {
     }
 
     @Test
-    fun addition() {
+    fun fromInteger() = run {
+        assertEquals("0", bigInt(0).toString())
+        assertEquals("1", bigInt(1).toString())
+        assertEquals("-1", bigInt(-1).toString())
+        assertEquals("999999999", bigInt(999999999).toString())
+        assertEquals("-999999999", bigInt(-999999999).toString())
+        assertEquals("1000000000", bigInt(1000000000).toString())
+        assertEquals("-1000000000", bigInt(-1000000000).toString())
+        assertEquals("2147483647", bigInt(Int.MAX_VALUE).toString())
+        assertEquals("-2147483648", bigInt(Int.MIN_VALUE).toString())
+    }
+
+    @Test
+    fun addition() = run {
         assertEquals(fromArray(1,0), fromArray(-1) + fromArray(1))
 
         // Digit carried
@@ -47,7 +61,7 @@ internal class BigIntTest {
     }
 
     @Test
-    fun subtract() {
+    fun subtract() = run {
         assertEquals(fromArray(2,2), fromArray(3,3) - fromArray(1,1))
 
         // Digits borrowed
@@ -190,7 +204,7 @@ internal class BigIntTest {
      */
 
     @Test
-    fun compare() {
+    fun compare() = run {
         assertTrue(fromArray(1,2) > fromArray(9))
         assertTrue(fromArray(9) < fromArray(1,0))
 
@@ -208,10 +222,10 @@ internal class BigIntTest {
     }
 
     @Test
-    fun abs() {
-        assertEquals(BigInt2(11), BigInt2(11).abs())
-        assertEquals(BigInt2(11), BigInt2(-11).abs())
-        assertEquals(BigInt2(0), BigInt2(0).abs())
+    fun abs() = run {
+        assertEquals(bigInt(11), bigInt(11).abs())
+        assertEquals(bigInt(11), bigInt(-11).abs())
+        assertEquals(bigInt(0), bigInt(0).abs())
     }
 
     @Test
@@ -317,6 +331,20 @@ internal class BigIntTest {
     }
 
     private class TestScope(val case: Int) {
+        fun bigInt(n: Int) = TestInt(if(case == 0) BigInt2(n) else BigInt10(n))
         fun bigInt(value: String): TestInt = if(case == 0) TestInt(BigInt2(value)) else TestInt(BigInt10(value))
+        fun fromArray(vararg digits: Int): TestInt {
+            if(case == 0)
+                return TestInt(BigInt2(1, digits.map { it.toUInt() }.reversed().toUIntArray()))
+
+            val arr = digits.map {
+                if (it < 0)
+                    (1000000000 + it).toUInt()
+                else
+                    it.toUInt()
+            }.reversed().toUIntArray()
+
+            return TestInt(BigInt10(1, arr))
+        }
     }
 }

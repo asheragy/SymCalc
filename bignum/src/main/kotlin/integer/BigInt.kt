@@ -7,6 +7,7 @@ interface BigInt<T : BigInt<T>> : Comparable<T> {
 
     fun pow(n: Int): T
     fun negate(): T
+    fun abs(): T
 
     // Operators
     operator fun plus(other: T): T = this.add(other)

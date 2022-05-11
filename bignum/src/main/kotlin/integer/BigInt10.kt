@@ -1,5 +1,8 @@
 package org.cerion.math.bignum.integer
 
+import kotlin.math.absoluteValue
+import kotlin.math.sign
+
 @ExperimentalUnsignedTypes
 class BigInt10 : BigIntArrayBase<BigInt10> {
     override val sign: Byte
@@ -15,7 +18,22 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
     constructor(sign: Byte, arr: UIntArray) {
         this.sign = sign
         this.arr = arr
+
+        validate()
     }
+
+    constructor(n: Int) {
+        sign = n.sign.toByte()
+        arr = if (n == 0)
+            UIntArray(0)
+        else if (n > 999999999 || n < -999999999)
+            uintArrayOf((n % 1000000000).absoluteValue.toUInt(), (n / 1000000000).absoluteValue.toUInt())
+        else
+            UIntArray(1) { n.absoluteValue.toUInt() }
+
+        validate()
+    }
+
     constructor(str: String) {
         val n = str.trimStart('-', '0')
         if (n.isEmpty()) {
@@ -31,6 +49,15 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         // loop in chunks of string length
         val digits = n.reversed().chunked(9).map { Integer.parseInt(it.reversed()).toUInt() }
         this.arr = digits.toUIntArray()
+
+        validate()
+    }
+
+    private fun validate() {
+        // TODO temp debugging
+        for(digit in arr)
+            if (digit > 999999999u)
+                throw RuntimeException("invalid digit")
     }
 
     override fun toString(): String {
@@ -54,10 +81,6 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
     override fun getInstance(sign: Byte, arr: UIntArray) = BigInt10(sign, arr)
 
     override fun equals(other: Any?) = other is BigInt10 && sign == other.sign && arr.contentEquals(other.arr)
-
-    override fun compareTo(other: BigInt10): Int {
-        TODO("Not yet implemented")
-    }
 
     override fun sqrtRemainder(): Pair<BigInt10, BigInt10> {
         TODO("Not yet implemented")

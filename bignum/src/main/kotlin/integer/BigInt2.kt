@@ -169,8 +169,6 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
         }
     }
 
-    override fun abs() = if (sign == NEGATIVE) BigInt2(1, arr) else this
-
     override fun gcd(n: IBigInt): IBigInt {
         n as BigInt2
         if (this.sign == ZEROSIGN)
@@ -294,17 +292,6 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
 
         val remainder = this - (x * x)
         return Pair(x, remainder)
-    }
-
-    override fun compareTo(other: BigInt2): Int {
-        if (sign != other.sign)
-            return sign.compareTo(other.sign)
-
-        return when(sign) {
-            NEGATIVE -> BigIntArray.compare(other.arr, arr)
-            POSITIVE -> BigIntArray.compare(arr, other.arr)
-            else -> 0
-        }
     }
 
     override fun toString(): String {
