@@ -118,8 +118,70 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         TODO("Not yet implemented")
     }
 
-    override fun add(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.add10(x, y)
-    override fun subtract(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.subtract10(x, y)
+    //region array operations
+
+    override fun add(x: UIntArray, y: UIntArray): UIntArray {
+        val a = if (x.size >= y.size) x else y
+        val b = if (x.size >= y.size) y else x
+
+        val arr = UIntArray(a.size)
+        var index = 0
+        var sum: UInt = 0u
+
+        // Add digits while array lengths are the same
+        while(index < b.size) {
+            sum = a[index] + b[index] + (sum / 1000000000u)
+            arr[index++] = sum % 1000000000u
+        }
+
+        // Add digits for larger number while digit is still carried
+        var carry = sum >= 1000000000u
+        while(index < a.size && carry) {
+            sum = a[index] + (sum / 1000000000u)
+            carry = sum >= 1000000000u
+            arr[index++] = sum % 1000000000u
+        }
+
+        // If there is still a digit to carry add it and return
+        if (carry) {
+            val t = arr.copyOf(arr.size + 1)
+            t[arr.size] = 1u
+            return t
+        }
+
+        // If no more carry just add the remaining digits
+        while(index < a.size)
+            arr[index] = a[index++]
+
+        return arr
+    }
+
+    override fun subtract(x: UIntArray, y: UIntArray): UIntArray {
+        if(x < y)
+            throw ArithmeticException("invalid subtraction") // TODO remove temp error checking
+
+        // Input is always expected to have x as the largest array and adjust result sign accordingly
+        val arr = UIntArray(x.size) // TODO is there a benefit in copying starting array? need to performance test first
+        var index = 0
+        var diff = 0
+
+        while(index < y.size) {
+            diff = x[index].toInt() - y[index].toInt() - if(diff < 0) 1 else 0
+            arr[index++] = diff.toUInt() + if(diff < 0) 1000000000u else 0u
+        }
+
+        var borrow = diff < 0
+        while(index < x.size && borrow) {
+            diff = x[index].toInt() - 1
+            borrow = diff < 0
+            arr[index++] = diff.toUInt() + if(diff < 0) 1000000000u else 0u
+        }
+
+        while(index < x.size)
+            arr[index] = x[index++]
+
+        return removeLeadingZeros(arr)
+    }
 
     override fun multiply(x: UIntArray, y: UInt): UIntArray {
         val result = UIntArray(x.size + 1) // Allocate carried digit by default
@@ -132,7 +194,7 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         }
 
         result[x.size] = (t / BASE).toUInt()
-        return BigIntArray.removeLeadingZeros(result)
+        return removeLeadingZeros(result)
     }
 
     override fun multiply(x: UIntArray, y: UIntArray): UIntArray {
@@ -167,6 +229,15 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
             i++
         }
 
-        return BigIntArray.removeLeadingZeros(z)
+        return removeLeadingZeros(z)
     }
+
+    override fun divide(n: UIntArray, d: UIntArray): Pair<UIntArray, UIntArray?> {
+        TODO("Not yet implemented")
+    }
+
+    override fun divide(x: UIntArray, y: UInt): Pair<UIntArray, UInt> {
+        TODO("Not yet implemented")
+    }
+    //endregion
 }

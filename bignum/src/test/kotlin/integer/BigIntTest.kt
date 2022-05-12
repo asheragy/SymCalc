@@ -148,9 +148,9 @@ internal class BigIntTest {
 
     @Test
     fun divisionSingleDigit() {
-        assertEquals(fromArray(1,1,1,1), fromArray(1,0,0,0,0).divide(4294967295u))
-        assertEquals(fromArray(1,1,1,1), fromArray(-1,-1,-1,-1).divide(4294967295u))
-        assertEquals(fromArray(2147483647,-1,-1,-1), fromArray(-1,-1,-1,-2).divide(2u))
+        assertEquals(fromArray(1,1,1,1), fromArray(1,0,0,0,0).divide(BigInt2("4294967295")))
+        assertEquals(fromArray(1,1,1,1), fromArray(-1,-1,-1,-1).divide(BigInt2("4294967295")))
+        assertEquals(fromArray(2147483647,-1,-1,-1), fromArray(-1,-1,-1,-2).divide(BigInt2("2")))
     }
 
     @Test

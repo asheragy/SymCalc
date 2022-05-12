@@ -21,7 +21,7 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
 
             // Subtract since one side is negative
             else ->
-                when (BigIntArray.compare(arr, other.arr)) {
+                when (compare(arr, other.arr)) {
                     -1 -> getInstance((-1 * sign).toByte(), subtract(other.arr, arr))
                     1 -> getInstance(sign, subtract(arr, other.arr))
                     else -> getInstance(ZEROSIGN, UIntArray(0))
@@ -40,7 +40,7 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
             return this as T
 
         // Sign is equal but need to subtract
-        return when (BigIntArray.compare(arr, other.arr)) {
+        return when (compare(arr, other.arr)) {
             -1 -> return getInstance((-1 * sign).toByte(), subtract(other.arr, arr))
             1 -> return getInstance(sign, subtract(arr, other.arr))
             else -> getZero()
@@ -59,6 +59,36 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
                 else -> multiply(arr, other.arr)
             }
         )
+    }
+
+    override fun divide(other: T) = divideAndRemainder(other).first
+
+    override fun divideAndRemainder(other: T): Pair<T, T> {
+        var sign = (sign * other.sign).toByte()
+
+        if (other.arr.size == 1) {
+            val result = divide(arr, other.arr[0])
+            val remainder = getInstance(sign, UIntArray(1) { result.second })
+
+            return Pair(getInstance(sign, result.first), remainder)
+        }
+
+        // TODO replace compare with overloaded operator
+        val div = if (arr < other.arr) // x/y = 0 rem x when x<y
+            Pair(UIntArray(0), arr)
+        else
+            divide(this.arr, other.arr)
+
+        val rem = when {
+            div.second == null -> getZero()
+            sign == (-1).toByte() -> getInstance(NEGATIVE, div.second!!)
+            else -> getInstance(POSITIVE, div.second!!)
+        }
+
+        if (div.first.isEmpty())
+            sign = 0
+
+        return Pair(getInstance(sign, div.first), rem)
     }
 
     override fun pow(n: Int): T {
@@ -85,8 +115,8 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
             return sign.compareTo(other.sign)
 
         return when(sign) {
-            NEGATIVE -> BigIntArray.compare(other.arr, arr)
-            POSITIVE -> BigIntArray.compare(arr, other.arr)
+            NEGATIVE -> compare(other.arr, arr)
+            POSITIVE -> compare(arr, other.arr)
             else -> 0
         }
     }
@@ -100,10 +130,12 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
 
     abstract fun getInstance(sign: Byte, arr: UIntArray): T
 
-    abstract fun add(x: UIntArray, y: UIntArray): UIntArray
-    abstract fun subtract(x: UIntArray, y: UIntArray): UIntArray
-    abstract fun multiply(x: UIntArray, y: UIntArray): UIntArray
-    abstract fun multiply(x: UIntArray, y: UInt): UIntArray
+    protected abstract fun add(x: UIntArray, y: UIntArray): UIntArray
+    protected abstract fun subtract(x: UIntArray, y: UIntArray): UIntArray
+    protected abstract fun multiply(x: UIntArray, y: UIntArray): UIntArray
+    protected abstract fun multiply(x: UIntArray, y: UInt): UIntArray
+    protected abstract fun divide(n: UIntArray, d: UIntArray): Pair<UIntArray,UIntArray?>
+    protected abstract fun divide(x: UIntArray, y: UInt): Pair<UIntArray, UInt>
 
     protected fun pow(x: UIntArray, n: Int): UIntArray {
         var result = UIntArray(1) { 1u }
@@ -118,6 +150,35 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
         }
 
         return result
+    }
+
+    protected operator fun UIntArray.compareTo(other: UIntArray): Int = compare(this, other)
+    protected fun compare(x: UIntArray, y: UIntArray): Int {
+        val size = x.size.compareTo(y.size)
+        if (size != 0)
+            return size
+
+        // Start at most significant digit
+        for (i in x.size - 1 downTo 0)
+            if (x[i].compareTo(y[i]) != 0)
+                return x[i].compareTo(y[i])
+
+        return 0
+    }
+
+    protected fun removeLeadingZeros(arr: UIntArray): UIntArray {
+        var digits = 0
+        for(i in arr.size -1 downTo 0) {
+            if (arr[i] == 0u)
+                digits++
+            else
+                break
+        }
+
+        if (digits > 0) // TODO, this drops elements from end of array is there a way to do that without copy?
+            return arr.copyOf(arr.size - digits)
+
+        return arr
     }
 }
 

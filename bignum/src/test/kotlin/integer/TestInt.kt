@@ -12,6 +12,12 @@ class TestInt(private val value: BigInt<*>) : BigInt<TestInt> {
     override fun add(other: TestInt) = TestInt(if(is2) two.add(other.two) else ten.add(other.ten))
     override fun subtract(other: TestInt) = TestInt(if(is2) two.subtract(other.two) else ten.subtract(other.ten))
     override fun multiply(other: TestInt) = TestInt(if(is2) two.multiply(other.two) else ten.multiply(other.ten))
+    override fun divide(other: TestInt) = TestInt(if(is2) two.divide(other.two) else ten.divide(other.ten))
+    override fun divideAndRemainder(other: TestInt): Pair<TestInt, TestInt> {
+        val result = if(is2) two.divideAndRemainder(other.two) else ten.divideAndRemainder(other.ten)
+        return Pair(TestInt(result.first), TestInt(result.second))
+    }
+
     override fun pow(n: Int) = TestInt(if(is2) two.pow(n) else ten.pow(n))
 
     override fun toString() = value.toString()
