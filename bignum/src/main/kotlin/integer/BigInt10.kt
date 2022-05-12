@@ -112,8 +112,6 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
 
     override fun getInstance(sign: Byte, arr: UIntArray) = BigInt10(sign, arr)
 
-    override fun equals(other: Any?) = other is BigInt10 && sign == other.sign && arr.contentEquals(other.arr)
-
     override fun sqrtRemainder(): Pair<BigInt10, BigInt10> {
         TODO("Not yet implemented")
     }

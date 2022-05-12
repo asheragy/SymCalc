@@ -121,6 +121,20 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
         }
     }
 
+    override fun equals(other: Any?): Boolean {
+        // TODO not technically correct but both subclasses are not intended to be used together
+        if (other is BigIntArrayBase<*>)
+            return sign == other.sign && arr.contentEquals(other.arr)
+
+        return false
+    }
+
+    override fun hashCode(): Int {
+        var result = sign.toInt()
+        result = 31 * result + arr.hashCode()
+        return result
+    }
+
     override fun abs() = if (sign == NEGATIVE) getInstance(1, arr) else this as T
     override fun negate() = if (sign == ZEROSIGN) this as T else getInstance((-1 * sign).toByte(), arr)
 

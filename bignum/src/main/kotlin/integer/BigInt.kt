@@ -11,6 +11,7 @@ interface BigInt<T : BigInt<T>> : Comparable<T> {
     fun abs(): T
     fun toDouble(): Double
     fun toInt(): Int
+    override fun equals(other: Any?): Boolean
 
     // Operators
     operator fun plus(other: T): T = this.add(other)

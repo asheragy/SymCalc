@@ -5,7 +5,7 @@ import java.math.BigInteger
 
 @Deprecated("unused")
 interface IBigInt {
-    override fun equals(other: Any?): Boolean
+    ///override fun equals(other: Any?): Boolean
     //fun abs(): IBigInt
     fun signum(): Int
     fun testBit(n: Int): Boolean

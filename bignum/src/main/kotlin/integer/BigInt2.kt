@@ -111,7 +111,6 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
 
     override fun getInstance(sign: Byte, arr: UIntArray) = BigInt2(sign, arr)
 
-    override fun equals(other: Any?) = other is BigInt2 && sign == other.sign && arr.contentEquals(other.arr)
     override fun signum() = sign.toInt()
 
     override fun testBit(n: Int): Boolean {
@@ -307,12 +306,6 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
 
         // TODO drop zero values
         return BigInt2(sign, newArr.toUIntArray())
-    }
-
-    override fun hashCode(): Int {
-        var result = sign.toInt()
-        result = 31 * result + arr.hashCode()
-        return result
     }
 
     private val bitLength: UInt
