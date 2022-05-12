@@ -91,6 +91,7 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
 
     }
 
+    /*
     override fun toBigDecimal(): BigDecimal = toBigInteger().toBigDecimal()
     override fun toBigInteger(): BigInteger {
         val constructor = BigInteger::class.constructors.toList()[11] // Signum / int[]
@@ -99,6 +100,7 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
         val copy = arr.map { it.toInt() }.reversed().toIntArray()
         return constructor.call(sign, copy)
     }
+     */
 
     fun validate() {
         // Temp error checking
@@ -147,7 +149,7 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
                     result += arr[i].toDouble()
                 }
 
-                return result
+                return result * sign
             }
         }
     }
@@ -364,7 +366,6 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
     override fun subtract(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.subtract(x, y)
     override fun multiply(x: UIntArray, y: UIntArray) = BigIntArray.multiply(x, y)
     override fun multiply(x: UIntArray, y: UInt) = BigIntArray.multiply(x, y)
-    override fun pow(x: UIntArray, n: Int) = BigIntArray.pow(x, n)
 }
 
 fun BigInteger.toBigInt(): BigInt2 = BigInt2(this.toString())

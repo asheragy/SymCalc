@@ -12,6 +12,7 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         val ZERO = BigInt10(0, UIntArray(0))
         val ONE = BigInt10(1, UIntArray(1) { 1u })
         val NEGATIVE_ONE = BigInt10(-1, UIntArray(1) { 1u })
+        val BASE = 1000000000u
     }
 
     constructor(s: Int, arr: UIntArray) : this (s.toByte(), arr)
@@ -78,6 +79,37 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         return sb.toString()
     }
 
+    override fun toDouble(): Double {
+        return when (arr.size) {
+            0 -> 0.0
+            1 -> arr[0].toDouble() * sign
+            else -> {
+                var result = arr.last().toDouble()
+                for(i in arr.size-2 downTo 0) {
+                    result *= BASE.toDouble()
+                    result += arr[i].toDouble()
+                }
+
+                return result * sign
+            }
+        }
+    }
+
+    override fun toInt(): Int {
+        return when (arr.size) {
+            0 -> 0
+            1 -> arr[0].toInt() * sign
+            2 -> {
+                val longValue = (arr[0] + (arr[1]* BASE.toULong())).toLong() * sign
+                if (longValue > Integer.MAX_VALUE || longValue < Integer.MIN_VALUE)
+                    throw ArithmeticException()
+
+                longValue.toInt()
+            }
+            else -> throw ArithmeticException()
+        }
+    }
+
     override fun getInstance(sign: Byte, arr: UIntArray) = BigInt10(sign, arr)
 
     override fun equals(other: Any?) = other is BigInt10 && sign == other.sign && arr.contentEquals(other.arr)
@@ -88,15 +120,53 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
 
     override fun add(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.add10(x, y)
     override fun subtract(x: UIntArray, y: UIntArray): UIntArray = BigIntArray.subtract10(x, y)
-    override fun multiply(x: UIntArray, y: UIntArray): UIntArray {
-        TODO("Not yet implemented")
-    }
 
     override fun multiply(x: UIntArray, y: UInt): UIntArray {
-        TODO("Not yet implemented")
+        val result = UIntArray(x.size + 1) // Allocate carried digit by default
+        var t = 0uL
+        var i = 0
+
+        while(i < x.size) {
+            t = (x[i].toULong() * y) + (t / BASE)
+            result[i++] = (t % BASE).toUInt()
+        }
+
+        result[x.size] = (t / BASE).toUInt()
+        return BigIntArray.removeLeadingZeros(result)
     }
 
-    override fun pow(x: UIntArray, n: Int): UIntArray {
-        TODO("Not yet implemented")
+    override fun multiply(x: UIntArray, y: UIntArray): UIntArray {
+        val xlen = x.size
+        val ylen = y.size
+        val z = UIntArray(xlen + ylen)
+
+        var carry = 0uL
+        var j = 0
+        while (j < ylen) {
+            val product = y[j].toULong() * x[0].toULong() + carry
+            z[j] = (product % BASE).toUInt()
+            carry = (product / BASE)
+            j++
+        }
+
+        z[ylen] = (carry % BASE).toUInt()
+
+        var i = 1
+        while (i < xlen) {
+            carry = 0uL
+            j = 0
+            var k = i
+            while (j < ylen) {
+                val product = y[j].toULong() * x[i].toULong() + z[k].toULong() + carry
+                z[k] = (product % BASE).toUInt()
+                carry = (product / BASE)
+                j++
+                k++
+            }
+            z[ylen + i] = (carry % BASE).toUInt()
+            i++
+        }
+
+        return BigIntArray.removeLeadingZeros(z)
     }
 }

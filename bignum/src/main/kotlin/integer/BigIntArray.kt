@@ -203,21 +203,6 @@ object BigIntArray {
         return removeLeadingZeros(z)
     }
 
-    internal fun pow(x: UIntArray, n: Int): UIntArray {
-        var result = UIntArray(1) { 1u }
-        var square = x
-        var m = n
-        while(m > 0) {
-            if (m % 2 == 1)
-                result = multiply(square, result)
-
-            square = multiply(square, square)
-            m /= 2
-        }
-
-        return result
-    }
-
     /**
      * Division with only first significant digit of divisor
      * ex: 88888/777 --> 88800/700 --> 888/7
@@ -313,7 +298,7 @@ object BigIntArray {
         return Pair(removeLeadingZeros(result), r.toShiftedUInt())
     }
 
-    private fun removeLeadingZeros(arr: UIntArray): UIntArray {
+    fun removeLeadingZeros(arr: UIntArray): UIntArray {
         var digits = 0
         for(i in arr.size -1 downTo 0) {
             if (arr[i] == 0u)

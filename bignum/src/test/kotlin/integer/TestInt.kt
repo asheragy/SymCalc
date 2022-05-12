@@ -24,6 +24,8 @@ class TestInt(private val value: BigInt<*>) : BigInt<TestInt> {
 
     override fun negate() = TestInt(if(is2) two.negate() else ten.negate())
     override fun abs() = TestInt(if(is2) two.abs() else ten.abs())
+    override fun toDouble() = if(is2) two.toDouble() else ten.toDouble()
+    override fun toInt() = if(is2) two.toInt() else ten.toInt()
 
     override fun equals(other: Any?): Boolean {
         return if (other is TestInt)

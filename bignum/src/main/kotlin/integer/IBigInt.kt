@@ -9,10 +9,10 @@ interface IBigInt {
     //fun abs(): IBigInt
     fun signum(): Int
     fun testBit(n: Int): Boolean
-    fun toDouble(): Double
-    fun toInt(): Int
-    fun toBigInteger(): BigInteger // For BigDecimal constructor
-    fun toBigDecimal(): BigDecimal
+    //fun toDouble(): Double
+    //fun toInt(): Int
+    //fun toBigInteger(): BigInteger // For BigDecimal constructor
+    //fun toBigDecimal(): BigDecimal
     //fun negate(): IBigInt
     //fun add(other: IBigInt): IBigInt
     //fun subtract(other: IBigInt): IBigInt

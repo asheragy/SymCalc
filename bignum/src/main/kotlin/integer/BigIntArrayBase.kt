@@ -54,9 +54,9 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
         return getInstance(
             if(sign == other.sign) 1 else -1,
             when {
-                arr.size == 1 -> BigIntArray.multiply(other.arr, arr[0])
-                other.arr.size == 1 -> BigIntArray.multiply(arr, other.arr[0])
-                else -> BigIntArray.multiply(arr, other.arr)
+                arr.size == 1 -> multiply(other.arr, arr[0])
+                other.arr.size == 1 -> multiply(arr, other.arr[0])
+                else -> multiply(arr, other.arr)
             }
         )
     }
@@ -75,7 +75,7 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
                     return if(n % 2 == 0) this.negate() else this as T
 
                 val resultSign = if(sign == (-1).toByte() && n % 2 == 1) -1 else 1
-                return getInstance(resultSign.toByte(), BigIntArray.pow(arr, n))
+                return getInstance(resultSign.toByte(), pow(arr, n))
             }
         }
     }
@@ -104,6 +104,20 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
     abstract fun subtract(x: UIntArray, y: UIntArray): UIntArray
     abstract fun multiply(x: UIntArray, y: UIntArray): UIntArray
     abstract fun multiply(x: UIntArray, y: UInt): UIntArray
-    abstract fun pow(x: UIntArray, n: Int): UIntArray
+
+    protected fun pow(x: UIntArray, n: Int): UIntArray {
+        var result = UIntArray(1) { 1u }
+        var square = x
+        var m = n
+        while(m > 0) {
+            if (m % 2 == 1)
+                result = multiply(square, result)
+
+            square = multiply(square, square)
+            m /= 2
+        }
+
+        return result
+    }
 }
 

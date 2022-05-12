@@ -103,13 +103,13 @@ internal class BigIntTest {
     }
 
     @Test
-    fun multiplySingleDigit() {
+    fun multiplySingleDigit() = run {
         assertEquals(fromArray(10,10,10), fromArray(1,1,1) * fromArray(10))
         assertEquals(fromArray(9,-1,-1,-10), fromArray(-1,-1,-1) * fromArray(10))
     }
 
     @Test
-    fun multiply() {
+    fun multiply() = run {
         assertEquals(fromArray(1,2,3,2,1), fromArray(1,1,1) * fromArray(1,1,1))
 
         // Digits carried
@@ -129,10 +129,10 @@ internal class BigIntTest {
     }
 
     @Test
-    fun multiplySigned() {
-        val zero = BigInt2.ZERO
-        val a = BigInt2("100000000000")
-        val abig = BigInt2("10000000000000000000000")
+    fun multiplySigned() = run {
+        val zero = bigInt("0")
+        val a = bigInt("100000000000")
+        val abig = bigInt("10000000000000000000000")
 
         assertEquals(zero, zero * zero)
         assertEquals(zero, zero * a)
@@ -240,16 +240,19 @@ internal class BigIntTest {
     }
 
     @Test
-    fun toNumber() {
-        assertEquals(0.0, BigInt2("0").toDouble())
-        assertEquals(0, BigInt2("0").toInt())
+    fun toNumber() = run {
+        assertEquals(0.0, bigInt("0").toDouble())
+        assertEquals(0, bigInt("0").toInt())
 
-        assertEquals(1234567890.0, BigInt2("1234567890").toDouble())
-        assertEquals(4000000000.0, BigInt2("4000000000").toDouble())
-        assertEquals(1234567890, BigInt2("1234567890").toInt())
+        assertEquals(1234567890.0, bigInt("1234567890").toDouble())
+        assertEquals(4000000000.0, bigInt("4000000000").toDouble())
+        assertEquals(1234567890, bigInt("1234567890").toInt())
 
-        assertEquals(-1234567890.0, BigInt2("-1234567890").toDouble())
-        assertEquals(-1234567890, BigInt2("-1234567890").toInt())
+        assertEquals(-1234567890.0, bigInt("-1234567890").toDouble())
+        assertEquals(-1234567890, bigInt("-1234567890").toInt())
+
+        assertEquals(123456789000000.0, bigInt("123456789000000").toDouble())
+        assertEquals(-123456789000000.0, bigInt("-123456789000000").toDouble())
     }
 
     @Test
@@ -272,15 +275,15 @@ internal class BigIntTest {
     }
 
     @Test
-    fun pow() {
-        assertEquals(BigInt2(1), BigInt2(12345).pow(0))
-        assertEquals(BigInt2(12345), BigInt2(12345).pow(1))
-        assertEquals(BigInt2(1), BigInt2(1).pow(2147483647))
-        assertEquals(BigInt2(-1), BigInt2(-1).pow(2147483647))
+    fun pow() = run {
+        assertEquals(bigInt(1), bigInt(12345).pow(0))
+        assertEquals(bigInt(12345), bigInt(12345).pow(1))
+        assertEquals(bigInt(1), bigInt(1).pow(2147483647))
+        assertEquals(bigInt(-1), bigInt(-1).pow(2147483647))
 
-        assertEquals(BigInt2(32), BigInt2(2).pow(5))
-        assertEquals(BigInt2(-32), BigInt2(-2).pow(5))
-        assertEquals(BigInt2("1267650600228229401496703205376"), BigInt2(2).pow(100))
+        assertEquals(bigInt(32), bigInt(2).pow(5))
+        assertEquals(bigInt(-32), bigInt(-2).pow(5))
+        assertEquals(bigInt("1267650600228229401496703205376"), bigInt(2).pow(100))
     }
 
     @Test
