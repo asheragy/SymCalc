@@ -230,12 +230,57 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         return removeLeadingZeros(z)
     }
 
-    override fun divide(n: UIntArray, d: UIntArray): Pair<UIntArray, UIntArray?> {
-        TODO("Not yet implemented")
+    override fun divide(x: UIntArray, y: UInt): Pair<UIntArray, UInt> {
+        var index = x.size - 1
+        var r = if (x.last() / y == 0u)
+            (x[index--].toULong() * BASE)
+        else
+            0uL
+
+        val result = UIntArray(index+1)
+
+        while(index >= 0) {
+            val t = r + x[index]
+            result[index] = (t / y).toUInt()
+            r = (t % y) * BASE
+            index--
+        }
+
+        return Pair(removeLeadingZeros(result), (r / BASE).toUInt())
     }
 
-    override fun divide(x: UIntArray, y: UInt): Pair<UIntArray, UInt> {
-        TODO("Not yet implemented")
+    /**
+     * Division with only first significant digit of divisor
+     * ex: 88888/777 --> 88800/700 --> 888/7
+     */
+    override fun fastDivide(n: UIntArray, d: UIntArray): UIntArray {
+        if (d.size > n.size)
+            return UIntArray(0)
+
+        val offset = d.size - 1
+        val y = d.last()
+        // For reference this is what needs to be computed
+        //val n1 = n.toList().drop(offset).toUIntArray()
+        //return  divideAndRemainder(n1, y).first
+
+        var index = n.size - 1
+        var r = if (n.last() / y == 0u)
+            (n[index--].toULong() * BASE)
+        else
+            0uL
+
+        val result = UIntArray(index+1-offset)
+        while(index >= offset) {
+            val t = r + n[index]
+            result[index-offset] = (t / y).toUInt()
+            // TODO unsure if toUInt above is always valid
+            if (result[index-offset] >= BASE)
+                throw RuntimeException("BigInt10.fastDivide error")
+            r = (t % y) * BASE
+            index--
+        }
+
+        return removeLeadingZeros(result)
     }
     //endregion
 }

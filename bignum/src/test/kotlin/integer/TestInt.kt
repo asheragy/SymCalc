@@ -18,6 +18,7 @@ class TestInt(private val value: BigInt<*>) : BigInt<TestInt> {
         return Pair(TestInt(result.first), TestInt(result.second))
     }
 
+    override fun gcd(n: TestInt) = TestInt(if(is2) two.gcd(n.two) else ten.gcd(n.ten))
     override fun pow(n: Int) = TestInt(if(is2) two.pow(n) else ten.pow(n))
 
     override fun toString() = value.toString()

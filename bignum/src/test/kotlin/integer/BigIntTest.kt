@@ -8,9 +8,7 @@ import kotlin.test.*
 @ExperimentalUnsignedTypes
 internal class BigIntTest {
 
-    // TODO when done verify no instance of BigInt2 exist
-    // TODO make BigInt2Test for these since 10 will use a different variation
-    private fun fromArray(vararg n: Int): BigInt2 = BigInt2(1, n.map { it.toUInt() }.reversed().toUIntArray())
+    // TODO when done verify only expected instance of BigInt2 and 10 exist + fromArray2
 
     @Test
     fun parse() = run {
@@ -121,7 +119,7 @@ internal class BigIntTest {
 
     @Test
     fun debug() {
-        assertEquals(fromArray(-1,-2,-1,0,1), fromArray(-1,-1,-1) * fromArray(-1, -1))
+        assertEquals(fromArray2(-1,-2,-1,0,1), fromArray2(-1,-1,-1) * fromArray2(-1, -1))
         //assertEquals(bigInt(-1,-1,-2,0,0,1), bigInt(-1,-1,-1) * bigInt(-1,-1,-1))
         //BigInteger("79228162514264337593543950335") * BigInteger("18446744073709551615")
 
@@ -147,41 +145,49 @@ internal class BigIntTest {
     }
 
     @Test
-    fun divisionSingleDigit() {
-        assertEquals(fromArray(1,1,1,1), fromArray(1,0,0,0,0).divide(BigInt2("4294967295")))
-        assertEquals(fromArray(1,1,1,1), fromArray(-1,-1,-1,-1).divide(BigInt2("4294967295")))
-        assertEquals(fromArray(2147483647,-1,-1,-1), fromArray(-1,-1,-1,-2).divide(BigInt2("2")))
+    fun divisionSingleDigit_base2() {
+        assertEquals(fromArray2(1,1,1,1), fromArray2(1,0,0,0,0).divide(BigInt2("4294967295")))
+        assertEquals(fromArray2(1,1,1,1), fromArray2(-1,-1,-1,-1).divide(BigInt2("4294967295")))
+        assertEquals(fromArray2(2147483647,-1,-1,-1), fromArray2(-1,-1,-1,-2).divide(BigInt2("2")))
     }
 
     @Test
-    fun division() {
-        assertEquals(Pair(fromArray(-1), BigInt2.ZERO), fromArray(-1,-1).divideAndRemainder(fromArray(1,1)))
-        assertEquals(Pair(fromArray(-1), BigInt2.ONE), fromArray(1, 0, 0).divideAndRemainder(fromArray(1,1)))
-        assertEquals(Pair(fromArray(-1,0), BigInt2.ZERO), fromArray(-1,-1,0).divideAndRemainder(fromArray(1,1)))
-        assertEquals(Pair(fromArray(-1,0), fromArray(-1)), fromArray(-1,-1,-1).divideAndRemainder(fromArray(1,1)))
-        assertEquals(Pair(fromArray(-1,0,-1), BigInt2.ZERO), fromArray(-1,-1,-1,-1).divideAndRemainder(fromArray(1,1)))
+    fun divisionSingleDigit_base10() {
+        val result = fromArray10(1,0,0,1).divideAndRemainder(BigInt10("2"))
+        assertEquals(fromArray10(500000000,0,0), result.first)
+        assertEquals(fromArray10(1), result.second)
 
-        assertEquals(Pair(BigInt2("5384072782"), BigInt2("12548692603041114205")), BigInt2("75628712337421087763136048659").divideAndRemainder(
-            BigInt2("14046747766433220397")
-        ))
-        assertEquals(Pair(BigInt2("68"), BigInt2("999999999999")), BigInt2("7556555555555547").divideAndRemainder(
-            BigInt2("111111111111111")
-        ))
-        assertEquals(Pair(BigInt2("9000000000000"), BigInt2("999999999999")), BigInt2("999999999999999999999999999").divideAndRemainder(
-            BigInt2("111111111111111")
-        ))
+        assertEquals(fromArray10(1,1,1,1), fromArray10(1,0,0,0,0).divide(BigInt10("999999999")))
+        assertEquals(fromArray10(1,1,1,1), fromArray10(-1,-1,-1,-1).divide(BigInt10("999999999")))
+        assertEquals(fromArray10(499999999,-1,-1,-1), fromArray10(-1,-1,-1,-2).divide(BigInt10("2")))
+    }
+
+    @Test
+    fun division() = run {
+        assertEquals(Pair(fromArray(-1), ZERO), fromArray(-1,-1).divideAndRemainder(fromArray(1,1)))
+        assertEquals(Pair(fromArray(-1), ONE), fromArray(1, 0, 0).divideAndRemainder(fromArray(1,1)))
+        assertEquals(Pair(fromArray(-1,0), ZERO), fromArray(-1,-1,0).divideAndRemainder(fromArray(1,1)))
+        assertEquals(Pair(fromArray(-1,0), fromArray(-1)), fromArray(-1,-1,-1).divideAndRemainder(fromArray(1,1)))
+        assertEquals(Pair(fromArray(-1,0,-1), ZERO), fromArray(-1,-1,-1,-1).divideAndRemainder(fromArray(1,1)))
+
+        assertEquals(Pair(bigInt("5384072782"), bigInt("12548692603041114205")),
+            bigInt("75628712337421087763136048659").divideAndRemainder(bigInt("14046747766433220397")))
+        assertEquals(Pair(bigInt("68"), bigInt("999999999999")),
+            bigInt("7556555555555547").divideAndRemainder(bigInt("111111111111111")))
+        assertEquals(Pair(bigInt("9000000000000"), bigInt("999999999999")),
+            bigInt("999999999999999999999999999").divideAndRemainder(bigInt("111111111111111")))
 
         // Negative remainder
-        assertEquals(Pair(BigInt2("-24"), BigInt2("-1")), BigInt2("-49").divideAndRemainder(BigInt2(2)))
-        assertEquals(Pair(BigInt2("-12"), BigInt2("-2")), BigInt2(-350).divideAndRemainder(BigInt2(29)))
+        assertEquals(Pair(bigInt("-24"), bigInt("-1")), bigInt("-49").divideAndRemainder(bigInt(2)))
+        assertEquals(Pair(bigInt("-12"), bigInt("-2")), bigInt(-350).divideAndRemainder(bigInt(29)))
     }
 
     @Test
-    fun divisionSigned() {
-        assertEquals(BigInt2(5), BigInt2(25) / BigInt2(5))
-        assertEquals(BigInt2(-5), BigInt2(-25) / BigInt2(5))
-        assertEquals(BigInt2(-5), BigInt2(25) / BigInt2(-5))
-        assertEquals(BigInt2(5), BigInt2(-25) / BigInt2(-5))
+    fun divisionSigned() = run {
+        assertEquals(bigInt(5), bigInt(25) / bigInt(5))
+        assertEquals(bigInt(-5), bigInt(-25) / bigInt(5))
+        assertEquals(bigInt(-5), bigInt(25) / bigInt(-5))
+        assertEquals(bigInt(5), bigInt(-25) / bigInt(-5))
     }
 
     /*
@@ -265,13 +271,13 @@ internal class BigIntTest {
     }
 
     @Test
-    fun gcd() {
-        assertEquals(BigInt2(24), BigInt2(24).gcd(BigInt2(24)))
-        assertEquals(BigInt2(1), BigInt2(25).gcd(BigInt2(24)))
-        assertEquals(BigInt2(21), BigInt2(1071).gcd(BigInt2(462)))
-        assertEquals(BigInt2(6), BigInt2(270).gcd(BigInt2(-192)))
-        assertEquals(BigInt2(2), BigInt2(-2).gcd(BigInt2(2)))
-        assertEquals(BigInt2(229), BigInt2("52139749485151463").gcd(BigInt2("179883737510857067")))
+    fun gcd() = run {
+        assertEquals(bigInt(24), bigInt(24).gcd(bigInt(24)))
+        assertEquals(bigInt(1), bigInt(25).gcd(bigInt(24)))
+        assertEquals(bigInt(21), bigInt(1071).gcd(bigInt(462)))
+        assertEquals(bigInt(6), bigInt(270).gcd(bigInt(-192)))
+        assertEquals(bigInt(2), bigInt(-2).gcd(bigInt(2)))
+        assertEquals(bigInt(229), bigInt("52139749485151463").gcd(bigInt("179883737510857067")))
     }
 
     @Test
@@ -336,10 +342,20 @@ internal class BigIntTest {
     private class TestScope(val case: Int) {
         fun bigInt(n: Int) = TestInt(if(case == 0) BigInt2(n) else BigInt10(n))
         fun bigInt(value: String): TestInt = if(case == 0) TestInt(BigInt2(value)) else TestInt(BigInt10(value))
+        val ZERO: TestInt
+            get() = TestInt(if(case == 0) BigInt2.ZERO else BigInt10.ZERO)
+        val ONE: TestInt
+            get() = TestInt(if(case == 0) BigInt2.ONE else BigInt10.ONE)
         fun fromArray(vararg digits: Int): TestInt {
             if(case == 0)
-                return TestInt(BigInt2(1, digits.map { it.toUInt() }.reversed().toUIntArray()))
+                return TestInt(fromArray2(*digits))
 
+            return TestInt(fromArray10(*digits))
+        }
+    }
+
+    companion object {
+        fun fromArray10(vararg digits: Int): BigInt10 {
             val arr = digits.map {
                 if (it < 0)
                     (1000000000 + it).toUInt()
@@ -347,7 +363,12 @@ internal class BigIntTest {
                     it.toUInt()
             }.reversed().toUIntArray()
 
-            return TestInt(BigInt10(1, arr))
+            return BigInt10(1, arr)
         }
+
+        fun fromArray2(vararg n: Int): BigInt2 = BigInt2(1, n.map { it.toUInt() }.reversed().toUIntArray())
     }
+
+
+
 }

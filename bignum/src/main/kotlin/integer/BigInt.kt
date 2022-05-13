@@ -7,6 +7,7 @@ interface BigInt<T : BigInt<T>> : Comparable<T> {
     fun divide(other: T): T
 
     fun pow(n: Int): T
+    fun gcd(n: T): T
     fun negate(): T
     fun abs(): T
     fun toDouble(): Double

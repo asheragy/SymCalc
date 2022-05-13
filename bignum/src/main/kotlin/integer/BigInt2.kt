@@ -156,37 +156,9 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
         }
     }
 
-    override fun gcd(n: IBigInt): IBigInt {
-        n as BigInt2
-        if (this.sign == ZEROSIGN)
-            return n
-        else if (n.sign == ZEROSIGN)
-            return this
-
-        // A is the larger of the two numbers
-        var a: UIntArray
-        var b: UIntArray
-        when(compare(arr, n.arr)) {
-            1 -> { a = arr; b = n.arr }
-            -1 -> { b = arr; a = n.arr }
-            else -> return this.abs()
-        }
-
-        var c = divide(a, b)
-
-        // No remainder, GCD is B
-        while (c.second != null) {
-            a = b
-            b = c.second!!
-            c = divide(a, b)
-        }
-
-        return BigInt2(1, b)
-    }
-
     override fun mod(m: IBigInt): IBigInt {
         m as BigInt2
-        val rem = this.divideAndRemainder(m).second as BigInt2
+        val rem = this.divideAndRemainder(m).second
 
         if (rem.sign == NEGATIVE)
             return m + rem
@@ -233,8 +205,8 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
 
         val two = BigInt2(2)
         while (true) {
-            val x2 = x.pow(2) as BigInt2
-            var xplus2 = x.add(ONE).pow(2) as BigInt2
+            val x2 = x.pow(2)
+            var xplus2 = x.add(ONE).pow(2)
 
             if (x2 <= this && xplus2 > this)
                 break
@@ -351,11 +323,6 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
         return arr
     }
 
-    private fun subtract(x: UIntArray, y: UInt): UIntArray {
-        // TODO implement this without calling the other for slight efficiency
-        return subtract(x, UIntArray(1) { y })
-    }
-
     override fun subtract(x: UIntArray, y: UIntArray): UIntArray {
         if(x < y)
             throw ArithmeticException("invalid subtraction") // TODO remove temp error checking
@@ -437,51 +404,6 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
         return removeLeadingZeros(z)
     }
 
-    // http://justinparrtech.com/JustinParr-Tech/an-algorithm-for-arbitrary-precision-integer-division/
-    override fun divide(n: UIntArray, d: UIntArray): Pair<UIntArray,UIntArray?> {
-        // Assumes n > d
-        if (n < d)
-            throw RuntimeException("numerator must be greater than denominator")
-
-        var q = fastDivide(n, d)
-
-        while(true) {
-            var qd = multiply(q, d)
-            val comp = compare(qd, n)
-            if (comp == 0) // Exact, no remainder
-                return Pair(q,null)
-
-            // This indicates if remainder is negative or not
-            var r = if (comp == 1) subtract(qd, n) else subtract(n, qd)
-            // TODO add Qn
-
-            val ra = fastDivide(r, d)
-            if (ra.isNotEmpty()) {
-                q = if (comp == -1)
-                    add(q, ra)
-                else
-                    subtract(q, ra)
-            }
-
-            if (r < d) {
-                // Done, get latest R based on Q
-                qd = multiply(q, d)
-
-                if (n > qd) {
-                    r = subtract(n, qd)
-                }
-                else {
-                    r = subtract(qd, n)
-                    // Remainder is negative, make it positive and remove 1 from quotient
-                    q = subtract(q, 1u)
-                    r = subtract(d, r)
-                }
-
-                return Pair(q, r)
-            }
-        }
-    }
-
     override fun divide(x: UIntArray, y: UInt): Pair<UIntArray, UInt> {
         var index = x.size - 1
         var r = if (x.last() / y == 0u)
@@ -505,7 +427,7 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
      * Division with only first significant digit of divisor
      * ex: 88888/777 --> 88800/700 --> 888/7
      */
-    private fun fastDivide(n: UIntArray, d: UIntArray): UIntArray {
+    override fun fastDivide(n: UIntArray, d: UIntArray): UIntArray {
         if (d.size > n.size)
             return UIntArray(0)
 
