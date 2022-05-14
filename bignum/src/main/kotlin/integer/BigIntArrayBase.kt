@@ -68,9 +68,11 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
 
         if (other.arr.size == 1) {
             val result = divide(arr, other.arr[0])
+            val dividend = getInstance(if(result.first.isEmpty()) ZEROSIGN else sign, result.first)
+            // TODO should remainder sign be negative?
             val remainder = getInstance(sign, UIntArray(1) { result.second })
 
-            return Pair(getInstance(sign, result.first), remainder)
+            return Pair(dividend, remainder)
         }
 
         // TODO replace compare with overloaded operator
@@ -135,6 +137,15 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
         }
 
         return getInstance(1, b)
+    }
+
+    override fun mod(m: T): T {
+        val rem = this.divideAndRemainder(m).second
+
+        if (rem.sign == NEGATIVE)
+            return m + rem
+
+        return rem
     }
 
     override fun compareTo(other: T): Int {

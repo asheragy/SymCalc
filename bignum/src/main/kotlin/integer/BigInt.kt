@@ -8,6 +8,8 @@ interface BigInt<T : BigInt<T>> : Comparable<T> {
 
     fun pow(n: Int): T
     fun gcd(n: T): T
+    fun mod(m: T): T
+    fun modPow(exponent: T, m: T): T
     fun negate(): T
     fun abs(): T
     fun toDouble(): Double

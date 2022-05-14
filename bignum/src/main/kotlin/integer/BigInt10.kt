@@ -110,6 +110,31 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         }
     }
 
+    // Less efficient than BigInt2 version since digits cannot be isolated
+    override fun modPow(exponent: BigInt10, m: BigInt10): BigInt10 {
+        if (exponent == ZERO)
+            return ONE
+
+        var result = ONE
+        var square = this
+        var current = exponent
+        val two = BigInt10(2)
+
+        while(current != ZERO) {
+            val div = current.divideAndRemainder(two)
+            if (div.second == ONE) {
+                val a = square * result
+                val b = a.mod(m)
+                result = b
+            }
+
+            square = (square * square).mod(m)
+            current = div.first
+        }
+
+        return result
+    }
+
     override fun getInstance(sign: Byte, arr: UIntArray) = BigInt10(sign, arr)
 
     override fun sqrtRemainder(): Pair<BigInt10, BigInt10> {

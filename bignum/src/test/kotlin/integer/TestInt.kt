@@ -20,6 +20,8 @@ class TestInt(private val value: BigInt<*>) : BigInt<TestInt> {
 
     override fun gcd(n: TestInt) = TestInt(if(is2) two.gcd(n.two) else ten.gcd(n.ten))
     override fun pow(n: Int) = TestInt(if(is2) two.pow(n) else ten.pow(n))
+    override fun modPow(exponent: TestInt, m: TestInt) = TestInt(if(is2) two.modPow(exponent.two, m.two) else ten.modPow(exponent.ten, m.ten))
+    override fun mod(m: TestInt) = TestInt(if(is2) two.mod(m.two) else ten.mod(m.ten))
 
     override fun toString() = value.toString()
 

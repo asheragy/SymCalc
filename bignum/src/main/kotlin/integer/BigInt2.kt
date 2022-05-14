@@ -156,20 +156,7 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
         }
     }
 
-    override fun mod(m: IBigInt): IBigInt {
-        m as BigInt2
-        val rem = this.divideAndRemainder(m).second
-
-        if (rem.sign == NEGATIVE)
-            return m + rem
-
-        return rem
-    }
-
-    override fun modPow(exponent: IBigInt, m: IBigInt): IBigInt {
-        exponent as BigInt2
-        m as BigInt2
-
+    override fun modPow(exponent: BigInt2, m: BigInt2): BigInt2 {
         if (exponent == ZERO)
             return ONE
 
@@ -181,10 +168,10 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
                 if (n % 2u == 1u) {
                     val a = square * result
                     val b = a.mod(m)
-                    result = b as BigInt2
+                    result = b
                 }
 
-                square = (square * square).mod(m) as BigInt2
+                square = (square * square).mod(m)
                 n /= 2u
             }
         }

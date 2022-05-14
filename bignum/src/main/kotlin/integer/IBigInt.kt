@@ -21,8 +21,8 @@ interface IBigInt {
     //fun pow(n: Int): IBigInt
     //fun sqrtRemainder(): Pair<IBigInt, IBigInt>
     //fun gcd(n: IBigInt): IBigInt
-    fun mod(m: IBigInt): IBigInt
-    fun modPow(exponent: IBigInt, m: IBigInt): IBigInt
+    //fun mod(m: IBigInt): IBigInt
+    //fun modPow(exponent: IBigInt, m: IBigInt): IBigInt
     fun isProbablePrime(certainty: Int): Boolean
     //fun divideAndRemainder(other: IBigInt): Pair<IBigInt, IBigInt>
 }

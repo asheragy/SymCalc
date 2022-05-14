@@ -293,18 +293,20 @@ internal class BigIntTest {
     }
 
     @Test
-    fun mod() {
-        assertEquals(BigInt2(1), BigInt2(7).mod(BigInt2(3)))
-        assertEquals(BigInt2(2), BigInt2(-7).mod(BigInt2(3)))
+    fun mod() = run {
+        assertEquals(bigInt(1), bigInt(7).mod(bigInt(3)))
+        assertEquals(bigInt(2), bigInt(-7).mod(bigInt(3)))
     }
 
     @Test
-    fun modPow() {
-        val a = BigInt2("1234567890987654321")
-        val e = BigInt2("1122334455667788990")
-        val m = BigInt2("5555555555555555555")
+    fun modPow() = run {
+        assertEquals(bigInt(1), bigInt(2).modPow(bigInt(10), bigInt(3)))
+        assertEquals(bigInt(8), bigInt(5).modPow(bigInt(3), bigInt(13)))
 
-        assertEquals(BigInt2("498317946897227631"), a.modPow(e, m))
+        val a = bigInt("1234567890987654321")
+        val e = bigInt("1122334455667788990")
+        val m = bigInt("5555555555555555555")
+        assertEquals(bigInt("498317946897227631"), a.modPow(e, m))
     }
 
     @Test
