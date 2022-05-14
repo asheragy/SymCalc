@@ -1,7 +1,6 @@
 package org.cerion.math.bignum.integer
 
-import kotlin.math.absoluteValue
-import kotlin.math.sign
+import kotlin.math.*
 
 @ExperimentalUnsignedTypes
 class BigInt10 : BigIntArrayBase<BigInt10> {
@@ -136,10 +135,38 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
     }
 
     override fun getInstance(sign: Byte, arr: UIntArray) = BigInt10(sign, arr)
+    override fun getInstance(value: String) = BigInt10(value)
 
-    override fun sqrtRemainder(): Pair<BigInt10, BigInt10> {
-        TODO("Not yet implemented")
+    override fun shiftRight(n: UInt): BigInt10 {
+        val pow = BigInt10(2).pow(n.toInt())
+        if (pow > this)
+            return ZERO
+
+        return this.divide(pow)
     }
+
+    override fun shiftLeft(n: UInt): BigInt10 {
+        val pow = BigInt10(2).pow(n.toInt())
+        return this.times(pow)
+    }
+
+    override val bitLength: UInt
+        get() {
+            if (sign == ZEROSIGN)
+                return 0u
+
+            // TODO inefficient but unsure what else to do
+            // 2^29 largest single digit we can divide by
+            val divideBy = BigInt10(536870912)
+            var remaining = this
+            var length = 0u
+            while(remaining > divideBy) {
+                remaining = remaining.divide(divideBy)
+                length += 29u
+            }
+
+            return length + remaining.arr[0].bitLength()
+        }
 
     //region array operations
 

@@ -4,7 +4,7 @@ import kotlin.math.*
 
 
 @ExperimentalUnsignedTypes
-class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
+class BigInt2 : BigIntArrayBase<BigInt2> {
     override val sign: Byte
     override val arr: UIntArray
 
@@ -110,18 +110,7 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
     }
 
     override fun getInstance(sign: Byte, arr: UIntArray) = BigInt2(sign, arr)
-
-    override fun signum() = sign.toInt()
-
-    override fun testBit(n: Int): Boolean {
-        if (n != 0)
-            throw Exception() // only supporting to check for odd
-
-        if (sign == ZEROSIGN)
-            return false
-
-        return arr[0] % 2u != 0u
-    }
+    override fun getInstance(value: String) = BigInt2(value)
 
     override fun toDouble(): Double {
         return when (arr.size) {
@@ -179,8 +168,57 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
         return result
     }
 
-    override fun sqrtRemainder(): Pair<BigInt2, BigInt2> {
+    override fun toString(): String {
+        if (sign == ZEROSIGN)
+            return "0"
+
+        val sb = StringBuilder()
+
+        if (arr.size == 1) {
+            sb.append(arr[0])
+        }
+        else {
+            var remaining = arr
+            while (remaining.size > 1) {
+                val t = divide(remaining, 1000000000u)
+                remaining = t.first
+                sb.insert(0, "0".repeat(9 - t.second.toString().length) + t.second.toString())
+            }
+
+            if (remaining[0] != 0u)
+                sb.insert(0, remaining[0])
+        }
+
         if (sign == NEGATIVE)
+            sb.insert(0, "-")
+
+        return sb.toString()
+    }
+
+    override fun shiftLeft(n: UInt): BigInt2 {
+        // TODO improve this to do real shift
+        val pow = BigInt2(2).pow(n.toInt())
+        return this.times(pow)
+    }
+
+    override fun shiftRight(n: UInt): BigInt2 {
+        if (n == 0u)
+            return this
+
+        val shift = (n % 32u).toInt()
+        val drop = (n / 32u).toInt()
+        if (drop >= arr.size)
+            return ZERO
+
+        val newArr = arr.drop(drop).toUIntArray()
+        val twoPow = 2.0.pow(shift.toDouble()).toUInt()
+
+        val result = divide(newArr, twoPow).first
+        return BigInt2(sign, result)
+    }
+
+    override fun sqrtRemainder(): Pair<BigInt2, BigInt2> {
+        if (sign == BigIntArrayBase.NEGATIVE)
             throw ArithmeticException()
 
         // Newton method, get initial estimate
@@ -212,63 +250,11 @@ class BigInt2 : IBigInt, BigIntArrayBase<BigInt2> {
         return Pair(x, remainder)
     }
 
-    override fun toString(): String {
-        if (sign == ZEROSIGN)
-            return "0"
-
-        val sb = StringBuilder()
-
-        if (arr.size == 1) {
-            sb.append(arr[0])
-        }
-        else {
-            var remaining = arr
-            while (remaining.size > 1) {
-                val t = divide(remaining, 1000000000u)
-                remaining = t.first
-                sb.insert(0, "0".repeat(9 - t.second.toString().length) + t.second.toString())
-            }
-
-            if (remaining[0] != 0u)
-                sb.insert(0, remaining[0])
-        }
-
-        if (sign == NEGATIVE)
-            sb.insert(0, "-")
-
-        return sb.toString()
-    }
-
-    override fun isProbablePrime(certainty: Int): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    private fun shiftLeft(n: UInt): BigInt2 {
-        var result = this
-
-        // TODO improve this to do real shift
-        repeat(n.toInt()) {
-            result = result * BigInt2(2)
-        }
-
-        return result
-    }
-
-    // TODO Java version is returning different in sqrtAndRemainder test but this is not necessarily wrong
-    private fun shiftRight(n: UInt): BigInt2 {
-        val shift = (n % 32u).toInt()
-        val drop = n / 32u
-        val newArr = arr.drop(drop.toInt()).toMutableList()
-
-        for(i in newArr.indices)
-            newArr[i] = newArr[i] shr shift
-
-        // TODO drop zero values
-        return BigInt2(sign, newArr.toUIntArray())
-    }
-
-    private val bitLength: UInt
+    override val bitLength: UInt
         get() {
+            if (arr.isEmpty())
+                return 0u
+
             return ((arr.size - 1) * 32).toUInt() + arr.last().bitLength()
         }
 

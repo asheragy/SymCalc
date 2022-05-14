@@ -14,6 +14,9 @@ interface BigInt<T : BigInt<T>> : Comparable<T> {
     fun abs(): T
     fun toDouble(): Double
     fun toInt(): Int
+    fun signum(): Int
+    fun testBit(n: Int): Boolean
+    val bitLength: UInt
     override fun equals(other: Any?): Boolean
 
     // Operators
@@ -22,6 +25,12 @@ interface BigInt<T : BigInt<T>> : Comparable<T> {
     operator fun times(other: T): T = this.multiply(other)
     operator fun div(other: T): T = this.divide(other)
 
+    fun shiftRight(n: UInt): T
+    fun shiftLeft(n: UInt): T
+
     fun divideAndRemainder(other: T): Pair<T, T>
     fun sqrtRemainder(): Pair<T, T>
+
+    // TODO
+    // fun isProbablePrime(certainty: Int): Boolean
 }

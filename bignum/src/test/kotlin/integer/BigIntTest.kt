@@ -7,9 +7,6 @@ import kotlin.test.*
 
 @ExperimentalUnsignedTypes
 internal class BigIntTest {
-
-    // TODO when done verify only expected instance of BigInt2 and 10 exist + fromArray2
-
     @Test
     fun parse() = run {
         // Tests to and from string
@@ -235,14 +232,14 @@ internal class BigIntTest {
     }
 
     @Test
-    fun testBit() {
-        assertFalse(BigInt2("123456789022").testBit(0))
-        assertFalse(BigInt2("-2").testBit(0))
-        assertFalse(BigInt2("0").testBit(0))
+    fun testBit() = run {
+        assertFalse(bigInt("123456789022").testBit(0))
+        assertFalse(bigInt("-2").testBit(0))
+        assertFalse(bigInt("0").testBit(0))
 
-        assertTrue(BigInt2("12345678901").testBit(0))
-        assertTrue(BigInt2("1").testBit(0))
-        assertTrue(BigInt2("-1").testBit(0))
+        assertTrue(bigInt("12345678901").testBit(0))
+        assertTrue(bigInt("1").testBit(0))
+        assertTrue(bigInt("-1").testBit(0))
     }
 
     @Test
@@ -262,10 +259,10 @@ internal class BigIntTest {
     }
 
     @Test
-    fun toNumberInvalid() {
+    fun toNumberInvalid() = run {
         val invalid = listOf("3000000000", "-3000000000")
         invalid.forEach {
-            val n = BigInt2(it)
+            val n = bigInt(it)
             assertFailsWith(ArithmeticException::class) { n.toInt() }
         }
     }
@@ -310,15 +307,46 @@ internal class BigIntTest {
     }
 
     @Test
-    fun sqrtAndRemainder() {
-        var sqrt = BigInt2("10000000000000000000009").sqrtRemainder()
-        assertEquals(BigInt2("100000000000"), sqrt.first)
-        assertEquals(BigInt2("9"), sqrt.second)
+    fun bitShift_left() = run {
+        assertEquals(bigInt("1"), bigInt("1").shiftLeft(0u))
+        assertEquals(bigInt("2"), bigInt("1").shiftLeft(1u))
+        assertEquals(bigInt("4294967296"), bigInt("1").shiftLeft(32u))
+        assertEquals(bigInt("8589934592"), bigInt("4294967296").shiftLeft(1u))
+        assertEquals(bigInt("102400"), bigInt("100").shiftLeft(10u))
+        assertEquals(bigInt("102400"), bigInt("100").shiftLeft(10u))
+        assertEquals(bigInt("102400"), bigInt("100").shiftLeft(10u))
+        assertEquals(bigInt("295147905179352825856"), bigInt("16").shiftLeft(64u))
+    }
+
+    @Test
+    fun bitShift_right() = run {
+        assertEquals(bigInt("4294967296"), bigInt("4294967296").shiftRight(0u))
+        assertEquals(bigInt("2147483648"), bigInt("4294967296").shiftRight(1u))
+        assertEquals(bigInt("0"), bigInt("4294967296").shiftRight(99u))
+        assertEquals(bigInt("4294967296"), bigInt("8589934592").shiftRight(1u))
+        assertEquals(bigInt("291038304567"), bigInt("10000000000000000000000").shiftRight(35u))
+        assertEquals(bigInt("323375893963"), bigInt("11111111111111111111111").shiftRight(35u))
+    }
+
+    @Test
+    fun sqrtAndRemainder() = run {
+        var sqrt = bigInt("10000000000000000000009").sqrtRemainder()
+        assertEquals(bigInt("100000000000"), sqrt.first)
+        assertEquals(bigInt("9"), sqrt.second)
 
         // Initial value is not determined by converting to double
-        sqrt = BigInt2("10000000000000000000000000000000000000009").sqrtRemainder()
-        Assertions.assertEquals(BigInt2("100000000000000000000"), sqrt.first)
-        Assertions.assertEquals(BigInt2("9"), sqrt.second)
+        sqrt = bigInt("10000000000000000000000000000000000000009").sqrtRemainder()
+        Assertions.assertEquals(bigInt("100000000000000000000"), sqrt.first)
+        Assertions.assertEquals(bigInt("9"), sqrt.second)
+    }
+
+    @Test
+    fun bitLength() = run {
+        assertEquals(0u, bigInt(0).bitLength)
+        assertEquals(1u, bigInt(1).bitLength)
+        assertEquals(2u, bigInt(2).bitLength)
+        assertEquals(32u, bigInt("4294967295").bitLength)
+        assertEquals(33u, bigInt("4294967296").bitLength)
     }
 
     /*
@@ -370,7 +398,4 @@ internal class BigIntTest {
 
         fun fromArray2(vararg n: Int): BigInt2 = BigInt2(1, n.map { it.toUInt() }.reversed().toUIntArray())
     }
-
-
-
 }

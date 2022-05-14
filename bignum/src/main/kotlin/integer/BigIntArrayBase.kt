@@ -1,6 +1,8 @@
 package org.cerion.math.bignum.integer
 
+import kotlin.math.roundToLong
 import kotlin.math.sign
+import kotlin.math.sqrt
 
 @ExperimentalUnsignedTypes
 abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
@@ -12,6 +14,8 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
         const val NEGATIVE = (-1).toByte()
         const val ZEROSIGN = 0.toByte()
     }
+
+    override fun signum() = sign.toInt()
 
     override fun add(other: T): T {
         return when {
@@ -148,6 +152,40 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
         return rem
     }
 
+    override fun sqrtRemainder(): Pair<T, T> {
+        this as T
+        if (sign == NEGATIVE)
+            throw ArithmeticException()
+
+        // Newton method, get initial estimate
+        val bl = bitLength
+        var x = if (bl > 120u)
+            shiftRight(bl / 2u - 1u)
+        else
+            getInstance("" + sqrt(toDouble()).roundToLong())
+
+        val two = getInstance("2")
+        while (true) {
+            val x2 = x.pow(2)
+            var xplus2 = x.add(getOne()).pow(2)
+
+            if (x2 <= this && xplus2 > this)
+                break
+
+            xplus2 = xplus2.subtract(x.shiftLeft(2u))
+            if (xplus2 <= this && x2 > this) {
+                x = x.subtract(getOne())
+                break
+            }
+
+            xplus2 = x2.subtract(this).divide(x).divide(two)
+            x = x.subtract(xplus2)
+        }
+
+        val remainder = this - (x * x)
+        return Pair(x, remainder)
+    }
+
     override fun compareTo(other: T): Int {
         if (sign != other.sign)
             return sign.compareTo(other.sign)
@@ -173,6 +211,17 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
         return result
     }
 
+    override fun testBit(n: Int): Boolean {
+        // only supporting to check for odd, for base 10^9 this would work up to n=29
+        if (n != 0)
+            throw Exception()
+
+        if (sign == ZEROSIGN)
+            return false
+
+        return arr[0] % 2u != 0u
+    }
+
     override fun abs() = if (sign == NEGATIVE) getInstance(1, arr) else this as T
     override fun negate() = if (sign == ZEROSIGN) this as T else getInstance((-1 * sign).toByte(), arr)
 
@@ -181,6 +230,7 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
     private fun getNegativeOne() = getInstance(-1, UIntArray(1) { 1u })
 
     abstract fun getInstance(sign: Byte, arr: UIntArray): T
+    abstract fun getInstance(value: String): T
 
     protected abstract fun add(x: UIntArray, y: UIntArray): UIntArray
     protected abstract fun subtract(x: UIntArray, y: UIntArray): UIntArray
@@ -195,7 +245,7 @@ abstract class BigIntArrayBase<T : BigIntArrayBase<T>> : BigInt<T> {
     }
 
     // http://justinparrtech.com/JustinParr-Tech/an-algorithm-for-arbitrary-precision-integer-division/
-    private fun divide(n: UIntArray, d: UIntArray): Pair<UIntArray,UIntArray?> {
+    protected fun divide(n: UIntArray, d: UIntArray): Pair<UIntArray,UIntArray?> {
         // Assumes n > d
         if (n < d)
             throw RuntimeException("numerator must be greater than denominator")
