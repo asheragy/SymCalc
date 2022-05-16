@@ -85,33 +85,6 @@ class BigDecTest {
     }
 
     @Test
-    fun divide() {
-        val mc = MathContext(10, RoundingMode.HALF_UP)
-        val test = BigDecimal("1000000000.000").divide(BigDecimal("33333.333"), mc)
-        val test2 = BigDecimal("1000000000.000").divide(BigDecimal("33333.333"), 10, RoundingMode.HALF_UP)
-
-
-        val a = BigDecimal("10000.00")
-        val b = BigDecimal("200")
-        val c = BigDecimal("0.000004")
-        val aa = BigDec("10000.00")
-        val bb = BigDec("200")
-        val cc = BigDec("0.000004")
-
-        assertEquals(BigDec("1.00"), aa / aa)
-        assertEquals(BigDec("1"), bb / bb)
-        assertEquals(BigDec("1.000000"), cc / cc)
-
-        //assertEquals(BigDecimal("50.00"), a / b)
-        assertEquals(BigDec("50.00"), aa / bb)
-        //assertEquals(BigDecimal("0.02"), b.divide(a, MathContext(10, RoundingMode.HALF_UP)))
-        //assertEquals(BigDecimal("2500000000.00"), a / c)
-        assertEquals(BigDecimal("0.0000000004"), c.divide(a, MathContext(10, RoundingMode.HALF_UP)))
-        assertEquals(BigDecimal("50000000"), b / c)
-        assertEquals(BigDecimal("0.00000002"), c.divide(b, MathContext(10, RoundingMode.HALF_UP)))
-    }
-
-    @Test
     fun divide_wholeNumbers() {
         // Exact
         assertEquals(BigDec("0.50000"), BigDec("1").divide(BigDec("2"), 5))
@@ -123,6 +96,7 @@ class BigDecTest {
         assertEquals(BigDec("0.33333"), BigDec("1").divide(BigDec("3"), 5))
         assertEquals(BigDec("0.3333333333333"), BigDec("1").divide(BigDec("3"), 13))
         assertEquals(BigDec("0.030303"), BigDec("1").divide(BigDec("33"), 5))
+        assertEquals(BigDec("30.9091"), BigDec("1020").divide(BigDec("33"), 6))
 
         // Rounding
         assertEquals(BigDec("0.99010"), BigDec("100").divide(BigDec("101"), 5))
@@ -130,7 +104,20 @@ class BigDecTest {
     }
 
     @Test
+    fun divide_sign() {
+        assertEquals(BigDec("-0.05"), BigDec("1").divide(BigDec("-20"), 1))
+        assertEquals(BigDec("-0.05"), BigDec("-1").divide(BigDec("20"), 1))
+        assertEquals(BigDec("0.05"), BigDec("-1").divide(BigDec("-20"), 1))
+    }
+
+    @Test
+    fun divide_real() {
+        assertEquals(BigDec("30.9091"), BigDec("10.20").divide(BigDec("0.33"), 6))
+    }
+
+    @Test
     fun debug() {
-        assertEquals(BigDec("1.5000"), BigDec("3").divide(BigDec("2"), 5))
+        //assertEquals(BigDec("1.5000"), BigDec("3").divide(BigDec("2"), 5))
+        assertEquals(BigDec("30.9091"), BigDec("1020").divide(BigDec("33"), 6))
     }
 }

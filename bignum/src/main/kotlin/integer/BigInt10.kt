@@ -157,7 +157,7 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         if (n > 0)
             return this.times(BigInt10("10").pow(n))
 
-        TODO("Not implemented")
+        return this.divide(BigInt10("10").pow(-n))
     }
 
     val digits: Int

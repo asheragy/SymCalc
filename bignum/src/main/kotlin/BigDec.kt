@@ -78,13 +78,14 @@ class BigDec {
 
     fun divide(other: BigDec, newPrecision: Int): BigDec {
         var numberatorExtraDigits = newPrecision - (precision - other.precision)
-        if (value > other.value)
+
+        // Test if scale is off by 1
+        val denominatorScaled = other.value.shift10(precision - other.precision)
+        if (value.abs() > denominatorScaled.abs())
             numberatorExtraDigits--
 
         val numerator = this.value.shift10(numberatorExtraDigits)
-
         var (result, rem) = numerator.divideAndRemainder(other.value)
-
 
         // TODO this could be improved, full division could be avoided
         // If remainder > divisor/2 round up by adding 1
