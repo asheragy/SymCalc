@@ -150,6 +150,24 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         return this.times(pow)
     }
 
+    // TODO this could be faster since its equivalent to bit shifting on normal numbers
+    fun shift10(n: Int): BigInt10 {
+        if (n == 0)
+            return this
+        if (n > 0)
+            return this.times(BigInt10("10").pow(n))
+
+        TODO("Not implemented")
+    }
+
+    val digits: Int
+        get() {
+            if (sign == ZEROSIGN)
+                return 1
+
+            return (arr.size - 1) * 10 + floor(log10(arr[arr.size - 1].toDouble())).toInt() + 1
+        }
+
     override val bitLength: UInt
         get() {
             if (sign == ZEROSIGN)

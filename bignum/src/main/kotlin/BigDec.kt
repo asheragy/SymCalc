@@ -1,16 +1,16 @@
 package org.cerion.math.bignum
 
-import org.cerion.math.bignum.integer.BigInt2
+import org.cerion.math.bignum.integer.BigInt10
 import kotlin.math.abs
 import kotlin.math.max
 
 @ExperimentalUnsignedTypes
 class BigDec {
 
-    val value: BigInt2
+    val value: BigInt10
     val scale: Int
 
-    constructor(value: BigInt2, scale: Int) {
+    constructor(value: BigInt10, scale: Int) {
         this.value = value
         this.scale = scale
     }
@@ -22,7 +22,7 @@ class BigDec {
         else
             scale = str.length - index - 1
 
-        value = BigInt2(str.replace(".", ""))
+        value = BigInt10(str.replace(".", ""))
     }
 
     override fun toString(): String {
@@ -51,7 +51,7 @@ class BigDec {
             return other + this
 
         val diff = other.scale - scale
-        val pow = BigInt2("10").pow(diff)
+        val pow = BigInt10("10").pow(diff)
         val scaled = this.value * pow
 
         return BigDec(scaled + other.value, other.scale)
@@ -62,7 +62,7 @@ class BigDec {
             return BigDec(value - other.value, scale)
 
         val diff = abs(other.scale - scale)
-        val pow = BigInt2("10").pow(diff)
+        val pow = BigInt10("10").pow(diff)
 
         val subtracted = if(scale < other.scale)
             (this.value * pow) - other.value
@@ -75,4 +75,39 @@ class BigDec {
     operator fun times(other: BigDec): BigDec {
         return BigDec(value * other.value, scale + other.scale)
     }
+
+    fun divide(other: BigDec, newPrecision: Int): BigDec {
+        var numberatorExtraDigits = newPrecision - (precision - other.precision)
+        if (value > other.value)
+            numberatorExtraDigits--
+
+        val numerator = this.value.shift10(numberatorExtraDigits)
+
+        var (result, rem) = numerator.divideAndRemainder(other.value)
+
+
+        // TODO this could be improved, full division could be avoided
+        // If remainder > divisor/2 round up by adding 1
+        if(rem.digits == other.value.digits - 1 || rem.digits == other.value.digits) {
+            val half = other.value.div(BigInt10(2))
+            if (rem > half)
+                result = result.add(BigInt10(1))
+        }
+
+        return BigDec(result, numberatorExtraDigits)
+    }
+
+    @Deprecated("need precision")
+    operator fun div(other: BigDec): BigDec {
+        val div = this.value.div(other.value)
+        val newScale = scale
+        val multiply = BigInt10("10").pow(newScale)
+
+        return BigDec(div * multiply, scale)
+    }
+
+    val precision: Int
+        get() {
+            return value.digits
+        }
 }
