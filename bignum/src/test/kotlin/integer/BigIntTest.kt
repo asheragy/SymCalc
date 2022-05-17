@@ -349,6 +349,17 @@ internal class BigIntTest {
         assertEquals(33u, bigInt("4294967296").bitLength)
     }
 
+    @Test
+    fun digits() {
+        assertEquals(1,BigInt10("0").digits)
+        assertEquals(1,BigInt10("1").digits)
+        assertEquals(1,BigInt10("-1").digits)
+
+        assertEquals(9,BigInt10("999999999").digits)
+        assertEquals(10,BigInt10("1000000000").digits)
+        assertEquals(10,BigInt10("1000000001").digits)
+    }
+
     /*
     @Test
     fun nthRootAndRemainder() {

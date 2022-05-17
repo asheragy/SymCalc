@@ -165,7 +165,7 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
             if (sign == ZEROSIGN)
                 return 1
 
-            return (arr.size - 1) * 10 + floor(log10(arr[arr.size - 1].toDouble())).toInt() + 1
+            return (arr.size - 1) * 9 + floor(log10(arr[arr.size - 1].toDouble())).toInt() + 1
         }
 
     override val bitLength: UInt

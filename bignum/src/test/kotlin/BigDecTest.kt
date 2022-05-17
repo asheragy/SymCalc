@@ -113,11 +113,31 @@ class BigDecTest {
     @Test
     fun divide_real() {
         assertEquals(BigDec("30.9091"), BigDec("10.20").divide(BigDec("0.33"), 6))
+        assertEquals(BigDec("301.818"), BigDec("33.20").divide(BigDec("0.11"), 6))
+        assertEquals(BigDec("0.2697368421"), BigDec("0.00123").divide(BigDec("0.00456"), 10))
+        assertEquals(BigDec("5000.000005"), BigDec("10000.00001").divide(BigDec("2"), 10))
+        assertEquals(BigDec("0.00020"), BigDec("2").divide(BigDec("10000.00001"), 2))
     }
 
     @Test
+    fun pi() {
+        //assertEquals(BigDec("3.1415"), BigDec.getPiToDigits(5))
+    }
+
+    @Test
+    fun toDouble() {
+        assertEquals(100.0, BigDec("100").toDouble())
+        assertEquals(0.1, BigDec("0.1").toDouble())
+    }
+
+    @Test
+    fun sqrt() {
+        assertEquals(BigDec("100.02499687578100594"), BigDec("10005").sqrt(20))
+    }
+
+
+    @Test
     fun debug() {
-        //assertEquals(BigDec("1.5000"), BigDec("3").divide(BigDec("2"), 5))
-        assertEquals(BigDec("30.9091"), BigDec("1020").divide(BigDec("33"), 6))
+        assertEquals(BigDec("5000.000005"), BigDec("10000.00001").divide(BigDec("2"), 10))
     }
 }

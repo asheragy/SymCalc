@@ -1,8 +1,12 @@
 package org.cerion.math.bignum
 
 import org.cerion.math.bignum.integer.BigInt10
+import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.sign
 
 @ExperimentalUnsignedTypes
 class BigDec {
@@ -23,6 +27,17 @@ class BigDec {
             scale = str.length - index - 1
 
         value = BigInt10(str.replace(".", ""))
+    }
+
+    constructor(n: Int) {
+        scale = 0
+        value = BigInt10(n)
+    }
+
+    constructor(x: Double) {
+        // TODO
+        scale = 0
+        value = BigInt10(x.toInt())
     }
 
     override fun toString(): String {
@@ -80,6 +95,7 @@ class BigDec {
         var numberatorExtraDigits = newPrecision - (precision - other.precision)
 
         // Test if scale is off by 1
+        // TODO probably a faster way to do this check
         val denominatorScaled = other.value.shift10(precision - other.precision)
         if (value.abs() > denominatorScaled.abs())
             numberatorExtraDigits--
@@ -95,7 +111,11 @@ class BigDec {
                 result = result.add(BigInt10(1))
         }
 
-        return BigDec(result, numberatorExtraDigits)
+        return BigDec(result, this.scale - other.scale + numberatorExtraDigits)
+    }
+
+    fun divide(other: BigDec, mc: MathContext): BigDec {
+        return this.divide(other, mc.precision)
     }
 
     @Deprecated("need precision")
@@ -107,8 +127,95 @@ class BigDec {
         return BigDec(div * multiply, scale)
     }
 
+    fun sqrt(precision: Int): BigDec {
+        if (value.signum() < 0)
+            throw Exception("sqrt() on negative number")
+
+        // TODO toDouble needs to be on the bigDec value
+        val initial = kotlin.math.sqrt(toDouble())
+        val mc = MathContext(precision)
+        var xn = BigDec(initial)
+        val two = BigDec(2)
+
+        // Babylonian method
+        // TODO_LP compare with Bakhshali method
+        for(i in 0 until 1000) {
+            val t = xn.plus(this.divide(xn, mc)).divide(two, mc)
+
+            if (t == xn)
+                return t
+
+            xn = t
+        }
+
+        throw IterationLimitExceeded()
+    }
+
+    fun toDouble(): Double {
+        return value.toDouble()
+    }
+
     val precision: Int
         get() {
             return value.digits
         }
+
+
+    companion object {
+        val ONE = BigDec(1)
+
+        /*
+        fun getPiToDigits(precision: Int): BigDec {
+            // https://en.wikipedia.org/wiki/Chudnovsky_algorithm
+            // 426880*Sqrt(10005)/Pi = Sum (6k!)(545140134k+13591409) / (3k)!(k!)^3(-262537412640768000)^k
+
+            val mc = MathContext(precision, RoundingMode.HALF_UP)
+            val bd54 = BigDec(545140134)
+            val bd13 = BigDec(13591409)
+            val bd26 = BigDec("-262537412640768000")
+
+            // Calculate sum
+            var sum = bd13
+            var n1 = ONE // (6*k)!
+            var d1 = ONE // (3*k)!
+            var d2 = ONE // k!
+            var d3 = ONE // bd26^k
+            for (k in 1..5000) {
+                n1 = factorial(6 * k, n1, 6 * (k - 1))
+                val numerator = bd54
+                    .times(BigDec(k))
+                    .plus(bd13)
+                    .times(n1)
+
+                d1 = factorial(3 * k, d1, 3 * (k - 1))
+                d2 = factorial(k, d2, k - 1)
+                d3 = d3.times(bd26, mc)
+                val denominator = d1.times(d2.pow(3)).times(d3)
+
+                val next = numerator.divide(denominator, mc)
+                val t = sum.plus(next)
+                if (t == sum) {
+                    // Divide this constant value by sum to get Pi
+                    var c = BigDec("10005").sqrt(mc.precision)
+                    c = c.multiply(BigDec("426880"))
+
+                    return c.divide(sum, mc)
+                }
+
+                sum = t
+            }
+
+            throw IterationLimitExceeded()
+        }
+         */
+
+        private fun factorial(k: Int, prev: BigDec, kprev: Int): BigDec {
+            var bd = prev
+            for (i in (kprev + 1)..k) {
+                bd = bd.times(BigDec(i))
+            }
+
+            return bd
+        }
+    }
 }
