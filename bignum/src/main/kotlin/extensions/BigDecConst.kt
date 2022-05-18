@@ -35,6 +35,7 @@ fun getPiToDigits(precision: Int): BigDecimal {
         val denominator = d1.multiply(d2.pow(3)).multiply(d3)
 
         val next = numerator.divide(denominator, mc)
+        // TODO checking scale of next might be better here
         val t = sum.add(next, mc)
         if (t == sum) {
             // Divide this constant value by sum to get Pi

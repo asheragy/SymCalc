@@ -127,6 +127,14 @@ class BigDec {
         return BigDec(div * multiply, scale)
     }
 
+    fun pow(n: Int): BigDec {
+        // TODO should have precision which needs to go in multiply too
+        if (n != 3)
+            TODO("Not implemented")
+
+        return this.times(this).times(this)
+    }
+
     fun sqrt(precision: Int): BigDec {
         if (value.signum() < 0)
             throw Exception("sqrt() on negative number")
@@ -164,7 +172,6 @@ class BigDec {
     companion object {
         val ONE = BigDec(1)
 
-        /*
         fun getPiToDigits(precision: Int): BigDec {
             // https://en.wikipedia.org/wiki/Chudnovsky_algorithm
             // 426880*Sqrt(10005)/Pi = Sum (6k!)(545140134k+13591409) / (3k)!(k!)^3(-262537412640768000)^k
@@ -187,27 +194,26 @@ class BigDec {
                     .plus(bd13)
                     .times(n1)
 
+                // TODO times needs precision added back (and probably plus)
                 d1 = factorial(3 * k, d1, 3 * (k - 1))
                 d2 = factorial(k, d2, k - 1)
-                d3 = d3.times(bd26, mc)
+                d3 = d3.times(bd26)
                 val denominator = d1.times(d2.pow(3)).times(d3)
 
                 val next = numerator.divide(denominator, mc)
-                val t = sum.plus(next)
-                if (t == sum) {
+                if (next.scale > precision) {
                     // Divide this constant value by sum to get Pi
                     var c = BigDec("10005").sqrt(mc.precision)
-                    c = c.multiply(BigDec("426880"))
+                    c = c.times(BigDec("426880"))
 
                     return c.divide(sum, mc)
                 }
 
-                sum = t
+                sum = sum.plus(next)
             }
 
             throw IterationLimitExceeded()
         }
-         */
 
         private fun factorial(k: Int, prev: BigDec, kprev: Int): BigDec {
             var bd = prev

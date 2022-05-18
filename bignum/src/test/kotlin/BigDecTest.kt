@@ -1,9 +1,6 @@
 package org.cerion.math.bignum
 
 import org.junit.Test
-import java.math.BigDecimal
-import java.math.MathContext
-import java.math.RoundingMode
 import kotlin.test.assertEquals
 
 @ExperimentalUnsignedTypes
@@ -121,7 +118,12 @@ class BigDecTest {
 
     @Test
     fun pi() {
-        //assertEquals(BigDec("3.1415"), BigDec.getPiToDigits(5))
+        val pi100 = "3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679"
+
+        for(i in 2 until 10) {
+            val computed = BigDec.getPiToDigits(i).toString()
+            assertEquals(pi100.substring(0, computed.length-1), computed.substring(0, computed.length - 1))
+        }
     }
 
     @Test
@@ -133,6 +135,11 @@ class BigDecTest {
     @Test
     fun sqrt() {
         assertEquals(BigDec("100.02499687578100594"), BigDec("10005").sqrt(20))
+    }
+
+    @Test
+    fun pow() {
+        // TODO
     }
 
 
