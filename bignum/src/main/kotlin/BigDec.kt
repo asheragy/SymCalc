@@ -1,12 +1,11 @@
 package org.cerion.math.bignum
 
 import org.cerion.math.bignum.integer.BigInt10
-import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.abs
 import kotlin.math.max
-import kotlin.math.sign
+import kotlin.math.pow
 
 @ExperimentalUnsignedTypes
 class BigDec {
@@ -35,9 +34,16 @@ class BigDec {
     }
 
     constructor(x: Double) {
-        // TODO
-        scale = 0
-        value = BigInt10(x.toInt())
+        // TODO probably could be changed without a loop
+        var longValue = x
+        var adjustedScale = 0
+        while(longValue % 1.0 != 0.0) {
+            longValue *= 10
+            adjustedScale++
+        }
+
+        scale = adjustedScale
+        value = BigInt10(longValue.toLong())
     }
 
     override fun toString(): String {
@@ -128,18 +134,24 @@ class BigDec {
     }
 
     fun pow(n: Int): BigDec {
-        // TODO should have precision which needs to go in multiply too
-        if (n != 3)
-            TODO("Not implemented")
+        var result = BigDec("1")
+        var square = this
+        var m = n
+        while(m > 0) {
+            if (m % 2 == 1)
+                result = square.times(result)
 
-        return this.times(this).times(this)
+            square = square.times(square)
+            m /= 2
+        }
+
+        return result
     }
 
     fun sqrt(precision: Int): BigDec {
         if (value.signum() < 0)
             throw Exception("sqrt() on negative number")
 
-        // TODO toDouble needs to be on the bigDec value
         val initial = kotlin.math.sqrt(toDouble())
         val mc = MathContext(precision)
         var xn = BigDec(initial)
@@ -160,7 +172,14 @@ class BigDec {
     }
 
     fun toDouble(): Double {
-        return value.toDouble()
+        if (scale < 0)
+            throw IllegalStateException()
+
+        var valueDouble = value.toDouble()
+        if (scale > 0)
+            valueDouble /= 10.0.pow(scale.toDouble())
+
+        return valueDouble
     }
 
     val precision: Int

@@ -34,6 +34,25 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         validate()
     }
 
+    constructor(n: Long) {
+        sign = n.sign.toByte()
+        arr = if (n == 0L)
+            UIntArray(0)
+        else {
+            val digits = mutableListOf<UInt>()
+            var remaining = n.absoluteValue.toULong()
+
+            while(remaining > 0u) {
+                digits.add((remaining % BASE).toUInt())
+                remaining /= BASE
+            }
+
+            digits.toUIntArray()
+        }
+
+        validate()
+    }
+
     constructor(str: String) {
         val n = str.trimStart('-', '0')
         if (n.isEmpty()) {

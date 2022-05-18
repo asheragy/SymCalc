@@ -44,6 +44,15 @@ internal class BigIntTest {
     }
 
     @Test
+    fun fromLong() {
+        // TODO BigInt2
+
+        assertEquals("10000000000", BigInt10(10000000000).toString())
+        assertEquals("9223372036854775807", BigInt10(Long.MAX_VALUE).toString())
+        assertEquals("-9223372036854775808", BigInt10(Long.MIN_VALUE).toString())
+    }
+
+    @Test
     fun addition() = run {
         assertEquals(fromArray(1,0), fromArray(-1) + fromArray(1))
 

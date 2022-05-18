@@ -1,6 +1,8 @@
 package org.cerion.math.bignum
 
 import org.junit.Test
+import java.math.BigDecimal
+import kotlin.math.pow
 import kotlin.test.assertEquals
 
 @ExperimentalUnsignedTypes
@@ -25,6 +27,16 @@ class BigDecTest {
             assertEquals("1", value.toString())
             assertEquals("0.000001", toString())
         }
+    }
+
+    @Test
+    fun fromDouble() {
+        // TODO bunch of issues with this on big and small numbers
+        assertEquals(BigDec("10"), BigDec(10.0))
+        assertEquals(BigDec("0"), BigDec(0.0))
+        assertEquals(BigDec("0.1"), BigDec(0.1))
+        assertEquals(BigDec("0.0000001"), BigDec(0.0000001))
+        assertEquals(BigDec("10000.000000100002"), BigDec(10000.0000001))
     }
 
     @Test
@@ -129,17 +141,22 @@ class BigDecTest {
     @Test
     fun toDouble() {
         assertEquals(100.0, BigDec("100").toDouble())
+        assertEquals(0.0, BigDec("0").toDouble())
         assertEquals(0.1, BigDec("0.1").toDouble())
+        assertEquals(0.01, BigDec("0.01").toDouble())
+        assertEquals(12345.6789, BigDec("12345.67890").toDouble())
+        assertEquals(1.0E-36, BigDec("0.000000000000000000000000000000000001").toDouble())
     }
 
     @Test
     fun sqrt() {
+        assertEquals(BigDec("0.3162277660"), BigDec("0.1").sqrt(10))
         assertEquals(BigDec("100.02499687578100594"), BigDec("10005").sqrt(20))
     }
 
     @Test
     fun pow() {
-        // TODO
+        assertEquals(BigDec("2.5937424601"), BigDec("1.1").pow(10))
     }
 
 
