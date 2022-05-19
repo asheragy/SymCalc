@@ -77,6 +77,18 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         for(digit in arr)
             if (digit > 999999999u)
                 throw RuntimeException("invalid digit")
+
+        if(arr.isEmpty() && sign != ZEROSIGN)
+            throw RuntimeException("Invalid zero sign")
+
+        /* TODO might be bugs if this is working
+        for(i in arr.size-1 downTo 0) {
+            if (arr[i] == 0u)
+                throw RuntimeException("Zero leading digit")
+            else
+                break
+        }
+         */
     }
 
     override fun toString(): String {
@@ -169,14 +181,42 @@ class BigInt10 : BigIntArrayBase<BigInt10> {
         return this.times(pow)
     }
 
-    // TODO this could be faster since its equivalent to bit shifting on normal numbers
-    fun shift10(n: Int): BigInt10 {
+    fun shiftLeft10(n: Int): BigInt10 {
         if (n == 0)
             return this
-        if (n > 0)
-            return this.times(BigInt10("10").pow(n))
+        if (n < 0)
+            throw ArithmeticException("shift must be positive")
 
-        return this.divide(BigInt10("10").pow(-n))
+        return this.times(BigInt10("10").pow(n))
+    }
+
+    fun shiftRight10(n: Int, round: Boolean = true): BigInt10 {
+        if (n == 0)
+            return this
+        if (n < 0)
+            throw ArithmeticException("shift must be positive")
+
+        // TODO this could be more efficient since its equivalent to regular bitshift
+        if (round) {
+            val truncated = this.divide(BigInt10("10").pow(n-1))
+            if (truncated == ZERO)
+                return ZERO
+
+            val lastDigit = truncated.arr[0] % 10u
+            var result = truncated.divide(BigInt10("10"))
+            if (lastDigit >= 5u) {
+                val prevDigits = result.digits
+                result += ONE
+
+                // 99..99 rounded increases precision so need to shift down again
+                if (result.digits > prevDigits)
+                    return result.shiftRight10(1, true)
+            }
+
+            return result
+        }
+
+        return this.divide(BigInt10("10").pow(n))
     }
 
     val digits: Int

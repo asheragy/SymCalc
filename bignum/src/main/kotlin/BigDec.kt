@@ -93,8 +93,18 @@ class BigDec {
         return BigDec(subtracted, max(scale, other.scale))
     }
 
-    operator fun times(other: BigDec): BigDec {
-        return BigDec(value * other.value, scale + other.scale)
+    operator fun times(other: BigDec) = BigDec(value * other.value, scale + other.scale)
+
+    fun multiply(other: BigDec, mc: MathContext? = null): BigDec {
+        var product = this * other
+
+        if (mc != null) {
+            val reducePrecision = product.precision - mc.precision
+            if (reducePrecision > 0)
+                product = BigDec(product.value.shiftRight10(reducePrecision), product.scale - reducePrecision)
+        }
+
+        return product
     }
 
     fun divide(other: BigDec, newPrecision: Int): BigDec {
@@ -102,11 +112,13 @@ class BigDec {
 
         // Test if scale is off by 1
         // TODO probably a faster way to do this check
-        val denominatorScaled = other.value.shift10(precision - other.precision)
+        var shift = precision - other.precision
+        val denominatorScaled = if(shift > 0) other.value.shiftLeft10(shift) else other.value.shiftRight10(-shift)
         if (value.abs() > denominatorScaled.abs())
             numberatorExtraDigits--
 
-        val numerator = this.value.shift10(numberatorExtraDigits)
+        shift = numberatorExtraDigits
+        val numerator = if(shift > 0) value.shiftLeft10(shift) else value.shiftRight10(-shift)
         var (result, rem) = numerator.divideAndRemainder(other.value)
 
         // TODO this could be improved, full division could be avoided
@@ -133,15 +145,16 @@ class BigDec {
         return BigDec(div * multiply, scale)
     }
 
-    fun pow(n: Int): BigDec {
+    fun pow(n: Int, mc: MathContext? = null): BigDec {
+        // TODO multiply precision should be larger then truncate final result
         var result = BigDec("1")
         var square = this
         var m = n
         while(m > 0) {
             if (m % 2 == 1)
-                result = square.times(result)
+                result = square.multiply(result, mc)
 
-            square = square.times(square)
+            square = square.multiply(square, mc)
             m /= 2
         }
 

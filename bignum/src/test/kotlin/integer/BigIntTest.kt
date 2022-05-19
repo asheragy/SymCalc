@@ -2,6 +2,9 @@ package org.cerion.math.bignum.integer
 
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
+import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 import kotlin.test.*
 
 
@@ -335,6 +338,26 @@ internal class BigIntTest {
         assertEquals(bigInt("4294967296"), bigInt("8589934592").shiftRight(1u))
         assertEquals(bigInt("291038304567"), bigInt("10000000000000000000000").shiftRight(35u))
         assertEquals(bigInt("323375893963"), bigInt("11111111111111111111111").shiftRight(35u))
+    }
+
+    @Test
+    fun shiftRight10() {
+        assertEquals(BigInt10("100000000"), BigInt10("1000000005").shiftRight10(1, false))
+        assertEquals(BigInt10("100000001"), BigInt10("1000000005").shiftRight10(1))
+        assertEquals(BigInt10("100000000"), BigInt10("1000000004").shiftRight10(1))
+
+        assertEquals(BigInt10("999999999"), BigInt10("9999999999").shiftRight10(1, false))
+        assertEquals(BigInt10("100000000"), BigInt10("9999999999").shiftRight10(1))
+
+        assertEquals(BigInt10("0"), BigInt10("1").shiftRight10(1))
+        assertEquals(BigInt10("0"), BigInt10("1").shiftRight10(10))
+    }
+
+    @Test
+    fun shiftLeft10() {
+        assertEquals(BigInt10.ZERO, BigInt10("0").shiftLeft10(10))
+        assertEquals(BigInt10("10"), BigInt10("1").shiftLeft10(1))
+        assertEquals(BigInt10("10000000000"), BigInt10("1").shiftLeft10(10))
     }
 
     @Test
