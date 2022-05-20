@@ -1,7 +1,6 @@
-package org.cerion.math.bignum
+package org.cerion.math.bignum.decimal
 
 import org.junit.Test
-import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.test.assertEquals

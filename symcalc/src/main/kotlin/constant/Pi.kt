@@ -1,6 +1,6 @@
 package org.cerion.symcalc.constant
 
-import org.cerion.math.bignum.extensions.getPiToDigits
+import org.cerion.math.bignum.decimal.getPiToDigits
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.number.RealBigDec

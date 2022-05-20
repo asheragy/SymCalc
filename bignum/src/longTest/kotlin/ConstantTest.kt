@@ -1,4 +1,4 @@
-import org.cerion.math.bignum.extensions.getPiToDigits
+import org.cerion.math.bignum.decimal.getPiToDigits
 import kotlin.test.Test
 
 class ConstantTest {

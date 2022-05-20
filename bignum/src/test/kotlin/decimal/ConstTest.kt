@@ -1,11 +1,13 @@
-package org.cerion.math.bignum.extensions
+package decimal
 
-import org.cerion.math.bignum.BigDec
+import org.cerion.math.bignum.decimal.calculateE
+import org.cerion.math.bignum.decimal.getEToPrecision
+import org.cerion.math.bignum.decimal.getPiToDigits
 import org.junit.Test
 import java.math.BigDecimal
 import kotlin.test.assertEquals
 
-class BigDecConst {
+class ConstTest {
 
     @Test
     fun e_Stored() {

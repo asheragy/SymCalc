@@ -1,6 +1,6 @@
 package org.cerion.symcalc.function.trig
 
-import org.cerion.math.bignum.extensions.arcsinh
+import org.cerion.math.bignum.decimal.arcsinh
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.number.RealBigDec
 

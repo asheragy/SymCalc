@@ -1,6 +1,6 @@
 package org.cerion.symcalc.function.trig
 
-import org.cerion.math.bignum.extensions.sinh
+import org.cerion.math.bignum.decimal.sinh
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Log

@@ -1,10 +1,14 @@
-package org.cerion.math.bignum.extensions
+package decimal
 
+import org.cerion.math.bignum.decimal.cos
+import org.cerion.math.bignum.decimal.sin
+import org.cerion.math.bignum.decimal.tan
+import org.cerion.math.bignum.decimal.tanh
 import org.junit.Test
 import java.math.BigDecimal
 import kotlin.test.assertEquals
 
-class BigDecTrigTest {
+class TrigTest {
 
     @Test
     fun sin() {

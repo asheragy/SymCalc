@@ -1,7 +1,7 @@
-import org.cerion.math.bignum.exp
-import org.cerion.math.bignum.log
-import org.cerion.math.bignum.root
-import org.cerion.math.bignum.sqrt
+import org.cerion.math.bignum.decimal.exp
+import org.cerion.math.bignum.decimal.log
+import org.cerion.math.bignum.decimal.root
+import org.cerion.math.bignum.decimal.sqrt
 import org.junit.Test
 import java.math.BigDecimal
 

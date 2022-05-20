@@ -1,7 +1,7 @@
 package org.cerion.symcalc.constant
 
-import org.cerion.math.bignum.extensions.calculateE
-import org.cerion.math.bignum.extensions.getEToPrecision
+import org.cerion.math.bignum.decimal.calculateE
+import org.cerion.math.bignum.decimal.getEToPrecision
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.number.RealBigDec

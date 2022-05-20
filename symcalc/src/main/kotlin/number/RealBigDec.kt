@@ -1,6 +1,6 @@
 package org.cerion.symcalc.number
 
-import org.cerion.math.bignum.*
+import org.cerion.math.bignum.decimal.*
 import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.AtomExpr

@@ -1,6 +1,6 @@
 package org.cerion.symcalc.function.trig
 
-import org.cerion.math.bignum.extensions.arctan
+import org.cerion.math.bignum.decimal.arctan
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Infinity

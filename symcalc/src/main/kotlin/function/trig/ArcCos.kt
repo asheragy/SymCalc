@@ -1,6 +1,6 @@
 package org.cerion.symcalc.function.trig
 
-import org.cerion.math.bignum.extensions.arccos
+import org.cerion.math.bignum.decimal.arccos
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Divide

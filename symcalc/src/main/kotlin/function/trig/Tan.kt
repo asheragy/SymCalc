@@ -1,6 +1,6 @@
 package org.cerion.symcalc.function.trig
 
-import org.cerion.math.bignum.extensions.tan
+import org.cerion.math.bignum.decimal.tan
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Minus

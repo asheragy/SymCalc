@@ -1,10 +1,12 @@
-package org.cerion.math.bignum
+package org.cerion.math.bignum.integer
 
+import org.cerion.math.bignum.nthRootAndRemainder
+import org.cerion.math.bignum.sqrtRemainder
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.*
 import java.math.BigInteger
 
-internal class BigIntegerExtensionsKtTest {
+internal class ExtensionsKtTest {
 
     @Test
     fun sqrtAndRemainder() {

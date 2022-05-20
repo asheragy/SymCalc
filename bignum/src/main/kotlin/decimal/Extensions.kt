@@ -1,5 +1,6 @@
-package org.cerion.math.bignum
+package org.cerion.math.bignum.decimal
 
+import org.cerion.math.bignum.IterationLimitExceeded
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode

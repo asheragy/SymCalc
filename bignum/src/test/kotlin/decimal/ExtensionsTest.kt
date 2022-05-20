@@ -1,13 +1,13 @@
-package org.cerion.math.bignum.extensions
+package decimal
 
-import org.cerion.math.bignum.sqrt
+import org.cerion.math.bignum.decimal.sqrt
 import org.junit.Test
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.test.assertEquals
 
-class BigDecExtensionsTest {
+class ExtensionsTest {
 
     @Test
     fun sqrt() {

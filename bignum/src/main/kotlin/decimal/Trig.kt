@@ -1,9 +1,6 @@
-package org.cerion.math.bignum.extensions
+package org.cerion.math.bignum.decimal
 
 import org.cerion.math.bignum.IterationLimitExceeded
-import org.cerion.math.bignum.exp
-import org.cerion.math.bignum.log
-import org.cerion.math.bignum.sqrt
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
