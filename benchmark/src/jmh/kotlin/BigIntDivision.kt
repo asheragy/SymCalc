@@ -1,6 +1,6 @@
 package org.cerion.math.bignum.benchmark
 
-import org.cerion.math.bignum.BigInt2
+import org.cerion.math.bignum.integer.BigInt2
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.Scope
 import org.openjdk.jmh.annotations.State

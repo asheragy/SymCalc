@@ -24,11 +24,11 @@ dependencies {
 jmh {
     // https://github.com/melix/jmh-gradle-plugin#configuration-options
     warmupIterations = 1
-    warmup = '500ms'
-    iterations = 3
-    timeOnIteration = '1s'
+    warmup = '200ms'
+    iterations = 2
+    timeOnIteration = '500ms'
     fork = 1
-    threads = 4
+    threads = 2
     jvmArgsPrepend = ['-XX:+UnlockDiagnosticVMOptions', '-XX:-UseMultiplyToLenIntrinsic']
 }
 
@@ -60,6 +60,14 @@ task jmhBigIntDivision {
     group 'jmh'
     doFirst {
         jmh.includes = ['BigIntDivision']
+    }
+    finalizedBy 'jmh'
+}
+
+task jmhBigDecDivide {
+    group 'jmh'
+    doFirst {
+        jmh.includes = ['BigDecDivide']
     }
     finalizedBy 'jmh'
 }

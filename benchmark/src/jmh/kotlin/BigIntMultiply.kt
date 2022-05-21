@@ -1,6 +1,7 @@
 package org.cerion.math.bignum.benchmark
 
-import org.cerion.math.bignum.BigInt2
+import org.cerion.math.bignum.integer.BigInt10
+import org.cerion.math.bignum.integer.BigInt2
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.Scope
 import org.openjdk.jmh.annotations.State
@@ -17,6 +18,8 @@ open class BigIntMultiply {
     private val b_multiplyLenJvm = a_multiplyLenJvm.add(BigInteger.ONE)
     private val a_multiplyLen = BigInt2(multiplyToLenMaxStr)
     private val b_multiplyLen = a_multiplyLen.add(BigInt2.ONE)
+    private val a_multiplyLen10 = BigInt10(multiplyToLenMaxStr)
+    private val b_multiplyLen10 = a_multiplyLen10.add(BigInt10.ONE)
 
     private val large = BigInt2("123456789098764321").pow(565) as BigInt2 // About 1000 digits
     private val large2 = large.add(BigInt2.ONE)
@@ -32,6 +35,7 @@ open class BigIntMultiply {
 
     @Benchmark fun multiplyToLenJvm(bh: Blackhole) = bh.consume(a_multiplyLenJvm * b_multiplyLenJvm)
     @Benchmark fun multiplyToLen(bh: Blackhole) = bh.consume(a_multiplyLen * b_multiplyLen)
+    @Benchmark fun multiplyToLen10(bh: Blackhole) = bh.consume(a_multiplyLen10 * b_multiplyLen10)
 
     @Benchmark fun largeJvm(bh: Blackhole) = bh.consume(largeJvm * large2Jvm)
     @Benchmark fun large(bh: Blackhole) = bh.consume(large * large2)
