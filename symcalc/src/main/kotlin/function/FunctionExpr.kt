@@ -187,15 +187,20 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         return attr.value and attrs != 0
     }
 
+    // TODO add comments for these
     // ssymb = Cases[Map[ToExpression, Names["System`*"]], _Symbol];
     // nfuns = Select[ssymb, MemberQ[Attributes[#], HoldFirst] &]
     enum class Properties constructor(val value: Int) {
         NONE(0),
+        // TODO this may be HoldAll
         HOLD(1),
         LISTABLE(2),
         Flat(4),
         NumericFunction(8),
         Orderless(16)
+
+        //Constant - Maybe unnecessary since not using constants as functions
+        //Locked OneIdentity SequenceHold NHoldAll NHoldFirst NHoldRest Stub Temporary Protect Protected ReadProtected Unprotect SetAttributes
     }
 
     companion object {
