@@ -1,0 +1,38 @@
+package org.cerion.symcalc.function.matrix
+
+/*
+Cross
+Norm
+Projection
+Orthogonalize
+DiagonalMatrix
+HilbertMatrix HankelMatrix ToeplitzMatrix
+PauliMatrix
+ScalingMatrix
+ShearingMatrix
+CrossMatrix DiamondMatrix GaussianMatrix
+UpperTriangularize LowerTriangularize
+SymmetricMatrixQ
+HermitianMatrixQ
+PositiveDefiniteMatrixQ
+ReflectionMatrix
+MatrixExp MatrixForm MatrixPower MatrixRank
+HermiteDecomposition CholeskyDecomposition JordanDecomposition HessenbergDecomposition QRDecomposition
+LUDecomposition SchurDecomposition SingularValueDecomposition
+Transpose ConjugateTranspose
+DesignMatrix Det Diagonal
+Eigensystem Eigenvalues Eigenvectors
+Tr
+KroneckerProduct
+Inverse PseudoInverse
+LeastSquares
+LeviCivitaTensor
+RowReduce
+UnitVector
+Minors
+SingularValueList
+VectorAngle
+
+ */
+class Todo {
+}

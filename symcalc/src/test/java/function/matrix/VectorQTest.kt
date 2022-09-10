@@ -1,7 +1,8 @@
-package org.cerion.symcalc.function.list
+package org.cerion.symcalc.function.matrix
 
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.function.matrix.VectorQ
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealDouble
 import kotlin.test.Test

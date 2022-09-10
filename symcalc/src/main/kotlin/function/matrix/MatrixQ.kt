@@ -1,4 +1,4 @@
-package org.cerion.symcalc.function.list
+package org.cerion.symcalc.function.matrix
 
 import org.cerion.symcalc.expression.BoolExpr
 import org.cerion.symcalc.expression.Expr

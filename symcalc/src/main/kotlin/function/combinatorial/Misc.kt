@@ -2,12 +2,12 @@ package org.cerion.symcalc.function.combinatorial
 
 // TODO
 /*
-Subfactorial
+Subfactorial - Derangements, permutations with none in previous position
 FactorialPower
-Hyperfactorial
-Multinomial
-CatalanNumber
-PolygonalNumber
+Hyperfactorial - 1^1 * ... n^n
+Multinomial - Simple formula
+CatalanNumber - Simple formula with binomial
+PolygonalNumber - Simple formula, related to shapes
 StirlingS1
 StirlingS2
 PartitionsP

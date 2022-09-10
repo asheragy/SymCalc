@@ -14,6 +14,10 @@ import org.cerion.symcalc.function.hyperbolic.*
 import org.cerion.symcalc.function.integer.*
 import org.cerion.symcalc.function.list.*
 import org.cerion.symcalc.function.logical.Greater
+import org.cerion.symcalc.function.matrix.Dot
+import org.cerion.symcalc.function.matrix.IdentityMatrix
+import org.cerion.symcalc.function.matrix.MatrixQ
+import org.cerion.symcalc.function.matrix.VectorQ
 import org.cerion.symcalc.function.numeric.Floor
 import org.cerion.symcalc.function.plots.Plot
 import org.cerion.symcalc.function.procedural.If
@@ -82,12 +86,15 @@ object FunctionFactory {
             Function.PARTITION -> return Partition(*e)
             Function.JOIN -> return Join(*e)
             Function.SELECT -> return Select(*e)
-            Function.VECTORQ -> return VectorQ(*e)
-            Function.MATRIXQ -> return MatrixQ(*e)
-            Function.DOT -> return Dot(*e)
             Function.CONSTANT_ARRAY -> return ConstantArray(*e)
             Function.TALLY -> return Tally(*e)
             Function.MAP -> return Map(*e)
+
+            // Matrix
+            Function.VECTORQ -> return VectorQ(*e)
+            Function.MATRIXQ -> return MatrixQ(*e)
+            Function.IDENTITY_MATRIX -> return IdentityMatrix(*e)
+            Function.DOT -> return Dot(*e)
 
             //Integer
             Function.MOD -> return Mod(*e)
@@ -134,7 +141,6 @@ object FunctionFactory {
             // Categorize these
             Function.SET -> return Set(*e)
             Function.COMPOUND_EXPRESSION -> return CompoundExpression(*e)
-            Function.IDENTITY_MATRIX -> return IdentityMatrix(*e)
 
             Function.IF -> return If(*e)
 

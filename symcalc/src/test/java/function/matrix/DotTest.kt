@@ -1,6 +1,7 @@
-package org.cerion.symcalc.function.list
+package org.cerion.symcalc.function.matrix
 
 import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.function.matrix.Dot
 import org.cerion.symcalc.number.Integer
 import kotlin.test.Test
 import kotlin.test.assertEquals

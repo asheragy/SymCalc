@@ -1,8 +1,9 @@
-package org.cerion.symcalc.function.list
+package org.cerion.symcalc.function.matrix
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.function.matrix.IdentityMatrix
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealDouble
 import kotlin.test.Test
