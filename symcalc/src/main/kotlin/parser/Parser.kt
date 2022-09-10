@@ -7,7 +7,7 @@ import org.cerion.symcalc.function.arithmetic.Plus
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Subtract
 import org.cerion.symcalc.function.arithmetic.Times
-import org.cerion.symcalc.function.integer.Factorial
+import org.cerion.symcalc.function.combinatorial.Factorial
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberExpr
 

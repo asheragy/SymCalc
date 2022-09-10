@@ -6,7 +6,11 @@ import org.cerion.symcalc.function.trig.ArcTan
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.*
 import org.cerion.symcalc.function.calculus.*
+import org.cerion.symcalc.function.combinatorial.Binomial
+import org.cerion.symcalc.function.combinatorial.Factorial
+import org.cerion.symcalc.function.combinatorial.Factorial2
 import org.cerion.symcalc.function.core.*
+import org.cerion.symcalc.function.hyperbolic.*
 import org.cerion.symcalc.function.integer.*
 import org.cerion.symcalc.function.list.*
 import org.cerion.symcalc.function.logical.Greater
@@ -86,8 +90,6 @@ object FunctionFactory {
             Function.MAP -> return Map(*e)
 
             //Integer
-            Function.FACTORIAL -> return Factorial(*e)
-            Function.FACTORIAL2 -> return Factorial2(*e)
             Function.MOD -> return Mod(*e)
             Function.POWERMOD -> return PowerMod(*e)
             Function.GCD -> return GCD(*e)
@@ -95,7 +97,6 @@ object FunctionFactory {
             Function.PRIMEQ -> return PrimeQ(*e)
             Function.FIBONACCI -> return Fibonacci(*e)
             Function.FACTOR -> return Factor(*e)
-            Function.BINOMIAL -> return Binomial(*e)
             Function.BERNOULLI -> return Bernoulli(*e)
             Function.INTEGER_DIGITS -> return IntegerDigits(*e)
             Function.EVENQ -> return EvenQ(*e)
@@ -104,6 +105,11 @@ object FunctionFactory {
             Function.EULERE -> return EulerE(*e)
             Function.DIVISORS -> return Divisors(*e)
             Function.DIVISORSIGMA -> return DivisorSigma(*e)
+
+            // Combinatorial
+            Function.FACTORIAL -> return Factorial(*e)
+            Function.FACTORIAL2 -> return Factorial2(*e)
+            Function.BINOMIAL -> return Binomial(*e)
 
             // Numeric
             Function.FLOOR -> return Floor(*e)

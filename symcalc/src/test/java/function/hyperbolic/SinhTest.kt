@@ -1,10 +1,11 @@
-package org.cerion.symcalc.function.trig
+package org.cerion.symcalc.function.hyperbolic
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Minus
+import org.cerion.symcalc.function.hyperbolic.Sinh
 import org.cerion.symcalc.number.Complex
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational

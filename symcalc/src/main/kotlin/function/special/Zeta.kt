@@ -10,8 +10,8 @@ import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.integer.Bernoulli
-import org.cerion.symcalc.function.integer.Binomial
-import org.cerion.symcalc.function.integer.Factorial
+import org.cerion.symcalc.function.combinatorial.Binomial
+import org.cerion.symcalc.function.combinatorial.Factorial
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec

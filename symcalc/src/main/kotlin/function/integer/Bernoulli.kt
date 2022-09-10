@@ -7,6 +7,7 @@ import org.cerion.symcalc.number.NumberExpr
 import org.cerion.symcalc.number.NumberType
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.function.FunctionExpr
+import org.cerion.symcalc.function.combinatorial.Binomial
 
 class Bernoulli(vararg e: Any) : FunctionExpr(*e) {
 

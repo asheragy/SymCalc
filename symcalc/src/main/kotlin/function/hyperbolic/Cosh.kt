@@ -1,47 +1,49 @@
-package org.cerion.symcalc.function.trig
+package org.cerion.symcalc.function.hyperbolic
 
-import org.cerion.math.bignum.decimal.tanh
+import org.cerion.math.bignum.decimal.cosh
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Log
-import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Minus
+import org.cerion.symcalc.function.arithmetic.Plus
+import org.cerion.symcalc.function.trig.TrigBase
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealBigDec
-import kotlin.math.tanh
+import kotlin.math.cosh
 
-class Tanh(e: Expr) : TrigBase(e) {
-    override fun evaluateAsDouble(d: Double): Double = tanh(d)
+class Cosh(e: Expr) : HyperbolicBase(e) {
+    override fun evaluateAsDouble(d: Double): Double = cosh(d)
 
     override fun evaluate(e: Expr): Expr {
+
         when (e) {
             is Integer -> {
                 if (e.isZero)
-                    return Integer.ZERO
+                    return Integer.ONE
             }
-            is Infinity -> return Integer.ONE
+            is Infinity -> return Infinity()
             is ComplexInfinity -> return Indeterminate()
             is Log -> {
                 if (e.size == 1) {
-                    val x = e[0]
-                    return (x * x - Integer.ONE) / (x * x + Integer.ONE)
+                    return ((Integer.ONE / e[0]) + e[0]) / Integer.TWO
                 }
             }
         }
 
         // Attempt to evaluate
-        val e2x = Exp(Integer.TWO * e).eval()
-        if (e2x !is Power)
-            return (e2x - Integer.ONE) / (e2x + Integer.ONE)
+        val result = Exp(e) + Exp(Minus(e))
+        if (result !is Plus)
+            return result / Integer.TWO
 
         return this
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): Expr {
         return RealBigDec(
-            x.value.tanh(RealBigDec.getStoredPrecision(x.precision)),
+            x.value.cosh(RealBigDec.getStoredPrecision(x.precision)),
             x.precision
         )
     }

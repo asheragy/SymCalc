@@ -1,8 +1,9 @@
-package org.cerion.symcalc.function.integer
+package org.cerion.symcalc.function.combinatorial
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.function.combinatorial.Binomial
 import org.cerion.symcalc.number.Integer
 import kotlin.test.Test
 

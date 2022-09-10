@@ -1,4 +1,4 @@
-package org.cerion.symcalc.function.integer
+package org.cerion.symcalc.function.combinatorial
 
 import org.cerion.math.bignum.binomial
 import org.cerion.symcalc.exception.ValidationException

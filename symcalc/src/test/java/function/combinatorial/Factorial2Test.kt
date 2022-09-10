@@ -1,4 +1,4 @@
-package org.cerion.symcalc.function.integer
+package org.cerion.symcalc.function.combinatorial
 
 import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.number.Integer

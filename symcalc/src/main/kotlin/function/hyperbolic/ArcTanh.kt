@@ -1,10 +1,10 @@
-package org.cerion.symcalc.function.trig
+package org.cerion.symcalc.function.hyperbolic
 
-import org.cerion.math.bignum.decimal.arccosh
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.function.trig.TrigBase
 import org.cerion.symcalc.number.RealBigDec
 
-class ArcCosh(e: Expr) : TrigBase(e) {
+class ArcTanh(e: Expr) : HyperbolicBase(e) {
     override fun evaluateAsDouble(d: Double): Double {
         TODO("Not yet implemented")
     }
@@ -14,11 +14,7 @@ class ArcCosh(e: Expr) : TrigBase(e) {
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): Expr {
-        if (x < RealBigDec("1.0")) {
-            TODO("Add complex result")
-        }
-
-        return RealBigDec(x.value.arccosh(x.maxStoredPrecision), x.precision)
+        TODO("Not yet implemented")
     }
 
 }
