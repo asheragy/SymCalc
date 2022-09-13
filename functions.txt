@@ -1,20 +1,19 @@
 
 Basic: DivideBy SubtractFrom TimesBy Log2 AddTo Decrement Increment LogBarnesG PlusMinus PreDecrement PreIncrement
-Calculus: Dt Integrate Derivative DifferentialRoot DifferentialRootReduce DiscreteConvolve InverseLaplaceTransform InverseZTransform LaplaceTransform Limit LinearRecurrence NIntegrate Product RecurrenceTable Series SeriesCoefficient SeriesData SumConvergence ZTransform
-Complex: Im Normalize Re
+Complex: Im Normalize Re Conjugate
 
 
-Expressions: Part Length Most Rest Take Drop Extract ReplacePart Append Prepend Insert Delete DeleteCases Position Cases MapAll MapAt Heads Sow Reap CompoundExpression Depth Distribute Evaluate LeafCount Level ListQ TimeConstrained Timing Trace Unevaluated
+Expressions: Part Length Most Rest Take Drop Extract ReplacePart Append Prepend Insert Delete DeleteCases Position Cases MapAll MapAt Heads Sow Reap CompoundExpression
+             Depth Distribute Evaluate LeafCount Level ListQ TimeConstrained Timing Trace Unevaluated
 
 Recurrence: LucasL BernoulliB NorlundB HarmonicNumber LerchPhi PolyLog BellB
-Numeric: Abs Round Floor Ceiling IntegerPart FractionalPart Arg Min Max Sign Clip Rescale Chop Unitize UnitStep UnitBox UnitTriangle Piecewise Boole DiscreteIndicator BaseForm ChineseRemainder Conjugate DigitCount DigitQ DivisorSum ExactNumberQ FromDigits InexactNumberQ IntegerExponent IntegerLength IntegerQ NProduct NSum NumberQ NumericQ Positive PossibleZeroQ RealDigits RealExponent
-Integer: Quotient QuotientRemainder LCM Divisible FactorInteger IntegerPartitions FrobeniusSolve CarmichaelLambda Rationalize
+Integer: Quotient QuotientRemainder LCM Divisible FactorInteger IntegerPartitions FrobeniusSolve CarmichaelLambda Rationalize ChineseRemainder DivisorSum FromDigits IntegerExponent IntegerLength IntegerQ
 
 Fractions: Apart Together Cancel Numerator Denominator PolynomialQuotient PolynomialRemainder Residue PadeApproximant ExpandAll ExpandDenominator ExpandNumerator
 Primes: Prime PrimeNu PrimeOmega PrimePi PrimePowerQ Primes PrimeZetaP NextPrime RandomPrime ZetaZero RiemannR RiemannSiegelZ CoprimeQ PrimeQ LiouvilleLambda MangoldtLambda
 
-Core: Accuracy AccuracyGoal Precision PrecisionGoal WorkingPrecision Hold HoldAll HoldAllComplete HoldComplete HoldFirst HoldForm HoldPattern HoldRest AtomQ Attributes ByteCount Defer Head Identity Information MachineNumberQ MachinePrecision MantissaExponent Message N NumberForm Print ReleaseHold Remove Set SetAccuracy SetPrecision Unset
-Programming: Break Continue Goto Do For While NestWhile Nest If Switch Return Throw Catch Block Composition FixedPoint FixedPointList Fold Function LengthWhile NestList NestWhileList NonNegative NonPositive TakeWhile Through Which With
+Core: Accuracy AccuracyGoal Precision PrecisionGoal WorkingPrecision Hold HoldAll HoldAllComplete HoldComplete HoldFirst HoldForm HoldPattern HoldRest AtomQ Attributes
+      ByteCount Defer Head Identity Information MachineNumberQ MachinePrecision MantissaExponent Message N NumberForm Print ReleaseHold Remove Set SetAccuracy SetPrecision Unset
 
 // Individual to try from below categories
 Fourier
