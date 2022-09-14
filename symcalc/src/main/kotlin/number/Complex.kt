@@ -38,6 +38,7 @@ class Complex(val real: NumberExpr, val img: NumberExpr = Integer.ZERO) : Number
     override val isNegative: Boolean
         get() = throw UnsupportedOperationException()
 
+    // TODO add normalize, these both could be functions outside of here too, same with Real/Img
     fun conjugate(): Complex = Complex(real, img.unaryMinus())
 
     //override fun toString(): String = real.toString() + (if(img.isNegative) "" else "+") + img.toString() + "i"

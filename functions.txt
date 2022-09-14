@@ -1,19 +1,11 @@
 
-Basic: DivideBy SubtractFrom TimesBy Log2 AddTo Decrement Increment LogBarnesG PlusMinus PreDecrement PreIncrement
-Complex: Im Normalize Re Conjugate
-
-
 Expressions: Part Length Most Rest Take Drop Extract ReplacePart Append Prepend Insert Delete DeleteCases Position Cases MapAll MapAt Heads Sow Reap CompoundExpression
              Depth Distribute Evaluate LeafCount Level ListQ TimeConstrained Timing Trace Unevaluated
 
 Recurrence: LucasL BernoulliB NorlundB HarmonicNumber LerchPhi PolyLog BellB
-Integer: Quotient QuotientRemainder LCM Divisible FactorInteger IntegerPartitions FrobeniusSolve CarmichaelLambda Rationalize ChineseRemainder DivisorSum FromDigits IntegerExponent IntegerLength IntegerQ
 
 Fractions: Apart Together Cancel Numerator Denominator PolynomialQuotient PolynomialRemainder Residue PadeApproximant ExpandAll ExpandDenominator ExpandNumerator
-Primes: Prime PrimeNu PrimeOmega PrimePi PrimePowerQ Primes PrimeZetaP NextPrime RandomPrime ZetaZero RiemannR RiemannSiegelZ CoprimeQ PrimeQ LiouvilleLambda MangoldtLambda
 
-Core: Accuracy AccuracyGoal Precision PrecisionGoal WorkingPrecision Hold HoldAll HoldAllComplete HoldComplete HoldFirst HoldForm HoldPattern HoldRest AtomQ Attributes
-      ByteCount Defer Head Identity Information MachineNumberQ MachinePrecision MantissaExponent Message N NumberForm Print ReleaseHold Remove Set SetAccuracy SetPrecision Unset
 
 // Individual to try from below categories
 Fourier
@@ -34,7 +26,7 @@ Distributions: ExponentialDistribution CauchyDistribution ChiDistribution ChiSqu
 Special Functions:
    Beta BetaRegularized GammaRegularized ChebyshevT ChebyshevU CoshIntegral CosIntegral  LogGamma MathieuC MathieuCharacteristicA MathieuCharacteristicB MathieuCharacteristicExponent MathieuCPrime MathieuS MathieuSPrime RiemannSiegelTheta DawsonF Erf Erfc Erfi ExpIntegralE ExpIntegralEi FresnelC FresnelS GegenbauerC HermiteH HurwitzLerchPhi HurwitzZeta InverseBetaRegularized
    InverseErf InverseErfc InverseFunction InverseFunctions InverseGammaRegularized JacobiP KleinInvariantJ LaguerreL LegendreP LegendreQ LogIntegral MeijerG ModularLambda NevilleThetaC NevilleThetaD NevilleThetaN NevilleThetaS ParabolicCylinderD ProductLog QBinomial QFactorial QGamma QHypergeometricPFQ QPochhammer QPolyGamma RamanujanTau RamanujanTauL RamanujanTauTheta RamanujanTauZ SiegelTheta
-   SinhIntegral SinIntegral SphericalHarmonicY WeierstrassHalfPeriods WeierstrassInvariants WeierstrassP WeierstrassPPrime WeierstrassSigma WeierstrassZeta WhittakerM WhittakerW ZernikeR
+   SinhIntegral SinIntegral SphericalHarmonicY WeierstrassHalfPeriods WeierstrassInvariants WeierstrassP WeierstrassPPrime WeierstrassSigma WeierstrassZeta WhittakerM WhittakerW ZernikeR LogBarnesG
 
 Polynomial: ApartSquareFree Coefficient CoefficientArrays CoefficientList CoefficientRules CountRoots Cyclotomic CylindricalDecomposition Decompose Discriminant Eliminate Exponent Factor FactorList FactorSquareFree FactorSquareFreeList FactorTerms FactorTermsList FromCoefficientRules GenericCylindricalDecomposition GroebnerBasis HornerForm IrreduciblePolynomialQ MinimalPolynomial MonomialList NRoots NSolve PolynomialExtendedGCD PolynomialGCD PolynomialLCM PolynomialMod PolynomialQ
        PolynomialQuotientRemainder PolynomialReduce Resultant Root RootIntervals Roots RootSum SemialgebraicComponentInstances Solve SolveAlways Subresultants SymmetricPolynomial SymmetricReduction Variables

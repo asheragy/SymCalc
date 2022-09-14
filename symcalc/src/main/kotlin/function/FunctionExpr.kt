@@ -200,6 +200,8 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         Orderless(16)
 
         //Constant - Maybe unnecessary since not using constants as functions
+        // HoldAll -- TODO replace hold
+        // HoldAllComplete HoldFirst HoldRest
         //Locked OneIdentity SequenceHold NHoldAll NHoldFirst NHoldRest Stub Temporary Protect Protected ReadProtected Unprotect SetAttributes
     }
 
