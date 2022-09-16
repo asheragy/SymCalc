@@ -12,7 +12,6 @@ StirlingS1
 StirlingS2
 PartitionsP
 PartitionsQ
-BellB
 FrobeniusNumber
 FiniteAbelianGroupCount
 FiniteGroupCount
@@ -22,5 +21,5 @@ ThreeJSymbol
  */
 
 
-class Misc {
+class Todo {
 }

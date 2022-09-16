@@ -16,6 +16,14 @@ ReleaseHold
 SetAccuracy
 SetPrecision
 Unset
+Evaluate
+LeafCount
+Level
+TimeConstrained
+Timing
+Trace
+Unevaluated
+
  */
 class Todo {
 }

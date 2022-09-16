@@ -1,11 +1,4 @@
 
-Expressions: Part Length Most Rest Take Drop Extract ReplacePart Append Prepend Insert Delete DeleteCases Position Cases MapAll MapAt Heads Sow Reap CompoundExpression
-             Depth Distribute Evaluate LeafCount Level ListQ TimeConstrained Timing Trace Unevaluated
-
-Recurrence: LucasL BernoulliB NorlundB HarmonicNumber LerchPhi PolyLog BellB
-
-Fractions: Apart Together Cancel Numerator Denominator PolynomialQuotient PolynomialRemainder Residue PadeApproximant ExpandAll ExpandDenominator ExpandNumerator
-
 
 // Individual to try from below categories
 Fourier
@@ -29,7 +22,7 @@ Special Functions:
    SinhIntegral SinIntegral SphericalHarmonicY WeierstrassHalfPeriods WeierstrassInvariants WeierstrassP WeierstrassPPrime WeierstrassSigma WeierstrassZeta WhittakerM WhittakerW ZernikeR LogBarnesG
 
 Polynomial: ApartSquareFree Coefficient CoefficientArrays CoefficientList CoefficientRules CountRoots Cyclotomic CylindricalDecomposition Decompose Discriminant Eliminate Exponent Factor FactorList FactorSquareFree FactorSquareFreeList FactorTerms FactorTermsList FromCoefficientRules GenericCylindricalDecomposition GroebnerBasis HornerForm IrreduciblePolynomialQ MinimalPolynomial MonomialList NRoots NSolve PolynomialExtendedGCD PolynomialGCD PolynomialLCM PolynomialMod PolynomialQ
-       PolynomialQuotientRemainder PolynomialReduce Resultant Root RootIntervals Roots RootSum SemialgebraicComponentInstances Solve SolveAlways Subresultants SymmetricPolynomial SymmetricReduction Variables
+       PolynomialQuotientRemainder PolynomialReduce Resultant Root RootIntervals Roots RootSum SemialgebraicComponentInstances Solve SolveAlways Subresultants SymmetricPolynomial SymmetricReduction Variables PolynomialQuotient PolynomialRemainder
 
 Elliptic: InverseJacobiCD InverseJacobiCN InverseJacobiCS InverseJacobiDC InverseJacobiDN InverseJacobiDS InverseJacobiNC InverseJacobiND InverseJacobiNS InverseJacobiSC InverseJacobiSD InverseJacobiSN JacobiCD JacobiCN JacobiCS JacobiDC JacobiDN JacobiDS JacobiNC JacobiND JacobiNS JacobiSC JacobiSD JacobiSN ArithmeticGeometricMean EllipticE EllipticExp EllipticExpPrime EllipticF EllipticK EllipticLog EllipticNomeQ EllipticPi EllipticTheta EllipticThetaPrime InverseEllipticNomeQ InverseWeierstrassP JacobiAmplitude JacobiZeta
 Spheroidal: SpheroidalPS SpheroidalPSPrime SpheroidalQS SpheroidalQSPrime SpheroidalS1 SpheroidalS1Prime SpheroidalS2 SpheroidalS2Prime SpheroidalRadialFactor SpheroidalEigenvalue SpheroidalJoiningFactor

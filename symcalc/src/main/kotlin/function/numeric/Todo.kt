@@ -27,6 +27,16 @@ NumberQ
 NumericQ
 RealDigits
 RealExponent
+Residue         - Complex related
+
+// Fraction related
+Apart Together
+Cancel
+Numerator Denominator
+PadeApproximant
+ExpandAll
+ExpandDenominator
+ExpandNumerator
 
 
 - Not doing

@@ -1,6 +1,7 @@
 package org.cerion.symcalc.function.list
 
 /*
+ListQ
 Sort SortBy
 OrderedQ          - Tests if list is sorted
 Count
@@ -36,6 +37,19 @@ Ordering          - Returns positions needed to sort list
 Pick              - Pick elements from list based on criteria
 Scan              - Similar to map but evaluates each individually instead of list result / Similar to ForEach rather than Map
 Dimensions        - Find dimensions of list
+
+// Works on expressions not just lists
+Length
+Most Rest Take Drop     - Returns list with start/end removed
+Extract
+ReplacePart
+Append Prepend
+Insert Delete
+DeleteCases Position Cases
+MapAll MapAt
+Sow Reap              - More expression related
+Depth
+Distribute            - Expression related
 
 
 Maybe not doing
