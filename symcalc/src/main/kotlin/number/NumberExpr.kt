@@ -28,7 +28,7 @@ sealed class NumberExpr : Expr(), Comparable<NumberExpr> {
     abstract operator fun div(other: NumberExpr): NumberExpr
     abstract operator fun unaryMinus(): NumberExpr
 
-    fun square(): NumberExpr = this * this
+    open fun square(): NumberExpr = this * this
     abstract infix fun pow(other: NumberExpr): NumberExpr
 
     open fun abs(): Expr = if (isNegative) this.unaryMinus() else this

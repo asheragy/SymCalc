@@ -213,6 +213,8 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
 
     override fun floor(): Integer = this
     override fun round(): NumberExpr = this
+    override fun square() = Integer(value.multiply(value))
+    override fun abs() = Integer(value.abs())
 }
 
 // TODO add more operators like this and replace use cases with them
