@@ -1,20 +1,26 @@
 package org.cerion.symcalc.function.integer
 
+import org.cerion.math.bignum.integer.BinomialGenerator
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberExpr
 import org.cerion.symcalc.number.NumberType
 import org.cerion.symcalc.number.Rational
-import org.cerion.symcalc.function.FunctionExpr
-import org.cerion.symcalc.function.combinatorial.Binomial
 
 class Bernoulli(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val e = get(0)
-        if (e is Integer)
-            return bernoulli(e.intValue()).first
+        if (e is Integer) {
+            val intVal = e.intValue()
+            if (intVal > 2 && intVal % 2 == 1)
+                return Integer.ZERO
+
+            // TODO https://www.williamstein.org/edu/2006/spring/583/notes/2006-04-14/2006-04-14.pdf
+
+            return calculate(intVal).last()
+        }
 
         return this
     }
@@ -25,65 +31,36 @@ class Bernoulli(vararg e: Any) : FunctionExpr(*e) {
     }
 
     companion object {
-        fun list(n: Int): List<NumberExpr> = bernoulli(n).second
-
-        private fun bernoulli(n: Int): Pair<NumberExpr, List<NumberExpr>> {
-            when(n) {
-                0 -> return Pair(Integer.ONE, emptyList())
-                1 -> return Pair(Rational(-1,2), emptyList())
-                else -> {
-                    var res: NumberExpr = Integer.ZERO
-
-                    val values = mutableListOf<NumberExpr>()
-                    val binomial = Binomial(Integer(n + 1)).eval() as ListExpr
-                    for (i in 0 until n) {
-                        val bin = binomial[i]
-                        val t = bin.eval() as Integer
-
-                        val bern = bernoulliRecursive(i, values)
-                        values.add(bern)
-                        var b = bern.eval() as NumberExpr
-
-                        b = t * b
-                        res+= b
-                    }
-
-                    res = -res
-                    res/= Integer(n + 1)
-
-                    return Pair(res, values)
-                }
-            }
-        }
-
-        private fun bernoulliRecursive(n: Int, previous: List<NumberExpr>): NumberExpr {
-            when(n) {
-                0 -> return Integer.ONE
-                1 -> return Rational(-1,2)
-                else -> {
-                    if (n % 2 == 1)
-                        return Integer.ZERO
-
-                    var res: NumberExpr = Integer.ZERO
-
-                    val binomial = Binomial(Integer(n+1)).eval() as ListExpr
-                    for (i in 0 until n) {
-                        val bin = binomial[i] as Integer
-
-                        val bern = previous[i]
-                        var b = bern.eval() as NumberExpr
-
-                        b = bin * b
-                        res+= b
-                    }
-
-                    res = -res
-                    res/= Integer(n + 1)
-
-                    return res
-                }
-            }
-        }
-
+        fun list(n: Int): List<NumberExpr> = calculate(n)
     }
+}
+
+/*
+ * Generate Bernoulli numbers from 0 to MAX
+ */
+private fun calculate(max: Int): List<NumberExpr> {
+    val Bn = Array<NumberExpr>(max+1) { Integer.ZERO}
+    val binomial = BinomialGenerator(max)
+    binomial.inc()
+    Bn[0] = Integer.ONE
+
+    if(max > 0) {
+        Bn[1] = Rational.HALF.unaryMinus()
+        binomial.inc()
+    }
+
+    for(n in 2..max) {
+        binomial.inc()
+        if (n % 2 == 1)
+            continue
+
+        var sum: NumberExpr = Integer.ZERO
+        for(k in 0 until n)
+            sum += (Integer(binomial[k]) * Bn[k])
+
+        val Bi = Integer.NEGATIVE_ONE.div(Integer(n + 1))
+        Bn[n] = Bi * sum
+    }
+
+    return Bn.toList()
 }

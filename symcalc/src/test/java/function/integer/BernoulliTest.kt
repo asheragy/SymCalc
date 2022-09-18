@@ -6,6 +6,8 @@ import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealDouble
+import org.cerion.symcalc.`should equal`
+import org.junit.jupiter.api.Disabled
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -32,6 +34,17 @@ class BernoulliTest {
                 //Bernoulli(Integer(50)) `==` Rational(Integer("495057205241079648212477525"), Integer("66")),
                 //Bernoulli(Integer(100)) `==` Rational(Integer("-94598037819122125295227433069493721872702841533066936133385696204311395415197247711"), Integer("33330"))
         )
+    }
+
+    @Test
+    @Ignore
+    fun large() {
+        Bernoulli(Integer(300)).eval() `should equal` Rational(Integer("-1863878995204859011995045341848156066182191846635905937518715320655775" +
+                "9581743605231349907569223034108104826005287694796420210012184158790061" +
+                "6430295537046082914643480796471773719535693514415158342483315425004774" +
+                "7433575584999029126775186293388721514970183351129809976971603227633930" +
+                "4349238439848295803115933725653985747628800282891676355700124156069413" +
+                "67995702212211519561707046505473575241"), Integer("866054419230"))
     }
 
     @Test
