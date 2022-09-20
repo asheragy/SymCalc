@@ -15,6 +15,7 @@ Overflow Underflow
 StieltjesGamma
 ChampernowneNumber
 
+Needed for things like ArcTanh
 DirectedInfinity - Infinity/ComplexInfinity may replace this
 
  */

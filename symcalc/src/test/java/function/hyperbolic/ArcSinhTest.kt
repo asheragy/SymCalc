@@ -1,7 +1,6 @@
 package org.cerion.symcalc.function.hyperbolic
 
 import org.cerion.symcalc.`==`
-import org.cerion.symcalc.function.hyperbolic.ArcSinh
 import org.cerion.symcalc.number.RealBigDec
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertAll
