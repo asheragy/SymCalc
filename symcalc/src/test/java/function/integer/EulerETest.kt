@@ -1,8 +1,8 @@
 package org.cerion.symcalc.function.integer
 
 import org.cerion.symcalc.`==`
+import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.`should equal`
-import org.junit.jupiter.api.Assertions.*
 import kotlin.test.Test
 
 internal class EulerETest {

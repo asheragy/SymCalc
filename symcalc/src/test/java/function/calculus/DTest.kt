@@ -11,7 +11,6 @@ import org.cerion.symcalc.number.Complex
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealDouble
-import org.cerion.symcalc.`should equal`
 import kotlin.test.Test
 
 class DTest {
@@ -34,9 +33,9 @@ class DTest {
     @Test
     fun sumRule() {
         // D(1 + x) = 1
-        D(VarExpr("x") + VarExpr("y") + Integer(5), VarExpr("x")).eval() `should equal` Integer.ONE
+        D(VarExpr("x") + VarExpr("y") + Integer(5), VarExpr("x")) `==` Integer.ONE
         // D(x - 5) = 1
-        D(VarExpr("x") - Integer(5), VarExpr("x")).eval() `should equal` Integer.ONE
+        D(VarExpr("x") - Integer(5), VarExpr("x")) `==` Integer.ONE
 
         // Sum rule
         // x + x = 2
@@ -59,7 +58,7 @@ class DTest {
 
     @Test
     fun power() {
-        D(VarExpr("x"), VarExpr("x")).eval() `should equal` Integer.ONE
+        D(VarExpr("x"), VarExpr("x")) `==` Integer.ONE
 
         //D(Power(VarExpr("x"), Integer.TWO), VarExpr("x")).eval() `should equal` Integer.ONE
 
@@ -85,8 +84,8 @@ class DTest {
 
     @Test
     fun trig() {
-        D(Sin(VarExpr("x")), VarExpr("x")).eval() `should equal` Cos(VarExpr("x"))
-        D(Cos(VarExpr("x")), VarExpr("x")).eval() `should equal` Times(Integer(-1), Sin(VarExpr("x")))
+        D(Sin(VarExpr("x")), VarExpr("x")) `==` Cos(VarExpr("x"))
+        D(Cos(VarExpr("x")), VarExpr("x")) `==` Times(Integer(-1), Sin(VarExpr("x")))
         // Tan(x) = sec^2(x)
         // cot(x) = -cosec^2(x)
         // sec(x) = sec(x)*tan(x)

@@ -1,8 +1,8 @@
 package org.cerion.symcalc.function.calculus
 
 import org.cerion.symcalc.`==`
+import org.cerion.symcalc.assertAll
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.assertAll
 
 internal class SumTest {
 

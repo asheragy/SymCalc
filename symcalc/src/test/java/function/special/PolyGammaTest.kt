@@ -1,10 +1,10 @@
 package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.`==`
+import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.number.RealDouble
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.assertAll
 
 internal class PolyGammaTest {
 

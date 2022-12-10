@@ -1,15 +1,15 @@
 package org.cerion.symcalc.function.list
 
 import org.cerion.symcalc.`==`
+import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.number.Integer
-import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.function.arithmetic.Plus
 import org.cerion.symcalc.function.statistics.RandomInteger
 import org.cerion.symcalc.function.trig.Sin
-import org.junit.jupiter.api.assertAll
+import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

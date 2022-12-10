@@ -1,6 +1,7 @@
 package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.`==`
+import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.ErrorExpr
@@ -13,37 +14,32 @@ import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.number.RealDouble
 import org.junit.Assert
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.assertAll
 import kotlin.test.Ignore
 
 internal class ZetaTest {
 
     @Test
-    fun trivialZeros() {
-        assertAll(
-                Zeta(Integer(-2)) `==` Integer.ZERO,
-                Zeta(Integer(-4)) `==` Integer.ZERO,
-                Zeta(Integer(-10)) `==` Integer.ZERO,
-                Zeta(Integer(-12345678)) `==` Integer.ZERO,
-                Zeta(Integer("-10000000000000000006")) `==` Integer.ZERO,
-                // Non-Integer
-                Zeta(RealDouble(-2.0)) `==` 0.0,
-                Zeta(RealDouble(-12345678.0)) `==` 0.0,
-                Zeta(RealBigDec("-2.0000000000")) `==` RealBigDec.ZERO,
-                //Zeta(RealBigDec("-4978848521029382.0000000000")) `==` RealBigDec.ZERO)
-        )
-    }
+    fun trivialZeros() = assertAll(
+        Zeta(Integer(-2)) `==` Integer.ZERO,
+        Zeta(Integer(-4)) `==` Integer.ZERO,
+        Zeta(Integer(-10)) `==` Integer.ZERO,
+        Zeta(Integer(-12345678)) `==` Integer.ZERO,
+        Zeta(Integer("-10000000000000000006")) `==` Integer.ZERO,
+        // Non-Integer
+        Zeta(RealDouble(-2.0)) `==` 0.0,
+        Zeta(RealDouble(-12345678.0)) `==` 0.0,
+        Zeta(RealBigDec("-2.0000000000")) `==` RealBigDec.ZERO,
+        //Zeta(RealBigDec("-4978848521029382.0000000000")) `==` RealBigDec.ZERO)
+    )
 
     @Test
-    fun integer_positiveEven() {
-        assertAll(
-                Zeta(Integer(0)) `==` Rational.HALF.unaryMinus(),
-                Zeta(Integer(2)) `==` Times(Rational(1,6), Power(Pi(), Integer(2))),
-                Zeta(Integer(4)) `==` Times(Rational(1,90), Power(Pi(), Integer(4))),
-                Zeta(Integer(6)) `==` Times(Rational(1,945), Power(Pi(), Integer(6))),
-                Zeta(Integer(12)) `==` Times(Rational(691,638512875), Power(Pi(), Integer(12))),
-        )
-    }
+    fun integer_positiveEven() = assertAll(
+        Zeta(Integer(0)) `==` Rational.HALF.unaryMinus(),
+        Zeta(Integer(2)) `==` Times(Rational(1,6), Power(Pi(), Integer(2))),
+        Zeta(Integer(4)) `==` Times(Rational(1,90), Power(Pi(), Integer(4))),
+        Zeta(Integer(6)) `==` Times(Rational(1,945), Power(Pi(), Integer(6))),
+        Zeta(Integer(12)) `==` Times(Rational(691,638512875), Power(Pi(), Integer(12))),
+    )
 
     @Test
     fun integer_positiveOdd() {

@@ -1,6 +1,7 @@
 package org.cerion.symcalc.function.special
 
 import org.cerion.symcalc.`==`
+import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.ErrorExpr
@@ -11,7 +12,6 @@ import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
 import org.junit.Assert
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.assertAll
 import kotlin.test.Ignore
 import kotlin.test.assertEquals
 
