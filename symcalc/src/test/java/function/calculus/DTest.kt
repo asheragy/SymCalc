@@ -3,39 +3,47 @@ package org.cerion.symcalc.function.calculus
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
+import org.cerion.symcalc.function.arithmetic.Plus
+import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
-import org.cerion.symcalc.function.trig.Cos
-import org.cerion.symcalc.function.trig.Sin
+import org.cerion.symcalc.function.special.Gamma
+import org.cerion.symcalc.function.special.Zeta
+import org.cerion.symcalc.function.trig.*
 import org.cerion.symcalc.number.Complex
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealDouble
 import kotlin.test.Test
 
+val x = VarExpr("x")
+
 class DTest {
+    private val Expr.dx: Expr
+        get() = D(this, x)
 
     @Test
     fun constant() = assertAll(
         // Numbers
-        D(Integer.TWO, VarExpr("x")) `==` Integer.ZERO,
-        D(RealDouble(2.354), VarExpr("x")) `==` Integer.ZERO,
-        D(Rational(4, 6), VarExpr("x")) `==` Integer.ZERO,
-        D(Complex.ZERO, VarExpr("x")) `==` Integer.ZERO,
+        Integer.TWO.dx `==` Integer.ZERO,
+        RealDouble(2.354).dx `==` Integer.ZERO,
+        Rational(4, 6).dx `==` Integer.ZERO,
+        Complex.ZERO.dx `==` Integer.ZERO,
 
         // Constant
-        D(Pi(), VarExpr("x")).eval() `==` Integer.ZERO,
+        Pi().dx`==` Integer.ZERO,
 
         // D(x,y) = 0
-        D(VarExpr("y"), VarExpr("x")) `==` Integer.ZERO
+        VarExpr("y").dx `==` Integer.ZERO
     )
 
     @Test
     fun sumRule() {
         // D(1 + x) = 1
-        D(VarExpr("x") + VarExpr("y") + Integer(5), VarExpr("x")) `==` Integer.ONE
+        (VarExpr("x") + VarExpr("y") + Integer(5)).dx `==` Integer.ONE
         // D(x - 5) = 1
-        D(VarExpr("x") - Integer(5), VarExpr("x")) `==` Integer.ONE
+        (VarExpr("x") - Integer(5)).dx `==` Integer.ONE
 
         // Sum rule
         // x + x = 2
@@ -45,10 +53,16 @@ class DTest {
 
     @Test
     fun productRule() {
-        // sin*cos
-        // 5 * sin
-        // gamma * sin
-        // gamma * zeta
+        Times(5, x).dx `==` Integer(5)
+        Times(5, Sin(x)).dx `==` Times(5, Cos(x))
+        Times(x, Sin(x)).dx `==` Plus(Times(x, Cos(x)), Sin(x))
+
+        // TODO bug with Times()
+        //D(Times(Sin(x), Cos(x)), x) `==` Plus(Power(Cos(x), 2), Times(-1, Power(Sin(x), 2)))
+
+        // Functions with no implemented derivative
+        Times(Gamma(x), Sin(x)).dx `==` Gamma(x).dx * Sin(x) + Cos(x) * Gamma(x)
+        Times(Gamma(x), Zeta(x)).dx `==` Gamma(x).dx * Zeta(x) + Zeta(x).dx * Gamma(x)
     }
 
     @Test
@@ -58,7 +72,7 @@ class DTest {
 
     @Test
     fun power() {
-        D(VarExpr("x"), VarExpr("x")) `==` Integer.ONE
+        x.dx `==` Integer.ONE
 
         //D(Power(VarExpr("x"), Integer.TWO), VarExpr("x")).eval() `should equal` Integer.ONE
 
@@ -78,20 +92,20 @@ class DTest {
 
     @Test
     fun chainRule() {
+        Sin(Times(5, x)).dx `==` Times(5, Cos(Times(5, x)))
         // sin(5x)
+        // cos(5 + x)
         // sin(cos(x))
     }
 
     @Test
     fun trig() {
-        D(Sin(VarExpr("x")), VarExpr("x")) `==` Cos(VarExpr("x"))
-        D(Cos(VarExpr("x")), VarExpr("x")) `==` Times(Integer(-1), Sin(VarExpr("x")))
-        // Tan(x) = sec^2(x)
-        // cot(x) = -cosec^2(x)
-        // sec(x) = sec(x)*tan(x)
-        // cosec(x) = -cosec(x)*cot(x)
-
-        // sin(5x) and sin(5 + x)
+        Sin(x).dx `==` Cos(x)
+        Cos(x).dx `==` Times(-1, Sin(x))
+        Tan(x).dx `==` Power(Sec(x), 2)
+        Sec(x).dx `==` Times(Sec(x), Tan(x))
+        Csc(x).dx `==` Times(-1, Cot(x), Csc(x))
+        Cot(x).dx `==` Times(-1, Power(Csc(x), 2))
     }
 
     @Test

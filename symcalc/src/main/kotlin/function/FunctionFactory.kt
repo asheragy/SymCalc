@@ -1,18 +1,19 @@
 package org.cerion.symcalc.function
 
-import org.cerion.symcalc.function.list.ConstantArray
-import org.cerion.symcalc.function.logical.Equal
-import org.cerion.symcalc.function.trig.ArcTan
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.*
-import org.cerion.symcalc.function.calculus.*
+import org.cerion.symcalc.function.calculus.D
+import org.cerion.symcalc.function.calculus.Sum
 import org.cerion.symcalc.function.combinatorial.Binomial
 import org.cerion.symcalc.function.combinatorial.Factorial
 import org.cerion.symcalc.function.combinatorial.Factorial2
 import org.cerion.symcalc.function.core.*
+import org.cerion.symcalc.function.core.Set
 import org.cerion.symcalc.function.hyperbolic.*
 import org.cerion.symcalc.function.integer.*
 import org.cerion.symcalc.function.list.*
+import org.cerion.symcalc.function.list.Map
+import org.cerion.symcalc.function.logical.Equal
 import org.cerion.symcalc.function.logical.Greater
 import org.cerion.symcalc.function.matrix.Dot
 import org.cerion.symcalc.function.matrix.IdentityMatrix
@@ -21,7 +22,10 @@ import org.cerion.symcalc.function.matrix.VectorQ
 import org.cerion.symcalc.function.numeric.Floor
 import org.cerion.symcalc.function.plots.Plot
 import org.cerion.symcalc.function.procedural.If
-import org.cerion.symcalc.function.special.*
+import org.cerion.symcalc.function.special.Gamma
+import org.cerion.symcalc.function.special.Pochhammer
+import org.cerion.symcalc.function.special.PolyGamma
+import org.cerion.symcalc.function.special.Zeta
 import org.cerion.symcalc.function.statistics.*
 import org.cerion.symcalc.function.trig.*
 
@@ -64,10 +68,12 @@ object FunctionFactory {
             Function.SIN -> return Sin(e[0])
             Function.COS -> return Cos(e[0])
             Function.TAN -> return Tan(e[0])
+            Function.SEC -> return Sec(e[0])
+            Function.CSC -> return Csc(e[0])
+            Function.COT -> return Cot(e[0])
             Function.ARCSIN -> return ArcSin(e[0])
             Function.ARCCOS -> return ArcCos(e[0])
             Function.ARCTAN -> return ArcTan(e[0])
-            Function.COT -> return Cot(e[0])
             Function.SINH -> return Sinh(e[0])
             Function.COSH -> return Cosh(e[0])
             Function.TANH -> return Tanh(e[0])

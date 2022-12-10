@@ -5,11 +5,8 @@ import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.function.FunctionExpr
-import org.cerion.symcalc.function.arithmetic.Plus
-import org.cerion.symcalc.function.arithmetic.Subtract
-import org.cerion.symcalc.function.arithmetic.Times
-import org.cerion.symcalc.function.trig.Cos
-import org.cerion.symcalc.function.trig.Sin
+import org.cerion.symcalc.function.arithmetic.*
+import org.cerion.symcalc.function.trig.*
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberExpr
 
@@ -35,8 +32,26 @@ class D(vararg e: Expr) : FunctionExpr(*e) {
             when (e) {
                 is Plus -> result = Plus(*e.args.map { D(it, x) }.toTypedArray())
                 is Subtract -> result = Subtract(*e.args.map { D(it, x) }.toTypedArray())
-                is Sin -> result = Times(D(e[0], x), Cos(e[0]))
-                is Cos -> result = Times(Integer(-1), D(e[0], x), Sin(e[0]))
+                is Times -> {
+                    val u = e[0]
+                    val v = e[1]
+                    if (e.args.size > 2)
+                        TODO("Not Implemented")
+
+                    result = Plus(Times(D(u, x), v), Times(D(v, x), u))
+                }
+                is StandardTrigFunction -> {
+                    val arg = e[0]
+                    val argDx = D(arg, x)
+                    result = when(e) {
+                        is Sin -> Times(argDx, Cos(arg))
+                        is Cos -> Times(Integer(-1), argDx, Sin(arg))
+                        is Tan -> Times(argDx, Power(Sec(arg), 2))
+                        is Sec -> Times(argDx, Sec(arg), Tan(arg))
+                        is Csc -> Times(Minus(argDx), Cot(arg), Csc(arg))
+                        is Cot -> Times(Minus(argDx), Power(Csc(arg), 2))
+                    }
+                }
 
                 else -> return this
             }
