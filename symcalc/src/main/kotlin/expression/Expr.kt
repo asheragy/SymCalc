@@ -170,3 +170,6 @@ abstract class Expr {
         return result
     }
 }
+
+operator fun Int.plus(other: Expr) = Plus(Integer(this), other).eval()
+operator fun Int.times(other: Expr) = Times(Integer(this), other).eval()

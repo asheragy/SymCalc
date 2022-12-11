@@ -2,6 +2,7 @@ package org.cerion.symcalc.function.core
 
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.FunctionFactory
 import org.cerion.symcalc.number.NumberExpr
@@ -17,6 +18,8 @@ class N(vararg e: Any) : FunctionExpr(*e) {
         if (precision == 0)
             return RealBigDec.ZERO
 
+        if (e is VarExpr)
+            return e
         if (e is ConstExpr)
             return e.evaluate(precision)
         if (e is NumberExpr)

@@ -40,6 +40,18 @@ class D(vararg e: Expr) : FunctionExpr(*e) {
 
                     result = Plus(Times(D(u, x), v), Times(D(v, x), u))
                 }
+                is Power -> {
+                    val a = e[0]
+                    val b = e[1]
+
+                    // x^b
+                    if (a.equals(x))
+                        result = Times(b, Power(a, Subtract(b, Integer.ONE)))
+                    // a^x
+                    else
+                        result = Times(e, Log(a), D(b, x))
+
+                }
                 is StandardTrigFunction -> {
                     val arg = e[0]
                     val argDx = D(arg, x)

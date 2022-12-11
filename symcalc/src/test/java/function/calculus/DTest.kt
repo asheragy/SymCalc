@@ -2,12 +2,14 @@ package org.cerion.symcalc.function.calculus
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.assertAll
+import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.function.arithmetic.Plus
+import org.cerion.symcalc.expression.plus
+import org.cerion.symcalc.expression.times
+import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Power
-import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.special.Gamma
 import org.cerion.symcalc.function.special.Zeta
 import org.cerion.symcalc.function.trig.*
@@ -17,7 +19,8 @@ import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealDouble
 import kotlin.test.Test
 
-val x = VarExpr("x")
+private val x = VarExpr("x")
+private val y = VarExpr("y")
 
 class DTest {
     private val Expr.dx: Expr
@@ -26,43 +29,36 @@ class DTest {
     @Test
     fun constant() = assertAll(
         // Numbers
-        Integer.TWO.dx `==` Integer.ZERO,
-        RealDouble(2.354).dx `==` Integer.ZERO,
-        Rational(4, 6).dx `==` Integer.ZERO,
-        Complex.ZERO.dx `==` Integer.ZERO,
+        Integer.TWO.dx `==` 0,
+        RealDouble(2.354).dx `==` 0,
+        Rational(4, 6).dx `==` 0,
+        Complex.ZERO.dx `==` 0,
 
-        // Constant
-        Pi().dx`==` Integer.ZERO,
-
-        // D(x,y) = 0
-        VarExpr("y").dx `==` Integer.ZERO
+        Pi().dx`==` 0,
+        y.dx `==` 0
     )
 
     @Test
     fun sumRule() {
-        // D(1 + x) = 1
-        (VarExpr("x") + VarExpr("y") + Integer(5)).dx `==` Integer.ONE
-        // D(x - 5) = 1
-        (VarExpr("x") - Integer(5)).dx `==` Integer.ONE
-
-        // Sum rule
-        // x + x = 2
-        // x + sin(x) =
-        // gamma(x) + zeta(x) = sum of derivatives
+        (x + y + 5).dx `==` 1
+        (x - 5).dx `==` 1
+        (x + x).dx `==` 2
+        (x + Sin(x)).dx `==` 1 + Cos(x)
+        (Gamma(x) + Zeta(x)).dx `==` Gamma(x).dx + Zeta(x).dx
     }
 
     @Test
     fun productRule() {
-        Times(5, x).dx `==` Integer(5)
-        Times(5, Sin(x)).dx `==` Times(5, Cos(x))
-        Times(x, Sin(x)).dx `==` Plus(Times(x, Cos(x)), Sin(x))
+        (5 * x).dx `==` 5
+        (5 * Sin(x)).dx `==` 5 * Cos(x)
+        (x * Sin(x)).dx `==` x * Cos(x) + Sin(x)
 
         // TODO bug with Times()
         //D(Times(Sin(x), Cos(x)), x) `==` Plus(Power(Cos(x), 2), Times(-1, Power(Sin(x), 2)))
 
         // Functions with no implemented derivative
-        Times(Gamma(x), Sin(x)).dx `==` Gamma(x).dx * Sin(x) + Cos(x) * Gamma(x)
-        Times(Gamma(x), Zeta(x)).dx `==` Gamma(x).dx * Zeta(x) + Zeta(x).dx * Gamma(x)
+        (Gamma(x) * Sin(x)).dx `==` Gamma(x).dx * Sin(x) + Cos(x) * Gamma(x)
+        (Gamma(x) * Zeta(x)).dx `==` Gamma(x).dx * Zeta(x) + Zeta(x).dx * Gamma(x)
     }
 
     @Test
@@ -72,16 +68,20 @@ class DTest {
 
     @Test
     fun power() {
-        x.dx `==` Integer.ONE
+        x.dx `==` 1
+        Power(x, 1).dx `==` 1
+        Power(x, 2).dx `==` 2 * x
+        Power(x, 3.14).dx `==` RealDouble(3.14) * Power(x, 2.14)
+        Power(x, y).dx `==` y * Power(x, y - 1)
+    }
 
-        //D(Power(VarExpr("x"), Integer.TWO), VarExpr("x")).eval() `should equal` Integer.ONE
-
-        // x^n = n*x^(n-1)
-        // Check misc things with and without x in the exponent
-
-        // a^x = a^x * ln(a)
-        // e^x = e^x
-        // e^5x = ??
+    @Test
+    fun exponential() {
+        Power(99, x).dx `==` Power(99, x) * Log(99)
+        Power(99, 5 * x).dx `==` 5 * Power(99, 5 * x) * Log(99)
+        Power(E(), x).dx `==` Power(E(), x)
+        Power(E(), 5 * x).dx `==` 5 * Power(E(), 5 * x)
+        //Power(x, x).dx `==` Power(x, x) * (1 + Log(x))
     }
 
     @Test
@@ -92,20 +92,19 @@ class DTest {
 
     @Test
     fun chainRule() {
-        Sin(Times(5, x)).dx `==` Times(5, Cos(Times(5, x)))
-        // sin(5x)
-        // cos(5 + x)
-        // sin(cos(x))
+        Sin(5 * x).dx `==` 5 * Cos(5 * x)
+        Cos(5 + x).dx `==` -1 * Sin(5 + x)
+        Sin(Cos(x)).dx `==` -1 * Cos(Cos(x)) * Sin(x)
     }
 
     @Test
     fun trig() {
         Sin(x).dx `==` Cos(x)
-        Cos(x).dx `==` Times(-1, Sin(x))
+        Cos(x).dx `==` -1 * Sin(x)
         Tan(x).dx `==` Power(Sec(x), 2)
-        Sec(x).dx `==` Times(Sec(x), Tan(x))
-        Csc(x).dx `==` Times(-1, Cot(x), Csc(x))
-        Cot(x).dx `==` Times(-1, Power(Csc(x), 2))
+        Sec(x).dx `==` Sec(x) * Tan(x)
+        Csc(x).dx `==` -1 * Cot(x) * Csc(x)
+        Cot(x).dx `==` -1 * Power(Csc(x), 2)
     }
 
     @Test
