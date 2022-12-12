@@ -1,7 +1,7 @@
 package org.cerion.symcalc.function.arithmetic
 
-import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.constant.ComplexInfinity
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberExpr
@@ -56,12 +56,11 @@ class Times(vararg e: Any) : FunctionExpr(*e) {
 
         // Factor non-numeric duplicates
         val nonNumerics = list.filter { it !is NumberExpr }
-        val groups = nonNumerics.groupBy { it }
+        val groups = nonNumerics.groupBy { it.toString() }
         for (group in groups) {
             if(group.value.size > 1) {
                 list.removeAll { it == group.value[0] }
-                list.add(Integer(group.value.size))
-                list.add(group.value[0])
+                list.add(Power(group.value[0], group.value.size))
             }
         }
 

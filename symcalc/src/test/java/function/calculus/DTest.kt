@@ -9,7 +9,9 @@ import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.expression.plus
 import org.cerion.symcalc.expression.times
 import org.cerion.symcalc.function.arithmetic.Log
+import org.cerion.symcalc.function.arithmetic.Plus
 import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.function.special.Gamma
 import org.cerion.symcalc.function.special.Zeta
 import org.cerion.symcalc.function.trig.*
@@ -53,8 +55,7 @@ class DTest {
         (5 * Sin(x)).dx `==` 5 * Cos(x)
         (x * Sin(x)).dx `==` x * Cos(x) + Sin(x)
 
-        // TODO bug with Times()
-        //D(Times(Sin(x), Cos(x)), x) `==` Plus(Power(Cos(x), 2), Times(-1, Power(Sin(x), 2)))
+        D(Times(Sin(x), Cos(x)), x) `==` Plus(Power(Cos(x), 2), Times(-1, Power(Sin(x), 2)))
 
         // Functions with no implemented derivative
         (Gamma(x) * Sin(x)).dx `==` Gamma(x).dx * Sin(x) + Cos(x) * Gamma(x)
