@@ -55,12 +55,16 @@ class Times(vararg e: Any) : FunctionExpr(*e) {
         }
 
         // Factor non-numeric duplicates
+        // x * x   = x^2
+        // x * x^2 = x^3
         val nonNumerics = list.filter { it !is NumberExpr }
-        val groups = nonNumerics.groupBy { it.toString() }
+        val groups = nonNumerics.groupBy { if (it is Power) it.args[0] else it }
         for (group in groups) {
             if(group.value.size > 1) {
                 list.removeAll { it == group.value[0] }
-                list.add(Power(group.value[0], group.value.size))
+                list.removeAll { it is Power && it.args[0] == group.value[0] }
+                val sum = group.value.map { if (it is Power) it.args[1] else Integer.ONE }
+                list.add(Power(group.value[0], Plus(*sum.toTypedArray()).eval()))
             }
         }
 

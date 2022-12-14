@@ -164,8 +164,11 @@ abstract class Expr {
         if (this is AtomExpr)
             result = value?.hashCode() ?: 0
 
-        if (this is MultiExpr)
-            result = 31 * result + (args.hashCode())
+        if (this is MultiExpr) {
+            result = 31 * result + (args.contentHashCode())
+            if (this is FunctionExpr)
+                result = 31 * result + name.hashCode()
+        }
         result = 31 * result + type.hashCode()
         return result
     }

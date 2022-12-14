@@ -92,8 +92,7 @@ class TimesTest {
         x * x `==` Power(x, 2)
         Times(x, x, x, y, y) `==` Power(x, 3) * Power(y, 2)
         Times(Pi(), Pi()) `==` Power(Pi(), 2)
-        // TODO x = Power(x,1)
-        //Times(x, Power(x, 2)) `==` Power(x, 3)
+        Times(x, Power(x, 2)) `==` Power(x, 3)
         Times(Cos(x), Cos(x)) `==` Power(Cos(x), 2)
     }
 }
