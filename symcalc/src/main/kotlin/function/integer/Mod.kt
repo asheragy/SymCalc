@@ -10,7 +10,7 @@ import org.cerion.symcalc.number.RealDouble
 
 class Mod(vararg e: Any) : FunctionExpr(*e) {
 
-    // FEAT can work with non-integers
+    // TODO can work with non-integers
 
     override fun evaluate(): Expr {
         val a = get(0) as NumberExpr

@@ -16,5 +16,5 @@ internal class ComplexInfinityTest {
                 ComplexInfinity() / Integer(5) `==` ComplexInfinity())
     }
 
-    // TODO_LP add other operators lke power/log
+    // TODO add other operators lke power/log
 }

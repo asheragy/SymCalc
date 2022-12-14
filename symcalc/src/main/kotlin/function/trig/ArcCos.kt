@@ -1,8 +1,9 @@
 package org.cerion.symcalc.function.trig
 
 import org.cerion.math.bignum.decimal.arccos
-import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealBigDec
@@ -10,12 +11,13 @@ import kotlin.math.acos
 
 class ArcCos(e: Any) : TrigBase(e) {
 
-    // FEAT Complex and more trig tables
+    // TODO Complex and more trig tables
 
     override fun evaluateAsDouble(d: Double): Double = acos(d)
 
     override fun evaluate(e: Expr): Expr {
         when (e) {
+            is ComplexInfinity -> return ComplexInfinity()
             is Integer -> {
                 when (e) {
                     Integer.ONE -> return Integer.ZERO

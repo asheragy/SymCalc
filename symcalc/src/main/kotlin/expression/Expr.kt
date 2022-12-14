@@ -51,7 +51,7 @@ abstract class MultiExpr(val args: Array<out Expr>) : Expr() {
 }
 
 abstract class Expr {
-    // TODO_LP need to handle this completely differently, global has issues with tests and duplicate values
+    // TODO need to handle this completely differently, global has issues with tests and duplicate values
     var env = Environment()
     protected fun getEnvVar(name: String): Expr? = env.getVar(name)
     protected fun setEnvVar(name: String, e: Expr) = env.setVar(name, e)

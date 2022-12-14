@@ -1,9 +1,9 @@
 package org.cerion.symcalc.function.trig
 
-import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.`should equal`
 import kotlin.test.Test
 
 internal class ArcCosTest {
@@ -29,7 +29,7 @@ internal class ArcCosTest {
         ArcCos("-0.75000").eval() `should equal` "2.4189"
         ArcCos("-0.50000").eval() `should equal` "2.0944"
         ArcCos("-0.25000").eval() `should equal` "1.8235"
-        ArcCos(RealBigDec("0.0000", 5)).eval() `should equal` "1.5708" // TODO_LP need better way to input 0 of certain precision
+        ArcCos(RealBigDec("0.0000", 5)).eval() `should equal` "1.5708" // TODO need better way to input 0 of certain precision
         ArcCos("0.25000").eval() `should equal` "1.3181"
         ArcCos("0.50000").eval() `should equal` "1.0472"
         ArcCos("0.75000").eval() `should equal` "0.72273"

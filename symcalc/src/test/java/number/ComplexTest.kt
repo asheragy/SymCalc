@@ -1,8 +1,8 @@
 package org.cerion.symcalc.number
 
-import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
+import org.cerion.symcalc.`should equal`
 import org.junit.jupiter.api.Assertions
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -164,7 +164,7 @@ class ComplexTest {
         Complex(8, 7) % Integer(3) `should equal` Complex(-1, 1)
         Complex(8, 8) % Integer(3) `should equal` Complex(-1, -1)
         Complex(7, 3) % Integer(2) `should equal` Complex(-1,-1)
-        //Complex(7, 5) % Integer(2) `should equal` Complex(-1, 1) TODO_LP related to https://en.wikipedia.org/wiki/Rounding#Round_half_to_even or at least round() needs fixed too
+        //Complex(7, 5) % Integer(2) `should equal` Complex(-1, 1) TODO related to https://en.wikipedia.org/wiki/Rounding#Round_half_to_even or at least round() needs fixed too
 
         Complex(7, 5) % Rational(1, 2) `should equal` 0
         Complex(7, 5) % RealDouble(0.33) `should equal` Complex(0.0699999999999994, 0.04999999999999982)

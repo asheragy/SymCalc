@@ -8,7 +8,7 @@ import org.cerion.symcalc.number.NumberType
 
 class Fibonacci(vararg e: Expr) : FunctionExpr(*e) {
 
-    // FEAT zero/negatives and non-integer
+    // TODO zero/negatives and non-integer
 
     override fun evaluate(): Expr {
         val n = get(0) as Integer

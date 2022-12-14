@@ -1,12 +1,12 @@
 package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.`==`
-import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.assertAll
-import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.number.*
+import org.cerion.symcalc.`should equal`
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -30,8 +30,7 @@ class LogTest {
 
     @Test
     fun zero() {
-        // TODO_LP
-        // need directed infinity
+        // TODO need directed infinity
         //assertEquals(Integer.ZERO, Log(Integer.ZERO).eval())
     }
 
@@ -77,6 +76,6 @@ class LogTest {
 
     @Test
     fun complex() {
-        // FEAT
+        // TODO
     }
 }

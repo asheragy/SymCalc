@@ -80,7 +80,6 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
             }
             is RealDouble -> return other + this
             is RealBigDec -> {
-                // TODO_LP issue with zero and precision, this is just a workaround until more is learned on how it
                 if (isZero)
                     return other
                 if (other.isZero)

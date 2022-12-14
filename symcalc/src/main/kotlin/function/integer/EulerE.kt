@@ -22,7 +22,7 @@ class EulerE(vararg e: Any) : FunctionExpr(*e) {
         return this
     }
 
-    // FEAT if a series of euler numbers is needed a more efficient algorithm can get them recursively
+    // TODO if a series of euler numbers is needed a more efficient algorithm can get them recursively
 
     // Double sum method of calculating E_2n
     private fun iteratedSum(n: Int): Integer {

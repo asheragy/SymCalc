@@ -2,8 +2,6 @@ package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.assertAll
-import org.cerion.symcalc.constant.ComplexInfinity
-import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Divide
@@ -23,7 +21,6 @@ class ArcTanTest {
                 ArcTan(Divide(Sqrt(Integer(3)), Integer(3))) `==` Divide(Pi(), Integer(6)),
                 ArcTan(Sqrt(Integer(3))) `==` Divide(Pi(), Integer(3)),
                 ArcTan(Infinity()) `==` Divide(Pi(), Integer.TWO),
-                ArcTan(ComplexInfinity()) `==` Indeterminate()
         )
     }
 
@@ -42,5 +39,5 @@ class ArcTanTest {
         )
     }
 
-    // TODO_LP add complex
+    // TODO add complex
 }

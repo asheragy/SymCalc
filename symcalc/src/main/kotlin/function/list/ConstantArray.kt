@@ -7,7 +7,7 @@ import org.cerion.symcalc.number.NumberType
 
 class ConstantArray(vararg e: Expr) : FunctionExpr(*e) {
 
-    // FEAT 2nd parameter can be N-dimensional
+    // TODO 2nd parameter can be N-dimensional
 
     override fun evaluate(): Expr {
         val expr = get(0)

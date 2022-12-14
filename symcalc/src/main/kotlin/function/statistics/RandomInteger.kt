@@ -10,7 +10,7 @@ class RandomInteger(vararg e: Expr) : FunctionExpr(*e) {
 
     constructor(max: Int) : this(Integer(max))
 
-    // TODO_LP Research more, input may be bit length or something different than implementation
+    // TODO Research more, input may be bit length or something different than implementation
 
     override fun evaluate(): Expr {
 

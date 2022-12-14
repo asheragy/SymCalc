@@ -1,5 +1,7 @@
 package org.cerion.symcalc.function.trig
 
+import org.cerion.symcalc.constant.ComplexInfinity
+import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
@@ -31,6 +33,9 @@ abstract class TrigBase protected constructor(e: Any) : FunctionExpr(e) {
             return evaluateAsBigDecimal(e)
 
         if (this is StandardTrigFunction) {
+            if (e is ComplexInfinity)
+                return Indeterminate()
+
             if (e is NumberExpr && e.isZero)
                 return evaluatePiFactoredOut(Integer.ZERO)
 

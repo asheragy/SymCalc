@@ -65,7 +65,7 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
             throw IterationLimitExceeded()
 
         // For accuracy more precision needs to be calculated from start
-        // TODO_LP see if there is anything in computations that can make this unnecessary or reduced
+        // TODO see if there is anything in computations that can make this unnecessary or reduced
         val extraPrecision = 2 + ((max(0, input.precision - 30)) / 3)
         val start = RealBigDec(input.value, input.precision + extraPrecision)
 

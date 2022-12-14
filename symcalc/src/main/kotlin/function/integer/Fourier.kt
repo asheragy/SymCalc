@@ -52,7 +52,7 @@ class Fourier(vararg e: Expr) : FunctionExpr(*e) {
             //w2 = w2.multiply(Number.getNumber("-1"));
         }
 
-        // FEAT Check this class again, add tests, etc
+        // TODO Check this class again, add tests, etc
 
         //Fix order
         val temp = mutableListOf<Expr>()

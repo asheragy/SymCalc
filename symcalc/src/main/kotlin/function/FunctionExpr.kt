@@ -1,18 +1,14 @@
 package org.cerion.symcalc.function
 
-import org.cerion.symcalc.expression.SymbolExpr
 import org.cerion.symcalc.exception.ValidationException
-import org.cerion.symcalc.expression.ErrorExpr
-import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.ListExpr
-import org.cerion.symcalc.expression.MultiExpr
+import org.cerion.symcalc.expression.*
 import org.cerion.symcalc.function.core.N
 import org.cerion.symcalc.number.NumberExpr
 import org.cerion.symcalc.number.NumberType
 
 abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
 {
-    // TODO_LP this is only needed to make copy, should be an easier way
+    // TODO this is only needed to make copy, should be an easier way
     val name: String = this.javaClass.simpleName
 
     open val properties: Int get() = Properties.NONE.value

@@ -1,9 +1,9 @@
 package org.cerion.symcalc.number
 
-import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.core.Hold
 import org.cerion.symcalc.function.core.N
+import org.cerion.symcalc.`should equal`
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -130,7 +130,7 @@ class RationalTest : NumberTestBase() {
 
     @Test
     fun divide() {
-        // TODO_LP add others
+        // TODO add others
 
         // Real
         assertEquals(RealDouble(3.9808917197452227), Divide(Rational(25, 2), RealDouble(3.14)).eval())
