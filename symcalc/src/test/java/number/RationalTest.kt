@@ -1,5 +1,6 @@
 package org.cerion.symcalc.number
 
+import org.cerion.symcalc.`==`
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.core.Hold
 import org.cerion.symcalc.function.core.N
@@ -173,6 +174,19 @@ class RationalTest : NumberTestBase() {
 
         Rational(Integer("3049854309810938218409328432094809324320941"), Integer(3)).round() `should equal` Integer("1016618103270312739469776144031603108106980")
         Rational(Integer("-3049854309810938218409328432094809324320941"), Integer(3)).round() `should equal` Integer("-1016618103270312739469776144031603108106980")
+    }
+
+    @Test
+    fun roundToNearestEven() {
+        Rational(1,2).round() `==` 0
+        Rational(3,2).round() `==` 2
+        Rational(5,2).round() `==` 2
+        Rational(7,2).round() `==` 4
+
+        Rational(-1,2).round() `==` 0
+        Rational(-3,2).round() `==` -2
+        Rational(-5,2).round() `==` -2
+        Rational(-7,2).round() `==` -4
     }
 
     @Test

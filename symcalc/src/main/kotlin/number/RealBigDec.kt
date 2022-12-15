@@ -145,14 +145,14 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
                 return RealBigDec(number, precision)
             }
             is Rational -> {
-                if (other == Rational.HALF)
-                    return if (isNegative) Complex(0, unaryMinus().sqrt()) else sqrt()
+                // ^(b/2)
+                if (!other.isNegative && other.denominator == Integer.TWO) {
+                    val sqrt = if (isNegative) Complex(0, unaryMinus().sqrt()) else sqrt()
+                    return sqrt.pow(other.numerator)
+                }
 
-                // TODO negative may work here but check cases
                 // TODO optimal values here
                 if (!isNegative && !other.isNegative) {
-                    if (other.denominator == Integer(2))
-                        return sqrt().pow(other.numerator)
                     if(other.numerator < Integer(10) && other.denominator < Integer(10))
                         return root(other.denominator.intValue()).pow(other.numerator)
                 }

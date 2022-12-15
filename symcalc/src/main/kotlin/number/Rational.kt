@@ -164,17 +164,26 @@ class Rational private constructor(val numerator: Integer, val denominator: Inte
 
     override fun round(): NumberExpr {
         val dr = numerator.value.divideAndRemainder(denominator.value)
-        val n = dr.first()
+        val n = Integer(dr.first())
         val d = dr[1]
 
         val remainder = d.abs().toDouble() / denominator.value.toDouble()
-        if (remainder >= 0.5) {
+        if (remainder == 0.5) {
+            if (n.isEven)
+                return n
+
             return if (isNegative)
-                Integer(n) - Integer.ONE
+                n - Integer.ONE
             else
-                Integer(n) + Integer.ONE
+                n + Integer.ONE
+        }
+        else if (remainder > 0.5) {
+            return if (isNegative)
+                n - Integer.ONE
+            else
+                n + Integer.ONE
         }
 
-        return Integer(n)
+        return n
     }
 }

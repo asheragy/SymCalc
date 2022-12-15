@@ -1,12 +1,12 @@
 package org.cerion.symcalc.number
 
-import org.cerion.symcalc.constant.I
-import org.cerion.symcalc.function.trig.ArcTan
-import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.constant.E
+import org.cerion.symcalc.constant.I
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Sqrt
 import org.cerion.symcalc.function.arithmetic.Times
+import org.cerion.symcalc.function.trig.ArcTan
 import org.cerion.symcalc.function.trig.Cos
 import org.cerion.symcalc.function.trig.Sin
 import kotlin.math.abs
@@ -156,6 +156,9 @@ class Complex(val real: NumberExpr, val img: NumberExpr = Integer.ZERO) : Number
     }
 
     override fun pow(other: NumberExpr): NumberExpr {
+        if (other is Integer)
+            return this.pow(other)
+
         if (other is Complex)
             throw UnsupportedOperationException()
 
@@ -181,6 +184,8 @@ class Complex(val real: NumberExpr, val img: NumberExpr = Integer.ZERO) : Number
         if(other is Complex) {
             if (img.isZero && other.img.isZero)
                 return real.compareTo(other.real)
+            else if(real.isZero && other.real.isZero)
+                return img.compareTo(other.img)
 
             if (real == other.real && img == other.img)
                 return 0

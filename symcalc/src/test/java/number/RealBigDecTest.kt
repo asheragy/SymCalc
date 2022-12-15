@@ -239,8 +239,7 @@ class RealBigDecTest : NumberTestBase() {
     fun pow_negativeRoot() = assertAll(
         Power("-4.0000", Rational.HALF) `==` Complex(0, "2.0000"),
         Power("-8.0000", Rational.THIRD) `==` Complex("1.0000", "1.7321"),
-        // TODO real part should be zero, related to power of 3/2 being converted to precision=5
-        Power("-1.2345", Rational(3,2)) `==` Complex("-0.79965E-18", "-1.3716")
+        Power("-1.2345", Rational(3,2)) `==` Complex(0, "-1.3716")
     )
 
     @Test

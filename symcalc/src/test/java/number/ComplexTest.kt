@@ -1,5 +1,6 @@
 package org.cerion.symcalc.number
 
+import org.cerion.symcalc.`==`
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.`should equal`
@@ -147,30 +148,30 @@ class ComplexTest {
 
     @Test
     fun quotient() {
-        Complex(8, 7).quotient(Integer(3)) `should equal` Complex(3, 2)
-        Complex(8, 8).quotient(Integer(3)) `should equal` Complex(3, 3)
-        Complex(7, 3).quotient(Integer(2)) `should equal` Complex(4, 2)
-        Complex(7, 5).quotient(Integer(2)) `should equal` Complex(4, 3)
+        Complex(8, 7).quotient(Integer(3)) `==` Complex(3, 2)
+        Complex(8, 8).quotient(Integer(3)) `==` Complex(3, 3)
+        Complex(7, 3).quotient(Integer(2)) `==` Complex(4, 2)
+        Complex(7, 5).quotient(Integer(2)) `==` Complex(4, 2)
 
-        Complex(7, 5).quotient(Rational(1, 2)) `should equal` Complex(14, 10)
-        Complex(7, 5).quotient(RealDouble(0.33)) `should equal` Complex(21, 15)
-        Complex(7, 5).quotient(RealBigDec("0.33")) `should equal` Complex(21, 15)
+        Complex(7, 5).quotient(Rational(1, 2)) `==` Complex(14, 10)
+        Complex(7, 5).quotient(RealDouble(0.33)) `==` Complex(21, 15)
+        Complex(7, 5).quotient(RealBigDec("0.33")) `==` Complex(21, 15)
 
-        Complex(7, 5).quotient(Complex(1, 2)) `should equal` Complex(3, -2)
+        Complex(7, 5).quotient(Complex(1, 2)) `==` Complex(3, -2)
     }
 
     @Test
     fun mod() {
-        Complex(8, 7) % Integer(3) `should equal` Complex(-1, 1)
-        Complex(8, 8) % Integer(3) `should equal` Complex(-1, -1)
-        Complex(7, 3) % Integer(2) `should equal` Complex(-1,-1)
-        //Complex(7, 5) % Integer(2) `should equal` Complex(-1, 1) TODO related to https://en.wikipedia.org/wiki/Rounding#Round_half_to_even or at least round() needs fixed too
+        Complex(8, 7) % Integer(3) `==` Complex(-1, 1)
+        Complex(8, 8) % Integer(3) `==` Complex(-1, -1)
+        Complex(7, 3) % Integer(2) `==` Complex(-1,-1)
+        Complex(7, 5) % Integer(2) `==` Complex(-1, 1)
 
-        Complex(7, 5) % Rational(1, 2) `should equal` 0
-        Complex(7, 5) % RealDouble(0.33) `should equal` Complex(0.0699999999999994, 0.04999999999999982)
-        Complex(7, 5) % RealBigDec("0.33") `should equal` Complex("0.07", "0.05")
+        Complex(7, 5) % Rational(1, 2) `==` 0
+        Complex(7, 5) % RealDouble(0.33) `==` Complex(0.0699999999999994, 0.04999999999999982)
+        Complex(7, 5) % RealBigDec("0.33") `==` Complex("0.07", "0.05")
 
-        Complex(7, 5) % Complex(3, 2) `should equal` Complex(1, 1)
+        Complex(7, 5) % Complex(3, 2) `==` Complex(1, 1)
     }
 
     @Test
