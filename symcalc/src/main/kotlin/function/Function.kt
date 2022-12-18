@@ -34,6 +34,9 @@ enum class Function constructor(val value: String) {
     ARCSEC("ArcSec"),
     ARCCSC("ArcCsc"),
     ARCCOT("ArcCot"),
+    // Sinc Haversine InverseHaversine
+
+    // Hyperbolic
     SINH("Sinh"),
     COSH("Cosh"),
     TANH("Tanh"),

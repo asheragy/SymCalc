@@ -15,4 +15,5 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_version"
     compile project(':bignum')
+    testImplementation 'org.testng:testng:7.1.0'
 }

@@ -1,8 +1,9 @@
 package org.cerion.symcalc.function.arithmetic
 
-import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.core.N
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
@@ -35,7 +36,12 @@ class DivideTest {
 
     @Test
     fun rationalFactoredOut() {
-        assertEquals(Times(Rational(1,2), Pi()), Divide(Pi(), Integer.TWO).eval())
+        Divide(Pi(), 2) `==` Times(Rational(1,2), Pi())
+    }
+
+    @Test
+    fun powerInverse() {
+        Divide(1, Power(3, Rational.HALF)) `==` Power(3, Rational.HALF.unaryMinus())
     }
 
     @Test

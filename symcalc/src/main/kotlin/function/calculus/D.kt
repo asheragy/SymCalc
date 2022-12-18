@@ -52,6 +52,8 @@ class D(vararg e: Expr) : FunctionExpr(*e) {
                         result = Times(e, Log(a), D(b, x))
 
                 }
+                is Csc,
+                is Sec,
                 is StandardTrigFunction -> {
                     val arg = e[0]
                     val argDx = D(arg, x)

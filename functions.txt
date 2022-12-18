@@ -37,7 +37,7 @@ Generalized: HeavisideLambda HeavisidePi HeavisideTheta
 
 Bitwise: BitAnd BitClear BitGet BitLength BitNot BitOr BitSet BitShiftLeft BitShiftRight BitXor
 Timing: AbsoluteTime AbsoluteTiming
-Transforms: Collect ComplexExpand Convolve Expand ExpToTrig FullSimplify FunctionExpand Reduce Refine RSolve
+Transforms: Collect ComplexExpand Convolve Expand ExpToTrig FullSimplify FunctionExpand Reduce Refine RSolve TrigExpand TrigFactor TrigFactorList TrigReduce TrigToExp
 
 Options: MaxIterations MaxRecursion MaxStepFraction MaxSteps MaxStepSize MinRecursion MinSize
 

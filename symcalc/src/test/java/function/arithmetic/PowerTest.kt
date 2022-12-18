@@ -1,13 +1,15 @@
 package org.cerion.symcalc.function.arithmetic
 
-import org.cerion.symcalc.`should equal`
-import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.function.core.N
 import org.cerion.symcalc.function.logical.Equal
 import org.cerion.symcalc.number.*
+import org.cerion.symcalc.`should equal`
 import java.math.BigDecimal
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -218,6 +220,15 @@ class PowerTest {
 
     @Test
     fun powToPow() {
-        Power(Power(2, Rational.HALF), -1).eval() `should equal` Power(2, Rational(-1, 2))
+        Power(Power(3, Rational.HALF), -1) `==` Power(3, Rational(-1, 2))
+    }
+
+    @Test
+    fun multiplicationSpread() {
+        val x = VarExpr("x")
+        val y = VarExpr("y")
+        // TODO this should work
+        //Power(x, 2) * Power(y, 2) `==` Times(Power(x, 2), Power(y, 2))
+        //Power(x * y, 2) `==` Times(Power(x, 2), Power(y, 2))
     }
 }

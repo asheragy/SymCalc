@@ -1,5 +1,6 @@
 package org.cerion.symcalc.function
 
+import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.*
 import org.cerion.symcalc.function.core.N
@@ -51,6 +52,9 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         }
 
         val newArgs = args.map { if (hasProperty(Properties.HOLD)) it else it.eval() }.toMutableList()
+
+        if (newArgs.any { it is Indeterminate })
+            return Indeterminate()
 
         // Evaluate precision on sibling elements, numbers already handled but its possible that could be done here as well, need to try that
         if (size > 0) {

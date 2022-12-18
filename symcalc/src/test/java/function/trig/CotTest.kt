@@ -1,9 +1,9 @@
 package org.cerion.symcalc.function.trig
 
-import org.cerion.symcalc.`should equal`
+import org.cerion.symcalc.`==`
+import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.SymbolExpr
-import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.list.Join
@@ -14,14 +14,14 @@ import kotlin.test.Test
 internal class CotTest {
 
     @Test
-    fun basic() {
-        Cot(1.0).eval() `should equal` 0.6420926159343306
+    fun double() {
+        Cot(1.0) `==` 0.6420926159343306
     }
 
     @Test
     fun bigDec() {
-        Cot("1.0000").eval() `should equal` "0.64209"
-        Cot("2.0000000000000000001").eval() `should equal` "-0.45765755436028576387"
+        Cot("1.0000") `==` "0.64209"
+        Cot("2.0000000000000000001") `==` "-0.45765755436028576387"
     }
 
     @Test
