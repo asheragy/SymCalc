@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.Rational
 
-class Sqrt(vararg e: Expr) : FunctionExpr(*e) {
+class Sqrt(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         return Power(get(0), Rational(1, 2)).eval()

@@ -62,6 +62,7 @@ class D(vararg e: Expr) : FunctionExpr(*e) {
                         is Sec -> Times(argDx, Sec(arg), Tan(arg))
                         is Csc -> Times(Minus(argDx), Cot(arg), Csc(arg))
                         is Cot -> Times(Minus(argDx), Power(Csc(arg), 2))
+                        else -> TODO("This should not even be required")
                     }
                 }
 

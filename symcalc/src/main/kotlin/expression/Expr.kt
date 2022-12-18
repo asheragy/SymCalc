@@ -158,6 +158,7 @@ abstract class Expr {
     operator fun times(other: Expr): Expr = Times(this, other).eval()
     operator fun times(other: Int): Expr = Times(this, Integer(other)).eval()
     operator fun div(other: Expr): Expr = Divide(this, other).eval()
+    operator fun div(other: Int): Expr = Divide(this, Integer(other)).eval()
 
     override fun hashCode(): Int {
         var result = 0

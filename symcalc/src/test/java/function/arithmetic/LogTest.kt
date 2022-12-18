@@ -76,6 +76,8 @@ class LogTest {
 
     @Test
     fun complex() {
-        // TODO
+        Log(Complex(0,1)) `==` Complex(0, Rational.HALF) * Pi()
+        Log(Complex(1,0)) `==` 0
+        Log(Complex(1.0,1.0)) `==` Complex(0.3465735902799727, 0.7853981633974483)
     }
 }

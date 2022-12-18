@@ -7,13 +7,15 @@ import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Divide
+import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.NumberExpr
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
 
-class ArcTan(e: Expr) : TrigBase(e) {
+class ArcTan(vararg e: Any) : TrigBase(*e) {
 
     override fun evaluateAsDouble(d: Double): Double = kotlin.math.atan(d)
 
@@ -21,7 +23,9 @@ class ArcTan(e: Expr) : TrigBase(e) {
         when (e) {
             is Integer -> {
                 if (e.isOne)
-                    return Divide(Pi(), Integer(4))
+                    return Divide(Pi(), 4)
+                else if (e == Integer.NEGATIVE_ONE)
+                    return Rational(-1,4) * Pi()
                 else if (e.isZero)
                     return Integer.ZERO
             }
@@ -42,6 +46,29 @@ class ArcTan(e: Expr) : TrigBase(e) {
         }
 
         return this
+    }
+
+    fun evaluate(x: NumberExpr, y: NumberExpr): Expr {
+        if (x.isZero) {
+            if (y.isZero)
+                return Indeterminate()
+
+            val piOver2 = Pi() / 2
+            return if (y.isNegative)
+                Minus(piOver2).eval()
+            else
+                piOver2
+        }
+
+        val result = ArcTan(y / x)
+        if (x.isNegative) {
+            if (y.isNegative)
+                return result - Pi()
+            else
+                return result + Pi()
+        }
+        else
+            return result.eval()
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): Expr {

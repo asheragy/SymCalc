@@ -15,7 +15,7 @@ sealed interface StandardTrigFunction {
     fun evaluatePiFactoredOut(e: Expr): Expr
 }
 
-abstract class TrigBase protected constructor(e: Any) : FunctionExpr(e) {
+abstract class TrigBase protected constructor(vararg e: Any) : FunctionExpr(*e) {
 
     override val properties: Int
         get() = Properties.LISTABLE.value
@@ -26,6 +26,12 @@ abstract class TrigBase protected constructor(e: Any) : FunctionExpr(e) {
 
     public override fun evaluate(): Expr {
         val e = get(0)
+
+        if (args.size == 2) {
+            val y = get(1)
+            if (this is ArcTan && e is NumberExpr && y is NumberExpr)
+                return evaluate(e, y)
+        }
 
         if (e is RealDouble)
             return RealDouble(evaluateAsDouble(e.value))
