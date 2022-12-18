@@ -1,9 +1,9 @@
 package org.cerion.symcalc.function.arithmetic
 
-import org.cerion.symcalc.exception.OperationException
-import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.I
+import org.cerion.symcalc.exception.OperationException
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.trig.Cos
 import org.cerion.symcalc.function.trig.Sin
@@ -72,6 +72,12 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
             }
 
             return a.pow(b)
+        }
+
+        // Spread power to inner terms
+        if (a is Times) {
+            val args = a.args.map { Power(it, b) }
+            return Times(*args.toTypedArray()).eval()
         }
 
         return this

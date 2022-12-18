@@ -54,6 +54,7 @@ class D(vararg e: Expr) : FunctionExpr(*e) {
                 }
                 is Csc,
                 is Sec,
+                is Cot,
                 is StandardTrigFunction -> {
                     val arg = e[0]
                     val argDx = D(arg, x)

@@ -53,7 +53,7 @@ internal class CotTest {
 
         assertTrigExprRange(expected, SymbolExpr("cot"))
     }
-
+    
     companion object {
         val sqrt3 = Power(Integer(3), Rational(1,2))
         val oneOverSqrt3 = Power(Integer(3), Rational(-1,2))

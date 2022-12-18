@@ -6,7 +6,6 @@ import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Sqrt
-import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import kotlin.test.Test
 
@@ -14,7 +13,7 @@ class ArcTanTest {
 
     @Test
     fun exact() {
-        ArcTan(0) `==` Integer.ZERO
+        ArcTan(0) `==` 0
         ArcTan(1) `==` Rational(1,4) * Pi()
         ArcTan(-1) `==` Rational(-1,4) * Pi()
         ArcTan(Divide(1, Sqrt(3))) `==` Divide(Pi(), 6)

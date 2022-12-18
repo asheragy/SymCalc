@@ -33,12 +33,12 @@ class TimesTest {
 
     @Test
     fun timesRealZero() {
-        Times(Integer(5), RealDouble()) `==` RealDouble()
-        Times(Rational(1,3), RealDouble()) `==` RealDouble()
-        Times(RealDouble(3.14), RealDouble()) `==` RealDouble()
-        Times(RealBigDec("3.14"), RealDouble()) `==` RealDouble()
-        Times(Complex(2.0, Rational.HALF), RealDouble()) `==` RealDouble()
-        Times(Pi(), RealDouble()) `==` RealDouble()
+        Times(5, 0.0) `==` 0.0
+        Times(Rational(1,3), 0.0) `==` 0.0
+        Times(3.14, 0.0) `==` 0.0
+        Times("3.14", 0.0) `==` 0.0
+        Times(Complex(2.0, Rational.HALF), 0.0) `==` 0.0
+        Times(Pi(), 0.0) `==` 0.0
     }
 
     @Test
@@ -64,15 +64,14 @@ class TimesTest {
     @Test
     fun transforms() {
         // 2*(Pi/2 + Pi) = 3*Pi
-        val e = Times(Integer.TWO,Plus(Pi(), Divide(Pi(), Integer.TWO))).eval()
-        assertEquals(Times(Integer(3), Pi()), e)
+        Times(2, Plus(Pi(), Divide(Pi(), 2))) `==` Times(3, Pi())
 
         val x = RealBigDec("1.6475490")
         val y = RealBigDec("0.93267057")
         val z=  RealBigDec("0.3607293")
         // x * (y + iz)
-        assertEquals(Complex("1.5366205", "0.5943192"), Times(x, y + Times(I(), z)).eval())
-        assertEquals(Complex("1.5366205", "0.5943192"), Times(x, y) + Times(I(), x, z))
+        Times(x, y + Times(I(), z)) `==` Complex("1.5366205", "0.5943192")
+        Times(x, y) + Times(I(), x, z) `==` Complex("1.5366205", "0.5943192")
     }
 
     @Test
@@ -90,7 +89,7 @@ class TimesTest {
     @Test
     fun commonTermsPowered() {
         x * x `==` Power(x, 2)
-        Times(x, x, x, y, y) `==` Power(x, 3) * Power(y, 2)
+        Times(x, x, x, y, y) `==` Times(Power(x, 3), Power(y, 2))
         Times(Pi(), Pi()) `==` Power(Pi(), 2)
         Times(x, Power(x, 2)) `==` Power(x, 3)
         Times(Cos(x), Cos(x)) `==` Power(Cos(x), 2)

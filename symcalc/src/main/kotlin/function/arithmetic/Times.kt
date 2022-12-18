@@ -40,17 +40,22 @@ class Times(vararg e: Any) : FunctionExpr(*e) {
         }
 
         // Transform same exponent: a^x * b^x = (ab)^x
+        // TODO this only applies when a^b can be evaluated to a number (NumericQ)
         if (list.count { it is Power } > 1) {
-            val groups = list.filterIsInstance<Power>().groupBy { it[1] }
-            list.removeIf { it is Power }
-            for (group in groups) {
-                if (group.value.size > 1) {
-                    val t = Times(*group.value.map { it[0] }.toTypedArray())
-                    val power = Power(t, group.key)
-                    list.add(power.eval())
+            val groups = list.filterIsInstance<Power>()
+                .filter { it.args.all { arg -> arg is NumberExpr } }
+                .groupBy { it[1] }
+
+            if (groups.isNotEmpty()) {
+                list.removeIf { it is Power }
+                for (group in groups) {
+                    if (group.value.size > 1) {
+                        val t = Times(*group.value.map { it[0] }.toTypedArray())
+                        val power = Power(t, group.key)
+                        list.add(power.eval())
+                    } else
+                        list.add(group.value[0])
                 }
-                else
-                    list.add(group.value[0])
             }
         }
 

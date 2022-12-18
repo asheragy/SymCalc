@@ -5,7 +5,7 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.NumberExpr
 
-class Equal(vararg e: Expr) : FunctionExpr(*e) {
+class Equal(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         if (size == 1)

@@ -1,8 +1,9 @@
 package org.cerion.symcalc.function.trig
 
-import org.cerion.symcalc.expression.SymbolExpr
-import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.expression.SymbolExpr
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Power
@@ -11,7 +12,6 @@ import org.cerion.symcalc.function.core.N
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
-import org.cerion.symcalc.number.RealDouble
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -20,28 +20,26 @@ class SinTest {
     @Test
     fun delayEval() {
         // Eval does nothing
-        assertEquals(Sin(Integer(5)), Sin(Integer(5)).eval())
+        Sin(5) `==` Sin(5)
 
         // Evals to number
-        assertEquals(RealDouble(-0.9589242746631385), N(Sin(Integer(5))).eval())
+        N(Sin(5)) `==` -0.9589242746631385
     }
 
     @Test
     fun basicPi() {
-        assertEquals(Integer.ZERO, Sin(Integer.ZERO).eval())
-        assertEquals(Integer.ONE, Sin(Divide(Pi(), Integer.TWO)).eval())
-        assertEquals(Integer.ONE, Sin(Times(Pi(), Rational(1,2))).eval())
-        assertEquals(Integer.ZERO, Sin(Pi()).eval())
-        assertEquals(Integer.NEGATIVE_ONE, Sin(Times(Pi(), Rational(3,2))).eval())
-        assertEquals(Integer.ZERO, Sin(Times(Pi(),Integer.TWO)).eval())
+        Sin(0) `==` 0
+        Sin(Divide(Pi(), 2)) `==` 1
+        Sin(Times(Pi(), Rational(1,2))) `==` 1
+        Sin(Pi()) `==` 0
+        Sin(Times(Pi(), Rational(3,2))) `==` -1
+        Sin(Times(Pi(), 2)) `==` 0
     }
 
     @Test
     fun valuesNotEvaluated() {
-        val e = Sin(Times(Pi(), Rational(1,5)))
-        assertEquals(e, e.eval())
-
-        assertEquals(Sin(Times(Integer(3), Power(Integer.TWO, Rational.HALF))), Sin(Times(Integer(3), Power(Integer.TWO, Rational.HALF))).eval())
+        Sin(Times(Pi(), Rational(1,5))) `==` Sin(Times(Pi(), Rational(1,5)))
+        Sin(Times(3, Power(2, Rational.HALF))) `==` Sin(Times(3, Power(2, Rational.HALF)))
     }
 
     @Test
@@ -75,11 +73,11 @@ class SinTest {
 
     @Test
     fun bigDecimal() {
-        assertEquals(RealBigDec("0.93"), Sin(RealBigDec("1.2")).eval())
-        assertEquals(RealBigDec("0.72066"), Sin(RealBigDec("0.80475")).eval())
-        assertEquals(RealBigDec("-0.958921"), Sin(RealBigDec("5.00001")).eval())
+        Sin("1.2") `==` "0.93"
+        Sin("0.80475") `==` "0.72066"
+        Sin("5.00001") `==` "-0.958921"
 
-        assertEquals(RealBigDec("0.84147098480789650665250232163029899962256306079837"), Sin(RealBigDec("1.0000000000000000000000000000000000000000000000000")).eval())
+        Sin("1.0000000000000000000000000000000000000000000000000") `==` "0.84147098480789650665250232163029899962256306079837"
     }
 
     @Test

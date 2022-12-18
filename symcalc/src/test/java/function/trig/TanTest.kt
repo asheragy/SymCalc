@@ -1,8 +1,9 @@
 package org.cerion.symcalc.function.trig
 
+import org.cerion.symcalc.`==`
+import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.SymbolExpr
-import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.core.N
@@ -61,11 +62,11 @@ class TanTest {
 
     @Test
     fun bigDecimal() {
-        assertEquals(RealBigDec("1.5574"), Tan(RealBigDec("1.0000")).eval())
-        assertEquals(RealBigDec("3.38045"), Tan(RealBigDec("1.28318")).eval())
-        assertEquals(RealBigDec("-3.38039"), Tan(RealBigDec("5.00001")).eval())
+        Tan("1.0000") `==` "1.5574"
+        Tan("1.28318") `==` "3.38045"
+        Tan("5.00001") `==` "-3.38039"
 
-        assertEquals(RealBigDec("1.1548660069442902748685813894288494284408800565653"), Tan(RealBigDec("0.85714285714285714285714285714285714285714285714286")).eval())
+        Tan("0.85714285714285714285714285714285714285714285714286") `==` "1.1548660069442902748685813894288494284408800565653"
     }
 
     @Test

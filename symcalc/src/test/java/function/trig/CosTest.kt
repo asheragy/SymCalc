@@ -1,7 +1,8 @@
 package org.cerion.symcalc.function.trig
 
-import org.cerion.symcalc.expression.SymbolExpr
+import org.cerion.symcalc.`==`
 import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.expression.SymbolExpr
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
@@ -45,11 +46,11 @@ class CosTest {
 
     @Test
     fun bigDecimal() {
-        assertEquals(RealBigDec("0.36"), Cos(RealBigDec("1.2")).eval())
-        assertEquals(RealBigDec("0.69329"), Cos(RealBigDec("0.80475")).eval())
-        assertEquals(RealBigDec("0.283672"), Cos(RealBigDec("5.00001")).eval())
+        Cos("1.2") `==` "0.36"
+        Cos("0.80475") `==` "0.69329"
+        Cos("5.00001") `==` "0.283672"
 
-        assertEquals(RealBigDec("0.54030230586813971740093660744297660373231042061792"), Cos(RealBigDec("1.0000000000000000000000000000000000000000000000000")).eval())
+        Cos("1.0000000000000000000000000000000000000000000000000") `==` "0.54030230586813971740093660744297660373231042061792"
     }
 
     @Test

@@ -3,6 +3,8 @@ package org.cerion.symcalc.function.trig
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Indeterminate
+import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.number.Integer
 import org.junit.Test
 
 class TrigTest {
@@ -24,9 +26,8 @@ class TrigTest {
         ArcSin(ci) `==` ComplexInfinity()
         ArcCos(ci) `==` ComplexInfinity()
         ArcTan(ci) `==` Indeterminate()
-        // TODO dont forget these when added
-        //ArcSec(ci) `==` Pi() / Integer.TWO
-        //ArcCsc(ci) `==` 0
-        //ArcCot(ci) `==` 0
+        ArcSec(ci) `==` Pi() / Integer.TWO
+        ArcCsc(ci) `==` 0
+        ArcCot(ci) `==` 0
     }
 }

@@ -1,5 +1,6 @@
 package org.cerion.symcalc.function.arithmetic
 
+import org.cerion.symcalc.`==`
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.Expr.ExprType
 import org.cerion.symcalc.expression.ListExpr
@@ -44,8 +45,8 @@ class SubtractTest {
 
     @Test
     fun lists() {
-        assertEquals(ListExpr(-6,3,3), Subtract(ListExpr(1,5,8), ListExpr(7,2,5)).eval())
-        assertEquals(ListExpr(1,2,3), Subtract(ListExpr(3,4,5), Integer(2)).eval())
-        assertEquals(ListExpr(7,6,5), Subtract(Integer(10), ListExpr(3,4,5)).eval())
+        Subtract(ListExpr(1,5,8), ListExpr(7,2,5)) `==` ListExpr(-6,3,3)
+        Subtract(ListExpr(3,4,5), 2) `==` ListExpr(1,2,3)
+        Subtract(10, ListExpr(3,4,5)) `==` ListExpr(7,6,5)
     }
 }

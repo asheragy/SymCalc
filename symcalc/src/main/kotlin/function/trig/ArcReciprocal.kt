@@ -26,8 +26,9 @@ class ArcCsc(e: Any) : FunctionExpr(e) {
     override fun evaluate(): Expr {
         val z = get(0)
 
-        if (z is NumberExpr)
-            return ArcSin(Divide(1, z)).eval()
+        val arcSin = ArcSin(Divide(1, z)).eval()
+        if (arcSin !is ArcSin)
+            return arcSin
 
         return this
     }
