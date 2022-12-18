@@ -1,12 +1,12 @@
 package org.cerion.symcalc.number
 
-import org.cerion.symcalc.`should equal`
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Times
-import kotlin.test.Test
+import org.cerion.symcalc.`should equal`
 import java.math.BigInteger
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
@@ -116,6 +116,10 @@ class IntegerTest {
 
     @Test
     fun divide() {
+        assertEquals(Integer(-1), Integer(1) / Integer(-1))
+        assertEquals(Integer(-1), Integer(-1) / Integer(1))
+        assertEquals(Integer(1), Integer(-1) / Integer(-1))
+
         assertEquals(Integer(5), Integer(10) / two)
         assertEquals(Integer(20), Integer(10) / Rational(1,2))
         assertEquals(Rational(21, 4), Integer(3) / Rational(4,7))

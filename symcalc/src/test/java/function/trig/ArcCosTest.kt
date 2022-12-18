@@ -1,5 +1,6 @@
 package org.cerion.symcalc.function.trig
 
+import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
@@ -9,10 +10,12 @@ import kotlin.test.Test
 internal class ArcCosTest {
 
     @Test
-    fun asInteger() {
-        ArcCos(1).eval() `should equal` 0
-        ArcCos(0).eval() `should equal` Rational(1,2) * Pi()
-        ArcCos(-1).eval() `should equal` Pi()
+    fun exact() {
+        ArcCos(-1) `==` Pi()
+        ArcCos(Rational(-1,2)) `==` Rational(2, 3) * Pi()
+        ArcCos(1) `==` 0
+        ArcCos(Rational(1,2)) `==` Rational(1, 3) * Pi()
+        ArcCos(0) `==` Rational(1,2) * Pi()
     }
 
     @Test

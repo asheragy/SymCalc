@@ -1,7 +1,7 @@
 package org.cerion.symcalc.function.arithmetic
 
-import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.constant.ComplexInfinity
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberExpr
@@ -16,11 +16,12 @@ class Divide(x: Any, y: Any) : FunctionExpr(x, y) {
             if (y.isZero)
                 return ComplexInfinity()
 
-            if (y.isOne) //Identity
-                return x
-
             if (x is NumberExpr)
                 return x / y
+
+            // TODO check Pi/1 and Pi/1.0 here
+            if (y.isOne) //Identity
+                return x
         }
 
         if (y is ComplexInfinity)

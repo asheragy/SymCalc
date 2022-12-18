@@ -1,8 +1,6 @@
 package org.cerion.symcalc.function.arithmetic
 
-import org.cerion.symcalc.constant.E
-import org.cerion.symcalc.constant.I
-import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.constant.*
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.trig.ArcTan
@@ -42,6 +40,8 @@ class Log(vararg e: Any) : FunctionExpr(*e) {
 
         if (n is E)
             return Integer.ONE
+        if (n is ComplexInfinity)
+            return Infinity()
 
         if (n is Power && n.args[0] is E)
             return n.args[1]

@@ -84,6 +84,8 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
                 if (gcd.isOne) {
                     if (other.isOne)
                         return this
+                    else if (other.unaryMinus().isOne)
+                        return this.unaryMinus()
 
                     return Rational(this, other)
                 }

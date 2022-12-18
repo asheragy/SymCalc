@@ -6,6 +6,7 @@ import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
 import kotlin.math.acos
 
@@ -24,6 +25,12 @@ class ArcCos(e: Any) : TrigBase(e) {
                     Integer.NEGATIVE_ONE -> return Pi()
                     Integer.ZERO -> return Divide(Pi(), 2).eval()
                 }
+            }
+            is Rational -> {
+                if (e == Rational(1,2))
+                    return Pi() / 3
+                if (e == Rational(-1,2))
+                    return Pi() * Rational(2,3)
             }
         }
 

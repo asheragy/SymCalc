@@ -23,9 +23,9 @@ class ArcTan(vararg e: Any) : TrigBase(*e) {
         when (e) {
             is Integer -> {
                 if (e.isOne)
-                    return Divide(Pi(), 4)
+                    return Pi() / 4
                 else if (e == Integer.NEGATIVE_ONE)
-                    return Rational(-1,4) * Pi()
+                    return Pi() / -4
                 else if (e.isZero)
                     return Integer.ZERO
             }

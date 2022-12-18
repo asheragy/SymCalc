@@ -6,6 +6,7 @@ import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.number.Integer
+import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
 import kotlin.math.asin
 
@@ -24,6 +25,12 @@ class ArcSin(e: Any) : TrigBase(e) {
                     Integer.NEGATIVE_ONE -> return Divide(Pi(), -2).eval()
                     Integer.ZERO -> return Integer.ZERO
                 }
+            }
+            is Rational -> {
+                if(e == Rational.HALF)
+                    return Pi() / 6
+                if(e == Rational.HALF.unaryMinus())
+                    return Rational(-1,6) * Pi()
             }
         }
 

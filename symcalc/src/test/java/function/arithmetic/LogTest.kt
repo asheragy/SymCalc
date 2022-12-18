@@ -2,7 +2,9 @@ package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.assertAll
+import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.E
+import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.number.*
@@ -76,6 +78,7 @@ class LogTest {
 
     @Test
     fun complex() {
+        Log(ComplexInfinity()) `==` Infinity()
         Log(Complex(0,1)) `==` Complex(0, Rational.HALF) * Pi()
         Log(Complex(1,0)) `==` 0
         Log(Complex(1.0,1.0)) `==` Complex(0.3465735902799727, 0.7853981633974483)
