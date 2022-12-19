@@ -103,6 +103,10 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
     }
 
     override fun toString(): String {
+        if (args.size == 2) {
+            if (args[0] is FunctionExpr)
+                return "(" + args[0] + ")^" + args[1]
+        }
         return args.toList().joinToString ("^")
     }
 }

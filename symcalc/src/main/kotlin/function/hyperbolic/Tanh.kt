@@ -2,18 +2,22 @@ package org.cerion.symcalc.function.hyperbolic
 
 import org.cerion.math.bignum.decimal.tanh
 import org.cerion.symcalc.constant.ComplexInfinity
+import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Times
+import org.cerion.symcalc.function.trig.Tan
+import org.cerion.symcalc.number.Complex
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.number.RealDouble
 import kotlin.math.tanh
 
-class Tanh(e: Expr) : HyperbolicBase(e) {
+class Tanh(e: Any) : HyperbolicBase(e) {
     override fun evaluate(e: Expr): Expr {
         when (e) {
             is Integer -> {
@@ -33,10 +37,15 @@ class Tanh(e: Expr) : HyperbolicBase(e) {
         }
 
         // Attempt to evaluate
-        val e2x = Exp(Integer.TWO * e).eval()
-        if (e2x !is Power)
-            return (e2x - Integer.ONE) / (e2x + Integer.ONE)
+        var result = Exp(Integer.TWO * e).eval()
+        if (result !is Power)
+            return (result - Integer.ONE) / (result + Integer.ONE)
 
-        return this
+        // Tanh(x) = -i*Tan(ix)
+        result = Complex(0, -1) * Tan(I() * e)
+        if (result is Times && result.args.any { it is Tan })
+            return this
+
+        return result
     }
 }

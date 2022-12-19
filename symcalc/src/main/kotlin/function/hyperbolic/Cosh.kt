@@ -2,6 +2,7 @@ package org.cerion.symcalc.function.hyperbolic
 
 import org.cerion.math.bignum.decimal.cosh
 import org.cerion.symcalc.constant.ComplexInfinity
+import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.expression.Expr
@@ -9,12 +10,13 @@ import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Plus
+import org.cerion.symcalc.function.trig.Cos
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.number.RealDouble
 import kotlin.math.cosh
 
-class Cosh(e: Expr) : HyperbolicBase(e) {
+class Cosh(e: Any) : HyperbolicBase(e) {
 
     override fun evaluate(e: Expr): Expr {
         when (e) {
@@ -37,9 +39,14 @@ class Cosh(e: Expr) : HyperbolicBase(e) {
         }
 
         // Attempt to evaluate
-        val result = Exp(e) + Exp(Minus(e))
+        var result = Exp(e) + Exp(Minus(e))
         if (result !is Plus)
             return result / Integer.TWO
+
+        // Cosh(x) = Cos(ix)
+        result = Cos(I() * e).eval()
+        if (result !is Cos)
+            return result
 
         return this
     }
