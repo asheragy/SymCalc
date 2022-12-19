@@ -74,17 +74,23 @@ object FunctionFactory {
             Function.ARCSIN -> return ArcSin(e[0])
             Function.ARCCOS -> return ArcCos(e[0])
             Function.ARCTAN -> return ArcTan(*e)
-
             Function.ARCSEC -> return ArcSec(e[0])
             Function.ARCCSC -> return ArcCsc(e[0])
             Function.ARCCOT -> return ArcCot(e[0])
+
             // Hyperbolic
             Function.SINH -> return Sinh(e[0])
             Function.COSH -> return Cosh(e[0])
             Function.TANH -> return Tanh(e[0])
+            Function.SECH -> return Sech(e[0])
+            Function.CSCH -> return Csch(e[0])
+            Function.COTH -> return Coth(e[0])
             Function.ARCSINH -> return ArcSinh(e[0])
             Function.ARCCOSH -> return ArcCosh(e[0])
             Function.ARCTANH -> return ArcTanh(e[0])
+            Function.ARCSECH -> return ArcSech(e[0])
+            Function.ARCCSCH -> return ArcCsch(e[0])
+            Function.ARCCOTH -> return ArcCoth(e[0])
 
             //List
             Function.TOTAL -> return Total(*e)

@@ -6,9 +6,9 @@ import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Subtract
-import org.cerion.symcalc.function.trig.TrigBase
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.number.RealDouble
 import kotlin.math.sinh
 
 class Sinh(e: Expr) : HyperbolicBase(e) {
@@ -20,6 +20,12 @@ class Sinh(e: Expr) : HyperbolicBase(e) {
                     return Integer.ZERO
                 else if (e.isNegative)
                     return Minus(Sinh(e.unaryMinus()))
+            }
+            is RealDouble -> return RealDouble(sinh(e.value))
+            is RealBigDec -> {
+                return RealBigDec(
+                    e.value.sinh(RealBigDec.getStoredPrecision(e.precision)),
+                    e.precision)
             }
             is Log -> {
                 if (e.size == 1) // Must be natural log
@@ -33,14 +39,5 @@ class Sinh(e: Expr) : HyperbolicBase(e) {
             return result / Integer.TWO
 
         return this
-    }
-
-    override fun evaluateAsDouble(d: Double): Double = sinh(d)
-
-    override fun evaluateAsBigDecimal(x: RealBigDec): Expr {
-        return RealBigDec(
-            x.value.sinh(RealBigDec.getStoredPrecision(x.precision)),
-            x.precision
-        )
     }
 }

@@ -9,21 +9,24 @@ import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Minus
 import org.cerion.symcalc.function.arithmetic.Plus
-import org.cerion.symcalc.function.trig.TrigBase
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.number.RealDouble
 import kotlin.math.cosh
 
 class Cosh(e: Expr) : HyperbolicBase(e) {
-    override fun evaluateAsDouble(d: Double): Double = cosh(d)
 
     override fun evaluate(e: Expr): Expr {
-
         when (e) {
             is Integer -> {
                 if (e.isZero)
                     return Integer.ONE
             }
+            is RealDouble -> return RealDouble(cosh(e.value))
+            is RealBigDec -> return RealBigDec(
+                e.value.cosh(RealBigDec.getStoredPrecision(e.precision)),
+                e.precision
+            )
             is Infinity -> return Infinity()
             is ComplexInfinity -> return Indeterminate()
             is Log -> {
@@ -39,12 +42,5 @@ class Cosh(e: Expr) : HyperbolicBase(e) {
             return result / Integer.TWO
 
         return this
-    }
-
-    override fun evaluateAsBigDecimal(x: RealBigDec): Expr {
-        return RealBigDec(
-            x.value.cosh(RealBigDec.getStoredPrecision(x.precision)),
-            x.precision
-        )
     }
 }

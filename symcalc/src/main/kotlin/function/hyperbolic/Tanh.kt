@@ -8,20 +8,20 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Exp
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Power
-import org.cerion.symcalc.function.trig.TrigBase
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.number.RealDouble
 import kotlin.math.tanh
 
 class Tanh(e: Expr) : HyperbolicBase(e) {
-    override fun evaluateAsDouble(d: Double): Double = tanh(d)
-
     override fun evaluate(e: Expr): Expr {
         when (e) {
             is Integer -> {
                 if (e.isZero)
                     return Integer.ZERO
             }
+            is RealDouble -> return RealDouble(tanh(e.value))
+            is RealBigDec -> return RealBigDec(e.value.tanh(RealBigDec.getStoredPrecision(e.precision)), e.precision)
             is Infinity -> return Integer.ONE
             is ComplexInfinity -> return Indeterminate()
             is Log -> {
@@ -38,12 +38,5 @@ class Tanh(e: Expr) : HyperbolicBase(e) {
             return (e2x - Integer.ONE) / (e2x + Integer.ONE)
 
         return this
-    }
-
-    override fun evaluateAsBigDecimal(x: RealBigDec): Expr {
-        return RealBigDec(
-            x.value.tanh(RealBigDec.getStoredPrecision(x.precision)),
-            x.precision
-        )
     }
 }

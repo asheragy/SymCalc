@@ -40,9 +40,16 @@ enum class Function constructor(val value: String) {
     SINH("Sinh"),
     COSH("Cosh"),
     TANH("Tanh"),
+    SECH("Sech"),
+    CSCH("Csch"),
+    COTH("Coth"),
     ARCSINH("ArcSinh"),
     ARCCOSH("ArcCosh"),
     ARCTANH("ArcTanh"),
+    ARCSECH("ArcSech"),
+    ARCCSCH("ArcCsch"),
+    ARCCOTH("ArcCoth"),
+    // Gudermannian InverseGudermannian
 
     // List Functions
     TOTAL("Total"),
