@@ -13,20 +13,34 @@ class HyperbolicTest {
         Sinh(0) `==` 0
         Cosh(0) `==` 1
         Tanh(0) `==` 0
+        Sech(0) `==` 1
+        Csch(0) `==` ComplexInfinity()
+        Coth(0) `==` ComplexInfinity()
         // TODO others
     }
 
     @Test
     fun infinity() {
-        Cosh(Infinity()) `==` Infinity()
-        Tanh(Infinity()) `==` 1
+        val x = Infinity()
+        Sinh(x) `==` Infinity()
+        Cosh(x) `==` Infinity()
+        Tanh(x) `==` 1
+        Sech(x) `==` 0
+        Csch(x) `==` 0
+        Coth(x) `==` 1
+
         // TODO others
     }
 
     @Test
     fun complexInfinity() {
-        Cosh(ComplexInfinity()) `==` Indeterminate()
-        Tanh(ComplexInfinity()) `==` Indeterminate()
+        val x = ComplexInfinity()
+        Sinh(x) `==` Indeterminate()
+        Cosh(x) `==` Indeterminate()
+        Tanh(x) `==` Indeterminate()
+        Sech(x) `==` Indeterminate()
+        Csch(x) `==` Indeterminate()
+        Coth(x) `==` Indeterminate()
         // TODO others
     }
 }

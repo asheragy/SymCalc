@@ -71,6 +71,8 @@ class SinTest {
         assertTrigExprRange(values.join(negativeValues), SymbolExpr("sin"))
     }
 
+    // TODO more values https://en.wikipedia.org/wiki/Exact_trigonometric_values#Common_angles
+
     @Test
     fun bigDecimal() {
         Sin("1.2") `==` "0.93"

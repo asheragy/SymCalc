@@ -2,6 +2,7 @@ package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.I
+import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.exception.OperationException
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
@@ -37,6 +38,12 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
                 return Integer.ONE
             if (b.isOne)
                 return a
+            if (a is Infinity && b !is Complex) {
+                return if (b.isNegative)
+                    Integer.ZERO
+                else
+                    Infinity()
+            }
         }
 
         if (b is Plus) {

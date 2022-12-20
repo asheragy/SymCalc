@@ -2,6 +2,7 @@ package org.cerion.symcalc.function.hyperbolic
 
 import org.cerion.math.bignum.decimal.sinh
 import org.cerion.symcalc.constant.I
+import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.*
 import org.cerion.symcalc.function.trig.Sin
@@ -27,6 +28,7 @@ class Sinh(e: Any) : HyperbolicBase(e) {
                     e.value.sinh(RealBigDec.getStoredPrecision(e.precision)),
                     e.precision)
             }
+            is Infinity -> return Infinity()
             is Log -> {
                 if (e.size == 1) // Must be natural log
                     return (e[0] - (Integer.ONE / e[0])) / Integer.TWO
