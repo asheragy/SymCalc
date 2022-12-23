@@ -1,8 +1,10 @@
 package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.constant.ComplexInfinity
+import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
+import org.cerion.symcalc.number.Complex
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberExpr
 
@@ -87,6 +89,19 @@ class Times(vararg e: Any) : FunctionExpr(*e) {
 
         if (list.contains(ComplexInfinity()))
             return ComplexInfinity()
+        if (list.contains(Infinity())) {
+            return if (list.any { it is NumberExpr && it !is Complex && it.isNegative })
+                Minus(Infinity())
+            else
+                Infinity()
+        }
+        // TODO add DirectedInfinity to replace this
+        if (list.contains(Minus(Infinity()))) {
+            return if (list.any { it is NumberExpr && it !is Complex && it.isNegative })
+                Infinity()
+            else
+                Minus(Infinity())
+        }
 
         return Times(*list.toTypedArray())
     }

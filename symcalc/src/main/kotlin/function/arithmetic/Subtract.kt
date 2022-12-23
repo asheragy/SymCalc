@@ -35,6 +35,8 @@ class Subtract(vararg e: Any) : FunctionExpr(*e) {
 
         if (a is ComplexInfinity || b is ComplexInfinity)
             return ComplexInfinity()
+        if (a == Minus(Infinity()) && b is NumberExpr)
+            return Minus(Infinity())
 
         if (a is NumberExpr && b is Infinity)
             return Minus(Infinity())

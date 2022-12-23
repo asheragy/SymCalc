@@ -2,9 +2,7 @@ package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.assertAll
-import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.E
-import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.number.*
@@ -62,23 +60,8 @@ class LogTest {
                 Log("100.000001") `==` "4.60517020")
     }
 
-    //@Test
-    fun temp() {
-        val x100 = Rational(1001,10).eval(100)
-        val x250 = Rational(1001,10).eval(250)
-        Log(x100).eval() `should equal` RealBigDec("4.606169686321174901202792308289263426662958039650712504063675468764045544312363680026290664941397509")
-        Log(x250).eval() `should equal` RealBigDec("4.606169686321174901202792308289263426662958039650712504063675468764045544312363680026290664941397508835067828144465612432101950443177354495663241233838524903260256246936957243232486023299562416895905726941502965091993506116907385338734535572300155929")
-
-        for(i in 0 until 1000)
-            Log(x100).eval()
-
-        for(i in 0 until 270)
-            Log(x250).eval()
-    }
-
     @Test
     fun complex() {
-        Log(ComplexInfinity()) `==` Infinity()
         Log(Complex(0,1)) `==` Complex(0, Rational.HALF) * Pi()
         Log(Complex(1,0)) `==` 0
         Log(Complex(1.0,1.0)) `==` Complex(0.3465735902799727, 0.7853981633974483)

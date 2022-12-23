@@ -22,20 +22,23 @@ class Log(vararg e: Any) : FunctionExpr(*e) {
 
         when(n) {
             is NumberExpr -> {
-                if (n is Complex)
-                    return Log(n.abs()) + I() * ArcTan(n.real, n.img).eval()
-                if (n.isNegative)
+                if (n !is Complex && n.isNegative)
                     return PI_I + Log(n.unaryMinus())
 
-                if (n is Rational && n < Integer.ONE)
-                    return Times(Integer.NEGATIVE_ONE, Log(n.reciprocal()))
-                if (n is RealDouble)
-                    return RealDouble(ln(n.value))
-                if (n is RealBigDec)
-                    return n.log()
-                if (n is Integer) {
-                    if(n == Integer.ONE)
-                        return Integer.ZERO
+                when(n) {
+                    is RealDouble -> return RealDouble(ln(n.value))
+                    is RealBigDec -> return n.log()
+                    is Integer -> {
+                        if(n == Integer.ONE)
+                            return Integer.ZERO
+                        else if (n == Integer.ZERO)
+                            return Minus(Infinity())
+                    }
+                    is Rational -> {
+                        if (n < Integer.ONE)
+                            return Times(-1, Log(n.reciprocal()))
+                    }
+                    is Complex -> return Log(n.abs()) + I() * ArcTan(n.real, n.img).eval()
                 }
             }
             is E -> return Integer.ONE

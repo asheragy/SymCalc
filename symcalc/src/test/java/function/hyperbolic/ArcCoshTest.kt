@@ -1,6 +1,8 @@
 package org.cerion.symcalc.function.hyperbolic
 
 import org.cerion.symcalc.`==`
+import org.cerion.symcalc.number.Complex
+import org.cerion.symcalc.number.RealBigDec
 import org.junit.Test
 
 internal class ArcCoshTest {
@@ -18,6 +20,9 @@ internal class ArcCoshTest {
 
     @Test
     fun bigDecimal_lessThanOne() {
-        // TODO these are complex results
+        ArcCosh("0.50000") `==` Complex(0, "1.0472")
+        ArcCosh(RealBigDec("0.0", 5)) `==` Complex(0, "1.5708")
+        ArcCosh("-0.50000") `==` Complex(0, "2.0944")
+        ArcCosh("-3.1415") `==` Complex("1.8115", "3.1416")
     }
 }
