@@ -47,6 +47,9 @@ class ArithmeticTest {
     fun complexInfinity() {
         val x = ComplexInfinity()
 
+        Power(x, 2) `==` ComplexInfinity()
+        Power(x, -2) `==` 0
+
         Log(x) `==` Infinity()
     }
 }

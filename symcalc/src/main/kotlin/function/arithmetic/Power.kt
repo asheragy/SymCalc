@@ -1,5 +1,6 @@
 package org.cerion.symcalc.function.arithmetic
 
+import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.constant.Infinity
@@ -38,11 +39,19 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
                 return Integer.ONE
             if (b.isOne)
                 return a
-            if (a is Infinity && b !is Complex) {
-                return if (b.isNegative)
-                    Integer.ZERO
-                else
-                    Infinity()
+
+            if (b !is Complex) {
+                if (a is Infinity) {
+                    return if (b.isNegative)
+                        Integer.ZERO
+                    else
+                        Infinity()
+                }
+                if (a is ComplexInfinity)
+                    return if (b.isNegative)
+                        Integer.ZERO
+                    else
+                        ComplexInfinity()
             }
         }
 

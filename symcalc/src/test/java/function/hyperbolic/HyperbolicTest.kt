@@ -23,9 +23,9 @@ class HyperbolicTest {
         ArcSinh(0) `==` 0
         ArcCosh(0) `==` Pi() * Complex(0, Rational(1, 2))
         ArcTanh(0) `==` 0
-        //ArcCsch(0) `==` ComplexInfinity()
-        //ArcSech(0) `==` Infinity()
-        //ArcCoth(0) `==` Pi() * Complex(0, Rational(1, 2))
+        ArcCsch(0) `==` ComplexInfinity()
+        ArcSech(0) `==` Infinity()
+        ArcCoth(0) `==` Pi() * Complex(0, Rational(1, 2))
     }
 
     @Test
@@ -41,10 +41,12 @@ class HyperbolicTest {
         ArcSinh(x) `==` Infinity()
         ArcCosh(x) `==` Infinity()
         ArcTanh(x) `==` Pi() * Complex(0, Rational(-1, 2))
-        //ArcCsch(x) `==` 0
-        //ArcSech(x) `==` Pi() * Complex(0, Rational(1, 2))
-        //ArcCoth(x) `==` 0
+        ArcCsch(x) `==` 0
+        ArcSech(x) `==` Pi() * Complex(0, Rational(1, 2))
+        ArcCoth(x) `==` 0
     }
+
+    // TODO negative infinity
 
     @Test
     fun complexInfinity() {
@@ -59,8 +61,8 @@ class HyperbolicTest {
         ArcSinh(x) `==` ComplexInfinity()
         ArcCosh(x) `==` Infinity()
         ArcTanh(x) `==` Indeterminate()
-        //ArcCsch(x) `==` 0
-        //ArcSech(x) `==` Indeterminate()
-        //ArcCoth(x) `==` 0
+        ArcCsch(x) `==` 0
+        ArcSech(x) `==` Indeterminate()
+        ArcCoth(x) `==` 0
     }
 }
