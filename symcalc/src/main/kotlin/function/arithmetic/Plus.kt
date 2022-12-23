@@ -1,11 +1,11 @@
 package org.cerion.symcalc.function.arithmetic
 
-import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.constant.ComplexInfinity
+import org.cerion.symcalc.constant.Infinity
+import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberExpr
-import java.util.*
 
 class Plus(vararg e: Any) : FunctionExpr(*e) {
 
@@ -13,13 +13,14 @@ class Plus(vararg e: Any) : FunctionExpr(*e) {
         get() = Properties.Flat.value or Properties.NumericFunction.value or Properties.Orderless.value or Properties.LISTABLE.value
 
     override fun evaluate(): Expr {
-        val list = ArrayList<Expr>()
-        for (i in 0 until size)
-            list.add(get(i))
+        val list = args.toMutableList()
 
         // Combine number values
         val numberItems = list.filterIsInstance<NumberExpr>()
         list.removeIf { it is NumberExpr }
+        if (list.any { it is Infinity })
+            return Infinity()
+
         val sum = numberItems.fold(Integer.ZERO as NumberExpr) { acc, n -> acc + n }
         if (!sum.isZero)
             list.add(sum)

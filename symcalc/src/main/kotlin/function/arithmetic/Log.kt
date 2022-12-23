@@ -20,31 +20,32 @@ class Log(vararg e: Any) : FunctionExpr(*e) {
     override fun evaluate(): Expr {
         val n = get(0)
 
-        if (n is NumberExpr) {
-            if (n is Complex)
-                return Log(n.abs()) + I() * ArcTan(n.real, n.img).eval()
+        when(n) {
+            is NumberExpr -> {
+                if (n is Complex)
+                    return Log(n.abs()) + I() * ArcTan(n.real, n.img).eval()
+                if (n.isNegative)
+                    return PI_I + Log(n.unaryMinus())
 
-            if (n.isNegative)
-                return PI_I + Log(n.unaryMinus())
-            if (n is Rational && n < Integer.ONE)
-                return Times(Integer.NEGATIVE_ONE, Log(n.reciprocal()))
-            if (n is RealDouble)
-                return RealDouble(ln(n.value))
-            if (n is RealBigDec)
-                return n.log()
-            if (n is Integer) {
-                if(n == Integer.ONE)
-                    return Integer.ZERO
+                if (n is Rational && n < Integer.ONE)
+                    return Times(Integer.NEGATIVE_ONE, Log(n.reciprocal()))
+                if (n is RealDouble)
+                    return RealDouble(ln(n.value))
+                if (n is RealBigDec)
+                    return n.log()
+                if (n is Integer) {
+                    if(n == Integer.ONE)
+                        return Integer.ZERO
+                }
+            }
+            is E -> return Integer.ONE
+            is Infinity -> return Infinity()
+            is ComplexInfinity -> return Infinity()
+            is Power -> {
+                if (n.args[0] is E)
+                    return n.args[1]
             }
         }
-
-        if (n is E)
-            return Integer.ONE
-        if (n is ComplexInfinity)
-            return Infinity()
-
-        if (n is Power && n.args[0] is E)
-            return n.args[1]
 
         return this
     }

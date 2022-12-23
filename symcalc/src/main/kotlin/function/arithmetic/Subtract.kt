@@ -1,6 +1,8 @@
 package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.constant.ComplexInfinity
+import org.cerion.symcalc.constant.Indeterminate
+import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.NumberExpr
@@ -18,11 +20,24 @@ class Subtract(vararg e: Any) : FunctionExpr(*e) {
         if (b is NumberExpr && b.isZero)
             return a
 
-        if (a is NumberExpr && b is NumberExpr)
-            return a - b
+        when(a) {
+            is NumberExpr -> {
+                if (b is NumberExpr)
+                    return a - b
+            }
+            is Infinity -> {
+                if (b is Infinity)
+                    return Indeterminate()
+                if (b is NumberExpr)
+                    return Infinity()
+            }
+        }
 
         if (a is ComplexInfinity || b is ComplexInfinity)
             return ComplexInfinity()
+
+        if (a is NumberExpr && b is Infinity)
+            return Minus(Infinity())
 
         return this
     }

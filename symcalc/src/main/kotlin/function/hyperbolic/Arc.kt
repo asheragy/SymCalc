@@ -2,60 +2,73 @@ package org.cerion.symcalc.function.hyperbolic
 
 import org.cerion.math.bignum.decimal.arccosh
 import org.cerion.math.bignum.decimal.arcsinh
+import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.function.arithmetic.Log
-import org.cerion.symcalc.function.arithmetic.Minus
-import org.cerion.symcalc.function.arithmetic.Times
+import org.cerion.symcalc.expression.minus
+import org.cerion.symcalc.function.arithmetic.*
 import org.cerion.symcalc.number.Complex
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
 
-class ArcSinh(e: Expr) : HyperbolicBase(e) {
-    override fun evaluate(x: Expr): Expr {
-        when(x) {
-            is RealBigDec -> return RealBigDec(x.value.arcsinh(x.maxStoredPrecision), x.precision)
+class ArcSinh(e: Any) : HyperbolicBase(e) {
+    override fun evaluate(z: Expr): Expr {
+        when(z) {
+            is ComplexInfinity -> return ComplexInfinity()
+            // TODO is this necessary to define there?
+            is RealBigDec -> return RealBigDec(z.value.arcsinh(z.maxStoredPrecision), z.precision)
         }
 
-        return this
+        val eval = Log(Sqrt(Power(z, 2) + 1) + z).eval()
+        if (eval is Log)
+            return this
+
+        return eval
     }
 }
 
-class ArcCosh(e: Expr) : HyperbolicBase(e) {
-    override fun evaluate(e: Expr): Expr {
-        when(e) {
+class ArcCosh(e: Any) : HyperbolicBase(e) {
+    override fun evaluate(z: Expr): Expr {
+        when(z) {
             is RealBigDec -> {
-                if (e < RealBigDec("1.0")) {
+                if (z < RealBigDec("1.0")) {
                     TODO("Add complex result")
                 }
 
-                return RealBigDec(e.value.arccosh(e.maxStoredPrecision), e.precision)
+                return RealBigDec(z.value.arccosh(z.maxStoredPrecision), z.precision)
             }
         }
 
-        return this
+        val eval = Log(z + Sqrt(z - 1) * Sqrt(z + 1)).eval()
+        if (eval is Log)
+            return this
+
+        return eval
     }
 }
 
-class ArcTanh(e: Expr) : HyperbolicBase(e) {
-    override fun evaluate(e: Expr): Expr {
+class ArcTanh(e: Any) : HyperbolicBase(e) {
+    override fun evaluate(z: Expr): Expr {
         // TODO https://mathworld.wolfram.com/InverseHyperbolicTangent.html
 
-        when(e) {
+        when(z) {
             is Integer -> {
-                when(e.value.toInt()) {
+                when(z.value.toInt()) {
                     // TODO should be directed infinity
                     -1 -> return Minus(Infinity())
                     0 -> return Integer.ZERO
                     1 -> return Infinity()
                 }
             }
-            is RealBigDec -> return Rational.HALF * Log((e + 1) / (e.unaryMinus() + 1))
             is Infinity -> return Times(Complex(0, Rational.HALF.unaryMinus()), Pi())
         }
 
-        return this
+        val eval = Rational.HALF * (Log(z + 1) - Log(1 - z))
+        if (eval is Log)
+            return this
+
+        return eval
     }
 }
