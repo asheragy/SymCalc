@@ -20,7 +20,6 @@ import org.cerion.symcalc.function.matrix.IdentityMatrix
 import org.cerion.symcalc.function.matrix.MatrixQ
 import org.cerion.symcalc.function.matrix.VectorQ
 import org.cerion.symcalc.function.numeric.Floor
-import org.cerion.symcalc.function.plots.Plot
 import org.cerion.symcalc.function.procedural.If
 import org.cerion.symcalc.function.special.Gamma
 import org.cerion.symcalc.function.special.Pochhammer
@@ -151,9 +150,6 @@ object FunctionFactory {
             Function.STANDARD_DEVIATION -> return StandardDeviation(*e)
             Function.RANDOM_CHOICE -> return RandomChoice(*e)
             Function.RANDOM_INTEGER -> return RandomInteger(*e)
-
-            // Graphics
-            Function.PLOT -> return Plot(*e)
 
             // Categorize these
             Function.SET -> return Set(*e)

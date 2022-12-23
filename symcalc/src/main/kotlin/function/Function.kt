@@ -108,9 +108,6 @@ enum class Function constructor(val value: String) {
     STANDARD_DEVIATION("StandardDeviation"),
     RANDOM_CHOICE("RandomChoice"),
 
-    // Graphics
-    PLOT("Plot"),
-
     // Procedural
     IF("If"),
 

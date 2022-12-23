@@ -1,8 +1,8 @@
 package org.cerion.symcalc.expression
 
-import org.cerion.symcalc.constant.*
-
-import java.util.Hashtable
+import org.cerion.symcalc.constant.E
+import org.cerion.symcalc.constant.Pi
+import java.util.*
 
 abstract class ConstExpr : Expr() {
     abstract override fun toString(): String
@@ -37,12 +37,11 @@ abstract class ConstExpr : Expr() {
         }
 
         @JvmStatic fun getConstant(name: String): ConstExpr {
-            when (this.lookup(name)) {
-                Name.PI -> return Pi()
-                Name.E -> return E()
+            return when (this.lookup(name)) {
+                Name.PI -> Pi()
+                Name.E -> E()
+                else -> throw IllegalArgumentException("invalid constant")
             }
-
-            throw IllegalArgumentException("invalid constant")
         }
 
         private var identifiers: Hashtable<String, Name>? = null

@@ -104,7 +104,6 @@ abstract class Expr {
         CONST,
         ERROR,
         BOOL,
-        GRAPHICS,
         SYMBOL
     }
 
