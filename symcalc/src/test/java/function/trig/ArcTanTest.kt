@@ -2,10 +2,10 @@ package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.Indeterminate
-import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Sqrt
+import org.cerion.symcalc.number.Complex
 import org.cerion.symcalc.number.Rational
 import kotlin.test.Test
 
@@ -13,13 +13,12 @@ class ArcTanTest {
 
     @Test
     fun exact() {
-        ArcTan(0) `==` 0
         ArcTan(1) `==` Rational(1,4) * Pi()
         ArcTan(-1) `==` Rational(-1,4) * Pi()
         ArcTan(Divide(1, Sqrt(3))) `==` Divide(Pi(), 6)
         ArcTan(Divide(Sqrt(3), 3)) `==` Divide(Pi(), 6)
         ArcTan(Sqrt(3)) `==` Divide(Pi(), 3)
-        ArcTan(Infinity()) `==` Divide(Pi(), 2)
+        ArcTan(2) `==` ArcTan(2)
     }
 
     @Test
@@ -56,5 +55,8 @@ class ArcTanTest {
         ArcTan(0, -1.0) `==` Rational.HALF.unaryMinus() * Pi()
     }
 
-    // TODO add complex
+    @Test
+    fun complex() {
+        ArcTan(Complex(1.0, 1.0)) `==` Complex(1.0172219678978514, 0.4023594781085251)
+    }
 }

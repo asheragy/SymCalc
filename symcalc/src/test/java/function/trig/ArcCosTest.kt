@@ -2,6 +2,7 @@ package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.number.Complex
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealBigDec
 import kotlin.test.Test
@@ -14,7 +15,6 @@ internal class ArcCosTest {
         ArcCos(Rational(-1,2)) `==` Rational(2, 3) * Pi()
         ArcCos(1) `==` 0
         ArcCos(Rational(1,2)) `==` Rational(1, 3) * Pi()
-        ArcCos(0) `==` Rational(1,2) * Pi()
     }
 
     @Test
@@ -41,5 +41,10 @@ internal class ArcCosTest {
     @Test
     fun evalBigDec() {
         ArcCos("0.9876543210123456789") `==` "0.1572969521806257177"
+    }
+
+    @Test
+    fun complex() {
+        ArcCos(Complex(1.0, 1.0)) `==` Complex(0.9045568943023813, -1.0612750619050355)
     }
 }

@@ -1,6 +1,8 @@
 package org.cerion.symcalc.number
 
+import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.function.trig.ArcTan
 import java.math.BigDecimal
 
 enum class NumberType {
@@ -79,5 +81,14 @@ sealed class NumberExpr : Expr(), Comparable<NumberExpr> {
 
             throw Exception()
         }
+    }
+
+    fun arg(): Expr {
+        return if (this is Complex)
+            ArcTan(img / real)
+        else if (this.isNegative)
+            Pi()
+        else
+            Integer.ZERO
     }
 }

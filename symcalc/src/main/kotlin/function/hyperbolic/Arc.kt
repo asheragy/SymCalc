@@ -10,7 +10,6 @@ import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Sqrt
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.number.Complex
-import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 
 class ArcSinh(e: Any) : HyperbolicBase(e) {
@@ -41,13 +40,6 @@ class ArcTanh(e: Any) : HyperbolicBase(e) {
         // TODO https://mathworld.wolfram.com/InverseHyperbolicTangent.html
 
         when(z) {
-            is Integer -> {
-                when(z.value.toInt()) {
-                    // TODO these can be evaluated generically but need things like Infinity - Log[2] to work as expected
-                    -1 -> return Infinity(-1)
-                    1 -> return Infinity()
-                }
-            }
             is Infinity -> return Times(Complex(0, Rational.HALF.unaryMinus()), Pi())
         }
 

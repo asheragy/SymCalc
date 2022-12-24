@@ -13,7 +13,6 @@ class SecTest {
     fun exact() {
         Sec(Rational(-1,3) * Pi()) `==` 2
         Sec(Rational(-1,6) * Pi()) `==` Integer(2) * Power(3, Rational(-1,2))
-        Sec(0) `==` 1
         Sec(Rational(1,6) * Pi()) `==` Integer.TWO * Power(3, Rational(-1,2))
         Sec(Rational(1,3) * Pi()) `==` 2
     }

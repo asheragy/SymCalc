@@ -1,7 +1,6 @@
 package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.`==`
-import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.number.Rational
 import org.junit.Test
@@ -12,7 +11,6 @@ class ArcTest {
     fun arcSec_exact() {
         ArcSec(-2) `==` Rational(2,3) * Pi()
         ArcSec(-1) `==` Pi()
-        ArcSec(0) `==` ComplexInfinity()
         ArcSec(1) `==` 0
         ArcSec(2) `==` Rational(1,3) * Pi()
     }
@@ -31,7 +29,6 @@ class ArcTest {
     fun arcCsc_exact() {
         ArcCsc(-2) `==` Rational(-1,6) * Pi()
         ArcCsc(-1) `==` Rational(-1, 2) * Pi()
-        ArcCsc(0) `==` ComplexInfinity()
         ArcCsc(1) `==` Rational(1, 2) * Pi()
         ArcCsc(2) `==` Rational(1,6) * Pi()
     }
@@ -47,7 +44,6 @@ class ArcTest {
     @Test
     fun arcCot_exact() {
         ArcCot(-1) `==` Rational(-1,4) * Pi()
-        ArcCot(0) `==` Rational(1,2) * Pi()
         ArcCot(1) `==` Rational(1,4) * Pi()
     }
 

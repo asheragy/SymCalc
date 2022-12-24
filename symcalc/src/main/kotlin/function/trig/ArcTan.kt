@@ -1,19 +1,10 @@
 package org.cerion.symcalc.function.trig
 
 import org.cerion.math.bignum.decimal.arctan
-import org.cerion.symcalc.constant.ComplexInfinity
-import org.cerion.symcalc.constant.Indeterminate
-import org.cerion.symcalc.constant.Infinity
-import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.constant.*
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.function.arithmetic.Divide
-import org.cerion.symcalc.function.arithmetic.Minus
-import org.cerion.symcalc.function.arithmetic.Power
-import org.cerion.symcalc.function.arithmetic.Times
-import org.cerion.symcalc.number.Integer
-import org.cerion.symcalc.number.NumberExpr
-import org.cerion.symcalc.number.Rational
-import org.cerion.symcalc.number.RealBigDec
+import org.cerion.symcalc.function.arithmetic.*
+import org.cerion.symcalc.number.*
 
 class ArcTan(vararg e: Any) : TrigBase(*e) {
 
@@ -28,6 +19,10 @@ class ArcTan(vararg e: Any) : TrigBase(*e) {
                     return Pi() / -4
                 else if (e.isZero)
                     return Integer.ZERO
+            }
+            is Complex -> {
+                val log = Log(Subtract(1, I() * e)) - Log(Plus(1, I() * e)).eval()
+                return Rational.HALF * I() * log
             }
             is Infinity -> return Divide(Pi(), Integer(2))
             is ComplexInfinity -> return Indeterminate()

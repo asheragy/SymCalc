@@ -28,7 +28,6 @@ class SinTest {
 
     @Test
     fun basicPi() {
-        Sin(0) `==` 0
         Sin(Divide(Pi(), 2)) `==` 1
         Sin(Times(Pi(), Rational(1,2))) `==` 1
         Sin(Pi()) `==` 0
