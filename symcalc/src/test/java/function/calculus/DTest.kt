@@ -77,6 +77,13 @@ class DTest {
     }
 
     @Test
+    fun debug() {
+        Power(x, Plus(y, -1)).eval()
+        //Times(Power(x, y), Power(x, -1)).eval()
+        //Power(x, y).dx.eval()
+    }
+
+    @Test
     fun exponential() {
         Power(99, x).dx `==` Power(99, x) * Log(99)
         Power(99, 5 * x).dx `==` 5 * Power(99, 5 * x) * Log(99)

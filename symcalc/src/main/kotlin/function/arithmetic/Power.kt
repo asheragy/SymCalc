@@ -55,8 +55,16 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
             }
         }
 
+        // Factor out exponents that can be evaluated to non-power form
         if (b is Plus) {
-            return Times(*b.args.map { Power(a, it) }.toTypedArray()).eval()
+            var powerArgs = b.args.map { Power(a, it).eval() }
+            val reducedArgs = powerArgs.filter { it !is Power }
+            if (reducedArgs.isNotEmpty()) {
+                powerArgs = powerArgs.filterIsInstance<Power>().map { it.args[1] }
+
+                val fullArgs = reducedArgs + Power(a, Plus(*powerArgs.toTypedArray()))
+                return Times(*fullArgs.toTypedArray()).eval()
+            }
         }
 
         // Euler's Identity

@@ -8,7 +8,10 @@ import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.function.core.N
 import org.cerion.symcalc.function.logical.Equal
-import org.cerion.symcalc.number.*
+import org.cerion.symcalc.number.Complex
+import org.cerion.symcalc.number.NumberExpr
+import org.cerion.symcalc.number.Rational
+import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.`should equal`
 import java.math.BigDecimal
 import kotlin.test.Test
@@ -78,7 +81,7 @@ class PowerTest {
         E() pow I() * Pi() `==` -1
 
         // Variations
-        E() pow Integer(5) + Times(I(), Pi()) `==` Times(-1, Power(E(), 5))
+        Power(E(), Times(I(), Pi()) + 5) `==` Times(-1, Power(E(), 5))
         E() pow Times(2, I(), Pi()) `==` 1
         E() pow Times(I(), Divide(Pi(), 2)) `==` Complex(0,1)
         E() pow Times(I(), Times(Pi(), Rational(3,2))) `==` Complex(0,-1)

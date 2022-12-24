@@ -57,5 +57,7 @@ class ArithmeticTest {
         Power(x, -2) `==` 0
 
         Log(x) `==` Infinity()
+
+        Exp(x) `==` Indeterminate()
     }
 }

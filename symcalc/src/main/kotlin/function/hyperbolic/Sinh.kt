@@ -37,7 +37,7 @@ class Sinh(e: Any) : HyperbolicBase(e) {
 
         // Attempt to evaluate
         var result = Exp(e) - Exp(Minus(e))
-        if (result !is Subtract)
+        if (result !is Plus)
             return result / Integer.TWO
 
         // -i*sin(ix)

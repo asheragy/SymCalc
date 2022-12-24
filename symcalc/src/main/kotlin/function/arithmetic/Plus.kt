@@ -18,8 +18,16 @@ class Plus(vararg e: Any) : FunctionExpr(*e) {
         // Combine number values
         val numberItems = list.filterIsInstance<NumberExpr>()
         list.removeIf { it is NumberExpr }
-        if (list.any { it is Infinity })
-            return Infinity()
+        if (list.any { it is Infinity }) {
+            return list
+                .filterIsInstance<Infinity>()
+                .fold(Integer.ZERO as Expr) { acc, n ->
+                    if (acc is Infinity)
+                        acc + n
+                    else
+                        n
+                }
+        }
 
         val sum = numberItems.fold(Integer.ZERO as NumberExpr) { acc, n -> acc + n }
         if (!sum.isZero)
