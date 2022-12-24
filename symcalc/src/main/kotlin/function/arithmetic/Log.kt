@@ -32,7 +32,7 @@ class Log(vararg e: Any) : FunctionExpr(*e) {
                         if(n == Integer.ONE)
                             return Integer.ZERO
                         else if (n == Integer.ZERO)
-                            return Minus(Infinity())
+                            return Infinity(-1)
                     }
                     is Rational -> {
                         if (n < Integer.ONE)

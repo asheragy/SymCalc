@@ -5,7 +5,10 @@ import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.minus
-import org.cerion.symcalc.function.arithmetic.*
+import org.cerion.symcalc.function.arithmetic.Log
+import org.cerion.symcalc.function.arithmetic.Power
+import org.cerion.symcalc.function.arithmetic.Sqrt
+import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.number.Complex
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
@@ -41,7 +44,7 @@ class ArcTanh(e: Any) : HyperbolicBase(e) {
             is Integer -> {
                 when(z.value.toInt()) {
                     // TODO these can be evaluated generically but need things like Infinity - Log[2] to work as expected
-                    -1 -> return Minus(Infinity())
+                    -1 -> return Infinity(-1)
                     1 -> return Infinity()
                 }
             }

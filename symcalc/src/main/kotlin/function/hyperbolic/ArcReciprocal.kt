@@ -3,13 +3,11 @@ package org.cerion.symcalc.function.hyperbolic
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Infinity
-import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.arithmetic.Log
 import org.cerion.symcalc.function.arithmetic.Power
 import org.cerion.symcalc.function.arithmetic.Sqrt
-import org.cerion.symcalc.number.Complex
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 
@@ -45,10 +43,6 @@ class ArcCsch(e: Any): HyperbolicBase(e) {
 class ArcCoth(e: Any): HyperbolicBase(e) {
     override fun evaluate(z: Expr): Expr {
         when (z) {
-            is Integer -> {
-                if (z.intValue() == 0)
-                    return Pi() * Complex(0, Rational.HALF)
-            }
             is Infinity -> return Integer.ZERO
             is ComplexInfinity -> return Integer.ZERO
         }

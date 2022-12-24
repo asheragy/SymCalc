@@ -42,6 +42,7 @@ class ArcReciprocalTest {
 
     @Test
     fun arcCoth_exact() {
+        //ArcCoth(1) `==` Infinity()
         //ArcCoth(Complex(0, -1)) `==` Pi() * Complex(0, Rational(1, 4))
         //ArcCoth(Complex(0, 1)) `==` Pi() * Complex(0, Rational(-1, 4))
     }

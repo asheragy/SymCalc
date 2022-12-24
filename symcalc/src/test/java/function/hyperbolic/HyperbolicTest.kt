@@ -25,7 +25,7 @@ class HyperbolicTest {
         ArcTanh(0) `==` 0
         ArcCsch(0) `==` ComplexInfinity()
         ArcSech(0) `==` Infinity()
-        ArcCoth(0) `==` Pi() * Complex(0, Rational(1, 2))
+        ArcCoth(0) `==` Pi() * Complex(0, Rational(-1, 2)) // Positive is also correct here
     }
 
     @Test

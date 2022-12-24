@@ -5,6 +5,7 @@ import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.function.FunctionExpr
+import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberExpr
 
 class Subtract(vararg e: Any) : FunctionExpr(*e) {
@@ -19,6 +20,9 @@ class Subtract(vararg e: Any) : FunctionExpr(*e) {
         //Identity
         if (b is NumberExpr && b.isZero)
             return a
+
+        if (a is Integer && a.isZero)
+            return b * -1
 
         when(a) {
             is NumberExpr -> {
@@ -35,11 +39,9 @@ class Subtract(vararg e: Any) : FunctionExpr(*e) {
 
         if (a is ComplexInfinity || b is ComplexInfinity)
             return ComplexInfinity()
-        if (a == Minus(Infinity()) && b is NumberExpr)
-            return Minus(Infinity())
 
         if (a is NumberExpr && b is Infinity)
-            return Minus(Infinity())
+            return Infinity(-1)
 
         return this
     }

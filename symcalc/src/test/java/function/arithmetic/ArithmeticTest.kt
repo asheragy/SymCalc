@@ -12,12 +12,14 @@ class ArithmeticTest {
 
     @Test
     fun zero() {
-        Log(0) `==` Minus(Infinity())
+        Log(0) `==` Infinity(-1)
     }
 
     @Test
     fun infinity() {
         val x = Infinity()
+
+        Minus(x) `==` Infinity(-1)
 
         Plus(x, x) `==` Infinity()
         Plus(x, 5) `==` Infinity()
@@ -25,7 +27,7 @@ class ArithmeticTest {
 
         Subtract(x, x) `==` Indeterminate()
         Subtract(x, 5) `==` Infinity()
-        Subtract(5, x) `==` Minus(Infinity())
+        Subtract(5, x) `==` Infinity(-1)
 
         Log(x) `==` Infinity()
         // TODO add others
@@ -33,14 +35,16 @@ class ArithmeticTest {
 
     @Test
     fun negativeInfinity() {
-        val x = Minus(Infinity())
+        val x = Infinity(-1)
 
-        Subtract(x, 1) `==` Minus(Infinity())
+        Minus(x) `==`  Infinity()
+
+        Subtract(x, 1) `==` Infinity(-1)
 
         Times(x, -1) `==` Infinity()
         Times(-1, x) `==` Infinity()
         //Times(x, x) `==` Infinity()
-        Times(x, 1) `==` Minus(Infinity())
+        Times(x, 1) `==` Infinity(-1)
     }
 
     @Test

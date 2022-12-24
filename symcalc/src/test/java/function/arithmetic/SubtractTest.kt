@@ -40,7 +40,8 @@ class SubtractTest {
 
     @Test
     fun identity() {
-        assertEquals(VarExpr("a"), Subtract(VarExpr("a"), Integer(0)).eval())
+        Subtract("a", 0) `==` VarExpr("a")
+        Subtract(0, "a") `==` Times(-1, VarExpr("a"))
     }
 
     @Test

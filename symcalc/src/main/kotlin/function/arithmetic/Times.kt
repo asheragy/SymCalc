@@ -91,16 +91,9 @@ class Times(vararg e: Any) : FunctionExpr(*e) {
             return ComplexInfinity()
         if (list.contains(Infinity())) {
             return if (list.any { it is NumberExpr && it !is Complex && it.isNegative })
-                Minus(Infinity())
+                Infinity(-1)
             else
                 Infinity()
-        }
-        // TODO add DirectedInfinity to replace this
-        if (list.contains(Minus(Infinity()))) {
-            return if (list.any { it is NumberExpr && it !is Complex && it.isNegative })
-                Infinity()
-            else
-                Minus(Infinity())
         }
 
         return Times(*list.toTypedArray())
