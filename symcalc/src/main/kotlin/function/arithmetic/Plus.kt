@@ -31,7 +31,7 @@ class Plus(vararg e: Any) : FunctionExpr(*e) {
             for (group in groups) {
                 if (group.value.size > 1) {
                     list.removeIf { it.toString() == group.key }
-                    list.add(Times(Integer(group.value.size), group.value.first()))
+                    list.add(Times(Integer(group.value.size), group.value.first()).eval())
                 }
             }
 

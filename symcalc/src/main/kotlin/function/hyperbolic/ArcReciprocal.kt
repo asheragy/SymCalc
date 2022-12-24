@@ -4,10 +4,7 @@ import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.function.arithmetic.Divide
-import org.cerion.symcalc.function.arithmetic.Log
-import org.cerion.symcalc.function.arithmetic.Power
-import org.cerion.symcalc.function.arithmetic.Sqrt
+import org.cerion.symcalc.function.arithmetic.*
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 
@@ -47,10 +44,10 @@ class ArcCoth(e: Any): HyperbolicBase(e) {
             is ComplexInfinity -> return Integer.ZERO
         }
 
-        val eval = Rational.HALF * (Log(z + 1) - Log(z - 1))
-        if (eval is Log)
-            return this
+        val eval = Log(z + 1) - Log(z - 1)
+        if (eval !is Subtract)
+            return Rational.HALF * eval
 
-        return eval
+        return this
     }
 }

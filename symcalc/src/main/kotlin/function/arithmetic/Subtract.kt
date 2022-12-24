@@ -32,7 +32,7 @@ class Subtract(vararg e: Any) : FunctionExpr(*e) {
             is Infinity -> {
                 if (b is Infinity)
                     return Indeterminate()
-                if (b is NumberExpr)
+                if (b is NumberExpr || b.eval(MachinePrecision) is NumberExpr)
                     return Infinity()
             }
         }
@@ -40,8 +40,11 @@ class Subtract(vararg e: Any) : FunctionExpr(*e) {
         if (a is ComplexInfinity || b is ComplexInfinity)
             return ComplexInfinity()
 
-        if (a is NumberExpr && b is Infinity)
+        if (b is Infinity && (a is NumberExpr || a.eval(MachinePrecision) is NumberExpr))
             return Infinity(-1)
+
+        // TODO most of the above should be able to just return this
+        //return a + Times(-1, b)
 
         return this
     }

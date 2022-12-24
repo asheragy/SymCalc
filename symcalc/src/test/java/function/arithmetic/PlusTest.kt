@@ -1,9 +1,10 @@
 package org.cerion.symcalc.function.arithmetic
 
-import org.cerion.symcalc.expression.Expr
-import org.cerion.symcalc.expression.VarExpr
+import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
+import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
 import org.cerion.symcalc.number.RealDouble
@@ -59,6 +60,8 @@ class PlusTest {
 
     @Test
     fun nestedTimes() {
-        assertEquals(Times(Integer(3), Pi()), (Integer(2) * Pi()) + Pi())
+        Plus(Pi() * 2, Pi()) `==` Times(3, Pi())
+        Plus(Pi() * Rational.HALF, Pi()) `==` Times(Rational(3,2), Pi())
+        Plus(Pi() * Rational.HALF, Pi() * Rational.HALF) `==` Pi()
     }
 }

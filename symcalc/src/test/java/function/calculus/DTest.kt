@@ -73,7 +73,7 @@ class DTest {
         Power(x, 1).dx `==` 1
         Power(x, 2).dx `==` 2 * x
         Power(x, 3.14).dx `==` RealDouble(3.14) * Power(x, 2.14)
-        Power(x, y).dx `==` y * Power(x, y - 1)
+        Power(x, y).dx `==` Times(y, Power(x, y - 1))
     }
 
     @Test

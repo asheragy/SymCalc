@@ -1,6 +1,7 @@
 package org.cerion.symcalc.function.hyperbolic
 
 import org.cerion.symcalc.`==`
+import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.number.Complex
 import org.junit.Test
@@ -42,7 +43,7 @@ class ArcReciprocalTest {
 
     @Test
     fun arcCoth_exact() {
-        //ArcCoth(1) `==` Infinity()
+        ArcCoth(1) `==` Infinity()
         //ArcCoth(Complex(0, -1)) `==` Pi() * Complex(0, Rational(1, 4))
         //ArcCoth(Complex(0, 1)) `==` Pi() * Complex(0, Rational(-1, 4))
     }

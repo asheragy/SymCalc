@@ -28,6 +28,8 @@ class ArithmeticTest {
         Subtract(x, x) `==` Indeterminate()
         Subtract(x, 5) `==` Infinity()
         Subtract(5, x) `==` Infinity(-1)
+        Subtract(Log(2), x) `==` Infinity(-1)
+        Subtract(x, Log(2)) `==` Infinity()
 
         Log(x) `==` Infinity()
         // TODO add others
