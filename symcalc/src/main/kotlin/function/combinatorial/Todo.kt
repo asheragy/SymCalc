@@ -1,6 +1,5 @@
 package org.cerion.symcalc.function.combinatorial
 
-// TODO
 /*
 Subfactorial - Derangements, permutations with none in previous position
 FactorialPower

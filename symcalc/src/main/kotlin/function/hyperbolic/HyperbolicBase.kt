@@ -6,7 +6,7 @@ import org.cerion.symcalc.function.FunctionExpr
 
 abstract class HyperbolicBase protected constructor(e: Any) : FunctionExpr(e) {
     override val properties: Int
-        get() = Properties.LISTABLE.value
+        get() = Properties.Listable.value
 
     abstract fun evaluate(e: Expr): Expr
 

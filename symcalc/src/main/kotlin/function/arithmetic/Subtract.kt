@@ -6,7 +6,7 @@ import org.cerion.symcalc.function.FunctionExpr
 class Subtract(vararg e: Any) : FunctionExpr(*e) {
 
     override val properties: Int
-        get() = Properties.LISTABLE.value
+        get() = Properties.Listable.value
 
     public override fun evaluate(): Expr {
         // a + (-1*b)

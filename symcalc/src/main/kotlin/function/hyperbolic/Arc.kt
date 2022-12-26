@@ -39,8 +39,6 @@ class ArcCosh(e: Any) : HyperbolicBase(e) {
 
 class ArcTanh(e: Any) : HyperbolicBase(e) {
     override fun evaluate(z: Expr): Expr {
-        // TODO https://mathworld.wolfram.com/InverseHyperbolicTangent.html
-
         when(z) {
             is Infinity -> return Times(Complex(0, Rational.HALF * -1 * z.direction), Pi())
         }

@@ -7,11 +7,11 @@ import org.cerion.symcalc.function.trig.ArcTan
 import org.cerion.symcalc.number.*
 import kotlin.math.ln
 
-// TODO replace more calls to this to use RealBigDec.log whenever possible
+
 class Log(vararg e: Any) : FunctionExpr(*e) {
 
     override val properties: Int
-        get() = Properties.LISTABLE.value
+        get() = Properties.Listable.value
 
     override fun validate() {
         validateParameterCount(1)

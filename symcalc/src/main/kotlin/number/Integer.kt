@@ -1,5 +1,6 @@
 package org.cerion.symcalc.number
 
+import org.cerion.math.bignum.nthRootAndRemainder
 import org.cerion.math.bignum.sqrtRemainder
 import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.exception.OperationException
@@ -132,11 +133,14 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
         */
         val a = this
 
-        // TODO nth root versions of this exist too, check and test on larger value
-        if (b == Rational.HALF) {
-            val sqrt = a.value.sqrtRemainder()
-            if (sqrt.second.signum() == 0)
-                return Integer(sqrt.first)
+        // Nth root
+        if (b.numerator == Integer(1)) {
+            val root = if(b.denominator == Integer(2))
+                a.value.sqrtRemainder()
+            else
+                a.value.nthRootAndRemainder(b.denominator.intValue())
+            if (root.second.signum() == 0)
+                return Integer(root.first)
         }
 
         // factor out any numbers that are the Nth root of the denominator
@@ -219,6 +223,5 @@ class Integer(override val value: BigInteger) : NumberExpr(), AtomExpr {
     override fun abs() = Integer(value.abs())
 }
 
-// TODO add more operators like this and replace use cases with them
 operator fun Int.plus(other: NumberExpr): NumberExpr = Integer(this) + other
 operator fun Int.minus(other: NumberExpr): NumberExpr = Integer(this) - other

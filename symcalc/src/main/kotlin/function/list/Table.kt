@@ -46,7 +46,7 @@ class Table(vararg e: Any) : FunctionExpr(*e) {
     }
 
     override val properties: Int
-        get() = Properties.HOLD.value
+        get() = Properties.HoldAll.value
 
     @Throws(ValidationException::class)
     override fun validate() {

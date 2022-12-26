@@ -78,8 +78,8 @@ class RealDouble(override val value: Double = 0.0) : NumberExpr(), AtomExpr {
             }
             is RealDouble -> {
                 val pow = value.pow(other.value)
-                if (pow.isNaN() && value < 0) // TODO see if this can be changed, if negative its just complex?
-                    return Exp(Times(other, Log(this.unaryMinus()) +  Times(I(), Pi()))).eval() as NumberExpr
+                if (pow.isNaN() && value < 0)
+                    return Exp(Times(other, Log(this.unaryMinus()) + Times(I(), Pi()))).eval() as NumberExpr
 
                 return RealDouble(pow)
             }

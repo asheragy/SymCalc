@@ -31,7 +31,7 @@ class EulerGamma : ConstExpr() {
         for(i in 1 until n.value.toInt()) {
             val k = i + 1
             npowk *= n
-            sum += (((bernoulli[k] / npowk) + Integer.ONE) / k).eval(precision)
+            sum += (((bernoulli[k] / npowk) + 1) / k).eval(precision)
         }
 
         val divlog = ((n * 2 -1) / (n * 2)) - Log(n)

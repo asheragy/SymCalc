@@ -9,8 +9,6 @@ import org.cerion.symcalc.number.NumberType
 
 class Factorial(vararg e: Any) : FunctionExpr(*e) {
 
-    // TODO can work with non-integer values but needs Gamma function first
-
     override fun evaluate(): Expr {
         val n = get(0) as Integer
         return Integer(factorial(n.intValue()))

@@ -31,5 +31,5 @@ class Sum(vararg e: Any) : FunctionExpr(*e) {
     }
 
     override val properties: Int
-        get() = Properties.HOLD.value
+        get() = Properties.HoldAll.value
 }

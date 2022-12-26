@@ -18,7 +18,7 @@ sealed interface StandardTrigFunction {
 abstract class TrigBase protected constructor(vararg e: Any) : FunctionExpr(*e) {
 
     override val properties: Int
-        get() = Properties.LISTABLE.value
+        get() = Properties.Listable.value
 
     protected abstract fun evaluateAsDouble(d: Double): Double
     protected abstract fun evaluate(e: Expr): Expr

@@ -1,10 +1,7 @@
 package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.`==`
-import org.cerion.symcalc.constant.ComplexInfinity
-import org.cerion.symcalc.constant.I
-import org.cerion.symcalc.constant.Indeterminate
-import org.cerion.symcalc.constant.Infinity
+import org.cerion.symcalc.constant.*
 import org.junit.Test
 
 class ArithmeticTest {
@@ -73,6 +70,11 @@ class ArithmeticTest {
         Log(x) `==` Infinity()
 
         Exp(x) `==` Indeterminate()
+    }
 
+    @Test
+    fun constant() {
+        Divide(Pi(), 1) `==` Pi()
+        Divide(Pi(), 1.0) `==` 3.141592653589793
     }
 }

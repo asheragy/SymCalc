@@ -6,8 +6,6 @@ import org.cerion.symcalc.number.NumberExpr
 
 class Floor(vararg e: Expr) : FunctionExpr(*e) {
 
-    // TODO 2nd parameter for multiple
-
     override fun validate() {
         validateParameterCount(1)
     }

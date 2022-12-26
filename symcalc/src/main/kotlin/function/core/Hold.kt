@@ -6,7 +6,7 @@ import org.cerion.symcalc.function.FunctionExpr
 class Hold(vararg e: Expr) : FunctionExpr(*e) {
 
     override val properties: Int
-        get() = Properties.HOLD.value
+        get() = Properties.HoldAll.value
 
     override fun evaluate(): Expr {
         return this

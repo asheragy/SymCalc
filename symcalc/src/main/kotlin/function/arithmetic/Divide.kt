@@ -19,7 +19,6 @@ class Divide(x: Any, y: Any) : FunctionExpr(x, y) {
             if (x is NumberExpr)
                 return x / y
 
-            // TODO check Pi/1 and Pi/1.0 here
             if (y.isOne) //Identity
                 return x
         }

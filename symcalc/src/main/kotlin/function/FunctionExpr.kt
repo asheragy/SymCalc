@@ -12,7 +12,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
     // TODO this is only needed to make copy, should be an easier way
     val name: String = this.javaClass.simpleName
 
-    open val properties: Int get() = Properties.NONE.value
+    open val properties: Int get() = Properties.None.value
 
     val isNumeric: Boolean
         get() = hasProperty(Properties.NumericFunction)
@@ -51,7 +51,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
             args[i].env = env
         }
 
-        val newArgs = args.map { if (hasProperty(Properties.HOLD)) it else it.eval() }.toMutableList()
+        val newArgs = args.map { if (hasProperty(Properties.HoldAll)) it else it.eval() }.toMutableList()
 
         if (newArgs.any { it is Indeterminate })
             return Indeterminate()
@@ -78,7 +78,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         }
 
         // Listable property
-        if (hasProperty(Properties.LISTABLE) && newArgs.any { it is ListExpr }) {
+        if (hasProperty(Properties.Listable) && newArgs.any { it is ListExpr }) {
             if (size == 1) {
                 val listArgs = newArgs[0].asList().args.map { createFunction(name, it) }
                 return ListExpr(*listArgs.toTypedArray()).eval()
@@ -187,20 +187,22 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         return attr.value and attrs != 0
     }
 
-    // TODO add comments for these
     // ssymb = Cases[Map[ToExpression, Names["System`*"]], _Symbol];
     // nfuns = Select[ssymb, MemberQ[Attributes[#], HoldFirst] &]
     enum class Properties constructor(val value: Int) {
-        NONE(0),
-        // TODO this may be HoldAll
-        HOLD(1),
-        LISTABLE(2),
+        None(0),
+        // Prevents args from being evaluated automatically
+        HoldAll(1),
+        // f({a, b, c}) -> {f(a), f(b), f(c)}
+        Listable(2),
+        // Associative f(a, f(b, c)) -> f(a, b, c)
         Flat(4),
+        // Function evaluates to number when all inputs are numbers
         NumericFunction(8),
+        // Order of parameters does not matter
         Orderless(16)
 
         //Constant - Maybe unnecessary since not using constants as functions
-        // HoldAll -- TODO replace hold
         // HoldAllComplete HoldFirst HoldRest
         //Locked OneIdentity SequenceHold NHoldAll NHoldFirst NHoldRest Stub Temporary Protect Protected ReadProtected Unprotect SetAttributes
     }

@@ -25,5 +25,5 @@ class Exp(vararg e: Expr) : FunctionExpr(*e) {
     }
 
     override val properties: Int
-        get() = Properties.LISTABLE.value
+        get() = Properties.Listable.value
 }

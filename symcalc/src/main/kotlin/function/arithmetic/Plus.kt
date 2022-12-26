@@ -10,7 +10,7 @@ import org.cerion.symcalc.number.NumberExpr
 class Plus(vararg e: Any) : FunctionExpr(*e) {
 
     override val properties: Int
-        get() = Properties.Flat.value or Properties.NumericFunction.value or Properties.Orderless.value or Properties.LISTABLE.value
+        get() = Properties.Flat.value or Properties.NumericFunction.value or Properties.Orderless.value or Properties.Listable.value
 
     override fun evaluate(): Expr {
         val list = args.toMutableList()

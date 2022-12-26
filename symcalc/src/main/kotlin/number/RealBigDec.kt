@@ -151,7 +151,7 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
                     return sqrt.pow(other.numerator)
                 }
 
-                // TODO optimal values here
+                // Value 10 is arbitrary but unsure what else to use
                 if (!isNegative && !other.isNegative) {
                     if(other.numerator < Integer(10) && other.denominator < Integer(10))
                         return root(other.denominator.intValue()).pow(other.numerator)
