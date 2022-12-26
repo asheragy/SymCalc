@@ -12,8 +12,6 @@ import org.junit.Test
 
 class TrigTest {
 
-    // TODO add more inputs here like 0 and Pi
-
     @Test
     fun zero() {
         val x = Integer(0)
@@ -30,6 +28,37 @@ class TrigTest {
         ArcSec(x) `==` ComplexInfinity()
         ArcCsc(x) `==` ComplexInfinity()
         ArcCot(x) `==` Rational(1,2) * Pi()
+    }
+
+    @Test
+    fun pi() {
+        val x = Pi()
+
+        Sin(x) `==` 0
+        Cos(x) `==` -1
+        Tan(x) `==` 0
+        Sec(x) `==` -1
+        Csc(x) `==` ComplexInfinity()
+        Cot(x) `==` ComplexInfinity()
+    }
+
+    @Test
+    fun one() {
+        val x = Integer(1)
+        ArcSin(x) `==` Pi() * Rational(1, 2)
+        ArcCos(x) `==` 0
+        ArcTan(x) `==` Pi() * Rational(1, 4)
+        ArcSec(x) `==` 0
+        ArcCsc(x) `==` Pi() * Rational(1, 2)
+        ArcCot(x) `==` Pi() * Rational(1, 4)
+
+        val y = Integer(-1)
+        ArcSin(y) `==` Pi() * Rational(-1, 2)
+        ArcCos(y) `==` Pi()
+        ArcTan(y) `==` Pi() * Rational(-1, 4)
+        ArcSec(y) `==` Pi()
+        ArcCsc(y) `==` Pi() * Rational(-1, 2)
+        ArcCot(y) `==` Pi() * Rational(-1, 4)
     }
 
     @Test

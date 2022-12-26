@@ -44,16 +44,36 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
                 if (a is Infinity) {
                     return if (b.isNegative)
                         Integer.ZERO
-                    else if (b == Rational.HALF && a.direction == -1)
-                        I() * Infinity()
+                    else if (b == Rational.HALF) {
+                        if(a.direction == -1)
+                            I() * Infinity()
+                        else
+                            Infinity()
+                    }
+                    else if(b is Integer) {
+                        if (b.isOdd && a.direction == -1)
+                            Infinity(-1)
+                        else
+                            Infinity()
+                    }
                     else
-                        Infinity()
+                        TODO("Unsure how to handle things like -Infinity^1.23")
                 }
                 if (a is ComplexInfinity)
                     return if (b.isNegative)
                         Integer.ZERO
                     else
                         ComplexInfinity()
+            }
+        }
+        else if (b is Infinity && a is NumberExpr) {
+            if (a !is Complex) {
+                return if (b.direction == -1)
+                    Integer(0)
+                else if (a.isNegative)
+                    ComplexInfinity()
+                else
+                    Infinity()
             }
         }
 

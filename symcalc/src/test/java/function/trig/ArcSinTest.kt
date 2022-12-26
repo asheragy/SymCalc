@@ -1,18 +1,10 @@
 package org.cerion.symcalc.function.trig
 
 import org.cerion.symcalc.`==`
-import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.number.Complex
-import org.cerion.symcalc.number.Rational
 import kotlin.test.Test
 
 internal class ArcSinTest {
-
-    @Test
-    fun asInteger() {
-        ArcSin(1) `==` Rational(1,2) * Pi()
-        ArcSin(-1) `==` Rational(-1,2) * Pi()
-    }
 
     @Test
     fun asDouble() {

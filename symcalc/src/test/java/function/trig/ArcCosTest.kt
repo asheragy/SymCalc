@@ -11,9 +11,7 @@ internal class ArcCosTest {
 
     @Test
     fun exact() {
-        ArcCos(-1) `==` Pi()
         ArcCos(Rational(-1,2)) `==` Rational(2, 3) * Pi()
-        ArcCos(1) `==` 0
         ArcCos(Rational(1,2)) `==` Rational(1, 3) * Pi()
     }
 

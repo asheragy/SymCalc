@@ -2,13 +2,12 @@ package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.`==`
 import org.cerion.symcalc.constant.ComplexInfinity
+import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Infinity
 import org.junit.Test
 
 class ArithmeticTest {
-
-    // TODO reflection to see if anything got added here
 
     @Test
     fun zero() {
@@ -32,7 +31,10 @@ class ArithmeticTest {
         Subtract(x, Log(2)) `==` Infinity()
 
         Log(x) `==` Infinity()
-        // TODO add others
+        Sqrt(x) `==` Infinity()
+        Power(x, 2) `==` Infinity()
+        Power(x, 3) `==` Infinity()
+        Power(5, x) `==` Infinity()
     }
 
     @Test
@@ -47,11 +49,23 @@ class ArithmeticTest {
         Times(-1, x) `==` Infinity()
         //Times(x, x) `==` Infinity()
         Times(x, 1) `==` Infinity(-1)
+
+        Log(x) `==` Infinity()
+        Sqrt(x) `==` I() * Infinity() // TODO should actually be Infinity(Complex(0, 1))
+
+        Power(x, 2) `==` Infinity(1)
+        Power(x, 3) `==` Infinity(-1)
+        Power(5, x) `==` 0
     }
 
     @Test
     fun complexInfinity() {
         val x = ComplexInfinity()
+
+        Plus(5, x) `==` ComplexInfinity()
+        Subtract(5, x) `==` ComplexInfinity()
+        Times(5, x) `==` ComplexInfinity()
+        Divide(x, 5) `==` ComplexInfinity()
 
         Power(x, 2) `==` ComplexInfinity()
         Power(x, -2) `==` 0
@@ -59,5 +73,6 @@ class ArithmeticTest {
         Log(x) `==` Infinity()
 
         Exp(x) `==` Indeterminate()
+
     }
 }

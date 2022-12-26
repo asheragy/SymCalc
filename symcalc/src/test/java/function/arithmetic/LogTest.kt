@@ -29,12 +29,6 @@ class LogTest {
     }
 
     @Test
-    fun zero() {
-        // TODO need directed infinity
-        //assertEquals(Integer.ZERO, Log(Integer.ZERO).eval())
-    }
-
-    @Test
     fun negative() {
         assertEquals(Plus(Times(Complex.I, Pi()), Log(Integer(10))), Log(Integer(-10)).eval())
         assertEquals(Plus(Times(Complex.I, Pi()), Log(Rational(4,3))), Log(Rational(-4, 3)).eval())

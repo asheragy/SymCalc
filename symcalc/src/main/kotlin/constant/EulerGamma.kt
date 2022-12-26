@@ -2,11 +2,11 @@ package org.cerion.symcalc.constant
 
 import org.cerion.symcalc.expression.ConstExpr
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.function.arithmetic.Log
+import org.cerion.symcalc.function.integer.Bernoulli
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.RealBigDec
 import org.cerion.symcalc.number.RealDouble
-import org.cerion.symcalc.function.arithmetic.Log
-import org.cerion.symcalc.function.integer.Bernoulli
 import kotlin.math.max
 
 class EulerGamma : ConstExpr() {
@@ -26,11 +26,12 @@ class EulerGamma : ConstExpr() {
         var sum: Expr = Integer(0)
         val n = Integer(max(2,precision))
         var npowk = n
+        val bernoulli = Bernoulli.list(n.intValue())
 
         for(i in 1 until n.value.toInt()) {
-            val k = Integer(i+1)
+            val k = i + 1
             npowk *= n
-            sum += (((Bernoulli(k) / npowk) + Integer.ONE) / k).eval(precision)
+            sum += (((bernoulli[k] / npowk) + Integer.ONE) / k).eval(precision)
         }
 
         val divlog = ((n * 2 -1) / (n * 2)) - Log(n)

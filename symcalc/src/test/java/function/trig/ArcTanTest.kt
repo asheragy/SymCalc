@@ -13,8 +13,6 @@ class ArcTanTest {
 
     @Test
     fun exact() {
-        ArcTan(1) `==` Rational(1,4) * Pi()
-        ArcTan(-1) `==` Rational(-1,4) * Pi()
         ArcTan(Divide(1, Sqrt(3))) `==` Divide(Pi(), 6)
         ArcTan(Divide(Sqrt(3), 3)) `==` Divide(Pi(), 6)
         ArcTan(Sqrt(3)) `==` Divide(Pi(), 3)

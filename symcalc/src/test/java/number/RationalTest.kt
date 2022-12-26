@@ -1,7 +1,6 @@
 package org.cerion.symcalc.number
 
 import org.cerion.symcalc.`==`
-import org.cerion.symcalc.function.arithmetic.Divide
 import org.cerion.symcalc.function.core.Hold
 import org.cerion.symcalc.function.core.N
 import org.cerion.symcalc.`should equal`
@@ -131,10 +130,20 @@ class RationalTest : NumberTestBase() {
 
     @Test
     fun divide() {
-        // TODO add others
+        Rational(25, 2) / Integer(2) `==` Rational(25, 4)
+        Rational(24, 7) / Integer(2) `==` Rational(12, 7)
+        Rational(25, 2) / Rational(1, 3) `==` Rational(75, 2)
+        Rational(25, 2) / RealDouble(3.1415) `==` 3.9789909279006843
+        Rational(25, 2) / RealBigDec("3.1415") `==` "3.9790"
+        Rational(25, 2) / Complex(1,1) `==` Complex(Rational(25,4), Rational(-25, 4))
+    }
 
-        // Real
-        assertEquals(RealDouble(3.9808917197452227), Divide(Rational(25, 2), RealDouble(3.14)).eval())
+    @Test
+    fun divide_byRational() {
+        Integer(5) / Rational(2, 3) `==` Rational(15,2)
+        Integer(5) / Rational(1, 3) `==` 15
+        RealDouble(3.1415) / Rational(3, 2)   `==`  2.0943333333333336
+        RealBigDec("3.1415") / Rational(3, 2) `==` "2.0943"
     }
 
     @Test

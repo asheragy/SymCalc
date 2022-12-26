@@ -10,8 +10,6 @@ class ArcTest {
     @Test
     fun arcSec_exact() {
         ArcSec(-2) `==` Rational(2,3) * Pi()
-        ArcSec(-1) `==` Pi()
-        ArcSec(1) `==` 0
         ArcSec(2) `==` Rational(1,3) * Pi()
     }
 
@@ -28,8 +26,6 @@ class ArcTest {
     @Test
     fun arcCsc_exact() {
         ArcCsc(-2) `==` Rational(-1,6) * Pi()
-        ArcCsc(-1) `==` Rational(-1, 2) * Pi()
-        ArcCsc(1) `==` Rational(1, 2) * Pi()
         ArcCsc(2) `==` Rational(1,6) * Pi()
     }
 
@@ -43,8 +39,7 @@ class ArcTest {
 
     @Test
     fun arcCot_exact() {
-        ArcCot(-1) `==` Rational(-1,4) * Pi()
-        ArcCot(1) `==` Rational(1,4) * Pi()
+        // 1 and -1 already covered
     }
 
     @Test
