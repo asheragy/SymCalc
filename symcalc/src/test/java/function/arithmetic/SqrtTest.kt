@@ -1,6 +1,8 @@
 package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.`==`
+import org.cerion.symcalc.constant.I
+import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.Rational
@@ -40,5 +42,12 @@ class SqrtTest {
 
         // 497664 = 288 * sqrt(6)
         Sqrt(497664) `==` Times(288, Power(6, Rational(1, 2)))
+    }
+
+    @Test
+    fun infinity() {
+        Sqrt(Infinity()) `==` Infinity()
+        // TODO should actually be Infinity(Complex(0, 1))
+        Sqrt(Infinity(-1)) `==` I() * Infinity()
     }
 }

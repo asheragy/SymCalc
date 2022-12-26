@@ -26,7 +26,7 @@ class Tanh(e: Any) : HyperbolicBase(e) {
             }
             is RealDouble -> return RealDouble(tanh(e.value))
             is RealBigDec -> return RealBigDec(e.value.tanh(RealBigDec.getStoredPrecision(e.precision)), e.precision)
-            is Infinity -> return Integer.ONE
+            is Infinity -> return Integer(e.direction)
             is ComplexInfinity -> return Indeterminate()
             is Log -> {
                 if (e.size == 1) {

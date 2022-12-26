@@ -44,6 +44,8 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
                 if (a is Infinity) {
                     return if (b.isNegative)
                         Integer.ZERO
+                    else if (b == Rational.HALF && a.direction == -1)
+                        I() * Infinity()
                     else
                         Infinity()
                 }

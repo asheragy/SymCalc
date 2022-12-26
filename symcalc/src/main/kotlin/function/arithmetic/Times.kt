@@ -75,6 +75,7 @@ class Times(vararg e: Any) : FunctionExpr(*e) {
             }
         }
 
+        // TODO if infinity zero doesn't work
         val numberItems = list.filterIsInstance<NumberExpr>()
         if (numberItems.contains(Integer.ZERO)) // If zero is an integer return integer/infinite precision rather than double/etc
             return Integer.ZERO
@@ -87,13 +88,17 @@ class Times(vararg e: Any) : FunctionExpr(*e) {
         if (list.size == 1)
             return list[0]
 
+        // TODO these should be collapsed in the numerics
+        // TODO test cases for multiple infinity expressions
         if (list.contains(ComplexInfinity()))
             return ComplexInfinity()
-        if (list.contains(Infinity())) {
-            return if (list.any { it is NumberExpr && it !is Complex && it.isNegative })
-                Infinity(-1)
-            else
-                Infinity()
+        if (list.any { it is Infinity }) {
+            val infinity = list.first { it is Infinity } as Infinity
+            val num = list.firstOrNull { it is NumberExpr && it !is Complex }
+            if (num != null) {
+                num as NumberExpr
+                return Infinity(infinity.direction * if (num.isNegative) -1 else 1)
+            }
         }
 
         return Times(*list.toTypedArray())

@@ -28,7 +28,7 @@ class Sinh(e: Any) : HyperbolicBase(e) {
                     e.value.sinh(RealBigDec.getStoredPrecision(e.precision)),
                     e.precision)
             }
-            is Infinity -> return Infinity()
+            is Infinity -> return e
             is Log -> {
                 if (e.size == 1) // Must be natural log
                     return (e[0] - (Integer.ONE / e[0])) / Integer.TWO

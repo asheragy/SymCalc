@@ -15,4 +15,8 @@ open class Infinity(val direction: Int) : ConstExpr() {
         else
             Indeterminate()
     }
+
+    override fun equals(e: Expr): Boolean {
+        return e is Infinity && direction == e.direction
+    }
 }

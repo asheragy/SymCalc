@@ -46,7 +46,24 @@ class HyperbolicTest {
         ArcCoth(x) `==` 0
     }
 
-    // TODO negative infinity
+    @Test
+    fun negativeInfinity() {
+        val x = Infinity(-1)
+
+        Sinh(x) `==` Infinity(-1)
+        Cosh(x) `==` Infinity()
+        Tanh(x) `==` -1
+        Sech(x) `==` 0
+        Csch(x) `==` 0
+        Coth(x) `==` -1
+
+        ArcSinh(x) `==` Infinity(-1)
+        ArcCosh(x) `==` Infinity()
+        ArcTanh(x) `==` Pi() * Complex(0, Rational(1, 2))
+        ArcSech(x) `==` Pi() * Complex(0, Rational(1, 2))
+        ArcCsch(x) `==` 0
+        ArcCoth(x) `==` 0
+    }
 
     @Test
     fun complexInfinity() {

@@ -16,6 +16,8 @@ class ArcSinh(e: Any) : HyperbolicBase(e) {
     override fun evaluate(z: Expr): Expr {
         if (z is ComplexInfinity)
             return ComplexInfinity()
+        if (z is Infinity)
+            return z
 
         val eval = Log(Sqrt(Power(z, 2) + 1) + z).eval()
         if (eval is Log)
@@ -40,7 +42,7 @@ class ArcTanh(e: Any) : HyperbolicBase(e) {
         // TODO https://mathworld.wolfram.com/InverseHyperbolicTangent.html
 
         when(z) {
-            is Infinity -> return Times(Complex(0, Rational.HALF.unaryMinus()), Pi())
+            is Infinity -> return Times(Complex(0, Rational.HALF * -1 * z.direction), Pi())
         }
 
         val eval = Rational.HALF * (Log(z + 1) - Log(1 - z))
