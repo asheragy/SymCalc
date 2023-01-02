@@ -105,7 +105,12 @@ class RealBigDec(override val value: BigDecimal, override val precision: Int) : 
 
     override fun times(other: NumberExpr): NumberExpr {
         return when(other) {
-            is Integer -> RealBigDec(value.times(other.value.toBigDecimal()), precision)
+            is Integer -> {
+                if (other.isZero)
+                    return Integer.ZERO
+
+                return RealBigDec(value.times(other.value.toBigDecimal()), precision)
+            }
             is Rational -> (this * other.numerator) / other.denominator
             is RealDouble -> other * this
             is RealBigDec -> return this * other

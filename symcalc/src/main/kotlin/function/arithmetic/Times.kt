@@ -14,94 +14,83 @@ class Times(vararg e: Any) : FunctionExpr(*e) {
         get() = Properties.Flat.value or Properties.NumericFunction.value or Properties.Orderless.value
 
     override fun evaluate(): Expr {
+        val factors = args.toMutableList()
 
-        // Transform 2*(a+b) to 2a + 2b
-        if (size == 2 && args[1] is Plus) {
-            val newArgs = (args[1] as Plus).args.map { Times(args[0], it) }
-            val e = Plus(*newArgs.toTypedArray()).eval()
-            if (e !is Plus) // If Plus eval is not any better don't use this value
-                return e
-        }
+        var i = 0
+        while(i < factors.size - 1) {
+            for(j in i+1 until factors.size) {
+                var product = multiply(factors[i], factors[j])
+                if (product == null)
+                    product = multiply(factors[j], factors[i])
 
-        val list = ArrayList<Expr>()
-        for (i in 0 until size)
-            list += get(i)
-
-        // Transform same base: x^a * x^b to x^(a+b)
-        if (list.count { it is Power } > 1) {
-            val groups = list.filterIsInstance<Power>().groupBy { it[0] }
-            list.removeIf { it is Power }
-            for (group in groups) {
-                if (group.value.size > 1) {
-                    val times = Power(group.key, Plus(*group.value.map { it[1] }.toTypedArray()))
-                    list.add(times.eval())
-                }
-                else
-                    list.add(group.value[0])
-            }
-        }
-
-        // Transform same exponent: a^x * b^x = (ab)^x
-        // TODO this only applies when a^b can be evaluated to a number (NumericQ)
-        if (list.count { it is Power } > 1) {
-            val groups = list.filterIsInstance<Power>()
-                .filter { it.args.all { arg -> arg is NumberExpr } }
-                .groupBy { it[1] }
-
-            if (groups.isNotEmpty()) {
-                list.removeIf { it is Power }
-                for (group in groups) {
-                    if (group.value.size > 1) {
-                        val t = Times(*group.value.map { it[0] }.toTypedArray())
-                        val power = Power(t, group.key)
-                        list.add(power.eval())
-                    } else
-                        list.add(group.value[0])
+                if (product != null) {
+                    factors.removeAt(j)
+                    factors.removeAt(i)
+                    if (!(product is NumberExpr && product.isOne))
+                        factors.add(product)
+                    i--
+                    break
                 }
             }
+
+            i++
         }
 
-        // Factor non-numeric duplicates
-        // x * x   = x^2
-        // x * x^2 = x^3
-        val nonNumerics = list.filter { it !is NumberExpr }
-        val groups = nonNumerics.groupBy { if (it is Power) it.args[0] else it }
-        for (group in groups) {
-            if(group.value.size > 1) {
-                list.removeAll { it == group.value[0] }
-                list.removeAll { it is Power && it.args[0] == group.value[0] }
-                val sum = group.value.map { if (it is Power) it.args[1] else Integer.ONE }
-                list.add(Power(group.value[0], Plus(*sum.toTypedArray()).eval()))
+        if (factors.isEmpty())
+            return Integer(1)
+        else if (factors.size == 1)
+            return factors[0]
+
+        factors.sortWith { x, y ->
+            if (x is NumberExpr)
+                -1
+            else
+                0
+        }
+
+        return Times(*factors.toTypedArray())
+    }
+
+    private fun multiply(a: Expr, b: Expr): Expr? {
+        when(a) {
+            is NumberExpr -> {
+                when(b) {
+                    is NumberExpr -> return a * b
+                }
+                if (a.isOne)
+                    return b
+                if (a.isZero)
+                    return a
             }
-        }
-
-        // TODO if infinity zero doesn't work
-        val numberItems = list.filterIsInstance<NumberExpr>()
-        if (numberItems.contains(Integer.ZERO)) // If zero is an integer return integer/infinite precision rather than double/etc
-            return Integer.ZERO
-
-        list.removeIf { it is NumberExpr }
-        val product = numberItems.fold(Integer.ONE as NumberExpr) { acc, n -> acc * n }
-        if(!product.isOne || list.size == 0)
-            list.add(0, product)
-
-        if (list.size == 1)
-            return list[0]
-
-        // TODO these should be collapsed in the numerics
-        // TODO test cases for multiple infinity expressions
-        if (list.contains(ComplexInfinity()))
-            return ComplexInfinity()
-        if (list.any { it is Infinity }) {
-            val infinity = list.first { it is Infinity } as Infinity
-            val num = list.firstOrNull { it is NumberExpr && it !is Complex }
-            if (num != null) {
-                num as NumberExpr
-                return Infinity(infinity.direction * if (num.isNegative) -1 else 1)
+            is Plus -> {
+                val newArgs = a.args.map { Times(b, it) }
+                val e = Plus(*newArgs.toTypedArray()).eval()
+                if (e !is Plus) // If Plus eval is not any better don't use this value
+                    return e
             }
+            is Power -> {
+                when(b) {
+                    is Power -> {
+                        if (a.args[0] == b.args[0])
+                            return Power(a.args[0], a.args[1] + b.args[1]).eval()
+                        else if(a.args[1] == b.args[1] && a.args.all { it is NumberExpr } && b.args.all { it is NumberExpr })
+                            return Power(a.args[0] * b.args[0], a.args[1]).eval()
+                    }
+                }
+                if (a.args[0] == b && b !is NumberExpr)
+                    return Power(a.args[0], a.args[1] + Integer(1)).eval()
+            }
+            is Infinity -> {
+                if (b is NumberExpr && b !is Complex)
+                    return Infinity(a.direction * if (b.isNegative) -1 else 1)
+            }
+            is ComplexInfinity -> return ComplexInfinity()
         }
 
-        return Times(*list.toTypedArray())
+        if(a == b)
+            return Power(a, 2)
+
+        return null
     }
 
     override fun toString(): String {
@@ -117,8 +106,5 @@ class Times(vararg e: Any) : FunctionExpr(*e) {
         }
 
         return super.toString()
-    }
-
-    override fun validate() {
     }
 }

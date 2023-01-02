@@ -25,9 +25,10 @@ class TimesTest {
     fun timesIntegerZero() {
         Times(5, 0) `==` 0
         Times(Rational(1,3), 0) `==` 0
-        Times(RealDouble(3.14), 0) `==` 0
+        Times(RealDouble(3.14), 0) `==` 0.0
         Times(RealBigDec("3.14"), 0) `==` 0
-        Times(Complex(2.0, Rational.HALF), 0) `==` 0
+        Times(Complex(2.0, Rational.HALF), 0) `==` 0.0
+        Times(Complex(2, 2.0), 0) `==` 0
         Times(Pi(), Integer.ZERO) `==` 0
     }
 
@@ -93,5 +94,11 @@ class TimesTest {
         Times(Pi(), Pi()) `==` Power(Pi(), 2)
         Times(x, Power(x, 2)) `==` Power(x, 3)
         Times(Cos(x), Cos(x)) `==` Power(Cos(x), 2)
+    }
+
+    @Test
+    fun ordering() {
+        Times(Pi(), 2) `==` Times(2, Pi())
+        // TODO add other things like power/other functions
     }
 }

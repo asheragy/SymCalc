@@ -8,6 +8,7 @@ class ArithmeticTest {
 
     @Test
     fun zero() {
+        Times(0, Pi()) `==` 0
         Log(0) `==` Infinity(-1)
     }
 
@@ -26,6 +27,9 @@ class ArithmeticTest {
         Subtract(5, x) `==` Infinity(-1)
         Subtract(Log(2), x) `==` Infinity(-1)
         Subtract(x, Log(2)) `==` Infinity()
+
+        // TODO
+        //Times(x, 0) `==` Indeterminate()
 
         Log(x) `==` Infinity()
         Sqrt(x) `==` Infinity()

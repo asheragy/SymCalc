@@ -227,9 +227,9 @@ class IntegerTest {
 
     @Test
     fun powToRational_partialReduce() {
-        assertEquals(Times(Integer(3), Power(Integer(3), Rational(1,3))), Integer(81).pow(Rational.THIRD))
-        assertEquals(Times(Integer(3), Power(Integer(3), Rational(2,3))), Integer(243).pow(Rational(1,3)))
-        assertEquals(Times(Power(Integer(5), Rational(2,3)), Power(Integer(7), Rational(1,3))), Integer(175).pow(Rational.THIRD))
+        assertEquals(Times(3, Power(3, Rational(1,3))), Integer(81).pow(Rational.THIRD))
+        assertEquals(Times(3, Power(3, Rational(2,3))), Integer(243).pow(Rational(1,3)))
+        assertEquals(Times(Power(5, Rational(2,3)), Power(7, Rational(1,3))), Integer(175).pow(Rational.THIRD))
     }
 
     @Test
