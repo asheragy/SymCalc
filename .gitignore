@@ -4,5 +4,8 @@
 /bignum/build
 /benchmark/build
 /symcalc/build
+/desktopUI/build
+
 .idea/modules.xml
 .idea/uiDesigner.xml
+.idea/artifacts

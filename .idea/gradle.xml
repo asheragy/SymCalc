@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/benchmark" />
             <option value="$PROJECT_DIR$/bignum" />
+            <option value="$PROJECT_DIR$/desktopUI" />
             <option value="$PROJECT_DIR$/symcalc" />
           </set>
         </option>
