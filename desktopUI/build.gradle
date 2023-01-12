@@ -17,6 +17,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(path: ':symcalc')
     //testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
     testImplementation 'org.testng:testng:7.1.0'
     //testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
@@ -39,6 +40,7 @@ kotlin {
         }
         jvmTest {
             dependencies {
+                project ':symcalc'
                 implementation kotlin('test')
                 implementation kotlin('test-junit')
             }
