@@ -51,22 +51,28 @@ class GraphModel(expr: Expr, val xmin: Float, val xmax: Float, val size: Size) {
         return centerW
     }
 
-    fun getXAxisTicks(): List<Float> {
-        val x_multiplier = size.width / xwidth
-        val centerW = size.width / 2
+    fun getXAxisTicks(): List<Pair<Float, String>> {
+        val ticks = plot.getXAxisTicks()
+        val round = ticks[1] - ticks[0] >= 1
 
-        // TODO implies viewport of -10 to 10
-        return (-10..10).map {
-            it * x_multiplier + centerW
+        val x_offset = ((plot.xmax - plot.xmin) / 2) - plot.xmax
+        val x_multiplier = size.width / xwidth
+        val centerW = (size.width / 2) + x_offset * x_multiplier
+
+        return ticks
+            .filter { it != 0f }
+            .map { x ->
+            Pair(x * x_multiplier + centerW, if(round) x.toInt().toString() else x.toString())
         }
     }
 
-    fun getYAxisTicks(): List<Float> {
+    // TODO this is wrong
+    fun getYAxisTicks(): List<Pair<Float, String>> {
         val multiplier = size.height / yheight
         val center = size.height / 2
 
         return (-10..10).map {
-            it * multiplier + center
+            Pair(it * multiplier + center, "")
         }
     }
 }
