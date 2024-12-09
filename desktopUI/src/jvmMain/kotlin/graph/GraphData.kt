@@ -24,23 +24,32 @@ class GraphData(val e: Expr, val xmin: Float, val xmax: Float, steps: Int) {
     }
 
     fun getXAxisTicks(): List<Float> {
-        val stepSize = xTickDistance()
+        val stepSize = tickStepSize(xmax - xmin)
+        return getAxisTicks(xmin, xmax, stepSize)
+    }
+
+    fun getYAxisTicks(): List<Float> {
+        val stepSize = tickStepSize(ymax - ymin)
+        return getAxisTicks(ymin, ymax, stepSize)
+    }
+
+    private fun getAxisTicks(min: Float, max: Float, stepSize: Float): List<Float> {
         val result = mutableListOf<Float>()
         var i = 0
 
         var start = 0f
-        if (xmin < 0) {
-            while(start - stepSize >= xmin)
+        if (min < 0) {
+            while(start - stepSize >= min)
                 start -= stepSize
         }
-        else if (xmin > 0) {
-            while(start + stepSize <= xmin)
+        else if (min > 0) {
+            while(start + stepSize <= min)
                 start += stepSize
         }
 
         while(true) {
             val x = start + (i * stepSize)
-            if (x > xmax)
+            if (x > max)
                 break
 
             result.add(x)
@@ -51,21 +60,20 @@ class GraphData(val e: Expr, val xmin: Float, val xmax: Float, steps: Int) {
         return result
     }
 
-    fun xTickDistance(): Float {
-        val width = xmax - xmin
-        return tickDistance(width.toInt()).toFloat()
-    }
-
-    private fun tickDistance(n: Int): Int {
-        if (n >= 80)
-            return 10 * tickDistance(n / 10)
-        else if (n >= 40)
-            return 10
-        else if (n >= 16)
-            return 5
-        else if (n >= 8)
-            return 2
-        else
-            return 1
+    companion object {
+        fun tickStepSize(n: Float): Float {
+            if (n >= 80)
+                return 10 * tickStepSize(n / 10)
+            else if (n >= 40)
+                return 10f
+            else if (n >= 16)
+                return 5f
+            else if (n >= 8)
+                return 2f
+            else if (n >= 4)
+                return 1f
+            else
+                return tickStepSize(n * 10) / 10
+        }
     }
 }

@@ -11,12 +11,13 @@ import androidx.compose.ui.graphics.PointMode
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import org.cerion.symcalc.expression.VarExpr
+import org.cerion.symcalc.function.trig.Sin
 import org.jetbrains.skia.Font
 import org.jetbrains.skia.TextLine
 
 val x = VarExpr("x")
-val expr = x
-//val expr = Sin(VarExpr("x"))
+//val expr = x
+val expr = Sin(VarExpr("x"))
 
 @Composable
 fun Graph() {
@@ -25,7 +26,7 @@ fun Graph() {
     }
 
     Canvas(modifier = Modifier.fillMaxSize()) {
-        val model = GraphModel(expr, -11f, 11f, size)
+        val model = GraphModel(expr, -10f, 10f, size)
         //val model = GraphModel(expr, -size.width / 20, size.width / 20, size)
 
         drawPoints(
@@ -70,14 +71,14 @@ fun Graph() {
         // Ticks
         model.getYAxisTicks().forEach {
             drawLine(
-                start = Offset(yAxisPosition - 5, it.first),
+                start = Offset(yAxisPosition, it.first),
                 end = Offset(yAxisPosition + 5, it.first),
                 color = Color.Black,
             )
 
             drawIntoCanvas {canvas ->
                 val textLine = TextLine.Companion.make(it.second, Font())
-                canvas.nativeCanvas.drawTextLine(textLine, yAxisPosition + 10, it.first, paint)
+                canvas.nativeCanvas.drawTextLine(textLine, yAxisPosition - textLine.width - 5, it.first + (textLine.xHeight / 2), paint)
             }
         }
     }

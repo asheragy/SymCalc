@@ -66,13 +66,18 @@ class GraphModel(expr: Expr, val xmin: Float, val xmax: Float, val size: Size) {
         }
     }
 
-    // TODO this is wrong
     fun getYAxisTicks(): List<Pair<Float, String>> {
-        val multiplier = size.height / yheight
-        val center = size.height / 2
+        val ticks = plot.getYAxisTicks()
+        val round = ticks[1] - ticks[0] >= 1
 
-        return (-10..10).map {
-            Pair(it * multiplier + center, "")
-        }
+        val offset = ((plot.ymax - plot.ymin) / 2) - plot.ymax
+        val multiplier = size.height / yheight
+        val center = (size.height / 2) + offset * multiplier
+
+        return ticks
+            .filter { it != 0f }
+            .map {y ->
+                Pair(center - y * multiplier, if(round) y.toInt().toString() else y.toString())
+            }
     }
 }
