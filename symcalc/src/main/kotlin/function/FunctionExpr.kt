@@ -189,7 +189,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
 
     // ssymb = Cases[Map[ToExpression, Names["System`*"]], _Symbol];
     // nfuns = Select[ssymb, MemberQ[Attributes[#], HoldFirst] &]
-    enum class Properties constructor(val value: Int) {
+    enum class Properties(val value: Int) {
         None(0),
         // Prevents args from being evaluated automatically
         HoldAll(1),

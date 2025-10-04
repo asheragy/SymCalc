@@ -31,6 +31,7 @@ fun main() = application {
 }
 
 val viewModel = MainViewModel()
+
 @Composable
 fun Calculator() {
     val display = viewModel.display

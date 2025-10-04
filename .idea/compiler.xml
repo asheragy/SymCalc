@@ -8,4 +8,12 @@
       <module name="SymCalc.longTest" target="11" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SymCalc.benchmark" options="-proc:none" />
+      <module name="SymCalc.benchmark.jmh" options="-proc:none" />
+      <module name="SymCalc.benchmark.main" options="-proc:none" />
+      <module name="SymCalc.benchmark.test" options="-proc:none" />
+    </option>
+  </component>
 </project>
