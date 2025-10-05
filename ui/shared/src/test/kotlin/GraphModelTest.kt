@@ -3,7 +3,7 @@ import androidx.compose.ui.geometry.Size
 import graph.GraphModel
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GraphModelTest {

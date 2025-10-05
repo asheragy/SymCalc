@@ -74,13 +74,9 @@ class DTest {
         Power(x, 2).dx `==` 2 * x
         Power(x, 3.14).dx `==` RealDouble(3.14) * Power(x, 2.14)
         Power(x, y).dx `==` Times(y, Power(x, y - 1))
-    }
+        Power(x, Plus(y, -1)).dx `==` Times(Plus(y, -1), Power(x, y - 2))
+        Power(x, x).dx `==` Power(x, x) * (1 + Log(x))
 
-    @Test
-    fun debug() {
-        Power(x, Plus(y, -1)).eval()
-        //Times(Power(x, y), Power(x, -1)).eval()
-        //Power(x, y).dx.eval()
     }
 
     @Test
@@ -89,7 +85,6 @@ class DTest {
         Power(99, 5 * x).dx `==` 5 * Power(99, 5 * x) * Log(99)
         Power(E(), x).dx `==` Power(E(), x)
         Power(E(), 5 * x).dx `==` 5 * Power(E(), 5 * x)
-        //Power(x, x).dx `==` Power(x, x) * (1 + Log(x))
     }
 
     @Test

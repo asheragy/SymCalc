@@ -1,6 +1,6 @@
 import graph.GraphData
 import org.cerion.symcalc.expression.VarExpr
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GraphDataTest {

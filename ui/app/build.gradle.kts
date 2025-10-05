@@ -1,7 +1,7 @@
 plugins {
     java
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version "1.6.11"
+    id("org.jetbrains.compose")
 }
 
 group = "org.cerion.symcalc"
@@ -13,28 +13,19 @@ repositories {
 }
 
 kotlin {
-    jvm {
+    jvm("desktop") {
         withJava()
     }
 
     sourceSets {
-        val jvmMain by getting {
+        val desktopMain by getting {
             dependencies {
-                implementation(project(":symcalc"))
+                implementation(project(":ui:shared"))
                 implementation(compose.desktop.currentOs)
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-                implementation(project(":symcalc"))
-                implementation(kotlin("test-junit"))
+                implementation(compose.preview)
             }
         }
     }
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
 
 compose.desktop {

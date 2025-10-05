@@ -1,5 +1,5 @@
 rootProject.name = 'SymCalc'
 
 include ':bignum', ':benchmark', ':symcalc'
-include 'desktopUI'
+include 'ui:shared', 'ui:app'
 

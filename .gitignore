@@ -4,8 +4,10 @@
 /bignum/build
 /benchmark/build
 /symcalc/build
-/desktopUI/build
+/ui/shared/build
+/ui/app/build
 
 .idea/modules.xml
 .idea/uiDesigner.xml
 .idea/artifacts
+/local.properties

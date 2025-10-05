@@ -41,16 +41,12 @@ class D(vararg e: Expr) : FunctionExpr(*e) {
                     result = Plus(Times(D(u, x), v), Times(D(v, x), u))
                 }
                 is Power -> {
-                    val a = e[0]
-                    val b = e[1]
+                    val f = e[0]
+                    val g = e[1]
+                    val f1 = D(f, x)
+                    val g1 = D(g, x)
 
-                    // x^b
-                    if (a.equals(x))
-                        result = Times(b, Power(a, Subtract(b, Integer.ONE)))
-                    // a^x
-                    else
-                        result = Times(e, Log(a), D(b, x))
-
+                    result = Times(e, Plus(Divide(Times(g, f1), f), Times(Log(f), g1)))
                 }
                 is Csc,
                 is Sec,

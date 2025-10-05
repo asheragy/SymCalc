@@ -1,5 +1,4 @@
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -129,14 +128,4 @@ fun RowScope.Key(label: String, onKeyPress:() -> Unit) {
     {
         Text(text = label, color = Color.White)
     }
-}
-
-@Preview
-@Composable
-fun Preview() {
-
-    KeyPad(onKeyPress = {})
-    //KeyPadBasic(onKeyPress = {})
-    //KeyPadExt(onKeyPress = {})
-
 }
