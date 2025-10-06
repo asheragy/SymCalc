@@ -53,7 +53,7 @@ abstract class ConstExpr : Expr() {
         }
 
         private fun lookup(s: String): Name? {
-            val lookup = s.toLowerCase()
+            val lookup = s.lowercase()
             return if (identifiers!!.containsKey(lookup)) identifiers!![lookup] else null
 
         }

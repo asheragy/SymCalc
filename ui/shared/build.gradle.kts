@@ -2,6 +2,7 @@ plugins {
     java
     kotlin("jvm")
     id("org.jetbrains.compose")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 group = "org.cerion.symcalc"

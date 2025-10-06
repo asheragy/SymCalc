@@ -169,15 +169,15 @@ object FunctionFactory {
 
     @JvmStatic
     fun isValidFunction(functionName: String): Boolean {
-        val name = functionName.toLowerCase()
+        val name = functionName.lowercase()
 
         return stringToFunctionType(name) != null
     }
 
     private fun stringToFunctionType(functionName: String): Function? {
-        val name = functionName.toLowerCase()
+        val name = functionName.lowercase()
         for (t in Function.values()) {
-            if (t.value.toLowerCase().contentEquals(name))
+            if (t.value.lowercase().contentEquals(name))
                 return t
         }
 

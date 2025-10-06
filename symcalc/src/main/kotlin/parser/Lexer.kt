@@ -48,14 +48,14 @@ class Lexer(exprStr: String) {
                             tokval += exprStr[pos]
                         }
                         if (isIdent(tokval)) {
-                            tokval = tokval.toLowerCase()
+                            tokval = tokval.lowercase()
                             return 'f'
                         } else if (ConstExpr.isConstant(tokval)) {
-                            tokval = tokval.toLowerCase()
+                            tokval = tokval.lowercase()
                             return 'c'
                         }
 
-                        tokval = tokval.toLowerCase()
+                        tokval = tokval.lowercase()
                         return 'v'
                     }
                 }
