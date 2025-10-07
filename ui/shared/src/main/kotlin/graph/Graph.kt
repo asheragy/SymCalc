@@ -6,24 +6,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.PointMode
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.unit.sp
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.function.trig.Sin
-import org.jetbrains.skia.Font
-import org.jetbrains.skia.TextLine
 
 val x = VarExpr("x")
-//val expr = x
-val expr = Sin(VarExpr("x"))
+val expr = Sin(x)
 
 @Composable
 fun Graph() {
-    val paint = Paint().asFrameworkPaint().apply {
-        // paint configuration
-    }
+    val textMeasurer = rememberTextMeasurer()
+    val textStyle = TextStyle(fontSize = 12.sp, color = Color.Black)
 
     Canvas(modifier = Modifier.fillMaxSize()) {
         val model = GraphModel(expr, -10f, 10f, size)
@@ -53,10 +50,11 @@ fun Graph() {
                 color = Color.Black,
             )
 
-            drawIntoCanvas {canvas ->
-                val textLine = TextLine.Companion.make(it.second, Font())
-                canvas.nativeCanvas.drawTextLine(textLine, it.first - (textLine.width / 2), xAxisPosition + 15, paint)
-            }
+            val textLayoutResult = textMeasurer.measure(it.second, textStyle)
+            drawText(
+                textLayoutResult = textLayoutResult,
+                topLeft = Offset(it.first - (textLayoutResult.size.width / 2), xAxisPosition + 15)
+            )
         }
 
         // Y-Axis
@@ -76,10 +74,11 @@ fun Graph() {
                 color = Color.Black,
             )
 
-            drawIntoCanvas {canvas ->
-                val textLine = TextLine.Companion.make(it.second, Font())
-                canvas.nativeCanvas.drawTextLine(textLine, yAxisPosition - textLine.width - 5, it.first + (textLine.xHeight / 2), paint)
-            }
+            val textLayoutResult = textMeasurer.measure(it.second, textStyle)
+            drawText(
+                textLayoutResult = textLayoutResult,
+                topLeft = Offset(yAxisPosition - textLayoutResult.size.width - 5, it.first - (textLayoutResult.size.height / 2))
+            )
         }
     }
 }

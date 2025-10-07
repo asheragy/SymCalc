@@ -1,3 +1,21 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+/runConfigurations.xml
+inspectionProfiles/
+runConfigurations/
+
+modules.xml
+uiDesigner.xml
+artifacts
+
+**/workspace.xml
+**/tasks.xml
+**/usage.statistics.xml
+**/dictionaries
+**/shelf
+**/httpRequests/
+**/contentModel.xml
+**/caches
+**/libraries
+**/modules.xml

@@ -21,6 +21,8 @@ fun App() {
     MaterialTheme {
         //Calculator()
         Graph()
+        //ComposeMultiplatformBasicLineChart()
+        //SinX()
     }
 }
 

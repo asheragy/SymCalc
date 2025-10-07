@@ -1,15 +1,4 @@
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/dictionaries
-.idea/**/shelf
-.idea/**/httpRequests/
-.idea/**/contentModel.xml
-.idea/**/caches
-.idea/**/libraries
-.idea/**/modules.xml
-.idea/inspectionProfiles/
-.idea/runConfigurations/
+
 
 *.iml
 /.gradle
@@ -20,9 +9,6 @@
 /ui/shared/build
 /ui/app/build
 
-.idea/modules.xml
-.idea/uiDesigner.xml
-.idea/artifacts
 /local.properties
 
 .kotlin
