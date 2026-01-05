@@ -27,6 +27,10 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         return name + args.toList().toString()
     }
 
+    override fun toLatex(): String {
+        return name + args.map { it.toLatex() }.toList().toString()
+    }
+
     @Throws(ValidationException::class)
     open fun validate() {
         validateParameterRange(1, Int.MAX_VALUE) // By default all functions take at least 1 parameter

@@ -80,6 +80,7 @@ abstract class Expr {
     abstract override fun toString(): String
     abstract fun equals(e: Expr): Boolean
 
+    open fun toLatex(): String = this.toString()
     open fun eval(): Expr = this
 
     fun eval(precision: Int): Expr {

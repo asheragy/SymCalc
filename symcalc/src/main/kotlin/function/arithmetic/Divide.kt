@@ -31,4 +31,8 @@ class Divide(x: Any, y: Any) : FunctionExpr(x, y) {
     }
 
     override fun toString(): String = if (size == 2) get(0).toString() + " / " + get(1) else super.toString()
+
+    override fun toLatex(): String {
+        return "\\frac{${get(0)}}{${get(1)}}"
+    }
 }

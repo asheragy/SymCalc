@@ -13,14 +13,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import graph.Graph
 
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
         //Calculator()
-        Graph()
+        //Graph()
+        //MathEditorDemoScreenWithKeypad()
+
+
+        MathInputWithPreviewDesktop()
+        //SwingPanelSmokeTest()
+
+
         //ComposeMultiplatformBasicLineChart()
         //SinX()
     }

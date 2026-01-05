@@ -83,6 +83,12 @@ class Plus(vararg e: Any) : FunctionExpr(*e) {
         return super.toString()
     }
 
+    override fun toLatex(): String {
+        return args.joinToString(" + ") {
+            it.toLatex()
+        }
+    }
+
     override fun validate() {
     }
 }
