@@ -14,7 +14,7 @@
             <option value="$PROJECT_DIR$/bignum" />
             <option value="$PROJECT_DIR$/symcalc" />
             <option value="$PROJECT_DIR$/ui" />
-            <option value="$PROJECT_DIR$/ui/app" />
+            <option value="$PROJECT_DIR$/ui/desktopApp" />
             <option value="$PROJECT_DIR$/ui/shared" />
           </set>
         </option>

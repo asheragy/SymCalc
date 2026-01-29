@@ -7,9 +7,10 @@ import androidx.compose.runtime.Composable
 @Composable
 fun Preview() {
 
+    Calculator()
     //KeyPad(onKeyPress = {})
     //KeyPadBasic(onKeyPress = {})
-    //KeyPadExt(onKeyPress = {})
+    //KeyPadExt(onKeyPress = {}
 }
 
 

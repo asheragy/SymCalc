@@ -8,6 +8,7 @@
 /symcalc/build
 /ui/shared/build
 /ui/app/build
+/ui/desktopApp/build
 
 /local.properties
 

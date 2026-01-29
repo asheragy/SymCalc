@@ -9,5 +9,7 @@ pluginManagement {
 rootProject.name = 'SymCalc'
 
 include ':bignum', ':benchmark', ':symcalc'
-include 'ui:shared', 'ui:app'
+include 'ui:shared'
 
+
+include 'ui:desktopApp'

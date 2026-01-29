@@ -25,16 +25,25 @@ class MainViewModel(initialDisplay: String = "") {
         _preview
     }
 
+    private var _mathText by mutableStateOf("")
+    val mathText: State<String> = derivedStateOf {
+        _mathText
+    }
+
     private var lastExpr: Expr? = null
 
     init {
-        if (initialDisplay.isNotEmpty())
-            _preview = Expr.parse(initialDisplay).eval().toString()
+        if (initialDisplay.isNotEmpty()) {
+            var expr = Expr.parse(initialDisplay)
+            _mathText = expr.toLatex()
+            _preview = expr.eval().toString()
+        }
     }
 
     fun clear() {
         _input = ""
         _preview = ""
+        _mathText = ""
     }
 
     // TODO auto closing bracket "(3+1 = 4"
@@ -49,8 +58,7 @@ class MainViewModel(initialDisplay: String = "") {
                     _input = _input.substring(0, _input.length - 1)
             }
             Key.CLEAR -> {
-                _input = ""
-                _preview = ""
+                clear()
             }
             Key.EVAL -> {
                 // TODO fix precision 8.05 - 5
@@ -77,6 +85,7 @@ class MainViewModel(initialDisplay: String = "") {
             val inputEval = eval()
             if (!inputEval.isError) {
                 val previewStr = exprToString(inputEval)
+                _mathText = Expr.parse(_input).toLatex()
                 if (previewStr != _input)
                     _preview = exprToString(inputEval)
             }
