@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
@@ -62,21 +62,6 @@ kotlin {
 
         val androidMain by getting {
             dependsOn(jvmSharedMain)
-            dependencies {
-                // Activity + setContent() + ComponentActivity
-                implementation("androidx.activity:activity-compose:1.9.3")
-
-                // Jetpack Compose on Android
-                //implementation("androidx.compose.ui:ui:1.7.2")
-                implementation("androidx.compose.ui:ui-tooling-preview:1.7.2")
-                implementation("androidx.compose.ui:ui-tooling:1.7.2")
-                implementation("androidx.compose.foundation:foundation:1.7.2")
-                implementation("androidx.compose.material:material:1.7.2")
-                // Optional but handy
-                //implementation("androidx.core:core-ktx:1.13.1")
-
-                implementation(compose.preview)
-            }
         }
     }
 }
@@ -87,11 +72,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "org.cerion.symcalc.ui"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
     }
 
     packaging {
@@ -110,9 +91,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-}
-dependencies {
-    debugImplementation("androidx.compose.ui:ui-tooling:1.9.2")
 }
 
 compose.desktop {

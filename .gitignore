@@ -9,6 +9,8 @@
 /ui/shared/build
 /ui/app/build
 /ui/desktopApp/build
+/.idea/deploymentTargetSelector.xml
+/.idea/go.imports.xml
 
 /local.properties
 

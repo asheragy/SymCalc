@@ -13,3 +13,4 @@ include 'ui:shared'
 
 
 include 'ui:desktopApp'
+include 'ui:androidApp'
