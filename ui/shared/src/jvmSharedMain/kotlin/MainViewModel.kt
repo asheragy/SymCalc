@@ -82,20 +82,38 @@ class MainViewModel(initialDisplay: String = "") {
         }
 
         if (key != Key.EVAL) {
-            val inputEval = eval()
-            if (!inputEval.isError) {
-                val previewStr = exprToString(inputEval)
-                _mathText = Expr.parse(_input).toLatex()
-                if (previewStr != _input)
-                    _preview = exprToString(inputEval)
-            }
+            refreshDerivedText()
         }
+    }
+
+    fun onTextInput(displayInput: String) {
+        _input = if (_input.startsWith(EXPR_PLACEHOLDER) && lastExpr != null) {
+            val exprText = exprToString(lastExpr!!)
+            if (displayInput.startsWith(exprText))
+                EXPR_PLACEHOLDER + displayInput.removePrefix(exprText)
+            else
+                displayInput
+        } else {
+            displayInput
+        }
+
+        refreshDerivedText()
     }
 
     fun directInput(input: String) {
         onKey(Key.CLEAR)
         _input = _input!! + input
         onKey(Key.NOOP)
+    }
+
+    private fun refreshDerivedText() {
+        val inputEval = eval()
+        if (!inputEval.isError) {
+            val previewStr = exprToString(inputEval)
+            _mathText = Expr.parse(_input).toLatex()
+            if (previewStr != _input)
+                _preview = exprToString(inputEval)
+        }
     }
 
     private fun exprToString(expr: Expr): String {
