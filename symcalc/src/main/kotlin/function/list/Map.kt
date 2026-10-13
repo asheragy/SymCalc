@@ -9,9 +9,9 @@ class Map(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val f = args[0] as SymbolExpr
-        val list = args[1].eval() as ListExpr
+        val list = args[1].eval(ctx) as ListExpr
 
-        return ListExpr(list.args.map { createFunction(f.value, it).eval() })
+        return ListExpr(list.args.map { createFunction(f.value, it).eval(ctx) })
     }
 
     override fun validate() {

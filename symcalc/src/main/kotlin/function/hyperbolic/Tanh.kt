@@ -37,7 +37,7 @@ class Tanh(e: Any) : HyperbolicBase(e) {
         }
 
         // Attempt to evaluate
-        var result = Exp(Integer.TWO * e).eval()
+        var result = Exp(Integer.TWO * e).eval(ctx)
         if (result !is Power)
             return (result - Integer.ONE) / (result + Integer.ONE)
 

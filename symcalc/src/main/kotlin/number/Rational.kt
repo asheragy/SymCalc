@@ -1,7 +1,9 @@
 package org.cerion.symcalc.number
 
+import org.cerion.symcalc.EvalContext
 import org.cerion.symcalc.function.arithmetic.Divide
 
+// TODO remove reduced
 class Rational private constructor(val numerator: Integer, val denominator: Integer = Integer.ONE, val reduced: Boolean = false) : NumberExpr() {
 
     companion object {
@@ -29,7 +31,7 @@ class Rational private constructor(val numerator: Integer, val denominator: Inte
 
     constructor(n: Any, d: Any = Integer.ONE) : this(convertArg(n), convertArg(d))
 
-    override fun eval(): NumberExpr {
+    override fun eval(ctx: EvalContext): NumberExpr {
         //Reduce with GCD
         val gcd = numerator.gcd(denominator)
         var n: Integer = numerator
@@ -49,7 +51,7 @@ class Rational private constructor(val numerator: Integer, val denominator: Inte
         //Integer since denominator is one
         return if (d.isOne) n else Rational(n, d, true)
     }
-    
+
     override fun toPrecision(precision: Int): NumberExpr {
         return when (precision) {
             InfinitePrecision -> this
@@ -57,7 +59,7 @@ class Rational private constructor(val numerator: Integer, val denominator: Inte
             else -> RealBigDec(numerator.toBigDecimal(), precision) / RealBigDec(denominator.toBigDecimal(), precision)
         }
     }
-    
+
     override fun toString(): String = "$numerator/$denominator"
     override fun unaryMinus(): NumberExpr = Rational(numerator.unaryMinus(), denominator)
 

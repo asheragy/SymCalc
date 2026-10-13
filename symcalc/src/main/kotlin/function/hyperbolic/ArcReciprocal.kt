@@ -15,7 +15,7 @@ class ArcSech(e: Any): HyperbolicBase(e) {
             return Indeterminate()
 
         val recip = Divide(1, z)
-        val eval = Log(Sqrt(recip - 1) * Sqrt(recip + 1) + recip).eval()
+        val eval = Log(Sqrt(recip - 1) * Sqrt(recip + 1) + recip).eval(ctx)
         if (eval is Log)
             return this
 
@@ -29,7 +29,7 @@ class ArcCsch(e: Any): HyperbolicBase(e) {
             return ComplexInfinity()
 
         val sqrt = Sqrt(Divide(1, Power(z, 2)) + 1)
-        val eval = Log(sqrt + (Divide(1, z))).eval()
+        val eval = Log(sqrt + (Divide(1, z))).eval(ctx)
         if (eval is Log)
             return this
 

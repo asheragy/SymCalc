@@ -27,7 +27,7 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
             if (z.isZero || z.isNegative)
                 return ComplexInfinity()
 
-            return Factorial(z - 1).eval()
+            return Factorial(z - 1).eval(ctx)
         }
 
         if (z is Rational && z.denominator == Integer(2)) {
@@ -80,7 +80,7 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
         // These are calculated multiple times with the same value
         val powerValues = (0 until N).map {
             val rhalf = (Rational.HALF + it)
-            Power(e / (sigma + rhalf), rhalf).eval()
+            Power(e / (sigma + rhalf), rhalf).eval(ctx)
         }
 
         var sum: Expr = g(0, powerValues)
@@ -101,7 +101,7 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
         val term = Integer(ek) * Power(-1, k)
         var sum: Expr = powerValues[0]
 
-        val binomial = Binomial(k).eval() as ListExpr
+        val binomial = Binomial(k).eval(ctx) as ListExpr
         var pochhammer = Integer.ONE
 
         for (r in 1..k) {
@@ -148,8 +148,8 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
         val z = (input - Integer.ONE) as RealBigDec
         val g = Integer(5) // TODO how to set this based on input
 
-        val term = Power(z + g + Rational.HALF, z + Rational.HALF).eval()
-        val exp = Exp((z + g + Rational.HALF).unaryMinus()).eval()
+        val term = Power(z + g + Rational.HALF, z + Rational.HALF).eval(ctx)
+        val exp = Exp((z + g + Rational.HALF).unaryMinus()).eval(ctx)
         val ag = A(g, z)
 
         val t = (Integer(2) * term * exp * ag) as RealBigDec
@@ -188,7 +188,7 @@ class Gamma(vararg e: Any) : FunctionExpr(*e) {
                 for (ii in n.intValue()-2 downTo 1 step 2)
                     factorial *= Integer(ii)
 
-                val div = (Power(Integer(2), (n - 1) / Integer(2)).eval() as NumberExpr)
+                val div = (Power(Integer(2), (n - 1) / Integer(2)).eval(ctx) as NumberExpr)
                 factorial /= div
             }
 

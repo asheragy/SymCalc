@@ -3,9 +3,9 @@ package org.cerion.symcalc.function.calculus
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
-import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.arithmetic.Plus
+import org.cerion.symcalc.number.Integer
 
 class Sum(vararg e: Any) : FunctionExpr(*e) {
 
@@ -21,13 +21,15 @@ class Sum(vararg e: Any) : FunctionExpr(*e) {
 
     private fun evaluate(expr: Expr, i: VarExpr, min: Integer, max: Integer): Expr {
         val range = (min.intValue()..max.intValue()).map { it }
-        val values = range.map {
-            setEnvVar(i.value, Integer(it))
-            expr.eval()
+        val values = ctx.child().let { childCtx ->
+            range.map {
+                childCtx[i.value] = Integer(it)
+                expr.eval(childCtx)
+            }
         }
 
         val sum = Plus(*values.toTypedArray())
-        return sum.eval()
+        return sum.eval(ctx)
     }
 
     override val properties: Int

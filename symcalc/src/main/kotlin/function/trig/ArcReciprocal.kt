@@ -14,7 +14,7 @@ private val i = Complex(0, 1)
 class ArcSec(e: Any) : FunctionExpr(e) {
     override fun evaluate(): Expr {
         val z = get(0)
-        return ArcCos(Divide(1, z)).eval()
+        return ArcCos(Divide(1, z)).eval(ctx)
 
         // Log formula
         //    val sqrt = Sqrt(one - (one / Power(z, 2)))
@@ -26,7 +26,7 @@ class ArcCsc(e: Any) : FunctionExpr(e) {
     override fun evaluate(): Expr {
         val z = get(0)
 
-        val arcSin = ArcSin(Divide(1, z)).eval()
+        val arcSin = ArcSin(Divide(1, z)).eval(ctx)
         if (arcSin !is ArcSin)
             return arcSin
 
@@ -41,7 +41,7 @@ class ArcCot(e: Any) : FunctionExpr(e) {
         if (z is NumberExpr && z.isZero)
             return Divide(Pi(), 2).eval(z.precision)
 
-        return ArcTan(one / z).eval()
+        return ArcTan(one / z).eval(ctx)
     }
 }
 

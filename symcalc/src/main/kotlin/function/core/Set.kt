@@ -10,7 +10,7 @@ class Set(vararg e: Expr) : FunctionExpr(*e) {
         val v = get(0) as VarExpr
         val e = get(1)
 
-        env.setVar(v.value, e)
+        ctx[v.value] = e
 
         return e
     }

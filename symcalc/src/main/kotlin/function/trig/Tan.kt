@@ -32,7 +32,7 @@ class Tan(e: Any) : TrigBase(e), StandardTrigFunction {
             val mod = e.numerator % (Integer.TWO * e.denominator)
             val position = mod.intValue().toDouble() / (e.denominator.intValue() * 2)
             if (position in 0.250001..0.50 || position in 0.750001..1.0)
-                return Minus(ratio).eval()
+                return Minus(ratio).eval(ctx)
 
             return ratio
         }

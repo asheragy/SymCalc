@@ -27,7 +27,7 @@ class ArcCos(e: Any) : TrigBase(e) {
                 when (e) {
                     Integer.ONE -> return Integer.ZERO
                     Integer.NEGATIVE_ONE -> return Pi()
-                    Integer.ZERO -> return Divide(Pi(), 2).eval()
+                    Integer.ZERO -> return Divide(Pi(), 2).eval(ctx)
                 }
             }
             is Rational -> {

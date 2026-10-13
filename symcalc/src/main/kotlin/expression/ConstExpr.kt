@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression
 
+import org.cerion.symcalc.EvalContext
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Pi
 import java.util.*
@@ -11,7 +12,7 @@ abstract class ConstExpr : Expr() {
 
     override fun equals(e: Expr): Boolean = javaClass == e.javaClass
 
-    final override fun eval(): Expr = evaluateInfinitePrecision()
+    final override fun eval(ctx: EvalContext): Expr = evaluateInfinitePrecision()
 
     open fun evaluateInfinitePrecision(): Expr = this
     open fun evaluateMachinePrecision(): Expr = this

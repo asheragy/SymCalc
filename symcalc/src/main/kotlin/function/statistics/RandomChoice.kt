@@ -11,10 +11,10 @@ class RandomChoice(vararg e: Expr) : FunctionExpr(*e) {
     override fun evaluate(): Expr {
         val list = get(0) as ListExpr
         if (size > 1) {
-            return Table(RandomChoice(list), ListExpr(getInteger(1))).eval()
+            return Table(RandomChoice(list), ListExpr(getInteger(1))).eval(ctx)
         }
 
-        val rand = RandomInteger(list.size - 1).eval() as Integer
+        val rand = RandomInteger(list.size - 1).eval(ctx) as Integer
         return list[rand.intValue()]
 
         /* Other cases

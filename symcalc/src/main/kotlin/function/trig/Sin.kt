@@ -40,7 +40,7 @@ class Sin(e: Any) : TrigBase(e), StandardTrigFunction {
 
             val mod = e.numerator % (Integer.TWO * e.denominator)
             if (mod > e.denominator)
-                return Minus(ratio).eval()
+                return Minus(ratio).eval(ctx)
 
             return ratio
         }

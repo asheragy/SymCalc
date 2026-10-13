@@ -1,5 +1,7 @@
 package org.cerion.symcalc.expression
 
+import org.cerion.symcalc.EvalContext
+
 class VarExpr(override val value: String) : Expr(), AtomExpr {
 
     override val type: ExprType
@@ -7,8 +9,8 @@ class VarExpr(override val value: String) : Expr(), AtomExpr {
 
     override fun toString(): String = value
 
-    override fun eval(): Expr {
-        var result = getEnvVar(value)
+    override fun eval(ctx: EvalContext): Expr {
+        var result = ctx.lookup(value)
         if (result == null)
             result = this
 

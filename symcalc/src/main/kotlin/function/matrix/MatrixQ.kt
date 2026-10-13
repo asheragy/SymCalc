@@ -19,7 +19,7 @@ class MatrixQ(vararg e: Expr) : FunctionExpr(*e) {
                 return BoolExpr.FALSE
 
             val sublist = list.getList(i)
-            if (VectorQ(sublist).eval() !== BoolExpr.TRUE)
+            if (VectorQ(sublist).eval(ctx) !== BoolExpr.TRUE)
                 return BoolExpr.FALSE
 
             if (size > 0) {

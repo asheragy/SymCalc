@@ -15,7 +15,7 @@ class Mean(vararg e: Expr) : FunctionExpr(*e) {
         var result: Expr = Plus(*list.args)
         result = Divide(result, Integer(list.size))
 
-        return result.eval()
+        return result.eval(ctx)
     }
 
     override fun validate() {

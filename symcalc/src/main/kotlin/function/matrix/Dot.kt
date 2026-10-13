@@ -13,11 +13,11 @@ class Dot(vararg e: Expr) : FunctionExpr(*e) {
     override fun evaluate(): Expr {
         val a = getList(0)
         val b = getList(1)
-        return if (VectorQ(a).eval() === BoolExpr.TRUE) evalVector(a, b) else evalMatrix(a, b)
+        return if (VectorQ(a).eval(ctx) === BoolExpr.TRUE) evalVector(a, b) else evalMatrix(a, b)
     }
 
     private fun evalVector(a: ListExpr, b: ListExpr): Expr {
-        return Plus(*a.args.mapIndexed { index, expr -> Times(expr,b[index]) }.toTypedArray()).eval()
+        return Plus(*a.args.mapIndexed { index, expr -> Times(expr,b[index]) }.toTypedArray()).eval(ctx)
     }
 
     private fun evalMatrix(a: ListExpr, b: ListExpr): Expr {
@@ -29,7 +29,7 @@ class Dot(vararg e: Expr) : FunctionExpr(*e) {
 
             for (j in 0 until a.size) {
                 val sum = Plus(*ax.args.mapIndexed { index, expr -> Times(expr,b[index].asList()[j]) }.toTypedArray())
-                subItems.add(sum.eval())
+                subItems.add(sum.eval(ctx))
             }
 
             items.add(ListExpr(subItems))
@@ -47,10 +47,10 @@ class Dot(vararg e: Expr) : FunctionExpr(*e) {
         val a = getList(0)
         val b = getList(1)
 
-        if (VectorQ(a).eval().asBool().value && VectorQ(b).eval().asBool().value) {
+        if (VectorQ(a).eval(ctx).asBool().value && VectorQ(b).eval(ctx).asBool().value) {
             if (a.size != b.size)
                 throw ValidationException("Vectors must be same length")
-        } else if (MatrixQ(a).eval().asBool().value && MatrixQ(b).eval().asBool().value) {
+        } else if (MatrixQ(a).eval(ctx).asBool().value && MatrixQ(b).eval(ctx).asBool().value) {
             val ax = a.getList(0)
             val bx = b.getList(0)
 

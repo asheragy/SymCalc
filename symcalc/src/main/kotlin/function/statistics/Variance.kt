@@ -12,13 +12,13 @@ class Variance(vararg e: Expr) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
         val list = get(0) as ListExpr
-        val mean = Mean(list).eval()
+        val mean = Mean(list).eval(ctx)
 
         // Sum of (a - b)^2
-        val sum = Plus(*list.args.map { Power(it - mean, Integer.TWO).eval() }.toTypedArray())
+        val sum = Plus(*list.args.map { Power(it - mean, Integer.TWO).eval(ctx) }.toTypedArray())
 
         val result = Divide(sum, Integer(list.size - 1))
-        return result.eval()
+        return result.eval(ctx)
     }
 
     override fun validate() {

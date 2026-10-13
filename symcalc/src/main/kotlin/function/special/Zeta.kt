@@ -31,7 +31,7 @@ class Zeta(vararg e: Any) : FunctionExpr(*e) {
                         return Integer.ZERO
 
                     // Positive even integers is Pi^n * 2^(n - 1)* Abs[BernoulliB[n]]/n!
-                    val bernoulli = Bernoulli(e).eval() as Rational
+                    val bernoulli = Bernoulli(e).eval(ctx) as Rational
                     return Power(Pi(),e) * Power(Integer(2), e - 1) * bernoulli.abs() / Factorial(e)
                 }
                 else if (e.isNegative) {
@@ -80,7 +80,7 @@ class Zeta(vararg e: Any) : FunctionExpr(*e) {
 
         var inv2pow = RealBigDec("0.5", s.precision)
         for (n in 1 until 100) {
-            val binomial = Binomial(n).eval() as ListExpr
+            val binomial = Binomial(n).eval(ctx) as ListExpr
             var innersum = one
             for (k in 1..n) {
                 val term = (binomial[k] * Power(k+1, s.unaryMinus())) as RealBigDec
@@ -196,7 +196,7 @@ class Zeta(vararg e: Any) : FunctionExpr(*e) {
     private fun calcZetaMod43(n: Int, precision: Int): RealBigDec {
         var sum1 = RealBigDec("0.0", precision)
         val bernoulliList = Bernoulli.list(n+2)
-        val binomialList = Binomial(n+1).eval() as ListExpr
+        val binomialList = Binomial(n+1).eval(ctx) as ListExpr
         for (k in 0..((n+1)/2)) {
             val binomial = binomialList[2*k]
             val bernoulli1 = bernoulliList[n + 1 - 2*k]
@@ -236,7 +236,7 @@ class Zeta(vararg e: Any) : FunctionExpr(*e) {
     private fun calcZetaMod41(n: Int, precision: Int): RealBigDec {
         var sum1 = RealBigDec("0.0", precision)
         val bernoulliList = Bernoulli.list(n+2)
-        val binomialList = Binomial(n+1).eval() as ListExpr
+        val binomialList = Binomial(n+1).eval(ctx) as ListExpr
         for (k in 0..((n+1)/4)) {
             val a = Integer(n + 1 - 4*k)
             val binomial = binomialList[2*k]

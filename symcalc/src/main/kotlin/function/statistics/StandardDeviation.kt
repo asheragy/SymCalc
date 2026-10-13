@@ -10,7 +10,7 @@ class StandardDeviation(vararg e: Expr) : FunctionExpr(*e) {
         val list = get(0).asList()
         val variance = Variance(list)
 
-        return Sqrt(variance).eval()
+        return Sqrt(variance).eval(ctx)
     }
 
     override fun validate() {

@@ -6,31 +6,31 @@ import org.cerion.symcalc.function.arithmetic.Divide
 
 class Sec(e: Any) : FunctionExpr(e) {
     override fun evaluate(): Expr {
-        val cos = Cos(get(0)).eval()
+        val cos = Cos(get(0)).eval(ctx)
 
         if (cos is Cos)
             return this
 
-        return Divide(1, cos).eval()
+        return Divide(1, cos).eval(ctx)
     }
 }
 
 class Csc(e: Any) : FunctionExpr(e) {
     override fun evaluate(): Expr {
-        val sin = Sin(get(0)).eval()
+        val sin = Sin(get(0)).eval(ctx)
         if (sin is Sin)
             return this
 
-        return Divide(1, sin).eval()
+        return Divide(1, sin).eval(ctx)
     }
 }
 
 class Cot(e: Any) : FunctionExpr(e) {
     override fun evaluate(): Expr {
-        val tan = Tan(get(0)).eval()
+        val tan = Tan(get(0)).eval(ctx)
         if (tan is Tan)
             return this
 
-        return Divide(1, tan).eval()
+        return Divide(1, tan).eval(ctx)
     }
 }

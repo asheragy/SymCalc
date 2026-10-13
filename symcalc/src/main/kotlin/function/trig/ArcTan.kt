@@ -21,7 +21,7 @@ class ArcTan(vararg e: Any) : TrigBase(*e) {
                     return Integer.ZERO
             }
             is Complex -> {
-                val log = Log(Subtract(1, I() * e)) - Log(Plus(1, I() * e)).eval()
+                val log = Log(Subtract(1, I() * e)) - Log(Plus(1, I() * e)).eval(ctx)
                 return Rational.HALF * I() * log
             }
             is Infinity -> return Divide(Pi(), Integer(2))
@@ -50,7 +50,7 @@ class ArcTan(vararg e: Any) : TrigBase(*e) {
 
             val piOver2 = Pi() / 2
             return if (y.isNegative)
-                Minus(piOver2).eval()
+                Minus(piOver2).eval(ctx)
             else
                 piOver2
         }
@@ -63,7 +63,7 @@ class ArcTan(vararg e: Any) : TrigBase(*e) {
                 return result + Pi()
         }
         else
-            return result.eval()
+            return result.eval(ctx)
     }
 
     override fun evaluateAsBigDecimal(x: RealBigDec): Expr {

@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression
 
+import org.cerion.symcalc.EvalContext
 import org.cerion.symcalc.function.FunctionExpr
 
 class SymbolExpr(override val value: String) : Expr(), AtomExpr {
@@ -9,7 +10,7 @@ class SymbolExpr(override val value: String) : Expr(), AtomExpr {
     override fun toString(): String = "Symbol $value"
     override fun equals(e: Expr): Boolean = e is SymbolExpr && value == e.value
 
-    override fun eval(): Expr {
+    override fun eval(ctx: EvalContext): Expr {
         if(FunctionExpr.isValidFunction(value))
             return this
 

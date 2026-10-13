@@ -1,5 +1,6 @@
 package org.cerion.symcalc.function
 
+import org.cerion.symcalc.EvalContext
 import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.exception.ValidationException
 import org.cerion.symcalc.expression.*
@@ -44,7 +45,10 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
 
     protected abstract fun evaluate(): Expr
 
-    final override fun eval(): Expr {
+    protected lateinit var ctx: EvalContext
+
+    final override fun eval(ctx: EvalContext): Expr {
+        this.ctx = ctx
         val start = System.currentTimeMillis()
 
         //https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
@@ -52,10 +56,11 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
 
         // Set environment for every parameter to the current one before its evaluated
         for (i in 0 until size) {
-            args[i].env = env
+            // TODO remove
+            //args[i].env = env
         }
 
-        val newArgs = args.map { if (hasProperty(Properties.HoldAll)) it else it.eval() }.toMutableList()
+        val newArgs = args.map { if (hasProperty(Properties.HoldAll)) it else it.eval(ctx) }.toMutableList()
 
         if (newArgs.any { it is Indeterminate })
             return Indeterminate()
@@ -100,7 +105,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         }
 
         val function = createFunction(name, *newArgs.toTypedArray())
-        function.env = env
+        function.ctx = ctx
 
         return try {
             function.validate()

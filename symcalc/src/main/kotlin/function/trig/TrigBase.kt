@@ -51,7 +51,7 @@ abstract class TrigBase protected constructor(vararg e: Any) : FunctionExpr(*e) 
             if (e is Times && e.args.contains(Pi())) {
                 val args = e.args.toMutableList()
                 args.remove(Pi())
-                return evaluatePiFactoredOut(Times(*args.toTypedArray()).eval())
+                return evaluatePiFactoredOut(Times(*args.toTypedArray()).eval(ctx))
             }
         }
 

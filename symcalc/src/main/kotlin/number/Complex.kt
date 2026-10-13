@@ -1,5 +1,6 @@
 package org.cerion.symcalc.number
 
+import org.cerion.symcalc.EvalContext
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.I
 import org.cerion.symcalc.expression.Expr
@@ -38,14 +39,14 @@ class Complex(val real: NumberExpr, val img: NumberExpr = Integer.ZERO) : Number
     override val isNegative: Boolean
         get() = throw UnsupportedOperationException()
 
-    // TODO add normalize, these both could be functions outside of here too, same with Real/Img
+    // TODO add normalize[] / conjugate[], these both could be functions outside of here too, same with Real/Img
     fun conjugate(): Complex = Complex(real, img.unaryMinus())
 
     //override fun toString(): String = real.toString() + (if(img.isNegative) "" else "+") + img.toString() + "i"
     override fun toString(): String = "Complex[$real, $img]"
     override fun unaryMinus(): Complex = Complex(real.unaryMinus(), img.unaryMinus())
 
-    override fun eval(): NumberExpr {
+    override fun eval(ctx: EvalContext): NumberExpr {
         if(img.isZero)
             return real
 

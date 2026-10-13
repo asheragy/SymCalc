@@ -1,5 +1,6 @@
 package org.cerion.symcalc.expression
 
+import org.cerion.symcalc.EvalContext
 import org.cerion.symcalc.function.arithmetic.Plus
 import org.cerion.symcalc.number.Integer
 import kotlin.test.Test
@@ -7,6 +8,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class VarExprTest {
+    private val ctx = EvalContext()
+
     @Test
     fun equals() {
         val v1 = VarExpr("x")
@@ -22,22 +25,22 @@ class VarExprTest {
     fun eval() {
         val x = VarExpr("x")
 
-        x.env.setVar("x", Integer(5))
-        assertEquals(Integer(5), x.eval())
+        ctx["x"] = Integer(5)
+        assertEquals(Integer(5), x.eval(ctx))
 
-        x.env.setVar("x", Integer(2))
-        assertEquals(Integer(2), x.eval())
+        ctx["x"] = Integer(2)
+        assertEquals(Integer(2), x.eval(ctx))
     }
 
     @Test
     fun evalFunction() {
         val e = Plus(VarExpr("x"), VarExpr("x"))
 
-        e.env.setVar("x", Integer(5))
-        assertEquals(Integer(10), e.eval())
+        ctx["x"] = Integer(5)
+        assertEquals(Integer(10), e.eval(ctx))
 
-        e.env.setVar("x", Integer(3))
-        assertEquals(Integer(6), e.eval())
+        ctx["x"] = Integer(3)
+        assertEquals(Integer(6), e.eval(ctx))
     }
 
 }

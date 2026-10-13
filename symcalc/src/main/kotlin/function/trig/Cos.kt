@@ -44,7 +44,7 @@ class Cos(e: Any) : TrigBase(e), StandardTrigFunction {
 
             val mod = (e.numerator + offset) % (Integer.TWO * e.denominator)
             if (mod >= e.denominator)
-                return Minus(ratio).eval()
+                return Minus(ratio).eval(ctx)
 
             return ratio
         }

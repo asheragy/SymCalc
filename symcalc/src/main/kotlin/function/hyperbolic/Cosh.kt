@@ -44,7 +44,7 @@ class Cosh(e: Any) : HyperbolicBase(e) {
             return result / Integer.TWO
 
         // Cosh(x) = Cos(ix)
-        result = Cos(I() * e).eval()
+        result = Cos(I() * e).eval(ctx)
         if (result !is Cos)
             return result
 

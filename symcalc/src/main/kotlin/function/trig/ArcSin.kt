@@ -26,8 +26,8 @@ class ArcSin(e: Any) : TrigBase(e) {
             is ComplexInfinity -> return ComplexInfinity()
             is Integer -> {
                 when (e) {
-                    Integer.ONE -> return Divide(Pi(), 2).eval()
-                    Integer.NEGATIVE_ONE -> return Divide(Pi(), -2).eval()
+                    Integer.ONE -> return Divide(Pi(), 2).eval(ctx)
+                    Integer.NEGATIVE_ONE -> return Divide(Pi(), -2).eval(ctx)
                     Integer.ZERO -> return Integer.ZERO
                 }
             }

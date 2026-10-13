@@ -37,12 +37,14 @@ class Table(vararg e: Any) : FunctionExpr(*e) {
     }
 
     private fun evaluate(expr: Expr, variable: VarExpr?, values: ListExpr): ListExpr {
-        return ListExpr(values.args.map {
-            if (variable != null)
-                setEnvVar(variable.value, it)
+        return ctx.child().let { ctx ->
+            ListExpr(values.args.map {
+                if (variable != null)
+                    ctx[variable.value] = it
 
-            expr.eval()
-        })
+                expr.eval(ctx)
+            })
+        }
     }
 
     override val properties: Int

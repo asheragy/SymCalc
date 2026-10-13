@@ -44,7 +44,7 @@ class Greater(vararg e: Expr) : FunctionExpr(*e) {
 
         // If elements were removed evaluate new instance
         if (args.size < size)
-            return Greater(*args.toTypedArray()).eval()
+            return Greater(*args.toTypedArray()).eval(ctx)
 
         if (size == 1)
             return BoolExpr.TRUE

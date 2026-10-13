@@ -5,6 +5,8 @@ import org.cerion.symcalc.assertAll
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
+import org.cerion.symcalc.expression.VarExpr
+import org.cerion.symcalc.function.core.CompoundExpression
 import org.cerion.symcalc.function.arithmetic.Plus
 import org.cerion.symcalc.function.statistics.RandomInteger
 import org.cerion.symcalc.function.trig.Sin
@@ -103,5 +105,21 @@ class TableTest {
         //Result should be list of 0s and 1s, verify there is at least a few of each
         assertTrue(sum.intValue() > 2)
         assertTrue(sum.intValue() < 18)
+    }
+
+    @Test
+    fun iteratorDoesNotLeak() {
+        // Table[i, {i, 3}]; i  ->  i   (Table localizes i like Block, so it is unassigned afterwards)
+        CompoundExpression(Table("i", ListExpr("i", 3)), VarExpr("i")) `==` VarExpr("i")
+    }
+
+    @Test
+    fun innerIteratorDoesNotLeakIntoOuter() {
+        // Table[{Table[i, {i, 2}], i}, {i, 2}]  ->  {{{1, 2}, 1}, {{1, 2}, 2}}
+        // The inner Table shadows i; when it finishes the outer i must still be visible
+        val inner = Table("i", ListExpr("i", 2))
+        val e = Table(ListExpr(inner, VarExpr("i")), ListExpr("i", 2))
+
+        e `==` ListExpr(ListExpr(ListExpr(1, 2), 1), ListExpr(ListExpr(1, 2), 2))
     }
 }

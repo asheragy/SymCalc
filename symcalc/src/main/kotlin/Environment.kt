@@ -2,8 +2,6 @@ package org.cerion.symcalc
 
 import org.cerion.symcalc.expression.Expr
 
-import java.util.HashMap
-
 class Environment {
 
     //Table of variables, x = expr
