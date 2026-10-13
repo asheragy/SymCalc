@@ -16,13 +16,13 @@ class EulerPhi(vararg e: Any) : FunctionExpr(*e) {
             if (n == Integer.ONE)
                 return n
 
-            val factors = Factor(n).eval() as ListExpr
+            val factors = Factor(n).eval(ctx) as ListExpr
 
             if (factors.size == 1)
                 return n - 1
 
             // Use integer formula to calculate
-            val tally = Tally(factors).eval() as ListExpr
+            val tally = Tally(factors).eval(ctx) as ListExpr
             val terms = tally.map { it as ListExpr
                 val prime = it[0] as Integer
                 val count = it[1] as Integer
@@ -30,7 +30,7 @@ class EulerPhi(vararg e: Any) : FunctionExpr(*e) {
                 prime.pow(count - 1) * (prime - 1)
             }
 
-            return Times(*terms.args).eval()
+            return Times(*terms.args).eval(ctx)
         }
 
         return this

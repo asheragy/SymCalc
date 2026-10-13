@@ -36,40 +36,41 @@ class Factor(vararg e: Expr) : FunctionExpr(*e) {
         validateParameterCount(1)
         validateNumberType(0, NumberType.INTEGER)
     }
-}
 
-fun pollardRho(n: Integer): Integer {
-    if (n.value.isProbablePrime(5))
-        return n
 
-    var seed = Integer.ONE
+    fun pollardRho(n: Integer): Integer {
+        if (n.value.isProbablePrime(5))
+            return n
 
-    while(true) {
-        val result = pollardRhoAttempt(n, seed)
-        if (result != null)
-            return result
+        var seed = Integer.ONE
 
-        seed++
-    }
-}
+        while(true) {
+            val result = pollardRhoAttempt(n, seed)
+            if (result != null)
+                return result
 
-fun pollardRhoAttempt(n: Integer, seed: Integer): Integer? {
-    var x = Integer(2)
-    var y = Integer(2)
-    var d = Integer.ONE
-
-    val g = { x: Integer ->
-        Mod(x.square().plus(seed),n).eval() as Integer
+            seed++
+        }
     }
 
-    while(d == Integer.ONE) {
-        x = g(x)
-        y = g(g(y))
-        d = x.minus(y).abs().gcd(n)
+    fun pollardRhoAttempt(n: Integer, seed: Integer): Integer? {
+        var x = Integer(2)
+        var y = Integer(2)
+        var d = Integer.ONE
+
+        val g = { x: Integer ->
+            Mod(x.square().plus(seed),n).eval(ctx) as Integer
+        }
+
+        while(d == Integer.ONE) {
+            x = g(x)
+            y = g(g(y))
+            d = x.minus(y).abs().gcd(n)
+        }
+
+        if(d == n)
+            return null
+
+        return d
     }
-
-    if(d == n)
-        return null
-
-    return d
 }

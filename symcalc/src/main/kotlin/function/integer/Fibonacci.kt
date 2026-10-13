@@ -44,8 +44,8 @@ class Fibonacci(vararg e: Expr) : FunctionExpr(*e) {
         if (n.isZero)
             return first
 
-        val a = Subtract(n, IntegerNum.ONE).eval().asInteger()
-        val b = Plus(first,second).eval().asInteger()
+        val a = Subtract(n, IntegerNum.ONE).eval(ctx).asInteger()
+        val b = Plus(first,second).eval(ctx).asInteger()
         return fibRecursive(a, b, first)
     }
      */

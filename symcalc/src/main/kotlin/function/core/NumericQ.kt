@@ -22,7 +22,7 @@ class NumericQ(vararg e: Expr) : FunctionExpr(*e) {
             if (test.isNumeric) {
 
                 for (i in 0 until test.size) {
-                    val isNumeric = NumericQ(test[i]).eval() as BoolExpr
+                    val isNumeric = NumericQ(test[i]).eval(ctx) as BoolExpr
                     if (isNumeric === BoolExpr.FALSE)
                         return BoolExpr.FALSE
                 }

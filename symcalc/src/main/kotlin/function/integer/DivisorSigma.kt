@@ -11,8 +11,8 @@ class DivisorSigma (vararg e: Any) : FunctionExpr(*e) {
         val k = get(0) as Integer
         val n = get(1) as Integer
 
-        val divisors = Divisors(n).eval() as ListExpr
-        val values = divisors.args.map { Power(it, k).eval() }
+        val divisors = Divisors(n).eval(ctx) as ListExpr
+        val values = divisors.args.map { Power(it, k).eval(ctx) }
 
         return values.reduce { acc, expr -> acc + expr }
     }

@@ -21,7 +21,7 @@ class GCD(vararg e: Expr) : FunctionExpr(*e) {
         for(i in 2 until size)
             next.add(args[i])
 
-        return GCD(*next.toTypedArray()).eval()
+        return GCD(*next.toTypedArray()).eval(ctx)
     }
 
     @Throws(ValidationException::class)

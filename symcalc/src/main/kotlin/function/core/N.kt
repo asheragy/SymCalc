@@ -30,7 +30,7 @@ class N(vararg e: Any) : FunctionExpr(*e) {
             for (i in 0 until e.args.size) {
                 newArgs.add(e.args[i].eval(precision))
             }
-            return FunctionFactory.createInstance(e.name, *newArgs.toTypedArray()).eval()
+            return FunctionFactory.createInstance(e.name, *newArgs.toTypedArray()).eval(ctx)
         }
 
         return this

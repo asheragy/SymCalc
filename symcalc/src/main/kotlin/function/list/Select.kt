@@ -14,7 +14,7 @@ class Select(vararg e: Expr) : FunctionExpr(*e) {
 
         for (i in 0 until list.size) {
             val f = (args[1] as SymbolExpr)
-            val e = createFunction(f.value, list[i]).eval()
+            val e = createFunction(f.value, list[i]).eval(ctx)
 
             if (e.equals(BoolExpr.TRUE)) {
                 result.add(list[i])

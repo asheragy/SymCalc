@@ -1,6 +1,5 @@
 package org.cerion.symcalc.expression
 
-import org.cerion.symcalc.Environment
 import org.cerion.symcalc.EvalContext
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.arithmetic.Divide
@@ -52,11 +51,6 @@ abstract class MultiExpr(val args: Array<out Expr>) : Expr() {
 }
 
 abstract class Expr {
-    // TODO need to handle this completely differently, global has issues with tests and duplicate values
-    var env = Environment()
-    //protected fun getEnvVar(name: String): Expr? = env.getVar(name)
-    //protected fun setEnvVar(name: String, e: Expr) = env.setVar(name, e)
-
     abstract val type: ExprType
 
     open val precision get() = InfinitePrecision

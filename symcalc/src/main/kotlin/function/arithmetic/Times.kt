@@ -64,7 +64,7 @@ class Times(vararg e: Any) : FunctionExpr(*e) {
             }
             is Plus -> {
                 val newArgs = a.args.map { Times(b, it) }
-                val e = Plus(*newArgs.toTypedArray()).eval()
+                val e = Plus(*newArgs.toTypedArray()).eval(ctx)
                 if (e !is Plus) // If Plus eval is not any better don't use this value
                     return e
             }
@@ -72,13 +72,13 @@ class Times(vararg e: Any) : FunctionExpr(*e) {
                 when(b) {
                     is Power -> {
                         if (a.args[0] == b.args[0])
-                            return Power(a.args[0], a.args[1] + b.args[1]).eval()
+                            return Power(a.args[0], a.args[1] + b.args[1]).eval(ctx)
                         else if(a.args[1] == b.args[1] && a.args.all { it is NumberExpr } && b.args.all { it is NumberExpr })
-                            return Power(a.args[0] * b.args[0], a.args[1]).eval()
+                            return Power(a.args[0] * b.args[0], a.args[1]).eval(ctx)
                     }
                 }
                 if (a.args[0] == b && b !is NumberExpr)
-                    return Power(a.args[0], a.args[1] + Integer(1)).eval()
+                    return Power(a.args[0], a.args[1] + Integer(1)).eval(ctx)
             }
             is Infinity -> {
                 if (b is NumberExpr && b !is Complex)

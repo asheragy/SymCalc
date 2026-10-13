@@ -8,7 +8,7 @@ import org.cerion.symcalc.number.Rational
 class Sqrt(vararg e: Any) : FunctionExpr(*e) {
 
     override fun evaluate(): Expr {
-        return Power(get(0), Rational(1, 2)).eval()
+        return Power(get(0), Rational(1, 2)).eval(ctx)
     }
 
     @Throws(ValidationException::class)

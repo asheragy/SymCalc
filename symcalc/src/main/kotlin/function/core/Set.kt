@@ -10,7 +10,8 @@ class Set(vararg e: Expr) : FunctionExpr(*e) {
         val v = get(0) as VarExpr
         val e = get(1)
 
-        ctx[v.value] = e
+        // Assign NOT set so its global
+        ctx.assign(v.value, e)
 
         return e
     }

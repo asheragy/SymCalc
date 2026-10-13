@@ -1,5 +1,6 @@
 package org.cerion.symcalc.function.core
 
+import org.cerion.symcalc.EvalContext
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
 import org.cerion.symcalc.function.arithmetic.Plus
@@ -17,9 +18,10 @@ class HoldTest {
     @Test
     fun varExprNotEvaluated() {
         val e: Expr = Hold(Plus(VarExpr("x"), VarExpr("x")))
-        e.env.setVar("x", Integer(5))
+        val ctx = EvalContext()
+        ctx["x"] = Integer(5)
 
-        assertEquals(e, e.eval())
+        assertEquals(e, e.eval(ctx))
     }
 
     @Test

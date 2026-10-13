@@ -8,7 +8,7 @@ import org.cerion.symcalc.number.Integer
 class Divisors (vararg e: Any) : FunctionExpr(*e) {
     override fun evaluate(): Expr {
         val n = get(0) as Integer
-        val factors = Factor(n).eval() as ListExpr
+        val factors = Factor(n).eval(ctx) as ListExpr
 
         if (factors.size == 1)
             return ListExpr(1, n)
@@ -16,7 +16,7 @@ class Divisors (vararg e: Any) : FunctionExpr(*e) {
         val result = factors.args.map { it as Integer }.toMutableList()
 
         for(m in factors.args.distinct()) {
-            val t = Divisors(n / m).eval() as ListExpr
+            val t = Divisors(n / m).eval(ctx) as ListExpr
             result.addAll(t.args.map { it as Integer })
         }
 

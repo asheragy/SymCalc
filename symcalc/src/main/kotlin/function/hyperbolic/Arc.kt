@@ -19,7 +19,7 @@ class ArcSinh(e: Any) : HyperbolicBase(e) {
         if (z is Infinity)
             return z
 
-        val eval = Log(Sqrt(Power(z, 2) + 1) + z).eval()
+        val eval = Log(Sqrt(Power(z, 2) + 1) + z).eval(ctx)
         if (eval is Log)
             return this
 
@@ -29,7 +29,7 @@ class ArcSinh(e: Any) : HyperbolicBase(e) {
 
 class ArcCosh(e: Any) : HyperbolicBase(e) {
     override fun evaluate(z: Expr): Expr {
-        val eval = Log(z + Sqrt(z - 1) * Sqrt(z + 1)).eval()
+        val eval = Log(z + Sqrt(z - 1) * Sqrt(z + 1)).eval(ctx)
         if (eval is Log)
             return this
 

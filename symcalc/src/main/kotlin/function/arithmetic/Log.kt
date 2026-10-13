@@ -38,7 +38,7 @@ class Log(vararg e: Any) : FunctionExpr(*e) {
                         if (n < Integer.ONE)
                             return Times(-1, Log(n.reciprocal()))
                     }
-                    is Complex -> return Log(n.abs()) + I() * ArcTan(n.real, n.img).eval()
+                    is Complex -> return Log(n.abs()) + I() * ArcTan(n.real, n.img).eval(ctx)
                 }
             }
             is E -> return Integer.ONE

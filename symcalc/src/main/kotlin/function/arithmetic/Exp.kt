@@ -17,7 +17,7 @@ class Exp(vararg e: Expr) : FunctionExpr(*e) {
         if (e is RealBigDec)
             return e.exp()
 
-        return Power(E(), e).eval()
+        return Power(E(), e).eval(ctx)
     }
 
     override fun validate() {

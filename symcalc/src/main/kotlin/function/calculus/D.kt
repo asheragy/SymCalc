@@ -68,7 +68,7 @@ class D(vararg e: Expr) : FunctionExpr(*e) {
                 else -> return this
             }
 
-            return result.eval()
+            return result.eval(ctx)
         }
 
         return this

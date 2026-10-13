@@ -54,14 +54,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         //https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
         //https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
-        // Set environment for every parameter to the current one before its evaluated
-        for (i in 0 until size) {
-            // TODO remove
-            //args[i].env = env
-        }
-
         val newArgs = args.map { if (hasProperty(Properties.HoldAll)) it else it.eval(ctx) }.toMutableList()
-
         if (newArgs.any { it is Indeterminate })
             return Indeterminate()
 
@@ -90,7 +83,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         if (hasProperty(Properties.Listable) && newArgs.any { it is ListExpr }) {
             if (size == 1) {
                 val listArgs = newArgs[0].asList().args.map { createFunction(name, it) }
-                return ListExpr(*listArgs.toTypedArray()).eval()
+                return ListExpr(*listArgs.toTypedArray()).eval(ctx)
             }
             else if (size == 2 && newArgs[0] is ListExpr || newArgs[1] is ListExpr) {
                 val list1 = if(newArgs[0] is ListExpr) newArgs[0] as ListExpr else newArgs[0].toList(newArgs[1].asList().size)
@@ -100,7 +93,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
                     return ErrorExpr("lists of unequal lengths cannot be combined")
 
                 val listArgs = list1.args.mapIndexed { index, expr -> createFunction(name, expr, list2[index]) }
-                return ListExpr(*listArgs.toTypedArray()).eval()
+                return ListExpr(*listArgs.toTypedArray()).eval(ctx)
             }
         }
 

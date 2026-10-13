@@ -21,14 +21,14 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
             return get(0)
 
         if (size > 2)
-            return Power(get(0), Power(*args.sliceArray(1 until size))).eval()
+            return Power(get(0), Power(*args.sliceArray(1 until size))).eval(ctx)
 
         val a = get(0)
         val b = get(1)
 
         // Power to power is just multiplied exponents
         if (a is Power)
-            return Power(a[0], a[1] * b).eval()
+            return Power(a[0], a[1] * b).eval(ctx)
 
         if (a is NumberExpr && a.isOne)
             return a
@@ -79,13 +79,13 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
 
         // Factor out exponents that can be evaluated to non-power form
         if (b is Plus) {
-            var powerArgs = b.args.map { Power(a, it).eval() }
+            var powerArgs = b.args.map { Power(a, it).eval(ctx) }
             val reducedArgs = powerArgs.filter { it !is Power }
             if (reducedArgs.isNotEmpty()) {
                 powerArgs = powerArgs.filterIsInstance<Power>().map { it.args[1] }
 
                 val fullArgs = reducedArgs + Power(a, Plus(*powerArgs.toTypedArray()))
-                return Times(*fullArgs.toTypedArray()).eval()
+                return Times(*fullArgs.toTypedArray()).eval(ctx)
             }
         }
 
@@ -99,7 +99,7 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
             if (a is Integer && b is Rational)
                 return a.pow(b)
             else if (a is Rational && b is Rational) {
-                return Divide(Power(a.numerator, b), Power(a.denominator, b)).eval()
+                return Divide(Power(a.numerator, b), Power(a.denominator, b)).eval(ctx)
             }
 
             if (a is Complex && b is Complex)
@@ -123,7 +123,7 @@ class Power(vararg e: Any) : FunctionExpr(*e) {
         // Spread power to inner terms
         if (a is Times) {
             val args = a.args.map { Power(it, b) }
-            return Times(*args.toTypedArray()).eval()
+            return Times(*args.toTypedArray()).eval(ctx)
         }
 
         return this

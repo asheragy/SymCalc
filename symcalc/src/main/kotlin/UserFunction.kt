@@ -8,15 +8,16 @@ class UserFunction(private val name: String, private val expr: Expr, vararg vars
     private val vars: List<VarExpr> = vars.asList()
 
     fun eval(vararg params: Expr): Expr {
+        val ctx = EvalContext()
 
         if (params.size != vars.size)
             throw IllegalArgumentException()
 
         for (i in vars.indices) {
-            expr.env.setVar(vars[i].value, params[i])
+            ctx[vars[i].value] = params[i]
         }
 
-        return expr.eval()
+        return expr.eval(ctx)
     }
 
     override fun toString(): String {

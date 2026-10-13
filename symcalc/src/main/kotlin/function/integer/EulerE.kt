@@ -30,7 +30,7 @@ class EulerE(vararg e: Any) : FunctionExpr(*e) {
 
         for(k in 1..(2*n + 1) step 2) {
             var innerSum: NumberExpr = Integer.ZERO
-            val binomial = Binomial(k).eval() as ListExpr
+            val binomial = Binomial(k).eval(ctx) as ListExpr
             for(j in 0..k) {
                 var numer = binomial[j] as NumberExpr
                 numer *= Integer(k - 2*j).pow(2*n + 1)

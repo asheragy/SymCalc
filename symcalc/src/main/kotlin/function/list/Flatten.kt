@@ -15,7 +15,7 @@ class Flatten(vararg e: Expr) : FunctionExpr(*e) {
             val e = l[i]
 
             if (e is ListExpr) {
-                val sublist = Flatten(e).eval() as ListExpr
+                val sublist = Flatten(e).eval(ctx) as ListExpr
                 items.addAll(sublist.args)
             } else {
                 items.add(e)
