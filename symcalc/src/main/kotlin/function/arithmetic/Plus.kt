@@ -11,10 +11,7 @@ import org.cerion.symcalc.number.NumberExpr
 class Plus(vararg e: Any) : FunctionExpr(*e) {
 
     override val attributes: Set<Attribute>
-        get() = setOf(Attribute.Orderless, Attribute.NumericFunction)
-
-    override val properties: Int
-        get() = Properties.Flat.value or Properties.Listable.value
+        get() = setOf(Attribute.Orderless, Attribute.NumericFunction, Attribute.Flat, Attribute.Listable)
 
     override fun evaluate(): Expr {
         val list = args.toMutableList()

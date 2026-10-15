@@ -4,6 +4,7 @@ import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.E
 import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.function.Attribute
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.RealBigDec
 
@@ -24,6 +25,6 @@ class Exp(vararg e: Expr) : FunctionExpr(*e) {
         validateParameterCount(1)
     }
 
-    override val properties: Int
-        get() = Properties.Listable.value
+    override val attributes: Set<Attribute>
+        get() = setOf(Attribute.Listable)
 }

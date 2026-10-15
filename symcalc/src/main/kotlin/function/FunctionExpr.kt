@@ -16,8 +16,6 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
     open val attributes: Set<Attribute> get() = emptySet()
     protected fun has(a: Attribute) = a in attributes
 
-    open val properties: Int get() = Properties.None.value
-
     val isNumeric: Boolean
         get() = has(Attribute.NumericFunction)
 
@@ -74,7 +72,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         }
 
         // Associative function, if the same function is a parameter move its parameters to the top level
-        if (hasProperty(Properties.Flat)) {
+        if (has(Attribute.Flat)) {
             val same = newArgs.filter { it.javaClass == javaClass  }
             if (same.isNotEmpty()) {
                 newArgs.removeIf { it.javaClass == javaClass }
@@ -83,7 +81,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         }
 
         // Listable property
-        if (hasProperty(Properties.Listable) && newArgs.any { it is ListExpr }) {
+        if (has(Attribute.Listable) && newArgs.any { it is ListExpr }) {
             if (size == 1) {
                 val listArgs = newArgs[0].asList().args.map { createFunction(name, it) }
                 return ListExpr(*listArgs.toTypedArray()).eval(ctx)
@@ -185,31 +183,6 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
 
         val error = "$name called with $size parameters, expected $min to $max"
         throw ValidationException(error)
-    }
-
-    private fun hasProperty(attr: Properties): Boolean {
-        val attrs = properties
-        return attr.value and attrs != 0
-    }
-
-    // ssymb = Cases[Map[ToExpression, Names["System`*"]], _Symbol];
-    // nfuns = Select[ssymb, MemberQ[Attributes[#], HoldFirst] &]
-    enum class Properties(val value: Int) {
-        None(0),
-        // Prevents args from being evaluated automatically
-        //HoldAll(1),
-        // f({a, b, c}) -> {f(a), f(b), f(c)}
-        Listable(2),
-        // Associative f(a, f(b, c)) -> f(a, b, c)
-        Flat(4),
-        // Function evaluates to number when all inputs are numbers
-        //NumericFunction(8),
-        // Order of parameters does not matter
-        //Orderless(16)
-
-        //Constant - Maybe unnecessary since not using constants as functions
-        // HoldAllComplete HoldFirst HoldRest
-        //Locked OneIdentity SequenceHold NHoldAll NHoldFirst NHoldRest Stub Temporary Protect Protected ReadProtected Unprotect SetAttributes
     }
 
     companion object {

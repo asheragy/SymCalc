@@ -12,10 +12,7 @@ import org.cerion.symcalc.number.NumberExpr
 class Times(vararg e: Any) : FunctionExpr(*e) {
 
     override val attributes: Set<Attribute>
-        get() = setOf(Attribute.Orderless, Attribute.NumericFunction)
-
-    override val properties: Int
-        get() = Properties.Flat.value
+        get() = setOf(Attribute.Orderless, Attribute.NumericFunction, Attribute.Flat)
 
     override fun evaluate(): Expr {
         val factors = args.toMutableList()

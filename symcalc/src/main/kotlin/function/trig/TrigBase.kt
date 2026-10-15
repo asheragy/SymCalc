@@ -4,6 +4,7 @@ import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Indeterminate
 import org.cerion.symcalc.constant.Pi
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.function.Attribute
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.arithmetic.Times
 import org.cerion.symcalc.number.Integer
@@ -17,8 +18,8 @@ sealed interface StandardTrigFunction {
 
 abstract class TrigBase protected constructor(vararg e: Any) : FunctionExpr(*e) {
 
-    override val properties: Int
-        get() = Properties.Listable.value
+    override val attributes: Set<Attribute>
+        get() = setOf(Attribute.Listable)
 
     protected abstract fun evaluateAsDouble(d: Double): Double
     protected abstract fun evaluate(e: Expr): Expr

@@ -2,6 +2,7 @@ package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.constant.*
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.function.Attribute
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.function.trig.ArcTan
 import org.cerion.symcalc.number.*
@@ -10,8 +11,8 @@ import kotlin.math.ln
 
 class Log(vararg e: Any) : FunctionExpr(*e) {
 
-    override val properties: Int
-        get() = Properties.Listable.value
+    override val attributes: Set<Attribute>
+        get() = setOf(Attribute.Listable)
 
     override fun validate() {
         validateParameterCount(1)

@@ -1,6 +1,7 @@
 package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.function.Attribute
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.Integer
 
@@ -13,6 +14,6 @@ class Minus(vararg e: Expr) : FunctionExpr(*e) {
         validateParameterCount(1)
     }
 
-    override val properties: Int
-        get() = Properties.Listable.value
+    override val attributes: Set<Attribute>
+        get() = setOf(Attribute.Listable)
 }

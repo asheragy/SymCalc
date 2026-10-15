@@ -1,12 +1,13 @@
 package org.cerion.symcalc.function.arithmetic
 
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.function.Attribute
 import org.cerion.symcalc.function.FunctionExpr
 
 class Subtract(vararg e: Any) : FunctionExpr(*e) {
 
-    override val properties: Int
-        get() = Properties.Listable.value
+    override val attributes: Set<Attribute>
+        get() = setOf(Attribute.Listable)
 
     public override fun evaluate(): Expr {
         // a + (-1*b)
