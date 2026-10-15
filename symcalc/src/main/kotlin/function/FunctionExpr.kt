@@ -13,10 +13,13 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
     // TODO this is only needed to make copy, should be an easier way
     val name: String = this.javaClass.simpleName
 
+    open val attributes: Set<Attribute> get() = emptySet()
+    protected fun has(a: Attribute) = a in attributes
+
     open val properties: Int get() = Properties.None.value
 
     val isNumeric: Boolean
-        get() = hasProperty(Properties.NumericFunction)
+        get() = has(Attribute.NumericFunction)
 
     val symbol: SymbolExpr
         get() = SymbolExpr(name)
@@ -54,7 +57,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         //https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
         //https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
-        val newArgs = args.map { if (hasProperty(Properties.HoldAll)) it else it.eval(ctx) }.toMutableList()
+        val newArgs = args.map { if (has(Attribute.HoldAll)) it else it.eval(ctx) }.toMutableList()
         if (newArgs.any { it is Indeterminate })
             return Indeterminate()
 
@@ -125,7 +128,7 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         if (e.size != size)
             return false
 
-        if (hasProperty(Properties.Orderless)) {
+        if (has(Attribute.Orderless)) {
             val otherArgs = e.args.toMutableList()
             for (arg in args) {
                 for(i in 0 until otherArgs.size)
@@ -194,15 +197,15 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
     enum class Properties(val value: Int) {
         None(0),
         // Prevents args from being evaluated automatically
-        HoldAll(1),
+        //HoldAll(1),
         // f({a, b, c}) -> {f(a), f(b), f(c)}
         Listable(2),
         // Associative f(a, f(b, c)) -> f(a, b, c)
         Flat(4),
         // Function evaluates to number when all inputs are numbers
-        NumericFunction(8),
+        //NumericFunction(8),
         // Order of parameters does not matter
-        Orderless(16)
+        //Orderless(16)
 
         //Constant - Maybe unnecessary since not using constants as functions
         // HoldAllComplete HoldFirst HoldRest

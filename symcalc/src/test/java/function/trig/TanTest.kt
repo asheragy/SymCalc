@@ -33,7 +33,7 @@ class TanTest {
     @Test
     fun basicPiCycles_over2() {
         val expected = ListExpr(0, ComplexInfinity(), 0, ComplexInfinity())
-        assertTrigExprRange(expected, SymbolExpr("tan"))
+        assertTrigExprRange(expected, SymbolExpr("Tan"))
     }
 
     @Test
@@ -41,7 +41,7 @@ class TanTest {
         val values = ListExpr(0, sqrt3, Minus(sqrt3))
         val expected = values.join(values)
 
-        assertTrigExprRange(expected, SymbolExpr("tan"))
+        assertTrigExprRange(expected, SymbolExpr("Tan"))
     }
 
     @Test
@@ -49,7 +49,7 @@ class TanTest {
         val values = ListExpr(0, 1, ComplexInfinity(), -1)
         val expected = values.join(values)
 
-        assertTrigExprRange(expected, SymbolExpr("tan"))
+        assertTrigExprRange(expected, SymbolExpr("Tan"))
     }
 
     @Test
@@ -57,7 +57,7 @@ class TanTest {
         val values = ListExpr(0, oneOverSqrt3, sqrt3, ComplexInfinity(), Minus(sqrt3), Minus(oneOverSqrt3))
         val expected = values.join(values)
 
-        assertTrigExprRange(expected, SymbolExpr("tan"))
+        assertTrigExprRange(expected, SymbolExpr("Tan"))
     }
 
     @Test

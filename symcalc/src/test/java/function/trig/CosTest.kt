@@ -17,7 +17,7 @@ class CosTest {
     @Test
     fun basicPiCycles_over2() {
         val expected = ListExpr(1, 0, -1, 0)
-        assertTrigExprRange(expected, SymbolExpr("cos"))
+        assertTrigExprRange(expected, SymbolExpr("Cos"))
     }
 
     @Test
@@ -25,7 +25,7 @@ class CosTest {
         val values = ListExpr(1, Rational.HALF, Rational.HALF.unaryMinus())
         val negativeValues = Minus(values).eval() as ListExpr
 
-        assertTrigExprRange(values.join(negativeValues), SymbolExpr("cos"))
+        assertTrigExprRange(values.join(negativeValues), SymbolExpr("Cos"))
     }
 
     @Test
@@ -33,7 +33,7 @@ class CosTest {
         val values = ListExpr(1, oneOverSqrt2, 0, Minus(oneOverSqrt2))
         val negativeValues = Minus(values).eval() as ListExpr
 
-        assertTrigExprRange(values.join(negativeValues), SymbolExpr("cos"))
+        assertTrigExprRange(values.join(negativeValues), SymbolExpr("Cos"))
     }
 
     @Test
@@ -41,7 +41,7 @@ class CosTest {
         val values = ListExpr(1, sqrt3Over2, Rational.HALF, 0, Rational.HALF.unaryMinus(), Minus(sqrt3Over2))
         val negativeValues = Minus(values).eval() as ListExpr
 
-        assertTrigExprRange(values.join(negativeValues), SymbolExpr("cos"))
+        assertTrigExprRange(values.join(negativeValues), SymbolExpr("Cos"))
     }
 
     @Test

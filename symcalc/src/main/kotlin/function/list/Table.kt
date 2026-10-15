@@ -5,6 +5,7 @@ import org.cerion.symcalc.expression.ErrorExpr
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.ListExpr
 import org.cerion.symcalc.expression.VarExpr
+import org.cerion.symcalc.function.Attribute
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.Integer
 
@@ -47,8 +48,8 @@ class Table(vararg e: Any) : FunctionExpr(*e) {
         }
     }
 
-    override val properties: Int
-        get() = Properties.HoldAll.value
+    override val attributes: Set<Attribute>
+        get() = setOf(Attribute.HoldAll)
 
     @Throws(ValidationException::class)
     override fun validate() {

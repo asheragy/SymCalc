@@ -27,7 +27,7 @@ internal class CotTest {
     @Test
     fun basicPiCycles_over2() {
         val expected = ListExpr(ComplexInfinity(), 0, ComplexInfinity(), 0)
-        assertTrigExprRange(expected, SymbolExpr("cot"))
+        assertTrigExprRange(expected, SymbolExpr("Cot"))
     }
 
     @Test
@@ -35,7 +35,7 @@ internal class CotTest {
         val values = ListExpr(ComplexInfinity(), oneOverSqrt3, Minus(oneOverSqrt3))
         val expected = Join(values, values).eval() as ListExpr
 
-        assertTrigExprRange(expected, SymbolExpr("cot"))
+        assertTrigExprRange(expected, SymbolExpr("Cot"))
     }
 
     @Test
@@ -43,7 +43,7 @@ internal class CotTest {
         val values = ListExpr(ComplexInfinity(), 1, 0, -1)
         val expected = Join(values, values).eval() as ListExpr
 
-        assertTrigExprRange(expected, SymbolExpr("cot"))
+        assertTrigExprRange(expected, SymbolExpr("Cot"))
     }
 
     @Test
@@ -51,9 +51,9 @@ internal class CotTest {
         val values = ListExpr(ComplexInfinity(), sqrt3, oneOverSqrt3, 0, Minus(oneOverSqrt3), Minus(sqrt3))
         val expected = Join(values, values).eval() as ListExpr
 
-        assertTrigExprRange(expected, SymbolExpr("cot"))
+        assertTrigExprRange(expected, SymbolExpr("Cot"))
     }
-    
+
     companion object {
         val sqrt3 = Power(Integer(3), Rational(1,2))
         val oneOverSqrt3 = Power(Integer(3), Rational(-1,2))

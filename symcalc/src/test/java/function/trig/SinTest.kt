@@ -42,7 +42,7 @@ class SinTest {
 
     @Test
     fun basicPiCycles_over2() {
-        assertTrigExprRange(ListExpr(0, 1, 0, -1), SymbolExpr("sin"))
+        assertTrigExprRange(ListExpr(0, 1, 0, -1), SymbolExpr("Sin"))
     }
 
     @Test
@@ -50,7 +50,7 @@ class SinTest {
         val values = ListExpr(0, sqrt3Over2, sqrt3Over2)
         val negativeValues = Minus(values).eval() as ListExpr
 
-        assertTrigExprRange(values.join(negativeValues), SymbolExpr("sin"))
+        assertTrigExprRange(values.join(negativeValues), SymbolExpr("Sin"))
     }
 
     @Test
@@ -58,7 +58,7 @@ class SinTest {
         val values = ListExpr(0, oneOverSqrt2, 1, oneOverSqrt2)
         val negativeValues = Minus(values).eval() as ListExpr
 
-        assertTrigExprRange(values.join(negativeValues), SymbolExpr("sin"))
+        assertTrigExprRange(values.join(negativeValues), SymbolExpr("Sin"))
     }
 
     @Test
@@ -66,7 +66,7 @@ class SinTest {
         val values = ListExpr(0, Rational(1,2), sqrt3Over2, 1, sqrt3Over2, Rational(1,2))
         val negativeValues = Minus(values).eval() as ListExpr
 
-        assertTrigExprRange(values.join(negativeValues), SymbolExpr("sin"))
+        assertTrigExprRange(values.join(negativeValues), SymbolExpr("Sin"))
     }
 
     // TODO more values https://en.wikipedia.org/wiki/Exact_trigonometric_values#Common_angles

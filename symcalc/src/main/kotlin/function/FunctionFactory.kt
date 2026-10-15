@@ -30,158 +30,139 @@ import org.cerion.symcalc.function.trig.*
 
 object FunctionFactory {
 
-    fun createInstance(name: String, vararg e: Expr): FunctionExpr {
-        val function = stringToFunctionType(name)
-        if (function != null) {
-            val result = createInstance(function, *e)
+    // kotlin.collections.Map is shadowed by the imported list.Map function class
+    private val functions: kotlin.collections.Map<String, (Array<out Expr>) -> FunctionExpr> = mapOf(
+        "N" to { N(*it) },
+        "Hold" to { Hold(*it) },
+        "NumberQ" to { NumberQ(*it) },
+        "NumericQ" to { NumericQ(*it) },
+        "Equal" to { Equal(*it) },
 
+        "Plus" to { Plus(*it) },
+        "Subtract" to { Subtract(*it) },
+        "Times" to { Times(*it) },
+        "Divide" to { Divide(it[0], it[1]) },
+        "Power" to { Power(*it) },
+        "Minus" to { Minus(*it) },
+        "Log" to { Log(*it) },
+        "Log10" to { Log10(*it) },
+        "Exp" to { Exp(*it) },
+        "Sqrt" to { Sqrt(*it) },
+
+        // Trig
+        "Sin" to { Sin(it[0]) },
+        "Cos" to { Cos(it[0]) },
+        "Tan" to { Tan(it[0]) },
+        "Sec" to { Sec(it[0]) },
+        "Csc" to { Csc(it[0]) },
+        "Cot" to { Cot(it[0]) },
+        "ArcSin" to { ArcSin(it[0]) },
+        "ArcCos" to { ArcCos(it[0]) },
+        "ArcTan" to { ArcTan(*it) },
+        "ArcSec" to { ArcSec(it[0]) },
+        "ArcCsc" to { ArcCsc(it[0]) },
+        "ArcCot" to { ArcCot(it[0]) },
+
+        // Hyperbolic
+        "Sinh" to { Sinh(it[0]) },
+        "Cosh" to { Cosh(it[0]) },
+        "Tanh" to { Tanh(it[0]) },
+        "Sech" to { Sech(it[0]) },
+        "Csch" to { Csch(it[0]) },
+        "Coth" to { Coth(it[0]) },
+        "ArcSinh" to { ArcSinh(it[0]) },
+        "ArcCosh" to { ArcCosh(it[0]) },
+        "ArcTanh" to { ArcTanh(it[0]) },
+        "ArcSech" to { ArcSech(it[0]) },
+        "ArcCsch" to { ArcCsch(it[0]) },
+        "ArcCoth" to { ArcCoth(it[0]) },
+
+        // List
+        "Total" to { Total(*it) },
+        "Range" to { Range(*it) },
+        "Reverse" to { Reverse(*it) },
+        "First" to { First(*it) },
+        "Last" to { Last(*it) },
+        "Table" to { Table(*it) },
+        "Flatten" to { Flatten(*it) },
+        "Partition" to { Partition(*it) },
+        "Join" to { Join(*it) },
+        "Select" to { Select(*it) },
+        "ConstantArray" to { ConstantArray(*it) },
+        "Tally" to { Tally(*it) },
+        "Map" to { Map(*it) },
+
+        // Matrix
+        "VectorQ" to { VectorQ(*it) },
+        "MatrixQ" to { MatrixQ(*it) },
+        "IdentityMatrix" to { IdentityMatrix(*it) },
+        "Dot" to { Dot(*it) },
+
+        // Integer
+        "Mod" to { Mod(*it) },
+        "PowerMod" to { PowerMod(*it) },
+        "GCD" to { GCD(*it) },
+        "Fourier" to { Fourier(*it) },
+        "PrimeQ" to { PrimeQ(*it) },
+        "Fibonacci" to { Fibonacci(*it) },
+        "Factor" to { Factor(*it) },
+        "Bernoulli" to { Bernoulli(*it) },
+        "IntegerDigits" to { IntegerDigits(*it) },
+        "EvenQ" to { EvenQ(*it) },
+        "OddQ" to { OddQ(*it) },
+        "EulerPhi" to { EulerPhi(*it) },
+        "EulerE" to { EulerE(*it) },
+        "Divisors" to { Divisors(*it) },
+        "DivisorSigma" to { DivisorSigma(*it) },
+
+        // Combinatorial
+        "Factorial" to { Factorial(*it) },
+        "Factorial2" to { Factorial2(*it) },
+        "Binomial" to { Binomial(*it) },
+
+        // Numeric
+        "Floor" to { Floor(*it) },
+
+        // Calculus
+        "D" to { D(*it) },
+        "Sum" to { Sum(*it) },
+
+        // Logical
+        "Greater" to { Greater(*it) },
+
+        // Statistics
+        "Mean" to { Mean(*it) },
+        "Variance" to { Variance(*it) },
+        "StandardDeviation" to { StandardDeviation(*it) },
+        "RandomChoice" to { RandomChoice(*it) },
+        "RandomInteger" to { RandomInteger(*it) },
+
+        // Categorize these
+        "Set" to { Set(*it) },
+        "CompoundExpression" to { CompoundExpression(*it) },
+
+        "If" to { If(*it) },
+
+        // Special
+        "Gamma" to { Gamma(*it) },
+        "Pochhammer" to { Pochhammer(*it) },
+        "PolyGamma" to { PolyGamma(*it) },
+        "Zeta" to { Zeta(*it) }
+    )
+
+    fun createInstance(name: String, vararg e: Expr): FunctionExpr {
+        val function = functions[name]
+        if (function != null) {
+            val result = function.invoke(e)
+            // TODO unnecessary after all non-vararg functions implement validate()
             require(result.size == e.size) { "expected ${result.size} parameters, actual ${e.size}" }
 
             return result
         }
 
-        throw RuntimeException("Function not found")
-    }
-
-    // TODO can this be done with reflection
-    private fun createInstance(f: Function, vararg e: Expr): FunctionExpr {
-        when (f) {
-            Function.N -> return N(*e)
-            Function.HOLD -> return Hold(*e)
-            Function.NUMBERQ -> return NumberQ(*e)
-            Function.NUMERICQ -> return NumericQ(*e)
-            Function.EQUAL -> return Equal(*e)
-
-            Function.PLUS -> return Plus(*e)
-            Function.SUBTRACT -> return Subtract(*e)
-            Function.TIMES -> return Times(*e)
-            Function.DIVIDE -> return Divide(e[0], e[1])
-            Function.POWER -> return Power(*e)
-            Function.MINUS -> return Minus(*e)
-            Function.LOG -> return Log(*e)
-            Function.LOG10 -> return Log10(*e)
-            Function.EXP -> return Exp(*e)
-            Function.SQRT -> return Sqrt(*e)
-
-            // Trig
-            Function.SIN -> return Sin(e[0])
-            Function.COS -> return Cos(e[0])
-            Function.TAN -> return Tan(e[0])
-            Function.SEC -> return Sec(e[0])
-            Function.CSC -> return Csc(e[0])
-            Function.COT -> return Cot(e[0])
-            Function.ARCSIN -> return ArcSin(e[0])
-            Function.ARCCOS -> return ArcCos(e[0])
-            Function.ARCTAN -> return ArcTan(*e)
-            Function.ARCSEC -> return ArcSec(e[0])
-            Function.ARCCSC -> return ArcCsc(e[0])
-            Function.ARCCOT -> return ArcCot(e[0])
-
-            // Hyperbolic
-            Function.SINH -> return Sinh(e[0])
-            Function.COSH -> return Cosh(e[0])
-            Function.TANH -> return Tanh(e[0])
-            Function.SECH -> return Sech(e[0])
-            Function.CSCH -> return Csch(e[0])
-            Function.COTH -> return Coth(e[0])
-            Function.ARCSINH -> return ArcSinh(e[0])
-            Function.ARCCOSH -> return ArcCosh(e[0])
-            Function.ARCTANH -> return ArcTanh(e[0])
-            Function.ARCSECH -> return ArcSech(e[0])
-            Function.ARCCSCH -> return ArcCsch(e[0])
-            Function.ARCCOTH -> return ArcCoth(e[0])
-
-            //List
-            Function.TOTAL -> return Total(*e)
-            Function.RANGE -> return Range(*e)
-            Function.REVERSE -> return Reverse(*e)
-            Function.FIRST -> return First(*e)
-            Function.LAST -> return Last(*e)
-            Function.TABLE -> return Table(*e)
-            Function.FLATTEN -> return Flatten(*e)
-            Function.PARTITION -> return Partition(*e)
-            Function.JOIN -> return Join(*e)
-            Function.SELECT -> return Select(*e)
-            Function.CONSTANT_ARRAY -> return ConstantArray(*e)
-            Function.TALLY -> return Tally(*e)
-            Function.MAP -> return Map(*e)
-
-            // Matrix
-            Function.VECTORQ -> return VectorQ(*e)
-            Function.MATRIXQ -> return MatrixQ(*e)
-            Function.IDENTITY_MATRIX -> return IdentityMatrix(*e)
-            Function.DOT -> return Dot(*e)
-
-            //Integer
-            Function.MOD -> return Mod(*e)
-            Function.POWERMOD -> return PowerMod(*e)
-            Function.GCD -> return GCD(*e)
-            Function.FOURIER -> return Fourier(*e)
-            Function.PRIMEQ -> return PrimeQ(*e)
-            Function.FIBONACCI -> return Fibonacci(*e)
-            Function.FACTOR -> return Factor(*e)
-            Function.BERNOULLI -> return Bernoulli(*e)
-            Function.INTEGER_DIGITS -> return IntegerDigits(*e)
-            Function.EVENQ -> return EvenQ(*e)
-            Function.ODDQ -> return OddQ(*e)
-            Function.EULERPHI -> return EulerPhi(*e)
-            Function.EULERE -> return EulerE(*e)
-            Function.DIVISORS -> return Divisors(*e)
-            Function.DIVISORSIGMA -> return DivisorSigma(*e)
-
-            // Combinatorial
-            Function.FACTORIAL -> return Factorial(*e)
-            Function.FACTORIAL2 -> return Factorial2(*e)
-            Function.BINOMIAL -> return Binomial(*e)
-
-            // Numeric
-            Function.FLOOR -> return Floor(*e)
-
-            // Calculus
-            Function.D -> return D(*e)
-            Function.SUM -> return Sum(*e)
-
-            //Logical
-            Function.GREATER -> return Greater(*e)
-
-            //Statistics
-            Function.MEAN -> return Mean(*e)
-            Function.VARIANCE -> return Variance(*e)
-            Function.STANDARD_DEVIATION -> return StandardDeviation(*e)
-            Function.RANDOM_CHOICE -> return RandomChoice(*e)
-            Function.RANDOM_INTEGER -> return RandomInteger(*e)
-
-            // Categorize these
-            Function.SET -> return Set(*e)
-            Function.COMPOUND_EXPRESSION -> return CompoundExpression(*e)
-
-            Function.IF -> return If(*e)
-
-            // Special
-            Function.GAMMA -> return Gamma(*e)
-            Function.POCHHAMMER -> return Pochhammer(*e)
-            Function.POLYGAMMA -> return PolyGamma(*e)
-            Function.ZETA -> return Zeta(*e)
-
-            Function.END_OF_LIST -> throw IllegalArgumentException()
-        }
+        throw IllegalArgumentException("Function ${name} not found")
     }
 
     @JvmStatic
-    fun isValidFunction(functionName: String): Boolean {
-        val name = functionName.lowercase()
-
-        return stringToFunctionType(name) != null
-    }
-
-    private fun stringToFunctionType(functionName: String): Function? {
-        val name = functionName.lowercase()
-        for (t in Function.values()) {
-            if (t.value.lowercase().contentEquals(name))
-                return t
-        }
-
-        return null
-    }
-
+    fun isValidFunction(functionName: String) = functions.contains(functionName)
 }

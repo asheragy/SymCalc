@@ -66,8 +66,8 @@ class FunctionExprTest {
 
     @Test
     fun createInvalidParameterCount() {
-        assertFailsWith<ArrayIndexOutOfBoundsException> { FunctionExpr.createFunction("sin").eval() }
-        assertFailsWith<IllegalArgumentException> { FunctionExpr.createFunction("sin", Integer(2), Integer(3)).eval() }
+        assertFailsWith<ArrayIndexOutOfBoundsException> { FunctionExpr.createFunction("Sin").eval() }
+        assertFailsWith<IllegalArgumentException> { FunctionExpr.createFunction("Sin", Integer(2), Integer(3)).eval() }
     }
 
 }

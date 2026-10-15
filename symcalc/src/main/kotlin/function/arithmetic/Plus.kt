@@ -3,14 +3,18 @@ package org.cerion.symcalc.function.arithmetic
 import org.cerion.symcalc.constant.ComplexInfinity
 import org.cerion.symcalc.constant.Infinity
 import org.cerion.symcalc.expression.Expr
+import org.cerion.symcalc.function.Attribute
 import org.cerion.symcalc.function.FunctionExpr
 import org.cerion.symcalc.number.Integer
 import org.cerion.symcalc.number.NumberExpr
 
 class Plus(vararg e: Any) : FunctionExpr(*e) {
 
+    override val attributes: Set<Attribute>
+        get() = setOf(Attribute.Orderless, Attribute.NumericFunction)
+
     override val properties: Int
-        get() = Properties.Flat.value or Properties.NumericFunction.value or Properties.Orderless.value or Properties.Listable.value
+        get() = Properties.Flat.value or Properties.Listable.value
 
     override fun evaluate(): Expr {
         val list = args.toMutableList()
