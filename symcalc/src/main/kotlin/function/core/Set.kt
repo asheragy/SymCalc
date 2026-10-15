@@ -2,7 +2,9 @@ package org.cerion.symcalc.function.core
 
 import org.cerion.symcalc.expression.Expr
 import org.cerion.symcalc.expression.VarExpr
+import org.cerion.symcalc.function.Attribute
 import org.cerion.symcalc.function.FunctionExpr
+import kotlin.collections.Set
 
 class Set(vararg e: Expr) : FunctionExpr(*e) {
 
@@ -20,4 +22,7 @@ class Set(vararg e: Expr) : FunctionExpr(*e) {
         validateParameterCount(2)
         validateParameterType(0, ExprType.VARIABLE)
     }
+
+    override val attributes: Set<Attribute>
+        get() = setOf(Attribute.HoldFirst, Attribute.SequenceHold)
 }

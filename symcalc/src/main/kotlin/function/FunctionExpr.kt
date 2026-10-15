@@ -55,7 +55,13 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         //https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
         //https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
-        val newArgs = args.map { if (has(Attribute.HoldAll)) it else it.eval(ctx) }.toMutableList()
+        val newArgs = args.mapIndexed { index, expr ->
+            if (has(Attribute.HoldAll) || (index == 0 && has(Attribute.HoldFirst)) || (index != 0 && has(Attribute.HoldRest)))
+                expr
+            else
+                expr.eval(ctx)
+        }.toMutableList()
+
         if (newArgs.any { it is Indeterminate })
             return Indeterminate()
 
@@ -80,25 +86,10 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
             }
         }
 
-        // Listable property
-        if (has(Attribute.Listable) && newArgs.any { it is ListExpr }) {
-            if (size == 1) {
-                val listArgs = newArgs[0].asList().args.map { createFunction(name, it) }
-                return ListExpr(*listArgs.toTypedArray()).eval(ctx)
-            }
-            else if (size == 2 && newArgs[0] is ListExpr || newArgs[1] is ListExpr) {
-                val list1 = if(newArgs[0] is ListExpr) newArgs[0] as ListExpr else newArgs[0].toList(newArgs[1].asList().size)
-                val list2 = if(newArgs[1] is ListExpr) newArgs[1] as ListExpr else newArgs[1].toList(newArgs[0].asList().size)
+        if (has(Attribute.Listable))
+            threadOverLists(newArgs)?.let { return it.eval(ctx) }
 
-                if (list1.size != list2.size)
-                    return ErrorExpr("lists of unequal lengths cannot be combined")
-
-                val listArgs = list1.args.mapIndexed { index, expr -> createFunction(name, expr, list2[index]) }
-                return ListExpr(*listArgs.toTypedArray()).eval(ctx)
-            }
-        }
-
-        val function = createFunction(name, *newArgs.toTypedArray())
+        val function = copy(newArgs)
         function.ctx = ctx
 
         return try {
@@ -115,6 +106,26 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
             ErrorExpr(e.message!!)
         }
     }
+
+    private fun threadOverLists(args: List<Expr>): Expr? {
+        val lists = args.filterIsInstance<ListExpr>()
+        if (lists.isEmpty())
+            return null
+
+        val length = lists[0].size
+        if (lists.any { it.size != length })
+            return ErrorExpr("lists of unequal lengths cannot be combined")
+
+        // One call per index: list arguments contribute their i-th element, everything else is repeated.
+        val calls = (0 until length).map { i ->
+            copy(args.map { if (it is ListExpr) it[i] else it })
+        }
+        return ListExpr(*calls.toTypedArray())
+    }
+
+    /** Same head, new arguments. Built-ins go through the factory; user calls keep their head name. */
+    protected open fun copy(newArgs: List<Expr>): FunctionExpr =
+        FunctionFactory.createInstance(name, *newArgs.toTypedArray())
 
     override fun equals(e: Expr): Boolean {
         if (e !is FunctionExpr)

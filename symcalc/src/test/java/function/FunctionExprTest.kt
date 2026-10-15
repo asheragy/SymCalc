@@ -65,6 +65,26 @@ class FunctionExprTest {
     }
 
     @Test
+    fun listable_scalarAndList() {
+        // Two-argument case, already handled
+        assertEquals(ListExpr(4, 5, 6), Plus(Integer(3), ListExpr(1, 2, 3)).eval())
+        assertEquals(ListExpr(4, 5, 6), Plus(ListExpr(1, 2, 3), Integer(3)).eval())
+    }
+
+    @Test
+    fun listable_threadsOverAnyArity() {
+        // Requires general threadOverLists: current code only threads one- and two-argument calls
+        assertEquals(ListExpr(8, 9), Plus(ListExpr(1, 2), Integer(3), Integer(4)).eval())
+        assertEquals(ListExpr(9, 10), Plus(Integer(1), ListExpr(2, 3), Integer(6)).eval())
+    }
+
+    @Test
+    fun listable_multipleListsAnyArity() {
+        assertEquals(ListExpr(8, 9), Plus(ListExpr(1, 2), ListExpr(5, 5), Integer(2)).eval())
+        assertEquals(Expr.ExprType.ERROR, Plus(ListExpr(1, 2), ListExpr(5, 5, 5), Integer(2)).eval().type)
+    }
+
+    @Test
     fun createInvalidParameterCount() {
         assertFailsWith<ArrayIndexOutOfBoundsException> { FunctionExpr.createFunction("Sin").eval() }
         assertFailsWith<IllegalArgumentException> { FunctionExpr.createFunction("Sin", Integer(2), Integer(3)).eval() }

@@ -4,13 +4,13 @@ enum class Attribute {
     Flat,              // Associative f(a, f(b, c)) -> f(a, b, c)
     Orderless,         // Order of parameters does not matter
     Listable,          // f({a, b, c}) -> {f(a), f(b), f(c)}
+    NumericFunction,   // Function evaluates to number when all inputs are numbers
     HoldAll,           // Prevents args from being evaluated automatically
-    NumericFunction    // Function evaluates to number when all inputs are numbers
-    //HoldFirst,
-    //HoldRest,
+    HoldFirst,         // Do not evaluate first argument
+    HoldRest,          // Only evaluate first argument
     //HoldAllComplete,
-    //OneIdentity,
-    //SequenceHold,
+    OneIdentity,
+    SequenceHold
 
 }
 
