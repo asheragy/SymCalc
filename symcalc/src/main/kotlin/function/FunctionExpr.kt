@@ -55,39 +55,27 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
         //https://reference.wolfram.com/language/tutorial/TheStandardEvaluationProcedure.html
         //https://reference.wolfram.com/language/tutorial/EvaluationOfExpressionsOverview.html
 
-        val newArgs = args.mapIndexed { index, expr ->
+        var newArgs = args.mapIndexed { index, arg ->
             if (has(Attribute.HoldAll) || (index == 0 && has(Attribute.HoldFirst)) || (index != 0 && has(Attribute.HoldRest)))
-                expr
+                arg
+            // arg is Evaluate && !has(Attribute.HoldAllComplete) -> arg[0].eval(ctx)   // Evaluate[] overrides a hold
             else
-                expr.eval(ctx)
-        }.toMutableList()
-
-        if (newArgs.any { it is Indeterminate })
-            return Indeterminate()
-
-        // Evaluate precision on sibling elements, numbers already handled but its possible that could be done here as well, need to try that
-        if (size > 0) {
-            val minPrecision = newArgs.minByOrNull { it.precision }!!.precision
-            for (i in 0 until newArgs.size) {
-                if (newArgs[i] !is NumberExpr && minPrecision < newArgs[i].precision) {
-                    val temp = newArgs[i].eval(minPrecision)
-                    if (temp !is N)
-                        newArgs[i] = temp
-                }
-            }
+                arg.eval(ctx)
         }
 
-        // Associative function, if the same function is a parameter move its parameters to the top level
-        if (has(Attribute.Flat)) {
-            val same = newArgs.filter { it.javaClass == javaClass  }
-            if (same.isNotEmpty()) {
-                newArgs.removeIf { it.javaClass == javaClass }
-                same.forEach { newArgs.addAll((it as FunctionExpr).args) }
-            }
-        }
+        if (newArgs.any { it is Indeterminate }) return Indeterminate()
+        newArgs = normalisePrecision(newArgs)
 
+        // Sequence splicing, unless SequenceHold / HoldAllComplete.
+        //if (!has(Attribute.SequenceHold) && !has(Attribute.HoldAllComplete))
+        //    newArgs = newArgs.flatMap { if (it is Sequence) it.args.toList() else listOf(it) }
+
+        if (has(Attribute.Flat))
+            newArgs = newArgs.flatMap { if (it.javaClass == javaClass) (it as FunctionExpr).args.toList() else listOf(it) }
         if (has(Attribute.Listable))
             threadOverLists(newArgs)?.let { return it.eval(ctx) }
+        if (has(Attribute.Orderless))
+            newArgs = canonicalSort(newArgs)
 
         val function = copy(newArgs)
         function.ctx = ctx
@@ -103,8 +91,31 @@ abstract class FunctionExpr (vararg e: Any) : MultiExpr(convertArgs(*e))
             return result
         }
         catch (e: Exception) {
-            ErrorExpr(e.message!!)
+            ErrorExpr(e.message ?: "Unknown error")
         }
+    }
+
+    // Evaluate precision on sibling elements, numbers already handled but its possible that could be done here as well, need to try that
+    private fun normalisePrecision(args: List<Expr>): List<Expr> {
+        if (size == 0) return args
+
+        val minPrecision = args.minByOrNull { it.precision }!!.precision
+        return args.map {
+            if (it !is NumberExpr && minPrecision < it.precision) {
+                val temp = it.eval(minPrecision)
+                if (temp !is N)
+                    temp
+                else
+                    it
+            }
+            else
+                it
+        }
+    }
+
+    private fun canonicalSort(args: List<Expr>): List<Expr> {
+        // TODO need to define what this sort actually does
+        return args
     }
 
     private fun threadOverLists(args: List<Expr>): Expr? {
